@@ -1,6 +1,6 @@
 from django.core import meta
 
-class Document
+class Document:
     fields = (
         meta.CharField('title', 'title', maxlength=200),
         meta.SlugField('slug', 'slug', unqique=True, prepopulate_from=('title',)),
