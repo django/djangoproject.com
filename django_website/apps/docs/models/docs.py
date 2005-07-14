@@ -4,7 +4,6 @@ class Document(meta.Model):
     fields = (
         meta.CharField('title', 'title', maxlength=200),
         meta.SlugField('slug', 'slug', unique=True, prepopulate_from=('title',)),
-        meta.TextField('blurb', 'blurb', help_text='HTML is allowed.'),
         meta.CharField('doc_path', 'doc path', maxlength=200, 
             help_text="Relative to the docs directory in django SVN; leave off the file extension"),
         meta.DateTimeField('last_updated', 'last updated', auto_now=True),
@@ -12,7 +11,7 @@ class Document(meta.Model):
     ordering = (('title', 'ASC'),)
     admin = meta.Admin(
         fields = (
-            (None, {'fields': ('title', 'slug', 'blurb', 'doc_path')}),
+            (None, {'fields': ('title', 'slug', 'doc_path')}),
         ),
         list_display = ('title', 'doc_path'),
     )
