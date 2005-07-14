@@ -3,7 +3,6 @@ from django.core import meta
 class Entry(meta.Model):
     verbose_name_plural = 'entries'
     module_name = 'entries'
-    db_table = 'new_blog_entries'
     fields = (
         meta.DateTimeField('pub_date', 'publication date'),
         meta.SlugField('slug', 'slug', unique_for_date='pub_date'),
