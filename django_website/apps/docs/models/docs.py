@@ -9,7 +9,7 @@ class Document(meta.Model):
             help_text="Relative to the docs directory in django SVN; leave off the file extension"),
         meta.DateTimeField('last_updated', 'last updated', auto_now=True),
     )
-    ordering = (('title', 'ASC'),),
+    ordering = (('title', 'ASC'),)
     admin = meta.Admin(
         fields = (
             (None, {'fields': ('title', 'slug', 'blurb', 'doc_path')}),
