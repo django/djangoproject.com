@@ -11,6 +11,7 @@ TEMPLATE_DIRS = (
 )
 ROOT_URLCONF = 'django_website.settings.urls.main'
 INSTALLED_APPS = (
+    'django.contrib.comments',
     'django_website.apps.blog',
     'django_website.apps.docs',
 )
