@@ -3,7 +3,7 @@ from django.core import meta
 class Document:
     fields = (
         meta.CharField('title', 'title', maxlength=200),
-        meta.SlugField('slug', 'slug', unqique=True, prepopulate_from=('title',)),
+        meta.SlugField('slug', 'slug', unique=True, prepopulate_from=('title',)),
         meta.TextField('blurb', 'blurb', help_text='HTML is allowed.'),
         meta.CharField('doc_path', 'doc path', maxlength=200, 
             help_text="Relative to the docs directory in django SVN; leave off the file extension"),
