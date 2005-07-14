@@ -21,4 +21,4 @@ class Entry(meta.Model):
         return self.headline
 
     def get_absolute_url(self):
-        return "/weblog/%s/%s/" % (self.pub_date.strftime("%Y/%b/%d"), self.slug)
+        return "/weblog/%s/%s/" % (self.pub_date.strftime("%Y/%b/%d").lower(), self.slug)
