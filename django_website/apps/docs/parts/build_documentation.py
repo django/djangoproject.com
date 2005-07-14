@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """
 Script to build the documentation for Django from ReST -> HTML.
 
@@ -86,7 +84,51 @@ class DjangoHTMLTranslator(html4css1.HTMLTranslator):
     def visit_table(self, node):
         """Remove the damn border=1 from the standard HTML writer"""
         self.body.append(self.starttag(node, 'table', CLASS='docutils'))
-        
+    
+    def visit_title(self, node):
+        """Coppied from html4css1.Writer wholesale just to get rid of the <a name=> crap.  Fun, eh?"""
+        check_id = 0
+        close_tag = '</p>\n'
+        if isinstance(node.parent, nodes.topic):
+            self.body.append(
+                  self.starttag(node, 'p', '', CLASS='topic-title first'))
+            check_id = 1
+        elif isinstance(node.parent, nodes.sidebar):
+            self.body.append(
+                  self.starttag(node, 'p', '', CLASS='sidebar-title'))
+            check_id = 1
+        elif isinstance(node.parent, nodes.Admonition):
+            self.body.append(
+                  self.starttag(node, 'p', '', CLASS='admonition-title'))
+            check_id = 1
+        elif isinstance(node.parent, nodes.table):
+            self.body.append(
+                  self.starttag(node, 'caption', ''))
+            check_id = 1
+            close_tag = '</caption>\n'
+        elif isinstance(node.parent, nodes.document):
+            self.body.append(self.starttag(node, 'h1', '', CLASS='title'))
+            self.context.append('</h1>\n')
+            self.in_document_title = len(self.body)
+        else:
+            assert isinstance(node.parent, nodes.section)
+            h_level = self.section_level + self.initial_header_level - 1
+            atts = {}
+            if (len(node.parent) >= 2 and
+                isinstance(node.parent[1], nodes.subtitle)):
+                atts['CLASS'] = 'with-subtitle'
+            node.ids = node.parent['ids']
+            self.body.append(self.starttag(node, 'h%s' % h_level, '', **atts))
+            self.context.append('</h%s>\n' % (h_level))
+        if check_id:
+            if node.parent['ids']:
+                self.body.append(
+                    self.starttag({}, 'a', '', name=node.parent['ids'][0]))
+                self.context.append('</a>' + close_tag)
+            else:
+                self.context.append(close_tag)
+
+    
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         build(sys.argv[1:])
