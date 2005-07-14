@@ -9,7 +9,7 @@ TEMPLATE_DIRS = (
     '/home/html/templates/djangoproject.com/',
     '/home/html/templates/default/',
 )
-ROOT_URLCONF = 'worldonline_settings.pam.urls.djangoproject'
+ROOT_URLCONF = 'django_website.settings.urls.main'
 INSTALLED_APPS = (
 )
 MEDIA_ROOT = "/home/html/djangoproject.com/m/"
