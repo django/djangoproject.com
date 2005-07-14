@@ -16,3 +16,6 @@ INSTALLED_APPS = (
 )
 MEDIA_ROOT = "/home/html/djangoproject.com/m/"
 MEDIA_URL = "http://www.djangoproject.com.com/m/"
+
+# setting for documentation root path
+DJANGO_DOCUMENT_ROOT_PATH = "/home/html/djangoproject.com/docs/"
