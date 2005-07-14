@@ -12,6 +12,7 @@ TEMPLATE_DIRS = (
 ROOT_URLCONF = 'django_website.settings.urls.main'
 INSTALLED_APPS = (
     'django_website.apps.blog',
+    'django_website.apps.docs',
 )
 MEDIA_ROOT = "/home/html/djangoproject.com/m/"
 MEDIA_URL = "http://www.djangoproject.com.com/m/"
