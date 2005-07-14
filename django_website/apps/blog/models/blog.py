@@ -8,13 +8,14 @@ class Entry(meta.Model):
         meta.SlugField('slug', 'slug', unique_for_date='pub_date'),
         meta.CharField('headline', 'headline', maxlength=200),
         meta.TextField('body', 'body', help_text="Use raw HTML."),
+        meta.CharField('author', 'author', maxlength=100),
     )
     ordering = (('pub_date', 'DESC'),)
     admin = meta.Admin(
         fields = (
-            (None, {'fields': ('pub_date', 'slug', 'headline', 'body')}),
+            (None, {'fields': ('pub_date', 'slug', 'author', 'headline', 'body')}),
         ),
-        list_display = ('pub_date', 'headline'),
+        list_display = ('pub_date', 'headline', 'author'),
     )
 
     def __repr__(self):
