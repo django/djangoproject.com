@@ -11,6 +11,7 @@ class Entry(meta.Model):
         meta.CharField('author', 'author', maxlength=100),
     )
     ordering = (('pub_date', 'DESC'),)
+    get_latest_by = 'pub_date'
     admin = meta.Admin(
         fields = (
             (None, {'fields': ('pub_date', 'slug', 'author', 'headline', 'body')}),
