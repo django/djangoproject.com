@@ -7,6 +7,7 @@ class Entry(meta.Model):
         meta.DateTimeField('pub_date', 'publication date'),
         meta.SlugField('slug', 'slug', unique_for_date='pub_date'),
         meta.CharField('headline', 'headline', maxlength=200),
+        meta.TextField('summary', 'summary', help_text="Use raw HTML."),
         meta.TextField('body', 'body', help_text="Use raw HTML."),
         meta.CharField('author', 'author', maxlength=100),
     )
@@ -14,7 +15,7 @@ class Entry(meta.Model):
     get_latest_by = 'pub_date'
     admin = meta.Admin(
         fields = (
-            (None, {'fields': ('pub_date', 'slug', 'author', 'headline', 'body')}),
+            (None, {'fields': ('pub_date', 'slug', 'author', 'headline', 'summary', 'body')}),
         ),
         list_display = ('pub_date', 'headline', 'author'),
     )
