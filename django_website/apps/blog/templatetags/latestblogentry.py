@@ -18,6 +18,6 @@ def do_get_latest_blog_entries(parser, token):
         raise template.TemplateSyntaxError, "'%s' tag takes three arguments" % bits[0]
     if bits[2] != 'as':
         raise template.TemplateSyntaxError, "First argument to '%s' tag must be 'as'" % bits[0]
-    return LatestBlogEntryNode(bits[1], bits[3])
+    return LatestBlogEntriesNode(bits[1], bits[3])
 
 template.register_tag('get_latest_blog_entries', do_get_latest_blog_entries)
