@@ -66,7 +66,10 @@ class DjangoHTMLWriter(html4css1.Writer):
         for section in sections:
             title = section[0]
             entrytext = title
-            reference = nodes.reference('', '', refid=section['ids'][0], *entrytext)
+            try:
+                reference = nodes.reference('', '', refid=section['ids'][0], *entrytext)
+            except IndexError:
+                continue
             ref_id = self.document.set_id(reference)
             entry = nodes.paragraph('', '', reference)
             item = nodes.list_item('', entry)
