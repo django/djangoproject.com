@@ -1,47 +1,9 @@
 {% extends "base_docs" %}
 
 {% block content %}
-<h1>Getting Started</h1>
+<h1>{{ flatfile.title }}</h1>
 
-<p>Note that we're not officially launched yet, and we're continuing to improve documentation as our foremost goal.</p>
-
-<h1>The essentials</h1>
-
-<p>Read the following before anything else.</p>
-
-<h3><a href="install/">Installation guide</a></h3>
-<p>How to get the code and set things up so that you can use Django.</p>
-
-<h3>Tutorial: Writing your first Django app</h3>
-<ul>
-<li><a href="/documentation/tutorial1/">Part 1: Initialization, creating models, the database API</a></li>
-<li><a href="/documentation/tutorial2/">Part 2: Exploring the automatically-generated admin site</a></li>
-</ul>
-
-<h3><a href="faq/">FAQ</a></h3>
-<p>Wherein all Q's F A'd are answered.</p>
-
-<h1 id="reference">Reference</h1>
-
-<h3><a href="model_api/">Model reference</a></h3>
-<p>An explanation of all the options and settings available to data models.</p>
-
-<h3><a href="db_api/">Database abstraction layer reference</a></h3>
-<p>How to use data models to access the database.</p>
-
-<h3><a href="templates/">Template authoring guide</a></h3>
-<p>An introduction and guide to the template language for designers and HTML authors.</p>
-
-<h3><a href="cache/">Cache framework</a></h3>
-<p>So you got slashdotted. Now what?</p>
-
-<h3><a href="url_dispatch/">URL dispatch</a></h3>
-<p>Design your URLs to be as purty as your code.</p>
-
-<h3><a href="admin_css/">Django admin CSS guide</a></h3>
-<p>Although the underlying format of the admin pages is built in to Django, you
-can customize the look and feel by editing the admin stylesheet and images.</p>
-
+{{ flatfile.content }}
 {% endblock %}
 
 {% block content-related %}
