@@ -1,0 +1,19 @@
+{% extends "base" %}
+
+{% block columnwrap %}
+	<div id="subwrap">
+		<div id="content-main">
+		{% block content %}{% endblock %}
+		</div>
+		<!-- END #content-main -->
+		<div id="content-related" class="sidebar">
+		{% block content-related %}{% endblock %}
+		</div>
+		<!-- END #content-related -->
+	</div>
+	<!-- END #subwrap -->
+	<div id="content-extra" class="sidebar">
+	{% block content-extra %}{% endblock %}
+	</div>
+	<!-- END #content-extra -->
+{% endblock %}

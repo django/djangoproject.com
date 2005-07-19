@@ -1,0 +1,28 @@
+{% extends "base_weblog" %}
+
+{% block title %}Weblog | {{ object.headline|escape }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ object.headline }}</h1>
+{{ object.body }}
+<p class="date small">Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }}</p>
+
+{% load comments %}
+{% get_free_comment_list for blog.entries object.id as comment_list %}
+
+<div id="content-secondary">
+<h2 id="comments">Comments</h2>
+
+{% for comment in comment_list %}
+<div class="comment" id="c{{ comment.id }}">
+	<h3>{{ comment.person_name }} <span class="small quiet">{{ comment.submit_date|date:"F j, Y" }} at {{ comment.submit_date|date:"P" }}</span></h3>
+    {{ comment.comment|escape|urlizetrunc:"40"|linebreaks }}
+</div>
+{% endfor %}
+
+<h2>Post a comment</h2>
+
+{% free_comment_form for blog.entries object.id %}
+</div>
+{% endblock %}
