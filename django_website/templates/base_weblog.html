@@ -1,0 +1,24 @@
+{% extends "base_2col" %}
+
+{% block extrahead %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/rss/weblog/" />
+{% endblock %}
+
+{% block sectionid %}weblog{% endblock %}
+
+{% block title %}Weblog{% endblock %}
+
+{% block billboard %}<h2><a href="/weblog/">Weblog</a></h2>{% endblock %}
+
+{% block content-related %}
+<h2>Archives</h2>
+<ul class="linklist">
+<li><a href="/weblog/2005/jul/">July 2005</a></li>
+</ul>
+
+<h2>RSS feeds</h2>
+<ul class="linklist">
+<li><a href="/rss/weblog/">Latest weblog entries</a></li>
+<li><a href="http://code.djangoproject.com/timeline?daysback=90&amp;max=50&amp;wiki=on&amp;ticket=on&amp;changeset=on&amp;milestone=on&amp;format=rss">Recent code changes</a></li>
+</ul>
+{% endblock %}

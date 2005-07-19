@@ -1,0 +1,16 @@
+{% extends "base_weblog" %}
+
+{% block title %}Weblog | {{ month|date:"F" }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ month|date:"F" }} archive</h1>
+
+{% for object in object_list %}
+<h2><a href="{{ object.get_absolute_url }}">{{ object.headline }}</a></h2>
+<p class="small date">{{ object.pub_date|date:"F j, Y" }}</p>
+{{ object.body }}
+
+{% endfor %}
+
+{% endblock %}

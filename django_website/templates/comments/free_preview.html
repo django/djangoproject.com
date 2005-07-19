@@ -1,0 +1,45 @@
+{% extends "base_weblog" %}
+
+{% block title %}Django | Weblog | Preview comment{% endblock %}
+
+{% block content %}
+
+<style type="text/css">
+#comments textarea { width: 380px; font: 12px verdana,sans-serif; }
+</style>
+
+<h1>Preview your comment</h1>
+
+<form action="../postfree/" method="post">
+
+{% if comment_form.has_errors %}
+    <p><strong style="color: red;">Please correct the following errors.</strong></p>
+{% else %}
+    <div class="comment">
+    {{ comment.comment|escape|urlizetrunc:"40"|linebreaks }}
+    <p class="date small">Posted by <strong>{{ comment.person_name }}</strong></p>
+    </div>
+
+    <p><input type="submit" name="post" value="Post public comment" /></p>
+
+    <h1>Or edit it again</h1>
+{% endif %}
+
+{% if comment_form.person_name.errors %}
+    {{ comment_form.person_name.html_error_list }}
+{% endif %}
+
+<p><label for="id_person_name">Your name:</label> {{ comment_form.person_name }}</p>
+
+{% if comment_form.comment.errors %}
+{{ comment_form.comment.html_error_list }}
+{% endif %}
+
+<p><label for="id_person_name">Comment:</label><br />{{ comment_form.comment }}</p>
+<input type="hidden" name="options" value="{{ options }}" />
+<input type="hidden" name="target" value="{{ target }}" />
+<input type="hidden" name="gonzo" value="{{ hash }}" />
+<p><input type="submit" name="preview" value="Preview revised comment" /></p>
+</form>
+
+{% endblock %}

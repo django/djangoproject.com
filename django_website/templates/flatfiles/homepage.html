@@ -1,0 +1,78 @@
+{% extends "base_3col" %}
+
+{% block sectionid %}homepage{% endblock %}
+
+{% block billboard %}<h2>The Web framework for perfectionists (with deadlines). Django makes it easier to build better Web apps more quickly and with less code.</h2>{% endblock %}
+
+{% block content %}
+<h1>Meet Django</h1>
+<h2 class="deck">Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design.</h2>
+<p>Developed and used over the past two years by a newspaper Web operation, Django is well-suited for developing content-management systems. It was designed from scratch to handle the intensive deadlines of a newsroom and the stringent requirements of experienced Web developers. It focuses on automating as much as possible and adhering to the <a href="http://c2.com/cgi/wiki?DontRepeatYourself"><abbr title="Don't Repeat Yourself">DRY</abbr> principle</a>.</p>
+<p>Dive in by <a href="/overview/">reading the overview &rarr;</a></p>
+<p>When you're ready to code, read the <a href="/documentation/install/">installation guide</a> and <a href="/documentation/tutorial1/">tutorial</a>.</p>
+<div id="content-secondary">
+	<h2>The Django framework</h2>
+	<h3>Object-relational mapper</h3>
+	<p>Define your <a href="http://www.djangoproject.com/documentation/model_api/">data models</a> entirely in Python. You get a rich, <a href="/documentation/db_api/">dynamic database-access API</a> for free &mdash; but you can still write SQL if needed.</p>
+	<h3>URL dispatcher</h3>
+	<p>Design pretty, <a href="http://www.djangoproject.com/documentation/url_dispatch/">cruft-free URLs</a> with no framework-specific limitations. Be as flexible as you like.</p>
+	<h3>Template system</h3>
+	<p>Use Django's powerful and extensible <a href="http://www.djangoproject.com/documentation/templates/">template language</a> to separate design, content and Python code.</p>
+	<h3>Cache system</h3>
+	<p>Hook into memcached or other cache frameworks for <a href="http://www.djangoproject.com/documentation/cache/">super caching</a> &mdash; as granularly as you need.</p>
+	<h3>Automatic admin interface</h3>
+	<p>Save yourself the tedious work of creating interfaces for people to add and update content. <a href="http://www.djangoproject.com/documentation/admin_css/">Django does that automatically</a>.</p>
+</div>
+<!-- END #content-secondary -->
+{% endblock %}
+
+{% block content-related %}
+
+<h2>Download</h2>
+<ul class="linklist">
+    <li><a href="/download/">Get current version: 1.0</a></li>
+</ul>
+<h2>Documentation</h2>
+<ul class="linklist">
+	<li><a href="/documentation/tutorial1/">Tutorial</a></li>
+	<li><a href="/documentation/templates/">Template language guide</a></li>
+	<li><a href="/documentation/#reference">API reference</a></li>
+</ul>
+<h2>Sites that use Django</h2>
+<dl>
+	<dt><a href="http://www.chicagocrime.org/">chicagocrime.org</a></dt>
+	<dd>A freely browsable database of crimes reported in Chicago.</dd>
+	<dt><a href="http://www.lawrence.com/">lawrence.com</a></dt>
+	<dd>An internationally renowned local-entertainment site with events, stories, bands, drink specials and more.</dd>
+	<dt><a href="http://www.ljworld.com/">LJWorld.com</a></dt>
+	<dd>An industry-leading newspaper site.</dd>
+	<dt><a href="http://www.kusports.com/">KUSports.com</a></dt>
+	<dd>The bible for University of Kansas sports fans.</dd>
+	<dt><a href="http://www.lawrencechamber.com/">lawrencechamber.com</a></dt>
+	<dd>A Chamber of Commerce site that doesn't suck.</dd>
+	<dt><a href="http://www.kkcscountry.com/">KKCScountry.com</a></dt>
+	<dd>A radio station site in Colorado Springs.</dd>
+</dl>
+{% endblock %}
+
+{% block content-extra %}
+<h2>Weblog</h2>
+
+{% load latestblogentry %}
+{% get_latest_blog_entries 2 as latest_entries %}
+
+{% for latest_entry in latest_entries %}
+<h3><a href="{{ latest_entry.get_absolute_url }}">{{ latest_entry.headline }}</a></h3>
+<p class="date">by <strong>{{ latest_entry.author }}</strong> on {{ latest_entry.pub_date|date:"F j, Y" }}</p>
+{{ latest_entry.summary }}
+<p class="more"><a href="{{ latest_entry.get_absolute_url }}">Read more</a> / <a href="{{ latest_entry.get_absolute_url }}#comments">Comments</a></p>
+{% endfor %}
+
+{% comment %}
+<blockquote class="fancyquote">
+<p>Django's cool. I should know because I’m British.</p>
+<cite><strong>Simon Willison</strong><br />Mad Genius</cite>
+</blockquote>
+{% endcomment %}
+
+{% endblock %}
