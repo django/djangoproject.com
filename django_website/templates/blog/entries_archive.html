@@ -2,13 +2,15 @@
 
 {% block content %}
 
+{% load comments.comments %}
+
 <h1>Latest entries</h1>
 
 {% for object in latest %}
-<h2><a href="{{ object.get_absolute_url }}">{{ object.headline }}</a></h2>
-{{ object.body }}
-<p class="date small">Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }}</p>
-
+    {% get_free_comment_count for blog.entries object.id as comment_count %}
+    <h2><a href="{{ object.get_absolute_url }}">{{ object.headline }}</a></h2>
+    {{ object.body }}
+    <p class="date small">Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }} | <a href="{{ object.get_absolute_url }}#comments">{{ comment_count }} comment{{ comment_count|pluralize }}</a></p>
 {% endfor %}
 
 {% endblock %}
