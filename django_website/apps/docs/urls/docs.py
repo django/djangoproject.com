@@ -8,5 +8,5 @@ info = {
 }
 
 urlpatterns = patterns('django.views.generic.list_detail',
-    (r'^(?P<slug>\w+)', 'object_detail', info),
+    (r'^(?P<slug>[\w\/]+)/$', 'object_detail', info),
 )
