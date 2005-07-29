@@ -30,7 +30,7 @@
 
 <h2>Download</h2>
 <ul class="linklist">
-    <li><a href="/download/">Get current version: 1.0</a></li>
+    <li><a href="/download/">Get current development version</a></li>
 </ul>
 <h2>Documentation</h2>
 <ul class="linklist">
@@ -60,7 +60,7 @@
 
 {% load comments %}
 {% load latestblogentry %}
-{% get_latest_blog_entries 2 as latest_entries %}
+{% get_latest_blog_entries 3 as latest_entries %}
 
 {% for latest_entry in latest_entries %}
     {% get_free_comment_count for blog.entries latest_entry.id as comment_count %}
