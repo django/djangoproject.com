@@ -1,0 +1,3 @@
+<p>Posted by {{ obj.person_name }} on {{ obj.submit_date|date:"F j, Y" }} at {{ obj.submit_date|date:"P" }}</p>
+<p>Page: {{ obj.get_content_object }}</p>
+{{ obj.comment|linebreaks }}
