@@ -12,28 +12,124 @@ import glob
 from docutils import nodes, utils
 from docutils.core import publish_parts
 from docutils.writers import html4css1
-from django.conf.settings import DJANGO_DOCUMENT_ROOT_PATH
+from django.conf import settings
+from django.core import template
 
 SETTINGS = {
     'initial_header_level': 2
 }
 
-def build(dirs):
+MODEL_DOC_TEMPLATE = """
+<div class="document" id="model-{{ model_name }}">
+
+<h1 class="title">{{ title }}</h1>
+{{ blurb }}
+
+<h2 id='model-source-code'>Model source code</h2>
+<pre class="literal-block">{{ model_source }}</pre>
+
+<h2 id='api-reference'>API reference</h2>
+
+{% for model in models %}
+<h3>{{ model.name }} objects have the following methods:</h3>
+<ul>
+{% for method in model.methods %}<li><tt class="docutils literal"><span class="pre">{{ method }}()</span></tt></li>
+{% endfor %}</ul>
+{% endfor %}
+
+<h2 id='sample-usage'>Sample API usage</h2>
+<pre class="literal-block">{{ api_usage }}</pre>
+</div>
+"""
+
+MODEL_TOC = """
+<ul>
+<li><a href="#model-source-code">Model source code</a></li>
+<li><a href="api-reference">API reference</a></li>
+<li><a href="sample-usage">Sample API usage</a></li>
+</ul>
+"""
+
+def build_documents():
     writer = DjangoHTMLWriter()
-    for dir in dirs:
-        for fname in glob.glob1(dir, "*.txt"):
-            in_file = os.path.join(dir, fname)
-            out_file = os.path.join(dir, os.path.splitext(fname)[0] + ".html")
-            toc_file = os.path.join(dir, os.path.splitext(fname)[0] + "_toc.html")
-            parts = publish_parts(
-                open(in_file).read(),
-                source_path=in_file,
-                destination_path=out_file,
-                writer=writer,
-                settings_overrides=SETTINGS,
-            )
-            open(out_file, 'w').write(parts['html_body'])
-            open(toc_file, 'w').write(parts['toc'])
+    for fname in glob.glob1(settings.DJANGO_DOCUMENT_ROOT_PATH, "*.txt"):
+        in_file = os.path.join(settings.DJANGO_DOCUMENT_ROOT_PATH, fname)
+        out_file = os.path.join(settings.DJANGO_DOCUMENT_ROOT_PATH, os.path.splitext(fname)[0] + ".html")
+        toc_file = os.path.join(settings.DJANGO_DOCUMENT_ROOT_PATH, os.path.splitext(fname)[0] + "_toc.html")
+        parts = publish_parts(
+            open(in_file).read(),
+            source_path=in_file,
+            destination_path=out_file,
+            writer=writer,
+            settings_overrides=SETTINGS,
+        )
+        open(out_file, 'w').write(parts['html_body'])
+        open(toc_file, 'w').write(parts['toc'])
+            
+def build_test_documents():
+    sys.path.append(settings.DJANGO_TESTS_PATH)
+    writer = DjangoHTMLWriter()
+    import runtests
+    
+    # Manually set INSTALLED_APPS to point to the test app.
+    settings.INSTALLED_APPS = (runtests.APP_NAME,)
+
+    for model_name in runtests.get_test_models():
+        mod = meta.get_app(model_name)
+
+        out_file = os.path.join(settings.DJANGO_DOCUMENT_ROOT_PATH, 'model_' + model_name + '.html')
+        toc_file = os.path.join(settings.DJANGO_DOCUMENT_ROOT_PATH, 'model_' + model_name + '_toc.html')
+
+        # Clean up the title and blurb.
+        title, blurb = mod.__doc__.strip().split('\n', 1)
+        parts = publish_parts(
+            blurb,
+            source_path=mod.__file__,
+            destination=out_file,
+            writer=writer,
+            settings_overrides=SETTINGS,
+        )
+        blurb = parts["html_body"]
+        api_usage = mod.API_TESTS
+
+        # Get the source code of the model, without the docstring or the
+        # API_TESTS variable.
+        model_source = inspect.getsource(mod)
+        model_source = model_source.replace(mod.__doc__, '')
+        model_source = model_source.replace(mod.API_TESTS, '')
+        model_source = model_source.replace('""""""\n', '\n')
+        model_source = model_source.replace('API_TESTS = ', '')
+        model_source = model_source.strip()
+
+        models = []
+        for m in mod._MODELS:
+            models.append({
+                'name': m._meta.object_name,
+                'methods': [method for method in dir(m) if not method.startswith('_')],
+            })
+
+        # Run this through the template system.
+        t = template.Template(MODEL_DOC_TEMPLATE)
+        c = template.Context(locals())
+        html = t.render(c)
+
+        try:
+            fp = open(out_file, 'w')
+        except IOError:
+            sys.stderr.write("Couldn't write to %s.\n" % file_name)
+            continue
+        else:
+            fp.write(html)
+            fp.close()
+            
+        try:
+            fp = open(toc_file, 'w')
+        except IOError:
+            sys.stderr.write("Couldn't write to %s.\n" % file_name)
+            continue
+        else:
+            fp.write(MODEL_TOC)
+            fp.close()    
 
 class DjangoHTMLWriter(html4css1.Writer):
     def __init__(self):
@@ -133,7 +229,5 @@ class DjangoHTMLTranslator(html4css1.HTMLTranslator):
 
     
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        build(sys.argv[1:])
-    else:
-        build([DJANGO_DOCUMENT_ROOT_PATH])
+    build_documents()
+    build_test_documents()

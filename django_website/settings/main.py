@@ -29,6 +29,7 @@ MEDIA_URL = "http://www.djangoproject.com.com/m/"
 
 # setting for documentation root path
 DJANGO_DOCUMENT_ROOT_PATH = "/home/html/djangoproject.com/docs/"
+DJANGO_TESTS_PATH = "/home/html/djangoproject.com/docs/tests/"
 
 CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 1 # 1 hour
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangoproject'
