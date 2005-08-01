@@ -18,13 +18,13 @@
 
         <?cs each:rel = links ?>
         <?cs each:link = rel ?>
-        <link rel="<?cs var:name(rel) ?>" 
+        <link rel="<?cs var:name(rel) ?>"
               href="<?cs var:link.href ?>"
               <?cs if:link.title ?>title="<?cs var:link.title ?>"<?cs /if ?>
               <?cs if:link.type ?>type="<?cs var:link.type ?>"<?cs /if ?> />
         <?cs /each ?>
         <?cs /each ?>
-              
+
         <style type="text/css">
          <?cs if:html.stylesheet ?>@import url(http://media.djangoproject.com/trac/<?cs
            var:html.stylesheet ?>);<?cs /if ?>
@@ -54,18 +54,29 @@
 		<!-- END Header -->
 		<div id="billboard"><h2><a href="http://code.djangoproject.com/">Code</a></h2></div>
 		<div id="columnwrap">
-			
+
 		<div id="content-main">
-  
+
         <?cs def:navlink(text, href, id, aclname, accesskey) ?><?cs
-         if $aclname ?><li><a href="<?cs var:href ?>"<?cs 
+         if $aclname ?><li><a href="<?cs var:href ?>"<?cs
           if $id == $trac.active_module ?> class="active"<?cs
           /if ?><?cs
-          if:$accesskey!="" ?> accesskey="<?cs var:$accesskey ?>"<?cs 
-          /if ?>><?cs var:text ?></a></li><?cs 
+          if:$accesskey!="" ?> accesskey="<?cs var:$accesskey ?>"<?cs
+          /if ?>><?cs var:text ?></a></li><?cs
          /if ?><?cs
         /def ?>
-        
+
+         <form id="search" action="<?cs var:trac.href.search ?>" method="get">
+          <?cs if:trac.acl.SEARCH_VIEW ?><div>
+           <label for="proj-search">Search:</label>
+           <input type="text" id="proj-search" name="q" size="10" value="" />
+           <input type="submit" value="Search" />
+           <input type="hidden" name="wiki" value="on" />
+           <input type="hidden" name="changeset" value="on" />
+           <input type="hidden" name="ticket" value="on" />
+          </div><?cs /if ?>
+         </form>
+
         <?cs if $trac.active_module == "wiki" ?><?cs
           set:$wiki_view="wiki" ?><?cs
          else  ?><?cs
@@ -88,15 +99,16 @@
          if $trac.active_module == "milestone" ?><?cs
           set:$roadmap_view="milestone" ?><?cs
          else ?><?cs
-          set:$roadmap_view="roadmap" ?><?cs 
+          set:$roadmap_view="roadmap" ?><?cs
          /if ?>
-        
         <div id="mainnav" class="nav">
          <ul><?cs
           call:navlink("Start", trac.href.wiki, wiki_view,
                        trac.acl.WIKI_VIEW, "1") ?><?cs
           call:navlink("Timeline", trac.href.timeline, "timeline",
                        trac.acl.TIMELINE_VIEW, "2") ?><?cs
+          call:navlink("Roadmap", trac.href.roadmap, roadmap_view,
+                       trac.acl.ROADMAP_VIEW, "3") ?><?cs
           call:navlink("Browse source", trac.href.browser, browser_view,
                        trac.acl.BROWSER_VIEW, "") ?><?cs
           call:navlink("View tickets", trac.href.report, ticket_view,
@@ -106,4 +118,3 @@
           call:navlink("Search", trac.href.search, "search",
                        trac.acl.SEARCH_VIEW, "4") ?></ul>
         </div>
-
