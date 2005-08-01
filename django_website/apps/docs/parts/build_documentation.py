@@ -9,11 +9,12 @@ with the TOC.
 import os
 import sys
 import glob
+import inspect
 from docutils import nodes, utils
 from docutils.core import publish_parts
 from docutils.writers import html4css1
 from django.conf import settings
-from django.core import template
+from django.core import meta, template
 
 SETTINGS = {
     'initial_header_level': 2
@@ -67,7 +68,7 @@ def build_documents():
         open(toc_file, 'w').write(parts['toc'])
             
 def build_test_documents():
-    sys.path.append(settings.DJANGO_TESTS_PATH)
+    sys.path.insert(0, settings.DJANGO_TESTS_PATH)
     writer = DjangoHTMLWriter()
     import runtests
     
@@ -85,7 +86,7 @@ def build_test_documents():
         parts = publish_parts(
             blurb,
             source_path=mod.__file__,
-            destination=out_file,
+            destination_path=out_file,
             writer=writer,
             settings_overrides=SETTINGS,
         )
