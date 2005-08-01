@@ -1,5 +1,9 @@
 {% extends "base_weblog" %}
 
+{% block extrahead %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/rss/comments/" />
+{% endblock %}
+
 {% block title %}Recent comments{% endblock %}
 
 {% block content %}
