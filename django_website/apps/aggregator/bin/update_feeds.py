@@ -14,7 +14,7 @@ def update_feeds():
     for feed in feeds.get_iterator(is_defunct__exact=False):
         for entry in feedparser.parse(feed.feed_url).entries:
             try:
-                feeditem = feed.get_feeditem(guid__exact=str(entry.id))
+                feeditem = feed.get_feeditem(guid__exact=str(entry.get("id", entry.link)))
             except feeditems.FeedItemDoesNotExist:
                 for i in ("summary", "content", "description"):
                     summary = entry.get(i, "")
