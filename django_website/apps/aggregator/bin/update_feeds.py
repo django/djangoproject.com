@@ -22,7 +22,7 @@ def update_feeds():
                 feeditem = feed.add_feeditem(title=str(entry.title),
                                              link=str(entry.link),
                                              summary=str(summary),
-                                             guid=str(entry.id),
+                                             guid=str(entry.get("id", entry.link)),
                                              date_modified=datetime.datetime.fromtimestamp(time.mktime(entry.modified_parsed)))
             else:
                 feeditem.date_modified = datetime.datetime.fromtimestamp(time.mktime(entry.modified_parsed))
