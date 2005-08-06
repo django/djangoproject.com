@@ -1,0 +1,25 @@
+{% extends "base_community" %}
+
+{% block content %}
+
+<h1>Community</h1>
+<h2 class="deck">Django hasn't even been officially released yet, and there's
+already a great, helpful, excited community of Web developers who've been
+hacking away at it.  This page aggregates their feeds.</h2>
+
+{% for item in object_list %}
+<h2><a href="{{ item.link }}">{{ item.title }}</a></h2>
+<p class='date'>Posted {{ item.date_modified|timesince }} ago by <a href="{{ item.get_feed.public_url }}">{{ item.get_feed.title }}</a> (<a href="{{ item.get_feed.feed_url }}">RSS</a>)</p>
+<div>
+{{ item.summary }}
+</div>
+<p class="small"><a href="{{ item.link }}">Read this post in context &raquo;</a></p>
+{% endfor %}
+
+<div id="content-secondary">
+<p>{% if has_previous %}<a href="?page={{ previous }}">Previous</a> | {% endif %}
+Page {{ page }} of {{ pages }}
+{% if has_next %} | <a href="?page={{ next }}">Next</a>{% endif %}</p>
+</div>
+
+{% endblock %}
