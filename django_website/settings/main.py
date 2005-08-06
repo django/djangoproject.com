@@ -23,6 +23,7 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'django_website.apps.blog',
     'django_website.apps.docs',
+    'django_website.apps.aggregator',
 )
 MEDIA_ROOT = "/home/html/djangoproject.com/m/"
 MEDIA_URL = "http://www.djangoproject.com.com/m/"
