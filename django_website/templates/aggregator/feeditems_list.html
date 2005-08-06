@@ -17,9 +17,7 @@ hacking away at it.  This page aggregates their feeds.</h2>
 {% endfor %}
 
 <div id="content-secondary">
-<p>{% if has_previous %}<a href="?page={{ previous }}">Previous</a> | {% endif %}
-Page {{ page }} of {{ pages }}
-{% if has_next %} | <a href="?page={{ next }}">Next</a>{% endif %}</p>
+{% if has_next %}<a href="?page={{ next }}">Earlier posts</a>{% endif %}</p>
 </div>
 
 {% endblock %}
