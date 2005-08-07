@@ -17,6 +17,7 @@ def update_feeds():
             title = entry.title.encode(parsed_feed.encoding, "xmlcharrefreplace")
             guid = entry.get("id", entry.link).encode(parsed_feed.encoding, "xmlcharrefreplace")
             link = entry.link.encode(parsed_feed.encoding, "xmlcharrefreplace")
+            
             if hasattr(entry, "summary"):
                 content = entry.summary
             elif hasattr(entry, "content"):
@@ -26,7 +27,16 @@ def update_feeds():
             else:
                 content = u""
             content = content.encode(parsed_feed.encoding, "xmlcharrefreplace")
-            date_modified = datetime.datetime.fromtimestamp(time.mktime(entry.modified_parsed))
+            
+            if entry.has_key('modified_parsed'):
+                date_modified = datetime.datetime.fromtimestamp(time.mktime(entry.modified_parsed))
+            elif parsed_feed.feed.has_key('modified_parsed'):
+                date_modified = datetime.datetime.fromtimestamp(time.mktime(parsed_feed.feed.modified_parsed))
+            elif parsed_feed.has_key('modified'):
+                date_modified = datetime.datetime.fromtimestamp(time.mktime(parsed_feed.modified))
+            else:
+                date_modified = datetime.datetime.now()
+            
             try:
                 feeditem = feed.get_feeditem(guid__exact=guid)
             except feeditems.FeedItemDoesNotExist:
