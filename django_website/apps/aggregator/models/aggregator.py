@@ -25,3 +25,6 @@ class FeedItem(meta.Model):
 
     def __repr__(self):
         return self.title
+        
+    def get_absolute_url(self):
+        return self.link
