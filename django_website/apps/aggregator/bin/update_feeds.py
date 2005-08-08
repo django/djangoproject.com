@@ -38,17 +38,10 @@ def update_feeds():
                 date_modified = datetime.datetime.now()
             
             try:
-                feeditem = feed.get_feeditem(guid__exact=guid)
+                feed.get_feeditem(guid__exact=guid)
             except feeditems.FeedItemDoesNotExist:
-                feeditem = feed.add_feeditem(title=title,
-                                             link=link,
-                                             summary=content,
-                                             guid=guid,
-                                             date_modified=date_modified)
-            else:
-                feeditem.date_modified = date_modified
-                feeditem.save()
-
+                feed.add_feeditem(title=title, link=link, summary=content, guid=guid, date_modified=date_modified)
+                
 if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option('--settings')
