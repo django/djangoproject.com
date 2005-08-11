@@ -27,4 +27,13 @@
 <li>Ask questions on the <a href="http://groups-beta.google.com/group/django-users">django-users mailing list</a></li>
 </ul>
 
+<h2>Authors</h2>
+
+<ul>
+{% load aggregator %}
+{% get_feed_list as feed_list %}
+{% for feed in feed_list %}
+<li><a href="{{ feed.public_url }}">{{ feed }}</a> <a class="rss" href="{{ feed.feed_url }}">RSS</a></li>
+{% endfor %}
+</ul>
 {% endblock %}
