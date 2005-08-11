@@ -99,7 +99,7 @@ def build_test_documents():
         model_source = model_source.replace(mod.__doc__, '')
         model_source = model_source.replace(mod.API_TESTS, '')
         model_source = model_source.replace('""""""\n', '\n')
-        model_source = re.sub(r'API_TESTS = .*', '', model_source)
+        model_source = re.sub(r'(?s)API_TESTS = .*', '', model_source)
         model_source = model_source.strip()
 
         models = []
