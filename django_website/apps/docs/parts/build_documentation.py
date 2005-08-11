@@ -72,6 +72,9 @@ def build_test_documents():
     # Manually set INSTALLED_APPS to point to the test app.
     settings.INSTALLED_APPS = (runtests.APP_NAME,)
 
+    # Some of the test models need to know whether the docs are being built.
+    settings.BUILDING_DOCS = True
+
     for model_name in runtests.get_test_models():
         mod = meta.get_app(model_name)
 
