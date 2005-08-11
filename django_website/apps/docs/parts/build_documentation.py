@@ -6,15 +6,12 @@ two files: a ".html" file with the document contents and a "_toc.html" file
 with the TOC.
 """
 
-import os
-import sys
-import glob
-import inspect
+from django.conf import settings
+from django.core import meta, template
 from docutils import nodes, utils
 from docutils.core import publish_parts
 from docutils.writers import html4css1
-from django.conf import settings
-from django.core import meta, template
+import glob, inspect, os, re, sys
 
 SETTINGS = {
     'initial_header_level': 2
@@ -66,12 +63,12 @@ def build_documents():
         )
         open(out_file, 'w').write(parts['html_body'])
         open(toc_file, 'w').write(parts['toc'])
-            
+
 def build_test_documents():
     sys.path.insert(0, settings.DJANGO_TESTS_PATH)
     writer = DjangoHTMLWriter()
     import runtests
-    
+
     # Manually set INSTALLED_APPS to point to the test app.
     settings.INSTALLED_APPS = (runtests.APP_NAME,)
 
@@ -99,7 +96,7 @@ def build_test_documents():
         model_source = model_source.replace(mod.__doc__, '')
         model_source = model_source.replace(mod.API_TESTS, '')
         model_source = model_source.replace('""""""\n', '\n')
-        model_source = model_source.replace('API_TESTS = ', '')
+        model_source = re.sub(r'API_TESTS = .*', '', model_source)
         model_source = model_source.strip()
 
         models = []
@@ -122,7 +119,7 @@ def build_test_documents():
         else:
             fp.write(html)
             fp.close()
-            
+
         try:
             fp = open(toc_file, 'w')
         except IOError:
@@ -130,17 +127,17 @@ def build_test_documents():
             continue
         else:
             fp.write(MODEL_TOC)
-            fp.close()    
+            fp.close()
 
 class DjangoHTMLWriter(html4css1.Writer):
     def __init__(self):
         html4css1.Writer.__init__(self)
         self.translator_class = DjangoHTMLTranslator
-        
+
     def translate(self):
         # build the document
         html4css1.Writer.translate(self)
-        
+
         # build the contents
         contents = self.build_contents(self.document)
         contents_doc = self.document.copy()
@@ -148,7 +145,7 @@ class DjangoHTMLWriter(html4css1.Writer):
         contents_visitor = self.translator_class(contents_doc)
         contents_doc.walkabout(contents_visitor)
         self.parts['toc'] = "<ul class='toc'>%s</ul>" % ''.join(contents_visitor.fragment)
-        
+
     def build_contents(self, node, level=0):
         level += 1
         sections = []
@@ -179,12 +176,12 @@ class DjangoHTMLWriter(html4css1.Writer):
             return contents
         else:
             return []
-        
+
 class DjangoHTMLTranslator(html4css1.HTMLTranslator):
     def visit_table(self, node):
         """Remove the damn border=1 from the standard HTML writer"""
         self.body.append(self.starttag(node, 'table', CLASS='docutils'))
-    
+
     def visit_title(self, node):
         """Coppied from html4css1.Writer wholesale just to get rid of the <a name=> crap.  Fun, eh?"""
         check_id = 0
@@ -228,7 +225,7 @@ class DjangoHTMLTranslator(html4css1.HTMLTranslator):
             else:
                 self.context.append(close_tag)
 
-    
+
 if __name__ == "__main__":
     build_documents()
     build_test_documents()
