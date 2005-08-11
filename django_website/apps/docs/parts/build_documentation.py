@@ -23,10 +23,10 @@ MODEL_DOC_TEMPLATE = """
 <h1 class="title">{{ title }}</h1>
 {{ blurb }}
 
-<h2 id='model-source-code'>Model source code</h2>
+<h2 id="model-source-code">Model source code</h2>
 <pre class="literal-block">{{ model_source }}</pre>
 
-<h2 id='api-reference'>API reference</h2>
+<h2 id="api-reference">API reference</h2>
 
 {% for model in models %}
 <h3>{{ model.name }} objects have the following methods:</h3>
@@ -35,8 +35,11 @@ MODEL_DOC_TEMPLATE = """
 {% endfor %}</ul>
 {% endfor %}
 
-<h2 id='sample-usage'>Sample API usage</h2>
-<pre class="literal-block">{{ api_usage }}</pre>
+<h2 id="sample-usage">Sample API usage</h2>
+<p>This sample code assumes the above model{{ models|pluralize }} {% if models|pluralize %}have{% else %}has{% endif %}
+been saved in a file <tt class="docutils literal"><span class="pre">examplemodel.py</span></tt>.
+<pre class="literal-block">&gt;&gt;&gt; from django.models.examplemodel import {% for model in models %}{{ model.module_name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+{{ api_usage }}</pre>
 </div>
 """
 
@@ -106,6 +109,7 @@ def build_test_documents():
         for m in mod._MODELS:
             models.append({
                 'name': m._meta.object_name,
+                'module_name': m._meta.module_name,
                 'methods': [method for method in dir(m) if not method.startswith('_')],
             })
 
