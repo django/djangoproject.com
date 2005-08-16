@@ -46,8 +46,8 @@ been saved in a file <tt class="docutils literal"><span class="pre">examplemodel
 MODEL_TOC = """
 <ul>
 <li><a href="#model-source-code">Model source code</a></li>
-<li><a href="api-reference">API reference</a></li>
-<li><a href="sample-usage">Sample API usage</a></li>
+<li><a href="#api-reference">API reference</a></li>
+<li><a href="#sample-usage">Sample API usage</a></li>
 </ul>
 """
 
