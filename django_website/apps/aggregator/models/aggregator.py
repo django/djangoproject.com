@@ -1,30 +1,28 @@
 from django.core import meta
 
 class Feed(meta.Model):
-    fields = (
-        meta.CharField('title', maxlength=200),
-        meta.URLField('feed_url', unique=True),
-        meta.URLField('public_url'),
-        meta.BooleanField("is_defunct"),
-    )
-    admin = meta.Admin()
+    title = meta.CharField(maxlength=200)
+    feed_url = meta.URLField(unique=True)
+    public_url = meta.URLField()
+    is_defunct = meta.BooleanField()
+    class META:
+        admin = meta.Admin()
 
     def __repr__(self):
         return self.title
 
 class FeedItem(meta.Model):
-    fields = (
-        meta.ForeignKey(Feed),
-        meta.CharField('title', maxlength=200),
-        meta.URLField('link'),
-        meta.TextField('summary', blank=True),
-        meta.DateTimeField('date_modified'),
-        meta.CharField('guid', maxlength=200, unique=True, db_index=True),
-    )
-    ordering = ("-date_modified",)
+    feed = meta.ForeignKey(Feed)
+    title = meta.CharField(maxlength=200)
+    link = meta.URLField()
+    summary = meta.TextField(blank=True)
+    date_modified = meta.DateTimeField()
+    guid = meta.CharField(maxlength=200, unique=True, db_index=True)
+    class META:
+        ordering = ("-date_modified",)
 
     def __repr__(self):
         return self.title
-        
+
     def get_absolute_url(self):
         return self.link
