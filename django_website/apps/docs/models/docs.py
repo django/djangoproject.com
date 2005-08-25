@@ -1,20 +1,19 @@
 from django.core import meta
 
 class Document(meta.Model):
-    fields = (
-        meta.CharField('title', maxlength=200),
-        meta.CharField('slug', maxlength=50, unique=True, prepopulate_from=('title',)),
-        meta.CharField('doc_path', maxlength=200,
-            help_text="Relative to the docs directory in django SVN; leave off the file extension"),
-        meta.DateTimeField('last_updated', 'last updated', auto_now=True),
-    )
-    ordering = ('title',)
-    admin = meta.Admin(
-        fields = (
-            (None, {'fields': ('title', 'slug', 'doc_path')}),
-        ),
-        list_display = ('title', 'doc_path'),
-    )
+    title = meta.CharField(maxlength=200)
+    slug = meta.CharField(maxlength=50, unique=True, prepopulate_from=('title',))
+    doc_path = meta.CharField(maxlength=200,
+        help_text="Relative to the docs directory in django SVN. Leave off the file extension.")
+    last_updated = meta.DateTimeField(auto_now=True)
+    class META:
+        ordering = ('title',)
+        admin = meta.Admin(
+            fields = (
+                (None, {'fields': ('title', 'slug', 'doc_path')}),
+            ),
+            list_display = ('title', 'doc_path'),
+        )
 
     def __repr__(self):
         return self.title
