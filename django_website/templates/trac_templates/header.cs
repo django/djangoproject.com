@@ -26,8 +26,8 @@
         <?cs /each ?>
 
         <style type="text/css">
-         <?cs if:html.stylesheet ?>@import url(http://media.djangoproject.com/trac/<?cs
-           var:html.stylesheet ?>);<?cs /if ?>
+         <?cs if:html.stylesheet ?>@import url(http://media.djangoproject.com/trac/<?cs var:html.stylesheet ?>);<?cs /if ?>
+         <?cs if:html.stylesheet2 ?>@import url(http://media.djangoproject.com/trac/<?cs var:html.stylesheet2 ?>);<?cs /if ?>
          <?cs include "site_css.cs" ?>
         </style>
         <script src="<?cs var:htdocs_location ?>trac.js" type="text/javascript"></script>

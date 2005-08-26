@@ -5,29 +5,19 @@
 <div id="ctxtnav" class="nav">
  <h2>Report Navigation</h2>
  <ul>
-  <?cs if report.edit_href || report.copy_href || report.delete_href ?>
-  <li><b>This report:</b>
-   <ul>
-    <?cs if report.edit_href
-      ?><li <?cs if !report.delete_href && !report.copy_href ?>class="last"<?cs /if
-        ?>><a href="<?cs var:report.edit_href ?>">Edit</a></li><?cs
-     /if ?><?cs
-     if report.copy_href ?><li <?cs if !report.delete_href ?>class="last"<?cs /if
-        ?>><a href="<?cs var:report.copy_href ?>">Copy</a></li><?cs /if ?><?cs
-    if report.delete_href ?><li class="last"><a href="<?cs var:report.delete_href ?>">Delete</a></li><?cs /if ?></ul></li>
-  <?cs /if ?>
-  <?cs if:report.create_href ?>
-   <li><a href="<?cs var:report.create_href ?>">New Report</a></li>
-  <?cs /if ?>
-  <li class="last"><a href="<?cs var:$trac.href.query ?>">Custom Query</a></li>
+  <li class="first"><?cs
+   if:chrome.links.up.0.href ?><li class="first"><a href="<?cs
+    var:chrome.links.up.0.href ?>">Available Reports</a><?cs
+   else ?>Available Reports<?cs
+  /if ?></li><?cs
+  if:report.query_href ?><li class="last"><a href="<?cs
+   var:report.query_href ?>">Custom Query</a></li><?cs
+  /if ?>
  </ul>
 </div>
 
 <div id="content" class="report">
 
-<?cs if report.message ?>
- <div class="error"><?cs var report.message ?></div>
-<?cs else ?>
  <?cs def:report_hdr(header) ?>
    <?cs if $header ?>
      <?cs if idx > 0 ?>
@@ -36,9 +26,9 @@
    <?cs /if ?>
    <?cs if:header ?><h2><?cs var:header ?></h2><?cs /if ?>
    <?cs if $report.id == -1 ?>
-     <table id="reportlist" class="listing">
+     <table class="listing reports">
    <?cs else ?>
-     <table id="tktlist" class="listing">
+     <table class="listing tickets">
    <?cs /if ?>
     <thead>
      <tr>
@@ -98,9 +88,27 @@
   <h1><?cs var:title ?><?cs
    if:report.numrows && report.id != -1 ?><span class="numrows"> (<?cs
     var:report.numrows ?> matches)</span><?cs
-   /if ?></h1>
-  <?cs if:report.description ?><div id="description"><?cs
+   /if ?></h1><?cs
+   if:report.description ?><div id="description"><?cs
     var:report.description ?></div><?cs
+   /if ?><?cs
+   if:report.id != -1 ?><?cs
+    if:report.can_create || report.can_modify || report.can_delete ?>
+     <div class="buttons"><?cs
+      if:report.can_modify ?><form action="" method="get"><div>
+       <input type="hidden" name="action" value="edit" />
+       <input type="submit" value="Edit report" />
+      </div></form><?cs /if ?><?cs
+      if:report.can_create ?><form action="" method="get"><div>
+       <input type="hidden" name="action" value="copy" />
+       <input type="submit" value="Copy report" />
+      </div></form><?cs /if ?><?cs
+      if:report.can_delete ?><form action="" method="get"><div>
+       <input type="hidden" name="action" value="delete" />
+       <input type="submit" value="Delete report" />
+      </div></form><?cs /if ?>
+     </div><?cs
+    /if ?><?cs
    /if ?>
 
      <?cs each row = report.items ?>
@@ -138,7 +146,7 @@
        <?cs set col = #0 ?>
        <?cs each cell = row ?>
          <?cs if cell.hidden || cell.hidehtml ?>
-         <?cs elif name(cell) == "ticket" ?>
+         <?cs elif name(cell) == "ticket" || name(cell) == "id" ?>
            <?cs call:report_cell('ticket',
                                  '<a title="View ticket" href="'+
                                  $cell.ticket_href+'">#'+$cell+'</a>') ?>
@@ -168,34 +176,37 @@
        </tr>
      <?cs /each ?>
     </tbody>
-   </table>
+   </table><?cs
+   if:report.id == -1 && report.can_create?><div class="buttons">
+    <form action="" method="get"><div>
+     <input type="hidden" name="action" value="new" />
+     <input type="submit" value="Create new report" />
+    </div></form></div><?cs
+   /if ?><?cs
+   if report.message ?>
+    <div class="system-message"><?cs var report.message ?></div><?cs
+   elif:idx == #0 ?>
+    <div id="report-notfound">No matches found.</div><?cs
+   /if ?>
 
-   <?cs if $idx == #0 ?>
-    <div id="report-notfound">No matches found.</div>
-   <?cs /if ?>
-
- <?cs elif report.mode == "delete" ?>
+ <?cs elif:report.mode == "delete" ?>
 
   <h1><?cs var:title ?></h1>
-  <form action="<?cs var:cgi_location ?>" method="post">
-   <input type="hidden" name="mode" value="report" />
+  <form action="<?cs var:report.href ?>" method="post">
    <input type="hidden" name="id" value="<?cs var:report.id ?>" />
-   <input type="hidden" name="action" value="confirm_delete" />
+   <input type="hidden" name="action" value="delete" />
    <p><strong>Are you sure you want to delete this report?</strong></p>
    <div class="buttons">
     <input type="submit" name="cancel" value="Cancel" />
-    <input type="submit" value="Delete Report" />
+    <input type="submit" value="Delete report" />
    </div>
   </form>
  
- <?cs elif report.mode == "editor" ?>
+ <?cs elif:report.mode == "edit" ?>
  
    <h1><?cs var:title ?></h1>
-   
-   <form action="<?cs var:cgi_location ?>" method="post">
+   <form action="<?cs var:report.href ?>" method="post">
     <div>
-     <input type="hidden" name="mode" value="report" />
-     <input type="hidden" name="id" value="<?cs var:report.id ?>" />
      <input type="hidden" name="action" value="<?cs var:report.action ?>" />
      <div class="field">
       <label for="title">Report Title:</label><br />
@@ -207,9 +218,8 @@
        Description:</label> (You may use <a tabindex="42" href="<?cs
          var:$trac.href.wiki ?>/WikiFormatting">WikiFormatting</a> here)
       </label><br />
-      <textarea id="description" name="description" cols="85" rows="5"><?cs
+      <textarea id="description" name="description" class="wikitext" rows="10" cols="78"><?cs
         var:report.description ?></textarea>
-      <?cs call:wiki_toolbar('description') ?>
      </div>
      <div class="field">
       <label for="sql">
@@ -218,10 +228,12 @@
         var:report.sql ?></textarea>
      </div>
      <div class="buttons">
-      <input type="submit" value="Save" />
+      <input type="submit" value="Save report" />
       <input type="submit" name="cancel" value="Cancel" />
      </div>
     </div>
+    <script type="text/javascript" src="<?cs
+      var:htdocs_location ?>js/wikitoolbar.js"></script>
    </form>
  <?cs /if?>
  
@@ -231,7 +243,5 @@
   creating reports.
  </div>
  
-<?cs /if ?><?cs #report.message ?>
-
 </div>
 <?cs include "footer.cs" ?>
