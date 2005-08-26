@@ -1,7 +1,7 @@
 from django.core import meta
 
 class Entry(meta.Model):
-    pub_date = meta.DateTimeField(),
+    pub_date = meta.DateTimeField()
     slug = meta.SlugField(unique_for_date='pub_date')
     headline = meta.CharField(maxlength=200)
     summary = meta.TextField(help_text="Use raw HTML.")
