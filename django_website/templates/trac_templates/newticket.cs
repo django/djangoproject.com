@@ -2,14 +2,24 @@
 <?cs include "header.cs" ?>
 <?cs include "macros.cs" ?>
 <script type="text/javascript">
-addEvent(window, 'load', function() { document.getElementById('summary').focus()}); 
+addEvent(window, 'load', function() { document.getElementById('summary').focus()});
 </script>
 
 <div id="ctxtnav" class="nav"></div>
 
 <div id="content" class="ticket">
 
-<h1>Create New Ticket</h1>
+<h1>Create a new ticket</h1>
+
+<h2>Read this first</h2>
+
+<ul>
+<li>Please check the the <a href="http://www.djangoproject.com/documentation/faq/">FAQ</a> first if you suspect your issue might be a frequently-asked question.</li>
+<li>Please don't use the ticket system to ask support questions. Use the <a href="http://groups.google.com/group/django-users">django-users mailing list</a> for that, or our IRC channel. (See the "Get help" section of the <a href="http://www.djangoproject.com/community/">community page</a> for more information.)</li>
+</ul>
+
+<h2>Submit the bug or feature request</h2>
+
 <form id="newticket" method="post" action="<?cs
   var:trac.href.newticket ?>#preview">
  <div class="field">
@@ -88,7 +98,7 @@ addEvent(window, 'load', function() { document.getElementById('summary').focus()
          var:option ?></label> <?cs set:optidx = optidx + 1 ?><?cs
        /each ?><?cs
       /if ?></td><?cs
-     if:idx % 2 || fullrow ?></tr><tr><?cs 
+     if:idx % 2 || fullrow ?></tr><tr><?cs
      elif:idx == num_fields - 1 ?><th class="col2"></th><td></td><?cs
      /if ?><?cs set:idx = idx + #fullrow + 1 ?><?cs
     /if ?><?cs
