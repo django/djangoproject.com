@@ -23,14 +23,15 @@ addEvent(window, 'load', function() { document.getElementById('summary').focus()
 <form id="newticket" method="post" action="<?cs
   var:trac.href.newticket ?>#preview">
  <div class="field">
-  <label for="reporter">Your email or username:</label><br />
+  <label for="reporter">Your email or username:</label>
   <input type="text" id="reporter" name="reporter" size="40" value="<?cs
     var:newticket.reporter ?>" /><br />
  </div>
  <div class="field">
-  <label for="summary">Short summary:</label><br />
+  <label for="summary">Short summary:</label>
   <input id="summary" type="text" name="summary" size="80" value="<?cs
     var:newticket.summary ?>"/>
+ <br />(Use a complete, descriptive sentence. Example: "Development server doesn't work on Commodore 64.")
  </div><?cs
  if:len(newticket.fields.type.options) ?>
   <div class="field"><label for="type">Type:</label> <?cs
