@@ -103,7 +103,7 @@
          /if ?>
         <div id="mainnav" class="nav">
          <ul><?cs
-          call:navlink("Start", trac.href.wiki, wiki_view,
+          call:navlink("Wiki", trac.href.wiki, wiki_view,
                        trac.acl.WIKI_VIEW, "1") ?><?cs
           call:navlink("Timeline", trac.href.timeline, "timeline",
                        trac.acl.TIMELINE_VIEW, "2") ?><?cs
