@@ -9,11 +9,11 @@
 <h1>Community</h1>
 <h2 class="deck">Django hasn't even been officially released yet, and there's
 already a great, helpful, excited community of Web developers who've been
-hacking away at it.  This page aggregates their feeds.</h2>
+using and discussing it. This page, updated every 15 minutes, aggregates their feeds.</h2>
 
 {% for item in object_list %}
 <h2><a href="{{ item.link }}">{{ item.title }}</a></h2>
-<p class='date'>Posted {{ item.date_modified|timesince }} ago by <a href="{{ item.get_feed.public_url }}">{{ item.get_feed.title }}</a> (<a href="{{ item.get_feed.feed_url }}">RSS</a>)</p>
+<p class='date'>Posted on {{ item.date_modified|date:"F j, Y" }} at {{ item.date_modified|date:"g:i A" }} by <a href="{{ item.get_feed.public_url }}">{{ item.get_feed.title }}</a> <a class="rss" href="{{ item.get_feed.feed_url }}">RSS</a></p>
 <div>
 {{ item.summary }}
 </div>
