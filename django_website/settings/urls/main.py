@@ -20,5 +20,5 @@ urlpatterns = patterns('',
     (r'^comments/', include('django.contrib.comments.urls.comments')),
     (r'^community/$', 'django.views.generic.list_detail.object_list', aggregator_info_dict),
     (r'^rss/', include('django.conf.urls.rss')),
-    (r'', include('django.conf.urls.flatfiles')),
+    (r'', include('django.contrib.flatpages.urls')),
 )
