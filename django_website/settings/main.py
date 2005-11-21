@@ -41,6 +41,8 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'djangoproject'
 CACHE_MIDDLEWARE_GZIP = True
 
 MIDDLEWARE_CLASSES = (
-    "django.middleware.common.CommonMiddleware",
-#    "django.middleware.cache.CacheMiddleware",
+    'django.middleware.sessions.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 )
