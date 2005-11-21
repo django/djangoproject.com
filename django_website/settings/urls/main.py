@@ -1,4 +1,7 @@
 from django.conf.urls.defaults import *
+from django.contrib.comments.feeds import LatestFreeCommentsFeed
+from django_website.apps.aggregator.feeds import CommunityAggregatorFeed
+from django_website.apps.blog.feeds import WeblogEntryFeed
 
 comments_info_dict = {
     'app_label': 'comments',
@@ -13,12 +16,18 @@ aggregator_info_dict = {
     'extra_lookup_kwargs': {'select_related' : True},
 }
 
+feeds = {
+    'weblog' : WeblogEntryFeed,
+    'comments' : LatestFreeCommentsFeed,
+    'community' : CommunityAggregatorFeed,
+}
+
 urlpatterns = patterns('',
     (r'^weblog/', include('django_website.apps.blog.urls.blog')),
     (r'^documentation/', include('django_website.apps.docs.urls.docs')),
     (r'^comments/$', 'django.views.generic.list_detail.object_list', comments_info_dict),
     (r'^comments/', include('django.contrib.comments.urls.comments')),
     (r'^community/$', 'django.views.generic.list_detail.object_list', aggregator_info_dict),
-    (r'^rss/', include('django.conf.urls.rss')),
+    (r'^rss/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     (r'', include('django.contrib.flatpages.urls')),
 )
