@@ -15,7 +15,7 @@
 		<meta name="keywords" content="Python, Django, framework, open-source" />
 		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
 
-		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="http://media.djangoproject.com/css/{% block cssid %}base{% endblock %}.css" rel="stylesheet" type="text/css" media="screen" />
 		<link href="http://media.djangoproject.com/css/print.css" rel="stylesheet" type="text/css" media="print" />
       {% block extrahead %}{% endblock %}
 	</head>
@@ -46,7 +46,7 @@
 		</div>
 		<!-- END #content -->
 		<div id="footer">
-			<p>This site's design and contents Copyright &copy; 2005 Lawrence Journal-World unless otherwise noted.</p>
+			<p>&copy; 2005 <a href="http://www.ljworld.com/">Lawrence Journal-World</a> unless otherwise noted. Django is a registered trademark of Lawrence Journal-World.</p>
 		</div>
 	</div>
 	<!-- END #container -->

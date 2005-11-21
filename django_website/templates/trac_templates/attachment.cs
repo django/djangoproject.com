@@ -2,7 +2,7 @@
 <?cs include "header.cs" ?>
 <?cs include "macros.cs" ?>
 
-<div id="ctxtnav" class="nav"></div>
+<div id="ctxtnav" class="nav"><ul><li class="last"><a href="?format=txt">View as plain text</a></li></ul></div>
 
 <div id="content" class="attachment">
 
