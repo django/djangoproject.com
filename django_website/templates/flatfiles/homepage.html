@@ -7,7 +7,8 @@
 {% block content %}
 <h1>Meet Django</h1>
 <h2 class="deck">Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design.</h2>
-<p>Developed and used over the past two years by a newspaper Web operation, Django is well-suited for developing content-management systems. It was designed from scratch to handle the intensive deadlines of a newsroom and the stringent requirements of experienced Web developers. It focuses on automating as much as possible and adhering to the <a href="http://c2.com/cgi/wiki?DontRepeatYourself"><abbr title="Don't Repeat Yourself">DRY</abbr> principle</a>.</p>
+<p>Developed and used over the past two years by a fast-moving online-news operation, Django was designed from scratch to handle two challenges: the intensive deadlines of a newsroom and the stringent requirements of experienced Web developers. It has convenient niceties for developing content-management systems, but it's an excellent tool for building any Web site.</p>
+<p>Django focuses on automating as much as possible and adhering to the <a href="http://c2.com/cgi/wiki?DontRepeatYourself"><abbr title="Don't Repeat Yourself">DRY</abbr> principle</a>.</p>
 <p>Dive in by <a href="/documentation/overview/">reading the overview &rarr;</a></p>
 <p>When you're ready to code, read the <a href="/documentation/install/">installation guide</a> and <a href="/documentation/tutorial1/">tutorial</a>.</p>
 <div id="content-secondary">
@@ -19,7 +20,7 @@
 	<h3>Template system</h3>
 	<p>Use Django's powerful and extensible <a href="http://www.djangoproject.com/documentation/templates/">template language</a> to separate design, content and Python code.</p>
 	<h3>Cache system</h3>
-	<p>Hook into memcached or other cache frameworks for <a href="http://www.djangoproject.com/documentation/cache/">super caching</a> &mdash; as granularly as you need.</p>
+	<p>Hook into memcached or other cache frameworks for <a href="http://www.djangoproject.com/documentation/cache/">super caching</a> &mdash; it's as granular as you need.</p>
 	<h3>Automatic admin interface</h3>
 	<p>Save yourself the tedious work of creating interfaces for people to add and update content. <a href="http://www.djangoproject.com/documentation/admin_css/">Django does that automatically</a>.</p>
 </div>
@@ -30,13 +31,13 @@
 
 <h2>Download</h2>
 <ul class="linklist">
-    <li><a href="/download/">Get current development version</a></li>
+    <li><a href="/download/">Get current version: 0.90</a></li>
 </ul>
 <h2>Documentation</h2>
 <ul class="linklist">
+	<li><a href="/documentation/install/">Installation guide</a></li>
 	<li><a href="/documentation/tutorial1/">Tutorial</a></li>
-	<li><a href="/documentation/templates/">Template language guide</a></li>
-	<li><a href="/documentation/#reference">API reference</a></li>
+	<li><a href="/documentation/">More...</a></li>
 </ul>
 <h2>Sites that use Django</h2>
 <dl>
@@ -60,14 +61,14 @@
 
 {% load comments %}
 {% load latestblogentry %}
-{% get_latest_blog_entries 3 as latest_entries %}
+{% get_latest_blog_entries 4 as latest_entries %}
 
 {% for latest_entry in latest_entries %}
     {% get_free_comment_count for blog.entries latest_entry.id as comment_count %}
     <h3><a href="{{ latest_entry.get_absolute_url }}">{{ latest_entry.headline }}</a></h3>
-    <p class="date">by <strong>{{ latest_entry.author }}</strong> on {{ latest_entry.pub_date|date:"F j, Y" }}</p>
+    <p class="date">by <strong>{{ latest_entry.author }}</strong> on {{ latest_entry.pub_date|date:"M. j, Y" }}</p>
     {{ latest_entry.summary }}
-    <p class="more"><a href="{{ latest_entry.get_absolute_url }}">Read more</a> / <a href="{{ latest_entry.get_absolute_url }}#comments">{{ comment_count }} comment{{ comment_count|pluralize }}</a></p>
+    <p class="more"><a href="{{ latest_entry.get_absolute_url }}">Read more</a>{% if comment_count %} / <a href="{{ latest_entry.get_absolute_url }}#comments">{{ comment_count }} comment{{ comment_count|pluralize }}</a>{% endif %}</p>
 {% endfor %}
 
 {% comment %}
