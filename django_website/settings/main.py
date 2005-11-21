@@ -1,3 +1,5 @@
+from worldonline.settings.default import *
+
 ADMINS = (('Adrian Holovaty','aholovaty@ljworld.com'), ('Jacob Kaplan-Moss', 'jacob@lawrence.com'))
 TIME_ZONE = 'America/Chicago'
 
@@ -20,7 +22,7 @@ TEMPLATE_DIRS = (
 )
 ROOT_URLCONF = 'django_website.settings.urls.main'
 INSTALLED_APPS = (
-    'django.contrib.comments',
+    'django.contrib.*',
     'django_website.apps.blog',
     'django_website.apps.docs',
     'django_website.apps.aggregator',
@@ -32,11 +34,13 @@ MEDIA_URL = "http://www.djangoproject.com.com/m/"
 DJANGO_DOCUMENT_ROOT_PATH = "/home/html/djangoproject.com/docs/"
 DJANGO_TESTS_PATH = "/home/html/djangoproject.com/tests/"
 
+CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+
 CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 1 # 1 hour
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangoproject'
 CACHE_MIDDLEWARE_GZIP = True
 
 MIDDLEWARE_CLASSES = (
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.cache.CacheMiddleware",
+#    "django.middleware.cache.CacheMiddleware",
 )

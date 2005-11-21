@@ -14,3 +14,4 @@ MIDDLEWARE_CLASSES = (
 ADMIN_FOR = (
     'django_website.settings.main',
 )
+ADMIN_MEDIA_PREFIX = '/m/'
