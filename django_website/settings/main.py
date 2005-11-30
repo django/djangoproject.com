@@ -13,7 +13,7 @@ DATABASE_ENGINE = 'postgresql'
 DATABASE_NAME = 'djangoproject'
 DATABASE_USER = 'apache'
 DATABASE_PASSWORD = ''
-DATABASE_HOST = '' # set to empty string for localhost
+DATABASE_HOST = '10.0.0.80' # set to empty string for localhost
 
 SITE_ID = 1
 TEMPLATE_DIRS = (
