@@ -212,7 +212,7 @@ class DjangoHTMLTranslator(html4css1.HTMLTranslator):
             close_tag = '</caption>\n'
         elif isinstance(node.parent, nodes.document):
             self.body.append(self.starttag(node, 'h1', '', CLASS='title'))
-            self.context.append('</h1>\n')
+            self.context.append('</h1>\n<h2 class="deck">This covers the Django development version. Old version: <a href="/documentation/0_90/">0.90 docs</a></h2>\n')
             self.in_document_title = len(self.body)
         else:
             assert isinstance(node.parent, nodes.section)
