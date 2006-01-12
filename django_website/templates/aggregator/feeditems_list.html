@@ -7,9 +7,8 @@
 {% block content %}
 
 <h1>Community</h1>
-<h2 class="deck">Django hasn't even been officially released yet, and there's
-already a great, helpful, excited community of Web developers who've been
-using and discussing it. This page, updated every 15 minutes, aggregates their feeds.</h2>
+<h2 class="deck">This page, updated every 15 minutes, aggregates blog entries by people who are
+writing about Django.</h2>
 
 {% for item in object_list %}
 <h2><a href="{{ item.link }}">{{ item.title }}</a></h2>
