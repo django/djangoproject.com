@@ -1,4 +1,5 @@
 <?cs set:html.stylesheet = 'css/wiki.css' ?>
+<?cs set:html.stylesheet2 = 'css/diff.css' ?>
 <?cs include "header.cs" ?>
 <?cs include "macros.cs" ?>
 
