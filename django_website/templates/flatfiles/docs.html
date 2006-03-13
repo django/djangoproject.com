@@ -8,6 +8,12 @@
 
 {% block content-related %}
 
+<h2>Search docs via Google</h2>
+<form action="http://www.google.com/search" method="get">
+<p><input type="text" name="as_q" /> <input type="submit" value="Go" /></p>
+<input type="hidden" name="as_sitesearch" value="www.djangoproject.com" />
+</form>
+
 <h2>Getting help</h2>
 <ul class="toc">
     <li><a href="irc://irc.freenode.net/django">#django IRC channel</a></li>
