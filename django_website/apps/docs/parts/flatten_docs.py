@@ -10,8 +10,8 @@ from django.models.docs import documents
 
 for doc in documents.get_list():
     f = flatpages.FlatPage(
-        url='/documentation/0_90/%s/' % doc.slug,
-        title='Documentation (version 0.90) | %s' % doc.title,
+        url='/documentation/0_91/%s/' % doc.slug,
+        title='Documentation (version 0.91) | %s' % doc.title,
         content='%s</div><div id="content-related" class="sidebar"><h2>Contents</h2>%s' % (doc.get_content(), doc.get_toc()),
         enable_comments=False,
         template_name='flatfiles/legacy_docs',
