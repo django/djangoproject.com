@@ -1,8 +1,8 @@
 from django.conf.urls.defaults import *
+from models import Entry # relative import
 
 info_dict = {
-    'app_label': 'blog',
-    'module_name': 'entries',
+    'queryset': Entry.objects.all(),
     'date_field': 'pub_date',
 }
 

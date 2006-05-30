@@ -1,6 +1,6 @@
-from worldonline.settings.default import *
+# from worldonline.settings.default import *
 
-ADMINS = (('Adrian Holovaty','aholovaty@ljworld.com'), ('Jacob Kaplan-Moss', 'jacob@lawrence.com'))
+ADMINS = (('Adrian Holovaty','holovaty@gmail.com'), ('Jacob Kaplan-Moss', 'jacob@lawrence.com'))
 TIME_ZONE = 'America/Chicago'
 
 SERVER_EMAIL = 'root@pam.servers.ljworld.com'
@@ -22,7 +22,13 @@ TEMPLATE_DIRS = (
 )
 ROOT_URLCONF = 'django_website.settings.urls.main'
 INSTALLED_APPS = (
-    'django.contrib.*',
+    'django.contrib.sites',
+    'django.contrib.auth',
+    'django.contrib.comments',
+    'django.contrib.contenttypes',
+    'django.contrib.flatpages',
+    'django.contrib.redirects',
+    'django.contrib.sessions',
     'django_website.apps.blog',
     'django_website.apps.docs',
     'django_website.apps.aggregator',
@@ -41,8 +47,12 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'djangoproject'
 CACHE_MIDDLEWARE_GZIP = True
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.sessions.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+)
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.load_template_source',
 )

@@ -1,10 +1,10 @@
-{% extends "base_weblog" %}
+{% extends "base_weblog.html" %}
 
-{% block title %}Weblog | {{ month|date:"F" }}{% endblock %}
+{% block title %}Weblog | {{ day|date:"F j" }}{% endblock %}
 
 {% block content %}
 
-<h1>{{ month|date:"F" }} archive</h1>
+<h1>{{ day|date:"F j" }} archive</h1>
 
 {% for object in object_list %}
 <h2><a href="{{ object.get_absolute_url }}">{{ object.headline }}</a></h2>
