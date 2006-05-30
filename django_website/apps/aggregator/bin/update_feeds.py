@@ -1,5 +1,5 @@
 """
-Update feeds for Django community page.  Requires Mark Pilgrim's excellent 
+Update feeds for Django community page.  Requires Mark Pilgrim's excellent
 Universal Feed Parser (http://feedparser.org)
 """
 
@@ -10,14 +10,14 @@ import datetime
 import feedparser
 
 def update_feeds():
-    from django.models.aggregator import feeds, feeditems
-    for feed in feeds.get_iterator(is_defunct__exact=False):
+    from django_website.apps.aggregator.models import Feed, FeedItem
+    for feed in Feed.objects.filter(is_defunct=False):
         parsed_feed = feedparser.parse(feed.feed_url)
         for entry in parsed_feed.entries:
             title = entry.title.encode(parsed_feed.encoding, "xmlcharrefreplace")
             guid = entry.get("id", entry.link).encode(parsed_feed.encoding, "xmlcharrefreplace")
             link = entry.link.encode(parsed_feed.encoding, "xmlcharrefreplace")
-            
+
             if hasattr(entry, "summary"):
                 content = entry.summary
             elif hasattr(entry, "content"):
@@ -27,7 +27,7 @@ def update_feeds():
             else:
                 content = u""
             content = content.encode(parsed_feed.encoding, "xmlcharrefreplace")
-            
+
             if entry.has_key('modified_parsed'):
                 date_modified = datetime.datetime.fromtimestamp(time.mktime(entry.modified_parsed))
             elif parsed_feed.feed.has_key('modified_parsed'):
@@ -36,12 +36,12 @@ def update_feeds():
                 date_modified = datetime.datetime.fromtimestamp(time.mktime(parsed_feed.modified))
             else:
                 date_modified = datetime.datetime.now()
-            
+
             try:
-                feed.get_feeditem(guid__exact=guid)
-            except feeditems.FeedItemDoesNotExist:
-                feed.add_feeditem(title=title, link=link, summary=content, guid=guid, date_modified=date_modified)
-                
+                feed.feeditem_set.filter(guid=guid)
+            except FeedItem.DoesNotExist:
+                feed.feeditem_set.create(title=title, link=link, summary=content, guid=guid, date_modified=date_modified)
+
 if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option('--settings')

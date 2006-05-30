@@ -1,4 +1,4 @@
-{% extends "base_2col" %}
+{% extends "base_2col.html" %}
 
 {% block sectionid %}community{% endblock %}
 
@@ -11,15 +11,29 @@
 <h2>Get involved</h2>
 
 <ul>
-<li><a href="http://groups-beta.google.com/group/django-users">django-users mailing list</a> -- the main place to go for help</li>
 <li><a href="irc://irc.freenode.net/django">#django IRC channel</a> -- chat with other Django users</li>
 <li><a href="http://code.djangoproject.com/newticket">Ticket system</a> -- report bugs and make feature requests</li>
 </ul>
+
+<h2>Mailing lists</h2>
+
+<p><strong><a href="http://groups.google.com/group/django-users">django-users</a></strong>: The main list for help and announcements.</p>
+
+<form action="http://groups.google.com/group/django-users/boxsubscribe">
+<p>Subscribe: <input type="text" name="email" size="15" /> <input type="submit" value="Go" /></p>
+</form>
+
+<p><strong><a href="http://groups.google.com/group/django-developers">django-developers</a></strong>: Where the developers of Django itself discuss new features.</p>
+
+<form action="http://groups.google.com/group/django-developers/boxsubscribe">
+<p>Subscribe: <input type="text" name="email" size="15" /> <input type="submit" value="Go" /></p>
+</form>
 
 <h2>Tell the world</h2>
 <ul>
 <li><a href="http://code.djangoproject.com/wiki/DjangoPoweredSites">Django-powered sites</a> -- add your site to the list</li>
 <li><a href="/community/badges/">Django badges</a> -- show your support (or wish longingly)</li>
+<li><a href="/community/logos/">Django logos</a> -- download official logos</li>
 <li>Write about Django, and <a href="mailto:jacob@jacobian.org">let us know</a>, and we'll add your feed to this page.</li>
 </ul>
 

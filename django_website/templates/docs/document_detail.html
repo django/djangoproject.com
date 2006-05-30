@@ -1,4 +1,4 @@
-{% extends "base_docs" %}
+{% extends "base_docs.html" %}
 
 {% block title %}Documentation | {{ object.title }}{% endblock %}
 
@@ -6,7 +6,7 @@
 {{ object.get_content }}
 
 {% load comments %}
-{% get_free_comment_list for docs.documents object.id as comment_list %}
+{% get_free_comment_list for docs.document object.id as comment_list %}
 
 <div id="content-secondary">
 <h2 id="comments">Comments</h2>
@@ -27,7 +27,7 @@ channel, or post to the <a href="http://groups-beta.google.com/group/django-user
 django-users list</a>. Comments will be periodically reviewed, integrated into
 the documentation proper, and removed.</p>
 
-{% free_comment_form for docs.documents object.id %}
+{% free_comment_form for docs.document object.id %}
 </div>
 {% endblock %}
 

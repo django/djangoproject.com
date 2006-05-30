@@ -1,4 +1,4 @@
-{% extends "base_download" %}
+{% extends "base_download.html" %}
 
 {% block content %}
 <h1>{{ flatpage.title }}</h1>
@@ -14,10 +14,10 @@
 </ul>
 
 <h2>Which version is better?</h2>
-<p>We (<a href="http://code.djangoproject.com/wiki/WorldOnline">World Online</a>, Django developers) improve Django every day and are pretty good about not checking in broken code. We use the development code directly on our servers, so we consider it stable. With that in mind, we <strong>recommend that you use the latest development code</strong>, because it generally contains more features and fewer bugs than the "official" releases.</p>
+<p>We (<a href="http://code.djangoproject.com/wiki/WorldOnline">World Online</a>, Django developers) improve Django every day and are pretty good about not checking in broken code. With that in mind, we <strong>recommend that you use the latest development code</strong>, because it generally contains more features and fewer bugs than the "official" releases.</p>
 
 <h2>Previous releases</h2>
 <ul>
-  <li>Django 0.90: <a href="http://www.djangoproject.com/download/0.90/egg/">tarball</a> | <a href="http://www.djangoproject.com/download/0.90/tarball/">egg</a>
+  <li>Django 0.90: <a href="http://www.djangoproject.com/download/0.90/tarball/">tarball</a> | <a href="http://www.djangoproject.com/download/0.90/egg/">egg</a>
 </ul>
 {% endblock %}
