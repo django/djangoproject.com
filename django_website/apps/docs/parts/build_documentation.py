@@ -8,7 +8,7 @@ with the TOC.
 
 from django.conf import settings
 from django import template
-from django.db import models
+from django.db.models import get_app, get_models
 from docutils import nodes, utils
 from docutils.core import publish_parts
 from docutils.writers import html4css1
@@ -73,20 +73,28 @@ def build_test_documents():
     writer = DjangoHTMLWriter()
     import runtests
 
-    # Manually set INSTALLED_APPS to point to the test app.
-    settings.INSTALLED_APPS = (runtests.APP_NAME,)
+    # An empty access of the settings to force the default options to be
+    # installed prior to assigning to them.
+    settings.INSTALLED_APPS
+
+    # Manually set INSTALLED_APPS to point to the test models.
+    settings.INSTALLED_APPS = runtests.ALWAYS_INSTALLED_APPS + [runtests.MODEL_TESTS_DIR_NAME + '.' + a for a in runtests.get_test_models()]
 
     # Some of the test models need to know whether the docs are being built.
     settings.BUILDING_DOCS = True
 
     for model_name in runtests.get_test_models():
-        mod = models.get_app(model_name)
+        mod = get_app(model_name)
 
         out_file = os.path.join(settings.DJANGO_DOCUMENT_ROOT_PATH, 'model_' + model_name + '.html')
         toc_file = os.path.join(settings.DJANGO_DOCUMENT_ROOT_PATH, 'model_' + model_name + '_toc.html')
 
         # Clean up the title and blurb.
-        title, blurb = mod.__doc__.strip().split('\n', 1)
+        try:
+            title, blurb = mod.__doc__.strip().split('\n', 1)
+        except ValueError:
+            sys.stderr.write("title and blurb not found in %s model test.\n" % model_name)
+            continue
         parts = publish_parts(
             blurb,
             source_path=mod.__file__,
@@ -95,7 +103,10 @@ def build_test_documents():
             settings_overrides=SETTINGS,
         )
         blurb = parts["html_body"]
-        api_usage = mod.API_TESTS
+        try:
+            api_usage = mod.API_TESTS
+        except AttributeError:
+            continue # This model didn't have API_TESTS.
 
         # Get the source code of the model, without the docstring or the
         # API_TESTS variable.
@@ -107,7 +118,7 @@ def build_test_documents():
         model_source = model_source.strip()
 
         models = []
-        for m in mod._MODELS:
+        for m in get_models(mod):
             models.append({
                 'name': m._meta.object_name,
                 'module_name': m._meta.module_name,
@@ -122,7 +133,7 @@ def build_test_documents():
         try:
             fp = open(out_file, 'w')
         except IOError:
-            sys.stderr.write("Couldn't write to %s.\n" % file_name)
+            sys.stderr.write("Couldn't write to %s.\n" % out_file)
             continue
         else:
             fp.write(html)
@@ -131,7 +142,7 @@ def build_test_documents():
         try:
             fp = open(toc_file, 'w')
         except IOError:
-            sys.stderr.write("Couldn't write to %s.\n" % file_name)
+            sys.stderr.write("Couldn't write to %s.\n" % toc_file)
             continue
         else:
             fp.write(MODEL_TOC)
