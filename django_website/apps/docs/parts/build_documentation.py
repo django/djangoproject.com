@@ -29,8 +29,8 @@ MODEL_DOC_TEMPLATE = """
 
 <h2 id="sample-usage">Sample API usage</h2>
 <p>This sample code assumes the above model{{ models|pluralize }} {% if models|pluralize %}have{% else %}has{% endif %}
-been saved in a file <tt class="docutils literal"><span class="pre">examplemodel.py</span></tt>.
-<pre class="literal-block">&gt;&gt;&gt; from django.models.examplemodel import {% for model in models %}{{ model.module_name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+been saved in a file <tt class="docutils literal"><span class="pre">mysite/models.py</span></tt>.
+<pre class="literal-block">&gt;&gt;&gt; from mysite.models import {% for model in models %}{{ model.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
 {{ api_usage }}</pre>
 </div>
 """
