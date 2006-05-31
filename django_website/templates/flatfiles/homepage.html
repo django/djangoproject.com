@@ -74,7 +74,7 @@
 {% get_latest_blog_entries 4 as latest_entries %}
 
 {% for latest_entry in latest_entries %}
-    {% get_free_comment_count for blog.entries latest_entry.id as comment_count %}
+    {% get_free_comment_count for blog.entry latest_entry.id as comment_count %}
     <h3><a href="{{ latest_entry.get_absolute_url }}">{{ latest_entry.headline }}</a></h3>
     <p class="date">by <strong>{{ latest_entry.author }}</strong> on {{ latest_entry.pub_date|date:"M. j, Y" }}</p>
     {{ latest_entry.summary }}
