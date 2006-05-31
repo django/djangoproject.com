@@ -27,15 +27,6 @@ MODEL_DOC_TEMPLATE = """
 <h2 id="model-source-code">Model source code</h2>
 <pre class="literal-block">{{ model_source }}</pre>
 
-<h2 id="api-reference">API reference</h2>
-
-{% for model in models %}
-<h3>{{ model.name }} objects have the following methods:</h3>
-<ul>
-{% for method in model.methods %}<li><tt class="docutils literal"><span class="pre">{{ method }}()</span></tt></li>
-{% endfor %}</ul>
-{% endfor %}
-
 <h2 id="sample-usage">Sample API usage</h2>
 <p>This sample code assumes the above model{{ models|pluralize }} {% if models|pluralize %}have{% else %}has{% endif %}
 been saved in a file <tt class="docutils literal"><span class="pre">examplemodel.py</span></tt>.
@@ -122,7 +113,6 @@ def build_test_documents():
             models.append({
                 'name': m._meta.object_name,
                 'module_name': m._meta.module_name,
-                'methods': [method for method in dir(m) if not method.startswith('_')],
             })
 
         # Run this through the template system.
