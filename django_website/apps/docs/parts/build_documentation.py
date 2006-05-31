@@ -7,7 +7,8 @@ with the TOC.
 """
 
 from django.conf import settings
-from django.core import meta, template
+from django import template
+from django.db import models
 from docutils import nodes, utils
 from docutils.core import publish_parts
 from docutils.writers import html4css1
@@ -79,7 +80,7 @@ def build_test_documents():
     settings.BUILDING_DOCS = True
 
     for model_name in runtests.get_test_models():
-        mod = meta.get_app(model_name)
+        mod = models.get_app(model_name)
 
         out_file = os.path.join(settings.DJANGO_DOCUMENT_ROOT_PATH, 'model_' + model_name + '.html')
         toc_file = os.path.join(settings.DJANGO_DOCUMENT_ROOT_PATH, 'model_' + model_name + '_toc.html')
