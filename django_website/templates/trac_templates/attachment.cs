@@ -30,6 +30,7 @@
    </div>
    <br />
   </fieldset>
+  <p><strong>Please help us keep track of patches:</strong> If your attachment is a patch that fixes this ticket, please change the ticket's 'Summary' to begin with the exact text "[patch]". That will add the ticket to the <a href="http://code.djangoproject.com/report/12">Tickets with patches report</a>, which will speed up the acceptance of your contribution.</p>
   <div class="buttons">
    <input type="hidden" name="action" value="new" />
    <input type="hidden" name="type" value="<?cs var:attachment.parent.type ?>" />
