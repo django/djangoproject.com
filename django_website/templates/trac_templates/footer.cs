@@ -32,11 +32,8 @@
             logged in as <?cs var:trac.authname ?> </li>
             <li><a href="<?cs var:trac.href.logout ?>">Logout</a>
           <?cs /if ?></li>
-          <li><a href="<?cs var:trac.href.settings ?>">Settings</a></li>
-          <li style="display: none"><a accesskey="6" href="<?cs var:trac.href.wiki ?>/TracGuide">Help/Guide</a></li>
-          <li style="display: none"><a accesskey="5" href="http://projects.edgewall.com/trac/wiki/TracFaq">FAQ</a></li>
           <li style="display: none"><a accesskey="0" href="<?cs var:trac.href.wiki ?>/TracAccessibility">Accessibility</a></li>
-          <li class="last"><a accesskey="9" href="<?cs var:trac.href.about ?>">About Trac</a></li>
+          <li class="last"><a href="<?cs var:trac.href.settings ?>">Settings</a></li>
          </ul>
         </div>
 </div>
