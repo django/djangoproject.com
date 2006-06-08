@@ -38,7 +38,7 @@ def update_feeds():
                 date_modified = datetime.datetime.now()
 
             try:
-                feed.feeditem_set.filter(guid=guid)
+                feed.feeditem_set.get(guid=guid)
             except FeedItem.DoesNotExist:
                 feed.feeditem_set.create(title=title, link=link, summary=content, guid=guid, date_modified=date_modified)
 
