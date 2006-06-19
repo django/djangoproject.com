@@ -28,5 +28,8 @@ urlpatterns = patterns('',
     (r'^comments/', include('django.contrib.comments.urls.comments')),
     (r'^community/$', 'django.views.generic.list_detail.object_list', aggregator_info_dict),
     (r'^rss/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+    (r'^password_reset/', include('django.conf.urls.admin_password_reset')),
+    (r'^r/', include('django.conf.urls.shortcut')),
+    (r'^admin/', include('django.contrib.admin.urls')),
     (r'', include('django.contrib.flatpages.urls')),
 )
