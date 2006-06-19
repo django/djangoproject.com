@@ -24,6 +24,7 @@ ROOT_URLCONF = 'django_website.settings.urls.main'
 INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.comments',
     'django.contrib.contenttypes',
     'django.contrib.flatpages',
@@ -33,6 +34,7 @@ INSTALLED_APPS = (
     'django_website.apps.docs',
     'django_website.apps.aggregator',
 )
+ADMIN_MEDIA_PREFIX = 'http://media.djangoproject.com/admin/'
 MEDIA_ROOT = "/home/html/djangoproject.com/m/"
 MEDIA_URL = "http://www.djangoproject.com.com/m/"
 
@@ -55,4 +57,5 @@ MIDDLEWARE_CLASSES = (
 )
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
+    'django.template.loaders.app_directories.load_template_source',
 )
