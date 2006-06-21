@@ -25,13 +25,13 @@ MODEL_DOC_TEMPLATE = """
 {{ blurb }}
 
 <h2 id="model-source-code">Model source code</h2>
-<pre class="literal-block">{{ model_source }}</pre>
+<pre class="literal-block">{{ model_source|escape }}</pre>
 
 <h2 id="sample-usage">Sample API usage</h2>
 <p>This sample code assumes the above model{{ models|pluralize }} {% if models|pluralize %}have{% else %}has{% endif %}
 been saved in a file <tt class="docutils literal"><span class="pre">mysite/models.py</span></tt>.
 <pre class="literal-block">&gt;&gt;&gt; from mysite.models import {% for model in models %}{{ model.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
-{{ api_usage }}</pre>
+{{ api_usage|escape }}</pre>
 </div>
 """
 
@@ -69,12 +69,14 @@ def build_test_documents():
     settings.INSTALLED_APPS
 
     # Manually set INSTALLED_APPS to point to the test models.
-    settings.INSTALLED_APPS = runtests.ALWAYS_INSTALLED_APPS + [runtests.MODEL_TESTS_DIR_NAME + '.' + a for a in runtests.get_test_models()]
+    test_apps = [runtests.MODEL_TESTS_DIR_NAME + '.' + app for (loc, app) in runtests.get_test_models() if loc != runtests.REGRESSION_TESTS_DIR_NAME]
+    settings.INSTALLED_APPS = runtests.ALWAYS_INSTALLED_APPS + test_apps
 
     # Some of the test models need to know whether the docs are being built.
     settings.BUILDING_DOCS = True
 
-    for model_name in runtests.get_test_models():
+    for app_name in test_apps:
+        model_name = app_name.split(".")[-1]
         mod = get_app(model_name)
 
         out_file = os.path.join(settings.DJANGO_DOCUMENT_ROOT_PATH, 'model_' + model_name + '.html')
