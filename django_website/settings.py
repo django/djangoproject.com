@@ -18,7 +18,6 @@ DATABASE_HOST = '10.0.0.80' # set to empty string for localhost
 SITE_ID = 1
 TEMPLATE_DIRS = (
     '/home/html/templates/djangoproject.com/',
-    '/home/html/templates/default/',
 )
 ROOT_URLCONF = 'django_website.urls'
 INSTALLED_APPS = (
