@@ -16,6 +16,7 @@ addEvent(window, 'load', function() { document.getElementById('summary').focus()
 <ul>
 <li>Please check the the <a href="http://www.djangoproject.com/documentation/faq/">FAQ</a> first if you suspect your issue might be a frequently-asked question.</li>
 <li>Please don't use the ticket system to ask support questions. Use the <a href="http://groups.google.com/group/django-users">django-users mailing list</a> for that, or our IRC channel. (See the "Get help" section of the <a href="http://www.djangoproject.com/community/">community page</a> for more information.)</li>
+<li>If you're submitting a patch, please submit it via the "Attach file" button, which will appear after you've created the ticket. Please don't paste the patch into the ticket description itself.</li>
 </ul>
 
 <h2>Submit the bug or feature request</h2>
