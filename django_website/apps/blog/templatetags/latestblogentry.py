@@ -1,12 +1,13 @@
 from django import template
 from django_website.apps.blog.models import Entry
+import datetime
 
 class LatestBlogEntriesNode(template.Node):
     def __init__(self, num, varname):
         self.num, self.varname = num, varname
 
     def render(self, context):
-        context[self.varname] = list(Entry.objects.all()[:self.num])
+        context[self.varname] = list(Entry.objects.filter(pub_date__lte=datetime.datetime.now())[:self.num])
         return ''
 
 def do_get_latest_blog_entries(parser, token):
