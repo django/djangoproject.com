@@ -35,8 +35,8 @@ class WeblogSitemap(Sitemap):
     def items(self):
         return Entry.objects.filter(pub_date__lte=datetime.datetime.now())
 
-    def lastmod(self, obj):
-        return obj.pub_date
+    # lastmod is not implemented, because weblog pages contain comments.
+    # We'd rather not look up the date of the latest comment -- not worth the overhead.
 
 class DocumentationSitemap(Sitemap):
     changefreq = 'weekly'
@@ -45,5 +45,5 @@ class DocumentationSitemap(Sitemap):
     def items(self):
         return Document.objects.all()
 
-    def lastmod(self, obj):
-        return obj.last_updated
+    # lastmod is not implemented, because documentation contains comments.
+    # We'd rather not look up the date of the latest comment -- not worth the overhead.
