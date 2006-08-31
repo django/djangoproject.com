@@ -29,6 +29,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'django.contrib.redirects',
     'django.contrib.sessions',
+    'django.contrib.sitemaps',
     'django_website.apps.blog',
     'django_website.apps.docs',
     'django_website.apps.aggregator',
@@ -58,3 +59,5 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
 )
+USE_I18N = False
+
