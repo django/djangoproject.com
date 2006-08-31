@@ -1,7 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django_website.apps.blog.models import Entry
 from django_website.apps.docs.models import Document
-from django.contrib.sites.models import Site
+from django.contrib.flatpages.models import FlatPage
 import datetime
 
 class FlatPageSitemap(Sitemap):
@@ -23,7 +23,7 @@ class FlatPageSitemap(Sitemap):
             return 0.5
 
     def items(self):
-        return Site.objects.all()
+        return FlatPage.objects.all()
 
     # lastmod is not implemented, because we have no way of knowing
     # when FlatPages were last updated.
