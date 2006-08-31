@@ -37,7 +37,7 @@ urlpatterns = patterns('',
     (r'^rss/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     (r'^password_reset/', include('django.conf.urls.admin_password_reset')),
     (r'^r/', include('django.conf.urls.shortcut')),
-    (r'^sitemap.xml$', 'django.contrib.sitemap.views.sitemap', {'sitemaps': sitemaps}),
+    (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
     (r'^admin/', include('django.contrib.admin.urls')),
     (r'', include('django.contrib.flatpages.urls')),
 )
