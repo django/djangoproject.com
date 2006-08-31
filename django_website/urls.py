@@ -4,6 +4,7 @@ from django.contrib.comments.models import FreeComment
 from django_website.apps.aggregator.feeds import CommunityAggregatorFeed
 from django_website.apps.aggregator.models import FeedItem
 from django_website.apps.blog.feeds import WeblogEntryFeed
+from django_website.sitemaps import FlatPageSitemap, WeblogSitemap, DocumentationSitemap
 
 comments_info_dict = {
     'queryset': FreeComment.objects.all(),
@@ -21,6 +22,12 @@ feeds = {
     'community': CommunityAggregatorFeed,
 }
 
+sitemaps = {
+    'weblog': WeblogSitemap,
+    'docs': DocumentationSitemap,
+    'flatpages': FlatPageSitemap,
+}
+
 urlpatterns = patterns('',
     (r'^weblog/', include('django_website.apps.blog.urls')),
     (r'^documentation/', include('django_website.apps.docs.urls')),
@@ -30,6 +37,7 @@ urlpatterns = patterns('',
     (r'^rss/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     (r'^password_reset/', include('django.conf.urls.admin_password_reset')),
     (r'^r/', include('django.conf.urls.shortcut')),
+    (r'^sitemap.xml$', 'django.contrib.sitemap.views.sitemap', {'sitemaps': sitemaps}),
     (r'^admin/', include('django.contrib.admin.urls')),
     (r'', include('django.contrib.flatpages.urls')),
 )
