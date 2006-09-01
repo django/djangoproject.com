@@ -1,10 +1,12 @@
 from django.conf.urls.defaults import *
 from django.contrib.comments.feeds import LatestFreeCommentsFeed
 from django.contrib.comments.models import FreeComment
+from django.contrib.sitemaps import views as sitemap_views
 from django_website.apps.aggregator.feeds import CommunityAggregatorFeed
 from django_website.apps.aggregator.models import FeedItem
 from django_website.apps.blog.feeds import WeblogEntryFeed
 from django_website.sitemaps import FlatPageSitemap, WeblogSitemap, DocumentationSitemap
+from django.views.decorators.cache import cache_page
 
 comments_info_dict = {
     'queryset': FreeComment.objects.all(),
@@ -37,7 +39,7 @@ urlpatterns = patterns('',
     (r'^rss/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     (r'^password_reset/', include('django.conf.urls.admin_password_reset')),
     (r'^r/', include('django.conf.urls.shortcut')),
-    (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
+    (r'^sitemap.xml$', cache_page(sitemap_views.sitemap, 60 * 60 * 6), {'sitemaps': sitemaps}),
     (r'^admin/', include('django.contrib.admin.urls')),
     (r'', include('django.contrib.flatpages.urls')),
 )
