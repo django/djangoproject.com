@@ -30,10 +30,11 @@
          <?cs if:html.stylesheet2 ?>@import url(http://media.djangoproject.com/trac/<?cs var:html.stylesheet2 ?>);<?cs /if ?>
          <?cs include "site_css.cs" ?>
         </style>
-        <script src="<?cs var:htdocs_location ?>trac.js" type="text/javascript"></script>
+        <script src="http://media.djangoproject.com/trac/trac.js" type="text/javascript"></script>
 
 		<link href="http://media.djangoproject.com/trac/css/trac.css" rel="stylesheet" type="text/css" media="all" />
 		<link href="http://media.djangoproject.com/css/base.css" rel="stylesheet" type="text/css" media="all" />
+                <link href="http://media.djangoproject.com/css/admin.css" rel="stylesheet" type="text/css" media="all" />
 
     </head>
 

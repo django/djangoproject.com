@@ -17,7 +17,7 @@
 {% else %}
     <div class="comment">
     {{ comment.comment|escape|urlizetrunc:"40"|linebreaks }}
-    <p class="date small">Posted by <strong>{{ comment.person_name }}</strong></p>
+    <p class="date small">Posted by <strong>{{ comment.person_name|escape }}</strong></p>
     </div>
 
     <p><input type="submit" name="post" value="Post public comment" /></p>
