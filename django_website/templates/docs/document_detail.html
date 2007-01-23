@@ -13,7 +13,7 @@
 
 {% for comment in comment_list %}
 <div class="comment" id="c{{ comment.id }}">
-	<h3>{{ comment.person_name }} <span class="small quiet">{{ comment.submit_date|date:"F j, Y" }} at {{ comment.submit_date|date:"P" }}</span></h3>
+	<h3>{{ comment.person_name|escape }} <span class="small quiet">{{ comment.submit_date|date:"F j, Y" }} at {{ comment.submit_date|date:"P" }}</span></h3>
     {{ comment.comment|escape|urlizetrunc:"40"|linebreaks }}
 </div>
 {% endfor %}
@@ -22,7 +22,7 @@
 
 <p class="small quiet"><strong>Note:</strong> Please only use the comments for
 questions/critcisms/suggestions on the docs; if you experience errors please <a
-href="http://code.djangoproject.com/newticket">file a ticket</a>, ask in the IRC
+href="http://code.djangoproject.com/simpleticket">file a ticket</a>, ask in the IRC
 channel, or post to the <a href="http://groups-beta.google.com/group/django-users">
 django-users list</a>. Comments will be periodically reviewed, integrated into
 the documentation proper, and removed.</p>
