@@ -1,5 +1,0 @@
-This directory contains Trac's default clearsilver templates.
-
-Local modifications to these files might be lost during the installation of 
-a new Trac version. This can be avoided by making a copy of this entire
-directory before beginning modifications.
