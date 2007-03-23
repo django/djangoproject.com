@@ -64,6 +64,9 @@ def model_index(request, version=None):
             except ValueError:
                 number = None
             model_docs.append({"title" : title, "link" : os.path.basename(testdir.name), "number" : number})
+            
+        model_docs.sort(lambda a,b: cmp(a["number"], b["number"]))
+        
         cache.set(cache_key, model_docs, 60*60)
         
     return render_to_response(
