@@ -7,6 +7,6 @@ urlpatterns = patterns('django_website.apps.docs.views',
     (r'^models/(?P<slug>\w+)/$',                        'model_detail'),
     (r'^(?P<version>[\d.]+)/models/$',                  'model_index'),
     (r'^(?P<version>[\d.]+)/models/(?P<slug>\w+)/$',    'model_detail'),
-    (r'^(?P<slug>[\w-.]+)/$',                           'doc_detail'),
-    (r'^(?P<version>[\d.]+)/(?P<slug>[\w-.]+)/$',       'doc_detail'),
+    (r'^(?P<slug>[\w-\.]+)/$',                          'doc_detail'),
+    (r'^(?P<version>[\d.]+)/(?P<slug>[\w-\.]+)/$',      'doc_detail'),
 )
