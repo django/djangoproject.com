@@ -1,0 +1,26 @@
+{% extends "base_docs.html" %}
+
+{% block content %}
+  <h1>Model examples</h1>
+  
+  <h2 class="deck">
+  {% ifequal version "trunk" %}
+    These examples are from Django's SVN release, which can be
+    significantly different than previous releases. Get old examples here: 
+    {% for r in all_versions %}
+      <a href="{{ r.version }}/models/">{{ r.version }}</a>{% if forloop.last %}.{% else %},{% endif %}
+    {% endfor %}
+  {% else %}
+    These examples are from Django version {{ version }}. For current documentation, 
+    <a href="/documentation/models/">go here</a>.
+  {% endifequal %}
+  </h2>
+  
+  <p>This is a set of example models.</p>
+
+  <ol>
+    {% for ex in example_list %}
+      <li><a href="{{ ex.link }}/">{{ ex.title }}</a></li>
+    {% endfor %}
+  </ol>
+{% endblock %}

@@ -5,7 +5,7 @@ from django.contrib.sitemaps import views as sitemap_views
 from django_website.apps.aggregator.feeds import CommunityAggregatorFeed
 from django_website.apps.aggregator.models import FeedItem
 from django_website.apps.blog.feeds import WeblogEntryFeed
-from django_website.sitemaps import FlatPageSitemap, WeblogSitemap, DocumentationSitemap
+from django_website.sitemaps import FlatPageSitemap, WeblogSitemap
 from django.views.decorators.cache import cache_page
 
 comments_info_dict = {
@@ -26,7 +26,6 @@ feeds = {
 
 sitemaps = {
     'weblog': WeblogSitemap,
-    'docs': DocumentationSitemap,
     'flatpages': FlatPageSitemap,
 }
 

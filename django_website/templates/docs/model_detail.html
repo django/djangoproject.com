@@ -1,0 +1,44 @@
+{% extends "base_docs.html" %}
+
+{% block title %}{{ doc.title }} | Django Documentation{% endblock %}
+
+{% block content %}
+<h1>{{ doc.title }}</h1>
+
+<h2 class="deck">
+{% ifequal version "trunk" %}
+  This example is for Django's SVN release, which can be
+  significantly different than previous releases. Get old examples here: 
+  {% for r in all_versions %}
+    <a href="/documentation/{{ r.version }}/models/{{ slug }}/">{{ r.version }}</a>{% if forloop.last %}.{% else %},{% endif %}
+  {% endfor %}
+{% else %}
+  This example describes Django version {{ version }}. For the current example,
+  <a href="/documentation/models/{{ slug }}/">go here</a>.
+{% endifequal %}
+</h2>
+
+{{ doc.fragment }}
+
+<h2 id="model-source-code">Model source code</h2>
+<pre class="literal-block">{{ doc.model_source|escape }}</pre>
+
+<h2 id="sample-usage">Sample API usage</h2>
+{% if doc.newstyle %}
+<p>This sample code assumes the above model{{ doc.models|pluralize }} {% if doc.models|pluralize %}have{% else %}has{% endif %}
+been saved in a file <tt class="docutils literal"><span class="pre">mysite/models.py</span></tt>.
+<pre class="literal-block">&gt;&gt;&gt; from mysite.models import {% for model in doc.models %}{{ model }}{% if not forloop.last %}, {% endif %}{% endfor %}
+{{ doc.api_usage|escape }}</pre>
+{% else %}
+<pre class="literal-block">{{ doc.api_usage|escape }}</pre>
+{% endif %}
+
+{% endblock %}
+
+{% block content-related %}
+  <h2>Contents</h2>
+  <ul>
+  <li><a href="#model-source-code">Model source code</a></li>
+  <li><a href="#sample-usage">Sample API usage</a></li>
+  </ul>
+{% endblock %}
