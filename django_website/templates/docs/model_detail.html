@@ -23,14 +23,12 @@
 <h2 id="model-source-code">Model source code</h2>
 <pre class="literal-block">{{ doc.model_source|escape }}</pre>
 
+{% if doc.api_usage %}
 <h2 id="sample-usage">Sample API usage</h2>
-{% if doc.newstyle %}
 <p>This sample code assumes the above model{{ doc.models|pluralize }} {% if doc.models|pluralize %}have{% else %}has{% endif %}
 been saved in a file <tt class="docutils literal"><span class="pre">mysite/models.py</span></tt>.
 <pre class="literal-block">&gt;&gt;&gt; from mysite.models import {% for model in doc.models %}{{ model }}{% if not forloop.last %}, {% endif %}{% endfor %}
-{{ doc.api_usage|escape }}</pre>
-{% else %}
-<pre class="literal-block">{{ doc.api_usage|escape }}</pre>
+{{ doc.api_usage|escape }}</pre>  
 {% endif %}
 
 {% endblock %}
@@ -39,6 +37,8 @@ been saved in a file <tt class="docutils literal"><span class="pre">mysite/model
   <h2>Contents</h2>
   <ul>
   <li><a href="#model-source-code">Model source code</a></li>
-  <li><a href="#sample-usage">Sample API usage</a></li>
+  {% if doc.api_usage %}
+  <li><a href="#sample-usage">Sample API usage</a></li>    
+  {% endif %}
   </ul>
 {% endblock %}

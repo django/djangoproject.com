@@ -32,13 +32,12 @@ def build_model_document(text):
     visitor = compiler.walk(tree, ModelSourceVistor())
     parts["api_usage"] = visitor.doctest
     parts["models"] = visitor.models
-    parts["newstyle"] = visitor.newstyle
     
     # Parse out the model source.
-    if visitor.newstyle:
+    try:
         model_source = text[:text.index("__test__")]        
-    else:
-        model_source = text[:text.index("API_TESTS")]
+    except ValueError:
+        model_source = text
     parts["model_source"] = model_source.replace(tree.doc, "").replace('""""""\n', '\n').strip()
     
     return parts
@@ -49,18 +48,14 @@ class ModelSourceVistor:
     def __init__(self):
         self.doctest = ""
         self.models = []
-        self.newstyle = True
     
     def visitAssign(self, node):
         assname, valtree = node.getChildren()
         if assname.name == "__test__":
             self.doctest = valtree.getChildren()[1].value
-        elif assname.name == "API_TESTS":
-            self.newstyle = False
-            self.doctest = valtree.value
             
     def visitClass(self, node):
-        if node.bases and node.bases[0].attrname == "Model":
+        if node.bases and isinstance(node.bases[0], compiler.ast.Getattr) and node.bases[0].attrname == "Model":
             self.models.append(node.name)
 
 class DjangoHTMLWriter(html4css1.Writer):
