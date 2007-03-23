@@ -62,7 +62,7 @@ def model_index(request, version=None):
                 number, title = title.split(". ", 1)
                 number = int(number)
             except ValueError:
-                number = None
+                continue
             model_docs.append({"title" : title, "link" : os.path.basename(testdir.name), "number" : number})
             
         model_docs.sort(lambda a,b: cmp(a["number"], b["number"]))
