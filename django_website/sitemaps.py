@@ -1,6 +1,5 @@
 from django.contrib.sitemaps import Sitemap
 from django_website.apps.blog.models import Entry
-from django_website.apps.docs.models import Document
 from django.contrib.flatpages.models import FlatPage
 import datetime
 
@@ -38,12 +37,3 @@ class WeblogSitemap(Sitemap):
     # lastmod is not implemented, because weblog pages contain comments.
     # We'd rather not look up the date of the latest comment -- not worth the overhead.
 
-class DocumentationSitemap(Sitemap):
-    changefreq = 'weekly'
-    priority = 0.8
-
-    def items(self):
-        return Document.objects.all()
-
-    # lastmod is not implemented, because documentation contains comments.
-    # We'd rather not look up the date of the latest comment -- not worth the overhead.

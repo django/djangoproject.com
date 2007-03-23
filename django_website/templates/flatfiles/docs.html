@@ -3,6 +3,10 @@
 {% block content %}
 <h1>{{ flatpage.title }}</h1>
 
+{% ifequal version "trunk" %}
+  
+{% endifequal %}
+
 {{ flatpage.content }}
 {% endblock %}
 
