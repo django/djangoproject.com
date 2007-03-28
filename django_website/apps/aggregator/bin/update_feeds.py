@@ -18,6 +18,9 @@ def update_feeds():
             guid = entry.get("id", entry.link).encode(parsed_feed.encoding, "xmlcharrefreplace")
             link = entry.link.encode(parsed_feed.encoding, "xmlcharrefreplace")
 
+            if not guid:
+                guid = link
+
             if hasattr(entry, "summary"):
                 content = entry.summary
             elif hasattr(entry, "content"):
