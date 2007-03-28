@@ -28,13 +28,16 @@ def update_feeds():
                 content = u""
             content = content.encode(parsed_feed.encoding, "xmlcharrefreplace")
 
-            if entry.has_key('modified_parsed'):
-                date_modified = datetime.datetime.fromtimestamp(time.mktime(entry.modified_parsed))
-            elif parsed_feed.feed.has_key('modified_parsed'):
-                date_modified = datetime.datetime.fromtimestamp(time.mktime(parsed_feed.feed.modified_parsed))
-            elif parsed_feed.has_key('modified'):
-                date_modified = datetime.datetime.fromtimestamp(time.mktime(parsed_feed.modified))
-            else:
+            try:
+                if entry.has_key('modified_parsed'):
+                    date_modified = datetime.datetime.fromtimestamp(time.mktime(entry.modified_parsed))
+                elif parsed_feed.feed.has_key('modified_parsed'):
+                    date_modified = datetime.datetime.fromtimestamp(time.mktime(parsed_feed.feed.modified_parsed))
+                elif parsed_feed.has_key('modified'):
+                    date_modified = datetime.datetime.fromtimestamp(time.mktime(parsed_feed.modified))
+                else:
+                    date_modified = datetime.datetime.now()
+            except TypeError:
                 date_modified = datetime.datetime.now()
 
             try:
