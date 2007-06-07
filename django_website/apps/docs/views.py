@@ -1,5 +1,6 @@
 import os
 import re
+import datetime
 import urlparse
 from django.conf import settings
 from django.core.cache import cache
@@ -38,12 +39,16 @@ def doc_detail(request, slug, version=None):
     if parts is None:
         parts = builder.build_document(client.cat(docpath))
         cache.set(cache_key, parts, 60*60)
-        
-    return render_to_response(
-        ["docs/%s_detail.html" % version, "docs/detail.html"],
-        {"doc" : parts, "version" : version, "all_versions" : DocumentRelease.objects.all(), "slug" : slug},
-        RequestContext(request, {})
-    )
+    
+    template_list = ["docs/%s_detail.html" % version, "docs/detail.html"]
+    context = {
+        "doc" : parts, 
+        "version" : version, 
+        "all_versions" : DocumentRelease.objects.all(), 
+        "slug" : slug,
+        "update_date" : datetime.datetime.fromtimestamp(info.last_changed_date),
+    }
+    return render_to_response(template_list, context, RequestContext(request, {}))
 
 docstring_re = re.compile(r"([\"']{3})(.*?)(\1)", re.DOTALL|re.MULTILINE)
 def model_index(request, version=None):
