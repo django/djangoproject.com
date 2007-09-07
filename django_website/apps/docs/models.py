@@ -11,7 +11,7 @@ class DocumentRelease(models.Model):
     class Admin:
         list_display = ("version", "repository_path", "release_date")
         
-    def __str__(self):
+    def __unicode__(self):
         return self.version
     
     def get_absolute_url(self):
