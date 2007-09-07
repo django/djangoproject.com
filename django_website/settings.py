@@ -25,6 +25,7 @@ else:
     DATABASE_USER = 'apache'
     DATABASE_PASSWORD = ''
     DATABASE_HOST = '10.0.0.80' # set to empty string for localhost
+    DATABASE_PORT = '5433'
     CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
     TEMPLATE_DIRS = ['/home/html/templates/djangoproject.com/']
     DJANGO_SVN_ROOT = "file:///home/svn/django/django/"

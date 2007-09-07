@@ -14,7 +14,7 @@ writing about Django.</h2>
 <h2><a href="{{ item.link }}">{{ item.title }}</a></h2>
 <p class='date'>Posted on {{ item.date_modified|date:"F j, Y" }} at {{ item.date_modified|date:"g:i A" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a> <a class="rss" href="{{ item.feed.feed_url }}">RSS</a></p>
 <div>
-{{ item.summary }}
+{{ item.summary|striptags|truncatewords:"200" }}
 </div>
 <p class="small"><a href="{{ item.link }}">Read this post in context &raquo;</a></p>
 {% endfor %}
