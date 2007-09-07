@@ -12,7 +12,7 @@ class Feed(models.Model):
     class Admin:
         pass
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title
 
 class FeedItem(models.Model):
@@ -27,7 +27,7 @@ class FeedItem(models.Model):
         db_table = 'aggregator_feeditems'
         ordering = ("-date_modified",)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.title
 
     def get_absolute_url(self):
