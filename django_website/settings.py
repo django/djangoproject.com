@@ -12,8 +12,8 @@ MANAGERS = (('Wilson Miner','wminer@ljworld.com'),)
 if DEVELOPMENT_MODE:
     DEBUG = True
     PREPEND_WWW = False
-    DATABASE_ENGINE = "sqlite3"
-    DATABASE_NAME = "/tmp/djangoproject.db"
+    DATABASE_ENGINE = 'postgresql_psycopg2'
+    DATABASE_NAME = 'djangoproject'
     CACHE_BACKEND = "file:///tmp/djangoprojectcache/"
     TEMPLATE_DIRS = [os.path.join(os.path.dirname(__file__), "templates")]
     DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
@@ -39,12 +39,14 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'django.contrib.contenttypes',
     'django.contrib.flatpages',
+    'django.contrib.humanize',
     'django.contrib.redirects',
     'django.contrib.sessions',
     'django.contrib.sitemaps',
     'django_website.apps.blog',
     'django_website.apps.docs',
     'django_website.apps.aggregator',
+    'registration',
 )
 ADMIN_MEDIA_PREFIX = 'http://media.djangoproject.com/admin/'
 MEDIA_ROOT = "/home/html/djangoproject.com/m/"
@@ -71,3 +73,5 @@ TEMPLATE_LOADERS = (
 )
 USE_I18N = False
 
+# django-registration settings
+ACCOUNT_ACTIVATION_DAYS = 3

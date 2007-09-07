@@ -1,0 +1,71 @@
+{% extends "registration/base.html" %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block content %}
+
+  {% if form.errors %}
+  <p class="error">Please correct the errors below:</p>
+  {% endif %}
+
+  <h1>Create an account</h1>
+  
+  <form method="post" action="">
+    <dl>
+      <dt>
+        <label for="id_username">Username:</label>
+      </dt>
+      <dd>
+        {{ form.username }}
+        {% if form.username.errors %}
+          <span class="error">* {{ form.username.errors|join:", " }}</span>
+        {% endif %}
+      </dd>
+  
+      <dt>
+        <label for="id_email">Email address:</label>
+      </dd>
+      <dd>
+        {{ form.email }}
+        {% if form.email.errors %}
+          <span class="error">* {{ form.email.errors|join:", " }}</span>
+        {% endif %}
+      </dd>
+  
+      <dt>
+        <label for="id_password1">Password:</label>
+      </dt>
+      <dd>
+        {{ form.password1 }}
+        {% if form.password1.errors %}
+          <span class="error">* {{ form.password2.errors|join:", " }}</span>
+        {% endif %}
+      </dd>
+  
+      <dt>
+        <label for="id_password2">Password (type again to catch typos):</label>
+      </dt>
+      <dd>
+        {{ form.password2 }}
+        {% if form.password2.errors %}
+          <span class="error">* {{ form.password2.errors|join:", " }}</span>
+        {% endif %}
+      </dd>
+
+      <dt><input type="submit" value="Register" /></dt>
+    </dl>
+  </form>
+  
+{% endblock %}
+
+{% block content-related %}
+<p>Fill out the form to the left (all fields are required), and your
+account will be created; you'll be sent an email with instructions on how
+to finish your registration.</p>
+
+<p>We'll only use your email to send you signup instructions. We hate spam
+as much as you do.</p>
+
+<p>This account will let you log into the ticket tracker, claim tickets,
+and be excempt from spam filtering.</p>
+{% endblock %}
