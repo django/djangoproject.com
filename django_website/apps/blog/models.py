@@ -17,7 +17,7 @@ class Entry(models.Model):
     class Admin:
         list_display = ('pub_date', 'headline', 'author')
 
-    def __str__(self):
+    def __unicode__(self):
         return self.headline
 
     def get_absolute_url(self):
