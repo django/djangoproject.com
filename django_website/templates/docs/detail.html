@@ -39,4 +39,6 @@
 {% block content-related %}
   <h2>Contents</h2>
   {{ doc.toc }}
+  <h3>Last update:</h3>
+  <div>{{ update_date|date:"F j, P" }}</div>
 {% endblock %}

@@ -62,7 +62,12 @@ def model_index(request, version=None):
                 content = client.cat(os.path.join(testdir.name, "models.py"))
             except pysvn.ClientError:
                 continue
-            title, blurb = docstring_re.match(content).group(2).strip().split('\n', 1)
+
+            try:
+                title, blurb = docstring_re.match(content).group(2).strip().split('\n', 1)
+            except AttributeError:
+                continue # Skip models that don't have docstrings.
+
             try:
                 number, title = title.split(". ", 1)
                 number = int(number)
