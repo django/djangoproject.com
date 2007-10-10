@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'django_website.apps.docs',
     'django_website.apps.aggregator',
     'registration',
+    'comment_utils',
 )
 ADMIN_MEDIA_PREFIX = 'http://media.djangoproject.com/admin/'
 MEDIA_ROOT = "/home/html/djangoproject.com/m/"
@@ -75,3 +76,6 @@ USE_I18N = False
 
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 3
+
+# comment_utils settings
+AKISMET_API_KEY = "c892e4962244"
