@@ -9,7 +9,7 @@ from django_website.sitemaps import FlatPageSitemap, WeblogSitemap
 from django.views.decorators.cache import cache_page
 
 comments_info_dict = {
-    'queryset': FreeComment.objects.all(),
+    'queryset': FreeComment.objects.filter(is_public=True),
     'paginate_by': 15,
 }
 

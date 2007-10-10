@@ -8,8 +8,8 @@
 {{ object.body }}
 <p class="date small">Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }}</p>
 
-{% load comments %}
-{% get_free_comment_list for blog.entry object.id as comment_list %}
+{% load comments comment_utils %}
+{% get_public_free_comment_list for blog.entry object.id as comment_list %}
 
 <div id="content-secondary">
 <h2 id="comments">Comments</h2>
@@ -21,8 +21,12 @@
 </div>
 {% endfor %}
 
-<h2>Post a comment</h2>
+<h2>Comments are closed</h2>
 
+{% if object.comments_enabled %}
 {% free_comment_form for blog.entry object.id %}
+{% else %}
+<p>To prevent spam, comments are no longer allowed after sixty days.</p>
+{% endif %}
 </div>
 {% endblock %}
