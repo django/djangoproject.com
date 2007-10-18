@@ -6,7 +6,7 @@
 <h2 class="deck">
 {% ifequal version "trunk" %}
   These docs are for Django's SVN release, which can be
-  significantly different than previous releases. Get old docs here: 
+  significantly different from previous releases. Get old docs here: 
   {% for r in all_versions %}
     <a href="{{ r.version }}/">{{ r.version }}</a>{% if forloop.last %}.{% else %},{% endif %}
   {% endfor %}
@@ -65,6 +65,7 @@
     <li><strong>New:</strong> <a href="databrowse/">Databrowse</a></li>
     <li><a href="syndication_feeds/">Syndication feeds (RSS and Atom)</a> (<code>django.contrib.syndication</code>)</li>
     <li><a href="flatpages/">Flatpages</a> (<code>django.contrib.flatpages</code>)</li>
+    <li><strong>New:</strong> <a href="form_preview/">Form preview</a></li>
     <li><a href="redirects/">Redirects</a> (<code>django.contrib.redirects</code>)</li>
     <li><a href="sites/">Sites</a> (<code>django.contrib.sites</code>)</li>
     <li><a href="sitemaps/">Sitemaps</a> (<code>django.contrib.sitemaps</code>)</li>

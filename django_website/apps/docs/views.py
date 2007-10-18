@@ -65,7 +65,7 @@ def model_index(request, version=None):
 
             try:
                 title, blurb = docstring_re.match(content).group(2).strip().split('\n', 1)
-            except AttributeError:
+            except (AttributeError, ValueError):
                 continue # Skip models that don't have docstrings.
 
             try:
