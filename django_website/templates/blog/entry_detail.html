@@ -21,11 +21,11 @@
 </div>
 {% endfor %}
 
-<h2>Comments are closed</h2>
-
 {% if object.comments_enabled %}
+<h2>Post a comment</h2>
 {% free_comment_form for blog.entry object.id %}
 {% else %}
+<h2>Comments are closed</h2>
 <p>To prevent spam, comments are no longer allowed after sixty days.</p>
 {% endif %}
 </div>

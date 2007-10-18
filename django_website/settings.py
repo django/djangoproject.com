@@ -1,7 +1,7 @@
 import os, platform
 
 # Far too clever trick to know if we're running on the deployment server.
-DEVELOPMENT_MODE = ("servers.ljworld.com" not in platform.node())
+DEVELOPMENT_MODE = (platform.node() != "djangoproject")
 
 ADMINS = (('Adrian Holovaty','holovaty@gmail.com'), ('Jacob Kaplan-Moss', 'jacob@lawrence.com'))
 TIME_ZONE = 'America/Chicago'
@@ -9,25 +9,21 @@ TIME_ZONE = 'America/Chicago'
 SERVER_EMAIL = 'root@pam.servers.ljworld.com'
 MANAGERS = (('Wilson Miner','wminer@ljworld.com'),)
 
+DATABASE_ENGINE = 'postgresql_psycopg2'
+DATABASE_NAME = 'djangoproject'
+TEMPLATE_DIRS = [os.path.join(os.path.dirname(__file__), "templates")]
+
 if DEVELOPMENT_MODE:
     DEBUG = True
     PREPEND_WWW = False
-    DATABASE_ENGINE = 'postgresql_psycopg2'
-    DATABASE_NAME = 'djangoproject'
     CACHE_BACKEND = "file:///tmp/djangoprojectcache/"
-    TEMPLATE_DIRS = [os.path.join(os.path.dirname(__file__), "templates")]
     DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
 else:
     DEBUG = False
     PREPEND_WWW = True
-    DATABASE_ENGINE = 'postgresql'
-    DATABASE_NAME = 'djangoproject'
     DATABASE_USER = 'apache'
-    DATABASE_PASSWORD = ''
-    DATABASE_HOST = '10.0.0.80' # set to empty string for localhost
-    DATABASE_PORT = '5433'
     CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-    TEMPLATE_DIRS = ['/home/html/templates/djangoproject.com/']
+    TEMPLATE_DIRS = ['/home/djangoproject.com/django_website/templates']
     DJANGO_SVN_ROOT = "file:///home/svn/django/django/"
 
 SITE_ID = 1
@@ -57,14 +53,17 @@ MEDIA_URL = "http://www.djangoproject.com.com/m/"
 DJANGO_DOCUMENT_ROOT_PATH = "/home/html/djangoproject.com/docs/"
 DJANGO_TESTS_PATH = "/home/html/djangoproject.com/tests/"
 
-CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 1 # 1 hour
+CACHE_MIDDLEWARE_SECONDS = 60 * 5 # 5 minutes
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangoproject'
 CACHE_MIDDLEWARE_GZIP = True
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.http.SetRemoteAddrFromForwardedFor',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.CacheMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 )
@@ -73,6 +72,8 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.load_template_source',
 )
 USE_I18N = False
+
+DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
 
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 3

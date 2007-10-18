@@ -29,7 +29,7 @@
         {{ comment.submit_date|date:"F j, Y" }} at {{ comment.submit_date|date:"P" }}
       </span>
     </a>
-    {% if perms.comments.delete_freecomment %}
+    {% if perms.comments %}
       <form style="display: inline" action="/admin/comments/freecomment/{{ comment.id }}/delete/" method="post">
         <input type="hidden" name="post" value="yes" />
         <input type="hidden" name="next" value="/comments/">

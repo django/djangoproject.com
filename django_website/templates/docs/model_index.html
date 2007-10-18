@@ -6,7 +6,7 @@
   <h2 class="deck">
   {% ifequal version "trunk" %}
     These examples are from Django's SVN release, which can be
-    significantly different than previous releases. Get old examples here: 
+    significantly different from previous releases. Get old examples here: 
     {% for r in all_versions %}
       <a href="../{{ r.version }}/models/">{{ r.version }}</a>{% if forloop.last %}.{% else %},{% endif %}
     {% endfor %}

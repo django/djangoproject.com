@@ -8,7 +8,7 @@
 <h2 class="deck">
 {% ifequal version "trunk" %}
   This document is for Django's SVN release, which can be
-  significantly different than previous releases. Get old docs here: 
+  significantly different from previous releases. Get old docs here: 
   {% for r in all_versions %}
     <a href="../{{ r.version }}/{{ slug }}/">{{ r.version }}</a>{% if forloop.last %}.{% else %},{% endif %}
   {% endfor %}
