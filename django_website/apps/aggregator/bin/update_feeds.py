@@ -9,9 +9,11 @@ import optparse
 import datetime
 import feedparser
 
-def update_feeds():
+def update_feeds(verbose=False):
     from django_website.apps.aggregator.models import Feed, FeedItem
     for feed in Feed.objects.filter(is_defunct=False):
+        if verbose:
+            print feed
         parsed_feed = feedparser.parse(feed.feed_url)
         for entry in parsed_feed.entries:
             title = entry.title.encode(parsed_feed.encoding, "xmlcharrefreplace")
@@ -51,7 +53,8 @@ def update_feeds():
 if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option('--settings')
+    parser.add_option('-v', '--verbose', action="store_true")
     options, args = parser.parse_args()
     if options.settings:
         os.environ["DJANGO_SETTINGS_MODULE"] = options.settings
-    update_feeds()
+    update_feeds(options.verbose)
