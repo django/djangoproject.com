@@ -1,9 +1,9 @@
 from django.db import models
 
 class Feed(models.Model):
-    title = models.CharField(maxlength=200)
-    feed_url = models.URLField(unique=True)
-    public_url = models.URLField()
+    title = models.CharField(maxlength=500)
+    feed_url = models.URLField(unique=True, maxlength=500)
+    public_url = models.URLField(maxlength=500)
     is_defunct = models.BooleanField()
 
     class Meta:
@@ -17,11 +17,11 @@ class Feed(models.Model):
 
 class FeedItem(models.Model):
     feed = models.ForeignKey(Feed)
-    title = models.CharField(maxlength=200)
-    link = models.URLField()
+    title = models.CharField(maxlength=500)
+    link = models.URLField(maxlength=500)
     summary = models.TextField(blank=True)
     date_modified = models.DateTimeField()
-    guid = models.CharField(maxlength=200, unique=True, db_index=True)
+    guid = models.CharField(maxlength=500, unique=True, db_index=True)
 
     class Meta:
         db_table = 'aggregator_feeditems'
