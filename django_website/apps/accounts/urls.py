@@ -1,12 +1,12 @@
 from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
-from django_website.apps.accounts.forms import RegistrationForm
+from registration.forms import RegistrationFormUniqueEmail
 
 urlpatterns = patterns('',
     url(
         r'^register/$', 
         "registration.views.register", 
-        {'form_class': RegistrationForm},
+        {'form_class': RegistrationFormUniqueEmail},
         name='registration_register',
     ),
     (r'', include('registration.urls')),

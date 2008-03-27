@@ -5,7 +5,7 @@
 {% block content %}
 
   {% if form.errors %}
-  <p class="error">Please correct the errors below:</p>
+  <p class="error">Please correct the errors below: {{ form.non_field_errors }}</p>
   {% endif %}
 
   <h1>Create an account</h1>
