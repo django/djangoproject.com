@@ -30,13 +30,13 @@ sitemaps = {
 }
 
 urlpatterns = patterns('',
+    (r'freenode\.9xJY7YIUWtwn\.html', 'django.views.generic.simple.direct_to_template', {'template': 'freenode_tmp.html'}),
     (r'^accounts/', include('django_website.apps.accounts.urls')),
     (r'^admin/', include('django.contrib.admin.urls')),
     (r'^comments/$', 'django.views.generic.list_detail.object_list', comments_info_dict),
     (r'^comments/', include('django.contrib.comments.urls.comments')),
     (r'^community/$', 'django.views.generic.list_detail.object_list', aggregator_info_dict),
     (r'^documentation/', include('django_website.apps.docs.urls')),
-    (r'^password_reset/', include('django.conf.urls.admin_password_reset')),
     (r'^r/', include('django.conf.urls.shortcut')),
     (r'^rss/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     (r'^sitemap.xml$', cache_page(sitemap_views.sitemap, 60 * 60 * 6), {'sitemaps': sitemaps}),
