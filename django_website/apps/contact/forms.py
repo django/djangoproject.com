@@ -14,4 +14,4 @@ class BaseContactForm(AkismetContactForm):
         return textwrap.wrap(self.cleaned_data["body"], 76)
 
 class FoundationContactForm(BaseContactForm):
-    pass
+    recipient_list = ["dsf-board@googlegroups.com"]
