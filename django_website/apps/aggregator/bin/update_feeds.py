@@ -53,19 +53,22 @@ def update_feeds(verbose=False):
             except FeedItem.DoesNotExist:
                 feed.feeditem_set.create(title=title, link=link, summary=content, guid=guid, date_modified=date_modified)
 
+def main(argv):
+    parser = optparse.OptionParser()
+    parser.add_option('--settings')
+    parser.add_option('-v', '--verbose', action="store_true")
+    options, args = parser.parse_args(argv)
+    if options.settings:
+        os.environ["DJANGO_SETTINGS_MODULE"] = options.settings
+    update_feeds(options.verbose)
+
 if __name__ == '__main__':
     try:
         lockfile = os.open(LOCKFILE, os.O_CREAT | os.O_EXCL)
     except OSError:
         sys.exit(0)
-    
-    parser = optparse.OptionParser()
-    parser.add_option('--settings')
-    parser.add_option('-v', '--verbose', action="store_true")
-    options, args = parser.parse_args()
-    if options.settings:
-        os.environ["DJANGO_SETTINGS_MODULE"] = options.settings
-    update_feeds(options.verbose)
-
-    os.close(lockfile)
-    os.unlink(LOCKFILE)
+    try:
+        sys.exit(main(sys.argv))
+    finally:
+        os.close(lockfile)
+        os.unlink(LOCKFILE)        
