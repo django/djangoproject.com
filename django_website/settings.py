@@ -7,7 +7,7 @@ ADMINS = (('Adrian Holovaty','holovaty@gmail.com'), ('Jacob Kaplan-Moss', 'jacob
 TIME_ZONE = 'America/Chicago'
 
 SERVER_EMAIL = 'root@pam.servers.ljworld.com'
-MANAGERS = (('Wilson Miner','wminer@ljworld.com'),)
+MANAGERS = (('Jacob Kaplan-Moss','jacob@jacobian.org'),)
 
 DATABASE_ENGINE = 'postgresql_psycopg2'
 DATABASE_NAME = 'djangoproject'
