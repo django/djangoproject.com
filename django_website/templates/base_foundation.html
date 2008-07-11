@@ -1,0 +1,45 @@
+{% extends "base_community.html" %}
+
+{% block content-related %}
+<h2>Support Django</h2>
+<script type="text/javascript"> 
+function validateAmount(amount){
+	if(amount.value.match( /^[0-9]+(\.([0-9]+))?$/)){
+		return true;
+	}else{
+		alert('You must enter a valid donation.');
+		amount.focus();
+		return false;
+	}
+}
+</script>
+<form action="https://checkout.google.com/cws/v2/Donations/404630304217012/checkoutForm" id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm" onSubmit="return validateAmount(this.item_price_1)">
+    <input name="item_name_1" type="hidden" value="Support the Django Software Foundation!"/>
+    <input name="item_description_1" type="hidden" value="Thanks for your help! Your money will directly support the development of Django by sponsoring developer meetings, user conferences, and other community activities."/>
+    <input name="item_quantity_1" type="hidden" value="1"/>
+    <input name="item_currency_1" type="hidden" value="USD"/>
+    <input name="item_is_modifiable_1" type="hidden" value="true"/>
+    <input name="item_min_price_1" type="hidden" value="0.0"/>
+    <input name="item_max_price_1" type="hidden" value="25000.0"/>
+    <input name="_charset_" type="hidden" value="utf-8"/>
+    <input id="item_price_1" name="item_price_1" onfocus="this.style.color='black'; this.value='';" size="6" type="text" value="20.00"/>
+    <input type="submit" name="submit" value="Donate" id="submit">
+</form>
+
+<h3>Questions?</h3>
+<p>Read more about <a href="/foundation/donate/">donating to the DSF</a>.
+  
+<h2>Licensing &amp; Trademarks</h2>  
+<ul>
+  <li>Django licensing policies</li>
+  <li>Contributor license agreements</li>
+</ul>
+
+<h2>About the foundation</h2>
+<ul>
+  <li>FAQ</li>
+  <li>Records</li>
+  <li>Board meeting minutes</li>
+  <li>Board resolutions</li>
+</ul>
+{% endblock %}
