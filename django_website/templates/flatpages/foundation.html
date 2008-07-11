@@ -1,10 +1,22 @@
-{% extends "base_community.html" %}
+{% extends "base_foundation.html" %}
 
-{% block title %}Foundation{% endblock %}
+{% block extrahead %}
+<style type="text/css" media="screen">
+  form #submit { 
+      border: 0px none; 
+      background-color: transparent;
+      color: transparent;
+      background-image: url(https://checkout.google.com/buttons/donateNow.gif?merchant_id=404630304217012&w=115&h=50&style=trans&variant=text&loc=en_US);
+      background-position: 0px 3px;
+      width: 115px;
+      height: 35px;
+  }
+</style>
+{% endblock %}
+
+{% block title %}{{ flatpage.title }}{% endblock %}
 
 {% block content %}
 <h1>{{ flatpage.title }}</h1>
 {{ flatpage.content }}
 {% endblock %}
-
-{% block content-related %}{% endblock %}

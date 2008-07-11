@@ -1,0 +1,45 @@
+{% extends "base_foundation.html" %}
+
+{% block title %}Contact the Django Software Foundation{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <style type="text/css" media="screen">
+    form.contact label { display: block; font-weight: bold; margin-top: 1.5em; margin-bottom: 0;}
+    form.contact label span { font-weight: normal; color: #555; }
+    form.contact input, 
+    form.contact textarea, 
+    form.contact select { width: 99%; padding: 1px; }
+    form.contact p { margin: 0; }
+    form.contact p.submit { text-align: right; margin-top: 1em; margin-right: 0;}
+    form.contact p.submit input { width: 10em; font-size: 1.5em; }
+    form.contact p.errors { margin: 0; padding: 0; font-weight: bold; color: red; }
+  </style>
+{% endblock %}
+
+{% block content %}
+<h1>Contact the Django Software Foundation</h1>
+<form action="." method="post" accept-charset="utf-8" class="contact">
+  <p>
+    <label for="id_name">Your name:</label>
+    {% if form.name.errors %}<p class="errors">{{ form.name.errors.as_text }}</p>{% endif %}
+    {{ form.name }}
+  </p>
+  <p>
+    <label for="id_email">Your email address:</label>
+    {% if form.email.errors %}<p class="errors">{{ form.email.errors.as_text }}</p>{% endif %}
+    {{ form.email }}
+  </p>
+  <p>
+    <label for="id_message_subject">Message subject:</label>
+    {% if form.message_subject.errors %}<p class="errors">{{ form.message_subject.errors.as_text }}</p>{% endif %}
+    {{ form.message_subject }}
+  </p>
+  <p>
+    <label for="id_body">Your message:</label>
+    {% if form.body.errors %}<p class="errors">{{ form.body.errors.as_text }}</p>{% endif %}
+    {{ form.body }}
+  </p>
+  <p class="submit"><input type="submit" value="Send &rarr;"></p>
+</form>
+{% endblock %}

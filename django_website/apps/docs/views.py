@@ -11,9 +11,11 @@ from django_website.apps.docs.models import DocumentRelease
 from django_website.apps.docs import builder
 import pysvn
 
+REVISION = pysvn.Revision(pysvn.opt_revision_kind.head)
+
 def doc_index(request, version=None):
     client, version, docroot = _get_svnroot(version, "docs/")
-    doclist = client.ls(docroot, recurse=False)
+    doclist = client.ls(docroot, recurse=False, revision=REVISION)
     
     # Convert list of URLs to list of document slugs.
     doclist = [os.path.splitext(os.path.basename(doc.name))[0] for doc in doclist]
@@ -30,14 +32,14 @@ def doc_detail(request, slug, version=None):
 
     docpath = urlparse.urljoin(docroot, slug+".txt")
     try:
-        name, info = client.info2(docpath)[0]
+        name, info = client.info2(docpath, revision=REVISION)[0]
     except pysvn.ClientError:
         raise Http404("Invalid doc: %r (version %r)" % (slug, version))
         
     cache_key = "djangowebsite:docs:%s:%s:%s" % (version, slug, info.rev.number)
     parts = cache.get(cache_key)
     if parts is None:
-        parts = builder.build_document(client.cat(docpath))
+        parts = builder.build_document(client.cat(docpath, revision=REVISION))
         cache.set(cache_key, parts, 60*60)
     
     template_list = ["docs/%s_detail.html" % version, "docs/detail.html"]
@@ -57,9 +59,9 @@ def model_index(request, version=None):
     cache_key = "djangowebsite:docs:modelindex:%s" % version
     model_docs = cache.get(cache_key, [])
     if not model_docs:
-        for testdir in client.ls(testroot):
+        for testdir in client.ls(testroot, revision=REVISION):
             try:
-                content = client.cat(os.path.join(testdir.name, "models.py"))
+                content = client.cat(os.path.join(testdir.name, "models.py"), revision=REVISION)
             except pysvn.ClientError:
                 continue
 
@@ -87,12 +89,12 @@ def model_index(request, version=None):
     
 def model_detail(request, slug, version=None):
     client, version, modelfile = _get_svnroot(version, "tests/modeltests/%s/models.py" % slug)
-    name, info = client.info2(modelfile)[0]
+    name, info = client.info2(modelfile, revision=REVISION)[0]
     
     cache_key = "djangowebsite:docs:model:%s:%s:%s" % (version, slug, info.rev.number)
     parts = cache.get(cache_key)
     if parts is None:
-        parts = builder.build_model_document(client.cat(modelfile))
+        parts = builder.build_model_document(client.cat(modelfile, revision=REVISION))
         cache.set(cache_key, parts, 60*60)
         
     return render_to_response(
@@ -112,7 +114,7 @@ def _get_svnroot(version, subpath):
     docroot = urlparse.urljoin(settings.DJANGO_SVN_ROOT, subpath)
 
     try:
-        client.info2(docroot, recurse=False)
+        client.info2(docroot, recurse=False, revision=REVISION)
     except pysvn.ClientError:
         raise Http404("Bad SVN path: %s" % docroot)
         

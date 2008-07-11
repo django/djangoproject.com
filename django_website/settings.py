@@ -3,7 +3,7 @@ import os, platform
 # Far too clever trick to know if we're running on the deployment server.
 DEVELOPMENT_MODE = (platform.node() != "djangoproject")
 
-ADMINS = (('Adrian Holovaty','holovaty@gmail.com'), ('Jacob Kaplan-Moss', 'jacob@lawrence.com'))
+ADMINS = (('Adrian Holovaty','holovaty@gmail.com'), ('Jacob Kaplan-Moss', 'jacob@jacobian.org'))
 TIME_ZONE = 'America/Chicago'
 
 SERVER_EMAIL = 'root@pam.servers.ljworld.com'
@@ -16,7 +16,7 @@ TEMPLATE_DIRS = [os.path.join(os.path.dirname(__file__), "templates")]
 if DEVELOPMENT_MODE:
     DEBUG = True
     PREPEND_WWW = False
-    CACHE_BACKEND = "file:///tmp/djangoprojectcache/"
+    CACHE_BACKEND = "dummy:///"
     DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
 else:
     DEBUG = False
