@@ -4,10 +4,13 @@ Universal Feed Parser (http://feedparser.org)
 """
 
 import os
+import sys
 import time
 import optparse
 import datetime
 import feedparser
+
+LOCKFILE = "/tmp/update_feeds.lock"
 
 def update_feeds(verbose=False):
     from django_website.apps.aggregator.models import Feed, FeedItem
@@ -51,6 +54,11 @@ def update_feeds(verbose=False):
                 feed.feeditem_set.create(title=title, link=link, summary=content, guid=guid, date_modified=date_modified)
 
 if __name__ == '__main__':
+    try:
+        lockfile = os.open(LOCKFILE, os.O_CREAT | os.O_EXCL)
+    except OSError:
+        sys.exit(0)
+    
     parser = optparse.OptionParser()
     parser.add_option('--settings')
     parser.add_option('-v', '--verbose', action="store_true")
@@ -58,3 +66,6 @@ if __name__ == '__main__':
     if options.settings:
         os.environ["DJANGO_SETTINGS_MODULE"] = options.settings
     update_feeds(options.verbose)
+
+    os.close(lockfile)
+    os.unlink(LOCKFILE)

@@ -10,7 +10,11 @@ class Feed(models.Model):
         db_table = 'aggregator_feeds'
 
     class Admin:
-        pass
+        list_display = ["title", "public_url", "is_defunct"]
+        list_filter = ["is_defunct"]
+        ordering = ["title"]
+        search_fields = ["title", "public_url"]
+        list_per_page = 500
 
     def __unicode__(self):
         return self.title
