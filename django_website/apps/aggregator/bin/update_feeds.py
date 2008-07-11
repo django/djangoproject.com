@@ -6,12 +6,12 @@ Universal Feed Parser (http://feedparser.org)
 import os
 import sys
 import time
+import socket
 import optparse
 import datetime
 import feedparser
 
 LOCKFILE = "/tmp/update_feeds.lock"
-
 def update_feeds(verbose=False):
     from django_website.apps.aggregator.models import Feed, FeedItem
     for feed in Feed.objects.filter(is_defunct=False):
@@ -54,6 +54,7 @@ def update_feeds(verbose=False):
                 feed.feeditem_set.create(title=title, link=link, summary=content, guid=guid, date_modified=date_modified)
 
 def main(argv):
+    socket.setdefaulttimeout(15)
     parser = optparse.OptionParser()
     parser.add_option('--settings')
     parser.add_option('-v', '--verbose', action="store_true")
