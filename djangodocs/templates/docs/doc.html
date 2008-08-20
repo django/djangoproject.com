@@ -1,0 +1,72 @@
+{% extends "base_docs.html" %}
+
+{% block title %}{{ doc.title }} | Django Documentation{% endblock %}
+
+{% block billboard %}<h2><a href="{{ home }}">Django documentation</a></h2>{% endblock %}
+
+{% block content %}
+
+{% block body %}
+  {{ doc.body }}
+{% endblock %}
+
+<div id="content-secondary">
+  <h2 id="comments">Questions/Feedback</h2>
+  <p>
+    If you notice errors with this documentation, please <a
+    href="http://code.djangoproject.com/simpleticket?component=Documentation">
+    open a ticket</a> and let us know!
+  </p>
+  <p>
+    Please only use the ticket tracker for criticisms and improvements on the
+    docs. For tech support, ask in the IRC channel or post to the <a
+    href="http://groups-beta.google.com/group/django-users"> django-users
+    list</a>.
+  </p>
+</div>
+{% endblock %}
+
+{% block content-related %}
+  {% block toc-wrapper %}
+    <h2>Contents</h2>
+    {% block toc %}
+      {{ doc.toc }}
+    {% endblock %}
+  {% endblock %}
+  
+  {% block browse-wrapper %}
+    <h2>Browse</h2>
+    <ul>
+      {% block browse %}
+        {% if doc.prev %}
+          <li>Prev: <a href="{{ doc.prev.link }}">{{ doc.prev.title }}</a></li>
+        {% endif %}
+        {% if doc.next %}
+          <li>Next: <a href="{{ doc.next.link }}">{{ doc.next.title }}</a></li>
+        {% endif %}
+        {% for doc, title, accesskey, shorttitle in env.rellinks %}
+          <li><a href="{{ home }}{{ doc }}/">{{ title }}</a></li>
+        {% endfor %}
+      {% endblock %}
+    </ul>
+  {% endblock %}
+  
+  {% block breadcrumbs-wrapper %}
+    <h2>You are here:</h2>
+    <ul>
+      {% block breadcrumbs %}
+        <li>
+          <a href="{{ home }}">{{ env.docstitle }}</a>
+          {% for p in doc.parents %}
+            <ul><li><a href="{{ p.link }}">{{ p.title }}</a>
+          {% endfor %}
+          <ul><li>{% block current-page-title %}{{ doc.title }}{% endblock %}</li></ul>
+          {% for p in doc.parents %}</li></ul>{% endfor %}
+        </li>
+      {% endblock %}
+    </ul>
+  {% endblock %}
+  
+  <h3>Last update:</h3>
+  <div>{{ update_date|date:"F j, Y, P" }} (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+{% endblock %}

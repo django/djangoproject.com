@@ -1,0 +1,45 @@
+{% extends "docs/doc.html" %}
+
+{% block title %}General Index | Django Documentation{% endblock %}
+{% block toc-wrapper %}{% endblock %}
+{% block current-page-title %}General Index{% endblock %}
+
+{% block body %}
+  <h1>General Index</h1>
+
+  <p class="indexletters">
+    {% for letter, _ in doc.genindexentries %}
+      <a href="#{{ letter }}">{{ letter }}</a> {% if not forloop.last %} |{% endif %}
+    {% endfor %}
+  </p>
+  
+  
+  {% for letter, entries in doc.genindexentries %}    
+    <br/ ><hr />
+    
+    <h2 id="{{ letter }}">{{ letter }}</h2>
+
+    <dl class="index">
+      {% for name, contents in entries %}
+        <dt>
+          {# contents.0 is a list of links for the item #}
+          {% if contents.0 %}
+            <a href="{{ contents.0.0 }}">{{ name }}</a>
+          {% else %}
+            {{ name }}
+          {% endif %}
+        </dt>
+        
+        {# contents.1 is a list of subitems #}
+        {% if contents.1 %}
+          {% for subname, sublinks in contents.1 %}
+            <dd>
+              <a href="{{ sublinks.0 }}">{{ subname }}</a>
+              {% for link in sublinks|slice:"1:" %}, <a href="{{ link }}">[Link]</a>{% endfor %}
+            </dd>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </dl>
+  {% endfor %}
+{% endblock %}
