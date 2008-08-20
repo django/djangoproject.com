@@ -2,6 +2,11 @@
 
 {% block title %}{{ doc.title }} | Django Documentation{% endblock %}
 
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
+{% endblock %}
+
 {% block billboard %}<h2><a href="{{ home }}">Django documentation</a></h2>{% endblock %}
 
 {% block content %}
