@@ -1,5 +1,6 @@
 from django_website.settings import *
 
+PREPEND_WWW = False
 INSTALLED_APPS = []
 TEMPLATE_DIRS = [os.path.join(os.path.dirname(__file__), "templates")] + TEMPLATE_DIRS
 ROOT_URLCONF = 'djangodocs.urls'
