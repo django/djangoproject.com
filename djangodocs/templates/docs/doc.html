@@ -49,6 +49,7 @@
         {% if doc.next %}
           <li>Next: <a href="{{ doc.next.link }}">{{ doc.next.title }}</a></li>
         {% endif %}
+        <li><a href="{{ home }}contents/">Table of contents</a></li>
         {% for doc, title, accesskey, shorttitle in env.rellinks %}
           <li><a href="{{ home }}{{ doc }}/">{{ title }}</a></li>
         {% endfor %}
