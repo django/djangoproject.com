@@ -11,8 +11,7 @@ class BaseContactForm(AkismetContactForm):
         return "[Contact form] " + self.cleaned_data["message_subject"]
 
     def message(self):
-        body = "\n".join(textwrap.wrap(self.cleaned_data["body"], 76))
-        return "From: %s <%s>\n\n%s" % (self.cleaned_data["name"], self.cleaned_data["email"], body)
+        return "From: %(name)s <%(email)s>\n\n%(body)s" % self.cleaned_data
 
 class FoundationContactForm(BaseContactForm):
     recipient_list = ["dsf-board@googlegroups.com"]
