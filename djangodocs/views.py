@@ -31,18 +31,20 @@ def document(request, lang, version, url):
     docroot = Path(settings.DOCS_PICKLE_ROOT)
 
     # First look for <bits>/index.fpickle, then for <bits>.fpickle
-    bits = url.strip('/').split('/')
-    doc = docroot.child(*(bits+['index.fpickle']))
+    bits = url.strip('/').split('/') + ['index.fpickle']
+    doc = docroot.child(*bits)
     if not doc.exists():
-        doc = docroot.child(*bits[:-1] + ["%s.fpickle" % bits[-1]])
+        bits = bits[:-2] + ['%s.fpickle' % bits[-2]]
+        doc = docroot.child(*bits)
         if not doc.exists():
             raise Http404("'%s' does not exist" % doc)
-    
-    # Build up a list of templates to search for so that if the page is
-    # "ref/models", the list will be ["docs/ref/models.html", "docs/ref.html"]
+
     bits[-1] = bits[-1].replace('.fpickle', '')
-    templates = ["docs/%s.html" % "/".join(bits[:-i+1]) for i in range(len(bits))]    
-    return render_to_response(templates + ['docs/doc.html'], {
+    template_names = [
+        'docs/%s.html' % '-'.join([b for b in bits if b]), 
+        'docs/doc.html'
+    ]
+    return render_to_response(template_names, {
         'doc': pickle.load(open(doc)),
         'env': pickle.load(open(docroot.child('globalcontext.pickle'))),
         'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),
