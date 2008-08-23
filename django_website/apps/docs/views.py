@@ -11,7 +11,7 @@ from django_website.apps.docs.models import DocumentRelease
 from django_website.apps.docs import builder
 import pysvn
 
-REVISION = pysvn.Revision(pysvn.opt_revision_kind.head)
+REVISION = pysvn.Revision(pysvn.opt_revision_kind.number, 8503)
 
 def doc_index(request, version=None):
     client, version, docroot = _get_svnroot(version, "docs/")
