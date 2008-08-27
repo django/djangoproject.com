@@ -11,7 +11,7 @@ urlpatterns = patterns('',
         djangodocs.views.language,
     ),
     url(
-        r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/(?P<url>[\w/-]*)$',
+        r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/(?P<url>[\w./-]*)$',
         djangodocs.views.document,
     ),
     url(
