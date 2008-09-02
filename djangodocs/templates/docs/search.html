@@ -1,0 +1,46 @@
+{% extends "docs/doc.html" %}
+
+{% load docs %}
+
+{% block title %}Search | Django Docuemtation{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <style type="text/css" media="screen">
+    #cse-search-results iframe {
+      width: 100%;
+    }
+  </style>
+{% endblock %}
+
+{% block toc-wrapper %}{% endblock %}
+
+{% block breadcrumbs-wrapper %}{% endblock %}
+
+{% block last-update-wrapper %}{% endblock %}
+
+{% block body %}
+  {% if query %}
+    <h1>Search Results</h1>
+    <div id="cse-search-results">
+      <div id="cse-search-results-js-required">
+        The Django Documentation search uses a Google Custom Search, which
+        requires Javascript. If your results don't appear here shortly, please
+        <a href="http://www.google.com/cse?{{ query_string|escape }}">view the results on Google's site</a>. 
+      </div>
+    </div>
+    <script type="text/javascript">
+      var googleSearchMessage = document.getElementById("cse-search-results-js-required");
+      googleSearchMessage.parentNode.removeChild(googleSearchMessage);
+    
+      var googleSearchIframeName = "cse-search-results";
+      var googleSearchFormName = "cse-search-box";
+      var googleSearchDomain = "www.google.com";
+      var googleSearchPath = "/cse";
+    </script>
+    <script type="text/javascript" src="http://www.google.com/afsonline/show_afs_search.js"></script>
+  {% else %}
+    <h1>Search</h1>
+    {% search_form "search_page" %}
+  {% endif %}
+{% endblock %}
