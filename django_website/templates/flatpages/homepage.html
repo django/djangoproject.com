@@ -68,22 +68,5 @@
 
 {% block content-extra %}
 <h2>Weblog</h2>
-
-{% load comments comment_utils latestblogentry %}
-{% get_latest_blog_entries 4 as latest_entries %}
-
-{% for latest_entry in latest_entries %}
-    <h3><a href="{{ latest_entry.get_absolute_url }}">{{ latest_entry.headline }}</a></h3>
-    <p class="date">by <strong>{{ latest_entry.author }}</strong> on {{ latest_entry.pub_date|date:"M. j, Y" }}</p>
-    {{ latest_entry.summary }}
-    <p class="more"><a href="{{ latest_entry.get_absolute_url }}">Read more</a>{% if comment_count %} / <a href="{{ latest_entry.get_absolute_url }}#comments">{{ comment_count }} comment{{ comment_count|pluralize }}</a>{% endif %}</p>
-{% endfor %}
-
-{% comment %}
-<blockquote class="fancyquote">
-<p>Django's cool. I should know because I’m British.</p>
-<cite><strong>Simon Willison</strong><br />Mad Genius</cite>
-</blockquote>
-{% endcomment %}
-
+{% load weblog %}{% render_latest_blog_entries 4 %}
 {% endblock %}

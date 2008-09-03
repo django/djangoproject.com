@@ -12,42 +12,7 @@
 
 {% block content-related %}
 <h2>Archives</h2>
-<ul class="linklist">
-    <li><a href="/weblog/2008/apr/">April 2008</a></li>
-    <li><a href="/weblog/2008/mar/">March 2008</a></li>
-    <li><a href="/weblog/2008/feb/">Febuary 2008</a></li>
-    <li><a href="/weblog/2008/jan/">January 2008</a></li>
-    <li><a href="/weblog/2007/dec/">December 2007</a></li> 
-    <li><a href="/weblog/2007/nov/">November 2007</a></li>
-    <li><a href="/weblog/2007/oct/">October 2007</a></li>
-    <li><a href="/weblog/2007/sep/">September 2007</a></li>
-    <li><a href="/weblog/2007/aug/">August 2007</a></li>
-    <li><a href="/weblog/2007/jul/">July 2007</a></li>
-    <li><a href="/weblog/2007/jun/">June 2007</a></li>
-    <li><a href="/weblog/2007/may/">May 2007</a></li>
-    <li><a href="/weblog/2007/apr/">April 2007</a></li>
-    <li><a href="/weblog/2007/mar/">March 2007</a></li>
-    <li><a href="/weblog/2007/feb/">February 2007</a></li>
-    <li><a href="/weblog/2007/jan/">January 2007</a></li>
-    <li><a href="/weblog/2006/dec/">December 2006</a></li>
-    <li><a href="/weblog/2006/nov/">November 2006</a></li>
-    <li><a href="/weblog/2006/oct/">October 2006</a></li>
-    <li><a href="/weblog/2006/sep/">September 2006</a></li>
-	<li><a href="/weblog/2006/aug/">August 2006</a></li>
-	<li><a href="/weblog/2006/jul/">July 2006</a></li>
-	<li><a href="/weblog/2006/jun/">June 2006</a></li>
-	<li><a href="/weblog/2006/may/">May 2006</a></li>
-	<li><a href="/weblog/2006/apr/">April 2006</a></li>
-	<li><a href="/weblog/2006/mar/">March 2006</a></li>
-	<li><a href="/weblog/2006/feb/">February 2006</a></li>
-	<li><a href="/weblog/2006/jan/">January 2006</a></li>
-	<li><a href="/weblog/2005/dec/">December 2005</a></li>
-  <li><a href="/weblog/2005/nov/">November 2005</a></li>
-	<li><a href="/weblog/2005/oct/">October 2005</a></li>
-	<li><a href="/weblog/2005/sep/">September 2005</a></li>
-	<li><a href="/weblog/2005/aug/">August 2005</a></li>
-	<li><a href="/weblog/2005/jul/">July 2005</a></li>
-</ul>
+{% load weblog %}{% render_month_links %}
 
 <h2>RSS feeds</h2>
 <ul class="linklist">
