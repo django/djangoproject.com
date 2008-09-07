@@ -2,7 +2,7 @@
 
 {% load docs %}
 
-{% block title %}Search | Django Docuemtation{% endblock %}
+{% block title %}Search | Django documentation{% endblock %}
 
 {% block extrahead %}
   {{ block.super }}
@@ -21,10 +21,10 @@
 
 {% block body %}
   {% if query %}
-    <h1>Search Results</h1>
+    <h1>Search results</h1>
     <div id="cse-search-results">
       <div id="cse-search-results-js-required">
-        The Django Documentation search uses a Google Custom Search, which
+        The Django documentation search uses a Google Custom Search, which
         requires Javascript. If your results don't appear here shortly, please
         <a href="http://www.google.com/cse?{{ query_string|escape }}">view the results on Google's site</a>. 
       </div>
