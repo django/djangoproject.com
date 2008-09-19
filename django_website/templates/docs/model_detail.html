@@ -18,7 +18,7 @@
 {% endifequal %}
 </h2>
 
-{{ doc.fragment }}
+{{ doc.fragment|safe }}
 
 <h2 id="model-source-code">Model source code</h2>
 <pre class="literal-block">{{ doc.model_source|escape }}</pre>
