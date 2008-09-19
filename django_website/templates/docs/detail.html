@@ -18,7 +18,7 @@
 {% endifequal %}
 </h2>
 
-{{ doc.body }}
+{{ doc.body|safe }}
 
 <div id="content-secondary">
   <h2 id="comments">Questions/Feedback</h2>
@@ -38,7 +38,7 @@
 
 {% block content-related %}
   <h2>Contents</h2>
-  {{ doc.toc }}
+  {{ doc.toc|safe }}
   <h3>Last update:</h3>
   <div>{{ update_date|date:"F j, Y, P" }} (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
 {% endblock %}
