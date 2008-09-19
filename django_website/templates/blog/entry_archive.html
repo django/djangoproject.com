@@ -2,13 +2,11 @@
 
 {% block content %}
 
-{% load comments comment_utils %}
-
 <h1>Latest entries</h1>
 
 {% for object in latest %}
-    <h2><a href="{{ object.get_absolute_url }}">{{ object.headline }}</a></h2>
-    {{ object.body }}
+    <h2><a href="{{ object.get_absolute_url }}">{{ object.headline|safe }}</a></h2>
+    {{ object.body|safe }}
     <p class="date small">Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }}</p>
 {% endfor %}
 

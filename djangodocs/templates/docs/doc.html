@@ -38,7 +38,7 @@
 {% block content %}
 
 {% block body %}
-  {{ doc.body }}
+  {{ doc.body|safe }}
 {% endblock %}
 
 <div id="content-secondary">
@@ -75,7 +75,7 @@
   {% block toc-wrapper %}
     <h2>Contents</h2>
     {% block toc %}
-      {{ doc.toc }}
+      {{ doc.toc|safe }}
     {% endblock %}
   {% endblock %}
   

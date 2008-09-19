@@ -1,5 +1,5 @@
 import textwrap
-from django import newforms as forms
+from django import forms
 from contact_form.forms import AkismetContactForm
 
 attrs = {'class': 'required'}
