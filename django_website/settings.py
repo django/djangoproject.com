@@ -18,6 +18,7 @@ if DEVELOPMENT_MODE:
     PREPEND_WWW = False
     CACHE_BACKEND = "dummy:///"
     DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
+    ADMIN_MEDIA_PREFIX = '/media/'
 else:
     DEBUG = False
     PREPEND_WWW = True
@@ -25,6 +26,7 @@ else:
     CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
     TEMPLATE_DIRS = ['/home/djangoproject.com/django_website/templates']
     DJANGO_SVN_ROOT = "file:///home/svn/django/django/"
+    ADMIN_MEDIA_PREFIX = 'http://media.djangoproject.com/admin/'
 
 SITE_ID = 1
 ROOT_URLCONF = 'django_website.urls'
@@ -43,9 +45,7 @@ INSTALLED_APPS = (
     'django_website.apps.docs',
     'django_website.apps.aggregator',
     'registration',
-    'comment_utils',
 )
-ADMIN_MEDIA_PREFIX = 'http://media.djangoproject.com/admin/'
 MEDIA_ROOT = "/home/html/djangoproject.com/m/"
 MEDIA_URL = "http://www.djangoproject.com.com/m/"
 

@@ -1,23 +1,24 @@
+import akismet
 import datetime
+from django.conf import settings
 from django.db import models
-from comment_utils.moderation import CommentModerator, moderator
+from django.contrib.sites.models import Site
+from django.contrib.comments.signals import comment_was_posted
+from django.utils.encoding import smart_str
 
 class Entry(models.Model):
     pub_date = models.DateTimeField()
     slug = models.SlugField(unique_for_date='pub_date')
-    headline = models.CharField(maxlength=200)
+    headline = models.CharField(max_length=200)
     summary = models.TextField(help_text="Use raw HTML.")
     body = models.TextField(help_text="Use raw HTML.")
-    author = models.CharField(maxlength=100)
+    author = models.CharField(max_length=100)
 
     class Meta:
         db_table = 'blog_entries'
         verbose_name_plural = 'entries'
         ordering = ('-pub_date',)
         get_latest_by = 'pub_date'
-
-    class Admin:
-        list_display = ('pub_date', 'headline', 'author')
 
     def __unicode__(self):
         return self.headline
@@ -30,8 +31,20 @@ class Entry(models.Model):
         delta = datetime.datetime.now() - self.pub_date
         return delta.days < 60
 
-class EntryModerator(CommentModerator):
-    akismet = True
-    enable_field = "comments_enabled"
-
-moderator.register(Entry, EntryModerator)
+def moderate_comment(sender, comment, request, **kwargs):
+    ak = akismet.Akismet(
+        key = settings.AKISMET_API_KEY,
+        blog_url = 'http://%s/' % Site.objects.get_current().domain
+    )
+    data = {
+        'user_ip': request.META.get('REMOTE_ADDR', '127.0.0.1'),
+        'user_agent': request.META.get('HTTP_USER_AGENT', ''),
+        'referrer': request.META.get('HTTP_REFERRER', ''),
+        'comment_type': 'comment',
+        'comment_author': smart_str(comment.user_name),
+    }
+    if ak.comment_check(smart_str(comment.comment), data=data, build_data=True):
+        comment.is_public = False
+        comment.save()
+    
+comment_was_posted.connect(moderate_comment)

@@ -1,6 +1,6 @@
 {% for e in entries %}
     <h3><a href="{{ e.get_absolute_url }}">{{ e.headline }}</a></h3>
     <p class="date">by <strong>{{ e.author }}</strong> on {{ e.pub_date|date:"M. j, Y" }}</p>
-    {{ e.summary }}
+    {{ e.summary|safe }}
     <p class="more"><a href="{{ e.get_absolute_url }}">Read more</a></p>
 {% endfor %}

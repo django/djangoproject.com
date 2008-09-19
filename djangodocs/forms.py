@@ -1,4 +1,4 @@
-from django import newforms as forms
+from django import forms
 
 AS_Q_CHOICES = (
     ('more:dev_docs', 'Latest'),
