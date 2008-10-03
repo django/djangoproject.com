@@ -10,19 +10,17 @@ from unipath import FSPath as Path
 
 def index(request):
     return HttpResponseRedirect(
-        urlresolvers.reverse(document, kwargs={
+        urlresolvers.reverse('document-index', kwargs={
             'lang': 'en',
             'version': 'dev',
-            'url': '',
         })
     )
     
 def language(request, lang):
     return HttpResponseRedirect(
-        urlresolvers.reverse(document, kwargs={
+        urlresolvers.reverse('document-index', kwargs={
             'lang': lang,
             'version': 'dev',
-            'url': '',
         })
     )
 
@@ -49,8 +47,8 @@ def document(request, lang, version, url):
         'doc': pickle.load(open(doc, 'rb')),
         'env': pickle.load(open(docroot.child('globalcontext.pickle'), 'rb')),
         'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),
-        'home': urlresolvers.reverse(document, kwargs={'lang':lang, 'version':version, 'url':''}),
-        'search': urlresolvers.reverse(search, kwargs={'lang':lang, 'version':version}),
+        'home': urlresolvers.reverse('document-index', kwargs={'lang':lang, 'version':version}),
+        'search': urlresolvers.reverse('document-search', kwargs={'lang':lang, 'version':version}),
     }))
 
 def images(request, lang, version, path):
@@ -84,6 +82,6 @@ def search(request, lang, version):
         'query': request.GET.get('q'),
         'query_string': mutable_get.urlencode(),
         'env': pickle.load(open(docroot.child('globalcontext.pickle'), 'rb')),
-        'home': urlresolvers.reverse(document, kwargs={'lang':lang, 'version':version, 'url':''}),
-        'search': urlresolvers.reverse(search, kwargs={'lang':lang, 'version':version}),
+        'home': urlresolvers.reverse('document-index', kwargs={'lang':lang, 'version':version}),
+        'search': urlresolvers.reverse('document-search', kwargs={'lang':lang, 'version':version}),
     }))

@@ -11,8 +11,15 @@ urlpatterns = patterns('',
         djangodocs.views.language,
     ),
     url(
+        r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/$',
+        djangodocs.views.document,
+        {'url': ''},
+        name = 'document-index',
+    ),
+    url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/search/$',
         djangodocs.views.search,
+        name = 'document-search',
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_images/(?P<path>.*)$',
@@ -25,5 +32,6 @@ urlpatterns = patterns('',
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/(?P<url>[\w./-]*)/$',
         djangodocs.views.document,
+        name = 'document-detail',
     ),
 )
