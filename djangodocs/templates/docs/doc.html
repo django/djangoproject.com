@@ -27,6 +27,19 @@
     form.search .query {
       width: 18em;
     }
+    div#old-docs-warning {
+      background-color:#FFFFAA;
+      font-size:1.2em;
+      line-height:1.3em;
+      border: 2px solid #d00;
+      padding: .5em;
+      margin-top: 1em;
+    }
+    div#old-docs-warning h3, div#old-docs.warning p {
+      margin-top: 0;
+      padding: 0.2em 0;
+      color: black;
+    }
   </style>
   <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
 {% endblock %}
@@ -38,6 +51,17 @@
 {% block content %}
 
 {% block body %}
+  {% if redirect_from %}
+    <div id="old-docs-warning">
+      <h3>Welcome to the new documentation.</h3>
+      <p>
+        We've recently reorganized the documentation, and you requested an
+        out-of-date page. We've tried to redirect you to the right place, but we
+        might have gotten it wrong. If you can't find what you're looking for
+        here, you might try <a href="{{ home }}/search/">searching for it</a>.
+      </p>
+    </div>
+  {% endif %}
   {{ doc.body|safe }}
 {% endblock %}
 
@@ -110,9 +134,9 @@
         <li>
           <a href="{{ home }}">{{ env.docstitle }}</a>
           {% for p in doc.parents %}
-            <ul><li><a href="{{ p.link }}">{{ p.title }}</a>
+            <ul><li><a href="{{ p.link }}">{{ p.title|safe }}</a>
           {% endfor %}
-          <ul><li>{% block current-page-title %}{{ doc.title }}{% endblock %}</li></ul>
+          <ul><li>{% block current-page-title %}{{ doc.title|safe }}{% endblock %}</li></ul>
           {% for p in doc.parents %}</li></ul>{% endfor %}
         </li>
       {% endblock %}

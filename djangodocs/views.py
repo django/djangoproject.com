@@ -49,6 +49,7 @@ def document(request, lang, version, url):
         'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),
         'home': urlresolvers.reverse('document-index', kwargs={'lang':lang, 'version':version}),
         'search': urlresolvers.reverse('document-search', kwargs={'lang':lang, 'version':version}),
+        'redirect_from': request.GET.get('from', None),
     }))
 
 def images(request, lang, version, path):
