@@ -8,7 +8,4 @@ TEMPLATE_CONTEXT_PROCESSORS = ['django.core.context_processors.request']
 ROOT_URLCONF = 'djangodocs.urls'
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangodocs'
 
-if DEVELOPMENT_MODE:
-    DOCS_PICKLE_ROOT = "/Users/jacob/Projects/Django/upstream/docs/_build/pickle/"
-else:
-    DOCS_PICKLE_ROOT = "/home/jacob/django-docs/docs/_build/pickle"
+DOCS_PICKLE_ROOT = "/tmp/djangodocs/"

@@ -27,41 +27,27 @@
     form.search .query {
       width: 18em;
     }
-    div#old-docs-warning {
-      background-color:#FFFFAA;
-      font-size:1.2em;
-      line-height:1.3em;
-      border: 2px solid #d00;
-      padding: .5em;
-      margin-top: 1em;
-    }
-    div#old-docs-warning h3, div#old-docs.warning p {
-      margin-top: 0;
-      padding: 0.2em 0;
-      color: black;
-    }
   </style>
   <link rel="stylesheet" href="http://media.djangoproject.com/css/pygments.css" type="text/css" />
 {% endblock %}
 
 {% block billboard %}
-  <h2><a href="{{ home }}">Django documentation</a></h2>
+  <h2><a href="{% url document-index lang=lang, version=version %}">Django documentation</a></h2>
 {% endblock %}
 
 {% block content %}
 
 {% block body %}
-  {% if redirect_from %}
-    <div id="old-docs-warning">
-      <h3>Welcome to the new documentation.</h3>
-      <p>
-        We've recently reorganized the documentation, and you requested an
-        out-of-date page. We've tried to redirect you to the right place, but we
-        might have gotten it wrong. If you can't find what you're looking for
-        here, you might try <a href="{{ home }}/search/">searching for it</a>.
-      </p>
-    </div>
-  {% endif %}
+  <h2 class="deck">
+  {% ifequal version "dev" %}
+    This document is for Django's SVN release, which can be
+    significantly different from previous releases. Get old docs here: 
+      <a href="{% url document-detail lang=lang, version="1.0", url=docurl %}">Django 1.0</a>
+  {% else %}
+    This document describes Django version {{ version }}. For development documentation, 
+    <a href="{% url document-detail lang=lang, version="dev", url=docurl %}">go here</a>.
+  {% endifequal %}
+  </h2>
   {{ doc.body|safe }}
 {% endblock %}
 
@@ -114,14 +100,14 @@
     <ul>
       {% block browse %}
         {% if doc.prev %}
-          <li>Prev: <a href="{{ doc.prev.link }}">{{ doc.prev.title }}</a></li>
+          <li>Prev: <a href="{{ doc.prev.link }}">{{ doc.prev.title|safe }}</a></li>
         {% endif %}
         {% if doc.next %}
-          <li>Next: <a href="{{ doc.next.link }}">{{ doc.next.title }}</a></li>
+          <li>Next: <a href="{{ doc.next.link }}">{{ doc.next.title|safe }}</a></li>
         {% endif %}
-        <li><a href="{{ home }}contents/">Table of contents</a></li>
+        <li><a href="{% url document-detail lang=lang, version=version, url="contents" %}">Table of contents</a></li>
         {% for doc, title, accesskey, shorttitle in env.rellinks %}
-          <li><a href="{{ home }}{{ doc }}/">{{ title }}</a></li>
+          <li><a href="{% url document-detail lang=lang, version=version, url=doc %}">{{ title }}</a></li>
         {% endfor %}
       {% endblock %}
     </ul>
@@ -132,7 +118,7 @@
     <ul>
       {% block breadcrumbs %}
         <li>
-          <a href="{{ home }}">{{ env.docstitle }}</a>
+          <a href="{% url document-index lang=lang, version=version %}">{{ env.docstitle }}</a>
           {% for p in doc.parents %}
             <ul><li><a href="{{ p.link }}">{{ p.title|safe }}</a>
           {% endfor %}
