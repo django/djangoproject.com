@@ -22,6 +22,11 @@ urlpatterns = patterns('',
         name = 'document-search',
     ),
     url(
+        r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_objects/$',
+        djangodocs.views.objects_inventory,
+        name = 'objects-inv',
+    ),
+    url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_images/(?P<path>.*)$',
         djangodocs.views.images,
     ),

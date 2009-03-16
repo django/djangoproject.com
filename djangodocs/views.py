@@ -1,4 +1,3 @@
-import cPickle as pickle
 import datetime
 import django.views.static
 from django.conf import settings
@@ -75,6 +74,16 @@ def source(request, lang, version, path):
         document_root = docroot.child('_sources'),
         path = path,
     )
+    
+def objects_inventory(request, lang, version):
+    docroot = get_docroot(lang, version)
+    response = django.views.static.serve(
+        request, 
+        document_root = docroot,
+        path = "objects.inv",
+    )
+    response['Content-Type'] = "text/plain"
+    return response
 
 def search(request, lang, version):
     docroot = get_docroot(lang, version)
