@@ -8,4 +8,4 @@ TEMPLATE_CONTEXT_PROCESSORS = ['django.core.context_processors.request']
 ROOT_URLCONF = 'djangodocs.urls'
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangodocs'
 
-DOCS_PICKLE_ROOT = "/tmp/djangodocs/"
+DOCS_PICKLE_ROOT = "/home/djangodocs/"
