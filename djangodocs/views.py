@@ -25,11 +25,15 @@ def language(request, lang):
         })
     )
 
-def document(request, lang, version, url):
+def get_docroot(lang, version):
     docroot = Path(settings.DOCS_PICKLE_ROOT).child(lang, version, "_build", "json")
     if not docroot.exists():
         raise Http404()
+    return docroot
 
+def document(request, lang, version, url):
+    docroot = get_docroot(lang, version)
+    
     # First look for <bits>/index.fpickle, then for <bits>.fpickle
     bits = url.strip('/').split('/') + ['index.fjson']
     doc = docroot.child(*bits)
@@ -57,25 +61,23 @@ def document(request, lang, version, url):
     }))
 
 def images(request, lang, version, path):
-    if lang != 'en' or version != 'dev': raise Http404()
+    docroot = get_docroot(lang, version)
     return django.views.static.serve(
         request, 
-        document_root = Path(settings.DOCS_PICKLE_ROOT).child('_images'),
+        document_root = docroot.child('_images'),
         path = path,
     )
     
 def source(request, lang, version, path):
-    if lang != 'en' or version != 'dev': raise Http404()
+    docroot = get_docroot(lang, version)
     return django.views.static.serve(
         request,
-        document_root = Path(settings.DOCS_PICKLE_ROOT).child('_sources'),
+        document_root = docroot.child('_sources'),
         path = path,
     )
 
 def search(request, lang, version):
-    if lang != 'en' or version != 'dev': raise Http404()
-    
-    docroot = Path(settings.DOCS_PICKLE_ROOT)
+    docroot = get_docroot(lang, version)
     
     # Remove the 'cof' GET variable from the query string so that the page
     # linked to by the Javascript fallback doesn't think its inside an iframe.
@@ -86,6 +88,8 @@ def search(request, lang, version):
     return render_to_response('docs/search.html', RequestContext(request, {
         'query': request.GET.get('q'),
         'query_string': mutable_get.urlencode(),
+        'lang': lang,
+        'version': version,
         'env': simplejson.load(open(docroot.child('globalcontext.json'), 'rb')),
         'home': urlresolvers.reverse('document-index', kwargs={'lang':lang, 'version':version}),
         'search': urlresolvers.reverse('document-search', kwargs={'lang':lang, 'version':version}),
