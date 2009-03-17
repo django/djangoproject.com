@@ -118,7 +118,7 @@
     <ul>
       {% block breadcrumbs %}
         <li>
-          <a href="{% url document-index lang=lang, version=version %}">{{ env.docstitle }}</a>
+          <a href="{% url document-index lang=lang, version=version %}">Django {{ version }} documentation</a>
           {% for p in doc.parents %}
             <ul><li><a href="{{ p.link }}">{{ p.title|safe }}</a>
           {% endfor %}
