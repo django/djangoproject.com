@@ -1,6 +1,6 @@
 {% extends "base_docs.html" %}
 
-{% block title %}{{ doc.title }} | Django Documentation{% endblock %}
+{% block title %}{{ doc.title|striptags }} | Django Documentation{% endblock %}
 
 {% block extrahead %}
   {{ block.super }}
