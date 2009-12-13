@@ -12,7 +12,7 @@ def index(request):
     return HttpResponseRedirect(
         urlresolvers.reverse('document-index', kwargs={
             'lang': 'en',
-            'version': 'dev',
+            'version': '1.1',
         })
     )
     
@@ -20,7 +20,7 @@ def language(request, lang):
     return HttpResponseRedirect(
         urlresolvers.reverse('document-index', kwargs={
             'lang': lang,
-            'version': 'dev',
+            'version': '1.1',
         })
     )
 
