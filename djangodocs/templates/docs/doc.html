@@ -42,11 +42,11 @@
   {% ifequal version "dev" %}
     This document is for Django's development version, which can be
     significantly different from previous releases. Get old docs here:
-    <a href="{% url document-detail lang=lang, version="1.1", url=docurl %}">1.1</a>,
-    <a href="{% url document-detail lang=lang, version="1.0", url=docurl %}">1.0</a>
+    <a href="/en/1.1/{{ docurl }}">1.1</a>,
+    <a href="/en/1.0/{{ docurl }}">1.0</a>
   {% else %}
     This document describes Django {{ version }}. For development docs, 
-    <a href="{% url document-detail lang=lang, version="dev", url=docurl %}">go here</a>.
+    <a href="/en/dev/{{ docurl }}">go here</a>.
   {% endifequal %}
   </h2>
   {{ doc.body|safe }}
@@ -57,7 +57,7 @@
   <p>Having trouble? We'd like to help!</p>
   <ul>
     <li>
-      Try the <a href="/en/dev/faq/">FAQ</a> — it's got answers to many common
+      Try the <a href="/en/dev/faq/">FAQ</a> -— it's got answers to many common
       questions.
     </li>
     <li>
