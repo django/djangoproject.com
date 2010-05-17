@@ -27,7 +27,7 @@ def language(request, lang):
 def get_docroot(lang, version):
     docroot = Path(settings.DOCS_PICKLE_ROOT).child(lang, version, "_build", "json")
     if not docroot.exists():
-        raise Http404()
+        raise Http404(docroot)
     return docroot
 
 def document(request, lang, version, url):
