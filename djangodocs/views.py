@@ -11,16 +11,16 @@ import simplejson
 def index(request):
     return HttpResponseRedirect(
         urlresolvers.reverse('document-index', kwargs={
-            'lang': 'en',
-            'version': '1.1',
+            'lang': settings.DOCS_DEFAULT_LANGUAGE,
+            'version': settings.DOCS_DEFAULT_VERSION,
         })
     )
     
 def language(request, lang):
     return HttpResponseRedirect(
         urlresolvers.reverse('document-index', kwargs={
-            'lang': lang,
-            'version': '1.1',
+            'lang': settings.DOCS_DEFAULT_LANGUAGE,
+            'version': settings.DOCS_DEFAULT_VERSION,
         })
     )
 
