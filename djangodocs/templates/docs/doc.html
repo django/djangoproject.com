@@ -40,7 +40,6 @@
 {% block body %}
   {% load docs %}
   {% get_all_doc_versions docurl as versions %}
-  {{ versions }}
   <h2 class="deck">
   {% ifequal version "dev" %}
     This document is for Django's development version, which can be
