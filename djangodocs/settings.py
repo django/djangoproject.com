@@ -9,3 +9,5 @@ ROOT_URLCONF = 'djangodocs.urls'
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangodocs'
 
 DOCS_PICKLE_ROOT = "/home/djangodocs/"
+DOCS_DEFAULT_LANGUAGE = 'en'
+DOCS_DEFAULT_VERSION = '1.2'
