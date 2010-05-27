@@ -21,6 +21,6 @@ urlpatterns = patterns('',
         kwargs = dict(
             template = 'contact/sent.html',
         ),
-        name = 'contact_sent',
+        name = 'contact_form_sent',
     )
 )

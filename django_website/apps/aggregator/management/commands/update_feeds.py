@@ -1,11 +1,12 @@
-import os
-import sys
-import time
-import socket
-import optparse
 import datetime
 import feedparser
+import optparse
+import os
+import socket
+import sys
+import time
 from django.core.management.base import BaseCommand
+from django_website.aggregator.models import Feed, FeedItem
 
 class Command(BaseCommand):
     """
@@ -31,7 +32,6 @@ class Command(BaseCommand):
             os.unlink(self.LOCKFILE)
 
     def update_feeds(self, verbose=False):
-        from django_website.apps.aggregator.models import Feed, FeedItem
         for feed in Feed.objects.filter(is_defunct=False):
             if verbose:
                 print feed
