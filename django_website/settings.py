@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django_website.blog',
     'django_website.aggregator',
+    'djangodocs',
     'registration',
 )
 

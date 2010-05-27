@@ -1,0 +1,12 @@
+[
+  {
+    "model": "djangodocs.documentrelease",
+    "pk": 1,
+    "fields": {
+      "lang": "en",
+      "version": "dev",
+      "scm_url": "http://code.djangoproject.com/svn/django/trunk/docs",
+      "is_default": false
+    }
+  }
+]
