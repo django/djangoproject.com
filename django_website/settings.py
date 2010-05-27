@@ -1,5 +1,7 @@
 import os, platform
 
+BASE = os.path.abspath(os.path.dirname(__file__))
+
 # Far too clever trick to know if we're running on the deployment server.
 DEVELOPMENT_MODE = (platform.node() != "djangoproject")
 
@@ -18,9 +20,10 @@ if DEVELOPMENT_MODE:
     PREPEND_WWW = False
     CACHE_BACKEND = "dummy:///"
     DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
-    ADMIN_MEDIA_PREFIX = '/static/'
-    MEDIA_ROOT = os.path.join(os.path.dirname(__file__), "media")
+    MEDIA_ROOT = os.path.abspath(os.path.join(BASE, '..', 'media'))
     MEDIA_URL = "/media/"
+    ADMIN_MEDIA_PREFIX = '/admin_media/'
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     DEBUG = False
     PREPEND_WWW = True
@@ -28,9 +31,9 @@ else:
     CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
     TEMPLATE_DIRS = ['/home/djangoproject.com/django_website/templates']
     DJANGO_SVN_ROOT = "file:///home/svn/django/django/"
-    ADMIN_MEDIA_PREFIX = 'http://media.djangoproject.com/admin/'
     MEDIA_ROOT = "/home/html/djangoproject.com/m/"
-    MEDIA_URL = "http://media.djangoproject.com.com/m/"
+    MEDIA_URL = "http://www.djangoproject.com.com/m/"
+    ADMIN_MEDIA_PREFIX = 'http://media.djangoproject.com/admin/'
 
 SITE_ID = 1
 ROOT_URLCONF = 'django_website.urls'
@@ -72,6 +75,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
 )
+
 USE_I18N = False
 
 DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"

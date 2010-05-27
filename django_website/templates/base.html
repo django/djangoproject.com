@@ -1,26 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-		<meta http-equiv="Content-Language" content="en-us" />
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="en-us" />
+    <title>Django | {% block title %}The Web framework for perfectionists with deadlines{% endblock %}</title>
+    <meta name="ROBOTS" content="ALL" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+    <link href="{{ MEDIA_URL }}css/{% block cssid %}base{% endblock %}.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="{{ MEDIA_URL }}css/print.css" rel="stylesheet" type="text/css" media="print" />
+    {% block extrahead %}{% endblock %}
+  </head>
 
-		<title>Django | {% block title %}The Web framework for perfectionists with deadlines{% endblock %}</title>
-
-		<meta name="ROBOTS" content="ALL" />
-		<meta http-equiv="imagetoolbar" content="no" />
-		<meta name="MSSmartTagsPreventParsing" content="true" />
-		<meta name="Copyright" content="This site's design and contents Copyright (c) 2005  Lawrence Journal-World." />
-
-		<meta name="keywords" content="Python, Django, framework, open-source" />
-		<meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
-
-		<link href="{{ MEDIA_URL}}css/{% block cssid %}base{% endblock %}.css" rel="stylesheet" type="text/css" media="screen" />
-		<link href="{{ MEDIA_URL }}css/print.css" rel="stylesheet" type="text/css" media="print" />
-      {% block extrahead %}{% endblock %}
-	</head>
-
-	<body id="{% block sectionid %}generic{% endblock %}" class="{% block coltype %}default{% endblock %}">
+  <body id="{% block sectionid %}generic{% endblock %}" class="{% block coltype %}default{% endblock %}">
 
 	<div id="container">
 		<div id="header">
