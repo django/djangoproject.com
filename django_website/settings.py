@@ -6,7 +6,7 @@ DEVELOPMENT_MODE = (platform.node() != "djangoproject")
 ADMINS = (('Adrian Holovaty','holovaty@gmail.com'), ('Jacob Kaplan-Moss', 'jacob@jacobian.org'))
 TIME_ZONE = 'America/Chicago'
 
-SERVER_EMAIL = 'root@pam.servers.ljworld.com'
+SERVER_EMAIL = 'root@djangoproject.com'
 MANAGERS = (('Jacob Kaplan-Moss','jacob@jacobian.org'),)
 
 DATABASE_ENGINE = 'postgresql_psycopg2'
@@ -45,9 +45,9 @@ INSTALLED_APPS = (
     'django.contrib.redirects',
     'django.contrib.sessions',
     'django.contrib.sitemaps',
-    'django_website.apps.blog',
-    'django_website.apps.docs',
-    'django_website.apps.aggregator',
+    'django_website.blog',
+    'django_website.docs',
+    'django_website.aggregator',
     'registration',
 )
 
@@ -82,9 +82,3 @@ ACCOUNT_ACTIVATION_DAYS = 3
 
 # comment_utils settings
 AKISMET_API_KEY = "c892e4962244"
-
-try:
-    from local_settings import *
-except ImportError:
-    pass
-

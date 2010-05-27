@@ -1,14 +1,16 @@
+from __future__ import absolute_import
+
 from django.conf import settings
 from django.conf.urls.defaults import *
 from django.contrib import admin
 from django.contrib.comments.feeds import LatestCommentFeed
 from django.contrib.comments.models import Comment
 from django.contrib.sitemaps import views as sitemap_views
-from django_website.apps.aggregator.feeds import CommunityAggregatorFeed
-from django_website.apps.aggregator.models import FeedItem
-from django_website.apps.blog.feeds import WeblogEntryFeed
-from django_website.sitemaps import FlatPageSitemap, WeblogSitemap
 from django.views.decorators.cache import cache_page
+from .aggregator.feeds import CommunityAggregatorFeed
+from .aggregator.models import FeedItem
+from .blog.feeds import WeblogEntryFeed
+from .sitemaps import FlatPageSitemap, WeblogSitemap
 
 comments_info_dict = {
     'queryset': Comment.objects.filter(is_public=True).order_by('-submit_date'),
@@ -45,7 +47,7 @@ urlpatterns = patterns('',
           name="community-feed-list"),
     url(r'^community/', 'django_website.apps.aggregator.views.index', name='community-index'),
     (r'^contact/', include('django_website.apps.contact.urls')),
-    (r'^documentation/', include('django_website.apps.docs.urls')),
+    (r'^documentation/', include('django_website.legacy.docurls')),
     (r'^r/', include('django.conf.urls.shortcut')),
     (r'^rss/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     (r'^sitemap\.xml$', cache_page(sitemap_views.sitemap, 60 * 60 * 6), {'sitemaps': sitemaps}),

@@ -1,6 +1,8 @@
-from django.contrib.syndication.feeds import Feed
-from django_website.apps.blog.models import Entry
+from __future__ import absolute_import
+
 import datetime
+from django.contrib.syndication.feeds import Feed
+from .models import Entry
 
 class WeblogEntryFeed(Feed):
     title = "The Django weblog"

@@ -1,7 +1,9 @@
-from django.contrib.sitemaps import Sitemap
-from django_website.apps.blog.models import Entry
-from django.contrib.flatpages.models import FlatPage
+from __future__ import absolute_import
+
 import datetime
+from django.contrib.sitemaps import Sitemap
+from django.contrib.flatpages.models import FlatPage
+from .blog.models import Entry
 
 class FlatPageSitemap(Sitemap):
     """
