@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 import datetime
 from django import template
-from .models import Entry
+from ..models import Entry
 
 register = template.Library()
 

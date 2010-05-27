@@ -17,11 +17,6 @@ comments_info_dict = {
     'paginate_by': 15,
 }
 
-aggregator_info_dict = {
-    'queryset': FeedItem.objects.select_related(),
-    'paginate_by': 15,
-}
-
 feeds = {
     'weblog': WeblogEntryFeed,
     'comments': LatestCommentFeed,
@@ -51,7 +46,7 @@ urlpatterns = patterns('',
     (r'^r/', include('django.conf.urls.shortcut')),
     (r'^rss/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     (r'^sitemap\.xml$', cache_page(sitemap_views.sitemap, 60 * 60 * 6), {'sitemaps': sitemaps}),
-    (r'^weblog/', include('django_website.apps.blog.urls')),
+    (r'^weblog/', include('django_website.blog.urls')),
     (r'^freenode\.9xJY7YIUWtwn\.html$', 'django.views.generic.simple.direct_to_template', {'template': 'freenode_tmp.html'}),
     url(r'^download$', 'django.contrib.flatpages.views.flatpage', {'url': 'download'}, name="download"),
 )

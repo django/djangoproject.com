@@ -46,7 +46,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sitemaps',
     'django_website.blog',
-    'django_website.docs',
     'django_website.aggregator',
     'registration',
 )
