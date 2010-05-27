@@ -1,0 +1,32 @@
+[
+  {
+    "model": "djangodocs.documentrelease",
+    "pk": 2,
+    "fields": {
+      "lang": "en",
+      "version": "1.0",
+      "scm_url": "http://code.djangoproject.com/svn/django/branches/releases/1.0.X/docs",
+      "is_default": false
+    }
+  },
+  {
+    "model": "djangodocs.documentrelease",
+    "pk": 3,
+    "fields": {
+      "lang": "en",
+      "version": "1.1",
+      "scm_url": "http://code.djangoproject.com/svn/django/branches/releases/1.1.X/docs",
+      "is_default": false
+    }
+  },
+  {
+    "model": "djangodocs.documentrelease",
+    "pk": 4,
+    "fields": {
+      "lang": "en",
+      "version": "1.2",
+      "scm_url": "http://code.djangoproject.com/svn/django/trunk/docs",
+      "is_default": true
+    }
+  }
+]
