@@ -1,7 +1,9 @@
+from __future__ import absolute_import
+
 from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
 from contact_form.views import contact_form
-from django_website.apps.contact.forms import FoundationContactForm
+from .forms import FoundationContactForm
 
 urlpatterns = patterns('',
     url(

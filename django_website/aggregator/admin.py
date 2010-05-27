@@ -1,5 +1,7 @@
+from __future__ import absolute_import
+
 from django.contrib import admin
-from django_website.apps.aggregator.models import Feed, FeedItem, FeedType
+from .models import Feed, FeedItem, FeedType
 
 admin.site.register(Feed, 
     list_display  = ["title", "public_url", "is_defunct"],

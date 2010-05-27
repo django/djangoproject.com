@@ -1,5 +1,7 @@
+from __future__ import absolute_import
+
 from django.contrib.syndication.feeds import Feed
-from django_website.apps.aggregator.models import FeedItem
+from .models import FeedItem
 
 class CommunityAggregatorFeed(Feed):
     title = "The Django community aggregator"

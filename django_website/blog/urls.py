@@ -1,5 +1,7 @@
+from __future__ import absolute_import
+
 from django.conf.urls.defaults import *
-from models import Entry # relative import
+from .models import Entry
 
 info_dict = {
     'queryset': Entry.objects.all(),
