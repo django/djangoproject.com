@@ -5,6 +5,7 @@
     "fields": {
       "lang": "en",
       "version": "1.0",
+      "scm": "svn",
       "scm_url": "http://code.djangoproject.com/svn/django/branches/releases/1.0.X/docs",
       "is_default": false
     }
@@ -15,6 +16,7 @@
     "fields": {
       "lang": "en",
       "version": "1.1",
+      "scm": "svn",
       "scm_url": "http://code.djangoproject.com/svn/django/branches/releases/1.1.X/docs",
       "is_default": false
     }
@@ -25,6 +27,7 @@
     "fields": {
       "lang": "en",
       "version": "1.2",
+      "scm": "svn",
       "scm_url": "http://code.djangoproject.com/svn/django/trunk/docs",
       "is_default": true
     }

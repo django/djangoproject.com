@@ -1,54 +1,30 @@
+from __future__ import absolute_import
+
 import datetime
 import django.views.static
-from django.conf import settings
 from django.core import urlresolvers
-from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
-from unipath import FSPath as Path
-import simplejson
+from django.utils import simplejson
+from .models import DocumentRelease
+from .utils import get_doc_root_or_404, get_doc_path_or_404
 
 def index(request):
-    return HttpResponseRedirect(
-        urlresolvers.reverse('document-index', kwargs={
-            'lang': settings.DOCS_DEFAULT_LANGUAGE,
-            'version': settings.DOCS_DEFAULT_VERSION,
-        })
-    )
+    return redirect(DocumentRelease.objects.default())
     
 def language(request, lang):
-    return HttpResponseRedirect(
-        urlresolvers.reverse('document-index', kwargs={
-            'lang': settings.DOCS_DEFAULT_LANGUAGE,
-            'version': settings.DOCS_DEFAULT_VERSION,
-        })
-    )
-
-def get_docroot(lang, version):
-    docroot = Path(settings.DOCS_PICKLE_ROOT).child(lang, version, "_build", "json")
-    if not docroot.exists():
-        raise Http404(docroot)
-    return docroot
+    return redirect(DocumentRelease.objects.default())
 
 def document(request, lang, version, url):
-    docroot = get_docroot(lang, version)
-    
-    # First look for <bits>/index.fpickle, then for <bits>.fpickle
-    bits = url.strip('/').split('/') + ['index.fjson']
-    doc = docroot.child(*bits)
-    if not doc.exists():
-        bits = bits[:-2] + ['%s.fjson' % bits[-2]]
-        doc = docroot.child(*bits)
-        if not doc.exists():
-            raise Http404("'%s' does not exist" % doc)
+    docroot = get_doc_root_or_404(lang, version)
+    doc_path = get_doc_path_or_404(docroot, url)
 
-    bits[-1] = bits[-1].replace('.fjson', '')
     template_names = [
-        'docs/%s.html' % '-'.join([b for b in bits if b]), 
-        'docs/doc.html'
-    ]
+        'docs/%s.html' % docroot.rel_path_to(doc_path).replace(doc_path.ext, ''),
+        'docs/doc.html',
+    ]    
     return render_to_response(template_names, RequestContext(request, {
-        'doc': simplejson.load(open(doc, 'rb')),
+        'doc': simplejson.load(open(doc_path, 'rb')),
         'env': simplejson.load(open(docroot.child('globalcontext.json'), 'rb')),
         'lang': lang,
         'version': version,
@@ -60,33 +36,30 @@ def document(request, lang, version, url):
     }))
 
 def images(request, lang, version, path):
-    docroot = get_docroot(lang, version)
     return django.views.static.serve(
         request, 
-        document_root = docroot.child('_images'),
+        document_root = get_doc_root_or_404(lang, version).child('_images'),
         path = path,
     )
     
 def source(request, lang, version, path):
-    docroot = get_docroot(lang, version)
     return django.views.static.serve(
         request,
-        document_root = docroot.child('_sources'),
+        document_root = get_doc_root_or_404(lang, version).child('_sources'),
         path = path,
     )
     
 def objects_inventory(request, lang, version):
-    docroot = get_docroot(lang, version)
     response = django.views.static.serve(
         request, 
-        document_root = docroot,
+        document_root = get_doc_root_or_404(lang, version),
         path = "objects.inv",
     )
     response['Content-Type'] = "text/plain"
     return response
 
 def search(request, lang, version):
-    docroot = get_docroot(lang, version)
+    docroot = get_doc_root_or_404(lang, version)
     
     # Remove the 'cof' GET variable from the query string so that the page
     # linked to by the Javascript fallback doesn't think its inside an iframe.
