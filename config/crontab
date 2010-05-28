@@ -3,4 +3,6 @@
 
 PYTHONPATH=/home/djangoproject.com/
 DJANGO_SETTINGS_MODULE=django_website.settings
-15,45 * * * * root python /home/djangoproject.com/django_website/manage.py update_feeds
+
+15,45 * * * * root /home/djangoproject/bin/python /home/djangoproject.com/manage-www.py update_feeds
+25,55 * * * * root /home/djangoproject/bin/python /home/djangoproject.com/manage-www.py update_docs
