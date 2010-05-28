@@ -1,6 +1,6 @@
 [
   {
-    "model": "djangodocs.documentrelease",
+    "model": "docs.documentrelease",
     "pk": 2,
     "fields": {
       "lang": "en",
@@ -11,7 +11,7 @@
     }
   },
   {
-    "model": "djangodocs.documentrelease",
+    "model": "docs.documentrelease",
     "pk": 3,
     "fields": {
       "lang": "en",
@@ -22,7 +22,7 @@
     }
   },
   {
-    "model": "djangodocs.documentrelease",
+    "model": "docs.documentrelease",
     "pk": 4,
     "fields": {
       "lang": "en",

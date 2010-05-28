@@ -1,0 +1,22 @@
+
+p.rubric { font-size:150%; font-weight:normal; margin-bottom:.2em; color:#487858; }
+div.section dt { font-weight: normal; }
+
+#s-getting-help { float: right; width: 40%; background: #E1ECE2; padding: 1em; margin: 2em 0 2em 2em; }
+#s-getting-help h2 { margin: 0; }
+
+#s-django-documentation div.section div.section h3 { margin: 0; }
+#s-django-documentation div.section div.section { background: #E1ECE2; padding: 1em; margin: 2em 0 2em 57%; }
+#s-django-documentation div.section div.section a.reference { white-space: nowrap; }
+
+#s-using-django dl,
+#s-add-on-contrib-applications dl,
+#s-solving-specific-problems dl,
+#s-reference dl
+    { float: left; width: 57%; }
+
+#s-add-on-contrib-applications,
+#s-solving-specific-problems,
+#s-reference,
+#s-and-all-the-rest
+    { clear: left; }

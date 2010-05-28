@@ -1,6 +1,10 @@
-import os, platform
+# Settings for www.djangoproject.com
 
-BASE = os.path.abspath(os.path.dirname(__file__))
+import platform
+from unipath import FSPath as Path
+
+# The full path to the django_website directory.
+BASE = Path(__file__).absolute().ancestor(2)
 
 # Far too clever trick to know if we're running on the deployment server.
 DEVELOPMENT_MODE = (platform.node() != "djangoproject")
@@ -13,14 +17,14 @@ MANAGERS = (('Jacob Kaplan-Moss','jacob@jacobian.org'),)
 
 DATABASE_ENGINE = 'postgresql_psycopg2'
 DATABASE_NAME = 'djangoproject'
-TEMPLATE_DIRS = [os.path.join(os.path.dirname(__file__), "templates")]
+TEMPLATE_DIRS = [BASE.child('templates')]
 
 if DEVELOPMENT_MODE:
     DEBUG = True
     PREPEND_WWW = False
     CACHE_BACKEND = "dummy:///"
     DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
-    MEDIA_ROOT = os.path.abspath(os.path.join(BASE, '..', 'media'))
+    MEDIA_ROOT = BASE.parent.child('media')
     MEDIA_URL = "/media/"
     ADMIN_MEDIA_PREFIX = '/admin_media/'
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -36,7 +40,7 @@ else:
     ADMIN_MEDIA_PREFIX = 'http://media.djangoproject.com/admin/'
 
 SITE_ID = 1
-ROOT_URLCONF = 'django_website.urls'
+ROOT_URLCONF = 'django_website.urls.www'
 INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.auth',
@@ -50,7 +54,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django_website.blog',
     'django_website.aggregator',
-    'djangodocs',
+    'django_website.docs',
     'registration',
 )
 
@@ -76,6 +80,12 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
 )
+TEMPLATE_CONTEXT_PROCESSORS = [
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+]
 
 USE_I18N = False
 

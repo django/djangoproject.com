@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 
 from django import template
-from djangodocs.forms import SearchForm
+from ..forms import SearchForm
 from ..models import DocumentRelease
 from ..utils import get_doc_root, get_doc_path
 
@@ -58,6 +58,6 @@ class AllDocVersionsTag(template.Node):
                     versions.append(release.version)
 
         # Save the versions into the context
-        context[self.asvar] = versions
+        context[self.asvar] = reversed(sorted(versions))
 
         return ''

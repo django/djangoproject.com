@@ -4,30 +4,7 @@
 
 {% block extrahead %}
   {{ block.super }}
-  <style type="text/css" media="screen">
-    #docs-search {
-      color: #000;
-      float: right;
-    }
-    #docs-search form {
-      font-size: 92%;
-      margin: 0;
-      padding: 1em 1em 0;
-      white-space: nowrap;
-    }
-    form.search ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    form.search li {
-      display: inline;
-      padding-right: 1em;
-    }
-    form.search .query {
-      width: 18em;
-    }
-  </style>
+  <link rel="stylesheet" href="{{ MEDIA_URL }}css/docs/docs.css" type="text/css" />
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/pygments.css" type="text/css" />
 {% endblock %}
 
@@ -41,18 +18,19 @@
   {% load docs %}
   {% get_all_doc_versions docurl as versions %}
   <h2 class="deck">
-  {% ifequal version "dev" %}
-    This document is for Django's development version, which can be
-    significantly different from previous releases. Get old docs here:
-    {% for version in versions|slice:"1:" %}
-      <a href="/en/{{ version }}/{{ docurl }}">{{ version }}</a>{% if forloop.last %}.{% else %},{% endif %}
-    {% endfor %}
-  {% else %}
-    {% ifequal versions.0 "dev" %}
+    {% if version == "dev" %}
+      This document is for Django's development version, which can be
+      significantly different from previous releases. Get older docs here:
+      {% for version in versions %}
+        {% if version != "dev" %}
+          <a href="{% url document-detail lang=lang, version=version, url=docurl %}">
+            {{ version }}</a>{% if forloop.last %}.{% else %},{% endif %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
       This document describes Django {{ version }}. For development docs, 
-      <a href="/en/dev/{{ docurl }}">go here</a>.
-    {% endifequal %}
-  {% endifequal %}
+      <a href="{% url document-detail lang=lang, version="dev", url=docurl %}">go here</a>.
+    {% endif %}
   </h2>
   {{ doc.body|safe }}
 {% endblock %}
@@ -62,8 +40,8 @@
   <p>Having trouble? We'd like to help!</p>
   <ul>
     <li>
-      Try the <a href="/en/dev/faq/">FAQ</a> -— it's got answers to many common
-      questions.
+      Try the <a href="{% url document-detail lang=lang, version=version, url="faq" %}">FAQ</a> 
+      -— it's got answers to many common questions.
     </li>
     <li>
       Search for information in the <a

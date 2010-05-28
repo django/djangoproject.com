@@ -1,0 +1,5 @@
+#docs-search { color: #000; float: right; }
+#docs-search form { font-size: 92%; margin: 0; padding: 1em 1em 0; white-space: nowrap; }
+form.search ul { list-style: none; margin: 0; padding: 0; }
+form.search li { display: inline; padding-right: 1em; }
+form.search .query { width: 18em; }

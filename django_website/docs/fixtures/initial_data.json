@@ -1,6 +1,6 @@
 [
   {
-    "model": "djangodocs.documentrelease",
+    "model": "docs.documentrelease",
     "pk": 1,
     "fields": {
       "lang": "en",
