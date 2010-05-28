@@ -1,42 +1,50 @@
-import djangodocs.views
+from django.conf import settings
 from django.conf.urls.defaults import *
+from . import views
 
 urlpatterns = patterns('',
     url(
         r'^$',
-        djangodocs.views.index,
+        views.index,
     ),
     url(
         r'^(?P<lang>[a-z-]+)/$',
-        djangodocs.views.language,
+        views.language,
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/$',
-        djangodocs.views.document,
+        views.document,
         {'url': ''},
         name = 'document-index',
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/search/$',
-        djangodocs.views.search,
+        views.search,
         name = 'document-search',
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_objects/$',
-        djangodocs.views.objects_inventory,
+        views.objects_inventory,
         name = 'objects-inv',
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_images/(?P<path>.*)$',
-        djangodocs.views.images,
+        views.images,
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_source/(?P<path>.*)$',
-        djangodocs.views.source,
+        views.source,
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/(?P<url>[\w./-]*)/$',
-        djangodocs.views.document,
+        views.document,
         name = 'document-detail',
     ),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^media/(?P<path>.*)$',
+            'django.views.static.serve', 
+            {'document_root': settings.MEDIA_ROOT}),
+    )

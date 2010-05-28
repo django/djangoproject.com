@@ -2,47 +2,33 @@
 Update and build the documentation into files for display with the djangodocs
 app.
 """
+from __future__ import absolute_import
 
-import os
-import sys
-import pysvn
-import sphinx
+import subprocess
+from django.conf import settings
+from django.core.management.base import NoArgsCommand
+from unipath import FSPath as Path
+from ...models import DocumentRelease
 
-SVN_DOCS_TRUNK = 'http://code.djangoproject.com/svn/django/trunk/docs/'
-SVN_DOCS_RELEASES = 'http://code.djangoproject.com/svn/django/branches/releases/'
+class Command(NoArgsCommand):
+    def handle_noargs(self, **kwargs):
+        for release in DocumentRelease.objects.all():
+            print "Updating %s..." % release
+            destdir = Path(settings.DOCS_BUILD_ROOT).child(release.lang, release.version)
+            if not destdir.exists():
+                destdir.mkdir(parents=True)
+            
+            # Make an SCM checkout/update into the destination directory.
+            # Do this dynamically in case we add other SCM later.
+            getattr(self, 'update_%s' % release.scm)(release.scm_url, destdir)
 
-svn = pysvn.Client()
+            # Run Sphinx by faking a commandline. Better than shelling out, I s'pose.
+            subprocess.call(['sphinx-build',
+                '-b', 'json',                       # Use the JSON builder
+                '-q',                               # Be vewy qwiet
+                destdir,                            # Source file directory
+                destdir.child('_build', 'json'),    # Destination directory
+            ])
 
-def get_doc_versions():
-    """
-    Get a list of (lang, version, svnurl) tuples of docs to build.
-    """
-    yield ('en', 'dev', SVN_DOCS_TRUNK)
-    for release in svn.ls(SVN_DOCS_RELEASES):
-        version = release.name.split('/')[-1].replace('.X', '')
-        yield ('en', version, "%s/docs/" % release.name)
-    
-def update_docs(basedir):
-    """
-    Update all versions of the docs into the given base directory.
-    """
-    for (lang, version, svnurl) in get_doc_versions():
-        
-        # Make an SVN checkout (or update) in the destination directory,
-        # creating it if it doesn't exist
-        destdir = os.path.join(basedir, lang, version)
-        if not os.path.exists(destdir):
-            os.makedirs(destdir)
-        svn.checkout(svnurl, destdir)
-                
-        # Run Sphinx by faking a commandline. Better than shelling out, I s'pose.
-        sphinx.main([
-            'sphinx-build',                          # Fake argv[0]
-            '-b', 'json',                            # Use the JSON builder
-            '-q',                                    # Be vewy qwiet
-            destdir,                                 # Source file directory
-            os.path.join(destdir, '_build', 'json'), # Destination directory
-        ])
-
-if __name__ == '__main__':
-    update_docs(sys.argv[1])
+    def update_svn(self, url, destdir):
+        subprocess.call(['svn', 'checkout', url, destdir])
