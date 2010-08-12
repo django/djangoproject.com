@@ -2,3 +2,4 @@ django-registration
 akismet
 feedparser
 django
+docutils
