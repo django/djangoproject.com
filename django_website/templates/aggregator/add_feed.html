@@ -1,0 +1,16 @@
+{% extends "base_community.html" %}
+
+{% block content %}
+
+<h1>Community</h1>
+
+<form method="POST" action="" id="add_feed_form">
+  {{ form.as_p }}
+  <input type="submit" name="submit" value="Add Feed" />
+</form>
+
+<div id="content-secondary">
+{% if has_next %}<a href="?page={{ next }}">Earlier posts</a>{% endif %}</p>
+</div>
+
+{% endblock %}

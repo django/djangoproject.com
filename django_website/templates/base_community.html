@@ -7,7 +7,6 @@
 {% block billboard %}<h2>Community</h2>{% endblock %}
 
 {% block content-related %}
-
 <h2>Get involved</h2>
 
 <ul>
@@ -33,11 +32,10 @@
 
 <h2>Tell the world</h2>
 <ul>
-<li><a href="http://code.djangoproject.com/wiki/DjangoPoweredSites">Django-powered sites</a> &mdash; add your site to the list</li>
+<li><a href="http://djangosites.org/">Django-powered sites</a> &mdash; add your site to the list</li>
 <li><a href="/community/badges/">Django badges</a> &mdash; show your support (or wish longingly)</li>
 <li><a href="/community/logos/">Django logos</a> &mdash; download official logos</li>
 <li><a href="/weblog/2005/nov/11/desktops/">Django wallpaper</a> &mdash; cover your desktop</li>
-<li>Write about Django, and <a href="mailto:jacob@jacobian.org">let us know</a>, and we'll add your feed to this page.</li>
 </ul>
 
 <h2>Improve Django</h2>
@@ -54,15 +52,4 @@
 <li><strong>Chat live with other Django users</strong> in the <a href="irc://irc.freenode.net/django">#django IRC channel on irc.freenode.net</a>.</li>
 <li><strong>Ask questions</strong> on the <a href="http://groups-beta.google.com/group/django-users">django-users mailing list</a>.</li>
 </ul>
-
-<h2>Authors</h2>
-
-<ul>
-{% load aggregator %}
-{% get_feed_list as feed_list %}
-{% for feed in feed_list %}
-<li><a href="{{ feed.public_url }}">{{ feed }}</a> <a class="rss" href="{{ feed.feed_url }}">RSS</a></li>
-{% endfor %}
-</ul>
-<p>Do you write about Django? <a href="mailto:jacob@jacobian.org">Let us know</a>, and we'll add your feed to this page.</p>
 {% endblock %}

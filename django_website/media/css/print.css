@@ -1,0 +1,22 @@
+@import url(base.css);
+
+@page {
+    size: US-Letter;
+    margin: .75in .5in .75in 1in;
+}
+
+body { font-size:10pt; background: white; color: black; }
+
+/* Hide unneccessary content */
+#header, #billboard, #content-extra, #documentation #content-secondary, #documentation #content-related, h2.deck { display:none; }
+
+/* Fix widths */
+#container { width:7in; }
+#subwrap, #content-main { width:7in; float:none; }
+
+/* Formatting and display fixes */
+#content { border-top:none; }
+.literal-block { overflow:visible; }
+
+/* Typographic adjustments */
+#content-main p, #content-main h2, #content-main h3, #content-main h4 { margin-bottom:1em; }
