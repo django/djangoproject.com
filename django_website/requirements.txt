@@ -1,0 +1,4 @@
+django-registration
+akismet
+feedparser
+django
