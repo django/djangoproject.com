@@ -18,7 +18,10 @@ if DEVELOPMENT_MODE:
     PREPEND_WWW = False
     CACHE_BACKEND = "dummy:///"
     DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
-    ADMIN_MEDIA_PREFIX = '/media/'
+    ADMIN_MEDIA_PREFIX = '/static/'
+    # FIXME: Really need to pull in actual media to serve so we can do this offline.
+    MEDIA_ROOT = os.path.join(os.path.dirname(__file__), "media")
+    MEDIA_URL = "/media/"
 else:
     DEBUG = False
     PREPEND_WWW = True
@@ -27,6 +30,8 @@ else:
     TEMPLATE_DIRS = ['/home/djangoproject.com/django_website/templates']
     DJANGO_SVN_ROOT = "file:///home/svn/django/django/"
     ADMIN_MEDIA_PREFIX = 'http://media.djangoproject.com/admin/'
+    MEDIA_ROOT = "/home/html/djangoproject.com/m/"
+    MEDIA_URL = "http://media.djangoproject.com.com/m/"
 
 SITE_ID = 1
 ROOT_URLCONF = 'django_website.urls'
@@ -46,8 +51,6 @@ INSTALLED_APPS = (
     'django_website.apps.aggregator',
     'registration',
 )
-MEDIA_ROOT = "/home/html/djangoproject.com/m/"
-MEDIA_URL = "http://www.djangoproject.com.com/m/"
 
 # setting for documentation root path
 DJANGO_DOCUMENT_ROOT_PATH = "/home/html/djangoproject.com/docs/"
@@ -56,16 +59,16 @@ DJANGO_TESTS_PATH = "/home/html/djangoproject.com/tests/"
 CACHE_MIDDLEWARE_SECONDS = 60 * 5 # 5 minutes
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangoproject'
 CACHE_MIDDLEWARE_GZIP = True
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+#CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.http.SetRemoteAddrFromForwardedFor',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.CacheMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',

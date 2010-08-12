@@ -1,0 +1,63 @@
+{% extends "base_community.html" %}
+
+{% block extrahead %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/rss/community/" />
+{% endblock %}
+
+{% block content %}
+<h1>Community</h1>
+<h2 class="deck">This page, updated every hour, aggregates what's going on in the community.</h2>
+
+{% for feedtype in feedtype_list %}
+<div id="{{ feedtype.slug }}" class="module {% cycle "first" "last" %}">
+  <h3 class="header">{{ feedtype.name }}</h3>
+  {% for item in feedtype.items|slice:":5" %}
+  <h5><a href="{{ item.link }}">{{ item.title }}</a></h5>
+  <p class="date">{{ item.date_modified|date:"N jS, Y \a\t P" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a></p>
+  {% endfor %}
+  <p style="padding-left: 10px;"><a href="{% url community-feed-list feedtype.slug %}">View more</a>{% if feedtype.can_self_add %} or <a href="{% url community-add-feed feedtype.slug %}">Add your feed</a>{% endif %}</p>
+</div>
+{% endfor %}
+
+{% comment %}
+
+<div id="blogs" class="module first">
+  <h3 class="header">Recent Blog Posts</h3>
+  {% for article in article_list|slice:":5" %}
+  <h5><a href="{{ article.link }}">{{ article.title }}</a></h5>
+  <p class='date'>{{ article.date_modified|date:"N jS, Y \a\t P" }} by <a href="{{ article.feed.public_url }}">{{ article.feed.title }}</a></p>
+  {% endfor %}
+  <p style="padding-left: 10px;"><a href="{% url community-feed-list 'articles' %}">View more</a> or <a href="{% url community-add-feed "articles" %}">Add your feed</a></p>
+</div>
+
+<div class="module last" id="jobs">
+  <h3 class="header">Recently Posted Jobs</h3>
+  {% for job in job_list|slice:":5" %}
+  <h5><a href="{{ job.link }}">{{ job.title }}</a></h5>
+  <p class='date'>{{ job.date_modified|date:"N jS, Y \a\t P" }} by <a href="{{ job.feed.public_url }}">{{ job.feed.title }}</a></p>
+  {% endfor %}
+</div>
+<hr style="clear: both; display: block; border: none; background-color: white; color: white;" />
+<div class="module" id="pypi">
+  <h3 class="header">Recently On PyPi</h3>
+  {% for package in pypi_list|slice:":5" %}
+  <h5><a href="{{ package.link }}">{{ package.title }}</a></h5>
+  <p>{{ package.summary }}</p>
+  {% endfor %}
+</div>
+
+<div class="module" id="elsewhere">
+  <h3 class="header">Recently External Development</h3>
+  {% for project in external_dev_list|slice:":5" %}
+  <h5><a href="{{ project.link }}">{{ project.feed.title }}</a></h5>
+  <p>{{ project.title }}</p>
+  {% endfor %}
+</div>
+{% endcomment %}
+
+<hr style="height: 35px; display: block; clear: both; visibility: hidden;" />
+<div id="content-secondary">
+{% if has_next %}<a href="?page={{ next }}">Earlier posts</a>{% endif %}</p>
+</div>
+
+{% endblock %}
