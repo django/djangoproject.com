@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('django_website.apps.docs.views',
-    (r'^$',                                             'doc_index'),
+    url(r'^$',                                          'doc_index', name="doc_index"),
     (r'^(?P<version>[\d.]+)/$',                         'doc_index'),
     (r'^models/$',                                      'model_index'),
     (r'^models/(?P<slug>\w+)/$',                        'model_detail'),
