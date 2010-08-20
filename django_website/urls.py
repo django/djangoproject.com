@@ -32,7 +32,7 @@ sitemaps = {
 }
 
 urlpatterns = patterns('',
-    (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'homepage.html'}),
+    url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'homepage.html'}, name="homepage"),
     (r'^accounts/', include('django_website.apps.accounts.urls')),
     (r'^admin/(.*)', admin.site.root),
     (r'^comments/$', 'django.views.generic.list_detail.object_list', comments_info_dict),
@@ -54,6 +54,7 @@ urlpatterns = patterns('',
     (r'^sitemap\.xml$', cache_page(sitemap_views.sitemap, 60 * 60 * 6), {'sitemaps': sitemaps}),
     (r'^weblog/', include('django_website.apps.blog.urls')),
     (r'^freenode\.9xJY7YIUWtwn\.html$', 'django.views.generic.simple.direct_to_template', {'template': 'freenode_tmp.html'}),
+    url(r'^download$', 'django.contrib.flatpages.views.flatpage', {'url': 'download'}, name="download"),
 )
 
 if settings.DEVELOPMENT_MODE:
