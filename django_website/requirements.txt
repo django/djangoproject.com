@@ -7,4 +7,7 @@ docutils
 # setuptools.dist has no attribue 'check_packages' ? -- update setuptools.
 -e hg+http://bitbucket.org/ubernostrum/django-contact-form#egg=contact_form
 
+# pysvn must be installed outside of easy_install as it requires
+# compilation
+#
 # apt-get install python-svn
