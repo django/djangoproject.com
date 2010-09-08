@@ -83,3 +83,9 @@ ACCOUNT_ACTIVATION_DAYS = 3
 
 # comment_utils settings
 AKISMET_API_KEY = "c892e4962244"
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
