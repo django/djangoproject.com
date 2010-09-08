@@ -59,7 +59,7 @@ DJANGO_TESTS_PATH = "/home/html/djangoproject.com/tests/"
 CACHE_MIDDLEWARE_SECONDS = 60 * 5 # 5 minutes
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangoproject'
 CACHE_MIDDLEWARE_GZIP = True
-#CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
