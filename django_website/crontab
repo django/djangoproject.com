@@ -3,4 +3,4 @@
 
 PYTHONPATH=/home/djangoproject.com/
 DJANGO_SETTINGS_MODULE=django_website.settings
-15,45 * * * * root python /home/djangoproject.com/django_website/apps/aggregator/bin/update_feeds.py
+15,45 * * * * root python /home/djangoproject.com/django_website/manage.py update_feeds
