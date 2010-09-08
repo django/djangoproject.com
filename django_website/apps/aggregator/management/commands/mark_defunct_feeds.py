@@ -7,12 +7,14 @@ class Command(BaseCommand):
     Mark people with 404'ing feeds as defunct.
     """
     def handle(self, *args, **kwargs):
+        verbose = kwargs.get('verbosity')
         for f in Feed.objects.all():
             try:
                 r = urllib2.urlopen(f.feed_url)
             except urllib2.HTTPError, e:
                 if e.code == 404 or e.code == 500:
-                    print "%s on %s; marking defunct" % (e.code, f)
+                    if verbose:
+                        print "%s on %s; marking defunct" % (e.code, f)
                     f.is_defunct = True
                     f.save()
                 else:
