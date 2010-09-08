@@ -21,7 +21,7 @@ class Command(BaseCommand):
             sys.exit(1)
 
         try:
-            verbose = kwargs.get('verbose')
+            verbose = kwargs.get('verbosity')
             socket.setdefaulttimeout(15)
             self.update_feeds(verbose=verbose)
         except:
