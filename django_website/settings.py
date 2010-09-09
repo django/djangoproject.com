@@ -19,7 +19,6 @@ if DEVELOPMENT_MODE:
     CACHE_BACKEND = "dummy:///"
     DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
     ADMIN_MEDIA_PREFIX = '/static/'
-    # FIXME: Really need to pull in actual media to serve so we can do this offline.
     MEDIA_ROOT = os.path.join(os.path.dirname(__file__), "media")
     MEDIA_URL = "/media/"
 else:
