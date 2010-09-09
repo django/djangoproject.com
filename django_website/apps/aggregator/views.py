@@ -29,12 +29,6 @@ def add_feed(request, feed_type_slug):
     if f.is_valid():
         if f.save():
             return HttpResponseRedirect(reverse('community-index'))
-        else:
-            # not sure when this happens.
-            return render_to_response('aggregator/add_feed.html',
-                                      {'form':f},
-                                      context_instance=RequestContext(request))
-    else:
-        return render_to_response('aggregator/add_feed.html',
-                                  {'form':f},
-                                  context_instance=RequestContext(request))
+    return render_to_response('aggregator/add_feed.html',
+                              {'form':f},
+                              context_instance=RequestContext(request))
