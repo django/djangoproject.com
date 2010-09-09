@@ -18,9 +18,6 @@ def feed_list(request, feed_type_slug):
     items = FeedItem.objects.filter(feed__feed_type=feed_type)
     return object_list(request, items)
 
-def feed_type_list(request):
-    return object_list(request, FeedType.objects.all())
-
 @login_required
 def add_feed(request, feed_type_slug):
     ft = get_object_or_404(FeedType, slug=feed_type_slug, can_self_add=True)
