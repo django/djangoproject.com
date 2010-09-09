@@ -1,14 +1,5 @@
 [
   {
-    "pk": 1, 
-    "model": "aggregator.feedtype", 
-    "fields": {
-      "can_self_add": true, 
-      "name": "Commits across the community", 
-      "slug": "community-commits"
-    }
-  }, 
-  {
     "pk": 2, 
     "model": "aggregator.feedtype", 
     "fields": {
