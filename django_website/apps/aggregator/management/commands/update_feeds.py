@@ -28,7 +28,7 @@ class Command(BaseCommand):
             sys.exit(1)
         finally:
             os.close(lockfile)
-            os.unlink(self.LOCKFILE)        
+            os.unlink(self.LOCKFILE)
 
     def update_feeds(self, verbose=False):
         from django_website.apps.aggregator.models import Feed, FeedItem

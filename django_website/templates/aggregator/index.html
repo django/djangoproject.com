@@ -18,7 +18,7 @@
     {% if feedtype.items and feedtype.can_self_add %}
       or 
     {% endif %}
-    {% if feedtype.can_self_add %} 
+    {% if feedtype.can_self_add %}
       <a href="{% url community-add-feed feedtype.slug %}">Add your feed</a>
     {% endif %}</p>
 </div>
