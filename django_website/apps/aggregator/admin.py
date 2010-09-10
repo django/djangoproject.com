@@ -16,6 +16,6 @@ admin.site.register(FeedItem,
     date_heirarchy = ['date_modified'],
 )
 
-admin.site.register(FeedType,   
+admin.site.register(FeedType,
     prepopulated_fields = {'slug': ('name',)},
 )
