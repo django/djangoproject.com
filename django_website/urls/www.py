@@ -7,10 +7,10 @@ from django.contrib.comments.feeds import LatestCommentFeed
 from django.contrib.comments.models import Comment
 from django.contrib.sitemaps import views as sitemap_views
 from django.views.decorators.cache import cache_page
-from .aggregator.feeds import CommunityAggregatorFeed
-from .aggregator.models import FeedItem
-from .blog.feeds import WeblogEntryFeed
-from .sitemaps import FlatPageSitemap, WeblogSitemap
+from ..aggregator.feeds import CommunityAggregatorFeed
+from ..aggregator.models import FeedItem
+from ..blog.feeds import WeblogEntryFeed
+from ..sitemaps import FlatPageSitemap, WeblogSitemap
 
 comments_info_dict = {
     'queryset': Comment.objects.filter(is_public=True).order_by('-submit_date'),
@@ -30,25 +30,25 @@ sitemaps = {
 
 urlpatterns = patterns('',
     url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'homepage.html'}, name="homepage"),
-    (r'^accounts/', include('django_website.apps.accounts.urls')),
+    (r'^accounts/', include('django_website.accounts.urls')),
     (r'^admin/(.*)', admin.site.root),
     (r'^comments/$', 'django.views.generic.list_detail.object_list', comments_info_dict),
     (r'^comments/', include('django.contrib.comments.urls')),
     url(r'^community/add/(?P<feed_type_slug>[-\w]+)/',
-         'django_website.apps.aggregator.views.add_feed',
+         'django_website.aggregator.views.add_feed',
           name='community-add-feed'),
     url(r'^community/(?P<feed_type_slug>[-\w]+)/',
-         'django_website.apps.aggregator.views.feed_list',
+         'django_website.aggregator.views.feed_list',
           name="community-feed-list"),
-    url(r'^community/', 'django_website.apps.aggregator.views.index', name='community-index'),
-    (r'^contact/', include('django_website.apps.contact.urls')),
-    (r'^documentation/', include('django_website.legacy.docurls')),
+    url(r'^community/', 'django_website.aggregator.views.index', name='community-index'),
+    (r'^contact/', include('django_website.contact.urls')),
     (r'^r/', include('django.conf.urls.shortcut')),
     (r'^rss/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     (r'^sitemap\.xml$', cache_page(sitemap_views.sitemap, 60 * 60 * 6), {'sitemaps': sitemaps}),
     (r'^weblog/', include('django_website.blog.urls')),
     (r'^freenode\.9xJY7YIUWtwn\.html$', 'django.views.generic.simple.direct_to_template', {'template': 'freenode_tmp.html'}),
     url(r'^download$', 'django.contrib.flatpages.views.flatpage', {'url': 'download'}, name="download"),
+    (r'', include('django_website.legacy.urls')),
 )
 
 if settings.DEVELOPMENT_MODE:
