@@ -1,12 +1,9 @@
-config.fab_hosts = ['djangoproject.com']
+from fabric.api import *
 
-def deploy():
-    sudo("cd /home/djangoproject.com && svn up")
-    reload()
-    
-def reload():
-    sudo("invoke-rc.d apache2 reload")
-    
-def flush_cache():
-    sudo("invoke-rc.d memcached restart")
-    
+env.hosts = ['ve.djangoproject.com']
+
+def copy_db():
+    """
+    Copy the production DB locally for testing.
+    """
+    local('ssh %s pg_dump -U djangoproject -c djangoproject | psql djangoproject' % env.hosts[0])
