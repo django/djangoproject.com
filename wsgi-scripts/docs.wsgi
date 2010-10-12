@@ -2,7 +2,7 @@ import os
 import sys 
 import site 
 
-SITE_PACKAGES = '/home/djangoproject.com/lib/python2.6/site-packages'
+SITE_PACKAGES = '/home/www/djangoproject.com/lib/python2.6/site-packages'
 
 # Remember original sys.path.
 prev_sys_path = list(sys.path) 
@@ -22,7 +22,7 @@ sys.path[:0] = new_sys_path
 here = os.path.dirname(__file__)
 parent = os.path.dirname(here)
 sys.path.append(parent)
-os.environ['DJANGO_SETTINGS_MODULE'] = 'djangodocs.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'django_website.settings.docs'
 
 import django.core.handlers.wsgi
 application = django.core.handlers.wsgi.WSGIHandler()
