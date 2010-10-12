@@ -50,15 +50,27 @@ def update_dependencies():
     reqs = env.code_dir.child('deploy-requirements.txt')
     sudo('%s -q install -r %s' % (pip, reqs))
 
-def _managepy(cmd, site='www'):
+def reset_community():
     """
-    Helper: run a management command remotely.
-    """
-    django_admin = env.virtualenv.child('bin', 'django-admin.py')
+    Resets the community pages.
     
+    This is a temporary command that does some damage and it should be removed
+    once the new server's up.
+    """
+    _managepy('reset aggregator --noinput')
+    _managepy('loaddata community_seed')
 
 def copy_db():
     """
     Copy the production DB locally for testing.
     """
     local('ssh %s pg_dump -U djangoproject -c djangoproject | psql djangoproject' % env.hosts[0])
+    
+def _managepy(cmd, site='www'):
+    """
+    Helper: run a management command remotely.
+    """
+    assert site in ('docs', 'www')
+    django_admin = env.virtualenv.child('bin', 'django-admin.py')
+    sudo('%s %s --settings=django_website.settings.%s' % (django_admin, cmd, site))
+    
