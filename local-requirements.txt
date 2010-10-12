@@ -1,0 +1,4 @@
+# Requirements to manage the site locally and run the fabfile.
+
+Unipath
+-e git+git://fabfile.org/fabric.git#egg=Fabric
