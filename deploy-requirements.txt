@@ -1,3 +1,5 @@
+# Requirements to deploy this code.
+
 akismet == 0.2.0
 Django >= 1.2, < 1.3
 django-registration == 0.7
@@ -8,4 +10,3 @@ psycopg2 >= 2.2, < 2.3
 Sphinx >= 0.6, < 0.7
 Unipath >= 0.2, < 0.3
 -e hg+http://bitbucket.org/ubernostrum/django-contact-form#egg=django_contact_form
--e git+git://fabfile.org/fabric.git#egg=Fabric
