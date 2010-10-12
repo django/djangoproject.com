@@ -20,16 +20,27 @@ def deploy():
     """
     deploy_code()
     update_dependencies()
-    # migrate()
-    # apache("restart")
-    # memcached("restart")
+    apache("restart")
+    memcached("restart")
 
 def quick_deploy():
     """
     Quick deploy: new code and an in-place reload.
     """
     deploy_code()
-    # apache("reload")
+    apache("reload")
+
+def apache(cmd):
+    """
+    Manage the apache service. For example, `fab apache:restart`.
+    """
+    sudo('invoke-rc.d apache2 %s' % cmd)
+
+def memcached(cmd):
+    """
+    Manage the memcached service. For example, `fab apache:restart`.
+    """
+    sudo('invoke-rc.d memcached %s' % cmd)
 
 def deploy_code(ref=None):
     """
