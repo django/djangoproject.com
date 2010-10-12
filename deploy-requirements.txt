@@ -9,4 +9,4 @@ Jinja2 >= 2.4, < 2.5
 psycopg2 >= 2.2, < 2.3
 Sphinx >= 0.6, < 0.7
 Unipath >= 0.2, < 0.3
--e hg+http://bitbucket.org/ubernostrum/django-contact-form#egg=django_contact_form
+http://bitbucket.org/ubernostrum/django-contact-form/get/tip.bz2
