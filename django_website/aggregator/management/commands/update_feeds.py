@@ -32,9 +32,10 @@ class Command(BaseCommand):
             os.unlink(self.LOCKFILE)
 
     def update_feeds(self, verbose=False):
-        for feed in Feed.objects.filter(is_defunct=False):
+        total = Feed.objects.filter(is_defunct=False).count()
+        for count, feed in enumerate(Feed.objects.filter(is_defunct=False)):
             if verbose:
-                print feed
+                print "%s (%d/%d)" % (feed, count+1, total)
             parsed_feed = feedparser.parse(feed.feed_url)
             for entry in parsed_feed.entries:
                 title = entry.title.encode(parsed_feed.encoding, "xmlcharrefreplace")
