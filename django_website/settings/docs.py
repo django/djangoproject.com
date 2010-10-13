@@ -8,7 +8,7 @@ ROOT_URLCONF = 'django_website.urls.docs'
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangodocs'
 
 # Where to store the build Sphinx docs.
-if DEVELOPMENT_MODE:
-    DOCS_BUILD_ROOT = '/tmp/djangodocs'
+if PRODUCTION:
+    DOCS_BUILD_ROOT = BASE.parent.child('docbuilds')
 else:
-    DOCS_BUILD_ROOT = "/home/djangodocs/"
+    DOCS_BUILD_ROOT = '/tmp/djangodocs'
