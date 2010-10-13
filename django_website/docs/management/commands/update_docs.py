@@ -21,13 +21,19 @@ class Command(NoArgsCommand):
             # Make an SCM checkout/update into the destination directory.
             # Do this dynamically in case we add other SCM later.
             getattr(self, 'update_%s' % release.scm)(release.scm_url, destdir)
-
-            # Run Sphinx by faking a commandline. Better than shelling out, I s'pose.
+            
+            # Make the directory for the JSON files - sphinx-build doesn't
+            # do it for us, apparently.
+            json_build_dir = destdir.child('_build', 'json')
+            if not json_build_dir.exists():
+                json_build_dir.mkdir(parents=True)
+            
+            # Shell out to sphinx-build.
             subprocess.call(['sphinx-build',
-                '-b', 'json',                       # Use the JSON builder
-                '-q',                               # Be vewy qwiet
-                destdir,                            # Source file directory
-                destdir.child('_build', 'json'),    # Destination directory
+                '-b', 'json',      # Use the JSON builder
+                '-q',              # Be vewy qwiet
+                destdir,           # Source file directory
+                json_build_dir,    # Destination directory
             ])
 
     def update_svn(self, url, destdir):
