@@ -71,6 +71,16 @@ def reset_community():
     _managepy('reset aggregator --noinput')
     _managepy('loaddata community_seed')
 
+def reset_docs():
+    """
+    Resets the doc releases.
+    
+    This is a temporary command that does some damage and it should be removed
+    once the new server's up.
+    """
+    _managepy('reset docs --noinput')
+    _managepy('loaddata doc_releases')
+
 def copy_db():
     """
     Copy the production DB locally for testing.
