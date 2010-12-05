@@ -38,4 +38,4 @@ class Command(NoArgsCommand):
             ])
 
     def update_svn(self, url, destdir):
-        subprocess.call(['svn', 'checkout', url, destdir])
+        subprocess.call(['svn', 'checkout', '-q', url, destdir])
