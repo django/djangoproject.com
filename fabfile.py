@@ -68,8 +68,8 @@ def reset_community():
     This is a temporary command that does some damage and it should be removed
     once the new server's up.
     """
-    _managepy('reset aggregator --noinput')
-    _managepy('loaddata community_seed')
+    managepy('reset aggregator --noinput')
+    managepy('loaddata community_seed')
 
 def reset_docs():
     """
@@ -78,8 +78,14 @@ def reset_docs():
     This is a temporary command that does some damage and it should be removed
     once the new server's up.
     """
-    _managepy('reset docs --noinput')
-    _managepy('loaddata doc_releases')
+    managepy('reset docs --noinput')
+    managepy('loaddata doc_releases')
+
+def update_docs():
+    """
+    Force an update of the docs on the server.
+    """
+    managepy('update_docs', site='docs')
 
 def copy_db():
     """
@@ -87,7 +93,7 @@ def copy_db():
     """
     local('ssh %s pg_dump -U djangoproject -c djangoproject | psql djangoproject' % env.hosts[0])
     
-def _managepy(cmd, site='www'):
+def managepy(cmd, site='www'):
     """
     Helper: run a management command remotely.
     """

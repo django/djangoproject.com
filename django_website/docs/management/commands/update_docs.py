@@ -5,6 +5,7 @@ app.
 from __future__ import absolute_import
 
 import subprocess
+import sphinx.cmdline
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from unipath import FSPath as Path
@@ -28,8 +29,8 @@ class Command(NoArgsCommand):
             if not json_build_dir.exists():
                 json_build_dir.mkdir(parents=True)
             
-            # Shell out to sphinx-build.
-            subprocess.call(['sphinx-build',
+            # "Shell out" (not exactly, but basically) to sphinx-build.
+            sphinx.cmdline.main(['sphinx-build',
                 '-b', 'json',      # Use the JSON builder
                 '-q',              # Be vewy qwiet
                 destdir,           # Source file directory
