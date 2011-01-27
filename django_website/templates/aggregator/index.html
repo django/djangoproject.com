@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Community</h1>
-<h2 class="deck">This page, updated every hour, aggregates what's going on in the community.</h2>
+<h2 class="deck">This page, updated regularly, aggregates what's going on in the community.</h2>
 
 {% for feedtype in feedtype_list %}
 <div id="{{ feedtype.slug }}" class="module {% cycle "first" "last" %}">

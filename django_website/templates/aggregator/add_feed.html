@@ -3,8 +3,19 @@
 {% block content %}
 <h1>Community</h1>
 
-<form method="POST" action="" id="add_feed_form">
-  {{ form.as_p }}
-  <input type="submit" name="submit" value="Add Feed" />
+<h2 class="deck">Add a {{ feed_type }} feed:</h2>
+
+<form method="POST" action="" id="add_feed_form" class="wide">
+  {% for field in form %}
+    <p>
+      <label id="{{ field.auto_id }}">{{ field.label }} - <span class="help">{{ field.help_text }}</label>
+      {% if field.errors %}
+        <p class="errors">{{ field.errors.as_text }}</p>
+      {% endif %}
+      {{ field }}
+    </p>
+  {% endfor %}
+  <p class="submit"><input type="submit" value="Add Feed"></p>
 </form>
+
 {% endblock %}
