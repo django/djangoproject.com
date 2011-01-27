@@ -23,11 +23,15 @@ def feed_list(request, feed_type_slug):
 @login_required
 def add_feed(request, feed_type_slug):
     ft = get_object_or_404(FeedType, slug=feed_type_slug, can_self_add=True)
-    initial_data = {'feed_type': ft.id}
-    f = FeedModelForm(request.POST or None, initial=initial_data)
+    if not ft.can_self_add and not request.user.is_superuser:
+        return render_to_response('aggregator/denied.html',
+                                  context_instance=RequestContext(request))
+        
+    instance = Feed(feed_type=ft)
+    f = FeedModelForm(request.POST or None, instance=instance)
     if f.is_valid():
         if f.save():
             return HttpResponseRedirect(reverse('community-index'))
     return render_to_response('aggregator/add_feed.html',
-                              {'form':f},
+                              {'form':f, 'feed_type': ft},
                               context_instance=RequestContext(request))

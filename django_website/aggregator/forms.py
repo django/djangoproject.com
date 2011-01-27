@@ -5,11 +5,13 @@ from django.forms import widgets
 from .models import Feed, FeedType
 
 class FeedModelForm(forms.ModelForm):
-    title = forms.CharField(max_length=250, help_text="The name of the resource / blog.")
-    feed_url = forms.URLField(help_text="URL to the feed.")
-    public_url = forms.URLField(help_text="URL to main page of the resource (ie: blog homepage)")
-    feed_type = forms.ModelChoiceField(widget=forms.widgets.HiddenInput,
-                                        queryset=FeedType.objects.all())
+    title = forms.CharField(max_length=250,
+                            help_text="title of the resource / blog.")
+    feed_url = forms.URLField(label='Feed URL',
+                              help_text="link to the RSS/Atom feed. Please only use Django-specific feeds.")
+    public_url = forms.URLField(label='Public URL',
+                                help_text="link to main page (i.e. blog homepage)")
+
     class Meta:
         model = Feed
-        exclude = ('is_defunct',)
+        exclude = ('is_defunct', 'feed_type')
