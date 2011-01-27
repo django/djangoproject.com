@@ -59,6 +59,7 @@ class FeedUpdateWorker(threading.Thread):
     
     def __init__(self, q, verbose, **kwargs):
         super(FeedUpdateWorker, self).__init__(**kwargs)
+        self.daemon = True
         self.verbose = verbose
         self.q = q
         
@@ -77,13 +78,14 @@ class FeedUpdateWorker(threading.Thread):
         
         parsed_feed = feedparser.parse(feed.feed_url)
         for entry in parsed_feed.entries:
+            # Parse out the entry, handling all the fun stuff that feeds can do.
             title = entry.title.encode(parsed_feed.encoding, "xmlcharrefreplace")
             guid = entry.get("id", entry.link).encode(parsed_feed.encoding, "xmlcharrefreplace")
             link = entry.link.encode(parsed_feed.encoding, "xmlcharrefreplace")
 
             if not guid:
                 guid = link
-
+                        
             if hasattr(entry, "summary"):
                 content = entry.summary
             elif hasattr(entry, "content"):
@@ -105,8 +107,11 @@ class FeedUpdateWorker(threading.Thread):
                     date_modified = datetime.datetime.now()
             except TypeError:
                 date_modified = datetime.datetime.now()
-
-            try:
-                feed.feeditem_set.get(guid=guid)
-            except FeedItem.DoesNotExist:
-                feed.feeditem_set.create(title=title, link=link, summary=content, guid=guid, date_modified=date_modified)
+            
+            FeedItem.objects.create_or_update_by_guid(guid,
+                feed = feed,
+                title = title,
+                link = link,
+                summary = content,
+                date_modified = date_modified
+            )
