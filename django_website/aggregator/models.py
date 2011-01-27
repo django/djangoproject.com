@@ -24,6 +24,35 @@ class Feed(models.Model):
     def __unicode__(self):
         return self.title
 
+class FeedItemManager(models.Manager):
+    def create_or_update_by_guid(self, guid, **kwargs):
+        """
+        Look up a FeedItem by GUID, updating it if it exists, and creating
+        it if it doesn't.
+        
+        We don't limit it by feed because an item could be in another feed if
+        some feeds are themselves aggregators. That's also why we don't update
+        the feed field if the feed item already exists.
+        
+        Returns (item, created) like get_or_create().
+        """
+        try:
+            item = self.get(guid=guid)
+        
+        except self.model.DoesNotExist:
+            # Create a new item
+            kwargs['guid'] = guid
+            item = self.create(**kwargs)
+            
+        else:
+            # Update an existing one.
+            kwargs.pop('feed', None)
+            for k,v in kwargs.items():
+                setattr(item, k, v)
+            item.save()
+            
+        return item
+        
 class FeedItem(models.Model):
     feed = models.ForeignKey(Feed)
     title = models.CharField(max_length=500)
@@ -31,6 +60,8 @@ class FeedItem(models.Model):
     summary = models.TextField(blank=True)
     date_modified = models.DateTimeField()
     guid = models.CharField(max_length=500, unique=True, db_index=True)
+
+    objects = FeedItemManager()
 
     class Meta:
         db_table = 'aggregator_feeditems'
