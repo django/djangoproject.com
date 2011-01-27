@@ -1,0 +1,4 @@
+* Pagination for aggregator feed item details
+* Individual RSS feeds - firehose, blogs, q&a, etc.
+* allow users to "own" feeds and self-edit
+* allow users to "claim" legacy feeds (might do this by hand.)
