@@ -2,6 +2,10 @@ import os
 import sys 
 import site 
 
+#
+# Bootstrap
+#
+
 SITE_PACKAGES = '/home/www/djangoproject.com/lib/python2.6/site-packages'
 
 # Remember original sys.path.
@@ -24,5 +28,32 @@ parent = os.path.dirname(here)
 sys.path.append(parent)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'django_website.settings.www'
 
+#
+# WSGI application
+#
 import django.core.handlers.wsgi
 application = django.core.handlers.wsgi.WSGIHandler()
+
+#
+# WSGI auth handlers
+#
+from django import db
+from django.contrib.auth.models import User
+
+def check_password(environ, user, password):
+    try:
+        user = User.objects.get(username=user, is_active=True)
+        if user.check_password(password):
+            return True
+        return False
+    except User.DoesNotExist:
+        return None
+    finally:
+        db.connection.close()
+        
+def groups_for_user(environ, user):
+    try:
+        u = User.objects.get(username=user)
+    except User.DoesNotExist:
+        return []
+    return [g.name.lower() for g in u.groups.all()]
