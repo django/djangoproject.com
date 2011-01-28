@@ -6,7 +6,10 @@
 
 {% for feedtype in feedtype_list %}
 <div id="{{ feedtype.slug }}" class="module {% cycle "first" "last" %}">
-  <h3 class="header">{{ feedtype.name }}</h3>
+  <h3 class="header">
+    {{ feedtype.name }}
+    <a class="rss" href="{% url aggregator-feed slug=feedtype.slug %}">RSS</a>
+  </h3>
   {% for item in feedtype.items|slice:":5" %}
     <h5><a href="{{ item.link }}">{{ item.title }}</a></h5>
     <p class="date">{{ item.date_modified|date:"N jS, Y \a\t P" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a></p>
