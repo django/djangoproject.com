@@ -84,6 +84,7 @@ body#community #content-main .module { width: 350px; float: left; display: inlin
 body#community #content-main .first { margin-left: 20px; clear: left; }
 body#community #content-main .last { margin-right: 5px; clear: right; }
 body#community .hidden { display: none; }
+body#community div.pagination { text-align: center; margin-top: 1em; }
 
 /* LISTS */
 
