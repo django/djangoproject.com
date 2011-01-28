@@ -34,7 +34,11 @@ class Command(BaseCommand):
             sys.exit(1)
 
         try:
-            verbose = kwargs.get('verbosity')
+            verbose = int(kwargs['verbosity']) > 0
+        except (KeyError, TypeError, ValueError):
+            verbose = True
+            
+        try:
             socket.setdefaulttimeout(15)
             self.update_feeds(verbose=verbose, num_threads=kwargs['threads'])
         except:
@@ -50,7 +54,7 @@ class Command(BaseCommand):
 
         threadpool = []
         for i in range(num_threads):
-            threadpool.append(FeedUpdateWorker(feed_queue, verbose))
+            threadpool.append(FeedUpdateWorker(q=feed_queue, verbose=verbose))
             
         [t.start() for t in threadpool]
         [t.join() for t in threadpool]

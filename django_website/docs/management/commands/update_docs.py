@@ -13,8 +13,15 @@ from ...models import DocumentRelease
 
 class Command(NoArgsCommand):
     def handle_noargs(self, **kwargs):
+        try:
+            verbose = int(kwargs['verbosity']) > 0
+        except (KeyError, TypeError, ValueError):
+            verbose = True
+        
         for release in DocumentRelease.objects.all():
-            print "Updating %s..." % release
+            if verbose:
+                print "Updating %s..." % release
+                
             destdir = Path(settings.DOCS_BUILD_ROOT).child(release.lang, release.version)
             if not destdir.exists():
                 destdir.mkdir(parents=True)
