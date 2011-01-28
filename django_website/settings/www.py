@@ -33,8 +33,8 @@ if PRODUCTION:
     DEBUG = False
     PREPEND_WWW = True
     CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
-    MEDIA_URL = "http://www.ve.djangoproject.com/m/"
-    ADMIN_MEDIA_PREFIX = "http://www.ve.djangoproject.com/m/admin/"
+    MEDIA_URL = "http://www.djangoproject.com/m/"
+    ADMIN_MEDIA_PREFIX = "http://www.djangoproject.com/m/admin/"
 else:
     DEBUG = True
     PREPEND_WWW = False
