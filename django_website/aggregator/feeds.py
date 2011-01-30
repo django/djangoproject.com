@@ -21,7 +21,7 @@ class CommunityAggregatorFeed(Feed):
         if obj:
             return urlresolvers.reverse('aggregator-feed', args=[obj.slug])
         else:
-            return urlresolvers.reverse('aggregator-feed-firehose')
+            return urlresolvers.reverse('aggregator-firehose-feed')
 
     def description(self, obj):
         return self.title(obj)
