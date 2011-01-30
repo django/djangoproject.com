@@ -47,6 +47,10 @@ class FeedItemManager(models.Manager):
         else:
             # Update an existing one.
             kwargs.pop('feed', None)
+            
+            # Don't update the date since most feeds get this wrong.
+            kwargs.pop('date_modified')
+            
             for k,v in kwargs.items():
                 setattr(item, k, v)
             item.save()
