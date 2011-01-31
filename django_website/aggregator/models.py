@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class FeedType(models.Model):
     name = models.CharField(max_length=250)
@@ -17,6 +18,7 @@ class Feed(models.Model):
     public_url = models.URLField(max_length=500)
     is_defunct = models.BooleanField()
     feed_type = models.ForeignKey(FeedType)
+    owner = models.ForeignKey(User, blank=True, null=True, related_name='owned_feeds')
 
     def __unicode__(self):
         return self.title
