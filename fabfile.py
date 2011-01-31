@@ -61,26 +61,6 @@ def update_dependencies():
     reqs = env.code_dir.child('deploy-requirements.txt')
     sudo('%s -q install -r %s' % (pip, reqs))
 
-def reset_community():
-    """
-    Resets the community pages.
-    
-    This is a temporary command that does some damage and it should be removed
-    once the new server's up.
-    """
-    managepy('reset aggregator --noinput')
-    managepy('loaddata community_seed')
-
-def reset_docs():
-    """
-    Resets the doc releases.
-    
-    This is a temporary command that does some damage and it should be removed
-    once the new server's up.
-    """
-    managepy('reset docs --noinput')
-    managepy('loaddata doc_releases')
-
 def update_docs():
     """
     Force an update of the docs on the server.
