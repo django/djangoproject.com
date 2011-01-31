@@ -18,9 +18,6 @@ class Feed(models.Model):
     is_defunct = models.BooleanField()
     feed_type = models.ForeignKey(FeedType)
 
-    class Meta:
-        db_table = 'aggregator_feeds'
-
     def __unicode__(self):
         return self.title
 
@@ -68,7 +65,6 @@ class FeedItem(models.Model):
     objects = FeedItemManager()
 
     class Meta:
-        db_table = 'aggregator_feeditems'
         ordering = ("-date_modified",)
 
     def __unicode__(self):
