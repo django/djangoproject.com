@@ -14,7 +14,7 @@ env.git_url = 'git://github.com/jacobian/djangoproject.com.git'
 # FIXME: make a deploy branch in this repo to deploy against.
 env.default_deploy_ref = 'origin/community_redux'
 
-def deploy():
+def full_deploy():
     """
     Full deploy: new code, update dependencies, migrate, and restart services.
     """
@@ -23,7 +23,7 @@ def deploy():
     apache("restart")
     memcached("restart")
 
-def quick_deploy():
+def deploy():
     """
     Quick deploy: new code and an in-place reload.
     """
