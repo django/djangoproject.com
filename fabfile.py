@@ -80,4 +80,13 @@ def managepy(cmd, site='www'):
     assert site in ('docs', 'www')
     django_admin = env.virtualenv.child('bin', 'django-admin.py')
     sudo('%s %s --settings=django_website.settings.%s' % (django_admin, cmd, site))
-    
+
+def southify(app):
+    """
+    Southify an app remotely.
+
+    This fakes the initial migration and then migrates forward. Use it the first
+    time you do a deploy on app that's been newly southified.
+    """
+    managepy('migrate %s 0001 --fake' % app)
+    managepy('migrate %s' % app)
