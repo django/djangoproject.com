@@ -8,6 +8,7 @@ admin.site.register(Feed,
     list_filter   = ["feed_type", "is_defunct"],
     ordering      = ["title"],
     search_fields = ["title", "public_url"],
+    raw_id_fields = ['owner'],
     list_per_page = 500,
 )
 

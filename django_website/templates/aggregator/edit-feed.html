@@ -3,7 +3,11 @@
 {% block content %}
 <h1>Community</h1>
 
-<h2 class="deck">Add a {{ feed_type }} feed:</h2>
+{% if adding %}
+  <h2 class="deck">Add a {{ feed_type }} feed:</h2>
+{% else %}
+  <h2 class="deck">Edit {{ feed }}:</h2>
+{% endif %}
 
 <form method="POST" action="" id="add_feed_form" class="wide">
   {% for field in form %}
@@ -15,7 +19,11 @@
       {{ field }}
     </p>
   {% endfor %}
-  <p class="submit"><input type="submit" value="Add Feed"></p>
+  {% if adding %}
+    <p class="submit"><input type="submit" value="Add Feed"></p>
+  {% else %}
+   <p class="submit"><input type="submit" value="Save"></p>
+  {% endif %}
 </form>
 
 {% endblock %}
