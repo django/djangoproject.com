@@ -7,7 +7,8 @@ from django.contrib.comments.feeds import LatestCommentFeed
 from django.contrib.comments.models import Comment
 from django.contrib.sitemaps import views as sitemap_views
 from django.views.decorators.cache import cache_page
-from ..aggregator.feeds import CommunityAggregatorFeed
+from django.views.generic.simple import redirect_to
+from ..aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 from ..aggregator.models import FeedItem
 from ..blog.feeds import WeblogEntryFeed
 from ..sitemaps import FlatPageSitemap, WeblogSitemap
@@ -40,7 +41,8 @@ urlpatterns = patterns('',
 
     url(r'^rss/weblog/$', WeblogEntryFeed(), name='weblog-feed'),
     url(r'^rss/comments/$', LatestCommentFeed(), name='comments-feed'),
-    url(r'^rss/community/$', CommunityAggregatorFeed(), name='aggregator-firehose-feed'),
+    url(r'^rss/community/$', redirect_to, {'url': '/rss/community/blogs/'}),
+    url(r'^rss/community/firehose/$', CommunityAggregatorFirehoseFeed(), name='aggregator-firehose-feed'),
     url(r'^rss/community/(?P<slug>[\w-]+)/$', CommunityAggregatorFeed(), name='aggregator-feed'),
 
     url(r'^sitemap\.xml$', cache_page(sitemap_views.sitemap, 60 * 60 * 6), {'sitemaps': sitemaps}),

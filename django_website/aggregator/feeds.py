@@ -5,34 +5,7 @@ from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404
 from .models import FeedType, FeedItem
 
-class CommunityAggregatorFeed(Feed):
-    description = "Aggregated feeds from the Django community."
-
-    def get_object(self, request, slug=None):
-        if slug:
-            return get_object_or_404(FeedType, slug=slug)
-        return None
-
-    def title(self, obj):
-        title = obj.name if obj else "firehose"
-        return "Django community aggregator: %s" % title
-
-    def link(self, obj):
-        if obj:
-            return urlresolvers.reverse('aggregator-feed', args=[obj.slug])
-        else:
-            return urlresolvers.reverse('aggregator-firehose-feed')
-
-    def description(self, obj):
-        return self.title(obj)
-
-    def items(self, obj):
-        qs = FeedItem.objects.order_by('-date_modified')
-        qs = qs.select_related('feed', 'feed__feed_type')
-        if obj:
-            qs = qs.filter(feed__feed_type=obj)
-        return qs[:25]
-
+class BaseCommunityAggregatorFeed(Feed):
     def item_title(self, item):
         return item.title
 
@@ -53,3 +26,33 @@ class CommunityAggregatorFeed(Feed):
 
     def item_pubdate(self, item):
         return item.date_modified
+
+class CommunityAggregatorFeed(BaseCommunityAggregatorFeed):
+    def get_object(self, request, slug=None):
+        return get_object_or_404(FeedType, slug=slug)
+
+    def items(self, obj):
+        qs = FeedItem.objects.filter(feed__feed_type=obj)
+        qs = qs.order_by('-date_modified')
+        qs = qs.select_related('feed', 'feed__feed_type')
+        return qs[:25]
+
+    def title(self, obj):
+        return "Django community aggregator: %s" % obj.name
+
+    def link(self, obj):
+        return urlresolvers.reverse('aggregator-feed', args=[obj.slug])
+
+    def description(self, obj):
+        return self.title(obj)
+
+class CommunityAggregatorFirehoseFeed(BaseCommunityAggregatorFeed):
+    title = 'Django community aggregator firehose'
+    description = 'All activity from the Django community aggregator'
+
+    def link(self):
+        return urlresolvers.reverse('aggregator-firehose-feed')
+
+    def items(self):
+        qs = FeedItem.objects.order_by('-date_modified').select_related('feed')
+        return qs[:50]
