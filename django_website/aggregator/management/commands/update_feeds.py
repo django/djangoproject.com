@@ -83,9 +83,9 @@ class FeedUpdateWorker(threading.Thread):
         parsed_feed = feedparser.parse(feed.feed_url)
         for entry in parsed_feed.entries:
             # Parse out the entry, handling all the fun stuff that feeds can do.
-            title = entry.title.encode(parsed_feed.encoding, "xmlcharrefreplace")
-            guid = entry.get("id", entry.link).encode(parsed_feed.encoding, "xmlcharrefreplace")
-            link = entry.link.encode(parsed_feed.encoding, "xmlcharrefreplace")
+            title = entry.title
+            guid = entry.get("id", entry.link)
+            link = entry.link
 
             if not guid:
                 guid = link
@@ -98,7 +98,6 @@ class FeedUpdateWorker(threading.Thread):
                 content = entry.description
             else:
                 content = u""
-            content = content.encode(parsed_feed.encoding, "xmlcharrefreplace")
 
             try:
                 if entry.has_key('modified_parsed'):
