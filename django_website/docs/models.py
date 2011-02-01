@@ -35,3 +35,22 @@ class DocumentRelease(models.Model):
             DocumentRelease.objects.update(is_default=False)
         super(DocumentRelease, self).save(*args, **kwargs)
     
+class Document(models.Model):
+    """
+    An individual document. Used mainly as a hook point for Haystack.
+    """
+    release = models.ForeignKey(DocumentRelease, related_name='documents')
+    path = models.CharField(max_length=500)
+    title = models.TextField(max_length=500)
+    content = models.TextField()
+
+    def __unicode__(self):
+        return "/".join([self.release.lang, self.release.version, self.path])
+
+    @models.permalink
+    def get_absolute_url(self):
+        return (
+            'document-detail',
+            [],
+            {'lang': self.lang, 'version': self.version, 'url': self.path}
+        )
