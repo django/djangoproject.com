@@ -1,13 +1,20 @@
+import haystack.forms
 from django import forms
+from .models import DocumentRelease
 
-AS_Q_CHOICES = (
-    ('more:dev_docs', 'Latest'),
-    ('more:1.0_docs', '1.0'),
-    ('more:0.96_docs', '0.96'),
-    ('more:all_docs', 'All'),
-)
+class DocSearchForm(haystack.forms.SearchForm):
 
-class SearchForm(forms.Form):
-    q = forms.CharField(widget=forms.TextInput({'class': 'query'}))
-    as_q = forms.ChoiceField(choices=AS_Q_CHOICES, widget=forms.RadioSelect, initial='more:dev_docs')
-    
+    def __init__(self, *args, **kwargs):
+        super(DocSearchForm, self).__init__(*args, **kwargs)
+        self.fields['release'] = forms.ModelChoiceField(
+            queryset = DocumentRelease.objects.all(),
+            initial = DocumentRelease.objects.default(),
+            empty_label = None,
+            widget = forms.RadioSelect,
+        )
+
+    def search(self):
+        sqs = super(DocSearchForm, self).search()
+        rel = self.cleaned_data['release']
+        return sqs.filter(lang=rel.lang, version=rel.version)
+

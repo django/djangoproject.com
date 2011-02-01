@@ -1,12 +1,6 @@
-<form action="{{ action|escape }}" id="{{ search_form_id|escape }}" class="search">
+<form action="{% url document-search %}" id="{{ search_form_id }}" class="search">
   <div>
-    <input type="hidden" name="cx" value="009763561546736975936:e88ek0eurf4" />
-    <input type="hidden" name="cof" value="FORID:11" />
-    <input type="hidden" name="ie" value="UTF-8" />
-    <input type="hidden" name="hl" value="{{ lang|escape }}" />
-    {{ form.q }}
-    <input type="submit" name="sa" class="submit" value="Search" />
-    {{ form.as_q }}
+  	{{ form.as_p }}
+    <input type="submit" class="submit" value="Search" />
   </div>
 </form>
-<script type="text/javascript" src="http://www.google.com/coop/cse/brand?form={{ search_form_id|escape }}&amp;lang={{ lang|escape }}"></script>

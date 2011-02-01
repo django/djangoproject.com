@@ -4,43 +4,33 @@
 
 {% block title %}Search | Django documentation{% endblock %}
 
-{% block extrahead %}
-  {{ block.super }}
-  <style type="text/css" media="screen">
-    #cse-search-results iframe {
-      width: 100%;
-    }
-  </style>
-{% endblock %}
-
 {% block toc-wrapper %}{% endblock %}
-
 {% block breadcrumbs-wrapper %}{% endblock %}
-
 {% block last-update-wrapper %}{% endblock %}
 
 {% block body %}
-  {% if query %}
-    <h1>Search results</h1>
-    <div id="cse-search-results">
-      <div id="cse-search-results-js-required">
-        The Django documentation search uses a Google Custom Search, which
-        requires Javascript. If your results don't appear here shortly, please
-        <a href="http://www.google.com/cse?{{ query_string|escape }}">view the results on Google's site</a>. 
-      </div>
-    </div>
-    <script type="text/javascript">
-      var googleSearchMessage = document.getElementById("cse-search-results-js-required");
-      googleSearchMessage.parentNode.removeChild(googleSearchMessage);
-    
-      var googleSearchIframeName = "cse-search-results";
-      var googleSearchFormName = "cse-search-box";
-      var googleSearchDomain = "www.google.com";
-      var googleSearchPath = "/cse";
-    </script>
-    <script type="text/javascript" src="http://www.google.com/afsonline/show_afs_search.js"></script>
-  {% else %}
-    <h1>Search</h1>
-    {% search_form "search_page" %}
+    <h2>Search</h2>
+    <form method="get" action=".">
+      {{ form.as_p }}
+      <input type="submit" value="Search">
+    </form>
+
+    {% if query %}
+      <h3>Results</h3>
+        {% for result in page.object_list %}
+          <p>
+            <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>
+          </p>
+        {% empty %}
+          <p>No results found.</p>
+        {% endfor %}
+
+        {% if page.has_previous or page.has_next %}
+          <div>
+            {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+            |
+            {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+          </div>
+        {% endif %}
   {% endif %}
 {% endblock %}
