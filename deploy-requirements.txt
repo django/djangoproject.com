@@ -12,4 +12,5 @@ python-memcached >= 1.45, < 2.0
 Sphinx >= 1.0, < 1.1
 South >= 0.7, < 0.8
 Unipath >= 0.2, < 0.3
+xapian-haystack == 1.1.5beta
 http://bitbucket.org/ubernostrum/django-contact-form/get/tip.bz2
