@@ -115,6 +115,6 @@
   
   {% block last-update-wrapper %}
     <h3>Last update:</h3>
-    <div>{{ update_date|date:"F j, Y, P" }} (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">CDT</a>)</div>
+    <div>{{ update_date|date:"F j, Y, P" }} (<a href="http://www.timeanddate.com/worldclock/city.html?n=64">{{ update_date|date:"T" }}</a>)</div>
   {% endblock %}
 {% endblock %}
