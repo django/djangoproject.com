@@ -3,3 +3,5 @@
 form.search ul { list-style: none; margin: 0; padding: 0; }
 form.search li { display: inline; padding-right: 1em; }
 form.search .query { width: 18em; }
+#content-main .jump_links { font-size: 1.2em; margin-left: 0px; }
+.synopsis { padding-left: 10px; color: #222;}
