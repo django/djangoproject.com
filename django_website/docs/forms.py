@@ -18,8 +18,10 @@ class DocSearchForm(haystack.forms.SearchForm):
 
     def search(self):
         sqs = super(DocSearchForm, self).search()
-        rel = self.cleaned_data.get('release', DocumentRelease.objects.default())
-        return sqs.filter(lang=rel.lang, version=rel.version)
+        if self.is_valid():
+            rel = self.cleaned_data['release']
+            sqs = sqs.filter(lang=rel.lang, version=rel.version)
+        return sqs
 
 class DocumentReleaseChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
