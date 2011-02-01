@@ -66,19 +66,18 @@
 {% endblock %}
 
 {% block content-related %}
+  {% block search %}
+    <h2>Search</h2>
+    {% load docs %}
+    {% search_form %}
+  {% endblock %}
+
   {% block toc-wrapper %}
     <h2>Contents</h2>
     {% block toc %}
       {{ doc.toc|safe }}
     {% endblock %}
   {% endblock %}
-  
-  {% block search %}
-    <h2>Search</h2>
-    {% load docs %}
-    {% search_form %}
-  {% endblock %}
-  
   {% block browse-wrapper %}
     <h2>Browse</h2>
     <ul>
