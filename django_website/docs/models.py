@@ -35,14 +35,21 @@ class DocumentRelease(models.Model):
             DocumentRelease.objects.update(is_default=False)
         super(DocumentRelease, self).save(*args, **kwargs)
     
+    @property
+    def human_version(self):
+        """
+        Return a "human readable" version of the version.
+        """
+        return "Development trunk" if self.version == 'dev' \
+                                   else "Django %s" % self.version
+
 class Document(models.Model):
     """
     An individual document. Used mainly as a hook point for Haystack.
     """
     release = models.ForeignKey(DocumentRelease, related_name='documents')
     path = models.CharField(max_length=500)
-    title = models.TextField(max_length=500)
-    content = models.TextField()
+    title = models.CharField(max_length=500)
 
     def __unicode__(self):
         return "/".join([self.release.lang, self.release.version, self.path])

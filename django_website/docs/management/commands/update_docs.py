@@ -89,7 +89,7 @@ class Command(NoArgsCommand):
                     with open(built_doc) as fp:
                         json_doc = json.load(fp)
                         try:
-                            body = strip_tags(json_doc['body'])
+                            ignored = json_doc['body'] # Just to make sure it exists.
                             title = strip_tags(json_doc['title'])
                         except KeyError, ex:
                             if verbosity >= 2:
@@ -98,7 +98,6 @@ class Command(NoArgsCommand):
 
                     doc = documents.pop(path, Document(path=path, release=release))
                     doc.title = title
-                    doc.body = body
                     if verbosity >= 2:
                         print "Indexing:", doc
                     doc.save()

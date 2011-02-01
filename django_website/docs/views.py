@@ -73,5 +73,6 @@ class DocSearchView(haystack.views.SearchView):
         return {
             'lang': default_release.lang,
             'version': default_release.version,
+            'release': default_release,
         }
     
