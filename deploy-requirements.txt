@@ -2,6 +2,7 @@
 
 akismet == 0.2.0
 Django >= 1.2, < 1.3
+django-haystack == 1.1.0
 django-registration == 0.7
 docutils >= 0.6, < 0.7
 FeedParser >= 4.1, < 5.0
