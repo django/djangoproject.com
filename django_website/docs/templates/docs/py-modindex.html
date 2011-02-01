@@ -8,9 +8,9 @@
 <h1>Module Index</h1>
 
 <ul class="jump_links">
-{% for letter, objects in doc.content %}
-<a href="#{{ letter }}"><strong>{{ letter }}</strong></a>{% if not forloop.last %} | {% endif %}
-{% endfor %}
+    {% for letter, objects in doc.content %}
+    <a href="#{{ letter }}"><strong>{{ letter }}</strong></a>{% if not forloop.last %} | {% endif %}
+    {% endfor %}
 </ul>
 
 {% for letter, objects in doc.content %}
