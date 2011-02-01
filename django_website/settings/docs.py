@@ -22,5 +22,9 @@ else:
 
 # Haystack settings
 HAYSTACK_SITECONF = 'django_website.docs.search_sites'
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
-HAYSTACK_WHOOSH_PATH = '/tmp/djangodocs.index'
+if PRODUCTION:
+    HAYSTACK_SEARCH_ENGINE = 'xapian'
+    HAYSTACK_XAPIAN_PATH = BASE.ancestor(2).child('djangodocs.index')
+else:
+    HAYSTACK_SEARCH_ENGINE = 'whoosh'
+    HAYSTACK_WHOOSH_PATH = '/tmp/djangodocs.index'
