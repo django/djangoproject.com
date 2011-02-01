@@ -45,7 +45,7 @@ else:
 
 SITE_ID = 1
 ROOT_URLCONF = 'django_website.urls.www'
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.admin',
@@ -61,22 +61,24 @@ INSTALLED_APPS = (
     'django_website.docs',
     'registration',
     'south',
-)
+]
 
 CACHE_MIDDLEWARE_SECONDS = 60 * 5 # 5 minutes
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangoproject'
 CACHE_MIDDLEWARE_GZIP = True
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
-MIDDLEWARE_CLASSES = (
-    'django.middleware.cache.UpdateCacheMiddleware',
+MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
-)
+]
+if PRODUCTION:
+    MIDDLEWARE_CLASSES.insert(0, 'django.middleware.cache.UpdateCacheMiddleware')
+    MIDDLEWARE_CLASSES.append('django.middleware.cache.FetchFromCacheMiddleware')
+
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
@@ -103,3 +105,16 @@ DJANGO_TESTS_PATH = "/home/html/djangoproject.com/tests/"
 
 # XXX What's this for?
 DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
+
+# If django-debug-toolbar is installed enable it.
+if not PRODUCTION:
+    try:
+        import debug_toolbar
+    except ImportError:
+        pass
+    else:
+        # Insert DDT after the common middleware
+        common_index = MIDDLEWARE_CLASSES.index('django.middleware.common.CommonMiddleware')
+        MIDDLEWARE_CLASSES.insert(common_index+1, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+        INTERNAL_IPS = ['127.0.0.1']
+        INSTALLED_APPS.append('debug_toolbar')
