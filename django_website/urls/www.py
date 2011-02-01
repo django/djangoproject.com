@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 from django.conf import settings
 from django.conf.urls.defaults import *
-from django.contrib import admin
+from django.contrib import admin; admin.autodiscover()
 from django.contrib.comments.feeds import LatestCommentFeed
 from django.contrib.comments.models import Comment
 from django.contrib.sitemaps import views as sitemap_views
