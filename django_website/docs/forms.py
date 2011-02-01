@@ -14,12 +14,13 @@ class DocSearchForm(haystack.forms.SearchForm):
             queryset = DocumentRelease.objects.all().order_by('version'),
             initial = DocumentRelease.objects.default(),
             empty_label = None,
+            required = False,
         )
 
     def search(self):
         sqs = super(DocSearchForm, self).search()
         if self.is_valid():
-            rel = self.cleaned_data['release']
+            rel = self.cleaned_data['release'] or DocumentRelease.objects.default()
             sqs = sqs.filter(lang=rel.lang, version=rel.version)
         return sqs
 
