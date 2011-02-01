@@ -19,10 +19,10 @@
     {% for module_name, subtype, docname, path, platforms, qualifier, synopsis in objects %}
     {% if docname %}
     <li>
-	<a href="../{{ docname }}"><tt class="literal xref">{{ module_name }}</tt></a>
-	{% if synopsis %}
-	<span class="synopsis"><br />{{ synopsis }}</span>
-	{% endif %}
+        <a href="../{{ docname }}"><tt class="literal xref">{{ module_name }}</tt></a>
+        {% if synopsis %}
+        <span class="synopsis"><br />{{ synopsis }}</span>
+        {% endif %}
     </li>
     {% endif %}
 
