@@ -2,15 +2,18 @@ import haystack.forms
 from django import forms
 from .models import DocumentRelease
 
+# Right now this just does version because we don't really have
+# multiple languages. If we get them, we'll need to deal with that.
+
 class DocSearchForm(haystack.forms.SearchForm):
 
     def __init__(self, *args, **kwargs):
         super(DocSearchForm, self).__init__(*args, **kwargs)
-        self.fields['release'] = forms.ModelChoiceField(
-            queryset = DocumentRelease.objects.all(),
+        self.fields['q'].widget = SearchInput()
+        self.fields['release'] = DocumentReleaseChoiceField(
+            queryset = DocumentRelease.objects.all().order_by('version'),
             initial = DocumentRelease.objects.default(),
             empty_label = None,
-            widget = forms.RadioSelect,
         )
 
     def search(self):
@@ -18,3 +21,9 @@ class DocSearchForm(haystack.forms.SearchForm):
         rel = self.cleaned_data['release']
         return sqs.filter(lang=rel.lang, version=rel.version)
 
+class DocumentReleaseChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.human_version
+
+class SearchInput(forms.TextInput):
+    input_type = 'search'

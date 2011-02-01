@@ -1,6 +1,14 @@
 <form action="{% url document-search %}" id="{{ search_form_id }}" class="search">
   <div>
-  	{{ form.as_p }}
-    <input type="submit" class="submit" value="Search" />
+    <p>
+      {{ form.q }}
+    </p>
+    <p>
+      <label for="{{ form.release.auto_id }}">Version:</label>
+      {{ form.release }}
+    </p>
+    <p>
+      <input type="submit" class="submit" value="Search" />
+    </p>
   </div>
 </form>

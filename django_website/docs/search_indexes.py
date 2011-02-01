@@ -1,5 +1,6 @@
 import json
 from django.conf import settings
+from django.utils.html import strip_tags
 import haystack
 import haystack.indexes
 from . import utils
@@ -20,6 +21,6 @@ class DocumentIndex(haystack.indexes.SearchIndex):
         docpath = utils.get_doc_path(root, obj.path)
         with open(docpath) as fp:
             doc = json.load(fp)
-        return doc['body']
+        return strip_tags(doc['body'])
 
 haystack.site.register(Document, DocumentIndex)
