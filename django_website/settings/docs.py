@@ -22,9 +22,5 @@ else:
 
 # Haystack settings
 HAYSTACK_SITECONF = 'django_website.docs.search_sites'
-if PRODUCTION:
-    HAYSTACK_SEARCH_ENGINE = 'solr'
-    HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
-else:
-    HAYSTACK_SEARCH_ENGINE = 'whoosh'
-    HAYSTACK_WHOOSH_PATH = '/tmp/djangodocs.index'
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_WHOOSH_PATH = '/tmp/djangodocs.index'
