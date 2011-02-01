@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 
 from django import template
-from ..forms import SearchForm
+from ..forms import DocSearchForm
 from ..models import DocumentRelease
 from ..utils import get_doc_root, get_doc_path
 
@@ -12,9 +12,7 @@ def search_form(context, search_form_id='search'):
     request = context['request']
     auto_id = 'id_%s_%%s' % search_form_id
     return {
-        'form': SearchForm(initial=request.GET, auto_id=auto_id),
-        'search_form_id': search_form_id,
-        'action': context['search'],
+        'form': DocSearchForm(initial=request.GET, auto_id=auto_id),
     }
 
 @register.tag

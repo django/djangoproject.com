@@ -1,11 +1,17 @@
 from django.conf import settings
 from django.conf.urls.defaults import *
+from haystack.views import search_view_factory
 from ..docs import views
 
 urlpatterns = patterns('',
     url(
         r'^$',
         views.index,
+    ),
+    url(
+        r'^search/$',
+        search_view_factory(view_class=views.DocSearchView),
+        name = 'document-search'
     ),
     url(
         r'^(?P<lang>[a-z-]+)/$',
@@ -16,11 +22,6 @@ urlpatterns = patterns('',
         views.document,
         {'url': ''},
         name = 'document-index',
-    ),
-    url(
-        r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/search/$',
-        views.search,
-        name = 'document-search',
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_objects/$',

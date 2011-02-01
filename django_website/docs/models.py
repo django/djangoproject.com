@@ -49,8 +49,9 @@ class Document(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return (
-            'document-detail',
-            [],
-            {'lang': self.lang, 'version': self.version, 'url': self.path}
-        )
+        kwargs = {
+            'lang': self.release.lang,
+            'version': self.release.version,
+            'url': self.path
+        }
+        return ('document-detail', [], kwargs)
