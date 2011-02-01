@@ -36,19 +36,17 @@
 
   {% if page.has_previous or page.has_next %}
     <div>
-      {% with "q={{ query }}&amp;release={{ release.id }}" as q %}    
-        {% if page.has_previous %}
-          <a href="?{{ q }}&amp;page={{ page.previous_page_number }}">
-        {% endif %}
-        &laquo; Previous
-        {% if page.has_previous %}</a>{% endif %}
-        |
-        {% if page.has_next %}
-          <a href="?{{ q }}&amp;page={{ page.next_page_number }}">
-        {% endif %}
-        Next &raquo;
-        {% if page.has_next %}</a>{% endif %}
-      {% endwith %}
+      {% if page.has_previous %}
+        <a href="?q={{ query }}&amp;release={{ release.id }}&amp;page={{ page.previous_page_number }}">
+      {% endif %}
+      &laquo; Previous
+      {% if page.has_previous %}</a>{% endif %}
+      |
+      {% if page.has_next %}
+        <a href="?q={{ query }}&amp;release={{ release.id }}&amp;page={{ page.next_page_number }}">
+      {% endif %}
+      Next &raquo;
+      {% if page.has_next %}</a>{% endif %}
     </div>
   {% endif %}
 {% endif %}
