@@ -85,6 +85,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
+    "django_website.context_processors.recent_release",
 ]
 
 
@@ -99,6 +100,7 @@ AKISMET_API_KEY = "c892e4962244"
 # setting for documentation root path
 DJANGO_DOCUMENT_ROOT_PATH = "/home/html/djangoproject.com/docs/"
 DJANGO_TESTS_PATH = "/home/html/djangoproject.com/tests/"
+RECENT_RELEASE = "1.2"
 
 # XXX What's this for?
 DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
