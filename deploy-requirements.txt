@@ -12,5 +12,10 @@ python-memcached >= 1.45, < 2.0
 Sphinx >= 1.0, < 1.1
 South >= 0.7, < 0.8
 Unipath >= 0.2, < 0.3
-xapian-haystack == 1.1.5beta
+
+# django-contact-form doens't have a release compatible with Django 1.2.
 http://bitbucket.org/ubernostrum/django-contact-form/get/tip.bz2
+
+# xapian-haystack has a bug in 1.1.5beta fixed in trunk. So this
+# can go back to a packaged release as soon as there's a newer release.
+-e git://github.com/notanumber/xapian-haystack.git@dc11c14542c0137831e5#egg=xapian-haystack
