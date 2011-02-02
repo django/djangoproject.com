@@ -67,6 +67,7 @@ class DocSearchView(haystack.views.SearchView):
         kwargs.update({
             'template': 'docs/search.html',
             'form_class': DocSearchForm,
+            'load_all': False,
         })
         super(DocSearchView, self).__init__(**kwargs)
     
