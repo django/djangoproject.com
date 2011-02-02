@@ -3,7 +3,6 @@ from __future__ import absolute_import
 import datetime
 import django.views.static
 from django.core import urlresolvers
-from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.utils import simplejson
@@ -61,7 +60,7 @@ def objects_inventory(request, lang, version):
     return response
 
 def redirect_index(request, *args, **kwargs):
-    return HttpResponseRedirect(request.path.rstrip('index/'))
+    return redirect(request.path.rstrip('index/'))
 
 class DocSearchView(haystack.views.SearchView):
     def __init__(self, **kwargs):
