@@ -36,6 +36,10 @@ urlpatterns = patterns('',
         views.source,
     ),
     url(
+        r'^(.*)/index/$',
+        views.redirect_index,
+    ),
+    url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/(?P<url>[\w./-]*)/$',
         views.document,
         name = 'document-detail',
