@@ -7,5 +7,9 @@ def recent_release(request):
     recent_release = cache.get('recent_release')
     if not recent_release:
         recent_release = DocumentRelease.objects.default().version
-        cache.set('recent_release', recent_release)
+        cache.set(
+            '%s_recent_release' % settings.CACHE_MIDDLEWARE_KEY_PREFIX,
+            recent_release,
+            settings.CACHE_MIDDLEWARE_SECONDS,
+        )
     return {'RECENT_RELEASE': recent_release}
