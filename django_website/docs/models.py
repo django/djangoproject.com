@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.cache import cache
 
 class DocumentReleaseManager(models.Manager):
     def default(self):
@@ -9,6 +10,7 @@ class DocumentRelease(models.Model):
     """
     A "release" of documentation -- i.e. English for v1.2.
     """
+    DEFAULT_CACHE_KEY = "%s_recent_release" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
     SVN = 'svn'
     SCM_CHOICES = (
         (SVN, 'SVN'),
@@ -33,5 +35,10 @@ class DocumentRelease(models.Model):
         # There can be only one. Default, that is.
         if self.is_default:
             DocumentRelease.objects.update(is_default=False)
+            cache.set(
+                self.DEFAULT_CACHE_KEY,
+                self.version,
+                settings.CACHE_MIDDLEWARE_SECONDS,
+            )
         super(DocumentRelease, self).save(*args, **kwargs)
     
