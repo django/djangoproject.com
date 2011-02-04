@@ -2,3 +2,4 @@
 
 Unipath
 -e git+git://fabfile.org/fabric.git#egg=Fabric
+whoosh
