@@ -1,4 +1,4 @@
-/* 
+/*
 djangoproject.com by Wilson Miner (wilson@lawrence.com)
 Copyright (c) 2005 Lawrence Journal-World. Please don't steal.
 */
@@ -55,12 +55,12 @@ a:hover { color:#ffe761; }
 
 /* CONTENT */
 
-h1,h2,h3 { margin-top:.8em; font-family:"Trebuchet MS",sans-serif; font-weight:normal; }
+h1,h2,h3,h4 { margin-top:.8em; font-family:"Trebuchet MS",sans-serif; font-weight:normal; }
 h1 { font-size:218%; margin-top:.6em; margin-bottom:.6em; color:#092e20; line-height:1.1em; }
-h2 { font-size:150%; margin-top:1em; margin-bottom:.2em; line-height:1.2em; color:#092e20; }
+h2 { font-size:150%; margin-top:1em; margin-bottom:.2em; line-height:1.2em; color:#487858; }
 #homepage h2 { font-size:140%; }
-h3 { font-size:125%; font-weight:bold; margin-bottom:.2em; color:#487858; }
-h4 { font-size:100%; font-weight:bold; margin-bottom:-3px; margin-top:1.2em; text-transform:uppercase; letter-spacing:1px; }
+h3 { font-size:125%; font-weight:bold; margin-bottom:.2em; color:#092e20; }
+h4 { font-size:110%; font-weight:bold; margin-bottom:-2px; margin-top:1.2em; color:#234D32;}
 h4 pre, h4 tt, h4 .literal { text-transform:none; }
 h5 { font-size:1em; font-weight:bold; margin-top:1.5em; margin-bottom:3px; }
 p, ul, dl { margin-top:.6em; margin-bottom:.8em; }
@@ -128,7 +128,7 @@ textarea.codedump { font-size:10px; color:#234f32; width:100%; background:#E0FFB
 /* NOTES & ADMONITIONS */
 
 .note, .admonition, .caution { padding:.8em 1em .8em; margin: 1em 0; border:1px solid #94da3a; }
-.admonition-title { font-weight:bold; margin-top:0 !important; margin-bottom:0 !important;}
+.admonition-title { font-weight:bold; margin-top:0 !important; margin-bottom:0 !important; color:#487858}
 .admonition .last { margin-bottom:0 !important; }
 .admonition, .admonition-note, .caution { padding-left:65px; background:url(../img/doc/icons/docicons-note.gif) .8em .8em no-repeat;}
 div.admonition-philosophy { padding-left:65px; background:url(../img/doc/icons/docicons-philosophy.gif) .8em .8em no-repeat;}
@@ -144,7 +144,10 @@ table.docutils thead th { border-bottom:2px solid #dfdfdf; text-align:left; }
 table.docutils td, table.docutils th { border-bottom:1px solid #dfdfdf; padding:4px 2px;}
 table.docutils td p { margin-top:0; margin-bottom:.5em; }
 #documentation #content-related .literal { background:transparent !important; }
-div.versionadded span.title, div.versionchanged span.title { font-weight: bold; }
+div.versionadded, div.versionchanged { font-size: 92%; color:#555;}
+div.versionadded span.title, div.versionchanged span.title { font-style: italic;}
+/* Verdana bold is too bold; lighten it to compensate */
+#documentation #content-main p > strong, #documentation #content-main p > b { color: #555; }
 
 /* Sphinx-specific fixes */
 #documentation a.headerlink { color: #c60f0f; font-size: 0.8em; padding: 0 4px 0 4px; text-decoration: none; visibility: hidden; }
@@ -181,8 +184,8 @@ div.comment p { margin-left:1em; }
 /* FORMS */
 form.wide label { display: block; font-weight: bold; margin-top: 1.5em; margin-bottom: 0;}
 form.wide label span { font-weight: normal; color: #555; }
-form.wide input, 
-form.wide textarea, 
+form.wide input,
+form.wide textarea,
 form.wide select { width: 99%; padding: 1px; }
 form.wide p { margin: 0; }
 form.wide p.submit { text-align: right; margin-top: 1em; margin-right: 0;}
@@ -201,10 +204,10 @@ h3 .small { font-size:80%; }
 /*  CLEARFIX KLUDGE */
 
 #columnwrap:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
     visibility: hidden;
 }
 #columnwrap { display: inline-block; }
@@ -215,10 +218,10 @@ h3 .small { font-size:80%; }
 /* End hide from IE-mac */
 
 #subwrap:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
     visibility: hidden;
 }
 #subwrap { display: inline-block; }
