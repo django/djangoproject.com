@@ -1,5 +1,5 @@
 # Requirements to manage the site locally and run the fabfile.
 
 Unipath
--e git+git://fabfile.org/fabric.git#egg=Fabric
+Fabric >= 1.0, < 1.1
 whoosh
