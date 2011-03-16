@@ -30,11 +30,15 @@ urlpatterns = patterns('',
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_images/(?P<path>.*)$',
-        views.images,
+        views.SphinxStatic('_images'),
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_source/(?P<path>.*)$',
-        views.source,
+        views.SphinxStatic('_sources'),
+    ),
+    url(
+        r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_downloads/(?P<path>.*)$',
+        views.SphinxStatic('_downloads'),
     ),
     url(
         r'^(.*)/index/$',
