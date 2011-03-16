@@ -36,20 +36,20 @@ def document(request, lang, version, url):
         'redirect_from': request.GET.get('from', None),
     }))
 
-def images(request, lang, version, path):
-    return django.views.static.serve(
-        request, 
-        document_root = get_doc_root_or_404(lang, version).child('_images'),
-        path = path,
-    )
-    
-def source(request, lang, version, path):
-    return django.views.static.serve(
-        request,
-        document_root = get_doc_root_or_404(lang, version).child('_sources'),
-        path = path,
-    )
-    
+class SphinxStatic(object):
+    """
+    Serve Sphinx static assets from a subdir of the build location.
+    """
+    def __init__(self, subpath):
+        self.subpath = subpath
+
+    def __call__(self, request, lang, version, path):
+        return django.views.static.serve(
+            request, 
+            document_root = get_doc_root_or_404(lang, version).child(self.subpath),
+            path = path,
+        )
+
 def objects_inventory(request, lang, version):
     response = django.views.static.serve(
         request, 
