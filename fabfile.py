@@ -10,9 +10,7 @@ env.deploy_base = unipath.Path('/home/www/djangoproject.com')
 env.virtualenv = env.deploy_base
 env.code_dir = env.deploy_base.child('src')
 env.git_url = 'git://github.com/jacobian/djangoproject.com.git'
-
-# FIXME: make a deploy branch in this repo to deploy against.
-env.default_deploy_ref = 'origin/community_redux'
+env.default_deploy_ref = 'origin/deploy'
 
 def full_deploy():
     """
