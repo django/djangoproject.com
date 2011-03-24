@@ -5,6 +5,7 @@ from django.conf.urls.defaults import *
 from django.contrib import admin; admin.autodiscover()
 from django.contrib.comments.feeds import LatestCommentFeed
 from django.contrib.comments.models import Comment
+from django.contrib.flatpages.views import flatpage
 from django.contrib.sitemaps import views as sitemap_views
 from django.views.decorators.cache import cache_page
 from django.views.generic.simple import redirect_to
@@ -39,10 +40,14 @@ urlpatterns = patterns('',
     url(r'^rss/community/firehose/$', CommunityAggregatorFirehoseFeed(), name='aggregator-firehose-feed'),
     url(r'^rss/community/(?P<slug>[\w-]+)/$', CommunityAggregatorFeed(), name='aggregator-feed'),
 
+    # PayPal insists on POSTing to the "thank you" page which means we can't
+    # just use a flatpage for it.
+    url(r'^foundation/donate/thanks/$', 'django_website.views.donate_thanks'),
+
     url(r'^sitemap\.xml$', cache_page(sitemap_views.sitemap, 60 * 60 * 6), {'sitemaps': sitemaps}),
     url(r'^weblog/', include('django_website.blog.urls')),
     url(r'^freenode\.9xJY7YIUWtwn\.html$', 'django.views.generic.simple.direct_to_template', {'template': 'freenode_tmp.html'}),
-    url(r'^download$', 'django.contrib.flatpages.views.flatpage', {'url': 'download'}, name="download"),
+    url(r'^download$', flatpage, {'url': 'download'}, name="download"),
     url(r'', include('django_website.legacy.urls')),
 )
 
