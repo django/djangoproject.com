@@ -4,6 +4,7 @@
 
 {% block content %}
 <h1>{{ object.headline|safe }}</h1>
+{% if not object.is_published %}<p><strong>Preview mode</strong></p>{% endif %}
 {{ object.body|safe }}
 <p class="date small">Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }}</p>
 {% endblock %}
