@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.sites.models import Site
 from django.contrib.comments.signals import comment_was_posted
 from django.utils.encoding import smart_str
+from docutils.core import publish_parts
 
 
 class EntryManager(models.Manager):
@@ -17,9 +18,12 @@ class Entry(models.Model):
     slug = models.SlugField(unique_for_date='pub_date')
     is_active = models.BooleanField(help_text="Tick to make the entry live on site (see also the publication date). Note that administrators (like yourself) are allowed to preview inactive content whereas other users and the general public aren't.", default=False)
     pub_date = models.DateTimeField(help_text='For an entry to be published, it must be active and its publication date must be in the past.')
-    summary = models.TextField(help_text="Use raw HTML.")
-    body = models.TextField(help_text="Use raw HTML.")
+    summary = models.TextField()
+    summary_html = models.TextField(help_text="Use reStructuredText unless specified otherwise")
+    body = models.TextField(help_text="Use reStructuredText unless specified otherwise")
+    body_html = models.TextField()
     author = models.CharField(max_length=100)
+    use_raw_html = models.BooleanField(help_text="Tick if you prefer to manually enter raw HTML instead of reStructureText formats in the summary and body. This option's main purpose is to cope with old entries that were entirely written in raw HTML.", default=False)
 
     objects = EntryManager()
     
@@ -47,6 +51,24 @@ class Entry(models.Model):
         delta = datetime.datetime.now() - self.pub_date
         return delta.days < 60
 
+    def save(self, *args, **kwargs):
+        if self.use_raw_html:
+            self.summary_html = self.summary
+            self.body_html = self.body
+        else:
+            settings_overrides = {
+                    'doctitle_xform': False,
+                    'initial_header_level': 4,
+                    'id_prefix': 's-',
+                }
+            self.summary_html = publish_parts(source=smart_str(self.summary),
+                                              writer_name="html",
+                                              settings_overrides=settings_overrides)['fragment']
+            self.body_html = publish_parts(source=smart_str(self.body),
+                                           writer_name="html",
+                                           settings_overrides=settings_overrides)['fragment']
+        super(Entry, self).save(*args, **kwargs)
+    
 def moderate_comment(sender, comment, request, **kwargs):
     ak = akismet.Akismet(
         key = settings.AKISMET_API_KEY,
