@@ -6,14 +6,23 @@ from django.contrib.sites.models import Site
 from django.contrib.comments.signals import comment_was_posted
 from django.utils.encoding import smart_str
 
+
+class EntryManager(models.Manager):
+    
+    def active(self):
+        return super(EntryManager, self).get_query_set().filter(is_active=True)
+
 class Entry(models.Model):
-    pub_date = models.DateTimeField()
-    slug = models.SlugField(unique_for_date='pub_date')
     headline = models.CharField(max_length=200)
+    slug = models.SlugField(unique_for_date='pub_date')
+    is_active = models.BooleanField(help_text="Tick to make the entry live on site (see also the publication date). Note that administrators (like yourself) are allowed to preview inactive content whereas other users and the general public aren't.", default=False)
+    pub_date = models.DateTimeField(help_text='For an entry to be published, it must be active and its publication date must be in the past.')
     summary = models.TextField(help_text="Use raw HTML.")
     body = models.TextField(help_text="Use raw HTML.")
     author = models.CharField(max_length=100)
 
+    objects = EntryManager()
+    
     class Meta:
         db_table = 'blog_entries'
         verbose_name_plural = 'entries'
@@ -25,7 +34,14 @@ class Entry(models.Model):
 
     def get_absolute_url(self):
         return "/weblog/%s/%s/" % (self.pub_date.strftime("%Y/%b/%d").lower(), self.slug)
-        
+    
+    def is_published(self):
+        """
+        Return True if the entry is publicly accessible.
+        """
+        return self.is_active and self.pub_date <= datetime.datetime.now()
+    is_published.boolean = True
+    
     @property
     def comments_enabled(self):
         delta = datetime.datetime.now() - self.pub_date

@@ -4,5 +4,6 @@ from django.contrib import admin
 from .models import Entry
 
 admin.site.register(Entry,
-    list_display = ('pub_date', 'headline', 'author'),
+    list_display = ('headline', 'pub_date', 'is_active', 'is_published', 'author'),
+    list_filter = ('is_active',)
 )
