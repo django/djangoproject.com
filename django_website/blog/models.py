@@ -10,6 +10,9 @@ from docutils.core import publish_parts
 
 class EntryManager(models.Manager):
     
+    def published(self):
+        return self.active().filter(pub_date__lte=datetime.datetime.now())
+    
     def active(self):
         return super(EntryManager, self).get_query_set().filter(is_active=True)
 
