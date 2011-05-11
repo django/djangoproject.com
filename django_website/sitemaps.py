@@ -34,7 +34,7 @@ class WeblogSitemap(Sitemap):
     priority = 0.4
 
     def items(self):
-        return Entry.objects.filter(pub_date__lte=datetime.datetime.now())
+        return Entry.objects.published()
 
     # lastmod is not implemented, because weblog pages contain comments.
     # We'd rather not look up the date of the latest comment -- not worth the overhead.
