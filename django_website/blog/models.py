@@ -1,11 +1,14 @@
 import akismet
 import datetime
+from docutils.core import publish_parts
+
 from django.conf import settings
 from django.db import models
 from django.contrib.sites.models import Site
 from django.contrib.comments.signals import comment_was_posted
 from django.utils.encoding import smart_str
-from docutils.core import publish_parts
+from django.utils.translation import ugettext_lazy as _
+
 
 
 class EntryManager(models.Manager):
@@ -16,17 +19,22 @@ class EntryManager(models.Manager):
     def active(self):
         return super(EntryManager, self).get_query_set().filter(is_active=True)
 
+CONTENT_FORMAT_CHOICES = (
+    (u'reST', u'reStructuredText'),
+    (u'html', u'Raw HTML'),
+)
+    
 class Entry(models.Model):
     headline = models.CharField(max_length=200)
     slug = models.SlugField(unique_for_date='pub_date')
-    is_active = models.BooleanField(help_text="Tick to make the entry live on site (see also the publication date). Note that administrators (like yourself) are allowed to preview inactive content whereas other users and the general public aren't.", default=False)
-    pub_date = models.DateTimeField(help_text='For an entry to be published, it must be active and its publication date must be in the past.')
+    is_active = models.BooleanField(help_text=_("Tick to make this entry live (see also the publication date). Note that administrators (like yourself) are allowed to preview inactive entries whereas the general public aren't."), default=False)
+    pub_date = models.DateTimeField(verbose_name=_("Publication date"), help_text=_("For an entry to be published, it must be active and its publication date must be in the past."))
+    content_format = models.CharField(choices=CONTENT_FORMAT_CHOICES, max_length=50)
     summary = models.TextField()
-    summary_html = models.TextField(help_text="Use reStructuredText unless specified otherwise")
-    body = models.TextField(help_text="Use reStructuredText unless specified otherwise")
+    summary_html = models.TextField()
+    body = models.TextField()
     body_html = models.TextField()
     author = models.CharField(max_length=100)
-    use_raw_html = models.BooleanField(help_text="Tick if you prefer to manually enter raw HTML instead of reStructureText formats in the summary and body. This option's main purpose is to cope with old entries that were entirely written in raw HTML.", default=False)
 
     objects = EntryManager()
     
@@ -55,10 +63,10 @@ class Entry(models.Model):
         return delta.days < 60
 
     def save(self, *args, **kwargs):
-        if self.use_raw_html:
+        if self.content_format == u'html':
             self.summary_html = self.summary
             self.body_html = self.body
-        else:
+        elif self.content_format == u'reST':
             settings_overrides = {
                     'doctitle_xform': False,
                     'initial_header_level': 4,
