@@ -11,6 +11,14 @@ from django.utils.translation import ugettext_lazy as _
 
 
 
+BLOG_DOCUTILS_SETTINGS = getattr(settings, 'BLOG_DOCUTILS_SETTINGS',
+     {  'doctitle_xform': False,
+        'initial_header_level': 4,
+        'id_prefix': 's-',
+     }
+)
+
+
 class EntryManager(models.Manager):
     
     def published(self):
@@ -67,17 +75,12 @@ class Entry(models.Model):
             self.summary_html = self.summary
             self.body_html = self.body
         elif self.content_format == u'reST':
-            settings_overrides = {
-                    'doctitle_xform': False,
-                    'initial_header_level': 4,
-                    'id_prefix': 's-',
-                }
             self.summary_html = publish_parts(source=smart_str(self.summary),
                                               writer_name="html",
-                                              settings_overrides=settings_overrides)['fragment']
+                                              settings_overrides=BLOG_DOCUTILS_SETTINGS)['fragment']
             self.body_html = publish_parts(source=smart_str(self.body),
                                            writer_name="html",
-                                           settings_overrides=settings_overrides)['fragment']
+                                           settings_overrides=BLOG_DOCUTILS_SETTINGS)['fragment']
         super(Entry, self).save(*args, **kwargs)
     
 def moderate_comment(sender, comment, request, **kwargs):
