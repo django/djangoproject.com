@@ -1,7 +1,4 @@
 *.pyc
 *.db
 local_settings.py
-pip-log.txt
 
-# PyCharm project files
-.idea/*
