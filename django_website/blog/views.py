@@ -1,8 +1,10 @@
+import functools
 from django.views.generic import date_based
 
 from .models import Entry
 
 def prepare_arguments(view):
+    @functools.wraps(view)
     def wrapped(request, *args, **kwargs):
         kwargs['allow_future'] = request.user.is_staff
         kwargs['queryset'] = Entry.objects.all() if request.user.is_staff else Entry.objects.published()
