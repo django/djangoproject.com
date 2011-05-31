@@ -4,6 +4,6 @@
 
 {% block content %}
 <h1>{{ object.headline|safe }}</h1>
-{{ object.body|safe }}
+{{ object.body_html|safe }}
 <p class="date small">Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }}</p>
 {% endblock %}
