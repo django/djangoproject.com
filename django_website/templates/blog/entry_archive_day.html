@@ -9,7 +9,7 @@
 {% for object in object_list %}
 <h2><a href="{{ object.get_absolute_url }}">{{ object.headline|safe }}</a></h2>
 <p class="small date">{{ object.pub_date|date:"F j, Y" }}</p>
-{{ object.body|safe }}
+{{ object.body_html|safe }}
 
 {% endfor %}
 
