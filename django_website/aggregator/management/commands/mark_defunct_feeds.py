@@ -10,6 +10,7 @@ class Command(BaseCommand):
         verbose = kwargs.get('verbosity')
         for f in Feed.objects.all():
             try:
+                socket.setdefaulttimeout(15)
                 r = urllib2.urlopen(f.feed_url)
             except urllib2.HTTPError, e:
                 if e.code == 404 or e.code == 500:
