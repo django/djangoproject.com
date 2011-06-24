@@ -1,3 +1,4 @@
+import socket
 import urllib2
 from django.core.management.base import BaseCommand
 from django_website.apps.aggregator.models import Feed
