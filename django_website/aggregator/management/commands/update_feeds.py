@@ -1,3 +1,4 @@
+import logging
 import datetime
 import feedparser
 import optparse
@@ -27,6 +28,9 @@ class Command(BaseCommand):
     )
 
     def handle(self, *args, **kwargs):
+        log = self.setup_logging()
+        log.debug('Starting run.')
+        
         try:
             lockfile = os.open(self.LOCKFILE, os.O_CREAT | os.O_EXCL)
         except OSError:
@@ -39,13 +43,15 @@ class Command(BaseCommand):
             verbose = True
             
         try:
-            socket.setdefaulttimeout(15)
             self.update_feeds(verbose=verbose, num_threads=kwargs['threads'])
         except:
-            sys.exit(1)
+            log.exception('Uncaught exception updating feeds.')
         finally:
+            log.debug('Cleaning up.')
             os.close(lockfile)
             os.unlink(self.LOCKFILE)
+        
+        log.debug('Ending run.')
 
     def update_feeds(self, verbose=False, num_threads=4):
         feed_queue = Queue.Queue()
@@ -58,7 +64,17 @@ class Command(BaseCommand):
             
         [t.start() for t in threadpool]
         [t.join() for t in threadpool]
-
+    
+    def setup_logging(self):
+        log = logging.getLogger('django_website.update_feeds')
+        log.setLevel(logging.DEBUG)
+        handler = logging.FileHandler('/var/log/update_feeds.log')
+        handler.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('%(asctime)s [%(levelname)s]: %(message)s')
+        handler.setFormatter(formatter)
+        log.addHandler(handler)
+        return log
+    
 class FeedUpdateWorker(threading.Thread):
     
     def __init__(self, q, verbose, **kwargs):
@@ -66,6 +82,7 @@ class FeedUpdateWorker(threading.Thread):
         self.daemon = True
         self.verbose = verbose
         self.q = q
+        self.log = logging.getLogger('django_website.update_feeds')
         
     def run(self):
         while 1:
@@ -77,10 +94,17 @@ class FeedUpdateWorker(threading.Thread):
             self.q.task_done()
             
     def update_feed(self, feed):
+        self.log.debug('Starting update: %s (%s)' % (feed, feed.feed_url))
         if self.verbose:
             print feed
         
-        parsed_feed = feedparser.parse(feed.feed_url)
+        try:
+            socket.setdefaulttimeout(15)
+            parsed_feed = feedparser.parse(feed.feed_url)
+        except Exception:
+            self.log.exception('Error updating %s (%s)' % (feed, feed.feed_url))
+            return
+
         for entry in parsed_feed.entries:
             # Parse out the entry, handling all the fun stuff that feeds can do.
             title = entry.title
@@ -118,3 +142,4 @@ class FeedUpdateWorker(threading.Thread):
                 summary = content,
                 date_modified = date_modified
             )
+            self.log.debug('Done with %s (%s)' % (feed, feed.feed_url))
