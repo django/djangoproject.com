@@ -142,4 +142,5 @@ class FeedUpdateWorker(threading.Thread):
                 summary = content,
                 date_modified = date_modified
             )
-            self.log.debug('Done with %s.' % feed)
+            
+        self.log.debug('Done with %s.' % feed)
