@@ -94,7 +94,7 @@ class FeedUpdateWorker(threading.Thread):
             self.q.task_done()
             
     def update_feed(self, feed):
-        self.log.debug('Starting update: %s (%s)' % (feed, feed.feed_url))
+        self.log.debug('Starting update: %s.' % feed)
         if self.verbose:
             print feed
         
@@ -102,7 +102,7 @@ class FeedUpdateWorker(threading.Thread):
             socket.setdefaulttimeout(15)
             parsed_feed = feedparser.parse(feed.feed_url)
         except Exception:
-            self.log.exception('Error updating %s (%s)' % (feed, feed.feed_url))
+            self.log.exception('Error updating %s.' % feed)
             return
 
         for entry in parsed_feed.entries:
@@ -142,4 +142,4 @@ class FeedUpdateWorker(threading.Thread):
                 summary = content,
                 date_modified = date_modified
             )
-            self.log.debug('Done with %s (%s)' % (feed, feed.feed_url))
+            self.log.debug('Done with %s.' % feed)
