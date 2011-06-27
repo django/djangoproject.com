@@ -70,7 +70,7 @@ class Command(BaseCommand):
         log.setLevel(logging.DEBUG)
         handler = logging.FileHandler('/var/log/update_feeds.log')
         handler.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('%(asctime)s [%(levelname)s]: %(message)s')
+        formatter = logging.Formatter('%(asctime)s [%(levelname)s] (%(thread)d) %(message)s')
         handler.setFormatter(formatter)
         log.addHandler(handler)
         return log
