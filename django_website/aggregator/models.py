@@ -1,9 +1,12 @@
+import logging
 import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 from django_push.subscriber import signals as push_signals
 from django_push.subscriber.models import Subscription
+
+log = logging.getLogger(__name__)
 
 class FeedType(models.Model):
     name = models.CharField(max_length=250)
@@ -52,10 +55,13 @@ class FeedItemManager(models.Manager):
         
         except self.model.DoesNotExist:
             # Create a new item
+            log.debug('Creating entry: %s', guid)
             kwargs['guid'] = guid
             item = self.create(**kwargs)
             
         else:
+            log.debug('Updating entry: %s', guid)
+
             # Update an existing one.
             kwargs.pop('feed', None)
             
@@ -88,10 +94,11 @@ class FeedItem(models.Model):
         return self.link
 
 def feed_updated(sender, notification, **kwargs):
+    log.debug('Recieved notification: %s', sender.topic)
     try:
         feed = Feed.objects.get(feed_url=sender.topic)
     except Feed.DoesNotExist:
-        return
+        log.error('Got notified about a non-existant feed: %s', sender.topic)
         
     for entry in notification.entries:
         title = entry.title

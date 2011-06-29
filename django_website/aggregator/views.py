@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+import logging
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
@@ -14,6 +15,7 @@ def index(request):
     """
     Displays the latest feeds of each type.
     """
+    logging.getLogger('django_website.foobar').info('sdfasdf')
     ctx = {'feedtype_list': FeedType.objects.all()}
     return render(request, 'aggregator/index.html', ctx)
 
