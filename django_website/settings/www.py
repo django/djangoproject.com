@@ -79,9 +79,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 ]
-if PRODUCTION:
-    MIDDLEWARE_CLASSES.insert(0, 'django.middleware.cache.UpdateCacheMiddleware')
-    MIDDLEWARE_CLASSES.append('django.middleware.cache.FetchFromCacheMiddleware')
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
