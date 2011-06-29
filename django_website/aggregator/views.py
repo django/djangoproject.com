@@ -15,7 +15,6 @@ def index(request):
     """
     Displays the latest feeds of each type.
     """
-    logging.getLogger('django_website.foobar').info('sdfasdf')
     ctx = {'feedtype_list': FeedType.objects.all()}
     return render(request, 'aggregator/index.html', ctx)
 

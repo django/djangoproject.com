@@ -94,11 +94,11 @@ class FeedItem(models.Model):
         return self.link
 
 def feed_updated(sender, notification, **kwargs):
-    log.debug('Recieved notification: %s', sender.topic)
+    log.debug('Recieved notification on subscription ID %s (%s)', sender.id, sender.topic)
     try:
         feed = Feed.objects.get(feed_url=sender.topic)
     except Feed.DoesNotExist:
-        log.error('Got notified about a non-existant feed: %s', sender.topic)
+        log.error("Subscription ID %s (%s) doesn't have a feed.", sender.id, sender.topic)
         
     for entry in notification.entries:
         title = entry.title
