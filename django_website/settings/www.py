@@ -12,7 +12,7 @@ BASE = Path(__file__).absolute().ancestor(2)
 PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ) and ("djangoproject" in platform.node())
 
 # It's a secret to everybody
-SECRET_KEY = json.load(open(BASE.child('secrets.json')))['secret_key']
+SECRET_KEY = json.load(open(BASE.parent.child('secrets.json')))['secret_key']
 
 ADMINS = (('Adrian Holovaty','holovaty@gmail.com'),('Jacob Kaplan-Moss', 'jacob@jacobian.org'))
 MANAGERS = (('Jacob Kaplan-Moss','jacob@jacobian.org'),)
