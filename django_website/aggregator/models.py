@@ -31,6 +31,10 @@ class Feed(models.Model):
         super(Feed, self).save(**kwargs)
         Subscription.objects.subscribe(self.feed_url, settings.PUSH_HUB)
 
+    def delete(self, **kwargs):
+        super(Feed, self).delete(**kwargs)
+        Subscription.objects.unsubscribe(self.feed_url, settings.PUSH_HUB)
+
 class FeedItemManager(models.Manager):
     def create_or_update_by_guid(self, guid, **kwargs):
         """
