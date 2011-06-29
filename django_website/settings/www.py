@@ -1,6 +1,7 @@
 # Settings for www.djangoproject.com
 
 import os
+import json
 import platform
 from unipath import FSPath as Path
 
@@ -9,6 +10,9 @@ BASE = Path(__file__).absolute().ancestor(2)
 
 # Far too clever trick to know if we're running on the deployment server.
 PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ) and ("djangoproject" in platform.node())
+
+# It's a secret to everybody
+SECRET_KEY = json.load(open(BASE.child('secrets.json')))['secret_key']
 
 ADMINS = (('Adrian Holovaty','holovaty@gmail.com'),('Jacob Kaplan-Moss', 'jacob@jacobian.org'))
 MANAGERS = (('Jacob Kaplan-Moss','jacob@jacobian.org'),)
