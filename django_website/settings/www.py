@@ -12,7 +12,8 @@ BASE = Path(__file__).absolute().ancestor(2)
 PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ) and ("djangoproject" in platform.node())
 
 # It's a secret to everybody
-SECRET_KEY = str(json.load(open(BASE.ancestor(2).child('secrets.json')))['secret_key'])
+SECRETS = json.load(open(BASE.ancestor(2).child('secrets.json')))
+SECRET_KEY = str(SECRETS['secret_key'])
 
 ADMINS = (('Adrian Holovaty','holovaty@gmail.com'),('Jacob Kaplan-Moss', 'jacob@jacobian.org'))
 MANAGERS = (('Jacob Kaplan-Moss','jacob@jacobian.org'),)
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.redirects',
     'django.contrib.sessions',
     'django.contrib.sitemaps',
+    'django_push.subscriber',
     'django_website.blog',
     'django_website.aggregator',
     'django_website.docs',
@@ -110,6 +112,11 @@ DJANGO_TESTS_PATH = "/home/html/djangoproject.com/tests/"
 
 # XXX What's this for?
 DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
+
+# PubSubHubbub settings
+PUSH_HUB = 'https://superfeedr.com/hubbub'
+PUSH_CREDENTIALS = 'django_website.aggregator.utils.push_credentials'
+PUSH_SSL_CALLBACK = PRODUCTION
 
 # If django-debug-toolbar is installed enable it.
 if not PRODUCTION:

@@ -5,7 +5,7 @@ Django >= 1.2, < 1.3
 django-haystack == 1.1.0
 django-registration == 0.7
 docutils >= 0.6, < 0.7
-FeedParser >= 4.1, < 5.0
+FeedParser >= 5.0, <= 5.1
 Jinja2 >= 2.4, < 2.5
 psycopg2 >= 2.2, < 2.3
 python-memcached >= 1.45, < 2.0
@@ -19,3 +19,6 @@ http://bitbucket.org/ubernostrum/django-contact-form/get/tip.bz2
 # xapian-haystack has a bug in 1.1.5beta fixed in trunk. So this
 # can go back to a packaged release as soon as there's a newer release.
 -e git://github.com/notanumber/xapian-haystack.git@dc11c14542c0137831e5#egg=xapian-haystack
+
+# django_push has a number of bugs in 0.3 fixed on trunk.
+-e git://github.com/brutasse/django-push.git@7ebbb23a0acc74750763#egg=django_push
