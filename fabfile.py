@@ -57,6 +57,7 @@ def update_dependencies():
     """
     pip = env.virtualenv.child('bin', 'pip')
     reqs = env.code_dir.child('deploy-requirements.txt')
+    sudo('%s -q install -U pip' % pip)
     sudo('%s -q install -r %s' % (pip, reqs))
 
 def update_docs():
