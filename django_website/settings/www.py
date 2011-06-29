@@ -100,6 +100,49 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 
 DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    "formatters": {
+        "simple": {"format": "[%(name)s] %(levelname)s: %(message)s"},
+        "full": {"format": "%(asctime)s [%(name)s] %(levelname)s: %(message)s"}
+    },
+    "handlers": {
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+    },
+    "loggers": {
+        "django.request": {
+            "handlers": ["mail_admins"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "django_website": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        }
+    }
+}
+if PRODUCTION:
+    LOGGING["handlers"]["logfile"] = {
+        "formatter": "full",
+        "level": "DEBUG",
+        "class": "logging.handlers.TimedRotatingFileHandler",
+        "filename": "/var/log/django_website.log",
+        "when": "D",
+        "interval": 7,
+        "backupCount": 5,
+    }
+    LOGGING["loggers"]["django.request"]["handlers"].append("logfile")
+    LOGGING["loggers"]["django_website"]["handlers"] = ["logfile"]
+
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 3
 
