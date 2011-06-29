@@ -22,3 +22,10 @@ admin.site.register(FeedItem,
 admin.site.register(FeedType,
     prepopulated_fields = {'slug': ('name',)},
 )
+
+# Register an admin for django_push.subscriber - it hasn't got one, and I'd
+# like to use it for debugging purposes.
+from django_push.subscriber.models import Subscription
+admin.site.register(Subscription, 
+    list_display = ['topic', 'verified', 'lease_expiration'],
+)
