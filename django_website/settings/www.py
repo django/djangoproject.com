@@ -135,7 +135,7 @@ if PRODUCTION:
         "formatter": "full",
         "level": "DEBUG",
         "class": "logging.handlers.TimedRotatingFileHandler",
-        "filename": "/var/log/django_website.log",
+        "filename": "/var/log/django_website/website.log",
         "when": "D",
         "interval": 7,
         "backupCount": 5,
