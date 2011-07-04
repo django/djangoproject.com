@@ -99,6 +99,7 @@ def feed_updated(sender, notification, **kwargs):
         feed = Feed.objects.get(feed_url=sender.topic)
     except Feed.DoesNotExist:
         log.error("Subscription ID %s (%s) doesn't have a feed.", sender.id, sender.topic)
+        return
         
     for entry in notification.entries:
         title = entry.title
