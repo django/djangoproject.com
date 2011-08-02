@@ -16,6 +16,7 @@ body, th, td {
     font:12px/1.4em Verdana,sans-serif;
 }
 #container {
+    margin:0 auto;
     position:relative;
     min-width:55em;
     max-width:100em;
