@@ -60,7 +60,8 @@ def objects_inventory(request, lang, version):
     return response
 
 def redirect_index(request, *args, **kwargs):
-    return redirect(request.path.rstrip('index/'))
+    assert request.path.endswith('index/')
+    return redirect(request.path[:-6])
 
 class DocSearchView(haystack.views.SearchView):
     def __init__(self, **kwargs):
