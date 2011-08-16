@@ -116,12 +116,12 @@
       <p>
       {% if version == "dev" %}
         Offline (development version):
-        <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.html">HTML</a> | 
+        <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> | 
         <a href="http://media.readthedocs.org/pdf/django/latest/django.pdf">PDF</a> | 
         <a href="http://media.readthedocs.org/epub/django/latest/django.epub">ePub</a>
       {% else %}
         Offline (Django {{ version }}):
-        <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.html">HTML</a> | 
+        <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> | 
         <a href="http://media.readthedocs.org/pdf/django/{{ version }}.X/django.pdf">PDF</a> | 
         <a href="http://media.readthedocs.org/epub/django/{{ version }}.X/django.epub">ePub</a>
       {% endif %}
