@@ -10,6 +10,7 @@
 {% endif %}
 
 <form method="POST" action="" id="add_feed_form" class="wide">
+  {% csrf_token %}
   {% for field in form %}
     <p>
       <label id="{{ field.auto_id }}">{{ field.label }} - <span class="help">{{ field.help_text }}</label>
