@@ -5,6 +5,7 @@
 {% block content %}
 <h1>Contact the Django Software Foundation</h1>
 <form action="." method="post" accept-charset="utf-8" class="wide">
+{% csrf_token %}
   <p>
     <label for="id_name">Your name:</label>
     {% if form.name.errors %}<p class="errors">{{ form.name.errors.as_text }}</p>{% endif %}

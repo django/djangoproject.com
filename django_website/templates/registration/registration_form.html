@@ -11,6 +11,7 @@
   <h1>Create an account</h1>
   
   <form method="post" action="" class="wide">
+    {% csrf_token %}
     <p>
       <label for="id_username">Username:</label>
       {% if form.username.errors %}

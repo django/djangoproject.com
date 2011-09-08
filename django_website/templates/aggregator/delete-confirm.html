@@ -11,6 +11,7 @@
 </p>
 
 <form class="wide" action="." method="post">
+  {% csrf_token %}
   <p class="submit"><input type="submit" value="Yes, delete the feed."></p>
 </form>
 {% endblock %}
