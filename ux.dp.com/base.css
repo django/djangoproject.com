@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    font-family: freight-sans-pro, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 100%;
     width: 600px;
     margin: 20px auto;
@@ -16,17 +16,25 @@ body {
     text-indent: -9999px;
     background: url(djangoux.png) no-repeat left center;
     margin: 0;
+    font-weight: 800;
 }
 
 #masthead>h2 {
+    font-family: "News Cycle", sans-serif;
     text-transform: uppercase;
     font-size: 1.8em;
     color: white;
     margin: 0.25em 0 0.5em;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+#content {
+    margin-bottom: 2em;
 }
 
 #mailinglist {
-    font-weight: 700;
+    font-weight: 800;
     text-decoration: none;
     color: black;
     display: inline-block;
@@ -41,4 +49,61 @@ body {
     text-decoration: underline;
     background: rgba(255,255,255,0.5);
     color: black;
+}
+
+#staff header h1 {
+    font-weight: 400;
+    font-style: italic;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    font-size: 100%;
+    padding-bottom: 0.5em;
+
+}
+
+.person {
+    float: left;
+    width: 122px;
+}
+
+.person>a {
+    border: 1px solid #789340;
+    background: #fff;
+    padding: 5px;
+    width: 72px;
+    height: 72px;
+    display: block;
+}
+
+.person>a:hover {
+    background-color: #FFF0AF;
+}
+
+.person>a img {
+    display: block;
+    padding: 0;
+    margin: 0;
+    width: 72px;
+    height: 72px;
+}
+
+.person h1 {
+    font-weight: 400;
+    font-size: 100%;
+    margin-bottom: 0.2em;
+}
+
+.person h2 {
+    font-weight: 400;
+    font-style: italic;
+    font-size: 0.75em;
+    margin-top: 0;
+}
+
+.person h2 a {
+    color: #000;
+    text-decoration: none;
+}
+
+.person h2 a:hover {
+    text-decoration: underline;
 }
