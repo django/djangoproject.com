@@ -10,7 +10,7 @@ env.deploy_base = unipath.Path('/home/www/djangoproject.com')
 env.virtualenv = env.deploy_base
 env.code_dir = env.deploy_base.child('src')
 env.git_url = 'git://github.com/django/djangoproject.com.git'
-env.default_deploy_ref = 'origin/deploy'
+env.default_deploy_ref = 'origin/master'
 
 def full_deploy():
     """
