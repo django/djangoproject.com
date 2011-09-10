@@ -1,0 +1,20 @@
+{% extends "base_community.html" %}
+
+{% block title %}{{ user }} | djangoproject.com{% endblock %}
+{% block content-related %}{% endblock %}
+
+{% block content %}
+  <h1>{% firstof user.get_full_name user.username %}</h1>
+  <p>Member since {{ user.date_joined.date }}.</p>
+  {% if user_can_commit %}<p>Committer!</p>{% endif %}
+  {% with user.owned_feeds.all as feeds %}
+    {% if feeds %}
+      <h2>Community feeds:</h2>
+      <li>
+        {% for f in feeds %}
+          <li><a href="{{ f.public_url }}">{{ f.title }}</a></li>   
+        {% endfor %}
+      </li>
+    {% endif %}
+  {% endwith %}
+{% endblock content %}
