@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'django_push.subscriber',
     'django_website.blog',
     'django_website.aggregator',
+    'django_website.cla',
     'django_website.docs',
     'registration',
     'south',
@@ -81,7 +82,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    #'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
 ]
 if PRODUCTION:
