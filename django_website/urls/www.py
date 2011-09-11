@@ -66,3 +66,8 @@ if not settings.PRODUCTION:
             "document_root": settings.MEDIA_ROOT,
         }),
     )
+
+# flatpages need to be last b/c they match anything
+urlpatterns += patterns('',
+    (r'', include('django.contrib.flatpages.urls')),
+)
