@@ -14,6 +14,8 @@ from ..aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFireh
 from ..blog.feeds import WeblogEntryFeed
 from ..sitemaps import FlatPageSitemap, WeblogSitemap
 
+admin.autodiscover()
+
 comments_info_dict = {
     'queryset': Comment.objects.filter(is_public=True).order_by('-submit_date'),
     'paginate_by': 15,
@@ -64,10 +66,3 @@ if not settings.PRODUCTION:
             "document_root": settings.MEDIA_ROOT,
         }),
     )
-
-urlpatterns += patterns('',
-# flatpages need to be last b/c they match anything
-    (r'', include('django.contrib.flatpages.urls')),
-)
-
-admin.autodiscover()
