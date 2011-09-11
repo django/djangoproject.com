@@ -18,6 +18,7 @@ def full_deploy():
     """
     deploy_code()
     update_dependencies()
+    migrate()
     apache("restart")
     memcached("restart")
 
@@ -59,6 +60,13 @@ def update_dependencies():
     reqs = env.code_dir.child('deploy-requirements.txt')
     sudo('%s -q install -U pip' % pip)
     sudo('%s -q install -r %s' % (pip, reqs))
+
+def migrate():
+    """
+    Run migrate/syncdb.
+    """
+    managepy('syncdb')
+    managepy('migrate')
 
 def update_docs():
     """
