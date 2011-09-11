@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 from django.conf.urls.defaults import patterns, url, include
 from registration.forms import RegistrationFormUniqueEmail
+from . import views as account_views
 
 urlpatterns = patterns('',
     url(
@@ -19,5 +20,6 @@ urlpatterns = patterns('',
         r'^reset/done/$',
         'django.contrib.auth.views.password_reset_complete'
     ),
+    url(r'^_trac/userinfo/$', account_views.json_user_info),
     (r'', include('registration.urls')),
 )
