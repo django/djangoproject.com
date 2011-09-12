@@ -41,6 +41,7 @@ def json_user_info(request):
 
 def get_user_info(username):
     c = cache.get_cache('default')
+    username = username.encode('ascii', 'ignore')
     key = 'trac_user_info:%s' % hashlib.md5(username).hexdigest()
     info = c.get(key)
     if info is None:
