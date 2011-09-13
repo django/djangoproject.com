@@ -17,8 +17,7 @@
   </style>
 {% endblock extrahead %}
 {% block content-related %}
-{% if user.is_authenticated and user == profile %}
-  <h2>This is you!</h3>
+  <h2>Is this you?</h3>
   <p>
   Need to edit something? Here's how:
   </p>
@@ -35,7 +34,6 @@
       outragous errors, please email <kbd>jacob</kbd> @ this domain.
     </li>
   </ul>
-{% endif %}
 {% endblock %}
 
 {% block content %}
