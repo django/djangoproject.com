@@ -25,8 +25,14 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'djangoproject',
         'USER': 'djangoproject'
+    },
+    'trac': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'code.djangoproject',
+        'USER': 'code.djangoproject'
     }
 }
+DATABASE_ROUTERS = ['django_website.trac.db_router.TracRouter']
 
 USE_I18N = False
 USE_L10N = False
@@ -66,6 +72,7 @@ INSTALLED_APPS = [
     'django_website.aggregator',
     'django_website.cla',
     'django_website.docs',
+    'django_website.trac',
     'registration',
     'south',
     'djangosecure',
