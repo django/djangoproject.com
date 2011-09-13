@@ -76,7 +76,6 @@ INSTALLED_APPS = [
     'registration',
     'south',
     'djangosecure',
-    'gunicorn',
 ]
 
 CACHE_MIDDLEWARE_SECONDS = 60 * 5 # 5 minutes
