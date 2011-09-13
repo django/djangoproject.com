@@ -1,6 +1,6 @@
 {% extends "base_community.html" %}
 
-{% block title %}{% firstof profile.get_full_name profile.username %} | djangoproject.com{% endblock %}
+{% block title %}{% firstof profile.get_full_name profile.username %}{% endblock %}
 {% block extrahead %}
   <style type="text/css">
     #avatar { float: left; margin-top: 16px; }
