@@ -5,6 +5,7 @@ Various queries for grabbing interesting user stats from Trac.
 from __future__ import absolute_import
 import operator
 import django.db
+from django.utils.datastructures import SortedDict
 from .models import Revision, Ticket, TicketChange
 
 _statfuncs = []
@@ -23,7 +24,7 @@ def stat(title):
     return _inner
 
 def get_user_stats(username):
-    stats = {}
+    stats = SortedDict()
     for func in sorted(_statfuncs, key=operator.attrgetter('title')):
         stats[func.title] = func(username)
     return stats
