@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 import hashlib
 import json
 from django.shortcuts import render, get_object_or_404
@@ -5,6 +7,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.core import cache
 from django.http import HttpResponse
+from ..trac import stats as trac_stats
 from ..cla.models import find_agreements
 
 def user_profile(request, username):
@@ -14,6 +17,7 @@ def user_profile(request, username):
         'email_hash': hashlib.md5(u.email).hexdigest(),
         'user_can_commit': u.has_perm('auth.commit'),
         'clas': find_agreements(u),
+        'stats': get_user_stats(u),
     }
     return render(request, "accounts/user_profile.html", ctx)
 
@@ -54,6 +58,20 @@ def get_user_info(username):
                 "core": u.has_perm('auth.commit'),
                 "cla": bool(find_agreements(u))
             }
+        c.set(key, info, 60*60)
+    return info
+
+def get_user_stats(user):
+    c = cache.get_cache('default')
+    key = 'user_vital_status:%s' % hashlib.md5(user.username).hexdigest()
+    info = c.get(key)
+    if info is None:
+        info = trac_stats.get_user_stats(user.username)
+        # Hide any stat with a value = 0 so that we don't accidentally insult
+        # non-contributors.
+        for k, v in info.items():
+            if v == 0:
+                info.pop(k)
         c.set(key, info, 60*60)
     return info
 

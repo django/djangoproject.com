@@ -4,45 +4,51 @@
 {% block extrahead %}
   <style type="text/css">
     #avatar { float: left; margin-top: 16px; }
-    #user-info { padding-left: 150px; }
-    #user-info ul { padding-left: 48px; }
+    #user-info { padding-left: 180px; }
+    #user-info ul li { margin-left: 1em; }
+    h1 span.badge { 
+      font-size: 12px;
+      background-color: #FFC757;
+      border-radius: 4px;
+      padding: 2px 6px; 
+      position: relative;
+      bottom: 0.3em;
+  }
   </style>
 {% endblock extrahead %}
 {% block content-related %}{% endblock %}
 
 {% block content %}
+  {% load humanize %}
   <img id='avatar' width='150' height='150'
        src="http://robohash.org/{{ email_hash }}?gravatar=hashed&amp;set=set3">
   <div id="user-info">
-    <h1>{% firstof user.get_full_name user.username %}</h1>
-    <p>
-      Member since {{ user.date_joined.date }}.
-    </p>
-    {% if user_can_commit %}<p>Committer!</p>{% endif %}
-    {% if clas %}
-      {% for cla in clas %}
-        {% if cla.ccla %}
-          {# it's a corporate cla #}
-          <p>
-            Contributions covered by CLA on file for {{ cla.ccla.company_name }}
-            (signed {{ cla.ccla.date_signed }}).
-          </p>
-        {% else %}
-          <p>
-            CLA on file (signed {{ cla.date_signed }}).
-          </p>
-        {% endif %}
-      {% endfor %}
+    <h1>
+      {% firstof user.get_full_name user.username %}
+      {% if user_can_commit %}<span class="badge" title="Core committer.">core</span>{% endif %}
+      {% if clas %}<span class="badge" title="Contributor License Agreement on file.">cla</span>{% endif %}
+    </h1>
+    
+    <h3 class="deck">
+      Contributor since {{ user.date_joined.date }}.
+    </h2>
+
+    {% if stats %}
+      <h2>Lies, damned lies, and statistics:</h2>
+      <ul>
+        {% for stat, value in stats.items %}
+          <li>{{ stat }}: {{ value|intcomma }}.</li>          
+        {% endfor %}
+      </ul>
     {% endif %}
+
     {% with user.owned_feeds.all as feeds %}
       {% if feeds %}
         <h2>Community feeds:</h2>
         <ul>
-          <li>
-            {% for f in feeds %}
-              <li><a href="{{ f.public_url }}">{{ f.title }}</a></li>   
-            {% endfor %}
-          </li>
+          {% for f in feeds %}
+            <li><a href="{{ f.public_url }}">{{ f.title }}</a></li>   
+          {% endfor %}
         </ul>
       {% endif %}
     {% endwith %}
