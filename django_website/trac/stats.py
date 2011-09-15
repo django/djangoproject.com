@@ -6,7 +6,7 @@ from __future__ import absolute_import
 import operator
 import django.db
 from django.utils.datastructures import SortedDict
-from .models import Revision, Ticket, TicketChange
+from .models import Revision, Ticket, TicketChange, Attachment
 
 _statfuncs = []
 
@@ -51,6 +51,10 @@ def new_tickets_reviewed(username):
     qs = TicketChange.objects.filter(author=username, field='stage', oldvalue='Unreviewed')
     qs = qs.exclude(newvalue='Unreviewed')
     return qs.count()
+
+@stat('Patches submitted')
+def patches_submitted(username):
+    return Attachment.objects.filter(author=username).count()
 
 def run_single_value_query(query, *params):
     """
