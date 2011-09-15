@@ -32,30 +32,16 @@ Some potential TODOs:
       that we could do here.
 
     * The whole Revision model will fall apart if we ever had a second
-      repository to Trac. There should be a way to always include a
-      "repos=1" filter whenever looking it up.
+      repository to Trac.
 
 And a few notes on tables that're left out and why:
 
     * All the session and permission tables: they're just not needd.
 
-    * Attachments: they don't have anything that looks like a primary key
-      in a way Django can understand at all, so even basic querying doesn't
-      work correctly. That's a bit of shame: there's really interesting data
-      here (patches, etc.).
-
-      A possible solution would be a view that creates a single field for
-      a primary key by concatenating (or something) the underlying composite
-      primary key fields.
-
     * Enum: I don't know what this is or what it's for.
 
-    * NodeChange: Ditto. Seems to be repository-related, so see below.
+    * NodeChange: Ditto.
 
-    * Repository: we've only got one. If we add a second, a view trick like
-      described above under attachments might be required.
-
-    * Wiki: ditto with attachments above.
 """
 
 from __future__ import absolute_import
@@ -201,6 +187,21 @@ class Milestone(models.Model):
     def __unicode__(self):
         return self.name
 
+class SingleRepoRevisionManager(models.Manager):
+    """
+    Forces Revision to only query against a single repo, thus making
+    Revision.rev behave something like a primary key.
+    """
+    def __init__(self, repo_id):
+        self.repo_id = repo_id
+        super(SingleRepoRevisionManager, self).__init__()
+
+    def get_query_set(self):
+        qs = super(SingleRepoRevisionManager, self).get_query_set()
+        return qs.filter(repos=self.repo_id)
+
+SINGLE_REPO_ID = 1
+
 class Revision(models.Model):
     repos = models.IntegerField()
     rev = models.TextField(primary_key=True)
@@ -211,9 +212,54 @@ class Revision(models.Model):
     author = models.TextField()
     message = models.TextField()
 
+    objects = SingleRepoRevisionManager(repo_id=SINGLE_REPO_ID)
+
     class Meta(object):
         db_table = u'revision'
         managed = False
 
     def __unicode__(self):
         return '[%s] %s' % (self.rev, self.message.split('\n', 1)[0])
+
+# The Wiki table uses a composite primary key (name, version). Since
+# Django doesn't support this, this model sits on top of a simple view.
+class Wiki(models.Model):
+    django_id = models.TextField(primary_key=True)
+    name = models.TextField()
+    version = models.IntegerField()
+    _time = models.BigIntegerField(db_column='time')
+    time = time_property('time')
+    author = models.TextField()
+    ipnr = models.TextField()
+    text = models.TextField()
+    comment = models.TextField()
+    readonly = models.IntegerField()
+
+    class Meta:
+        db_table = u'wiki_django_view'
+        managed = False
+
+    def __unicode__(self):
+        return u'%s (v%s)' % (self.name, self.version)
+
+# Same story as for Wiki: attachment's PK is (type, id, filename), so again
+# there's a simple view this is on top of.
+class Attachment(models.Model):
+    django_id = models.TextField(primary_key=True)
+    type = models.TextField()
+    id = models.TextField()
+    filename = models.TextField()
+    size = models.IntegerField()
+    _time = models.BigIntegerField(db_column='time')
+    time = time_property('time')
+    description = models.TextField()
+    author = models.TextField()
+    ipnr = models.TextField()
+
+    class Meta:
+        db_table = u'attachment_django_view'
+        managed = False
+
+    def __unicode__(self):
+        attached_to = (u'#%s' % self.id) if self.type == 'ticket' else self.id
+        return u'%s (on %s)' % (self.filename, attached_to)
