@@ -12,6 +12,11 @@ urlpatterns = patterns('',
         name='registration_register',
     ),
     url(
+        r'^edit/$',
+        account_views.edit_profile,
+        name='edit_profile',
+    ),
+    url(
         r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
         'django.contrib.auth.views.password_reset_confirm',
         name='auth_password_reset_confim',
