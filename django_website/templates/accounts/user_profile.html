@@ -41,7 +41,7 @@
 {% block content %}
   {% load humanize %}
   <img id='avatar' width='150' height='150'
-       src="http://robohash.org/{{ email_hash }}?gravatar=hashed&amp;set=set3">
+   src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=150&amp;d=https%3A%2F%2Frobohash.org%2F{{ email_hash }}%3Fset%3Dset3%26size%3D150x150">
   <div id="user-info">
     <h1>
       {% firstof user_obj.profile.name user_obj.username %}
