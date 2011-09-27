@@ -2,24 +2,36 @@ from __future__ import absolute_import
 
 import hashlib
 import json
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.core import cache
 from django.http import HttpResponse
+from .forms import ProfileForm
+from .models import Profile
 from ..trac import stats as trac_stats
 from ..cla.models import find_agreements
 
 def user_profile(request, username):
     u = get_object_or_404(User, username=username)
     ctx = {
-        'profile': u,
+        'user_obj': u,
         'email_hash': hashlib.md5(u.email).hexdigest(),
         'user_can_commit': u.has_perm('auth.commit'),
         'clas': find_agreements(u),
         'stats': get_user_stats(u),
     }
     return render(request, "accounts/user_profile.html", ctx)
+
+@login_required
+def edit_profile(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    form = ProfileForm(request.POST or None, instance=profile)
+    if form.is_valid():
+        form.save()
+        return redirect('user_profile', request.user.username)
+    return render(request, "accounts/edit_profile.html", {'form': form})
 
 def json_user_info(request):
     """

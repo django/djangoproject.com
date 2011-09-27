@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django_push.subscriber',
     'django_website.blog',
+    'django_website.accounts',
     'django_website.aggregator',
     'django_website.cla',
     'django_website.docs',
