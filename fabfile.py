@@ -43,7 +43,7 @@ def memcached(cmd):
 
 def deploy_code(ref=None):
     """
-    Update code on the servers from Git.    
+    Update code on the servers from Git.
     """
     ref = ref or env.default_deploy_ref
     puts("Deploying %s" % ref)
@@ -79,7 +79,14 @@ def copy_db():
     Copy the production DB locally for testing.
     """
     local('ssh %s pg_dump -U djangoproject -c djangoproject | psql djangoproject' % env.hosts[0])
-    
+
+def copy_docs():
+    """
+    Copy build docs locally for testing.
+    """
+    local('rsync -av --delete --exclude=.svn %s:%s/ /tmp/djangodocs/' %
+            (env.hosts[0], env.deploy_base.child('docbuilds')))
+
 def managepy(cmd, site='www'):
     """
     Helper: run a management command remotely.
