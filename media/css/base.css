@@ -461,6 +461,54 @@ div.admonition-behind-the-scenes {
 
 /* DOCS */
 
+#doc-versions {
+    position: fixed;
+    display: block;
+    padding: 0;
+    margin: 0;
+    bottom: 5px;
+    right: 5px;
+}
+
+#doc-versions:hover {
+    background: transparent url(../img/site/invisible.gif) repeat; /* IE7 hack */
+    border-radius: 3px;
+}
+
+#doc-versions li.other {
+    display: none;
+}
+
+#doc-versions li.other a {
+    display: block;
+    padding: 5px;
+}
+
+#doc-versions:hover li.other {
+    display: block;
+}
+
+#doc-versions li {
+    display: block;
+    float: left;
+    padding: 0;
+    margin: 0 0 0 7px;
+    background-color: #E0FFB8;
+    border: 4px #487858 solid;
+    border-radius: 3px;
+    color: #234F32;
+}
+
+#doc-versions li.current {
+    background: #E0FFB8 url(../img/site/arrow-head-left.gif) 7px center no-repeat;
+    padding-left: 15px;
+}
+
+#doc-versions li.current span {
+    display: block;
+    padding: 5px;
+}
+
 #documentation h2,
 #documentation h3,
 #documentation h4 {
@@ -492,17 +540,17 @@ table.docutils td p {
 }
 div.versionadded,
 div.versionchanged {
-    font-size: 92%; 
+    font-size: 92%;
     color:#555;
 }
 div.versionadded span.title,
-div.versionchanged span.title { 
+div.versionchanged span.title {
     font-style: italic;
 }
 /* Verdana bold is too bold; lighten it to compensate */
 #documentation #content-main p > strong,
 #documentation #content-main p > b {
-    color: #555; 
+    color: #555;
 }
 
 /* Sphinx-specific fixes */
