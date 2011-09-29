@@ -20,11 +20,11 @@ def search_form(context, search_form_id='sidebar_search'):
 def get_all_doc_versions(parser, token):
     """
     Get a list of all versions of this document to link to.
-    
+
     Usage: {% get_all_doc_versions <docurl> as "varname" %}
     """
     return AllDocVersionsTag.handle(parser, token)
-    
+
 class AllDocVersionsTag(template.Node):
     @classmethod
     def handle(cls, parser, token):
@@ -39,7 +39,7 @@ class AllDocVersionsTag(template.Node):
         self.asvar = asvar
         # FIXME
         self.lang = 'en'
-        
+
     def render(self, context):
         try:
             url = self.docurl.resolve(context)
@@ -47,7 +47,7 @@ class AllDocVersionsTag(template.Node):
             return ''
 
         versions = []
-    
+
         # Look for each version of the docs.
         for release in DocumentRelease.objects.all():
             version_root = get_doc_root(release.lang, release.version)
@@ -57,6 +57,6 @@ class AllDocVersionsTag(template.Node):
                     versions.append(release.version)
 
         # Save the versions into the context
-        context[self.asvar] = reversed(sorted(versions))
+        context[self.asvar] = sorted(versions)
 
         return ''

@@ -494,14 +494,14 @@ div.admonition-behind-the-scenes {
     padding: 0;
     margin: 0 0 0 7px;
     background-color: #E0FFB8;
-    border: 4px #487858 solid;
+    border: 2px #487858 solid;
     border-radius: 3px;
     color: #234F32;
 }
 
 #doc-versions li.current {
-    background: #E0FFB8 url(../img/site/arrow-head-left.gif) 7px center no-repeat;
-    padding-left: 15px;
+    background: #E0FFB8 url(../img/site/arrow-head-left.gif) 6px center no-repeat;
+    padding-left: 13px;
 }
 
 #doc-versions li.current span {
