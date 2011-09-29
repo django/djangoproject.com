@@ -17,21 +17,14 @@
 {% block body %}
   {% load docs %}
   {% get_all_doc_versions docurl as versions %}
-  <h2 class="deck">
-    {% if version == "dev" %}
-      This document is for Django's development version, which can be
-      significantly different from previous releases. Get older docs here:
-      {% for version in versions %}
-        {% if version != "dev" %}
-          <a href="{% url document-detail lang=lang, version=version, url=docurl %}">
-            {{ version }}</a>{% if forloop.last %}.{% else %},{% endif %}
+  <ul id="doc-versions">
+      {% for v in versions reversed %}
+        {% if version != v %}
+          <li class="other"><a href="{% url document-detail lang=lang, version=v, url=docurl %}">{{ v|upper }}</a></li>
         {% endif %}
       {% endfor %}
-    {% else %}
-      This document describes Django {{ version }}. For development docs, 
-      <a href="{% url document-detail lang=lang, version="dev", url=docurl %}">go here</a>.
-    {% endif %}
-  </h2>
+      <li class="current" title="{% if version == 'dev' %}This document is for Django's development version, which can be significantly different from previous releases.{% else %}This document describes Django {{ version }}.{% endif %} Click on the links on the left to see other versions."><span>Version: <strong>{{ version|upper }}</strong></span></li>
+  </ul>
   {{ doc.body|safe }}
 {% endblock %}
 
@@ -40,7 +33,7 @@
   <p>Having trouble? We'd like to help!</p>
   <ul>
     <li>
-      Try the <a href="{% url document-detail lang=lang, version=version, url="faq" %}">FAQ</a> 
+      Try the <a href="{% url document-detail lang=lang, version=version, url="faq" %}">FAQ</a>
       — it's got answers to many common questions.
     </li>
     <li>
@@ -95,7 +88,7 @@
       {% endblock %}
     </ul>
   {% endblock %}
-  
+
   {% block breadcrumbs-wrapper %}
     <h2>You are here:</h2>
     <ul>
