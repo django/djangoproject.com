@@ -18,12 +18,18 @@
   {% load docs %}
   {% get_all_doc_versions docurl as versions %}
   <ul id="doc-versions">
-      {% for v in versions reversed %}
+      {% for v in versions %}
         {% if version != v %}
-          <li class="other"><a href="{% url document-detail lang=lang, version=v, url=docurl %}">{{ v|upper }}</a></li>
+          <li class="other">
+            <a href="{% url document-detail lang=lang, version=v, url=docurl %}">{% if v == 'dev' %}latest{% else %}{{ v }}{% endif %}</a></li>
         {% endif %}
       {% endfor %}
-      <li class="current" title="{% if version == 'dev' %}This document is for Django's development version, which can be significantly different from previous releases.{% else %}This document describes Django {{ version }}.{% endif %} Click on the links on the left to see other versions."><span>Version: <strong>{{ version|upper }}</strong></span></li>
+      <li class="current"
+          title="{% if version == 'dev' %}This document is for Django's development version, which can be significantly different from previous releases.{% else %}This document describes Django {{ version }}.{% endif %} Click on the links on the left to see other versions.">
+        <span>Documentation version:
+          <strong>{% if version == 'dev' %}latest{% else %}{{ version }}{% endif %}</strong>
+        </span>
+      </li>
   </ul>
   {{ doc.body|safe }}
 {% endblock %}
@@ -109,13 +115,13 @@
       <p>
       {% if version == "dev" %}
         Offline (development version):
-        <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> | 
-        <a href="http://media.readthedocs.org/pdf/django/latest/django.pdf">PDF</a> | 
+        <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> |
+        <a href="http://media.readthedocs.org/pdf/django/latest/django.pdf">PDF</a> |
         <a href="http://media.readthedocs.org/epub/django/latest/django.epub">ePub</a>
       {% else %}
         Offline (Django {{ version }}):
-        <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> | 
-        <a href="http://media.readthedocs.org/pdf/django/{{ version }}.X/django.pdf">PDF</a> | 
+        <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> |
+        <a href="http://media.readthedocs.org/pdf/django/{{ version }}.X/django.pdf">PDF</a> |
         <a href="http://media.readthedocs.org/epub/django/{{ version }}.X/django.epub">ePub</a>
       {% endif %}
       <br>
