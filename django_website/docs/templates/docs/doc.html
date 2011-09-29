@@ -21,13 +21,13 @@
       {% for v in versions %}
         {% if version != v %}
           <li class="other">
-            <a href="{% url document-detail lang=lang, version=v, url=docurl %}">{% if v == 'dev' %}latest{% else %}{{ v }}{% endif %}</a></li>
+            <a href="{% url document-detail lang=lang, version=v, url=docurl %}">{{ v }}</a></li>
         {% endif %}
       {% endfor %}
       <li class="current"
           title="{% if version == 'dev' %}This document is for Django's development version, which can be significantly different from previous releases.{% else %}This document describes Django {{ version }}.{% endif %} Click on the links on the left to see other versions.">
         <span>Documentation version:
-          <strong>{% if version == 'dev' %}latest{% else %}{{ version }}{% endif %}</strong>
+          <strong>{{ version }}</strong>
         </span>
       </li>
   </ul>
