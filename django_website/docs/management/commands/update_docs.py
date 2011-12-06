@@ -54,11 +54,9 @@ class Command(NoArgsCommand):
             # Use Sphinx to build the release docs into JSON and HTML documents.
             #
             for builder in ('json', 'html'):
-                build_dir = destdir.child('_build', builder)
-                # Remove old renderized versions of the docs
-                build_dir.rmtree(parents=False)
                 # Make the directory for the built files - sphinx-build doesn't
                 # do it for us, apparently.
+                build_dir = destdir.child('_build', builder)
                 if not build_dir.exists():
                     build_dir.mkdir(parents=True)
 
@@ -104,7 +102,7 @@ class Command(NoArgsCommand):
             # Walk the tree we've just built looking for ".fjson" documents
             # (just JSON, but Sphinx names them weirdly). Each one of those
             # documents gets a corresponding Document object created which
-            # we'll then ask Haystack to reindex.
+            # we'll then ask Sphinx to reindex.
             #
             # We have to be a bit careful to reverse-engineer the correct
             # relative path component, especially for "index" documents,
