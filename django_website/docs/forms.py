@@ -7,12 +7,16 @@ from .models import DocumentRelease
 
 class DocSearchForm(haystack.forms.SearchForm):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, version, *args, **kwargs):
         super(DocSearchForm, self).__init__(*args, **kwargs)
         self.fields['q'].widget = SearchInput()
+        try:
+            rel = DocumentRelease.objects.get(version=version)
+        except DocumentRelease.DoesNotExist:
+            rel = DocumentRelease.objects.default()
         self.fields['release'] = DocumentReleaseChoiceField(
             queryset = DocumentRelease.objects.all().order_by('version'),
-            initial = DocumentRelease.objects.default(),
+            initial = rel,
             empty_label = None,
             required = False,
         )
