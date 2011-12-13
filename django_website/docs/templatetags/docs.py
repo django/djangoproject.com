@@ -10,9 +10,10 @@ register = template.Library()
 @register.inclusion_tag('docs/search_form.html', takes_context=True)
 def search_form(context, search_form_id='sidebar_search'):
     request = context['request']
+    version = context['version']
     auto_id = 'id_%s_%%s' % search_form_id
     return {
-        'form': DocSearchForm(initial=request.GET, auto_id=auto_id),
+        'form': DocSearchForm(version, initial=request.GET, auto_id=auto_id),
         'search_form_id': search_form_id,
     }
 
