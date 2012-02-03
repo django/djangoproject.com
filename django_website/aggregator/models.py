@@ -46,7 +46,7 @@ class Feed(models.Model):
 
     def delete(self, **kwargs):
         super(Feed, self).delete(**kwargs)
-        if settings.PRODUCTION: # @@@ need to validate what pubsub stuff is actually doing here.
+        if settings.PRODUCTION:
             Subscription.objects.unsubscribe(self.feed_url, settings.PUSH_HUB)
 
 class FeedItemManager(models.Manager):
