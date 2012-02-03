@@ -3,6 +3,7 @@ from __future__ import absolute_import
 import logging
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -59,6 +60,8 @@ def add_feed(request, feed_type_slug):
     f = FeedModelForm(request.POST or None, instance=instance)
     if f.is_valid():
         f.save()
+        messages.add_message(
+            request, messages.INFO, 'Your feed has entered moderation. Please allow up to 1 week for processing.')
         return redirect('community-index')
 
     ctx = {'form': f, 'feed_type': ft, 'adding': True}
