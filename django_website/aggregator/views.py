@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list
-from .models import FeedItem, Feed, FeedType
+from .models import FeedItem, Feed, FeedType, APPROVED_FEED
 from .forms import FeedModelForm
 from ..shortcuts import render
 
@@ -23,8 +23,8 @@ def feed_list(request, feed_type_slug):
     Shows the latest feeds for the given type.
     """
     feed_type = get_object_or_404(FeedType, slug=feed_type_slug)
-    return object_list(request, 
-        queryset = FeedItem.objects.filter(feed__feed_type=feed_type), 
+    return object_list(request,
+        queryset = FeedItem.objects.filter(feed__feed_type=feed_type, feed__approval_status=APPROVED_FEED),
         paginate_by = 25,
         extra_context = {'feed_type': feed_type},
     )
@@ -54,7 +54,7 @@ def add_feed(request, feed_type_slug):
     ft = get_object_or_404(FeedType, slug=feed_type_slug, can_self_add=True)
     if not ft.can_self_add and not request.user.is_superuser:
         return render(request, 'aggregator/denied.html')
-        
+
     instance = Feed(feed_type=ft, owner=request.user)
     f = FeedModelForm(request.POST or None, instance=instance)
     if f.is_valid():
@@ -76,7 +76,7 @@ def edit_feed(request, feed_id):
     if f.is_valid():
         f.save()
         return redirect('community-my-feeds')
-    
+
     ctx = {'form': f, 'feed': feed, 'adding': False}
     return render(request, 'aggregator/edit-feed.html', ctx)
 
