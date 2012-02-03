@@ -21,11 +21,12 @@ class FeedType(models.Model):
         return FeedItem.objects.filter(feed__feed_type=self)
 
 APPROVED_FEED='A'
+DENIED_FEED='D'
 PENDING_FEED='P'
 
 STATUS_CHOICES = (
     (PENDING_FEED, 'Pending'),
-    ('D', 'Denied'),
+    (DENIED_FEED, 'Denied'),
     (APPROVED_FEED, 'Approved')
 )
 
