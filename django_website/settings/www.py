@@ -17,7 +17,7 @@ SECRET_KEY = str(SECRETS['secret_key'])
 
 ADMINS = (('Adrian Holovaty','holovaty@gmail.com'),('Jacob Kaplan-Moss', 'jacob@jacobian.org'))
 MANAGERS = (('Jacob Kaplan-Moss','jacob@jacobian.org'),)
-FEED_APPROVERS = []
+FEED_APPROVERS_GROUP_NAME = "feed-approver"
 TIME_ZONE = 'America/Chicago'
 SERVER_EMAIL = 'root@djangoproject.com'
 
