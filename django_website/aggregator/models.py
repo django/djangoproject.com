@@ -35,7 +35,7 @@ class Feed(models.Model):
     feed_url = models.URLField(unique=True, max_length=500)
     public_url = models.URLField(max_length=500)
     is_defunct = models.BooleanField()
-    approval_status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
+    approval_status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=PENDING_FEED)
     feed_type = models.ForeignKey(FeedType)
     owner = models.ForeignKey(User, blank=True, null=True, related_name='owned_feeds')
 
@@ -44,7 +44,7 @@ class Feed(models.Model):
 
     def save(self, **kwargs):
         super(Feed, self).save(**kwargs)
-        if settings.PRODUCTION and self.approval_status == STATUS_CHOICES[2][0]:
+        if settings.PRODUCTION and self.approval_status == APPROVED_FEED:
             Subscription.objects.subscribe(self.feed_url, settings.PUSH_HUB)
 
     def delete(self, **kwargs):
