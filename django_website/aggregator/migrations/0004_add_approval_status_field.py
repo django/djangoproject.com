@@ -7,16 +7,12 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Adding field 'Feed.approval_status'
-        db.add_column('aggregator_feed', 'approval_status', self.gf('django.db.models.fields.CharField')(default='P', max_length=1), keep_default=False)
+        # Create approval status field. All feeds default to approved.
+        db.add_column('aggregator_feed', 'approval_status', self.gf('django.db.models.fields.CharField')(default='A', max_length=1), keep_default=False)
 
 
     def backwards(self, orm):
-        
-        # Deleting field 'Feed.approval_status'
         db.delete_column('aggregator_feed', 'approval_status')
-
 
     models = {
         'aggregator.feed': {
