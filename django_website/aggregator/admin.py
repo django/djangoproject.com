@@ -9,6 +9,7 @@ admin.site.register(Feed,
     ordering      = ["title"],
     search_fields = ["title", "public_url"],
     raw_id_fields = ['owner'],
+    list_editable = ["approval_status"],
     list_per_page = 500,
 )
 
