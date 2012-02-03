@@ -1,4 +1,4 @@
-To run locally, do the usual:
+To run locally, do the usual::
 
 1. Create a virtualenv
 2. Install dependencies::
@@ -13,7 +13,8 @@ To run locally, do the usual:
 4. Create a 'secrets.json' file in the directoy above the checkout, containing
    something like::
 
-    { "secret_key": "xyz" }
+    { "secret_key": "xyz",
+      "superfeedr_creds": ["any@email.com", "some_string"] }
 
 5. Set up DB::
 
@@ -22,7 +23,7 @@ To run locally, do the usual:
 
    and::
 
-    ./manage.py sycndb --docs
+    ./manage.py syncdb --docs
 
    if you want to run docs site.
 
