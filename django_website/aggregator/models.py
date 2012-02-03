@@ -45,13 +45,13 @@ class Feed(models.Model):
 
     def save(self, **kwargs):
         super(Feed, self).save(**kwargs)
-        if settings.PRODUCTION and self.approval_status == APPROVED_FEED:
+        # TODO(justinlilly): It would be nice if we didn't send these in development
+        if self.approval_status == APPROVED_FEED:
             Subscription.objects.subscribe(self.feed_url, settings.PUSH_HUB)
 
     def delete(self, **kwargs):
         super(Feed, self).delete(**kwargs)
-        if settings.PRODUCTION:
-            Subscription.objects.unsubscribe(self.feed_url, settings.PUSH_HUB)
+        Subscription.objects.unsubscribe(self.feed_url, settings.PUSH_HUB)
 
 class FeedItemManager(models.Manager):
     def create_or_update_by_guid(self, guid, **kwargs):
