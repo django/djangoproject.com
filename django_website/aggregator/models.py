@@ -107,7 +107,7 @@ def feed_updated(sender, notification, **kwargs):
             guid = entry.get("id", entry.link)
         except AttributeError:
             log.error("Feed ID %s has an entry ('%s') without a link or guid. Skipping.", feed.id, title)
-        link = entry.link or guid
+        link = getattr(entry, "link", guid)
 
         if hasattr(entry, "summary"):
             content = entry.summary
