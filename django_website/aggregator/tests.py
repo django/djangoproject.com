@@ -15,25 +15,7 @@ from ..docs.models import DocumentRelease
 
 class AggregatorTests(TestCase):
 
-    class MockSubscription(object):
-        class ObjectsClass(object):
-            def subscribe(self, *args, **kwargs):
-                pass
-
-            def unsubscribe(self, *args, **kwargs):
-                pass
-
-        objects = ObjectsClass()
-
-    def tearDown(self):
-        models.Subscription = self.old_subscription
-
     def setUp(self):
-
-        # monkeypatch models.Subscription so we don't send pubsub
-        self.old_subscription = models.Subscription
-        models.Subscription = AggregatorTests.MockSubscription()
-
         # document release necessary to fetch main page
         DocumentRelease(version="1.4", scm="svn", scm_url="/path/to/svn", is_default=True).save()
 
