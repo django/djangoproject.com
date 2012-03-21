@@ -194,3 +194,8 @@ if not PRODUCTION:
         MIDDLEWARE_CLASSES.insert(common_index+1, 'debug_toolbar.middleware.DebugToolbarMiddleware')
         INTERNAL_IPS = ['127.0.0.1']
         INSTALLED_APPS.append('debug_toolbar')
+
+# Log errors to Sentry, if available.
+if 'sentry_dsn' in SECRETS:
+    INSTALLED_APPS.append('raven.contrib.django')
+    SENTRY_DSN = SECRETS['sentry_dsn']
