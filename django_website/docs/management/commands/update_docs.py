@@ -81,6 +81,10 @@ class Command(NoArgsCommand):
                 zipfile_path.parent.mkdir(parents=True)
             if verbosity >= 2:
                 print "  build zip (into %s)" % zipfile_path
+
+            def zipfile_inclusion_filter(f):
+                return f.isfile() and '.doctrees' not in f.components()
+
             with closing(zipfile.ZipFile(zipfile_path, 'w')) as zf:
                 for f in html_build_dir.walk(filter=Path.isfile):
                     zf.write(f, html_build_dir.rel_path_to(f))
