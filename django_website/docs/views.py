@@ -24,7 +24,7 @@ def language(request, lang):
 
 def document(request, lang, version, url):
     # If either of these can't be encoded as ascii then later on down the line an
-    #exception will be emitted by unipath, proactively check for bad data (mostly
+    # exception will be emitted by unipath, proactively check for bad data (mostly
     # from the Googlebot) so we can give a nice 404 error.
     try:
         version.encode("ascii")
