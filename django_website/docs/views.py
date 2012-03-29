@@ -1,15 +1,20 @@
 from __future__ import absolute_import
 
 import datetime
+
 import django.views.static
 from django.core import urlresolvers
+from django.http import Http404
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.utils import simplejson
+
 import haystack.views
+
 from .forms import DocSearchForm
 from .models import DocumentRelease
 from .utils import get_doc_root_or_404, get_doc_path_or_404
+
 
 def index(request):
     return redirect(DocumentRelease.objects.default())
@@ -18,6 +23,14 @@ def language(request, lang):
     return redirect(DocumentRelease.objects.default())
 
 def document(request, lang, version, url):
+    # If either of these can't be encoded as ascii then later on down the line an
+    #exception will be emitted by unipath, proactively check for bad data (mostly
+    # from the Googlebot) so we can give a nice 404 error.
+    try:
+        version.encode("ascii")
+        url.encode("ascii")
+    except UnicodeEncodeError:
+        raise Http404
     docroot = get_doc_root_or_404(lang, version)
     doc_path = get_doc_path_or_404(docroot, url)
 
