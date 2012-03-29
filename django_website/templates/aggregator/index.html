@@ -1,8 +1,26 @@
 {% extends "base_community.html" %}
 
+{% block extrahead %}
+{{ block.super }}
+<style type="text/css">
+ul.messages li {
+  font-weight: 600;
+  list-style: none;
+  padding: 20px 0;
+</style>
+{% endblock %}
+
 {% block content %}
 <h1>Community</h1>
 <h2 class="deck">This page, updated regularly, aggregates what's going on in the community.</h2>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 
 {% for feedtype in feedtype_list %}
 <div id="{{ feedtype.slug }}" class="module {% cycle "first" "last" %}">
@@ -19,7 +37,7 @@
       <a href="{% url community-feed-list feedtype.slug %}">View more</a>
     {% endif %}
     {% if feedtype.items and feedtype.can_self_add %}
-      or 
+      or
     {% endif %}
     {% if feedtype.can_self_add %}
       <a href="{% url community-add-feed feedtype.slug %}">Add your feed</a>
