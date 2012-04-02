@@ -14,4 +14,4 @@ class FeedModelForm(forms.ModelForm):
 
     class Meta:
         model = Feed
-        exclude = ('is_defunct', 'feed_type', 'owner')
+        exclude = ('is_defunct', 'feed_type', 'owner', 'approval_status')
