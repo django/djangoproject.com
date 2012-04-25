@@ -53,6 +53,9 @@ urlpatterns = patterns('',
     # django-push
     url(r'^subscriber/', include('django_push.subscriber.urls')),
 
+    # Github/trac integration hooks
+    url(r'^gitrachub/', include('django_website.gitrachub.urls')),
+
     url(r'^sitemap\.xml$', cache_page(sitemap_views.sitemap, 60 * 60 * 6), {'sitemaps': sitemaps}),
     url(r'^weblog/', include('django_website.blog.urls')),
     url(r'^freenode\.9xJY7YIUWtwn\.html$', 'django.views.generic.simple.direct_to_template', {'template': 'freenode_tmp.html'}),

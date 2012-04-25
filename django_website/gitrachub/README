@@ -1,0 +1,2 @@
+Glue to tie together GitHub with our Trac instance. This code lives here rather
+than as a Trac plugin because Trac plugins are hard so I went shopping.

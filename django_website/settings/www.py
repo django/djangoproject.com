@@ -14,8 +14,12 @@ PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ) and ("djangoproject" in p
 # It's a secret to everybody
 SECRETS = json.load(open(BASE.ancestor(2).child('secrets.json')))
 SECRET_KEY = str(SECRETS['secret_key'])
+
 # SUPERFEEDR_CREDS is a 2 element list in the form of [email,secretkey]
 SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
+
+# GITHUB_CREDS is a (username, password) tuple.
+GITHUB_CREDS = SECRETS['github_creds']
 
 ADMINS = (('Adrian Holovaty','holovaty@gmail.com'),('Jacob Kaplan-Moss', 'jacob@jacobian.org'))
 MANAGERS = (('Jacob Kaplan-Moss','jacob@jacobian.org'),)
@@ -78,6 +82,7 @@ INSTALLED_APPS = [
     'django_website.cla',
     'django_website.docs',
     'django_website.trac',
+    'django_website.gitrachub',
     'registration',
     'south',
     'djangosecure',
