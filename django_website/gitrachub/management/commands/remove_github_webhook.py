@@ -8,6 +8,7 @@ import requests
 from django.conf import settings
 from django.core import urlresolvers
 from django.core.management.base import NoArgsCommand
+from ... import github
 
 class Command(NoArgsCommand):
     help = __doc__.strip()
@@ -20,17 +21,16 @@ class Command(NoArgsCommand):
     )
 
     def handle_noargs(self, **options):
-        auth = tuple(settings.GITHUB_CREDS)
         url = "%s/%s" % (options['base_url'].rstrip('/'), urlresolvers.reverse('github_webhook').lstrip('/'))
-        hooks = json.loads(requests.get('https://api.github.com/repos/django/django/hooks', auth=auth).content)
-        for hook in hooks:
-            if hook['name'] == 'web' and hook['config']['url'] == url:
-                print "Deleting hook for %s..." % url
-                resp = requests.delete(hook['url'], auth=auth)
-                if resp.status_code == 204:
-                    print "OK!"
-                else:
-                    print "WHOOPS (%s): %s", (resp.status_code, resp.content)
-                break
-        else:
-            print "No hook for %s found." % url
+        with github.session() as gh:
+            for hook in gh.get('repos/django/django/hooks').json:
+                if hook['name'] == 'web' and hook['config']['url'] == url:
+                    print "Deleting hook for %s..." % url
+                    resp = gh.delete(hook['url'])
+                    if resp.status_code == 204:
+                        print "OK!"
+                    else:
+                        print "WHOOPS (%s): %s", (resp.status_code, resp.content)
+                    break
+            else:
+                print "No hook for %s found." % url
