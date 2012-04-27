@@ -6,7 +6,7 @@ access GitHub, like so::
 
     >>> with github.session() as gh:
     ...     resp = gh.get('repos/django/django')
-    ..      print resp.keys()
+    ...     print resp.keys()
 
 What this does:
 

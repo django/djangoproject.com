@@ -1,8 +1,19 @@
 import json
-from django.views.generic import View
+from django.contrib.auth.decorators import user_passes_test
+from django.forms import model_to_dict
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import View
+from ..trac.models import Ticket
+from . import github
+from .models import PullRequest
 
 class GithubWebhook(View):
+    """
+    Handle the Github webhooks.
+    """
     def dispatch(self, request):
         self.request = request
         self.event = request.META['HTTP_X_GITHUB_EVENT']
