@@ -150,3 +150,7 @@ class Command(NoArgsCommand):
 
     def update_svn(self, url, destdir):
         subprocess.call(['svn', 'checkout', '-q', url, destdir])
+
+    def update_git(self, url, destdir):
+        repo_url, branch = url.rsplit("@", 1)
+        subprocess.call(['git', 'clone', '-q', '--branch', branch, repo_url, destdir])
