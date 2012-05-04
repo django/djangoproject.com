@@ -4,6 +4,7 @@ app.
 """
 from __future__ import absolute_import
 
+import os
 import json
 import haystack
 import optparse
@@ -53,6 +54,11 @@ class Command(NoArgsCommand):
             #
             # Use Sphinx to build the release docs into JSON and HTML documents.
             #
+            if release.docs_subdir:
+                source_dir = destdir.child(*release.docs_subdir.split('/'))
+            else:
+                source_dir = destdir
+
             for builder in ('json', 'html'):
                 # Make the directory for the built files - sphinx-build doesn't
                 # do it for us, apparently.
@@ -62,11 +68,11 @@ class Command(NoArgsCommand):
 
                 # "Shell out" (not exactly, but basically) to sphinx-build.
                 if verbosity >= 2:
-                    print "  building %s (into %s)" % (builder, build_dir)
+                    print "  building %s (%s -> %s)" % (builder, source_dir, build_dir)
                 sphinx.cmdline.main(['sphinx-build',
                     '-b', builder,
                     '-q',              # Be vewy qwiet
-                    destdir,           # Source file directory
+                    source_dir,        # Source file directory
                     build_dir,         # Destination directory
                 ])
 
@@ -150,3 +156,19 @@ class Command(NoArgsCommand):
 
     def update_svn(self, url, destdir):
         subprocess.call(['svn', 'checkout', '-q', url, destdir])
+
+    def update_git(self, url, destdir):
+        if '@' in url:
+            repo, branch = url.rsplit('@', 1)
+        else:
+            repo, branch = url, 'master'
+        if destdir.child('.git').exists():
+            try:
+                cwd = os.getcwdu()
+                os.chdir(destdir)
+                subprocess.call(['git', 'fetch'])
+                subprocess.call(['git', 'reset', '--hard', branch])
+            finally:
+                os.chdir(cwd)
+        else:
+            subprocess.call(['git', 'clone', '-q', '--branch', branch, repo, destdir])
