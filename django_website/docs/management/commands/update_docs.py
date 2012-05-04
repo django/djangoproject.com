@@ -34,7 +34,12 @@ class Command(NoArgsCommand):
         except (KeyError, TypeError, ValueError):
             verbosity = 1
 
-        for release in DocumentRelease.objects.all():
+        # Somehow, bizarely, there's a bug in Sphinx such that if I try to
+        # build 1.0 before other versions, things fail in weird ways. However,
+        # building newer versions first works. I suspect Sphinx is hanging onto
+        # some global state. Anyway, we can work around it by making sure that
+        # "dev" builds before "1.0". This is ugly, but oh well.
+        for release in DocumentRelease.objects.order_by('-version'):
             if verbosity >= 1:
                 print "Updating %s..." % release
 
