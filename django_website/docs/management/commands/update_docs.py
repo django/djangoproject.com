@@ -162,7 +162,7 @@ class Command(NoArgsCommand):
             repo, branch = url.rsplit('@', 1)
         else:
             repo, branch = url, 'master'
-        if destdir.exists():
+        if destdir.child('.git').exists():
             try:
                 cwd = os.getcwdu()
                 os.chdir(destdir)
