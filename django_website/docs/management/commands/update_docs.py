@@ -69,7 +69,7 @@ class Command(NoArgsCommand):
                 # "Shell out" (not exactly, but basically) to sphinx-build.
                 if verbosity >= 2:
                     print "  building %s (%s -> %s)" % (builder, source_dir, build_dir)
-                sphinx.cmdline.main(['sphinx-build',
+                subprocess.call(['sphinx-build',
                     '-b', builder,
                     '-q',              # Be vewy qwiet
                     source_dir,        # Source file directory
