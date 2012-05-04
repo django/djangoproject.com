@@ -12,28 +12,25 @@ class DocumentRelease(models.Model):
     """
     DEFAULT_CACHE_KEY = "%s_recent_release" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
     SVN = 'svn'
-    GIT = 'git'
     SCM_CHOICES = (
         (SVN, 'SVN'),
-        (GIT, 'git'),
     )
-
+    
     lang = models.CharField(max_length=2, choices=settings.LANGUAGES, default='en')
     version = models.CharField(max_length=20)
     scm = models.CharField(max_length=10, choices=SCM_CHOICES)
-    scm_url = models.CharField(max_length=200)
-    docs_subdir = models.CharField(max_length=200, blank=True)
+    scm_url = models.URLField()
     is_default = models.BooleanField()
-
+    
     objects = DocumentReleaseManager()
-
+    
     def __unicode__(self):
         return "%s/%s" % (self.lang, self.version)
-
+    
     @models.permalink
     def get_absolute_url(self):
         return ('document-index', [], {'lang': self.lang, 'version': self.version})
-
+            
     def save(self, *args, **kwargs):
         # There can be only one. Default, that is.
         if self.is_default:
@@ -44,7 +41,7 @@ class DocumentRelease(models.Model):
                 settings.CACHE_MIDDLEWARE_SECONDS,
             )
         super(DocumentRelease, self).save(*args, **kwargs)
-
+    
     @property
     def human_version(self):
         """
