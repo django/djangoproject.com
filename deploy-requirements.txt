@@ -11,7 +11,7 @@ FeedParser >= 5.0, <= 5.1
 Jinja2 >= 2.4, < 2.5
 psycopg2 >= 2.2, < 2.3
 python-memcached >= 1.45, < 2.0
-Sphinx >= 1.0, < 1.1
+Sphinx == 1.0.3
 South >= 0.7, < 0.8
 Unipath >= 0.2, < 0.3
 raven == 1.4.6
