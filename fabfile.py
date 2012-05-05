@@ -72,7 +72,7 @@ def update_docs():
     """
     Force an update of the docs on the server.
     """
-    managepy('update_docs', site='docs')
+    managepy('update_docs -v2', site='docs')
 
 def copy_db():
     """
