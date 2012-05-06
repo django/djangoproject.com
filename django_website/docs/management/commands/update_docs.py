@@ -15,6 +15,7 @@ from contextlib import closing
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.utils.html import strip_tags
+from django.utils.text import unescape_entities
 from unipath import FSPath as Path
 from ...models import DocumentRelease, Document
 
@@ -141,7 +142,7 @@ class Command(NoArgsCommand):
                         json_doc = json.load(fp)
                         try:
                             json_doc['body']  # Just to make sure it exists.
-                            title = strip_tags(json_doc['title'])
+                            title = unescape_entities(strip_tags(json_doc['title']))
                         except KeyError, ex:
                             if verbosity >= 2:
                                 print "Skipping: %s (no %s)" % (path, ex.args[0])
