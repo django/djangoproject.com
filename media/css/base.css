@@ -573,6 +573,10 @@ div.versionchanged span.title {
 #documentation a.reference em {
     font-style: normal;
 }
+#documentation td.field-body ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
 
 /* BILLBOARDS */
 
