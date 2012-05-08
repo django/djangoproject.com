@@ -75,7 +75,7 @@ class PullRequestsForTicket(View):
         # Make sure the PR exists over on the GitHub side.
         response = github.session().get('repos/django/django/pulls/%s' % number)
         if response.status_code != 200:
-            return HttpResponse("Bad PR number: GItHub returned HTTP %s." % response.status_code, status=400)
+            return HttpResponse("Bad PR number: GitHub returned HTTP %s." % response.status_code, status=400)
 
         pr, created = PullRequest.objects.get_or_create(number=number)
         pr.ticket_id = self.ticket.id
