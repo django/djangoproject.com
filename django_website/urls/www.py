@@ -57,6 +57,7 @@ urlpatterns = patterns('',
     url(r'^weblog/', include('django_website.blog.urls')),
     url(r'^freenode\.9xJY7YIUWtwn\.html$', 'django.views.generic.simple.direct_to_template', {'template': 'freenode_tmp.html'}),
     url(r'^download$', flatpage, {'url': 'download'}, name="download"),
+    url(r'^svntogit/', include('django_website.svntogit.urls')),
     url(r'', include('django_website.legacy.urls')),
 )
 

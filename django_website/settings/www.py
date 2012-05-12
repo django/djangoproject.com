@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'django_website.aggregator',
     'django_website.cla',
     'django_website.docs',
+    'django_website.svntogit',
     'django_website.trac',
     'registration',
     'south',
