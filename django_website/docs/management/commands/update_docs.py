@@ -172,8 +172,8 @@ class Command(NoArgsCommand):
             try:
                 cwd = os.getcwdu()
                 os.chdir(destdir)
-                subprocess.call(['git', 'fetch'])
-                subprocess.call(['git', 'reset', '--hard', branch])
+                subprocess.call(['git', 'reset', '--hard', 'HEAD'])
+                subprocess.call(['git', 'pull'])
             finally:
                 os.chdir(cwd)
         else:
