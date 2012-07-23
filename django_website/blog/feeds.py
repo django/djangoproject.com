@@ -13,3 +13,9 @@ class WeblogEntryFeed(Feed):
 
     def item_pubdate(self, item):
         return item.pub_date
+
+    def item_author_name(self, item):
+        return item.author
+
+    def item_description(self, item):
+        return item.body_html
