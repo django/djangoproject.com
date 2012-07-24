@@ -26,6 +26,9 @@ sitemaps = {
     'flatpages': FlatPageSitemap,
 }
 
+handler500 = 'django_website.views.server_error'
+
+
 urlpatterns = patterns('',
     url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'homepage.html'}, name="homepage"),
     url(r'^accounts/', include('django_website.accounts.urls')),
