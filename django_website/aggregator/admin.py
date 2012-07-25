@@ -5,12 +5,18 @@ from .models import Feed, FeedItem, FeedType, APPROVED_FEED, DENIED_FEED
 
 
 def mark_approved(modeladmin, request, queryset):
-    queryset.update(approval_status=APPROVED_FEED)
+    for item in queryset.iterator():
+        item.approval_status = APPROVED_FEED
+        item.save()
 mark_approved.short_description = "Mark selected feeds as approved."
 
+
 def mark_denied(modeladmin, request, queryset):
-    queryset.update(approval_status=DENIED_FEED)
+    for item in queryset.iterator():
+        item.approval_status = DENIED_FEED
+        item.save()
 mark_denied.short_description = "Mark selected feeds as denied."
+
 
 admin.site.register(Feed,
     list_display  = ["title", "feed_type", "public_url", "approval_status"],
