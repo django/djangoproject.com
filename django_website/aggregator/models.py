@@ -124,14 +124,19 @@ def feed_updated(sender, notification, **kwargs):
             log.error("Feed ID %s has an entry ('%s') without a link or guid. Skipping.", feed.id, title)
         link = getattr(entry, "link", guid)
 
+        content = u''
         if hasattr(entry, "summary"):
             content = entry.summary
-        elif hasattr(entry, "content"):
-            content = entry.content[0].value
-        elif hasattr(entry, "description"):
+
+        if hasattr(entry, "description"):
             content = entry.description
-        else:
-            content = u""
+
+        # 'content' takes precedence on anything else. 'summary' and
+        # 'description' are usually truncated so it's safe to overwrite them
+        if hasattr(entry, "content"):
+            content = u''
+            for item in entry.content:
+                content += item.value
 
         if 'published_parsed' in entry and entry.published_parsed is not None:
             date_modified = datetime.datetime(*entry.published_parsed[:6])
