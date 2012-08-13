@@ -2,6 +2,8 @@
 
 {% block title %}{{ doc.title|striptags|safe }} | Django documentation{% endblock %}
 
+{% block robots %}{% if version == 'dev' %}NOINDEX, NOFOLLOW{% else %}{{ block.super }}{% endif %}{% endblock %}
+
 {% block extrahead %}
   {{ block.super }}
   <link rel="stylesheet" href="{{ MEDIA_URL }}css/docs/docs.css" type="text/css" />
