@@ -3,3 +3,6 @@
 local_settings.py
 media/docs
 src/
+lib/
+bin/
+include/
