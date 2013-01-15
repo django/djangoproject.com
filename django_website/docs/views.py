@@ -18,7 +18,7 @@ from .utils import get_doc_root_or_404, get_doc_path_or_404
 
 def index(request):
     return redirect(DocumentRelease.objects.default())
-    
+
 def language(request, lang):
     return redirect(DocumentRelease.objects.default())
 
@@ -37,12 +37,13 @@ def document(request, lang, version, url):
     template_names = [
         'docs/%s.html' % docroot.rel_path_to(doc_path).replace(doc_path.ext, ''),
         'docs/doc.html',
-    ]    
+    ]
     return render_to_response(template_names, RequestContext(request, {
         'doc': simplejson.load(open(doc_path, 'rb')),
         'env': simplejson.load(open(docroot.child('globalcontext.json'), 'rb')),
         'lang': lang,
         'version': version,
+        'rtd_version': '%s.%s' % (version, 'x' if version >= '1.5' else 'X'),
         'docurl': url,
         'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),
         'home': urlresolvers.reverse('document-index', kwargs={'lang':lang, 'version':version}),
@@ -58,14 +59,14 @@ class SphinxStatic(object):
 
     def __call__(self, request, lang, version, path):
         return django.views.static.serve(
-            request, 
+            request,
             document_root = get_doc_root_or_404(lang, version).child(self.subpath),
             path = path,
         )
 
 def objects_inventory(request, lang, version):
     response = django.views.static.serve(
-        request, 
+        request,
         document_root = get_doc_root_or_404(lang, version),
         path = "objects.inv",
     )
@@ -84,7 +85,7 @@ class DocSearchView(haystack.views.SearchView):
             'load_all': False,
         })
         super(DocSearchView, self).__init__(**kwargs)
-    
+
     def extra_context(self):
         # Constuct a context that matches the rest of the doc page views.
         default_release = DocumentRelease.objects.default()
@@ -93,4 +94,4 @@ class DocSearchView(haystack.views.SearchView):
             'version': default_release.version,
             'release': default_release,
         }
-    
+
