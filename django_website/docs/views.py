@@ -31,6 +31,12 @@ def document(request, lang, version, url):
         url.encode("ascii")
     except UnicodeEncodeError:
         raise Http404
+    if version == 'dev':
+        rtd_version = 'latest'
+    elif version >= '1.5':
+        rtd_version = version + '.x'
+    else:
+        rtd_version = version + '.X'
     docroot = get_doc_root_or_404(lang, version)
     doc_path = get_doc_path_or_404(docroot, url)
 
@@ -43,7 +49,7 @@ def document(request, lang, version, url):
         'env': simplejson.load(open(docroot.child('globalcontext.json'), 'rb')),
         'lang': lang,
         'version': version,
-        'rtd_version': '%s.%s' % (version, 'x' if version >= '1.5' else 'X'),
+        'rtd_version': rtd_version,
         'docurl': url,
         'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),
         'home': urlresolvers.reverse('document-index', kwargs={'lang':lang, 'version':version}),

@@ -113,17 +113,10 @@
     {% if version != "1.1" and version != "1.0" %}
       <h2>Download:</h2>
       <p>
-      {% if version == "dev" %}
-        Offline (development version):
-        <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> |
-        <a href="http://media.readthedocs.org/pdf/django/latest/django.pdf">PDF</a> |
-        <a href="http://media.readthedocs.org/epub/django/latest/django.epub">ePub</a>
-      {% else %}
-        Offline (Django {{ version }}):
+        Offline ({% if version == "dev" %}development version{% else %}Django {{ version }}{% endif %}):
         <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> |
         <a href="http://media.readthedocs.org/pdf/django/{{ rtd_version }}/django.pdf">PDF</a> |
         <a href="http://media.readthedocs.org/epub/django/{{ rtd_version }}/django.epub">ePub</a>
-      {% endif %}
       <br>
       <span class="quiet">Provided by <a href="http://readthedocs.org/">Read the Docs</a>.
       </p>
