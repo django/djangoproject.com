@@ -1,46 +1,86 @@
 [
   {
-    "model": "docs.documentrelease",
     "pk": 1,
+    "model": "docs.documentrelease",
     "fields": {
       "lang": "en",
+      "scm": "git",
+      "scm_url": "git://github.com/django/django.git",
+      "is_default": false,
       "version": "dev",
-      "scm": "svn",
-      "scm_url": "http://code.djangoproject.com/svn/django/trunk/docs",
-      "is_default": false
+      "docs_subdir": "docs"
     }
   },
   {
-    "model": "docs.documentrelease",
     "pk": 2,
+    "model": "docs.documentrelease",
     "fields": {
       "lang": "en",
+      "scm": "git",
+      "scm_url": "git://github.com/django/django.git@stable/1.0.x",
+      "is_default": false,
       "version": "1.0",
-      "scm": "svn",
-      "scm_url": "http://code.djangoproject.com/svn/django/branches/releases/1.0.X/docs",
-      "is_default": false
+      "docs_subdir": "docs"
     }
   },
   {
-    "model": "docs.documentrelease",
     "pk": 3,
+    "model": "docs.documentrelease",
     "fields": {
       "lang": "en",
+      "scm": "git",
+      "scm_url": "git://github.com/django/django.git@stable/1.1.x",
+      "is_default": false,
       "version": "1.1",
-      "scm": "svn",
-      "scm_url": "http://code.djangoproject.com/svn/django/branches/releases/1.1.X/docs",
-      "is_default": false
+      "docs_subdir": "docs"
     }
   },
   {
-    "model": "docs.documentrelease",
     "pk": 4,
+    "model": "docs.documentrelease",
     "fields": {
       "lang": "en",
+      "scm": "git",
+      "scm_url": "git://github.com/django/django.git@stable/1.2.x",
+      "is_default": false,
       "version": "1.2",
-      "scm": "svn",
-      "scm_url": "http://code.djangoproject.com/svn/django/trunk/docs",
-      "is_default": true
+      "docs_subdir": "docs"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "docs.documentrelease",
+    "fields": {
+      "lang": "en",
+      "scm": "git",
+      "scm_url": "git://github.com/django/django.git@stable/1.3.x",
+      "is_default": false,
+      "version": "1.3",
+      "docs_subdir": "docs"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "docs.documentrelease",
+    "fields": {
+      "lang": "en",
+      "scm": "git",
+      "scm_url": "git://github.com/django/django.git@stable/1.4.x",
+      "is_default": true,
+      "version": "1.4",
+      "docs_subdir": "docs"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "docs.documentrelease",
+    "fields": {
+      "lang": "en",
+      "scm": "git",
+      "scm_url": "git://github.com/django/django.git@stable/1.5.x",
+      "is_default": false,
+      "version": "1.5",
+      "docs_subdir": "docs"
     }
   }
 ]
