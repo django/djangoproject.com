@@ -6,7 +6,7 @@ import platform
 from unipath import FSPath as Path
 
 # The full path to the django_website directory.
-BASE = Path(__file__).absolute().ancestor(2)
+BASE = Path(__file__).absolute().ancestor(2).child('django_website')
 
 # Far too clever trick to know if we're running on the deployment server.
 PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ) and ("djangoproject" in platform.node())
@@ -58,7 +58,7 @@ else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SITE_ID = 1
-ROOT_URLCONF = 'django_website.urls.www'
+ROOT_URLCONF = 'django_www.urls'
 INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.auth',

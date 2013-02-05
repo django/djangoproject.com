@@ -93,7 +93,7 @@ def managepy(cmd, site='www'):
     """
     assert site in ('docs', 'www')
     django_admin = env.virtualenv.child('bin', 'django-admin.py')
-    sudo('%s %s --settings=django_website.settings.%s' % (django_admin, cmd, site))
+    sudo('%s %s --settings=django_%s.settings' % (django_admin, cmd, site))
 
 def southify(app):
     """

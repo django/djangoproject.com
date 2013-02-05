@@ -1,9 +1,9 @@
-from django_website.settings.www import *
+from django_www.settings import *
 
 PREPEND_WWW = False
 APPEND_SLASH = True
 TEMPLATE_CONTEXT_PROCESSORS += ["django.core.context_processors.request"]
-ROOT_URLCONF = 'django_website.urls.docs'
+ROOT_URLCONF = 'django_docs.urls'
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangodocs'
 
 # Override INSTALLED_APPS so that we only have a few things running on docs.
