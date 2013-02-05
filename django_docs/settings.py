@@ -10,7 +10,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'djangodocs'
 # Keep around debug_toolbar and raven if the parent settings module installed
 # them.
 _new_apps = [
-    'django_website.docs',
+    'docs',
     'haystack',
 ]
 if 'debug_toolbar' in INSTALLED_APPS:
@@ -26,7 +26,7 @@ else:
     DOCS_BUILD_ROOT = '/tmp/djangodocs'
 
 # Haystack settings
-HAYSTACK_SITECONF = 'django_website.docs.search_sites'
+HAYSTACK_SITECONF = 'docs.search_sites'
 if PRODUCTION:
     HAYSTACK_SEARCH_ENGINE = 'xapian'
     HAYSTACK_XAPIAN_PATH = BASE.ancestor(2).child('djangodocs.index')

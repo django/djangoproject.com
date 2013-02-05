@@ -8,9 +8,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list
+
+from django_website.shortcuts import render
+
 from .models import FeedItem, Feed, FeedType, APPROVED_FEED
 from .forms import FeedModelForm
-from ..shortcuts import render
 
 def index(request):
     """
