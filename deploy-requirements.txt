@@ -1,7 +1,7 @@
 # Requirements to deploy this code.
 
 akismet == 0.2.0
-Django >= 1.3, < 1.4
+Django >= 1.4, < 1.5
 django-haystack == 1.1.0
 django-push == 0.4
 django-registration == 0.7

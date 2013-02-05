@@ -1,14 +1,14 @@
 #!/usr/bin/env python
-
 import os
 import sys
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
-if '--docs' in sys.argv:
-    import django_website.settings.docs as settings
-    sys.argv.remove('--docs')
-else:
-    import django_website.settings.www as settings
-    
-from django.core.management import execute_manager
-execute_manager(settings)
+if __name__ == "__main__":
+    if '--docs' in sys.argv:
+        settings_module = 'django_docs.settings'
+        sys.argv.remove('--docs')
+    else:
+        settings_module = 'django_www.settings'
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
+
+    from django.core.management import execute_from_command_line
+    execute_from_command_line(sys.argv)

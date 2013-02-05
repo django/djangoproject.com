@@ -9,10 +9,10 @@ from django.contrib.flatpages.views import flatpage
 from django.contrib.sitemaps import views as sitemap_views
 from django.views.decorators.cache import cache_page
 from django.views.generic.simple import redirect_to
-from ..accounts import views as account_views
-from ..aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
-from ..blog.feeds import WeblogEntryFeed
-from ..sitemaps import FlatPageSitemap, WeblogSitemap
+from django_website.accounts import views as account_views
+from django_website.aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
+from django_website.blog.feeds import WeblogEntryFeed
+from django_website.sitemaps import FlatPageSitemap, WeblogSitemap
 
 admin.autodiscover()
 

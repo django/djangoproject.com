@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.conf.urls.defaults import *
 from haystack.views import search_view_factory
-from ..docs import views
+
+from django_website.docs import views
 
 urlpatterns = patterns('',
     url(
@@ -54,6 +55,6 @@ urlpatterns = patterns('',
 if settings.DEBUG:
     urlpatterns += patterns('',
         url(r'^media/(?P<path>.*)$',
-            'django.views.static.serve', 
+            'django.views.static.serve',
             {'document_root': settings.MEDIA_ROOT}),
     )
