@@ -8,10 +8,12 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.core import cache
 from django.http import HttpResponse
+
+from cla.models import find_agreements
+from tracdb import stats as trac_stats
+
 from .forms import ProfileForm
 from .models import Profile
-from ..trac import stats as trac_stats
-from ..cla.models import find_agreements
 
 def user_profile(request, username):
     u = get_object_or_404(User, username=username)

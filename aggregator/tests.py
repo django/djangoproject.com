@@ -9,9 +9,11 @@ from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
+
+from docs.models import DocumentRelease
+
 from .management.commands import send_pending_approval_email
 from . import models
-from ..docs.models import DocumentRelease
 
 class AggregatorTests(TestCase):
 

@@ -9,9 +9,10 @@ from django.contrib.flatpages.views import flatpage
 from django.contrib.sitemaps import views as sitemap_views
 from django.views.decorators.cache import cache_page
 from django.views.generic.simple import redirect_to
-from django_website.accounts import views as account_views
-from django_website.aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
-from django_website.blog.feeds import WeblogEntryFeed
+
+from accounts import views as account_views
+from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
+from blog.feeds import WeblogEntryFeed
 from django_website.sitemaps import FlatPageSitemap, WeblogSitemap
 
 admin.autodiscover()
@@ -31,12 +32,12 @@ handler500 = 'django_website.views.server_error'
 
 urlpatterns = patterns('',
     url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'homepage.html'}, name="homepage"),
-    url(r'^accounts/', include('django_website.accounts.urls')),
+    url(r'^accounts/', include('accounts.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^comments/$', 'django.views.generic.list_detail.object_list', comments_info_dict),
     url(r'^comments/', include('django.contrib.comments.urls')),
-    url(r'^community/', include('django_website.aggregator.urls')),
-    url(r'^contact/', include('django_website.contact.urls')),
+    url(r'^community/', include('aggregator.urls')),
+    url(r'^contact/', include('contact.urls')),
     url(r'^r/', include('django.conf.urls.shortcut')),
 
     # There's no school like the old school.
@@ -57,11 +58,11 @@ urlpatterns = patterns('',
     url(r'^subscriber/', include('django_push.subscriber.urls')),
 
     url(r'^sitemap\.xml$', cache_page(sitemap_views.sitemap, 60 * 60 * 6), {'sitemaps': sitemaps}),
-    url(r'^weblog/', include('django_website.blog.urls')),
+    url(r'^weblog/', include('blog.urls')),
     url(r'^freenode\.9xJY7YIUWtwn\.html$', 'django.views.generic.simple.direct_to_template', {'template': 'freenode_tmp.html'}),
     url(r'^download$', flatpage, {'url': 'download'}, name="download"),
-    url(r'^svntogit/', include('django_website.svntogit.urls')),
-    url(r'', include('django_website.legacy.urls')),
+    url(r'^svntogit/', include('svntogit.urls')),
+    url(r'', include('legacy.urls')),
 )
 
 if not settings.PRODUCTION:

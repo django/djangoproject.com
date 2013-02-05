@@ -35,7 +35,7 @@ DATABASES = {
         'USER': 'code.djangoproject'
     }
 }
-DATABASE_ROUTERS = ['django_website.trac.db_router.TracRouter']
+DATABASE_ROUTERS = ['tracdb.db_router.TracRouter']
 
 USE_I18N = False
 USE_L10N = False
@@ -72,13 +72,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sitemaps',
     'django_push.subscriber',
-    'django_website.blog',
-    'django_website.accounts',
-    'django_website.aggregator',
-    'django_website.cla',
-    'django_website.docs',
-    'django_website.svntogit',
-    'django_website.trac',
+    'blog',
+    'accounts',
+    'aggregator',
+    'cla',
+    'docs',
+    'svntogit',
+    'tracdb',
     'registration',
     'south',
     'djangosecure',
@@ -179,7 +179,7 @@ DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
 
 # PubSubHubbub settings
 PUSH_HUB = 'https://superfeedr.com/hubbub'
-PUSH_CREDENTIALS = 'django_website.aggregator.utils.push_credentials'
+PUSH_CREDENTIALS = 'aggregator.utils.push_credentials'
 PUSH_SSL_CALLBACK = PRODUCTION
 
 # Lock down some security stuff
