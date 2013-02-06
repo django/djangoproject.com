@@ -84,11 +84,11 @@ class Command(NoArgsCommand):
 
             #
             # Create a zip file of the HTML build for offline reading.
-            # This gets moved into MEDIA_ROOT for downloading.
+            # This gets moved into STATIC_ROOT for downloading.
             #
             html_build_dir = destdir.child('_build', 'html')
             zipfile_name = 'django-docs-%s-%s.zip' % (release.version, release.lang)
-            zipfile_path = Path(settings.MEDIA_ROOT).child('docs', zipfile_name)
+            zipfile_path = Path(settings.STATIC_ROOT).child('docs', zipfile_name)
             if not zipfile_path.parent.exists():
                 zipfile_path.parent.mkdir(parents=True)
             if verbosity >= 2:
