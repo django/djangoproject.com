@@ -25,7 +25,7 @@ To run locally, do the usual::
 
 5. Create tables::
 
-    psql -d code.djangoproject < django_website/trac/trac.sql
+    psql -d code.djangoproject < tracdb/trac.sql
 
     ./manage.py syncdb
     ./manage.py migrate
