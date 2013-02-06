@@ -1,3 +1,2 @@
 * allow users to "claim" legacy feeds (might do this by hand.)
 * get rid of wsgi-scripts, move useful functions to django_*.wsgi
-* the aggregator templatetags are dead code and have an import error
