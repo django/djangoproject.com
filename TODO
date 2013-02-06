@@ -1,1 +1,6 @@
 * allow users to "claim" legacy feeds (might do this by hand.)
+* finish cleanup of django_website and rename it to something
+  not starting with django_
+* sitemaps look outdated — /documentation/0_90/ really?
+* running tests fails because of the second database
+* some apps don't have tests
