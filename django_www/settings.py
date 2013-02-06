@@ -115,9 +115,9 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.static",
-    "django_website.context_processors.recent_release",
     "django.contrib.messages.context_processors.messages",
-    ]
+    "docs.context_processors.recent_release",
+]
 
 
 DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
