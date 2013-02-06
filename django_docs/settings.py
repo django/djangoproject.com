@@ -21,7 +21,7 @@ INSTALLED_APPS = _new_apps
 
 # Where to store the build Sphinx docs.
 if PRODUCTION:
-    DOCS_BUILD_ROOT = BASE.ancestor(2).child('docbuilds')
+    DOCS_BUILD_ROOT = BASE.parent.child('docbuilds')
 else:
     DOCS_BUILD_ROOT = '/tmp/djangodocs'
 
@@ -29,7 +29,7 @@ else:
 HAYSTACK_SITECONF = 'docs.search_sites'
 if PRODUCTION:
     HAYSTACK_SEARCH_ENGINE = 'xapian'
-    HAYSTACK_XAPIAN_PATH = BASE.ancestor(2).child('djangodocs.index')
+    HAYSTACK_XAPIAN_PATH = BASE.parent.child('djangodocs.index')
 else:
     HAYSTACK_SEARCH_ENGINE = 'whoosh'
     HAYSTACK_WHOOSH_PATH = '/tmp/djangodocs.index'
