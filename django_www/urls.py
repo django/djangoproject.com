@@ -59,7 +59,6 @@ urlpatterns = patterns('',
 
     url(r'^sitemap\.xml$', cache_page(sitemap_views.sitemap, 60 * 60 * 6), {'sitemaps': sitemaps}),
     url(r'^weblog/', include('blog.urls')),
-    url(r'^freenode\.9xJY7YIUWtwn\.html$', 'django.views.generic.simple.direct_to_template', {'template': 'freenode_tmp.html'}),
     url(r'^download$', flatpage, {'url': 'download'}, name="download"),
     url(r'^svntogit/', include('svntogit.urls')),
     url(r'', include('legacy.urls')),
