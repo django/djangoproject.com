@@ -23,6 +23,13 @@ FEED_APPROVERS_GROUP_NAME = "feed-approver"
 TIME_ZONE = 'America/Chicago'
 SERVER_EMAIL = 'root@djangoproject.com'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -50,11 +57,10 @@ STATIC_URL = '/s/'
 if PRODUCTION:
     DEBUG = False
     PREPEND_WWW = True
-    CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 else:
     DEBUG = True
     PREPEND_WWW = False
-    CACHE_BACKEND = "dummy:///"
+    CACHES['default']['BACKEND'] = 'django.core.cache.backends.dummy.DummyCache'
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SITE_ID = 1
@@ -127,11 +133,17 @@ LOGGING = {
     "disable_existing_loggers": True,
     "formatters": {
         "simple": {"format": "[%(name)s] %(levelname)s: %(message)s"},
-        "full": {"format": "%(asctime)s [%(name)s] %(levelname)s: %(message)s"}
+        "full": {"format": "%(asctime)s [%(name)s] %(levelname)s: %(message)s"},
+    },
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
     },
     "handlers": {
         "mail_admins": {
             "level": "ERROR",
+            "filters": ['require_debug_false'],
             "class": "django.utils.log.AdminEmailHandler",
         },
         "console": {
@@ -149,7 +161,7 @@ LOGGING = {
         "django_website": {
             "handlers": ["console"],
             "level": "DEBUG",
-        }
+        },
     }
 }
 if PRODUCTION:
