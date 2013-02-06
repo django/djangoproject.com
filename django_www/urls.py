@@ -8,6 +8,8 @@ from django.contrib.comments.models import Comment
 from django.contrib.flatpages.views import flatpage
 from django.contrib.sitemaps import views as sitemap_views
 from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import TemplateView
 from django.views.generic.simple import redirect_to
 
 from accounts import views as account_views
@@ -31,7 +33,7 @@ handler500 = 'django_website.views.server_error'
 
 
 urlpatterns = patterns('',
-    url(r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'homepage.html'}, name="homepage"),
+    url(r'^$', TemplateView.as_view(template_name='homepage.html'), name="homepage"),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^comments/$', 'django.views.generic.list_detail.object_list', comments_info_dict),
@@ -52,7 +54,7 @@ urlpatterns = patterns('',
 
     # PayPal insists on POSTing to the "thank you" page which means we can't
     # just use a flatpage for it.
-    url(r'^foundation/donate/thanks/$', 'django_website.views.donate_thanks'),
+    url(r'^foundation/donate/thanks/$', csrf_exempt(TemplateView.as_view(template_name='donate_thanks.html'))),
 
     # django-push
     url(r'^subscriber/', include('django_push.subscriber.urls')),

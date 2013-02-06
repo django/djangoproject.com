@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 
 from django.conf.urls import patterns, url
-from django.views.generic.simple import direct_to_template
+from django.views.generic import TemplateView
 
 from contact_form.views import contact_form
 
@@ -19,10 +19,7 @@ urlpatterns = patterns('',
     ),
     url(
         regex=r'^sent/',
-        view=direct_to_template,
-        kwargs=dict(
-            template='contact/sent.html',
-        ),
+        view=TemplateView.as_view(template_name='contact/sent.html'),
         name='contact_form_sent',
     )
 )
