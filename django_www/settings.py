@@ -40,7 +40,7 @@ DATABASE_ROUTERS = ['tracdb.db_router.TracRouter']
 USE_I18N = False
 USE_L10N = False
 
-TEMPLATE_DIRS = [BASE.child('templates')]
+TEMPLATE_DIRS = [BASE.parent.child('templates')]
 MEDIA_ROOT = BASE.parent.child('media')
 
 if PRODUCTION:
