@@ -63,10 +63,3 @@ urlpatterns = patterns('',
     url(r'^svntogit/', include('svntogit.urls')),
     url(r'', include('legacy.urls')),
 )
-
-if not settings.PRODUCTION:
-    urlpatterns += patterns("django.views",
-        url(r"^media/(?P<path>.*)", "static.serve", {
-            "document_root": settings.MEDIA_ROOT,
-        }),
-    )
