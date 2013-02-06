@@ -1,5 +1,5 @@
-from django.conf import settings
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url
+
 from haystack.views import search_view_factory
 
 from docs import views
@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     url(
         r'^search/$',
         search_view_factory(view_class=views.DocSearchView),
-        name = 'document-search'
+        name='document-search'
     ),
     url(
         r'^(?P<lang>[a-z-]+)/$',
@@ -22,12 +22,12 @@ urlpatterns = patterns('',
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/$',
         views.document,
         {'url': ''},
-        name = 'document-index',
+        name='document-index',
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_objects/$',
         views.objects_inventory,
-        name = 'objects-inv',
+        name='objects-inv',
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_images/(?P<path>.*)$',
@@ -48,6 +48,6 @@ urlpatterns = patterns('',
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/(?P<url>[\w./-]*)/$',
         views.document,
-        name = 'document-detail',
+        name='document-detail',
     ),
 )

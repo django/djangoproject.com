@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from django.conf.urls.defaults import patterns, url, include
+from django.conf.urls import patterns, url, include
 from registration.forms import RegistrationFormUniqueEmail
 from . import views as account_views
 
