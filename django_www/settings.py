@@ -5,14 +5,14 @@ import json
 import platform
 from unipath import FSPath as Path
 
-# The full path to the django_website directory.
-BASE = Path(__file__).absolute().ancestor(2).child('django_website')
+# The full path to the repository root.
+BASE = Path(__file__).absolute().ancestor(2)
 
 # Far too clever trick to know if we're running on the deployment server.
 PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ) and ("djangoproject" in platform.node())
 
 # It's a secret to everybody
-SECRETS = json.load(open(BASE.ancestor(2).child('secrets.json')))
+SECRETS = json.load(open(BASE.parent.child('secrets.json')))
 SECRET_KEY = str(SECRETS['secret_key'])
 # SUPERFEEDR_CREDS is a 2 element list in the form of [email,secretkey]
 SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
@@ -40,11 +40,11 @@ DATABASE_ROUTERS = ['tracdb.db_router.TracRouter']
 USE_I18N = False
 USE_L10N = False
 
-MEDIA_ROOT = BASE.parent.child('media')
+MEDIA_ROOT = BASE.child('media')
 MEDIA_URL = '/m/'
-TEMPLATE_DIRS = [BASE.parent.child('templates')]
-STATICFILES_DIRS = [BASE.parent.child('static')]
-STATIC_ROOT = BASE.parent.child('static_root')
+TEMPLATE_DIRS = [BASE.child('templates')]
+STATICFILES_DIRS = [BASE.child('static')]
+STATIC_ROOT = BASE.child('static_root')
 STATIC_URL = '/s/'
 
 if PRODUCTION:
