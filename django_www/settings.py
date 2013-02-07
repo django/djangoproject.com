@@ -105,6 +105,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'djangoproject'
 
 MIDDLEWARE_CLASSES = [
     'djangosecure.middleware.SecurityMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -199,9 +200,6 @@ if PRODUCTION:
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
     SECURE_SSL_REDIRECT = False
-    # This breaks SVG embedding in docs.
-    # TODO: switch to X_FRAME_OPTIONS = 'SAMEORIGIN' in Django 1.4
-    # SECURE_FRAME_DENY = True
     SECURE_HSTS_SECONDS = 600
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTOCOL", "SSL")
 
