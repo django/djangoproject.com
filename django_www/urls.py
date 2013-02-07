@@ -7,8 +7,7 @@ from django.contrib.flatpages.views import flatpage
 from django.contrib.sitemaps import views as sitemap_views
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView
-from django.views.generic.simple import redirect_to
+from django.views.generic import RedirectView, TemplateView
 
 from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
@@ -38,7 +37,7 @@ urlpatterns = patterns('',
 
     # Feeds
     url(r'^rss/weblog/$', WeblogEntryFeed(), name='weblog-feed'),
-    url(r'^rss/community/$', redirect_to, {'url': '/rss/community/blogs/'}),
+    url(r'^rss/community/$', RedirectView.as_view(url='/rss/community/blogs/')),
     url(r'^rss/community/firehose/$', CommunityAggregatorFirehoseFeed(), name='aggregator-firehose-feed'),
     url(r'^rss/community/(?P<slug>[\w-]+)/$', CommunityAggregatorFeed(), name='aggregator-feed'),
 
