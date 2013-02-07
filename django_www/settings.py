@@ -14,14 +14,17 @@ PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ) and ("djangoproject" in p
 # It's a secret to everybody
 SECRETS = json.load(open(BASE.parent.child('secrets.json')))
 SECRET_KEY = str(SECRETS['secret_key'])
-# SUPERFEEDR_CREDS is a 2 element list in the form of [email,secretkey]
-SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
 
-ADMINS = (('Adrian Holovaty','holovaty@gmail.com'),('Jacob Kaplan-Moss', 'jacob@jacobian.org'))
-MANAGERS = (('Jacob Kaplan-Moss','jacob@jacobian.org'),)
+ADMINS = (
+    ('Adrian Holovaty', 'holovaty@gmail.com'),
+    ('Jacob Kaplan-Moss', 'jacob@jacobian.org'),
+)
+MANAGERS = (
+    ('Jacob Kaplan-Moss', 'jacob@jacobian.org'),
+)
 FEED_APPROVERS_GROUP_NAME = "feed-approver"
+
 TIME_ZONE = 'America/Chicago'
-SERVER_EMAIL = 'root@djangoproject.com'
 
 CACHES = {
     'default': {
@@ -46,6 +49,7 @@ DATABASE_ROUTERS = ['tracdb.db_router.TracRouter']
 
 USE_I18N = False
 USE_L10N = False
+USE_TZ = True
 
 MEDIA_ROOT = BASE.child('media')
 MEDIA_URL = '/m/'
@@ -113,10 +117,6 @@ if PRODUCTION:
     MIDDLEWARE_CLASSES.insert(0, 'django.middleware.cache.UpdateCacheMiddleware')
     MIDDLEWARE_CLASSES.append('django.middleware.cache.FetchFromCacheMiddleware')
 
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
 TEMPLATE_CONTEXT_PROCESSORS = [
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
@@ -127,6 +127,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 ]
 
 DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
+SERVER_EMAIL = "root@djangoproject.com"
 
 LOGGING = {
     "version": 1,
@@ -190,6 +191,8 @@ SOUTH_TESTS_MIGRATE = False
 PUSH_HUB = 'https://superfeedr.com/hubbub'
 PUSH_CREDENTIALS = 'aggregator.utils.push_credentials'
 PUSH_SSL_CALLBACK = PRODUCTION
+# SUPERFEEDR_CREDS is a 2 element list in the form of [email,secretkey]
+SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
 
 # Lock down some security stuff
 if PRODUCTION:
