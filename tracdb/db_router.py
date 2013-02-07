@@ -17,5 +17,8 @@ class TracRouter(object):
     def db_for_write(self, model, **hints):
         return 'trac' if app_label(model) == THIS_APP else None
 
+    def allow_syncdb(self, db, model):
+        return False if db == 'trac' else None
+
 def app_label(model):
     return model._meta.app_label

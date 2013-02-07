@@ -183,6 +183,9 @@ ACCOUNT_ACTIVATION_DAYS = 3
 # comment_utils settings
 AKISMET_API_KEY = "c892e4962244"
 
+# south settings
+SOUTH_TESTS_MIGRATE = False
+
 # setting for documentation root path
 DJANGO_DOCUMENT_ROOT_PATH = "/home/html/djangoproject.com/docs/"
 DJANGO_TESTS_PATH = "/home/html/djangoproject.com/tests/"
