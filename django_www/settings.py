@@ -49,7 +49,7 @@ DATABASE_ROUTERS = ['tracdb.db_router.TracRouter']
 
 USE_I18N = False
 USE_L10N = False
-USE_TZ = True
+USE_TZ = False
 
 MEDIA_ROOT = BASE.child('media')
 MEDIA_URL = '/m/'
