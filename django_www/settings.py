@@ -98,8 +98,6 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 CACHE_MIDDLEWARE_SECONDS = 60 * 5 # 5 minutes
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangoproject'
-CACHE_MIDDLEWARE_GZIP = True
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 MIDDLEWARE_CLASSES = [
     'djangosecure.middleware.SecurityMiddleware',
@@ -127,7 +125,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.contrib.messages.context_processors.messages",
     "docs.context_processors.recent_release",
 ]
-
 
 DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
 
@@ -188,13 +185,6 @@ AKISMET_API_KEY = "c892e4962244"
 
 # south settings
 SOUTH_TESTS_MIGRATE = False
-
-# setting for documentation root path
-DJANGO_DOCUMENT_ROOT_PATH = "/home/html/djangoproject.com/docs/"
-DJANGO_TESTS_PATH = "/home/html/djangoproject.com/tests/"
-
-# XXX What's this for?
-DJANGO_SVN_ROOT = "http://code.djangoproject.com/svn/django/"
 
 # PubSubHubbub settings
 PUSH_HUB = 'https://superfeedr.com/hubbub'
