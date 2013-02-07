@@ -1,5 +1,8 @@
 # WSGI auth handlers for Trac
 
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = 'django_www.settings'
+
 from django import db
 from django.contrib.auth.models import User
 
