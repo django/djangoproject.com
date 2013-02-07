@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     'aggregator',
     'cla',
     'docs',
+    'legacy',
     'svntogit',
     'tracdb',
     'registration',
