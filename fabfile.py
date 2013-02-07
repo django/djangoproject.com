@@ -51,6 +51,7 @@ def deploy_code(ref=None):
         sudo('git clone %s %s' % (env.git_url, env.code_dir))
     with cd(env.code_dir):
         sudo('git fetch && git reset --hard %s' % ref)
+    managepy('collectstatic')
 
 def update_dependencies():
     """
