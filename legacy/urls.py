@@ -9,8 +9,10 @@ from django.conf.urls import patterns
 from .views import gone
 
 urlpatterns = patterns('',
-    (r'^documentation/models/$',                                      gone),
-    (r'^documentation/models/(?P<slug>\w+)/$',                        gone),
-    (r'^documentation/(?P<version>[\d.]+)/models/$',                  gone),
-    (r'^documentation/(?P<version>[\d.]+)/models/(?P<slug>\w+)/$',    gone),
+    (r'^comments/', gone),
+    (r'^rss/comments/$', gone),
+    (r'^documentation/models/$', gone),
+    (r'^documentation/models/(?P<slug>\w+)/$', gone),
+    (r'^documentation/(?P<version>[\d.]+)/models/$', gone),
+    (r'^documentation/(?P<version>[\d.]+)/models/(?P<slug>\w+)/$', gone),
 )
