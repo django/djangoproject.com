@@ -1,12 +1,8 @@
 from __future__ import absolute_import
 
-import logging
-from django.shortcuts import render, render_to_response, get_object_or_404, redirect
-from django.template import RequestContext
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list
 
 from .models import FeedItem, Feed, FeedType, APPROVED_FEED

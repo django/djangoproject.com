@@ -1,4 +1,3 @@
-import textwrap
 from django import forms
 from contact_form.forms import AkismetContactForm
 

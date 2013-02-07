@@ -1,7 +1,6 @@
 # -*- coding: utf-8-*-
 
 import json
-from django.conf import settings
 from django.utils.html import strip_tags
 import haystack
 import haystack.indexes
