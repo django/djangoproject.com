@@ -664,19 +664,6 @@ div.versionchanged span.title {
     font-size:90%;
 }
 
-/* COMMENTS */
-
-.comment {
-    margin:15px 0;
-}
-div.comment p {
-    margin-left:1em;
-}
-#weblog div.comment p.date {
-    margin-bottom:.2em;
-    color:#94da3a;
-}
-
 /* FORMS */
 form.wide label {
     display: block;

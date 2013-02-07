@@ -37,6 +37,5 @@ class WeblogSitemap(Sitemap):
     def items(self):
         return Entry.objects.published()
 
-    # lastmod is not implemented, because weblog pages contain comments.
-    # We'd rather not look up the date of the latest comment -- not worth the overhead.
+    # lastmod wasn't implemented, because weblog pages used to contain comments.
 
