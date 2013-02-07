@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 
-import datetime
 from django.contrib.sitemaps import Sitemap
 from django.contrib.flatpages.models import FlatPage
 
