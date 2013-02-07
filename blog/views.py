@@ -1,38 +1,32 @@
-import functools
-from django.views.generic import date_based
+from django.views.generic.dates import (ArchiveIndexView, YearArchiveView,
+    MonthArchiveView, DayArchiveView, DateDetailView)
 
 from .models import Entry
 
-def prepare_arguments(view):
-    @functools.wraps(view)
-    def wrapped(request, *args, **kwargs):
-        kwargs['allow_future'] = request.user.is_staff
-        kwargs['queryset'] = Entry.objects.all() if request.user.is_staff else Entry.objects.published()
-        kwargs['date_field'] = 'pub_date'
-        return view(request, *args, **kwargs)
-    return wrapped
+class BlogViewMixin(object):
 
-@prepare_arguments
-def entry_detail(request, *args, **kwargs):
-    return date_based.object_detail(request, *args, **kwargs)
+    date_field = 'pub_date'
 
-@prepare_arguments
-def archive_day(request, *args, **kwargs):
-    return date_based.archive_day(request, *args, **kwargs)
+    def get_allow_future(self):
+        return self.request.user.is_staff
 
-@prepare_arguments
-def archive_month(request, *args, **kwargs):
-    return date_based.archive_month(request, *args, **kwargs)
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Entry.objects.all()
+        else:
+            return Entry.objects.published()
 
-@prepare_arguments
-def archive_year(request, *args, **kwargs):
-    return date_based.archive_year(request, *args, **kwargs)
+class BlogArchiveIndexView(BlogViewMixin, ArchiveIndexView):
+    pass
 
-@prepare_arguments
-def archive_index(request, *args, **kwargs):
-    return date_based.archive_index(request, *args, **kwargs)
+class BlogYearArchiveView(BlogViewMixin, YearArchiveView):
+    pass
 
+class BlogMonthArchiveView(BlogViewMixin, MonthArchiveView):
+    pass
 
+class BlogDayArchiveView(BlogViewMixin, DayArchiveView):
+    pass
 
-
-
+class BlogDateDetailView(BlogViewMixin, DateDetailView):
+    pass
