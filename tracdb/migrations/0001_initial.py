@@ -17,13 +17,12 @@ class Migration(SchemaMigration):
             SELECT "name" || '.' || "version" AS "django_id", *
             FROM wiki;''')
 
-        # I have no idea why this is needed, but without it the migration
-        # doesn't get committed. This is probably a bug in South?
-        # Filed as http://south.aeracode.org/ticket/924.
+        # Work around a limitation of South's support for multiple databases.
+        # See http://south.aeracode.org/ticket/924.
         db.execute('COMMIT')
 
     def backwards(self, orm):
         db = dbs['trac']
-        db.execute('DROP VIEW attachment_django_view;')
-        db.execute('DROP VIEW wiki_django_view;')
+        db.execute('DROP VIEW "attachment_django_view";')
+        db.execute('DROP VIEW "wiki_django_view";')
         db.execute('COMMMIT')
