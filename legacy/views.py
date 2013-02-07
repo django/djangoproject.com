@@ -1,10 +1,7 @@
-from django import template
-from django.http import HttpResponseGone
+from django.shortcuts import render
 
 def gone(request, *args, **kwargs):
     """
     Display a nice 410 gone page.
     """
-    t = template.loader.get_template('410.html')
-    c = template.RequestContext(request, {'request': request})
-    return HttpResponseGone(t.render(c))
+    return render(request, '410.html', status=410)
