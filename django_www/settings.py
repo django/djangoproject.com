@@ -78,17 +78,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
     'django_push.subscriber',
-    'blog',
+
     'accounts',
     'aggregator',
+    'blog',
     'cla',
+    'contact',
     'docs',
     'legacy',
     'svntogit',
     'tracdb',
+
+    'djangosecure',
     'registration',
     'south',
-    'djangosecure',
 ]
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
