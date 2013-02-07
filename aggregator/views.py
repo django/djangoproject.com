@@ -3,7 +3,7 @@ from __future__ import absolute_import
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.views.generic.list_detail import object_list
+from django.views.generic.list import ListView
 
 from .models import FeedItem, Feed, FeedType, APPROVED_FEED
 from .forms import FeedModelForm
@@ -15,16 +15,21 @@ def index(request):
     ctx = {'feedtype_list': FeedType.objects.all()}
     return render(request, 'aggregator/index.html', ctx)
 
-def feed_list(request, feed_type_slug):
+class FeedListView(ListView):
     """
     Shows the latest feeds for the given type.
     """
-    feed_type = get_object_or_404(FeedType, slug=feed_type_slug)
-    return object_list(request,
-        queryset = FeedItem.objects.filter(feed__feed_type=feed_type, feed__approval_status=APPROVED_FEED),
-        paginate_by = 25,
-        extra_context = {'feed_type': feed_type},
-    )
+
+    paginate_by = 25
+
+    def get_queryset(self):
+        self.feed_type = get_object_or_404(FeedType, slug=self.kwargs.pop('feed_type_slug'))
+        return FeedItem.objects.filter(feed__feed_type=self.feed_type, feed__approval_status=APPROVED_FEED)
+
+    def get_context_data(self, **kwargs):
+        context = super(FeedListView, self).get_context_data(**kwargs)
+        context['feed_type'] = self.feed_type
+        return context
 
 @login_required
 def my_feeds(request):

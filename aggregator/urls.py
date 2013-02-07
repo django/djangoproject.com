@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     ),
     url(
         r'^(?P<feed_type_slug>[-\w]+)/$',
-        views.feed_list,
+        views.FeedListView.as_view(),
         name='community-feed-list'
     ),
     url(
