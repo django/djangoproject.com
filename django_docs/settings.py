@@ -9,6 +9,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'djangodocs'
 # Keep around debug_toolbar and raven if the parent settings module installed
 # them.
 _new_apps = [
+    'django.contrib.staticfiles',
     'docs',
     'haystack',
 ]
@@ -17,6 +18,13 @@ if 'debug_toolbar' in INSTALLED_APPS:
 if 'raven.contrib.django' in INSTALLED_APPS:
     _new_apps.append('raven.contrib.django')
 INSTALLED_APPS = _new_apps
+
+MIDDLEWARE_CLASSES = [
+    'django.middleware.common.CommonMiddleware',
+]
+if PRODUCTION:
+    MIDDLEWARE_CLASSES.insert(0, 'django.middleware.cache.UpdateCacheMiddleware')
+    MIDDLEWARE_CLASSES.append('django.middleware.cache.FetchFromCacheMiddleware')
 
 # Where to store the build Sphinx docs.
 if PRODUCTION:
