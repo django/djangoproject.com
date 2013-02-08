@@ -46,7 +46,7 @@ urlpatterns = patterns('',
     # django-push
     url(r'^subscriber/', include('django_push.subscriber.urls')),
 
-    url(r'^sitemap\.xml$', cache_page(sitemap_views.sitemap, 60 * 60 * 6), {'sitemaps': sitemaps}),
+    url(r'^sitemap\.xml$', cache_page(60 * 60 * 6)(sitemap_views.sitemap), {'sitemaps': sitemaps}),
     url(r'^weblog/', include('blog.urls')),
     url(r'^download$', flatpage, {'url': 'download'}, name="download"),
     url(r'^svntogit/', include('svntogit.urls')),
