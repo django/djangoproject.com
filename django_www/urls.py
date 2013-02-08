@@ -11,7 +11,8 @@ from django.views.generic import RedirectView, TemplateView
 from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 from blog.feeds import WeblogEntryFeed
-from django_website.sitemaps import FlatPageSitemap, WeblogSitemap
+from blog.sitemaps import WeblogSitemap
+from django_website.sitemaps import FlatPageSitemap
 
 admin.autodiscover()
 

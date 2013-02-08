@@ -3,8 +3,6 @@ from __future__ import absolute_import
 from django.contrib.sitemaps import Sitemap
 from django.contrib.flatpages.models import FlatPage
 
-from blog.models import Entry
-
 class FlatPageSitemap(Sitemap):
     """
     We're not using the built-in django.contrib.sitemaps.FlatPageSitemap,
@@ -28,13 +26,3 @@ class FlatPageSitemap(Sitemap):
 
     # lastmod is not implemented, because we have no way of knowing
     # when FlatPages were last updated.
-
-class WeblogSitemap(Sitemap):
-    changefreq = 'never'
-    priority = 0.4
-
-    def items(self):
-        return Entry.objects.published()
-
-    # lastmod wasn't implemented, because weblog pages used to contain comments.
-
