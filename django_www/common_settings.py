@@ -139,4 +139,8 @@ USE_TZ = False
 
 ### django-secure settings
 
+SECURE_BROWSER_XSS_FILTER = True
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 SECURE_HSTS_SECONDS = 600
