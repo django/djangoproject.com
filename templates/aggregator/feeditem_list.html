@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Django community: {{ feed_type.name }}
-  <a class="rss" href="{% url aggregator-feed feed_type.slug %}">RSS</a></h1>
+  <a class="rss" href="{% url 'aggregator-feed' feed_type.slug %}">RSS</a></h1>
 <h2 class="deck">
   This page, updated regularly, aggregates {{ feed_type.name }}
   from the Django community.

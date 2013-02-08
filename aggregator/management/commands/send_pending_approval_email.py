@@ -33,7 +33,7 @@ class Command(NoArgsCommand):
  - {{ feed.title }} ( {{ feed.feed_url }} ) {% endfor %}
 {% endfor %}
 
-To approve them, visit: http://djangoproject.com{% url admin:aggregator_feed_changelist %}
+To approve them, visit: https://djangoproject.com{% url 'admin:aggregator_feed_changelist' %}
 """
 
         message = Template(email).render(Context({'feeds': feeds}))

@@ -1,7 +1,8 @@
 # Requirements to deploy this code.
 
 akismet == 0.2.0
-Django >= 1.4, < 1.5
+# Django 1.5 is coming soon.
+https://www.djangoproject.com/download/1.5c1/tarball/
 django-haystack == 1.1.0
 django-push == 0.4
 # django-registration doesn't have a release compatible with Django 1.5 yet

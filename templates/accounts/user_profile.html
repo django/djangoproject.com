@@ -17,13 +17,12 @@
   </style>
 {% endblock extrahead %}
 {% block content-related %}
-  {% load url from future %}
   <h2>{% if user_obj == user %}This is you!{% else %}Is this you?{% endif %}</h2>
   <p>
   Need to edit something? Here's how:
   </p>
   <ul>
-    <li><a href="{% url "edit_profile" %}">Edit your name and email here.</a></li>
+    <li><a href="{% url 'edit_profile' %}">Edit your name and email here.</a></li>
     <li>
       The image is the <a href="http://en.gravatar.com/">Gravatar</a> linked
       to the email address you signed up with. You can change the image over
