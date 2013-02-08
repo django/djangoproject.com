@@ -1,42 +1,79 @@
-from django_www.settings import *
+# Settings for docs.djangoproject.com
 
-PREPEND_WWW = False
-TEMPLATE_CONTEXT_PROCESSORS += ["django.core.context_processors.request"]
-ROOT_URLCONF = 'django_docs.urls'
+from django_www.common_settings import *
+
+
+### Django settings
+
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangodocs'
 
-# Override INSTALLED_APPS so that we only have a few things running on docs.
-# Keep around debug_toolbar and raven if the parent settings module installed
-# them.
-_new_apps = [
+INSTALLED_APPS = [
     'django.contrib.staticfiles',
-    'docs',
+
+    'djangosecure',
     'haystack',
+
+    'docs',
 ]
-if 'debug_toolbar' in INSTALLED_APPS:
-    _new_apps.append('debug_toolbar')
-if 'raven.contrib.django' in INSTALLED_APPS:
-    _new_apps.append('raven.contrib.django')
-INSTALLED_APPS = _new_apps
 
 MIDDLEWARE_CLASSES = [
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'djangosecure.middleware.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware'
 ]
-if PRODUCTION:
-    MIDDLEWARE_CLASSES.insert(0, 'django.middleware.cache.UpdateCacheMiddleware')
-    MIDDLEWARE_CLASSES.append('django.middleware.cache.FetchFromCacheMiddleware')
 
-# Where to store the build Sphinx docs.
+TEMPLATE_CONTEXT_PROCESSORS = [
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.static',
+    'django.contrib.messages.context_processors.messages',
+    'docs.context_processors.recent_release',
+    'django.core.context_processors.request',
+]
+
+ROOT_URLCONF = 'django_docs.urls'
+
+SITE_ID = 2
+
+
+### Docs settings
+
 if PRODUCTION:
     DOCS_BUILD_ROOT = BASE.parent.child('docbuilds')
 else:
     DOCS_BUILD_ROOT = '/tmp/djangodocs'
 
-# Haystack settings
+
+### Haystack settings
+
 HAYSTACK_SITECONF = 'docs.search_sites'
+
 if PRODUCTION:
     HAYSTACK_SEARCH_ENGINE = 'xapian'
     HAYSTACK_XAPIAN_PATH = BASE.parent.child('djangodocs.index')
 else:
     HAYSTACK_SEARCH_ENGINE = 'whoosh'
     HAYSTACK_WHOOSH_PATH = '/tmp/djangodocs.index'
+
+
+### Enable optional components
+
+if DEBUG:
+    try:
+        import debug_toolbar
+    except ImportError:
+        pass
+    else:
+        INSTALLED_APPS.append('debug_toolbar')
+        INTERNAL_IPS = ['127.0.0.1']
+        MIDDLEWARE_CLASSES.insert(
+            MIDDLEWARE_CLASSES.index('django.middleware.common.CommonMiddleware') + 1,
+            'debug_toolbar.middleware.DebugToolbarMiddleware')
+
+# Log errors to Sentry instead of email, if available.
+if 'sentry_dsn' in SECRETS:
+    INSTALLED_APPS.append('raven.contrib.django')
+    SENTRY_DSN = SECRETS['sentry_dsn']
+    LOGGING["loggers"]["django.request"]["handlers"].remove("mail_admins")
