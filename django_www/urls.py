@@ -4,8 +4,9 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.flatpages.views import flatpage
 from django.contrib.sitemaps import views as sitemap_views
+from django.shortcuts import render
 from django.views.decorators.cache import cache_page
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, requires_csrf_token
 from django.views.generic import RedirectView, TemplateView
 
 from accounts import views as account_views
@@ -20,9 +21,6 @@ sitemaps = {
     'weblog': WeblogSitemap,
     'flatpages': FlatPageSitemap,
 }
-
-handler500 = 'django_website.views.server_error'
-
 
 urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name='homepage.html'), name="homepage"),
@@ -54,3 +52,7 @@ urlpatterns = patterns('',
     url(r'^svntogit/', include('svntogit.urls')),
     url(r'', include('legacy.urls')),
 )
+
+@requires_csrf_token
+def handler500(request):
+    return render(request, '500.html')
