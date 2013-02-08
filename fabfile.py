@@ -19,6 +19,7 @@ def full_deploy():
     deploy_code()
     update_dependencies()
     migrate()
+    collectstatic()
     apache("restart")
     memcached("restart")
 
@@ -27,6 +28,7 @@ def deploy():
     Quick deploy: new code and an in-place reload.
     """
     deploy_code()
+    collectstatic()
     apache("reload")
 
 def apache(cmd):
@@ -51,7 +53,6 @@ def deploy_code(ref=None):
         sudo('git clone %s %s' % (env.git_url, env.code_dir))
     with cd(env.code_dir):
         sudo('git fetch && git reset --hard %s' % ref)
-    managepy('collectstatic')
 
 def update_dependencies():
     """
@@ -61,6 +62,12 @@ def update_dependencies():
     reqs = env.code_dir.child('deploy-requirements.txt')
     sudo('%s -q install -U pip' % pip)
     sudo('%s -q install -r %s' % (pip, reqs))
+
+def collectstatic():
+    """
+    Run collectstatic.
+    """
+    managepy('collectstatic')
 
 def migrate():
     """
