@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.flatpages.views import flatpage
+from django.contrib.sitemaps import FlatPageSitemap
 from django.contrib.sitemaps import views as sitemap_views
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
@@ -13,7 +14,6 @@ from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
-from django_website.sitemaps import FlatPageSitemap
 
 admin.autodiscover()
 
