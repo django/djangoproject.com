@@ -26,7 +26,7 @@ ul.messages li {
 <div id="{{ feedtype.slug }}" class="module {% cycle "first" "last" %}">
   <h3 class="header">
     {{ feedtype.name }}
-    <a class="rss" href="{% url aggregator-feed slug=feedtype.slug %}">RSS</a>
+    <a class="rss" href="{% url 'aggregator-feed' slug=feedtype.slug %}">RSS</a>
   </h3>
   {% for item in feedtype.items|slice:":5" %}
     <h5><a href="{{ item.link }}">{{ item.title }}</a></h5>
@@ -34,13 +34,13 @@ ul.messages li {
   {% endfor %}
   <p>
     {% if feedtype.items|length %}
-      <a href="{% url community-feed-list feedtype.slug %}">View more</a>
+      <a href="{% url 'community-feed-list' feedtype.slug %}">View more</a>
     {% endif %}
     {% if feedtype.items and feedtype.can_self_add %}
       or
     {% endif %}
     {% if feedtype.can_self_add %}
-      <a href="{% url community-add-feed feedtype.slug %}">Add your feed</a>
+      <a href="{% url 'community-add-feed' feedtype.slug %}">Add your feed</a>
     {% endif %}</p>
 </div>
 {% endfor %}

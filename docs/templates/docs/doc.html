@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block billboard %}
-  <h2><a href="{% url document-index lang=lang, version=version %}">Django documentation</a></h2>
+  <h2><a href="{% url 'document-index' lang=lang version=version %}">Django documentation</a></h2>
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,7 @@
       {% for v in versions %}
         {% if version != v %}
           <li class="other">
-            <a href="{% url document-detail lang=lang, version=v, url=docurl %}">{{ v }}</a></li>
+            <a href="{% url 'document-detail' lang=lang version=v url=docurl %}">{{ v }}</a></li>
         {% endif %}
       {% endfor %}
       <li class="current"
@@ -39,7 +39,7 @@
   <p>Having trouble? We'd like to help!</p>
   <ul>
     <li>
-      Try the <a href="{% url document-detail lang=lang, version=version, url="faq" %}">FAQ</a>
+      Try the <a href="{% url 'document-detail' lang=lang version=version url="faq" %}">FAQ</a>
       — it's got answers to many common questions.
     </li>
     <li>
@@ -87,9 +87,9 @@
         {% if doc.next %}
           <li>Next: <a href="{{ doc.next.link }}">{{ doc.next.title|safe }}</a></li>
         {% endif %}
-        <li><a href="{% url document-detail lang=lang, version=version, url="contents" %}">Table of contents</a></li>
+        <li><a href="{% url 'document-detail' lang=lang version=version url="contents" %}">Table of contents</a></li>
         {% for doc, title, accesskey, shorttitle in env.rellinks %}
-          <li><a href="{% url document-detail lang=lang, version=version, url=doc %}">{{ title }}</a></li>
+          <li><a href="{% url 'document-detail' lang=lang version=version url=doc %}">{{ title }}</a></li>
         {% endfor %}
       {% endblock %}
     </ul>
@@ -100,7 +100,7 @@
     <ul>
       {% block breadcrumbs %}
         <li>
-          <a href="{% url document-index lang=lang, version=version %}">Django {{ version }} documentation</a>
+          <a href="{% url 'document-index' lang=lang version=version %}">Django {{ version }} documentation</a>
           {% for p in doc.parents %}
             <ul><li><a href="{{ p.link }}">{{ p.title|safe }}</a>
           {% endfor %}

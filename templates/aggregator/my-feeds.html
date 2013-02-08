@@ -9,13 +9,13 @@
   {% for feed in feeds %}
     <li>
     {{ feed }} (<code>{{ feed.feed_url }}</code> — <strong>{{ feed.get_approval_status_display }}</strong>) —
-    <a href="{% url community-edit-feed feed.id %}">edit</a> |
-    <a href="{% url community-delete-feed feed.id %}">delete</a>
+    <a href="{% url 'community-edit-feed' feed.id %}">edit</a> |
+    <a href="{% url 'community-delete-feed' feed.id %}">delete</a>
     </li>
   {% endfor %}
   <li>Add a new feed:
     {% for t in feed_types %}
-      <a href="{% url community-add-feed t.slug %}">{{ t }}</a>
+      <a href="{% url 'community-add-feed' t.slug %}">{{ t }}</a>
       {% if not forloop.last %}|{% endif %}
     {% endfor %}
   </li>
