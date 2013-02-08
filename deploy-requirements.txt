@@ -4,7 +4,8 @@ akismet == 0.2.0
 Django >= 1.4, < 1.5
 django-haystack == 1.1.0
 django-push == 0.4
-django-registration == 0.7
+# django-registration doesn't have a release compatible with Django 1.5 yet
+-e hg+https://bitbucket.org/jscott1971/django-registration@b963cb9#egg=django-registration
 django-secure == 0.1.0
 docutils >= 0.6, < 0.7
 feedparser==5.1.1
