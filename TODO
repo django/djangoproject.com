@@ -1,9 +1,2 @@
 * allow users to "claim" legacy feeds (might do this by hand.)
-* finish cleanup of django_website and rename it to something
-  not starting with django_
-* sitemaps look outdated — /documentation/0_90/ really?
 * some apps don't have tests
-
-After upgrading to 1.5:
-* use the built-in wsgi auth handler for trac, remove tracdb.wsgiauth
-  https://docs.djangoproject.com/en/1.5/howto/deployment/wsgi/apache-auth/#authentication-with-mod-wsgi
