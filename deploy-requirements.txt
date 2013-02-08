@@ -3,24 +3,21 @@
 akismet == 0.2.0
 # Django 1.5 is coming soon.
 https://www.djangoproject.com/download/1.5c1/tarball/
-django-haystack == 1.1.0
+# django-contact-form doesn't have a release compatible with Django 1.2.
+http://bitbucket.org/ubernostrum/django-contact-form/get/tip.bz2
+django-haystack == 1.2.7
 django-push == 0.4
-# django-registration doesn't have a release compatible with Django 1.5 yet
+# django-registration doesn't have a release compatible with Django 1.5 yet.
 -e hg+https://bitbucket.org/jscott1971/django-registration@b963cb9#egg=django-registration
 django-secure == 0.1.2
-docutils >= 0.6, < 0.7
-feedparser==5.1.1
-Jinja2 >= 2.4, < 2.5
-psycopg2 >= 2.2, < 2.3
-python-memcached >= 1.45, < 2.0
-Sphinx == 1.0.3
-South >= 0.7, < 0.8
-Unipath >= 0.2, < 0.3
+docutils == 0.10
+feedparser == 5.1.3
+Jinja2 == 2.6
+psycopg2 == 2.4.6
+python-memcached == 1.48
 raven == 1.4.6
-
-# django-contact-form doens't have a release compatible with Django 1.2.
-http://bitbucket.org/ubernostrum/django-contact-form/get/tip.bz2
-
-# xapian-haystack has a bug in 1.1.5beta fixed in trunk. So this
-# can go back to a packaged release as soon as there's a newer release.
+South == 0.7.6
+Sphinx == 1.1.3
+Unipath == 0.2.1
+# xapian-haystack has a bug in 1.1.5beta fixed in trunk.
 -e git://github.com/notanumber/xapian-haystack.git@dc11c14542c0137831e5#egg=xapian-haystack
