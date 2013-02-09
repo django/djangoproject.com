@@ -25,7 +25,7 @@ def language(request, lang):
 
 def stable(request, lang, version, url):
     path = request.get_full_path()
-    version = DocumentRelease.objects.default_version()
+    default_version = DocumentRelease.objects.default_version()
     return redirect(path.replace(version, default_version, 1))
 
 def document(request, lang, version, url):
