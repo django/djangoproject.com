@@ -4,7 +4,7 @@ from unipath import FSPath as Path
 
 def get_doc_root(lang, version):
     return Path(settings.DOCS_BUILD_ROOT).child(lang, version, "_build", "json")
-    
+
 def get_doc_root_or_404(lang, version):
     docroot = get_doc_root(lang, version)
     if not docroot.exists():
@@ -12,7 +12,7 @@ def get_doc_root_or_404(lang, version):
     return docroot
 
 def get_doc_path(docroot, subpath):
-    # First look for <bits>/index.fpickle, then for <bits>.fpickle
+    # First look for <bits>/index.fjson, then for <bits>.fjson
     bits = subpath.strip('/').split('/') + ['index.fjson']
     doc = docroot.child(*bits)
     if doc.exists():
@@ -22,8 +22,8 @@ def get_doc_path(docroot, subpath):
     doc = docroot.child(*bits)
     if doc.exists():
         return doc
-        
-    return None    
+
+    return None
 
 def get_doc_path_or_404(docroot, subpath):
     doc = get_doc_path(docroot, subpath)
