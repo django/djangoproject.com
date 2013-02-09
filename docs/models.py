@@ -41,6 +41,9 @@ class DocumentRelease(models.Model):
 
     objects = DocumentReleaseManager()
 
+    class Meta:
+        unique_together = ('lang', 'version')
+
     def __unicode__(self):
         return "%s/%s" % (self.lang, self.version)
 
@@ -77,6 +80,9 @@ class Document(models.Model):
     release = models.ForeignKey(DocumentRelease, related_name='documents')
     path = models.CharField(max_length=500)
     title = models.CharField(max_length=500)
+
+    class Meta:
+        unique_together = ('release', 'path')
 
     def __unicode__(self):
         return "/".join([self.release.lang, self.release.version, self.path])
