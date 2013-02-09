@@ -8,6 +8,8 @@ from django_www.common_settings import *
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangodocs'
 
 INSTALLED_APPS = [
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
 
     'djangosecure',

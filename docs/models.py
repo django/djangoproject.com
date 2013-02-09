@@ -50,8 +50,11 @@ class DocumentRelease(models.Model):
         """
         Return a "human readable" version of the version.
         """
-        return "Development trunk" if self.version == 'dev' \
-                                   else "Django %s" % self.version
+        return "Development trunk" if self.is_dev else "Django %s" % self.version
+
+    @property
+    def is_dev(self):
+        return self.version == 'dev'
 
 class Document(models.Model):
     """
@@ -66,9 +69,16 @@ class Document(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        kwargs = {
-            'lang': self.release.lang,
-            'version': self.release.version,
-            'url': self.path
-        }
-        return ('document-detail', [], kwargs)
+        if self.path:
+            kwargs = {
+                'lang': self.release.lang,
+                'version': self.release.version,
+                'url': self.path,
+            }
+            return ('document-detail', [], kwargs)
+        else:
+            kwargs = {
+                'lang': self.release.lang,
+                'version': self.release.version,
+            }
+            return ('document-index', [], kwargs)
