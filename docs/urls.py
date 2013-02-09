@@ -19,6 +19,10 @@ urlpatterns = patterns('',
         views.language,
     ),
     url(
+        r'^(?P<lang>[a-z-]+)/stable/(?P<url>.*)$',
+        views.stable,
+    ),
+    url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/$',
         views.document,
         {'url': ''},
