@@ -19,7 +19,7 @@ urlpatterns = patterns('',
         views.language,
     ),
     url(
-        r'^(?P<lang>[a-z-]+)/stable/(?P<url>.*)$',
+        r'^(?P<lang>[a-z-]+)/(?P<version>stable)/(?P<url>.*)$',
         views.stable,
     ),
     url(
