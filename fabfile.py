@@ -68,6 +68,7 @@ def collectstatic():
     Run collectstatic.
     """
     managepy('collectstatic --noinput')
+    managepy('collectstatic --noinput', site='docs')
 
 def migrate():
     """
@@ -75,6 +76,8 @@ def migrate():
     """
     managepy('syncdb')
     managepy('migrate')
+    managepy('syncdb', site='docs')
+    managepy('migrate', site='docs')
 
 def update_docs():
     """
