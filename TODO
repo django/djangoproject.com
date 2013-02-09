@@ -1,3 +1,5 @@
 * allow users to "claim" legacy feeds (might do this by hand.)
 * investigate the status of django-contact-form
 * some apps don't have tests
+* allow update_docs to build only some versions, and build
+  old versions less often.
