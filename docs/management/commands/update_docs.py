@@ -8,6 +8,7 @@ import os
 import json
 import haystack
 import optparse
+import shutil
 import subprocess
 import zipfile
 import sphinx.cmdline
@@ -66,11 +67,11 @@ class Command(NoArgsCommand):
                 source_dir = destdir
 
             for builder in ('json', 'html'):
-                # Make the directory for the built files - sphinx-build doesn't
-                # do it for us, apparently.
+                # Wipe and re-create the build directory. See #18930.
                 build_dir = destdir.child('_build', builder)
-                if not build_dir.exists():
-                    build_dir.mkdir(parents=True)
+                if build_dir.exists():
+                    shutil.rmtree(build_dir)
+                build_dir.mkdir(parents=True)
 
                 # "Shell out" (not exactly, but basically) to sphinx-build.
                 if verbosity >= 2:
@@ -102,6 +103,15 @@ class Command(NoArgsCommand):
                     zf.write(f, html_build_dir.rel_path_to(f))
 
             #
+            # Copy the build results to the directory used for serving
+            # the documentation in the least disruptive way possible.
+            #
+            build_dir = destdir.child('_build')
+            built_dir = destdir.child('_built')
+            subprocess.check_call(['rsync', '--archive', '--delete',
+                    '--link-dest=' + build_dir, build_dir + '/', built_dir])
+
+            #
             # Rebuild the imported document list and search index.
             #
             if not kwargs['reindex']:
@@ -123,14 +133,14 @@ class Command(NoArgsCommand):
             # We have to be a bit careful to reverse-engineer the correct
             # relative path component, especially for "index" documents,
             # otherwise the search results will be incorrect.
-            json_build_dir = destdir.child('_build', 'json')
-            for built_doc in json_build_dir.walk():
+            json_built_dir = destdir.child('_built', 'json')
+            for built_doc in json_built_dir.walk():
                 if built_doc.isfile() and built_doc.ext == '.fjson':
 
                     # Convert the built_doc path which is now an absolute
-                    # path (i.e. "/home/docs/en/1.2/_build/ref/models.json")
+                    # path (i.e. "/home/docs/en/1.2/_built/ref/models.json")
                     # into a path component (i.e. "ref/models").
-                    path = json_build_dir.rel_path_to(built_doc)
+                    path = json_built_dir.rel_path_to(built_doc)
                     if path.stem == 'index':
                         path = path.parent
                     path = str(path.parent.child(path.stem))
