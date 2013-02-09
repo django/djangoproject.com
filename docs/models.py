@@ -1,10 +1,24 @@
-from django.db import models
 from django.conf import settings
 from django.core.cache import cache
+from django.db import models
 
 class DocumentReleaseManager(models.Manager):
     def default(self):
         return DocumentRelease.objects.get(is_default=True)
+
+    def default_version(self):
+        default_version = cache.get(DocumentRelease.DEFAULT_CACHE_KEY)
+        if not default_version:
+            try:
+                default_version = DocumentRelease.objects.default().version
+            except DocumentRelease.DoesNotExist:
+                default_version = 'dev'
+            cache.set(
+                DocumentRelease.DEFAULT_CACHE_KEY,
+                default_version,
+                settings.CACHE_MIDDLEWARE_SECONDS,
+            )
+        return default_version
 
 class DocumentRelease(models.Model):
     """

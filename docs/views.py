@@ -11,6 +11,7 @@ from django.utils import simplejson
 
 import haystack.views
 
+from .context_processors import recent_release
 from .forms import DocSearchForm
 from .models import DocumentRelease
 from .utils import get_doc_root_or_404, get_doc_path_or_404
@@ -22,6 +23,11 @@ def index(request):
 def language(request, lang):
     return redirect(DocumentRelease.objects.default())
 
+def stable(request, lang, version, url):
+    path = request.get_full_path()
+    version = DocumentRelease.objects.default_version()
+    return redirect(path.replace(version, default_version, 1))
+
 def document(request, lang, version, url):
     # If either of these can't be encoded as ascii then later on down the line an
     # exception will be emitted by unipath, proactively check for bad data (mostly
@@ -31,14 +37,16 @@ def document(request, lang, version, url):
         url.encode("ascii")
     except UnicodeEncodeError:
         raise Http404
+
+    docroot = get_doc_root_or_404(lang, version)
+    doc_path = get_doc_path_or_404(docroot, url)
+
     if version == 'dev':
         rtd_version = 'latest'
     elif version >= '1.5':
         rtd_version = version + '.x'
     else:
         rtd_version = version + '.X'
-    docroot = get_doc_root_or_404(lang, version)
-    doc_path = get_doc_path_or_404(docroot, url)
 
     template_names = [
         'docs/%s.html' % docroot.rel_path_to(doc_path).replace(doc_path.ext, ''),
