@@ -67,7 +67,7 @@ def collectstatic():
     """
     Run collectstatic.
     """
-    managepy('collectstatic')
+    managepy('collectstatic --noinput')
 
 def migrate():
     """
