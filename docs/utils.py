@@ -3,7 +3,7 @@ from django.http import Http404
 from unipath import FSPath as Path
 
 def get_doc_root(lang, version):
-    return Path(settings.DOCS_BUILD_ROOT).child(lang, version, "_build", "json")
+    return Path(settings.DOCS_BUILD_ROOT).child(lang, version, "_built", "json")
 
 def get_doc_root_or_404(lang, version):
     docroot = get_doc_root(lang, version)
