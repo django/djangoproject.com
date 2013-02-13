@@ -5,8 +5,7 @@ import datetime
 import django.views.static
 from django.core import urlresolvers
 from django.http import Http404
-from django.shortcuts import get_object_or_404, redirect, render_to_response
-
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.utils import simplejson
 
@@ -14,7 +13,7 @@ import haystack.views
 
 from .context_processors import recent_release
 from .forms import DocSearchForm
-from .models import DocumentRelease, Document
+from .models import DocumentRelease
 from .utils import get_doc_root_or_404, get_doc_path_or_404
 
 
@@ -39,8 +38,6 @@ def document(request, lang, version, url):
     except UnicodeEncodeError:
         raise Http404
 
-    get_object_or_404(Document,
-        release__lang=lang, release__version=version, path=url)
     docroot = get_doc_root_or_404(lang, version)
     doc_path = get_doc_path_or_404(docroot, url)
 
