@@ -46,7 +46,7 @@ SITE_ID = 2
 if PRODUCTION:
     DOCS_BUILD_ROOT = BASE.parent.child('docbuilds')
 else:
-    DOCS_BUILD_ROOT = '/tmp/djangodocs'
+    DOCS_BUILD_ROOT = BASE.child('djangodocs')
 
 
 ### Haystack settings
@@ -58,7 +58,7 @@ if PRODUCTION:
     HAYSTACK_XAPIAN_PATH = BASE.parent.child('djangodocs.index')
 else:
     HAYSTACK_SEARCH_ENGINE = 'whoosh'
-    HAYSTACK_WHOOSH_PATH = '/tmp/djangodocs.index'
+    HAYSTACK_WHOOSH_PATH = BASE.child('djangodocs.index')
 
 
 ### South settings
