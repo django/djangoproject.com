@@ -7,6 +7,7 @@ ul.messages li {
   font-weight: 600;
   list-style: none;
   padding: 20px 0;
+}
 </style>
 {% endblock %}
 
@@ -22,21 +23,21 @@ ul.messages li {
 </ul>
 {% endif %}
 
-{% for feedtype in feedtype_list %}
+{% for feedtype, latest_feeds in feedtype_list %}
 <div id="{{ feedtype.slug }}" class="module {% cycle "first" "last" %}">
   <h3 class="header">
     {{ feedtype.name }}
     <a class="rss" href="{% url 'aggregator-feed' slug=feedtype.slug %}">RSS</a>
   </h3>
-  {% for item in feedtype.items|slice:":5" %}
+  {% for item in latest_feeds %}
     <h5><a href="{{ item.link }}">{{ item.title }}</a></h5>
     <p class="date">{{ item.date_modified|date:"N jS, Y \a\t P" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a></p>
   {% endfor %}
   <p>
-    {% if feedtype.items|length %}
+    {% if latest_feeds %}
       <a href="{% url 'community-feed-list' feedtype.slug %}">View more</a>
     {% endif %}
-    {% if feedtype.items and feedtype.can_self_add %}
+    {% if latest_feeds and feedtype.can_self_add %}
       or
     {% endif %}
     {% if feedtype.can_self_add %}
