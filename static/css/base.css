@@ -543,12 +543,14 @@ table.docutils td p {
     background:transparent !important;
 }
 div.versionadded,
-div.versionchanged {
+div.versionchanged,
+div.deprecated {
     font-size: 92%;
     color:#555;
 }
 div.versionadded span.title,
-div.versionchanged span.title {
+div.versionchanged span.title,
+div.deprecated span.title {
     font-style: italic;
 }
 /* Verdana bold is too bold; lighten it to compensate */
