@@ -441,7 +441,7 @@ textarea.codedump {
     font-weight:bold;
     margin-top:0 !important;
     margin-bottom:0 !important;
-	color:#487858;
+    color:#487858;
 }
 .admonition .last {
     margin-bottom:0 !important;
@@ -457,6 +457,10 @@ div.admonition-philosophy {
 div.admonition-behind-the-scenes {
     padding-left:65px;
     background:url(../img/doc/icons/docicons-behindscenes.gif) .8em .8em no-repeat;
+}
+div.admonition.warning {
+    background:url(../img/doc/icons/docicons-warning.png) .8em .8em no-repeat;
+    border:1px solid #ffc83c;
 }
 
 /* DOCS */
