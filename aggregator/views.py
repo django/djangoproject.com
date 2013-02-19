@@ -20,7 +20,10 @@ def index(request):
     """
     Displays the latest feeds of each type.
     """
-    ctx = {'feedtype_list': FeedType.objects.all()}
+    feeds = []
+    for ft in FeedType.objects.all():
+        feeds.append((ft, ft.items()[0:5]))
+    ctx = {'feedtype_list': feeds}
     return render(request, 'aggregator/index.html', ctx)
 
 class FeedListView(ListView):
