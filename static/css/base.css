@@ -400,6 +400,9 @@ a.rss:hover, a.rss:link, a.rss:visited {
 .literal {
     white-space:nowrap;
 }
+dt > tt.literal {
+    white-space: normal;
+}
 .literal, .literal-block {
     color:#234f32;
 }
