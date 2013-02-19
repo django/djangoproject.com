@@ -8,6 +8,14 @@ from django.views.generic.list import ListView
 from .models import FeedItem, Feed, FeedType, APPROVED_FEED
 from .forms import FeedModelForm
 
+# The regex used for strip_tags in 1.5rc is somewhat broken on larger strings
+# (see https://github.com/django/django/commit/20ac33) which can break the feed
+# list view (via the |striptags filter). Monkeypatching until 1.5rc2 ships, at
+# which point this grossness can be removed.
+import re
+from django.utils import html
+html.strip_tags_re = re.compile(r'<[^>]*?>', re.IGNORECASE)
+
 def index(request):
     """
     Displays the latest feeds of each type.
