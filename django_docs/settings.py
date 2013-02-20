@@ -5,6 +5,8 @@ from django_www.common_settings import *
 
 ### Django settings
 
+ALLOWED_HOSTS = ['docs.djangoproject.com']
+
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangodocs'
 
 INSTALLED_APPS = [
