@@ -8,6 +8,7 @@ from django_www.common_settings import *
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangodocs'
 
 INSTALLED_APPS = [
+    'django.contrib.redirects',
     'django.contrib.sitemaps',
     'django.contrib.sites',
     'django.contrib.staticfiles',
@@ -23,6 +24,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.cache.UpdateCacheMiddleware',
     'djangosecure.middleware.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware'
 ]
 
