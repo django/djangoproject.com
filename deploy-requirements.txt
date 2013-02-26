@@ -1,8 +1,7 @@
 # Requirements to deploy this code.
 
 akismet == 0.2.0
-# Django 1.5 is coming soon.
-https://www.djangoproject.com/download/1.5c2/tarball/
+Django == 1.5
 # django-contact-form doesn't have a release compatible with Django 1.2.
 http://bitbucket.org/ubernostrum/django-contact-form/get/tip.bz2
 django-haystack == 1.2.7
