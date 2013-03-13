@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'blog',
     'cla',
     'contact',
+    'docs',             # provides the DocumentRelease model used in the tests
     'legacy',
+    'releases',
     'svntogit',
     'tracdb',
 ]
