@@ -11,7 +11,6 @@ from django.utils import simplejson
 
 import haystack.views
 
-from .context_processors import recent_release
 from .forms import DocSearchForm
 from .models import DocumentRelease
 from .utils import get_doc_root_or_404, get_doc_path_or_404
@@ -25,8 +24,8 @@ def language(request, lang):
 
 def stable(request, lang, version, url):
     path = request.get_full_path()
-    default_version = DocumentRelease.objects.default_version()
-    return redirect(path.replace(version, default_version, 1))
+    current_version = DocumentRelease.objects.current_version()
+    return redirect(path.replace(version, current_version, 1))
 
 def document(request, lang, version, url):
     # If either of these can't be encoded as ascii then later on down the line an

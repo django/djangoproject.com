@@ -5,12 +5,37 @@ from distutils.version import LooseVersion
 
 from django.db import models
 from django.conf import settings
+from django.core.cache import cache
 from django.utils.functional import cached_property
 from django.utils.version import get_version
 
 
+class ReleaseManager(models.Manager):
+
+    def final(self):
+        return self.filter(status='f', major=1)
+
+    def current(self):
+        return self.final().order_by('-minor', '-micro')[0]
+
+    def current_version(self):
+        current_version = cache.get(Release.DEFAULT_CACHE_KEY)
+        if not current_version:
+            try:
+                current_version = self.current().version
+            except Release.DoesNotExist:
+                current_version = ''
+            cache.set(
+                Release.DEFAULT_CACHE_KEY,
+                current_version,
+                settings.CACHE_MIDDLEWARE_SECONDS,
+            )
+        return current_version
+
+
 class Release(models.Model):
 
+    DEFAULT_CACHE_KEY = "%s_django_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
     STATUS_CHOICES = (
         ('a', 'alpha'),
         ('b', 'beta'),
@@ -28,9 +53,12 @@ class Release(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, editable=False)
     iteration = models.PositiveSmallIntegerField(editable=False)
 
+    objects = ReleaseManager()
+
     def save(self, *args, **kwargs):
         self.major, self.minor, self.micro, status, self.iteration = self.version_tuple
         self.status = self.STATUS_REVERSE[status]
+        cache.delete(self.DEFAULT_CACHE_KEY)
         super(Release, self).save(*args, **kwargs)
 
     def __unicode__(self):

@@ -36,7 +36,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'django.core.context_processors.i18n',
     'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
-    'docs.context_processors.recent_release',
+    'docs.context_processors.docs_version',
     'django.core.context_processors.request',
 ]
 
