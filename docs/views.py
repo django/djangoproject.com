@@ -17,10 +17,10 @@ from .utils import get_doc_root_or_404, get_doc_path_or_404
 
 
 def index(request):
-    return redirect(DocumentRelease.objects.default())
+    return redirect(DocumentRelease.objects.current())
 
 def language(request, lang):
-    return redirect(DocumentRelease.objects.default())
+    return redirect(DocumentRelease.objects.current())
 
 def stable(request, lang, version, url):
     path = request.get_full_path()
@@ -101,7 +101,7 @@ class DocSearchView(haystack.views.SearchView):
 
     def extra_context(self):
         # Constuct a context that matches the rest of the doc page views.
-        default_release = DocumentRelease.objects.default()
+        default_release = DocumentRelease.objects.current()
         return {
             'lang': default_release.lang,
             'version': default_release.version,
