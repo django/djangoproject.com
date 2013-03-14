@@ -12,8 +12,11 @@ from django.utils.version import get_version
 
 class ReleaseManager(models.Manager):
 
+    def preview(self):
+        return self.filter(major=1).exclude(status='f')
+
     def final(self):
-        return self.filter(status='f', major=1)
+        return self.filter(major=1, status='f')
 
     def current(self):
         return self.final().order_by('-minor', '-micro')[0]
