@@ -1,5 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
+import datetime
 from distutils.version import LooseVersion
 
 from django.db import models
@@ -9,8 +10,28 @@ from django.utils.version import get_version
 
 
 class Release(models.Model):
+
+    STATUS_CHOICES = (
+        ('a', 'alpha'),
+        ('b', 'beta'),
+        ('c', 'rc'),
+        ('f', 'final'),
+    )
+    STATUS_REVERSE = dict((word, letter) for (letter, word) in STATUS_CHOICES)
+
     version = models.CharField(max_length=16, primary_key=True)
-    date = models.DateField(null=True)          # nullable until we have a date for every release
+    date = models.DateField(default=datetime.date.today)
+
+    major = models.PositiveSmallIntegerField(editable=False)
+    minor = models.PositiveSmallIntegerField(editable=False)
+    micro = models.PositiveSmallIntegerField(editable=False)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, editable=False)
+    iteration = models.PositiveSmallIntegerField(editable=False)
+
+    def save(self, *args, **kwargs):
+        self.major, self.minor, self.micro, status, self.iteration = self.version_tuple
+        self.status = self.STATUS_REVERSE[status]
+        super(Release, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.version
@@ -25,8 +46,8 @@ class Release(models.Model):
         if not isinstance(version[2], int):
             version.insert(2, 0)
         if len(version) == 3:
-            version.append('alpha')
-        if version[3] not in ('alpha', 'beta', 'rc'):
+            version.append('final')
+        if version[3] not in ('alpha', 'beta', 'rc', 'final'):
             version[3] = {'a': 'alpha', 'b': 'beta', 'c': 'rc'}[version[3]]
         if len(version) == 4:
             version.append(0)
@@ -41,10 +62,11 @@ class Release(models.Model):
             '0.96.1': '0.96.2',
         }.get(self.version)
         # Early 1.x.y releases had a different directory tree.
-        if self.version_tuple[:3] in [(1, 0, 1), (1, 0, 2), (1, 0, 3), (1, 0, 4), (1, 1, 1)]:
-            number = '%d.%d.%d' % self.version_tuple[:3]
+        has_subdir = (1, 0, 1), (1, 0, 2), (1, 0, 3), (1, 0, 4), (1, 1, 1)
+        if self.version_tuple[:3] in has_subdir:
+            directory = '%d.%d.%d' % self.version_tuple[:3]
         else:
-            number = '%d.%d' % self.version_tuple[:2]
+            directory = '%d.%d' % self.version_tuple[:2]
         # Django gained PEP 386 numbering in 1.4b1.
         if self.version_tuple >= (1, 4, 0, 'beta', 0):
             actual_version = get_version(self.version_tuple)
@@ -63,7 +85,7 @@ class Release(models.Model):
             if superseded_by:
                 pattern = '/download/%(superseded_by)s/tarball/'
             else:
-                pattern = '%(media)sreleases/%(number)s/Django-%(version)s.tar.gz'
+                pattern = '%(media)sreleases/%(directory)s/Django-%(version)s.tar.gz'
 
         elif kind == 'checksum':
             if self.version_tuple[:3] >= (1, 0, 4):
@@ -79,7 +101,7 @@ class Release(models.Model):
 
         return pattern % {
             'media': settings.MEDIA_URL,
-            'number': number,
+            'directory': directory,
             'version': actual_version,
             'superseded_by': superseded_by,
             'major': self.version_tuple[0],
