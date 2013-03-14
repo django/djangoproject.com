@@ -1,9 +1,43 @@
-{% extends "base_download.html" %}
+{% extends "base_2col.html" %}
+
+{% block sectionid %}download{% endblock %}
+
+{% block title %}Download{% endblock %}
+
+{% block billboard %}<h2>Download</h2>{% endblock %}
 
 {% block content %}
-<h1>{{ flatpage.title }}</h1>
+<h1>How to get Django</h1>
 
-{{ flatpage.content }}
+<p>Django is available open-source under the <a href="https://github.com/django/django/blob/master/LICENSE">BSD license</a>. It requires Python version 2.6.5 or higher, but it has no dependencies on other Python libraries. There are several ways you can get it:</p>
+
+<h2>Option 1. Get the latest official version</h2>
+
+<p>The latest official version is 1.5. You can get it by direct download:
+
+<p>First, download <a href="https://www.djangoproject.com/download/1.5/tarball/">Django-1.5.tar.gz</a> (<a href="https://www.djangoproject.com/download/1.5/checksum/">checksums</a>). Then:</p>
+
+<pre class="literal-block"><code>tar xzvf Django-1.5.tar.gz
+cd Django-1.5
+sudo python setup.py install</code></pre>
+
+<p>You can also use <a href="http://www.pip-installer.org/en/latest/">pip</a>:
+
+<pre class="literal-block"><code>pip install Django==1.5</code></pre>
+
+<h2>Option 2. Get the latest development version</h2>
+
+<p>The latest and greatest Django version is the one that's in our Git repository (our revision-control system). Get it using this shell command, which requires <a href="http://git-scm.com/">Git</a>:</p>
+
+<p class="literal-block"><code>git clone https://github.com/django/django.git</code></p>
+
+<p>You can also download <a href="https://github.com/django/django/zipball/master">a zipped archive</a> of the development version.</p>
+
+<h2>After you get it</h2>
+
+<p>See the <a href="https://docs.djangoproject.com/en/stable/intro/install/">installation guide</a> for further instructions. Make sure you read the documentation that corresponds to the version of Django you've just installed.</p>
+
+<p>And be sure to sign up for the <a href="/r/django-users/">django-users mailing list</a>, where other Django users and the Django developers themselves all hang out to help each other.</p>
 {% endblock %}
 
 {% block content-related %}
