@@ -16,7 +16,7 @@ class ReleaseAdmin(admin.ModelAdmin):
 
     # Hack -- disable logging because it crashes on the non-integer pk
     def log_addition(self, request, object): pass
-    def log_change(self, request, object): pass
-    def log_deletion(self, request, object): pass
+    def log_change(self, request, object, message): pass
+    def log_deletion(self, request, object, object_repr): pass
 
 admin.site.register(Release, ReleaseAdmin)
