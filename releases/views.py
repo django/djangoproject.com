@@ -14,10 +14,28 @@ def index(request):
     releases = [releases[minor] for minor in sorted(releases)]
     current = releases.pop()
     previous = releases.pop()
+    # Handle preview releases
+    try:
+        preview = (Release.objects.preview()
+                .filter(minor__gt=current.minor)
+                .order_by('-minor', '-micro', '-status', '-iteration'))[0]
+    except Release.DoesNotExist:
+        preview_version = None
+        preview_kind = None
+    else:
+        preview_version = preview.version
+        preview_kind = {
+            'a': 'alpha',
+            'b': 'beta',
+            'c': 'release candidate',
+        }[preview.status]
+
     context = {
         'current_version': current.version,
         'previous_version': previous.version,
         'earlier_versions': [release.version for release in reversed(releases)],
+        'preview_version': preview_version,
+        'preview_kind': preview_kind,
     }
     return render(request, 'releases/download.html', context)
 

@@ -11,7 +11,7 @@
 
 <p>Django is available open-source under the <a href="https://github.com/django/django/blob/master/LICENSE">BSD license</a>. It requires Python version 2.6.5 or higher, but it has no dependencies on other Python libraries. There are several ways you can get it:</p>
 
-<h2>Option 1. Get the latest official version</h2>
+<h2>Option {% cycle '1' '2' '3' as options %}. Get the latest official version</h2>
 
 <p>The latest official version is {{ current_version }}. You can get it by direct download:
 
@@ -25,7 +25,23 @@ sudo python setup.py install</code></pre>
 
 <pre class="literal-block"><code>pip install Django=={{ current_version }}</code></pre>
 
-<h2>Option 2. Get the latest development version</h2>
+{% if preview_version %}
+<h2>Option {% cycle options %}. Get the {{ preview_kind }} for {{ preview_version|slice:":3" }}</h2>
+
+<p>As part of the Django {{ preview_version|slice:":3" }} development process, Django {{ preview_version }} is available. This release is only for experienced users who want to try out the new version and help identify any remaining bugs prior to the {{ preview_version|slice:":3" }} release. Please read the {{ preview_version|slice:":3" }} release notes before using this package.
+
+<p>To try out the {{ preview_kind }}, download <a href="{% url 'download-redirect' preview_version 'tarball' %}">Django-{{ preview_version }}.tar.gz</a> (<a href="{% url 'download-redirect' preview_version 'checksum' %}">checksums</a>). Then:</p>
+
+<pre class="literal-block"><code>tar xzvf Django-{{ preview_version }}.tar.gz
+cd Django-{{ preview_version }}
+sudo python setup.py install</code></pre>
+
+<p>You can also use <a href="http://www.pip-installer.org/en/latest/">pip</a>:
+
+<pre class="literal-block"><code>pip install Django=={{ preview_version }}</code></pre>
+{% endif %}
+
+<h2>Option {% cycle options %}. Get the latest development version</h2>
 
 <p>The latest and greatest Django version is the one that's in our Git repository (our revision-control system). Get it using this shell command, which requires <a href="http://git-scm.com/">Git</a>:</p>
 
