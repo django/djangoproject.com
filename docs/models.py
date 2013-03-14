@@ -2,29 +2,32 @@ from django.conf import settings
 from django.core.cache import cache
 from django.db import models
 
-class DocumentReleaseManager(models.Manager):
-    def default(self):
-        return DocumentRelease.objects.get(is_default=True)
 
-    def default_version(self):
-        default_version = cache.get(DocumentRelease.DEFAULT_CACHE_KEY)
-        if not default_version:
+class DocumentReleaseManager(models.Manager):
+
+    def current(self):
+        return self.get(is_default=True)
+
+    def current_version(self):
+        current_version = cache.get(DocumentRelease.DEFAULT_CACHE_KEY)
+        if not current_version:
             try:
-                default_version = DocumentRelease.objects.default().version
+                current_version = self.current().version
             except DocumentRelease.DoesNotExist:
-                default_version = 'dev'
+                current_version = 'dev'
             cache.set(
                 DocumentRelease.DEFAULT_CACHE_KEY,
-                default_version,
+                current_version,
                 settings.CACHE_MIDDLEWARE_SECONDS,
             )
-        return default_version
+        return current_version
+
 
 class DocumentRelease(models.Model):
     """
     A "release" of documentation -- i.e. English for v1.2.
     """
-    DEFAULT_CACHE_KEY = "%s_recent_release" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
+    DEFAULT_CACHE_KEY = "%s_docs_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
     SVN = 'svn'
     GIT = 'git'
     SCM_CHOICES = (
@@ -72,6 +75,7 @@ class DocumentRelease(models.Model):
     @property
     def is_dev(self):
         return self.version == 'dev'
+
 
 class Document(models.Model):
     """

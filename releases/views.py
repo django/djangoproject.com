@@ -9,7 +9,7 @@ from .models import Release
 def index(request):
     # Build a dictionary of x => latest 1.x.y release
     releases = {}
-    for release in Release.objects.filter(status='f', major=1).order_by('minor', 'micro'):
+    for release in Release.objects.final().order_by('minor', 'micro'):
         releases[release.minor] = release
     releases = [releases[minor] for minor in sorted(releases)]
     current = releases.pop()
