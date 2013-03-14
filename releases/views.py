@@ -19,7 +19,7 @@ def index(request):
         preview = (Release.objects.preview()
                 .filter(minor__gt=current.minor)
                 .order_by('-minor', '-micro', '-status', '-iteration'))[0]
-    except Release.DoesNotExist:
+    except IndexError:
         preview_version = None
         preview_kind = None
     else:
