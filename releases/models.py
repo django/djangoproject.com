@@ -10,6 +10,10 @@ from django.utils.version import get_version
 
 class Release(models.Model):
     version = models.CharField(max_length=16, primary_key=True)
+    date = models.DateField(null=True)          # nullable until we have a date for every release
+
+    def __unicode__(self):
+        return self.version
 
     @cached_property
     def version_tuple(self):
