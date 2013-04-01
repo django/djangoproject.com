@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('accounts.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^community/', include('aggregator.urls')),
+    url(r'^conduct/$', TemplateView.as_view(template_name='code_of_conduct.html'), name='code_of_conduct'),
     url(r'^contact/', include('contact.urls')),
     url(r'^r/', include('django.conf.urls.shortcut')),
 
