@@ -5,12 +5,20 @@
   <style type="text/css">
     h2 a, h3 a { display: none; }
     h2:hover a, h3:hover a { display: inline; }
+    p.message {
+      background-color: #ffe761;
+      padding: 8px;
+    }
   </style>
 {% endblock extrahead %}
 
 {% block content %}
 
 <h1>Django Code of Conduct - DRAFT</h1>
+
+{% for message in messages %}
+  <p class="message">{{ message }}</p>
+{% endfor %}
 
 <h2 class="deck">
 You're looking at a draft Code of Conduct proposed for adoption by the
