@@ -22,11 +22,11 @@ class ReleaseManager(models.Manager):
         return self.final().order_by('-minor', '-micro')[0]
 
     def current_version(self):
-        current_version = cache.get(Release.DEFAULT_CACHE_KEY)
-        if not current_version:
+        current_version = cache.get(Release.DEFAULT_CACHE_KEY, None)
+        if current_version is None:
             try:
                 current_version = self.current().version
-            except Release.DoesNotExist:
+            except (Release.DoesNotExist, IndexError):
                 current_version = ''
             cache.set(
                 Release.DEFAULT_CACHE_KEY,
