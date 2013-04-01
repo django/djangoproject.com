@@ -16,7 +16,7 @@ class FoundationContactForm(BaseContactForm):
     recipient_list = ["dsf-board@googlegroups.com"]
 
 class CoCFeedbackForm(BaseContactForm):
-    recipient_list = ['alex+django-coc@djangoproject.com',
+    recipient_list = ['alex@djangoproject.com',
                       'jacob+django-coc@jacobian.org']
 
     def __init__(self, *args, **kwargs):
