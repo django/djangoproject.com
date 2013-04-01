@@ -14,3 +14,19 @@ class BaseContactForm(AkismetContactForm):
 
 class FoundationContactForm(BaseContactForm):
     recipient_list = ["dsf-board@googlegroups.com"]
+
+class CoCFeedbackForm(BaseContactForm):
+    recipient_list = ['alex+django-coc@djangoproject.com',
+                      'jacob+django-coc@jacobian.org']
+
+    def __init__(self, *args, **kwargs):
+        super(BaseContactForm, self).__init__(*args, **kwargs)
+        del self.fields['message_subject']
+        self.fields['name'].required = False
+        self.fields['email'].required = False
+
+    def subject(self):
+        return "Django Code of Conduct feedback"
+
+    def message(self):
+        return "From: {name} <{email}>\n\n{body}".format(**self.cleaned_data)

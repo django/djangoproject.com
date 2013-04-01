@@ -1,0 +1,203 @@
+{% extends "base_3col.html" %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <style type="text/css">
+    h2 a, h3 a { display: none; }
+    h2:hover a, h3:hover a { display: inline; }
+  </style>
+{% endblock extrahead %}
+
+{% block content %}
+
+<h1>Django Code of Conduct - DRAFT</h1>
+
+<h2 class="deck">
+You're looking at a draft Code of Conduct proposed for adoption by the
+Django core team and the Django Software Foundation. Think of this as a
+"beta" release: we've written it, and we like it, but we want community
+feedback before we "check it in" (that is, adopt it formally).
+So please check out the draft text, read the FAQ below, and let us know
+what you think using the feedback form at the bottom of the page.
+</h2>
+
+<p>Like the technical community as a whole, the Django team and community is made up
+of a mixture of professionals and volunteers from all over the world, working on
+every aspect of the mission - including mentorship, teaching and connecting
+people.</p>
+
+<p>Diversity is one of our huge strengths, but it can also lead to communication
+issues and unhappiness. To that end, we have a few ground rules that we ask
+people to adhere to when they’re participating within this community and
+project. These rules apply equally to founders, mentors and those seeking help
+and guidance.</p>
+
+<p>This isn’t an exhaustive list of things that you can’t do. Rather, take it in
+the spirit in which it’s intended - a guide to make it easier to enrich all of
+us and the technical communities in which we participate.</p>
+
+<p>This code of conduct applies to all spaces managed by the Django project or
+Django Software Foundation. This includes IRC, the mailing lists, the issue
+tracker, DSF events, and any other forums created by the project team
+which the community uses for communication.</p>
+
+<ul>
+  <li><strong>Be welcoming, friendly, and patient.</strong></li>
+
+  <li><strong>Be considerate.</strong> Your work will be used by other people, and you in turn will
+  depend on the work of others. Any decision you take will affect users and
+  colleagues, and you should take those consequences into account when making
+  decisions. Remember that we're a world-wide community, so you might not be
+  communicating in someone else's primary language.</li>
+
+  <li><strong>Be respectful.</strong> Not all of us will agree all the time, but disagreement is no
+  excuse for poor behavior and poor manners. We might all experience some
+  frustration now and then, but we cannot allow that frustration to turn into a
+  personal attack. It’s important to remember that a community where people feel
+  uncomfortable or threatened is not a productive one. Members of the Django
+  community should be respectful when dealing with other members as well as with
+  people outside the Django community.</li>
+
+  <li><strong>Be careful in the words that you choose.</strong> We are a community of professionals,
+  and we conduct ourselves professionally. Be kind to others. Do not insult or
+  put down other participants. Sexist, racist, and other discriminatory jokes
+  are not welcome, nor is harassment or other exclusionary behavior.</li>
+
+  <li><strong>When we disagree, try to understand why.</strong> Disagreements, both social and
+  technical, happen all the time and Django is no exception. It is important that
+  we resolve disagreements and differing views constructively. Remember that we’re
+  different. The strength of Django comes from its varied community, people from a
+  wide range of backgrounds. Different people have different perspectives on
+  issues. Being unable to understand why someone holds a viewpoint doesn’t mean
+  that they’re wrong. Don’t forget that it is human to err and blaming each other
+  doesn’t get us anywhere, rather offer to help resolving issues and to help learn
+  from mistakes.</li>
+</ul>
+
+<p>Original text courtesy of the <a href="http://speakup.io/coc.html">Speak Up! project</a>.</p>
+
+<h2 id="faq">FAQ <a href="#faq">¶</a></h2>
+
+<p>Again, we'd love feedback. But before we get to that, please read the FAQ below;
+we've tried to anticipate some of the common question and answer 'em quickly so
+that you don't have to wait for us to get back to you:</p>
+
+<h3 id="why-adopt">Why are you adopting a Code of Conduct? <a href="#why-adopt">¶</a></h3>
+
+    <p>We think the Django community is awesome. If you're familiar with the Django
+    community, you'll probably notice that the text above basically matches what
+    we already do. Think of this as documentation: we're taking implicit
+    expectations about behavior and making them explicit.</p>
+
+    <p>We're doing this because the Django community is growing faster than any of
+    us could have anticipated. This is on balance a very positive thing, but
+    as we've grown past the point where it's possible to know the whole community
+    we think it's very important to be clear about our values.</p>
+
+    <p>We know that the Django community is open, friendly, and welcoming. We want to
+    make sure everyone else knows it too.</p>
+
+<h3 id="what-does-it-mean">What does it mean to "adopt" a Code of Conduct? <a href="#what-does-it-mean">¶</a></h3>
+
+    <p>For the most part, we don't think it means large changes. We think that the text
+    does a really good job describing the way the Django community already conducts
+    itself. We expect that most people will simple continue to behave in the
+    awesome way they have for years.</p>
+
+    <p>However, we do expect that people will abide by the spirit and words of the CoC
+    when in "official" Django spaces. We're proposing that this code — or rather,
+    the final draft of it — be adopted simultaneously by the Django core team and by
+    the Django Software Foundation. So that means that it'll apply both in community
+    spaces *and* at DSF events.</p>
+
+    <p>In practice, this means mailing lists (django-users, django-developers, etc.),
+    the various Django IRC channels (<tt>#django</tt>, <tt>#django-dev</tt>, etc.), bug
+    tracking and code review tools, and "official" Django events such as sprints.</p>
+
+<h3 id="dsf-events">What about events funded by the Django Software Foundation? <a href="#dsf-events">¶</a></h3>
+
+    <p>This Code of Conduct also covers any events that the DSF funds. However, events
+    funded by the DSF already
+    <a href="https://www.djangoproject.com/foundation/code-of-conduct">require a code of conduct</a>
+    isn't this redundant?</p>
+
+    <p>No: there's a difference between the two, and they're complimentary.</p>
+
+    <p>This Code of Conduct is all about how we interact as a community. It's about
+    saying that the Django community will be open, friendly and welcoming.
+    The core issue is about ensuring the conversations we have are productive
+    and inviting for all.</p>
+
+    <p>Real-life events, however, require a bit more care. The DSF wants to be sure
+    that any events it funds have policies and procedures in place for handling
+    harassment. It's especially important to us that real-life events take steps to
+    protect the physical and mental security of their participants.</p>
+
+    <p>So the DSF will require that any events it funds have some sort of anti-
+    harassment policy in place. The DSF thinks the
+    <a href="http://geekfeminism.wikia.com/wiki/Conference_anti-harassment/Policy">Ada Initiative's template</a>
+    is pretty good, but we're open to alternatives.</p>
+
+<h3 id="violations">What happens if someone violates the Code of Conduct? <a href="#violations">¶</a></h3>
+
+    <p>Our intent is that the anyone in the community can stand up for this code,
+    and direct people who're unaware to this document. If that doesn't work,
+    or if you need more help, we have several channels you can use:</p>
+
+    <ul>
+    <li>You can contact the DSF at <i>foundation@djangoproject.com</i>. This is our
+    preferred contact mechanism; it'll help us respond as quick as possible
+    and get your issue resolved smoothly.</li>
+
+    <li>At in-person events, you should contact event staff. They'll be there to help
+    physically, and can get Django people involved if needed.</li>
+
+    <li>On IRC, all Django core developers are "voiced"; you can contact any of them
+    (publicly or privately).</li>
+    </ul>
+
+    <p>What happens next depends  on the context and the specific action. If someone
+    points out a (potential) violation to us we'll look into it, speak to everyone
+    involved, and take action if we need to. This action could range from a simple
+    "hey, not cool" to bans from channels/lists and/or in-person events, if
+    necessary. We hope it won't be; we expect that the act of publishing a CoC will
+    help prevent over- the-line behavior in the first place.</p>
+
+<h3 id="why-do-we-need">Why do we need a Code of Conduct? Everyone knows not to be a jerk. <a href="#why-do-we-need">¶</a></h3>
+
+    <p>Sadly, not everyone knows this.</p>
+
+    <p>However, even if everyone was kind, everyone was compassionate, and everyone was
+    familiar with codes of conduct it would still be incumbent upon our community to
+    publish our own. Maintaining a code of conduct forces us to consider and
+    articulate what kind of community we want to be, and serves as a constant
+    reminder to put our best foot forward. But most importantly, it serves as a
+    signpost to people looking to join our community that we feel these values are
+    important.</p>
+
+<h3 id="free-speech">This is censorship! I have the right to say whatever I want! <a href="#free-speech">¶</a></h3>
+
+    <p>You do -- in <em>your</em> space. If you'd like to hang out in <em>our</em> spaces (as
+    clarified above), we have some simple guidelines to follow. If you want to, for
+    example, form a group where Django is discussed using language inappropriate for
+    general channels then nobody's stopping you. We respect your right to establish
+    whatever codes of conduct you want in the spaces that belong to you. Please
+    honor this Code of Conduct in our spaces.</p>
+
+<h2 id="feedback">Feedback <a href="#feedback">¶</a></h2>
+<p>
+As we said above, this is a rough draft. We want to know what you think before
+we adopt this. Let us know about your questions, comments, concerns, or
+criticism. We'll try to address all the feedback we get via email, or an
+edit to the draft, or both.
+</p>
+
+<p>Thank you!</p>
+<p>
+— Jacob Kaplan-Moss, for the Django Core Team.<br>
+— Alex Gaynor, for the Django Software Foundation.
+</p>
+
+<div>{% include "contact/coc_form.html" %}</div>
+
+{% endblock %}
