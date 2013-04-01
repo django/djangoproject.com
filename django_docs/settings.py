@@ -85,7 +85,7 @@ if DEBUG:
             'debug_toolbar.middleware.DebugToolbarMiddleware')
 
 # Log errors to Sentry instead of email, if available.
-if 'sentry_dsn' in SECRETS:
+if 'sentry_dsn' in SECRETS and not DEBUG:
     INSTALLED_APPS.append('raven.contrib.django')
     SENTRY_DSN = SECRETS['sentry_dsn']
     LOGGING["loggers"]["django.request"]["handlers"].remove("mail_admins")
