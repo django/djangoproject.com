@@ -17,5 +17,5 @@ def contact_coc(request):
         template_name = 'contact/coc.html',
         success_url = urlresolvers.reverse('code_of_conduct'))
     if isinstance(resp, HttpResponseRedirect):
-        messages.success(request, "Thanks for your feedback! If you provided an email address, we'll get back to you shortly.")
+        messages.success(request, "Thanks for your feedback! If you provided an email address, we'll get back to you.")
     return resp
