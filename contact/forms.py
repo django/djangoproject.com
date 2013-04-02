@@ -10,7 +10,7 @@ class BaseContactForm(AkismetContactForm):
         return "[Contact form] " + self.cleaned_data["message_subject"]
 
     def message(self):
-        return "From: %(name)s <%(email)s>\n\n%(body)s" % self.cleaned_data
+        return u"From: {name} <{email}>\n\n{body}".format(**self.cleaned_data)
 
 class FoundationContactForm(BaseContactForm):
     recipient_list = ["dsf-board@googlegroups.com"]
@@ -27,6 +27,3 @@ class CoCFeedbackForm(BaseContactForm):
 
     def subject(self):
         return "Django Code of Conduct feedback"
-
-    def message(self):
-        return "From: {name} <{email}>\n\n{body}".format(**self.cleaned_data)
