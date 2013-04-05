@@ -42,7 +42,7 @@ urlpatterns = patterns('',
 
     # PayPal insists on POSTing to the "thank you" page which means we can't
     # just use a flatpage for it.
-    url(r'^foundation/donate/thanks/$', csrf_exempt(TemplateView.as_view(template_name='donate_thanks.html'))),
+    url(r'^foundation/donate/thanks/$', csrf_exempt(lambda req: render(req, 'donate_thanks.html'))),
 
     # django-push
     url(r'^subscriber/', include('django_push.subscriber.urls')),
