@@ -85,11 +85,12 @@ def update_docs():
     """
     managepy('update_docs -v2', site='docs')
 
-def copy_db():
+def copy_dbs():
     """
-    Copy the production DB locally for testing.
+    Copy the production DBs locally for testing.
     """
-    local('ssh %s pg_dump -U djangoproject -c djangoproject | psql djangoproject' % env.hosts[0])
+    for db in ('djangoproject', 'code.djangoproject'):
+        local('ssh %s pg_dump -U %s -c %s | psql %s' % (env.hosts[0], db, db, db))
 
 def copy_docs():
     """

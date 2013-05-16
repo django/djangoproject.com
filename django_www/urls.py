@@ -47,6 +47,10 @@ urlpatterns = patterns('',
     # django-push
     url(r'^subscriber/', include('django_push.subscriber.urls')),
 
+    # Trac schtuff
+    url(r'^trac/', include('tracdb.urls')),
+
+
     url(r'^sitemap\.xml$', cache_page(60 * 60 * 6)(sitemap_views.sitemap), {'sitemaps': sitemaps}),
     url(r'^weblog/', include('blog.urls')),
     url(r'^download/', include('releases.urls')),
