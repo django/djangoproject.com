@@ -21,7 +21,7 @@ class Migration(SchemaMigration):
            AND change.oldvalue = 'closed'
            AND change.newvalue != 'closed'
            AND ticket.resolution = 'wontfix'
-        GROUP BY ticket.id;
+        GROUP BY ticket.id, ticket.summary;
     """
 
     def forwards(self, orm):
