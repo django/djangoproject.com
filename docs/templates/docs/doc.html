@@ -38,7 +38,14 @@
   </ul>
   {{ doc.body|safe }}
 {% endblock %}
-
+<div class="browse-horizontal">
+  {% if doc.prev %}
+    <div class="left">Previous: <a href="{{ doc.prev.link }}">{{ doc.prev.title|safe }}</a></div>
+  {% endif %}
+  {% if doc.next %}
+    <div class="right">Next: <a href="{{ doc.next.link }}">{{ doc.next.title|safe }}</a></div>
+  {% endif %}
+</div>
 <div id="content-secondary">
   <h2 id="comments">Questions/Feedback</h2>
   <p>Having trouble? We'd like to help!</p>
