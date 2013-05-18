@@ -10,7 +10,7 @@ To run locally, do the usual::
    If you only need to deploy, and don't need to test any changes,
    you can use local-requirements.txt only.
 
-3. Create a 'secrets.json' file in the directoy above the checkout, containing
+3. Create a 'secrets.json' file in the directory above the checkout, containing
    something like::
 
     { "secret_key": "xyz",
@@ -33,6 +33,7 @@ To run locally, do the usual::
    and::
 
     ./manage.py syncdb --docs
+    ./manage.py migrate --docs
 
    if you want to run docs site.
 
