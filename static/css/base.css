@@ -473,13 +473,16 @@ div.admonition.warning {
     display: block;
     padding: 0;
     margin: 0;
-    bottom: 5px;
-    right: 5px;
+    bottom: 50px;
+    right: 20px;
+    background-color:#255633;
+    border:1px solid #2e7843;
 }
-
-#doc-versions:hover {
-    background: transparent url(../img/site/invisible.gif) repeat; /* IE7 hack */
-    border-radius: 3px;
+#doc-versions.versions-affix {
+    overflow:hidden;
+    border:none;
+    bottom:0;
+    right:auto;
 }
 
 #doc-versions li.other {
@@ -496,19 +499,19 @@ div.admonition.warning {
 }
 
 #doc-versions li {
-    display: block;
-    float: left;
+    float:right;
     padding: 0;
     margin: 0 0 0 7px;
-    background-color: #E0FFB8;
-    border: 2px #487858 solid;
-    border-radius: 3px;
+    background-color: #487858;
     color: #234F32;
+    list-style:none;
 }
 
 #doc-versions li.current {
-    background: #E0FFB8 url(../img/site/arrow-head-left.gif) 6px center no-repeat;
-    padding-left: 13px;
+    background: transparent url(../img/site/arrow-head-left_wht.png) 0 center no-repeat;
+    padding-left: 8px;
+    color:inherit;
+    border:none;
 }
 
 #doc-versions li.current span {
