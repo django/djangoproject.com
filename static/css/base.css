@@ -485,13 +485,14 @@ div.admonition.warning {
     right:auto;
 }
 
-#doc-versions li.other {
-    display: none;
-}
-
-#doc-versions li.other a {
+#doc-versions li.other a,
+#doc-versions li.current span {
     display: block;
     padding: 5px;
+}
+
+#doc-versions li.other {
+    display: none;
 }
 
 #doc-versions:hover li.other {
@@ -504,19 +505,15 @@ div.admonition.warning {
     margin: 0 0 0 7px;
     background-color: #487858;
     color: #234F32;
-    list-style:none;
+    list-style: none;
 }
 
 #doc-versions li.current {
     background: transparent url(../img/site/arrow-head-left_wht.png) 0 center no-repeat;
     padding-left: 8px;
-    color:inherit;
-    border:none;
-}
-
-#doc-versions li.current span {
-    display: block;
-    padding: 5px;
+    color: inherit;
+    border: none;
+    margin-left: 10px;
 }
 
 #documentation h2,

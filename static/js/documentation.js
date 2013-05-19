@@ -2,15 +2,15 @@
  * Script to fix doc version switcher according to scroll position
  */
 function add_event(html_element, event_name, event_function) {       
-   if(html_element.attachEvent) // IE
-      html_element.attachEvent("on" + event_name, function() {event_function.call(html_element);}); 
-   else if(html_element.addEventListener)
+   if (html_element.attachEvent) // IE
+      html_element.attachEvent("on" + event_name, function() { event_function.call(html_element); }); 
+   else if (html_element.addEventListener)
       html_element.addEventListener(event_name, event_function, false); 
 } 
 function get_window_height() {
-  if( typeof( window.innerWidth ) == 'number' ) {
+  if (typeof(window.innerWidth) == 'number' ) {
     return window.innerHeight; // Non-IE
-  } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+  } else if (document.documentElement && document.documentElement.clientHeight) {
     return document.documentElement.clientHeight; //IE 6+ in 'standards compliant mode'
   }
 }
