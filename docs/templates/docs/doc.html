@@ -16,26 +16,6 @@
 
 {% block body %}
   {% load docs %}
-  {% get_all_doc_versions docurl as versions %}
-  <ul id="doc-versions">
-      {% for v in versions %}
-        {% if version != v %}
-          <li class="other">
-          {% if docurl %}
-            <a href="{% url 'document-detail' lang=lang version=v url=docurl %}">{{ v }}</a>
-          {% else %}
-            <a href="{% url 'document-index' lang=lang version=v %}">{{ v }}</a>
-          {% endif %}
-          </li>
-        {% endif %}
-      {% endfor %}
-      <li class="current"
-          title="{% if version == 'dev' %}This document is for Django's development version, which can be significantly different from previous releases.{% else %}This document describes Django {{ version }}.{% endif %} Click on the links on the left to see other versions.">
-        <span>Documentation version:
-          <strong>{{ version }}</strong>
-        </span>
-      </li>
-  </ul>
   {{ doc.body|safe }}
 {% endblock %}
 
@@ -70,6 +50,30 @@
 {% endblock %}
 
 {% block content-related %}
+  {% block versions %}
+    {% get_all_doc_versions docurl as versions %}
+    <ul id="doc-versions">
+        <li class="current"
+            title="{% if version == 'dev' %}This document is for Django's development version, which can be significantly different from previous releases.{% else %}This document describes Django {{ version }}.{% endif %} Click on the links on the left to see other versions.">
+          <span>Documentation version:
+            <strong>{{ version }}</strong>
+          </span>
+        </li>
+        {% for v in versions %}
+          {% if version != v %}
+            <li class="other">
+            {% if docurl %}
+              <a href="{% url 'document-detail' lang=lang version=v url=docurl %}">{{ v }}</a>
+            {% else %}
+              <a href="{% url 'document-index' lang=lang version=v %}">{{ v }}</a>
+            {% endif %}
+            </li>
+          {% endif %}
+        {% endfor %}
+    </ul>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/documentation.js"></script>
+  {% endblock %}
+
   {% block search %}
     <h2>Search</h2>
     {% load docs %}
