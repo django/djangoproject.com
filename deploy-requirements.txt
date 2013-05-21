@@ -7,7 +7,7 @@ http://bitbucket.org/ubernostrum/django-contact-form/get/tip.bz2
 django-haystack == 1.2.7
 django-push == 0.4
 # django-registration doesn't have a release compatible with Django 1.5 yet.
--e hg+https://bitbucket.org/jscott1971/django-registration@b963cb9#egg=django-registration
+-e hg+https://bitbucket.org/ubernostrum/django-registration@b3c41b3c7f50523b4ecb8267d6d27a918adc2e1f#egg=django-registration
 django-secure == 0.1.2
 docutils == 0.10
 feedparser == 5.1.3
