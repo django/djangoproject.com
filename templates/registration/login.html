@@ -10,7 +10,9 @@
 <p class="error">Please correct the errors below:</p>
 {% endif %}
 
-<form method="post" action="?next={{ next|default:"/" }}">{% csrf_token %}
+<form method="post" action="">
+{% csrf_token %}
+<input type="hidden" name="next" value="{{ next|default:"/" }}">
 <dl>
 <dt><label for="id_username">Username:</label>{% if form.username.errors %} <span class="error">{{ form.username.errors|join:", " }}</span>{% endif %}</dt>
 <dd>{{ form.username }}</dd>
