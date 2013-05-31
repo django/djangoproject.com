@@ -37,7 +37,8 @@ a:link, a:visited {
     color:#ab5603;
     text-decoration:underline;
 }
-#content-secondary a:link, #content-secondary a:visited {
+#content-secondary a:link, #content-secondary a:visited,
+#content-main .browse-horizontal a:link, #content-main .browse-horizontal a:visited {
     color:#ffc757;
     text-decoration:none;
 }
@@ -49,7 +50,8 @@ a:hover {
     color:#234f32;
     text-decoration:none;
 }
-#content-secondary a:hover {
+#content-secondary a:hover,
+#content-main .browse-horizontal a:hover {
     color:#ffe761;
     background:none;
 }
@@ -166,7 +168,6 @@ a:hover {
     background:#487858;
     margin-left:0;
     margin-right:0;
-    margin-top:15px;
     margin-bottom:-10px;
     padding:10px 24px;
     color:white;
@@ -178,6 +179,20 @@ a:hover {
 }
 .subcol-primary {
     margin-right:1%;
+}
+#content-main .browse-horizontal {
+    background-color:#234f32;
+    color:white;
+    margin:1.5em 0 0 0;
+    padding:1em 24px 1em 22px;
+    overflow:hidden;
+    line-height:1;
+}
+.browse-horizontal .left {
+    float:left;
+}
+.browse-horizontal .right {
+    float:right;
 }
 
 /* CONTENT */
