@@ -20,7 +20,7 @@ def index(request):
     return redirect(DocumentRelease.objects.current())
 
 def language(request, lang):
-    return redirect(DocumentRelease.objects.current())
+    return redirect(DocumentRelease.objects.current(lang))
 
 def stable(request, lang, version, url):
     path = request.get_full_path()
@@ -101,10 +101,9 @@ class DocSearchView(haystack.views.SearchView):
 
     def extra_context(self):
         # Constuct a context that matches the rest of the doc page views.
-        default_release = DocumentRelease.objects.current()
+        current_release = self.form.initial_rel
         return {
-            'lang': default_release.lang,
-            'version': default_release.version,
-            'release': default_release,
+            'lang': current_release.lang,
+            'version': current_release.version,
+            'release': current_release,
         }
-
