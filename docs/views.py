@@ -1,13 +1,13 @@
 from __future__ import absolute_import
 
 import datetime
+import json
 
 import django.views.static
 from django.core import urlresolvers
 from django.http import Http404
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
-from django.utils import simplejson
 
 import haystack.views
 
@@ -52,8 +52,8 @@ def document(request, lang, version, url):
         'docs/doc.html',
     ]
     return render_to_response(template_names, RequestContext(request, {
-        'doc': simplejson.load(open(doc_path, 'rb')),
-        'env': simplejson.load(open(docroot.child('globalcontext.json'), 'rb')),
+        'doc': json.load(open(doc_path, 'rb')),
+        'env': json.load(open(docroot.child('globalcontext.json'), 'rb')),
         'lang': lang,
         'version': version,
         'rtd_version': rtd_version,
