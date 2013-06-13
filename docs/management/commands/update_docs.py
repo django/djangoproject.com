@@ -46,9 +46,13 @@ class Command(NoArgsCommand):
             if verbosity >= 1:
                 print "Updating %s..." % release
 
-            destdir = Path(settings.DOCS_BUILD_ROOT).child(release.lang, release.version)
-            if not destdir.exists():
-                destdir.mkdir(parents=True)
+            # checkout_dir is shared for all languages.
+            checkout_dir = Path(settings.DOCS_BUILD_ROOT).child(release.version)
+            parent_build_dir = Path(settings.DOCS_BUILD_ROOT).child(release.lang, release.version)
+            if not checkout_dir.exists():
+                checkout_dir.mkdir(parents=True)
+            if not parent_build_dir.exists():
+                parent_build_dir.mkdir(parents=True)
 
             #
             # Update the release from SCM.
@@ -56,19 +60,29 @@ class Command(NoArgsCommand):
 
             # Make an SCM checkout/update into the destination directory.
             # Do this dynamically in case we add other SCM later.
-            getattr(self, 'update_%s' % release.scm)(release.scm_url, destdir)
+            getattr(self, 'update_%s' % release.scm)(release.scm_url, checkout_dir)
+
+            if release.docs_subdir:
+                source_dir = checkout_dir.child(*release.docs_subdir.split('/'))
+            else:
+                source_dir = checkout_dir
+
+            if release.lang != 'en':
+                scm_url = release.scm_url.replace('django.git', 'django-docs-translations.git')
+                trans_dir = checkout_dir.child('django-docs-translation')
+                if not trans_dir.exists():
+                    trans_dir.mkdir()
+                getattr(self, 'update_%s' % release.scm)(scm_url, trans_dir)
+                if not source_dir.child('locale').exists():
+                    source_dir.child('locale').write_link(trans_dir.child('translations'))
+                subprocess.call("cd %s && make translations" % trans_dir, shell=True)
 
             #
             # Use Sphinx to build the release docs into JSON and HTML documents.
             #
-            if release.docs_subdir:
-                source_dir = destdir.child(*release.docs_subdir.split('/'))
-            else:
-                source_dir = destdir
-
             for builder in ('json', 'html'):
                 # Wipe and re-create the build directory. See #18930.
-                build_dir = destdir.child('_build', builder)
+                build_dir = parent_build_dir.child('_build', builder)
                 if build_dir.exists():
                     shutil.rmtree(build_dir)
                 build_dir.mkdir(parents=True)
@@ -78,6 +92,7 @@ class Command(NoArgsCommand):
                     print "  building %s (%s -> %s)" % (builder, source_dir, build_dir)
                 sphinx.cmdline.main(['sphinx-build',
                     '-b', builder,
+                    '-D', 'language=%s' % release.lang,
                     '-q',              # Be vewy qwiet
                     source_dir,        # Source file directory
                     build_dir,         # Destination directory
@@ -87,7 +102,7 @@ class Command(NoArgsCommand):
             # Create a zip file of the HTML build for offline reading.
             # This gets moved into STATIC_ROOT for downloading.
             #
-            html_build_dir = destdir.child('_build', 'html')
+            html_build_dir = parent_build_dir.child('_build', 'html')
             zipfile_name = 'django-docs-%s-%s.zip' % (release.version, release.lang)
             zipfile_path = Path(settings.STATIC_ROOT).child('docs', zipfile_name)
             if not zipfile_path.parent.exists():
@@ -106,8 +121,8 @@ class Command(NoArgsCommand):
             # Copy the build results to the directory used for serving
             # the documentation in the least disruptive way possible.
             #
-            build_dir = destdir.child('_build')
-            built_dir = destdir.child('_built')
+            build_dir = parent_build_dir.child('_build')
+            built_dir = parent_build_dir.child('_built')
             subprocess.check_call(['rsync', '--archive', '--delete',
                     '--link-dest=' + build_dir, build_dir + '/', built_dir])
 
@@ -133,7 +148,7 @@ class Command(NoArgsCommand):
             # We have to be a bit careful to reverse-engineer the correct
             # relative path component, especially for "index" documents,
             # otherwise the search results will be incorrect.
-            json_built_dir = destdir.child('_built', 'json')
+            json_built_dir = parent_build_dir.child('_built', 'json')
             for built_doc in json_built_dir.walk():
                 if built_doc.isfile() and built_doc.ext == '.fjson':
 
