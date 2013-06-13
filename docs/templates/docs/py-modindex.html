@@ -1,11 +1,12 @@
 {% extends "docs/doc.html" %}
+{% load i18n %}
 
-{% block title %}Module Index | Django Documentation{% endblock %}
+{% block title %}{% trans "Module Index | Django Documentation" %}{% endblock %}
 {% block toc-wrapper %}{% endblock %}
-{% block current-page-title %}Module Index{% endblock %}
+{% block current-page-title %}{% trans "Module Index" %}{% endblock %}
 
 {% block body %}
-<h1>Module Index</h1>
+<h1>{% trans "Module Index" %}</h1>
 
 <ul class="jump_links">
     {% for letter, objects in doc.content %}

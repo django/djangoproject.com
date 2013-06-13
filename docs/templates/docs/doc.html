@@ -1,6 +1,7 @@
 {% extends "base_docs.html" %}
+{% load i18n %}
 
-{% block title %}{{ doc.title|striptags|safe }} | Django documentation{% endblock %}
+{% block title %}{{ doc.title|striptags|safe }} | {% trans "Django documentation" %}{% endblock %}
 
 {% block extrahead %}
   {{ block.super }}
@@ -9,7 +10,7 @@
 {% endblock %}
 
 {% block billboard %}
-  <h2><a href="{% url 'document-index' lang=lang version=version %}">Django documentation</a></h2>
+  <h2><a href="{% url 'document-index' lang=lang version=version %}">{% trans "Django documentation" %}</a></h2>
 {% endblock %}
 
 {% block content %}
@@ -30,8 +31,8 @@
         {% endif %}
       {% endfor %}
       <li class="current"
-          title="{% if version == 'dev' %}This document is for Django's development version, which can be significantly different from previous releases.{% else %}This document describes Django {{ version }}.{% endif %} Click on the links on the left to see other versions.">
-        <span>Documentation version:
+          title="{% if version == 'dev' %}{% trans "This document is for Django's development version, which can be significantly different from previous releases." %}{% else %}{% blocktrans %}This document describes Django {{ version }}.{% endblocktrans %}{% endif %} {% trans "Click on the links on the left to see other versions." %}">
+        <span>{% trans "Documentation version:" %}
           <strong>{{ version }}</strong>
         </span>
       </li>
@@ -47,30 +48,30 @@
   {% endif %}
 </div>
 <div id="content-secondary">
-  <h2 id="comments">Questions/Feedback</h2>
-  <p>Having trouble? We'd like to help!</p>
+  <h2 id="comments">{% trans "Questions/Feedback" %}</h2>
+  <p>{% trans "Having trouble? We'd like to help!" %}</p>
   <ul>
     <li>
-      Try the <a href="{% url 'document-detail' lang=lang version=version url="faq" %}">FAQ</a>
-      — it's got answers to many common questions.
+      {% url 'document-detail' lang=lang version=version url="faq" as faq_url %}
+      {% blocktrans %}Try the <a href="{{ faq_url }}">FAQ</a> — it's got answers to many common questions.{% endblocktrans %}
     </li>
     <li>
-      Search for information in the <a
+      {% blocktrans %}Search for information in the <a
       href="http://groups.google.com/group/django-users/">archives of the
       django-users mailing list</a>, or <a
-      href="http://groups.google.com/group/django-users/">post a question</a>.
+      href="http://groups.google.com/group/django-users/">post a question</a>.{% endblocktrans %}
     </li>
     <li>
-      Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+      {% blocktrans %}Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
       channel</a>, or search the <a href="http://django-irc-logs.com/">IRC
-      logs</a> to see if it has been asked before.
+      logs</a> to see if it has been asked before.{% endblocktrans %}
     </li>
     <li>
-      If you notice errors with this documentation, please <a
+      {% blocktrans %}If you notice errors with this documentation, please <a
       href="https://code.djangoproject.com/newticket?component=Documentation">
       open a ticket</a> and let us know! Please only use the ticket tracker for
       criticisms and improvements on the docs. For tech support, use the
-      resources above.
+      resources above.{% endblocktrans %}
     </li>
   </ul>
 </div>
@@ -78,28 +79,28 @@
 
 {% block content-related %}
   {% block search %}
-    <h2>Search</h2>
+    <h2>{% trans "Search" %}</h2>
     {% load docs %}
     {% search_form %}
   {% endblock %}
 
   {% block toc-wrapper %}
-    <h2>Contents</h2>
+    <h2>{% trans "Contents" %}</h2>
     {% block toc %}
       {{ doc.toc|safe }}
     {% endblock %}
   {% endblock %}
   {% block browse-wrapper %}
-    <h2>Browse</h2>
+    <h2>{% trans "Browse" %}</h2>
     <ul>
       {% block browse %}
         {% if doc.prev %}
-          <li>Prev: <a href="{{ doc.prev.link }}">{{ doc.prev.title|safe }}</a></li>
+          <li>{% trans "Prev:" %} <a href="{{ doc.prev.link }}">{{ doc.prev.title|safe }}</a></li>
         {% endif %}
         {% if doc.next %}
-          <li>Next: <a href="{{ doc.next.link }}">{{ doc.next.title|safe }}</a></li>
+          <li>{% trans "Next:" %} <a href="{{ doc.next.link }}">{{ doc.next.title|safe }}</a></li>
         {% endif %}
-        <li><a href="{% url 'document-detail' lang=lang version=version url="contents" %}">Table of contents</a></li>
+        <li><a href="{% url 'document-detail' lang=lang version=version url="contents" %}">{% trans "Table of contents" %}</a></li>
         {% for doc, title, accesskey, shorttitle in env.rellinks %}
           <li><a href="{% url 'document-detail' lang=lang version=version url=doc %}">{{ title }}</a></li>
         {% endfor %}
@@ -108,11 +109,11 @@
   {% endblock %}
 
   {% block breadcrumbs-wrapper %}
-    <h2>You are here:</h2>
+    <h2>{% trans "You are here:" %}</h2>
     <ul>
       {% block breadcrumbs %}
         <li>
-          <a href="{% url 'document-index' lang=lang version=version %}">Django {{ version }} documentation</a>
+          <a href="{% url 'document-index' lang=lang version=version %}">{% blocktrans %}Django {{ version }} documentation{% endblocktrans %}</a>
           {% for p in doc.parents %}
             <ul><li><a href="{{ p.link }}">{{ p.title|safe }}</a>
           {% endfor %}
@@ -123,14 +124,17 @@
     </ul>
 
     {% if version != "1.1" and version != "1.0" %}
-      <h2>Download:</h2>
+      <h2>{% trans "Download:" %}</h2>
       <p>
-        Offline ({% if version == "dev" %}development version{% else %}Django {{ version }}{% endif %}):
+        {% if version == "dev" %}{% trans "Offline (development version):" %}
+        {% else %}{% blocktrans %}Offline (Django {{ version }}):{% endblocktrans %}{% endif %}
         <a href="{{ STATIC_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> |
         <a href="http://media.readthedocs.org/pdf/django/{{ rtd_version }}/django.pdf">PDF</a> |
         <a href="http://media.readthedocs.org/epub/django/{{ rtd_version }}/django.epub">ePub</a>
       <br>
-      <span class="quiet">Provided by <a href="http://readthedocs.org/">Read the Docs</a>.
+      <span class="quiet">
+        {% blocktrans %}Provided by <a href="http://readthedocs.org/">Read the Docs</a>.{% endblocktrans %}
+      </span>
       </p>
     {% endif %}
   {% endblock %}
