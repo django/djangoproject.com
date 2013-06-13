@@ -5,8 +5,14 @@ from django.db import models
 
 class DocumentReleaseManager(models.Manager):
 
-    def current(self):
-        return self.get(is_default=True)
+    def current(self, lang='en'):
+        current = self.get(is_default=True)
+        if lang != 'en':
+            try:
+                return self.get(lang=lang, version=current.version)
+            except DocumentRelease.DoesNotExist:
+                pass
+        return current
 
     def current_version(self):
         current_version = cache.get(DocumentRelease.DEFAULT_CACHE_KEY)

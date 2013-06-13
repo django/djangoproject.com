@@ -11,7 +11,7 @@ register = template.Library()
 def search_form(context, search_form_id='sidebar_search'):
     request = context['request']
     auto_id = 'id_%s_%%s' % search_form_id
-    release = DocumentRelease.objects.get(version=context['version'])
+    release = DocumentRelease.objects.get(version=context['version'], lang=context['lang'])
     return {
         'form': DocSearchForm(initial=request.GET, auto_id=auto_id, release=release),
         'search_form_id': search_form_id,
