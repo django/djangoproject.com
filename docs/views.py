@@ -8,6 +8,7 @@ from django.core import urlresolvers
 from django.http import Http404
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from django.utils import translation
 
 import haystack.views
 
@@ -36,6 +37,9 @@ def document(request, lang, version, url):
         url.encode("ascii")
     except UnicodeEncodeError:
         raise Http404
+
+    if lang != 'en':
+        translation.activate(lang)
 
     docroot = get_doc_root_or_404(lang, version)
     doc_path = get_doc_path_or_404(docroot, url)
@@ -102,6 +106,8 @@ class DocSearchView(haystack.views.SearchView):
     def extra_context(self):
         # Constuct a context that matches the rest of the doc page views.
         current_release = self.form.initial_rel
+        if current_release.lang != 'en':
+            translation.activate(current_release.lang)
         return {
             'lang': current_release.lang,
             'version': current_release.version,

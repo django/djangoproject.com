@@ -44,6 +44,8 @@ ROOT_URLCONF = 'django_docs.urls'
 
 SITE_ID = 2
 
+USE_I18N = True
+LANGUAGE_CODE = 'en'
 
 ### Docs settings
 

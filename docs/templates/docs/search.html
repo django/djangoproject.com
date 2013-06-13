@@ -1,8 +1,9 @@
 {% extends "docs/doc.html" %}
+{% load i18n %}
 
 {% load docs %}
 
-{% block title %}Search | Django documentation{% endblock %}
+{% block title %}{% trans "Search | Django documentation" %}{% endblock %}
 
 {% block toc-wrapper %}{% endblock %}
 {% block breadcrumbs-wrapper %}{% endblock %}
@@ -11,18 +12,18 @@
 {% block body %}
   <form method="get" action="." id="page_search">
     <p>
-      <label for="{{ form.q.auto_id }}">Search for:</label>
+      <label for="{{ form.q.auto_id }}">{% trans "Search for:" %}</label>
       {{ form.q }}
-      <label for="{{ form.release.auto_id }}">in version:</label>
+      <label for="{{ form.release.auto_id }}">{% trans "in version:" %}</label>
       {{ form.release }}
-      <input type="submit" class="submit" value="Search" />
+      <input type="submit" class="submit" value="{% trans 'Search' %}" />
     </p>
   </form>
 </form>
 
 {% if query %}
   {% load highlight %}
-  <h2>Results</h2>
+  <h2>{% trans "Results" %}</h2>
   <div id="search-results">
     {% for result in page.object_list %}
       <h3>
@@ -30,7 +31,7 @@
       </h3>
       <p>{% highlight result.text with query max_length 200 %}</p>
     {% empty %}
-      <h3>No results found.</h3>
+      <h3>{% trans "No results found." %}</h3>
     {% endfor %}
   </div>
 
@@ -39,13 +40,13 @@
       {% if page.has_previous %}
         <a href="?q={{ query }}&amp;release={{ release.id }}&amp;page={{ page.previous_page_number }}">
       {% endif %}
-      &laquo; Previous
+      &laquo; {% trans "Previous" %}
       {% if page.has_previous %}</a>{% endif %}
       |
       {% if page.has_next %}
         <a href="?q={{ query }}&amp;release={{ release.id }}&amp;page={{ page.next_page_number }}">
       {% endif %}
-      Next &raquo;
+      {% trans "Next" %} &raquo;
       {% if page.has_next %}</a>{% endif %}
     </div>
   {% endif %}
