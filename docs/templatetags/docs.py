@@ -50,7 +50,7 @@ class AllDocVersionsTag(template.Node):
         versions = []
 
         # Look for each version of the docs.
-        for release in DocumentRelease.objects.all():
+        for release in DocumentRelease.objects.filter(lang=self.lang):
             version_root = get_doc_root(release.lang, release.version)
             if version_root.exists():
                 doc_path = get_doc_path(version_root, url)
