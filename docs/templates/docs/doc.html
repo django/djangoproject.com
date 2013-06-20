@@ -4,6 +4,19 @@
 
 {% block title %}{{ doc.title|striptags|safe }} | {% trans "Django documentation" %}{% endblock %}
 
+{% block extrabody %}
+{% if version == 'dev' %}
+  <div class="dev-warning">
+   {% trans "This document is for Django's development version, which can be significantly different from previous releases. Use the version selector in the bottom right corner for older releases." %}
+  </div>
+  <style type="text/css" media="screen">
+  body {
+    margin-top: 2em;
+  }
+  </style>
+  {% endif %}
+{% endblock extrabody %}
+
 {% block extrahead %}
   {{ block.super }}
   <link rel="stylesheet" href="{% static "css/docs/docs.css" %}" type="text/css" />
@@ -18,22 +31,6 @@
 
 {% block body %}
   {% load docs %}
-  {% if version == 'dev' %}
-  <style type="text/css" media="screen">
-    #content-main {
-      background-size: 50px 50px;
-      background-color: #fff;
-      background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, .02) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .02) 50%, rgba(0, 0, 0, .02) 75%, transparent 75%, transparent);
-      background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, .02) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .02) 50%, rgba(0, 0, 0, .02) 75%, transparent 75%, transparent);
-      background-image: linear-gradient(135deg, rgba(0, 0, 0, .02) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .02) 50%, rgba(0, 0, 0, .02) 75%, transparent 75%, transparent);
-  }
-  </style>
-  <div class="admonition warning">
-    <p>{% trans "This document is for Django's in-development version, which can be significantly different from previous releases." %}</p>
-    <p>{% trans "Use the version selector in the bottom right corner to see older versions." %}</p>
-  </div>
-
-  {% endif %}
   {% get_all_doc_versions docurl as versions %}
   <ul id="doc-versions">
       {% for v in versions %}
@@ -47,10 +44,12 @@
           </li>
         {% endif %}
       {% endfor %}
-      <li class="current"
+      <li class="current{% if version == 'dev' %} dev{% endif %}"
           title="{% if version == 'dev' %}{% trans "This document is for Django's development version, which can be significantly different from previous releases." %}{% else %}{% blocktrans %}This document describes Django {{ version }}.{% endblocktrans %}{% endif %} {% trans "Click on the links on the left to see other versions." %}">
         <span>{% trans "Documentation version:" %}
-          <strong>{{ version }}</strong>
+          <strong>{% if version == 'dev' %}
+            development{% else %}{{ version }}
+          {% endif %}</strong>
         </span>
       </li>
   </ul>
