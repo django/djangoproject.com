@@ -1,12 +1,13 @@
 {% extends "base_docs.html" %}
 {% load i18n %}
+{% load staticfiles %}
 
 {% block title %}{{ doc.title|striptags|safe }} | {% trans "Django documentation" %}{% endblock %}
 
 {% block extrahead %}
   {{ block.super }}
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/docs/docs.css" type="text/css" />
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="{% static "css/docs/docs.css" %}" type="text/css" />
+  <link rel="stylesheet" href="{% static "css/pygments.css" %}" type="text/css" />
 {% endblock %}
 
 {% block billboard %}
@@ -128,7 +129,7 @@
       <p>
         {% if version == "dev" %}{% trans "Offline (development version):" %}
         {% else %}{% blocktrans %}Offline (Django {{ version }}):{% endblocktrans %}{% endif %}
-        <a href="{{ STATIC_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> |
+        <a href="{% static zipfile_path %}">HTML</a> |
         <a href="http://media.readthedocs.org/pdf/django/{{ rtd_version }}/django.pdf">PDF</a> |
         <a href="http://media.readthedocs.org/epub/django/{{ rtd_version }}/django.epub">ePub</a>
       <br>
