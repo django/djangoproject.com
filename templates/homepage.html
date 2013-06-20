@@ -1,6 +1,9 @@
 {% extends "base_3col.html" %}
+{% load staticfiles %}
 
-{% block cssid %}homepage{% endblock %}
+{% block basecss %}
+<link href="{% static "css/homepage.css" %}" rel="stylesheet" type="text/css" media="screen" />
+{% endblock basecss %}
 
 {% block sectionid %}homepage{% endblock %}
 
