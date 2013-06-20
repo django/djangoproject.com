@@ -18,6 +18,22 @@
 
 {% block body %}
   {% load docs %}
+  {% if version == 'dev' %}
+  <style type="text/css" media="screen">
+    #content-main {
+      background-size: 50px 50px;
+      background-color: #fff;
+      background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, .02) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .02) 50%, rgba(0, 0, 0, .02) 75%, transparent 75%, transparent);
+      background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, .02) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .02) 50%, rgba(0, 0, 0, .02) 75%, transparent 75%, transparent);
+      background-image: linear-gradient(135deg, rgba(0, 0, 0, .02) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .02) 50%, rgba(0, 0, 0, .02) 75%, transparent 75%, transparent);
+  }
+  </style>
+  <div class="admonition warning">
+    <p>{% trans "This document is for Django's in-development version, which can be significantly different from previous releases." %}</p>
+    <p>{% trans "Use the version selector in the bottom right corner to see older versions." %}</p>
+  </div>
+
+  {% endif %}
   {% get_all_doc_versions docurl as versions %}
   <ul id="doc-versions">
       {% for v in versions %}
