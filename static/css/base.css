@@ -531,7 +531,7 @@ div.admonition.warning {
     padding: 5px;
 }
 
-.dev-warning {
+#dev-warning {
   position:fixed;
   top: 0;
   width: 100%;
