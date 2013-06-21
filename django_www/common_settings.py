@@ -122,6 +122,8 @@ SESSION_COOKIE_HTTPONLY = True
 
 STATICFILES_DIRS = [BASE.child('static')]
 
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+
 STATIC_ROOT = BASE.child('static_root')
 
 STATIC_URL = '/s/'
