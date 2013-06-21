@@ -47,6 +47,8 @@ SITE_ID = 2
 USE_I18N = True
 LANGUAGE_CODE = 'en'
 
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+
 ### Docs settings
 
 if PRODUCTION:
