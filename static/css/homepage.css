@@ -1,4 +1,4 @@
 @import url(base.css);
 
-.button-download { display:block; background:url(https://www.djangoproject.com/s/img/site/download_bg-left.gif) no-repeat; }
-.button-download a { height:18px; color:white; display:block; white-space:nowrap; background:url(https://www.djangoproject.com/s/img/site/download_bg-right.gif) top right no-repeat; padding:6px 12px; }
+.button-download { display:block; background:url(../img/site/download_bg-left.gif) no-repeat; }
+.button-download a { height:18px; color:white; display:block; white-space:nowrap; background:url(../img/site/download_bg-right.gif) top right no-repeat; padding:6px 12px; }
