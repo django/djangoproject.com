@@ -44,7 +44,6 @@ form#addplug { width: 35% }
  margin: .5em 0 0;
  padding-left: 16px;
 }
-.collapsed h3 { background-image: url(../img/collapsed.png); }
 .plugin .buttons { margin-top: 0; text-align: right }
 .plugin .uninstall { margin-top: -2em; padding: 0 }
 .plugin .summary, .plugin .info {
