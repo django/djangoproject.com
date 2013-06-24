@@ -5,7 +5,7 @@ Django == 1.5.1
 # django-contact-form doesn't have a release compatible with Django 1.2.
 http://bitbucket.org/ubernostrum/django-contact-form/get/tip.bz2
 django-haystack == 1.2.7
-django-push == 0.4
+django-push == 0.5
 django-registration==1.0
 django-secure == 1.0
 docutils == 0.10
@@ -14,6 +14,7 @@ Jinja2 == 2.6
 psycopg2 == 2.5
 python-memcached == 1.48
 raven == 1.4.6
+requests == 1.2.3
 South == 0.7.6
 Sphinx == 1.2b1
 Unipath == 1.0
