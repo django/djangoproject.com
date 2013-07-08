@@ -6,8 +6,7 @@ import json
 import django.views.static
 from django.core import urlresolvers
 from django.http import Http404
-from django.shortcuts import render_to_response, redirect
-from django.template import RequestContext
+from django.shortcuts import render, redirect
 from django.utils import translation
 
 import haystack.views
@@ -20,13 +19,16 @@ from .utils import get_doc_root_or_404, get_doc_path_or_404
 def index(request):
     return redirect(DocumentRelease.objects.current())
 
+
 def language(request, lang):
     return redirect(DocumentRelease.objects.current(lang))
+
 
 def stable(request, lang, version, url):
     path = request.get_full_path()
     current_version = DocumentRelease.objects.current_version()
     return redirect(path.replace(version, current_version, 1))
+
 
 def document(request, lang, version, url):
     # If either of these can't be encoded as ascii then later on down the line an
@@ -55,7 +57,7 @@ def document(request, lang, version, url):
         'docs/%s.html' % docroot.rel_path_to(doc_path).replace(doc_path.ext, ''),
         'docs/doc.html',
     ]
-    return render_to_response(template_names, RequestContext(request, {
+    context = {
         'doc': json.load(open(doc_path, 'rb')),
         'env': json.load(open(docroot.child('globalcontext.json'), 'rb')),
         'lang': lang,
@@ -63,9 +65,10 @@ def document(request, lang, version, url):
         'rtd_version': rtd_version,
         'docurl': url,
         'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),
-        'home': urlresolvers.reverse('document-index', kwargs={'lang': lang, 'version': version}),
         'redirect_from': request.GET.get('from', None),
-    }))
+    }
+    return render(request, template_names, context)
+
 
 class SphinxStatic(object):
     """
@@ -77,22 +80,25 @@ class SphinxStatic(object):
     def __call__(self, request, lang, version, path):
         return django.views.static.serve(
             request,
-            document_root = get_doc_root_or_404(lang, version).child(self.subpath),
-            path = path,
+            document_root=get_doc_root_or_404(lang, version).child(self.subpath),
+            path=path,
         )
+
 
 def objects_inventory(request, lang, version):
     response = django.views.static.serve(
         request,
-        document_root = get_doc_root_or_404(lang, version),
-        path = "objects.inv",
+        document_root=get_doc_root_or_404(lang, version),
+        path="objects.inv",
     )
     response['Content-Type'] = "text/plain"
     return response
 
+
 def redirect_index(request, *args, **kwargs):
     assert request.path.endswith('index/')
     return redirect(request.path[:-6])
+
 
 class DocSearchView(haystack.views.SearchView):
     def __init__(self, **kwargs):
