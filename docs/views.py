@@ -60,7 +60,6 @@ def document(request, lang, version, url):
         'env': json.load(open(docroot.child('globalcontext.json'), 'rb')),
         'lang': lang,
         'version': version,
-        'zipfile_path': 'docs/django-docs-%s-%s.zip' % (version, lang),
         'rtd_version': rtd_version,
         'docurl': url,
         'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),
