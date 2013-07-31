@@ -1,23 +1,14 @@
 {% extends "conduct/base.html" %}
 
-{% block title %}Django Code of Conduct - DRAFT{% endblock %}
+{% block title %}Django Code of Conduct{% endblock %}
 
 {% block content %}
 
-<h1>Django Code of Conduct - DRAFT</h1>
+<h1>Django Code of Conduct</h1>
 
 {% for message in messages %}
   <p class="message">{{ message }}</p>
 {% endfor %}
-
-<h2 class="deck">
-You're looking at a draft Code of Conduct proposed for adoption by the
-Django core team and the Django Software Foundation. Think of this as a
-"beta" release: we've written it, and we like it, but we want community
-feedback before we "check it in" (that is, adopt it formally).
-So please check out the draft text, read the FAQ below, and let us know
-what you think using the feedback form at the bottom of the page.
-</h2>
 
 <p>Like the technical community as a whole, the Django team and community is made up
 of a mixture of professionals and volunteers from all over the world, working on
@@ -95,15 +86,5 @@ For more details please see our
 <p>If you have questions, please see <a href="/conduct/faq/">the FAQ</a>. If
 that doesn't answer your questions, feel free to
 <a href="mailto:conduct@djangoproject.com">contact us</a>.</p>
-
-<h2>Feedback</h2>
-<p>
-As we said above, this is a rough draft. We want to know what you think before
-we adopt this. Let us know about your questions, comments, concerns, or
-criticism. We'll try to address all the feedback we get via email, or an
-edit to the draft, or both.
-</p>
-
-<div>{% include "contact/coc_form.html" %}</div>
 
 {% endblock %}
