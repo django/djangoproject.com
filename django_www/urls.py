@@ -31,6 +31,7 @@ urlpatterns = patterns('',
     url(r'^conduct/faq/$', TemplateView.as_view(template_name='conduct/faq.html'), name='conduct_faq'),
     url(r'^conduct/reporting/$', TemplateView.as_view(template_name='conduct/reporting.html'), name='conduct_reporting'),
     url(r'^conduct/enforcement-manual/$', TemplateView.as_view(template_name='conduct/enforcement.html'), name='conduct_enforcement'),
+    url(r'^conduct/changes/$', TemplateView.as_view(template_name='conduct/changes.html'), name='conduct_enforcement'),
     url(r'^contact/', include('contact.urls')),
     url(r'^r/', include('django.conf.urls.shortcut')),
 
