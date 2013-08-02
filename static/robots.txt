@@ -1,0 +1,2 @@
+user-agent: AhrefsBot
+disallow: /
