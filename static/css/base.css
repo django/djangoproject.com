@@ -42,6 +42,9 @@ a:link, a:visited {
     color:#ffc757;
     text-decoration:none;
 }
+#content-main .browse-horizontal a .literal {
+    color:white;
+}
 a:hover {
     color:#ffe761;
 }
