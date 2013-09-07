@@ -30,10 +30,19 @@ def index(request):
             'c': 'release candidate',
         }[preview.status]
 
+    # Look for an LTS release, if there is one.
+    try:
+        lts = Release.objects.lts()
+    except IndexError:
+        lts = None
+    if lts == previous:
+        lts = None
+
     context = {
         'current_version': current.version,
         'previous_version': previous.version,
-        'earlier_versions': [release.version for release in reversed(releases)],
+        'lts_version': lts.version if lts else None,
+        'earlier_versions': [release.version for release in reversed(releases) if release != lts],
         'preview_version': preview_version,
         'preview_kind': preview_kind,
     }
