@@ -2,8 +2,7 @@
 
 akismet == 0.2.0
 Django == 1.5.2
-# django-contact-form doesn't have a release compatible with Django 1.2.
-http://bitbucket.org/ubernostrum/django-contact-form/get/tip.bz2
+django-contact-form == 1.0
 django-haystack == 1.2.7
 django-push == 0.4
 django-registration==1.0
