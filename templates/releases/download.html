@@ -65,6 +65,9 @@ sudo python setup.py install</code></pre>
 <h2>Previous releases</h2>
 <ul>
   <li>Django {{ previous_version }}: <a href="{% url 'download-redirect' previous_version 'tarball' %}">Django-{{ previous_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' previous_version 'checksum' %}">Django-{{ previous_version }}.checksum.txt</a></li>
+  {% if lts_version %}
+    <li>Django {{ lts_version }} (LTS): <a href="{% url 'download-redirect' lts_version 'tarball' %}">Django-{{ lts_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' lts_version 'checksum' %}">Django-{{ lts_version }}.checksum.txt</a></li>
+  {% endif %}
 </ul>
 
 <h2>Unsupported previous releases (no longer receive security updates or bugfixes)</h2>
