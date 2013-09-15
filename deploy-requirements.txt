@@ -1,7 +1,7 @@
 # Requirements to deploy this code.
 
 akismet == 0.2.0
-Django == 1.5.2
+Django == 1.5.4
 django-contact-form == 1.0
 django-haystack == 1.2.7
 django-push == 0.4
