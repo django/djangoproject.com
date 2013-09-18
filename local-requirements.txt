@@ -2,4 +2,4 @@
 
 Unipath
 Fabric
-whoosh
+whoosh < 2.5
