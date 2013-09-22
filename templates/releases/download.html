@@ -13,17 +13,19 @@
 
 <h2>Option {% cycle '1' '2' '3' as options %}. Get the latest official version</h2>
 
-<p>The latest official version is {{ current_version }}. You can get it by direct download:
+<p>The latest official version is {{ current_version }}.
+
+You can install it with <a href="http://www.pip-installer.org/en/latest/">pip</a>:
+
+<pre class="literal-block"><code>pip install Django=={{ current_version }}</code></pre>
+
+You can also get it by direct download:
 
 <p>First, download <a href="{% url 'download-redirect' current_version 'tarball' %}">Django-{{ current_version }}.tar.gz</a> (<a href="{% url 'download-redirect' current_version 'checksum' %}">checksums</a>). Then:</p>
 
 <pre class="literal-block"><code>tar xzvf Django-{{ current_version }}.tar.gz
 cd Django-{{ current_version }}
 sudo python setup.py install</code></pre>
-
-<p>You can also use <a href="http://www.pip-installer.org/en/latest/">pip</a>:
-
-<pre class="literal-block"><code>pip install Django=={{ current_version }}</code></pre>
 
 {% if preview_version %}
 <h2>Option {% cycle options %}. Get the {{ preview_kind }} for {{ preview_version|slice:":3" }}</h2>
