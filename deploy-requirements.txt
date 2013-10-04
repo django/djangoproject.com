@@ -14,7 +14,7 @@ psycopg2 == 2.5
 python-memcached == 1.48
 raven == 1.4.6
 South == 0.7.6
-Sphinx == 1.2b2
+Sphinx == 1.2b3
 Unipath == 1.0
 # xapian-haystack has a bug in 1.1.5beta fixed in trunk.
 -e git://github.com/notanumber/xapian-haystack.git@dc11c14542c0137831e5#egg=xapian-haystack
