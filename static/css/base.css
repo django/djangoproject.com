@@ -711,6 +711,7 @@ div.deprecated span.title {
     color:#487858;
     padding:10px 20px;
     font-size:90%;
+    margin-right: 18em; /* prevent doc versoin switcher from overlapping with footer text */
 }
 
 /* FORMS */
