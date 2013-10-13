@@ -1,13 +1,14 @@
 import logging
 import datetime
+import feedparser
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 from django_push.subscriber import signals as push_signals
 from django_push.subscriber.models import Subscription
-from django.conf import settings
 
 log = logging.getLogger(__name__)
+
 
 class FeedType(models.Model):
     name = models.CharField(max_length=250)
@@ -50,8 +51,8 @@ class Feed(models.Model):
 
     def delete(self, **kwargs):
         super(Feed, self).delete(**kwargs)
-        if settings.SUPERFEEDR_CREDS != None:
-            Subscription.objects.unsubscribe(self.feed_url, settings.PUSH_HUB)
+        if settings.SUPERFEEDR_CREDS is not None:
+            Subscription.objects.get(topic=self.feed_url).unsubscribe()
 
 class FeedItemManager(models.Manager):
     def create_or_update_by_guid(self, guid, **kwargs):
@@ -108,13 +109,18 @@ class FeedItem(models.Model):
     def get_absolute_url(self):
         return self.link
 
+
 def feed_updated(sender, notification, **kwargs):
-    log.debug('Recieved notification on subscription ID %s (%s)', sender.id, sender.topic)
+    log.debug('Recieved notification on subscription ID %s (%s)',
+              sender.id, sender.topic)
     try:
         feed = Feed.objects.get(feed_url=sender.topic)
     except Feed.DoesNotExist:
-        log.error("Subscription ID %s (%s) doesn't have a feed.", sender.id, sender.topic)
+        log.error("Subscription ID %s (%s) doesn't have a feed.",
+                  sender.id, sender.topic)
         return
+
+    notification = feedparser.parse(notification)
 
     for entry in notification.entries:
         title = entry.title
