@@ -12,3 +12,10 @@
 
 /* Search results */
 #search-results span.highlighted { background-color: #ffe761; font-weight: bold; }
+
+div.snippet-filename {
+    color: white; background-color: #234F32; margin: 0; padding: 2px 5px;
+    font-family: monospace; font-size: small; line-height: 1.3em;
+}
+div.snippet-filename + div.highlight > pre { margin-top: 0; }
+div.snippet-filename + pre { margin-top: 0; }
