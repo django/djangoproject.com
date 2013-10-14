@@ -4,7 +4,7 @@ akismet == 0.2.0
 Django == 1.5.4
 django-contact-form == 1.0
 django-haystack == 1.2.7
-django-push == 0.4
+django-push == 0.6
 django-registration==1.0
 django-secure == 1.0
 docutils == 0.10
@@ -13,6 +13,7 @@ Jinja2 == 2.6
 psycopg2 == 2.5
 python-memcached == 1.48
 raven == 1.4.6
+requests == 1.2.3
 South == 0.7.6
 Sphinx == 1.2b3
 Unipath == 1.0
