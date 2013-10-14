@@ -20,7 +20,7 @@ mark_denied.short_description = "Mark selected feeds as denied."
 
 admin.site.register(Feed,
     list_display=["title", "feed_type", "public_url", "approval_status"],
-    list_filter=["feed_type", "is_defunct", "approval_status"],
+    list_filter=["feed_type", "approval_status"],
     ordering=["title"],
     search_fields=["title", "public_url"],
     raw_id_fields=['owner'],
