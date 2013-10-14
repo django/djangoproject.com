@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class Command(NoArgsCommand):
     def handle_noargs(self, **kwargs):
         feed_urls = set(Feed.objects.filter(
-            is_defunct=False, approval_status=APPROVED_FEED
+            approval_status=APPROVED_FEED
         ).values_list('feed_url', flat=True))
 
         subscribed_urls = set(Subscription.objects.values_list('topic',
