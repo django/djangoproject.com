@@ -36,7 +36,6 @@ class Feed(models.Model):
     title = models.CharField(max_length=500)
     feed_url = models.URLField(unique=True, max_length=500)
     public_url = models.URLField(max_length=500)
-    is_defunct = models.BooleanField()
     approval_status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=PENDING_FEED)
     feed_type = models.ForeignKey(FeedType)
     owner = models.ForeignKey(User, blank=True, null=True, related_name='owned_feeds')
