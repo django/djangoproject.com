@@ -92,16 +92,14 @@ LOGGING = {
     }
 }
 if PRODUCTION:
-    LOGGING["handlers"]["logfile"] = {
+    LOGGING["handlers"]["syslog"] = {
         "formatter": "full",
         "level": "DEBUG",
-        "class": "logging.handlers.TimedRotatingFileHandler",
-        "filename": "/var/log/django_website/website.log",
-        "when": "D",
-        "interval": 7,
-        "backupCount": 5,
+        "class": "logging.handlers.SyslogHandler",
+        "address": "/dev/log",
+        "facility": "local4",
     }
-    LOGGING["loggers"]["django.request"]["handlers"].append("logfile")
+    LOGGING["loggers"]["django.request"]["handlers"].append("syslog")
 
 
 MANAGERS = (
