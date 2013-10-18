@@ -30,7 +30,7 @@ ADMINS = (
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+        'LOCATION': SECRETS.get('memcached_host', '127.0.0.1:11211'),
     } if PRODUCTION else {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
     },
