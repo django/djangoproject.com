@@ -13,10 +13,10 @@ from unipath import FSPath as Path
 BASE = Path(__file__).absolute().ancestor(2)
 
 # Far too clever trick to know if we're running on the deployment server.
-PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ) and ("djangoproject" in platform.node())
+PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ)
 
 # It's a secret to everybody
-with open(BASE.parent.child('secrets.json')) as handle:
+with open(BASE.child('secrets.json')) as handle:
     SECRETS = json.load(handle)
 
 
@@ -30,7 +30,7 @@ ADMINS = (
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+        'LOCATION': SECRETS.get('memcached_host', '127.0.0.1:11211'),
     } if PRODUCTION else {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
     },
@@ -46,7 +46,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'djangoproject',
-        'USER': 'djangoproject'
+        'USER': 'djangoproject',
+        'HOST': SECRETS.get('db_host', 'localhost'),
+        'PASSWORD': SECRETS.get('db_password', ''),
     },
 }
 
@@ -90,16 +92,14 @@ LOGGING = {
     }
 }
 if PRODUCTION:
-    LOGGING["handlers"]["logfile"] = {
+    LOGGING["handlers"]["syslog"] = {
         "formatter": "full",
         "level": "DEBUG",
-        "class": "logging.handlers.TimedRotatingFileHandler",
-        "filename": "/var/log/django_website/website.log",
-        "when": "D",
-        "interval": 7,
-        "backupCount": 5,
+        "class": "logging.handlers.SysLogHandler",
+        "address": "/dev/log",
+        "facility": "local4",
     }
-    LOGGING["loggers"]["django.request"]["handlers"].append("logfile")
+    LOGGING["loggers"]["django.request"]["handlers"].append("syslog")
 
 
 MANAGERS = (

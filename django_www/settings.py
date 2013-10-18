@@ -5,14 +5,16 @@ from django_www.common_settings import *
 
 ### Django settings
 
-ALLOWED_HOSTS = ['www.djangoproject.com', 'djangoproject.com']
+ALLOWED_HOSTS = ['www.djangoproject.com', 'djangoproject.com'] + SECRETS.get('allowed_hosts', [])
 
 CACHE_MIDDLEWARE_KEY_PREFIX = 'djangoproject'
 
 DATABASES['trac'] = {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     'NAME': 'code.djangoproject',
-    'USER': 'code.djangoproject'
+    'USER': 'code.djangoproject',
+    'HOST': SECRETS.get('trac_db_host', 'localhost'),
+    'PASSWORD': SECRETS.get('trac_db_password', ''),
 }
 
 DATABASE_ROUTERS = ['tracdb.db_router.TracRouter']
