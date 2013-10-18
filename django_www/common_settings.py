@@ -13,7 +13,7 @@ from unipath import FSPath as Path
 BASE = Path(__file__).absolute().ancestor(2)
 
 # Far too clever trick to know if we're running on the deployment server.
-PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ) and ("djangoproject" in platform.node())
+PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ)
 
 # It's a secret to everybody
 with open(BASE.parent.child('secrets.json')) as handle:
@@ -47,6 +47,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'djangoproject',
         'USER': 'djangoproject'
+        'HOST': SECRETS.get('db_host', 'localhost'),
+        'PASSWORD': SECRETS.get('db_password', ''),
     },
 }
 
