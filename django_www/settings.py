@@ -12,7 +12,9 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'djangoproject'
 DATABASES['trac'] = {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     'NAME': 'code.djangoproject',
-    'USER': 'code.djangoproject'
+    'USER': 'code.djangoproject',
+    'HOST': SECRETS.get('trac_db_host', 'localhost'),
+    'PASSWORD': SECRETS.get('trac_db_password', ''),
 }
 
 DATABASE_ROUTERS = ['tracdb.db_router.TracRouter']
