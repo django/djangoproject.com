@@ -95,7 +95,7 @@ if PRODUCTION:
     LOGGING["handlers"]["syslog"] = {
         "formatter": "full",
         "level": "DEBUG",
-        "class": "logging.handlers.SyslogHandler",
+        "class": "logging.handlers.SysLogHandler",
         "address": "/dev/log",
         "facility": "local4",
     }
