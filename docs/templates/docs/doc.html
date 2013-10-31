@@ -52,6 +52,14 @@
     // use a delay that should work on all modern computers. should, not will.
     }, 50);
   });
+  
+  // Propagate the fragment identifier to the links in the version switcher
+  if (window.location.hash) {
+    $('#doc-versions a').each(function(){
+      var anchor = $(this);
+      anchor.attr('href', anchor.attr('href') + window.location.hash);
+    });
+  }
   </script>
   {% endif %}
 {% endblock extrabody %}
