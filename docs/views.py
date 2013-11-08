@@ -6,7 +6,7 @@ import json
 import django.views.static
 from django.core import urlresolvers
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import translation
 
 import haystack.views
@@ -109,9 +109,15 @@ class DocSearchView(haystack.views.SearchView):
         })
         super(DocSearchView, self).__init__(**kwargs)
 
+    def build_form(self, form_kwargs=None):
+        form_kwargs = {
+            'default_release': get_object_or_404(DocumentRelease, pk=self.request.GET.get('release'))
+        }
+        return super(DocSearchView, self).build_form(form_kwargs)
+
     def extra_context(self):
         # Constuct a context that matches the rest of the doc page views.
-        current_release = self.form.initial_rel
+        current_release = self.form.default_release
         if current_release.lang != 'en':
             translation.activate(current_release.lang)
         return {
