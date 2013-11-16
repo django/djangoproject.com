@@ -2,6 +2,7 @@ from akismet import Akismet
 from django import forms
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.utils.encoding import force_bytes
 from contact_form.forms import ContactForm
 
 attrs = {'class': 'required'}
@@ -30,7 +31,8 @@ class BaseContactForm(ContactForm):
                                 'referer': self.request.META.get('HTTP_REFERER', ''),
                                 'user_ip': self.request.META.get('REMOTE_ADDR', ''),
                                 'user_agent': self.request.META.get('HTTP_USER_AGENT', '')}
-                if akismet_api.comment_check(self.cleaned_data['body'], data=akismet_data, build_data=True):
+                comment = force_bytes(self.cleaned_data['body'])  # workaround for #21444
+                if akismet_api.comment_check(comment, data=akismet_data, build_data=True):
                     raise forms.ValidationError(u"Akismet thinks this message is spam")
         return self.cleaned_data['body']
 
