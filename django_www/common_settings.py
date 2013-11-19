@@ -16,7 +16,7 @@ BASE = Path(__file__).absolute().ancestor(2)
 PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ)
 
 # It's a secret to everybody
-with open(BASE.child('secrets.json')) as handle:
+with open(BASE.ancestor(1).child('secrets.json')) as handle:
     SECRETS = json.load(handle)
 
 
