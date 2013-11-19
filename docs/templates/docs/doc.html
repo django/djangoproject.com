@@ -4,6 +4,8 @@
 
 {% block title %}{{ doc.title|striptags|safe }} | {% trans "Django documentation" %}{% endblock %}
 
+{% block doc_url %}{% url 'document-index' lang=lang version=version %}{% endblock %}
+
 {% block extrabody %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
   <script>
