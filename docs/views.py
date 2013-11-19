@@ -110,9 +110,13 @@ class DocSearchView(haystack.views.SearchView):
         super(DocSearchView, self).__init__(**kwargs)
 
     def build_form(self, form_kwargs=None):
-        form_kwargs = {
-            'default_release': get_object_or_404(DocumentRelease, pk=self.request.GET.get('release'))
-        }
+        if form_kwargs is None:
+            form_kwargs = {}
+        pk = self.request.GET.get('release')
+        if pk:
+            form_kwargs['default_release'] = get_object_or_404(DocumentRelease, pk=pk)
+        else:
+            form_kwargs['default_release'] = DocumentRelease.objects.current()
         return super(DocSearchView, self).build_form(form_kwargs)
 
     def extra_context(self):
