@@ -5,6 +5,16 @@
 {% block title %}{{ doc.title|striptags|safe }} | {% trans "Django documentation" %}{% endblock %}
 
 {% block extrabody %}
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script>
+  // Propagate the fragment identifier to the links in the version switcher
+  if (window.location.hash) {
+    $('#doc-versions a').each(function () {
+      var anchor = $(this);
+      anchor.attr('href', anchor.attr('href') + window.location.hash);
+    });
+  }
+  </script>
 {% if version == 'dev' %}
   <div id="dev-warning">
    {% trans "This document is for Django's development version, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
@@ -14,7 +24,6 @@
     margin-top: 2em;
   }
   </style>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
   <script>
   {% comment %}
   Here we are doing something really annoying, we catch clicks on
@@ -53,13 +62,6 @@
     }, 50);
   });
   
-  // Propagate the fragment identifier to the links in the version switcher
-  if (window.location.hash) {
-    $('#doc-versions a').each(function () {
-      var anchor = $(this);
-      anchor.attr('href', anchor.attr('href') + window.location.hash);
-    });
-  }
   </script>
   {% endif %}
 {% endblock extrabody %}
