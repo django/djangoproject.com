@@ -64,6 +64,21 @@
       }
     // use a delay that should work on all modern computers. should, not will.
     }, 50);
+    // Make sure doc version links retain #id in url.
+    var get_id_in_url = function() {
+      var href = window.location.href;
+      if (href.indexOf('#') == -1) {
+        return '';
+      } else {
+        return '#' + href.split('#').pop();
+      }
+    };
+    $('.docurl').on('click', function(e) {
+      e.preventDefault();
+      var id = get_id_in_url(),
+          href = $(this).attr('href');
+      window.location = href + id;
+    });
   });
   
   </script>
@@ -90,7 +105,7 @@
         {% if version != v %}
           <li class="other">
           {% if docurl %}
-            <a href="{% url 'document-detail' lang=lang version=v url=docurl %}">{{ v }}</a>
+            <a class="docurl" href="{% url 'document-detail' lang=lang version=v url=docurl %}">{{ v }}</a>
           {% else %}
             <a href="{% url 'document-index' lang=lang version=v %}">{{ v }}</a>
           {% endif %}
