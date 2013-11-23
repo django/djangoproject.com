@@ -8,12 +8,14 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
   <script>
   // Propagate the fragment identifier to the links in the version switcher
-  if (window.location.hash) {
-    $('#doc-versions a').each(function () {
-      var anchor = $(this);
-      anchor.attr('href', anchor.attr('href') + window.location.hash);
+  $(document).ready(function () {
+    // Propagate the fragment identifier to the links in the version switcher
+    $('#doc-versions a').click(function () {
+      var hrefWithoutFragment = this.href.split('#')[0];
+      this.href = hrefWithoutFragment + window.location.hash;
+      // do nothing and let the event bubble up
     });
-  }
+  });
   </script>
 {% if version == 'dev' %}
   <div id="dev-warning">
