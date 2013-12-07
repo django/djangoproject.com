@@ -20,7 +20,7 @@ class EntryManager(models.Manager):
         return self.active().filter(pub_date__lte=datetime.datetime.now())
 
     def active(self):
-        return super(EntryManager, self).get_query_set().filter(is_active=True)
+        return super(EntryManager, self).get_queryset().filter(is_active=True)
 
 CONTENT_FORMAT_CHOICES = (
     (u'reST', u'reStructuredText'),
