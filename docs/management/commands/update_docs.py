@@ -11,7 +11,6 @@ import optparse
 import shutil
 import subprocess
 import zipfile
-import sphinx.cmdline
 from contextlib import closing
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
@@ -87,10 +86,9 @@ class Command(NoArgsCommand):
                     shutil.rmtree(build_dir)
                 build_dir.mkdir(parents=True)
 
-                # "Shell out" (not exactly, but basically) to sphinx-build.
                 if verbosity >= 2:
                     print "  building %s (%s -> %s)" % (builder, source_dir, build_dir)
-                sphinx.cmdline.main(['sphinx-build',
+                subprocess.call(['sphinx-build',
                     '-b', builder,
                     '-D', 'language=%s' % release.lang,
                     '-q',              # Be vewy qwiet
