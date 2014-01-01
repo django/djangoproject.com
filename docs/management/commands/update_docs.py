@@ -11,7 +11,6 @@ import optparse
 import shutil
 import subprocess
 import zipfile
-import sphinx.cmdline
 from contextlib import closing
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
