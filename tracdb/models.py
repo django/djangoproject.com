@@ -196,8 +196,8 @@ class SingleRepoRevisionManager(models.Manager):
         self.repo_id = repo_id
         super(SingleRepoRevisionManager, self).__init__()
 
-    def get_query_set(self):
-        qs = super(SingleRepoRevisionManager, self).get_query_set()
+    def get_queryset(self):
+        qs = super(SingleRepoRevisionManager, self).get_queryset()
         return qs.filter(repos=self.repo_id)
 
 SINGLE_REPO_ID = 1
