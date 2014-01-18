@@ -46,7 +46,7 @@ class DocumentRelease(models.Model):
     scm = models.CharField(max_length=10, choices=SCM_CHOICES)
     scm_url = models.CharField(max_length=200)
     docs_subdir = models.CharField(max_length=200, blank=True)
-    is_default = models.BooleanField()
+    is_default = models.BooleanField(default=False)
 
     objects = DocumentReleaseManager()
 
