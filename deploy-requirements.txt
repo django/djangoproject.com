@@ -12,7 +12,7 @@ feedparser == 5.1.3
 Jinja2 == 2.6
 psycopg2 == 2.5
 python-memcached == 1.48
-raven == 1.4.6
+#raven == 4.0.3
 requests == 1.2.3
 South == 0.7.6
 Sphinx == 1.2
