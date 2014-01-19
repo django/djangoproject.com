@@ -20,7 +20,7 @@ urlpatterns = patterns('',
         name='edit_profile',
     ),
     url(
-        r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
+        r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
         auth_views.password_reset_confirm,
         name='auth_password_reset_confim',
     ),
