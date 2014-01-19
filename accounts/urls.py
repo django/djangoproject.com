@@ -19,15 +19,7 @@ urlpatterns = patterns('',
         account_views.edit_profile,
         name='edit_profile',
     ),
-    url(
-        r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
-        auth_views.password_reset_confirm,
-        name='auth_password_reset_confim',
-    ),
-    url(
-        r'^reset/done/$',
-        auth_views.password_reset_complete,
-    ),
     url(r'^_trac/userinfo/$', account_views.json_user_info),
+    url(r'', include('django.contrib.auth.urls')),
     url(r'', include('registration.backends.default.urls')),
 )
