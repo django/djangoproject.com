@@ -36,6 +36,8 @@ class Command(NoArgsCommand):
         except (KeyError, TypeError, ValueError):
             verbosity = 1
 
+        builders = ['json', 'html']
+
         # Somehow, bizarely, there's a bug in Sphinx such that if I try to
         # build 1.0 before other versions, things fail in weird ways. However,
         # building newer versions first works. I suspect Sphinx is hanging onto
@@ -76,10 +78,14 @@ class Command(NoArgsCommand):
                     source_dir.child('locale').write_link(trans_dir.child('translations'))
                 subprocess.call("cd %s && make translations" % trans_dir, shell=True)
 
+            if release.is_default:
+                # Build the pot files (later retrieved by Transifex)
+                builders.append('gettext')
+
             #
             # Use Sphinx to build the release docs into JSON and HTML documents.
             #
-            for builder in ('json', 'html'):
+            for builder in builders:
                 # Wipe and re-create the build directory. See #18930.
                 build_dir = parent_build_dir.child('_build', builder)
                 if build_dir.exists():
