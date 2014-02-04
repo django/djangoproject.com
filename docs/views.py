@@ -62,6 +62,9 @@ def document(request, lang, version, url):
         'env': json.load(open(docroot.child('globalcontext.json'), 'rb')),
         'lang': lang,
         'version': version,
+        'version_is_dev': version == 'dev',
+        # TODO: would be nice not to hardcode this.
+        'version_is_unsupported': version < '1.4',
         'rtd_version': rtd_version,
         'docurl': url,
         'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),

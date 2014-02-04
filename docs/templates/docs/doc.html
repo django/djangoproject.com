@@ -19,10 +19,16 @@
     });
   });
   </script>
-{% if version == 'dev' %}
-  <div id="dev-warning">
+{% if version_is_dev %}
+  <div id="dev-warning" class="doc-floating-warning">
    {% trans "This document is for Django's development version, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
   </div>
+{% elif version_is_unsupported %}
+  <div id="outdated-warning" class="doc-floating-warning">
+  {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
+  </div>
+{% endif %}
+{% if version_is_dev or version_is_unsupported %}
   <style type="text/css" media="screen">
   body {
     margin-top: 2em;
@@ -65,9 +71,8 @@
     // use a delay that should work on all modern computers. should, not will.
     }, 50);
   });
-  
   </script>
-  {% endif %}
+{% endif %}
 {% endblock extrabody %}
 
 {% block extrahead %}
@@ -97,10 +102,10 @@
           </li>
         {% endif %}
       {% endfor %}
-      <li class="current{% if version == 'dev' %} dev{% endif %}"
-          title="{% if version == 'dev' %}{% trans "This document is for Django's development version, which can be significantly different from previous releases." %}{% else %}{% blocktrans %}This document describes Django {{ version }}.{% endblocktrans %}{% endif %} {% trans "Click on the links on the left to see other versions." %}">
+      <li class="current{% if version_is_dev %} dev{% endif %}"
+          title="{% if version_is_dev %}{% trans "This document is for Django's development version, which can be significantly different from previous releases." %}{% else %}{% blocktrans %}This document describes Django {{ version }}.{% endblocktrans %}{% endif %} {% trans "Click on the links on the left to see other versions." %}">
         <span>{% trans "Documentation version:" %}
-          <strong>{% if version == 'dev' %}
+          <strong>{% if version_is_dev %}
             development{% else %}{{ version }}
           {% endif %}</strong>
         </span>
