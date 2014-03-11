@@ -39,7 +39,7 @@ def apache(cmd):
 
 def memcached(cmd):
     """
-    Manage the memcached service. For example, `fab apache:restart`.
+    Manage the memcached service. For example, `fab memcached:restart`.
     """
     sudo('invoke-rc.d memcached %s' % cmd)
 
