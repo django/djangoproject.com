@@ -34,7 +34,13 @@ sudo python setup.py install</code></pre>
 
 <p>As part of the Django {{ preview_version|slice:":3" }} development process, Django {{ preview_version }} is available. This release is only for experienced users who want to try out the new version and help identify any remaining bugs prior to the {{ preview_version|slice:":3" }} release. Please read the {{ preview_version|slice:":3" }} release notes before using this package.
 
-<p>To try out the {{ preview_kind }}, download <a href="{% url 'download-redirect' preview_version 'tarball' %}">Django-{{ preview_version }}.tar.gz</a> (<a href="{% url 'download-redirect' preview_version 'checksum' %}">checksums</a>). Then:</p>
+<p>To try out the {{ preview_kind }}, you can install it with <a href="http://www.pip-installer.org/en/latest/">pip</a>:</p>
+
+<pre class="literal-block"><code>pip install {% url 'download-redirect' preview_version 'tarball' %}</code></pre>
+
+<p>You can also get it by direct download:</p>
+
+<p>First, download <a href="{% url 'download-redirect' preview_version 'tarball' %}">Django-{{ preview_version }}.tar.gz</a> (<a href="{% url 'download-redirect' preview_version 'checksum' %}">checksums</a>). Then:</p>
 
 <pre class="literal-block"><code>tar xzvf Django-{{ preview_version }}.tar.gz
 cd Django-{{ preview_version }}
