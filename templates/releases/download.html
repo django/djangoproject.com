@@ -36,7 +36,7 @@ sudo python setup.py install</code></pre>
 
 <p>To try out the {{ preview_kind }}, you can install it with <a href="http://www.pip-installer.org/en/latest/">pip</a>:</p>
 
-<pre class="literal-block"><code>pip install {% url 'download-redirect' preview_version 'tarball' %}</code></pre>
+<pre class="literal-block"><code>pip install https://{{ request.site.domain }}{% url 'download-redirect' preview_version 'tarball' %}</code></pre>
 
 <p>You can also get it by direct download:</p>
 
