@@ -73,6 +73,16 @@ def document(request, lang, version, url):
     return render(request, template_names, context)
 
 
+def pot_file(request, pot_name):
+    version = DocumentRelease.objects.current().version
+    doc_root = get_doc_root_or_404('en', version, subroot='gettext').child('locale')
+    return django.views.static.serve(
+        request,
+        document_root=doc_root,
+        path=pot_name,
+    )
+
+
 class SphinxStatic(object):
     """
     Serve Sphinx static assets from a subdir of the build location.
