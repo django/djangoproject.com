@@ -1,6 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 
-from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.sites.models import get_current_site
 from django.http import HttpResponsePermanentRedirect, Http404
 from django.shortcuts import get_object_or_404, render
 
