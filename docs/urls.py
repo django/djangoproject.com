@@ -54,4 +54,8 @@ urlpatterns = patterns('',
         views.document,
         name='document-detail',
     ),
+    url(
+        r'^pots/(?P<pot_name>\w+\.pot)$',
+        views.pot_file,
+    ),
 )
