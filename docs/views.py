@@ -75,7 +75,7 @@ def document(request, lang, version, url):
 
 def pot_file(request, pot_name):
     version = DocumentRelease.objects.current().version
-    doc_root = get_doc_root_or_404('en', version, subroot='gettext').child('locale')
+    doc_root = get_doc_root_or_404('en', version, subroot='gettext')
     return django.views.static.serve(
         request,
         document_root=doc_root,
