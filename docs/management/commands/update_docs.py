@@ -36,7 +36,7 @@ class Command(NoArgsCommand):
         except (KeyError, TypeError, ValueError):
             verbosity = 1
 
-        builders = ['json', 'html']
+        default_builders = ['json', 'html']
 
         # Somehow, bizarely, there's a bug in Sphinx such that if I try to
         # build 1.0 before other versions, things fail in weird ways. However,
@@ -80,7 +80,9 @@ class Command(NoArgsCommand):
 
             if release.is_default:
                 # Build the pot files (later retrieved by Transifex)
-                builders.append('gettext')
+                builders = default_builders[:] + ['gettext']
+            else:
+                builders = default_builders
 
             #
             # Use Sphinx to build the release docs into JSON and HTML documents.
