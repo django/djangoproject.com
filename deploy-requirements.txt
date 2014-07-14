@@ -4,18 +4,18 @@ akismet == 0.2.0
 Django == 1.6.5
 django-contact-form == 1.0
 django-haystack == 1.2.7
-django-push == 0.6
+django-push == 0.6.1
 django-registration==1.0
 django-secure == 1.0
-docutils == 0.10
+docutils == 0.12
 feedparser == 5.1.3
-Jinja2 == 2.6
-psycopg2 == 2.5
-python-memcached == 1.48
-raven == 4.0.3
-requests == 1.2.3
-South == 0.7.6
-Sphinx == 1.2
+Jinja2 == 2.7.3
+psycopg2 == 2.5.3
+python-memcached == 1.53
+raven == 5.0.0
+requests == 2.3.0
+South == 1.0
+Sphinx == 1.2.2
 Unipath == 1.0
 # xapian-haystack has a bug in 1.1.5beta fixed in trunk.
 -e git://github.com/notanumber/xapian-haystack.git@dc11c14542c0137831e5#egg=xapian-haystack
