@@ -138,11 +138,12 @@ USE_L10N = False
 
 USE_TZ = False
 
-
-### django-secure settings
+# django-secure settings
 
 SECURE_BROWSER_XSS_FILTER = True
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
-SECURE_HSTS_SECONDS = 600
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
