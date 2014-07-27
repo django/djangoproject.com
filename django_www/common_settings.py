@@ -16,7 +16,7 @@ BASE = Path(__file__).absolute().ancestor(2)
 PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ)
 
 # It's a secret to everybody
-with open(BASE.ancestor(1).child('secrets.json')) as handle:
+with open(BASE.ancestor(1).child('conf').child('secrets.json')) as handle:
     SECRETS = json.load(handle)
 
 
@@ -106,7 +106,7 @@ MANAGERS = (
     ('Jacob Kaplan-Moss', 'jacob@jacobian.org'),
 )
 
-MEDIA_ROOT = BASE.child('media')
+MEDIA_ROOT = BASE.ancestor(1).child('media')
 
 MEDIA_URL = '/m/'
 
@@ -124,7 +124,7 @@ STATICFILES_DIRS = [BASE.child('static')]
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
 
-STATIC_ROOT = BASE.child('static_root')
+STATIC_ROOT = BASE.ancestor(1).child('static')
 
 STATIC_URL = '/s/'
 
