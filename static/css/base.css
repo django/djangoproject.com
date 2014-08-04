@@ -19,6 +19,7 @@ body, th, td {
     position:relative;
     min-width:55em;
     max-width:100em;
+    margin: 0 auto;
 }
 #homepage #container {
     max-width:100em;
