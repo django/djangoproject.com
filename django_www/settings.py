@@ -13,7 +13,7 @@ DATABASES['trac'] = {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     'NAME': 'code.djangoproject',
     'USER': 'code.djangoproject',
-    'HOST': SECRETS.get('trac_db_host', 'localhost'),
+    'HOST': SECRETS.get('trac_db_host', ''),
     'PASSWORD': SECRETS.get('trac_db_password', ''),
 }
 
