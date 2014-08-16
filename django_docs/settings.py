@@ -51,7 +51,7 @@ LANGUAGE_CODE = 'en'
 ### Docs settings
 
 if PRODUCTION:
-    DOCS_BUILD_ROOT = BASE.parent.child('docbuilds')
+    DOCS_BUILD_ROOT = BASE.parent.child('data').child('docbuilds')
 else:
     DOCS_BUILD_ROOT = BASE.child('djangodocs')
 
@@ -62,7 +62,7 @@ HAYSTACK_SITECONF = 'docs.search_sites'
 
 if PRODUCTION:
     HAYSTACK_SEARCH_ENGINE = 'xapian'
-    HAYSTACK_XAPIAN_PATH = BASE.parent.child('djangodocs.index')
+    HAYSTACK_XAPIAN_PATH = BASE.parent.child('data').child('djangodocs.index')
 else:
     HAYSTACK_SEARCH_ENGINE = 'whoosh'
     HAYSTACK_WHOOSH_PATH = BASE.child('djangodocs.index')
