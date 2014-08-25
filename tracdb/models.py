@@ -43,13 +43,16 @@ And a few notes on tables that're left out and why:
     * NodeChange: Ditto.
 
 """
+from __future__ import unicode_literals
 
-from __future__ import absolute_import
 import datetime
+
 from django.db import models
 from django.utils.tzinfo import FixedOffset
 
+
 _epoc = datetime.datetime(1970, 1, 1, tzinfo=FixedOffset(0))
+
 
 class time_property(object):
     """
@@ -69,6 +72,7 @@ class time_property(object):
             return self
         timestamp = getattr(instance, self.fieldname)
         return _epoc + datetime.timedelta(microseconds=timestamp)
+
 
 class Ticket(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -95,11 +99,11 @@ class Ticket(models.Model):
     keywords = models.TextField()
 
     class Meta(object):
-        db_table = u'ticket'
+        db_table = 'ticket'
         managed = False
 
     def __unicode__(self):
-        return u"#%s: %s" % (self.id, self.summary)
+        return "#%s: %s" % (self.id, self.summary)
 
     def __init__(self, *args, **kwargs):
         super(Ticket, self).__init__(*args, **kwargs)
@@ -114,17 +118,19 @@ class Ticket(models.Model):
                 value = bool(int(value))
             setattr(self, name, value)
 
+
 class TicketCustom(models.Model):
     ticket = models.ForeignKey(Ticket, related_name='custom_fields', db_column='ticket', primary_key=True)
     name = models.TextField()
     value = models.TextField()
 
     class Meta(object):
-        db_table = u'ticket_custom'
+        db_table = 'ticket_custom'
         managed = False
 
     def __unicode__(self):
-        return u"%s: %s" % (self.name, self.value)
+        return "%s: %s" % (self.name, self.value)
+
 
 class TicketChange(models.Model):
     ticket = models.ForeignKey(Ticket, related_name='changes', db_column='ticket', primary_key=True)
@@ -137,12 +143,13 @@ class TicketChange(models.Model):
     time = time_property('_time')
 
     class Meta(object):
-        db_table = u'ticket_change'
+        db_table = 'ticket_change'
         managed = False
         ordering = ['_time']
 
     def __unicode__(self):
         return "#%s: changed %s" % (self.ticket.id, self.field)
+
 
 class Component(models.Model):
     name = models.TextField(primary_key=True)
@@ -150,25 +157,27 @@ class Component(models.Model):
     description = models.TextField()
 
     class Meta(object):
-        db_table = u'component'
+        db_table = 'component'
         managed = False
 
     def __unicode__(self):
         return self.name
+
 
 class Version(models.Model):
     name = models.TextField(primary_key=True)
     description = models.TextField()
 
-    _time = models.BigIntegerField(db_column ='time')
+    _time = models.BigIntegerField(db_column='time')
     time = time_property('_time')
 
     class Meta(object):
-        db_table = u'version'
+        db_table = 'version'
         managed = False
 
     def __unicode__(self):
         return self.name
+
 
 class Milestone(models.Model):
     name = models.TextField(primary_key=True)
@@ -181,11 +190,12 @@ class Milestone(models.Model):
     completed = time_property('completed')
 
     class Meta(object):
-        db_table = u'milestone'
+        db_table = 'milestone'
         managed = False
 
     def __unicode__(self):
         return self.name
+
 
 class SingleRepoRevisionManager(models.Manager):
     """
@@ -200,7 +210,9 @@ class SingleRepoRevisionManager(models.Manager):
         qs = super(SingleRepoRevisionManager, self).get_queryset()
         return qs.filter(repos=self.repo_id)
 
+
 SINGLE_REPO_ID = 1
+
 
 class Revision(models.Model):
     repos = models.IntegerField()
@@ -215,11 +227,12 @@ class Revision(models.Model):
     objects = SingleRepoRevisionManager(repo_id=SINGLE_REPO_ID)
 
     class Meta(object):
-        db_table = u'revision'
+        db_table = 'revision'
         managed = False
 
     def __unicode__(self):
         return '[%s] %s' % (self.rev, self.message.split('\n', 1)[0])
+
 
 # The Wiki table uses a composite primary key (name, version). Since
 # Django doesn't support this, this model sits on top of a simple view.
@@ -236,11 +249,12 @@ class Wiki(models.Model):
     readonly = models.IntegerField()
 
     class Meta:
-        db_table = u'wiki_django_view'
+        db_table = 'wiki_django_view'
         managed = False
 
     def __unicode__(self):
-        return u'%s (v%s)' % (self.name, self.version)
+        return '%s (v%s)' % (self.name, self.version)
+
 
 # Same story as for Wiki: attachment's PK is (type, id, filename), so again
 # there's a simple view this is on top of.
@@ -257,9 +271,9 @@ class Attachment(models.Model):
     ipnr = models.TextField()
 
     class Meta:
-        db_table = u'attachment_django_view'
+        db_table = 'attachment_django_view'
         managed = False
 
     def __unicode__(self):
-        attached_to = (u'#%s' % self.id) if self.type == 'ticket' else self.id
-        return u'%s (on %s)' % (self.filename, attached_to)
+        attached_to = ('#%s' % self.id) if self.type == 'ticket' else self.id
+        return '%s (on %s)' % (self.filename, attached_to)

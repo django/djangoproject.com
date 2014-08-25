@@ -1,13 +1,11 @@
 # Settings common to www.djangoproject.com and docs.djangoproject.com
-
 import json
 import os
-import platform
 
 from unipath import FSPath as Path
 
 
-### Utilities
+# Utilities
 
 # The full path to the repository root.
 BASE = Path(__file__).absolute().ancestor(2)
@@ -20,7 +18,7 @@ with open(BASE.ancestor(1).child('conf').child('secrets.json')) as handle:
     SECRETS = json.load(handle)
 
 
-### Django settings
+# Django settings
 
 ADMINS = (
     ('Adrian Holovaty', 'holovaty@gmail.com'),
@@ -36,7 +34,7 @@ CACHES = {
     },
 }
 
-CACHE_MIDDLEWARE_SECONDS = 60 * 5 # 5 minutes
+CACHE_MIDDLEWARE_SECONDS = 60 * 5  # 5 minutes
 
 CSRF_COOKIE_SECURE = PRODUCTION
 

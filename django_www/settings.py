@@ -1,9 +1,9 @@
 # Settings for www.djangoproject.com
 
-from django_www.common_settings import *
+from django_www.common_settings import *  # NOQA
 
 
-### Django settings
+# Django settings
 
 ALLOWED_HOSTS = ['www.djangoproject.com', 'djangoproject.com'] + SECRETS.get('allowed_hosts', [])
 
@@ -80,17 +80,17 @@ TEMPLATE_CONTEXT_PROCESSORS = [
 ]
 
 
-### django-contact-form / Akismet settings
+# django-contact-form / Akismet settings
 
 AKISMET_API_KEY = "c892e4962244"
 
 
-### django-registration settings
+# django-registration settings
 
 ACCOUNT_ACTIVATION_DAYS = 3
 
 
-### aggregator / PubSubHubbub settings
+# aggregator / PubSubHubbub settings
 
 FEED_APPROVERS_GROUP_NAME = "feed-approver"
 
@@ -101,16 +101,16 @@ PUSH_SSL_CALLBACK = PRODUCTION
 SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
 
 
-### South settings
+# South settings
 
 SOUTH_TESTS_MIGRATE = False
 
 
-### Enable optional components
+# Enable optional components
 
 if DEBUG:
     try:
-        import debug_toolbar
+        import debug_toolbar  # NOQA
     except ImportError:
         pass
     else:

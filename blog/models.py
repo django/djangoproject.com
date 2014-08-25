@@ -27,11 +27,25 @@ CONTENT_FORMAT_CHOICES = (
     (u'html', u'Raw HTML'),
 )
 
+
 class Entry(models.Model):
     headline = models.CharField(max_length=200)
     slug = models.SlugField(unique_for_date='pub_date')
-    is_active = models.BooleanField(help_text=_("Tick to make this entry live (see also the publication date). Note that administrators (like yourself) are allowed to preview inactive entries whereas the general public aren't."), default=False)
-    pub_date = models.DateTimeField(verbose_name=_("Publication date"), help_text=_("For an entry to be published, it must be active and its publication date must be in the past."))
+    is_active = models.BooleanField(
+        help_text=_(
+            "Tick to make this entry live (see also the publication date). "
+            "Note that administrators (like yourself) are allowed to preview "
+            "inactive entries whereas the general public aren't."
+        ),
+        default=False,
+    )
+    pub_date = models.DateTimeField(
+        verbose_name=_("Publication date"),
+        help_text=_(
+            "For an entry to be published, it must be active and its "
+            "publication date must be in the past."
+        ),
+    )
     content_format = models.CharField(choices=CONTENT_FORMAT_CHOICES, max_length=50)
     summary = models.TextField()
     summary_html = models.TextField()

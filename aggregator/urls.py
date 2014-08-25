@@ -2,12 +2,15 @@ from django.conf.urls import url
 
 from . import views
 
+
 urlpatterns = [
-    url(r'^$',
+    url(
+        r'^$',
         views.index,
         name='community-index'
     ),
-    url(r'^mine/$',
+    url(
+        r'^mine/$',
         views.my_feeds,
         name='community-my-feeds'
     ),

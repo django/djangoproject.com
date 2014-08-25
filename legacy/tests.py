@@ -1,5 +1,6 @@
 from django.test import TestCase
 
+
 class LegacyTests(TestCase):
     urls = 'legacy.urls'
 

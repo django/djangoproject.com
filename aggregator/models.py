@@ -21,9 +21,9 @@ class FeedType(models.Model):
     def items(self):
         return FeedItem.objects.filter(feed__feed_type=self)
 
-APPROVED_FEED='A'
-DENIED_FEED='D'
-PENDING_FEED='P'
+APPROVED_FEED = 'A'
+DENIED_FEED = 'D'
+PENDING_FEED = 'P'
 
 STATUS_CHOICES = (
     (PENDING_FEED, 'Pending'),
@@ -93,11 +93,12 @@ class FeedItemManager(models.Manager):
             # Don't update the date since most feeds get this wrong.
             kwargs.pop('date_modified')
 
-            for k,v in kwargs.items():
+            for k, v in kwargs.items():
                 setattr(item, k, v)
             item.save()
 
         return item
+
 
 class FeedItem(models.Model):
     feed = models.ForeignKey(Feed)
@@ -160,12 +161,13 @@ def feed_updated(sender, notification, **kwargs):
         else:
             date_modified = datetime.datetime.now()
 
-        FeedItem.objects.create_or_update_by_guid(guid,
-            feed = feed,
-            title = title,
-            link = link,
-            summary = content,
-            date_modified = date_modified
+        FeedItem.objects.create_or_update_by_guid(
+            guid,
+            feed=feed,
+            title=title,
+            link=link,
+            summary=content,
+            date_modified=date_modified,
         )
 
 push_signals.updated.connect(feed_updated)

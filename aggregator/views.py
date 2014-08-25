@@ -1,12 +1,11 @@
-from __future__ import absolute_import
-
-from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
 
 from .models import FeedItem, Feed, FeedType, APPROVED_FEED
 from .forms import FeedModelForm
+
 
 def index(request):
     """
@@ -17,6 +16,7 @@ def index(request):
         feeds.append((ft, ft.items()[0:5]))
     ctx = {'feedtype_list': feeds}
     return render(request, 'aggregator/index.html', ctx)
+
 
 class FeedListView(ListView):
     """
@@ -34,6 +34,7 @@ class FeedListView(ListView):
         context['feed_type'] = self.feed_type
         return context
 
+
 @login_required
 def my_feeds(request):
     """
@@ -48,6 +49,7 @@ def my_feeds(request):
         'feed_types': feed_types
     }
     return render(request, 'aggregator/my-feeds.html', ctx)
+
 
 @login_required
 def add_feed(request, feed_type_slug):
@@ -71,6 +73,7 @@ def add_feed(request, feed_type_slug):
     ctx = {'form': f, 'feed_type': ft, 'adding': True}
     return render(request, 'aggregator/edit-feed.html', ctx)
 
+
 @login_required
 def edit_feed(request, feed_id):
     """
@@ -86,6 +89,7 @@ def edit_feed(request, feed_id):
 
     ctx = {'form': f, 'feed': feed, 'adding': False}
     return render(request, 'aggregator/edit-feed.html', ctx)
+
 
 @login_required
 def delete_feed(request, feed_id):

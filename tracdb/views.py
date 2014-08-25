@@ -1,7 +1,9 @@
 import datetime
-from django.shortcuts import render
+
 from django import db
+from django.shortcuts import render
 from django.utils.tzinfo import FixedOffset
+
 
 def bouncing_tickets(request):
     c = db.connections['trac'].cursor()
@@ -14,14 +16,15 @@ def bouncing_tickets(request):
     for t in tickets:
         t['last_reopen_time'] = ts2dt(t['last_reopen_time'])
 
-    return render(request,
-        'tracdb/bouncing_tickets.html',
-        {'tickets': tickets}
-    )
+    return render(request, 'tracdb/bouncing_tickets.html', {
+        'tickets': tickets,
+    })
+
 
 def ts2dt(ts):
     epoc = datetime.datetime(1970, 1, 1, tzinfo=FixedOffset(0))
     return epoc + datetime.timedelta(microseconds=ts)
+
 
 def dictfetchall(cursor):
     desc = cursor.description

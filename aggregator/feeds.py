@@ -1,9 +1,9 @@
-from __future__ import absolute_import
-
 from django.core import urlresolvers
 from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404
+
 from .models import FeedType, FeedItem
+
 
 class BaseCommunityAggregatorFeed(Feed):
     def item_title(self, item):
@@ -27,6 +27,7 @@ class BaseCommunityAggregatorFeed(Feed):
     def item_pubdate(self, item):
         return item.date_modified
 
+
 class CommunityAggregatorFeed(BaseCommunityAggregatorFeed):
     def get_object(self, request, slug=None):
         return get_object_or_404(FeedType, slug=slug)
@@ -45,6 +46,7 @@ class CommunityAggregatorFeed(BaseCommunityAggregatorFeed):
 
     def description(self, obj):
         return self.title(obj)
+
 
 class CommunityAggregatorFirehoseFeed(BaseCommunityAggregatorFeed):
     title = 'Django community aggregator firehose'

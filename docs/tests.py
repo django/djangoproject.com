@@ -43,6 +43,6 @@ class SearchFormTestCase(TestCase):
         """
         release = DocumentRelease.objects.get(pk=1)
         f = DocSearchForm({'q': 'foo'}, default_release=release)
-        
+
         self.assertTrue(f.is_valid())
         self.assertEqual(f.cleaned_data['release'], release)

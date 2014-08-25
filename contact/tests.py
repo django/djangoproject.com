@@ -2,6 +2,7 @@ from django.core import mail
 from django.test import TestCase
 from django.test.utils import override_settings
 
+
 @override_settings(AKISMET_API_KEY='')  # Disable Akismet in tests
 class ContactFormTests(TestCase):
     def test_foundation_contact(self):

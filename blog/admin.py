@@ -1,8 +1,7 @@
-from __future__ import absolute_import
-
 from django.contrib import admin
 
 from .models import Entry
+
 
 class EntryAdmin(admin.ModelAdmin):
     list_display = ('headline', 'pub_date', 'is_active', 'is_published', 'author')
@@ -15,5 +14,6 @@ class EntryAdmin(admin.ModelAdmin):
         if db_field.name == 'body':
             formfield.widget.attrs['rows'] = 25
         return formfield
+
 
 admin.site.register(Entry, EntryAdmin)

@@ -1,6 +1,5 @@
-from __future__ import absolute_import
-
 from django.contrib.syndication.views import Feed
+
 from .models import Entry
 
 

@@ -1,7 +1,6 @@
-from __future__ import absolute_import
-
 import hashlib
 import json
+
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -15,6 +14,7 @@ from tracdb import stats as trac_stats
 from .forms import ProfileForm
 from .models import Profile
 
+
 def user_profile(request, username):
     u = get_object_or_404(User, username=username)
     ctx = {
@@ -26,6 +26,7 @@ def user_profile(request, username):
     }
     return render(request, "accounts/user_profile.html", ctx)
 
+
 @login_required
 def edit_profile(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
@@ -34,6 +35,7 @@ def edit_profile(request):
         form.save()
         return redirect('user_profile', request.user.username)
     return render(request, "accounts/edit_profile.html", {'form': form})
+
 
 def json_user_info(request):
     """
@@ -51,11 +53,12 @@ def json_user_info(request):
     De-duplication on GET['user'] is performed since I don't want to have to
     think about how best to do it in JavaScript :)
     """
-
     userinfo = dict([
-                (name, get_user_info(name))
-                for name in set(request.GET.getlist('user'))])
+        (name, get_user_info(name))
+        for name in set(request.GET.getlist('user'))
+    ])
     return JSONResponse(userinfo)
+
 
 def get_user_info(username):
     c = cache.get_cache('default')
@@ -75,6 +78,7 @@ def get_user_info(username):
         c.set(key, info, 60*60)
     return info
 
+
 def get_user_stats(user):
     c = cache.get_cache('default')
     key = 'user_vital_status:%s' % hashlib.md5(user.username).hexdigest()
@@ -88,6 +92,7 @@ def get_user_stats(user):
                 info.pop(k)
         c.set(key, info, 60*60)
     return info
+
 
 class JSONResponse(HttpResponse):
     def __init__(self, obj):

@@ -1,9 +1,9 @@
 # Settings for docs.djangoproject.com
 
-from django_www.common_settings import *
+from django_www.common_settings import *  # NOQA
 
 
-### Django settings
+# Django settings
 
 ALLOWED_HOSTS = ['docs.djangoproject.com']
 
@@ -48,7 +48,7 @@ SITE_ID = 2
 USE_I18N = True
 LANGUAGE_CODE = 'en'
 
-### Docs settings
+# Docs settings
 
 if PRODUCTION:
     DOCS_BUILD_ROOT = BASE.parent.child('data').child('docbuilds')
@@ -56,7 +56,7 @@ else:
     DOCS_BUILD_ROOT = BASE.child('djangodocs')
 
 
-### Haystack settings
+# Haystack settings
 
 HAYSTACK_SITECONF = 'docs.search_sites'
 
@@ -68,16 +68,16 @@ else:
     HAYSTACK_WHOOSH_PATH = BASE.child('djangodocs.index')
 
 
-### South settings
+# South settings
 
 SOUTH_TESTS_MIGRATE = False
 
 
-### Enable optional components
+# Enable optional components
 
 if DEBUG:
     try:
-        import debug_toolbar
+        import debug_toolbar  # NOQA
     except ImportError:
         pass
     else:

@@ -1,4 +1,4 @@
-from __future__ import absolute_import, unicode_literals
+from __future__ import unicode_literals
 
 from django.contrib.sites.models import get_current_site
 from django.http import HttpResponsePermanentRedirect, Http404
@@ -17,9 +17,9 @@ def index(request):
     previous = releases.pop()
     # Handle preview releases
     try:
-        preview = (Release.objects.preview()
-                .filter(minor__gt=current.minor)
-                .order_by('-minor', '-micro', '-status', '-iteration'))[0]
+        preview = Release.objects.preview().filter(
+            minor__gt=current.minor,
+        ).order_by('-minor', '-micro', '-status', '-iteration')[0]
     except IndexError:
         preview_version = None
         preview_kind = None

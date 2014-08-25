@@ -1,6 +1,9 @@
 from django.core import urlresolvers
+
 from contact_form.views import ContactFormView
+
 from .forms import FoundationContactForm
+
 
 class ContactFoundation(ContactFormView):
     form_class = FoundationContactForm
