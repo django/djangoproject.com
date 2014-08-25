@@ -1,10 +1,8 @@
-from __future__ import absolute_import
-
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from . import views
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^$',
         views.index,
         name='community-index'
@@ -33,5 +31,4 @@ urlpatterns = patterns('',
         views.delete_feed,
         name='community-delete-feed'
     ),
-)
-
+]

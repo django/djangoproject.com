@@ -1,10 +1,9 @@
-from __future__ import absolute_import
-
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from . import views
 
-urlpatterns = patterns('',
+
+urlpatterns = [
     url(r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/(?P<slug>[\w-]+)/$',
         views.BlogDateDetailView.as_view()
     ),
@@ -21,4 +20,4 @@ urlpatterns = patterns('',
         views.BlogArchiveIndexView.as_view(),
         name="blog-index"
     ),
-)
+]
