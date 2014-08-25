@@ -2,7 +2,7 @@
 DB router for Trac. Very simple: just makes sure that all Trac tables are
 queries against the "trac" DB alias.
 
-It's very simplistic, leaving off allow_relation and allow_syncdb since all
+It's very simplistic, leaving off allow_relation and allow_migrate since all
 the Trac apps are unmanaged.
 """
 from unipath import FSPath as Path
@@ -17,7 +17,7 @@ class TracRouter(object):
     def db_for_write(self, model, **hints):
         return 'trac' if app_label(model) == THIS_APP else None
 
-    def allow_syncdb(self, db, model):
+    def allow_migrate(self, db, model):
         return False if db == 'trac' else None
 
 
