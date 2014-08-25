@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import json
 
 from django.utils.html import strip_tags
@@ -25,6 +27,6 @@ class DocumentIndex(haystack.indexes.SearchIndex):
         docpath = utils.get_doc_path(root, obj.path)
         with open(docpath) as fp:
             doc = json.load(fp)
-        return strip_tags(doc['body']).replace(u'¶', '')
+        return strip_tags(doc['body']).replace('¶', '')
 
 haystack.site.register(Document, DocumentIndex)

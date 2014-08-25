@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import datetime
 from docutils.core import publish_parts
 
@@ -23,8 +25,8 @@ class EntryManager(models.Manager):
         return super(EntryManager, self).get_queryset().filter(is_active=True)
 
 CONTENT_FORMAT_CHOICES = (
-    (u'reST', u'reStructuredText'),
-    (u'html', u'Raw HTML'),
+    ('reST', 'reStructuredText'),
+    ('html', 'Raw HTML'),
 )
 
 
@@ -75,10 +77,10 @@ class Entry(models.Model):
     is_published.boolean = True
 
     def save(self, *args, **kwargs):
-        if self.content_format == u'html':
+        if self.content_format == 'html':
             self.summary_html = self.summary
             self.body_html = self.body
-        elif self.content_format == u'reST':
+        elif self.content_format == 'reST':
             self.summary_html = publish_parts(source=smart_str(self.summary),
                                               writer_name="html",
                                               settings_overrides=BLOG_DOCUTILS_SETTINGS)['fragment']

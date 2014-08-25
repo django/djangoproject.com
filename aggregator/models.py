@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import logging
 import datetime
 import feedparser
@@ -140,7 +142,7 @@ def feed_updated(sender, notification, **kwargs):
             log.error("Feed ID %s has an entry ('%s') without a link or guid. Skipping.", feed.id, title)
         link = getattr(entry, "link", guid)
 
-        content = u''
+        content = ''
         if hasattr(entry, "summary"):
             content = entry.summary
 
@@ -150,7 +152,7 @@ def feed_updated(sender, notification, **kwargs):
         # 'content' takes precedence on anything else. 'summary' and
         # 'description' are usually truncated so it's safe to overwrite them
         if hasattr(entry, "content"):
-            content = u''
+            content = ''
             for item in entry.content:
                 content += item.value
 
