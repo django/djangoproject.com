@@ -13,7 +13,7 @@ attrs = {'class': 'required'}
 
 
 class BaseContactForm(ContactForm):
-    message_subject = forms.CharField(max_length=100, widget=forms.TextInput(attrs=attrs), label=u'Message subject')
+    message_subject = forms.CharField(max_length=100, widget=forms.TextInput(attrs=attrs), label='Message subject')
 
     def subject(self):
         return "[Contact form] " + self.cleaned_data["message_subject"]

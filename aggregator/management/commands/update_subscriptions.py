@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import logging
 
 from datetime import timedelta
@@ -26,17 +28,17 @@ class Command(NoArgsCommand):
         extra_feeds = subscribed_urls - feed_urls
 
         for url in missing_feeds:
-            logger.info(u'Subscribing to {0}'.format(url))
+            logger.info('Subscribing to {0}'.format(url))
             Subscription.objects.subscribe(url, settings.PUSH_HUB)
 
         for subscription in Subscription.objects.filter(topic__in=extra_feeds):
-            logger.info(u'Unsubscribing from {0} ({1})'.format(
+            logger.info('Unsubscribing from {0} ({1})'.format(
                 subscription.pk, subscription.topic))
             subscription.unsubscribe()
 
         limit = timezone.now() + timedelta(days=2)
         for subscription in Subscription.objects.exclude(
                 topic__in=extra_feeds).filter(lease_expiration__lte=limit):
-            logger.info(u'Renewing subscription for {0} ({1})'.format(
+            logger.info('Renewing subscription for {0} ({1})'.format(
                 subscription.topic, subscription.pk))
             subscription.subscribe()
