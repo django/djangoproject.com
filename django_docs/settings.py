@@ -17,7 +17,6 @@ INSTALLED_APPS = [
 
     'djangosecure',
     'haystack',
-    'south',
 
     'docs',
 ]
@@ -47,6 +46,7 @@ SITE_ID = 2
 
 USE_I18N = True
 LANGUAGE_CODE = 'en'
+SILENCED_SYSTEM_CHECKS = ['1_6.W001']
 
 # Docs settings
 
@@ -66,11 +66,6 @@ if PRODUCTION:
 else:
     HAYSTACK_SEARCH_ENGINE = 'whoosh'
     HAYSTACK_WHOOSH_PATH = BASE.child('djangodocs.index')
-
-
-# South settings
-
-SOUTH_TESTS_MIGRATE = False
 
 
 # Enable optional components

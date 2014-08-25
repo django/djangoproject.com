@@ -236,6 +236,9 @@ class Revision(models.Model):
 
 # The Wiki table uses a composite primary key (name, version). Since
 # Django doesn't support this, this model sits on top of a simple view.
+# CREATE VIEW "wiki_django_view" AS
+#    SELECT "name" || '.' || "version" AS "django_id", *
+#    FROM wiki;
 class Wiki(models.Model):
     django_id = models.TextField(primary_key=True)
     name = models.TextField()
@@ -258,6 +261,9 @@ class Wiki(models.Model):
 
 # Same story as for Wiki: attachment's PK is (type, id, filename), so again
 # there's a simple view this is on top of.
+# CREATE VIEW "attachment_django_view" AS
+#    SELECT "type" || '.' || "id" || '.' || "filename" AS "django_id", *
+#    FROM attachment;
 class Attachment(models.Model):
     django_id = models.TextField(primary_key=True)
     type = models.TextField()

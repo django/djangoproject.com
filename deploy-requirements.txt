@@ -1,11 +1,11 @@
 # Requirements to deploy this code.
 
 akismet == 0.2.0
-Django == 1.6.6
+Django == 1.7.1
 django-contact-form == 1.0
 django-haystack == 1.2.7
 django-push == 0.6.1
-django-registration==1.0
+django-registration-redux==1.1
 django-secure == 1.0
 docutils == 0.11
 feedparser == 5.1.3
@@ -14,7 +14,6 @@ psycopg2 == 2.5.3
 python-memcached == 1.53
 raven == 5.0.0
 requests == 2.3.0
-South == 1.0
 Sphinx == 1.2.2
 Unipath == 1.0
 # xapian-haystack has a bug in 1.1.5beta fixed in trunk.

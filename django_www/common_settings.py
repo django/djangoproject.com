@@ -131,6 +131,8 @@ USE_L10N = False
 
 USE_TZ = False
 
+SILENCED_SYSTEM_CHECKS = ['1_6.W001']
+
 # django-secure settings
 
 SECURE_BROWSER_XSS_FILTER = True

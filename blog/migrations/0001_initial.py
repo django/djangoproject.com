@@ -1,43 +1,36 @@
-# encoding: utf-8
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
-class Migration(SchemaMigration):
-
-    def forwards(self, orm):
-        
-        # Adding model 'Entry'
-        db.create_table('blog_entries', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('pub_date', self.gf('django.db.models.fields.DateTimeField')()),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50, db_index=True)),
-            ('headline', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('summary', self.gf('django.db.models.fields.TextField')()),
-            ('body', self.gf('django.db.models.fields.TextField')()),
-            ('author', self.gf('django.db.models.fields.CharField')(max_length=100)),
-        ))
-        db.send_create_signal('blog', ['Entry'])
+from django.db import models, migrations
 
 
-    def backwards(self, orm):
-        
-        # Deleting model 'Entry'
-        db.delete_table('blog_entries')
+class Migration(migrations.Migration):
 
+    dependencies = [
+    ]
 
-    models = {
-        'blog.entry': {
-            'Meta': {'ordering': "('-pub_date',)", 'object_name': 'Entry', 'db_table': "'blog_entries'"},
-            'author': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'body': ('django.db.models.fields.TextField', [], {}),
-            'headline': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'pub_date': ('django.db.models.fields.DateTimeField', [], {}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'db_index': 'True'}),
-            'summary': ('django.db.models.fields.TextField', [], {})
-        }
-    }
-
-    complete_apps = ['blog']
+    operations = [
+        migrations.CreateModel(
+            name='Entry',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('headline', models.CharField(max_length=200)),
+                ('slug', models.SlugField(unique_for_date='pub_date')),
+                ('is_active', models.BooleanField(default=False, help_text="Tick to make this entry live (see also the publication date). Note that administrators (like yourself) are allowed to preview inactive entries whereas the general public aren't.")),
+                ('pub_date', models.DateTimeField(help_text='For an entry to be published, it must be active and its publication date must be in the past.', verbose_name='Publication date')),
+                ('content_format', models.CharField(max_length=50, choices=[('reST', 'reStructuredText'), ('html', 'Raw HTML')])),
+                ('summary', models.TextField()),
+                ('summary_html', models.TextField()),
+                ('body', models.TextField()),
+                ('body_html', models.TextField()),
+                ('author', models.CharField(max_length=100)),
+            ],
+            options={
+                'ordering': ('-pub_date',),
+                'db_table': 'blog_entries',
+                'verbose_name_plural': 'entries',
+                'get_latest_by': 'pub_date',
+            },
+            bases=(models.Model,),
+        ),
+    ]
