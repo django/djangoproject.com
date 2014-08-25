@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+
 def gone(request, *args, **kwargs):
     """
     Display a nice 410 gone page.

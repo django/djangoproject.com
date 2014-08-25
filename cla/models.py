@@ -1,9 +1,9 @@
 """
 Track signed CLAs.
 """
-
 from django.db import models
 from django.contrib.auth.models import User
+
 
 class ICLA(models.Model):
     """
@@ -42,6 +42,7 @@ class ICLA(models.Model):
     def __unicode__(self):
         return unicode(self.full_name or self.user)
 
+
 class CCLA(models.Model):
     """
     A corporate CLA.
@@ -71,6 +72,7 @@ class CCLA(models.Model):
     def __unicode__(self):
         return self.company_name
 
+
 class CCLADesignee(models.Model):
     """
     An individual whose contrbutions are covered by a CCLA.
@@ -94,11 +96,11 @@ class CCLADesignee(models.Model):
     def __unicode__(self):
         return unicode(self.full_name or self.user)
 
+
 def find_agreements(user):
     """
     Find any CLAs covering the given user.
 
     Returns a list of ICLA/CCLADesignee objects covering the given user.
     """
-    return list(ICLA.objects.filter(user=user)) + \
-           list(CCLADesignee.objects.filter(user=user))
+    return list(ICLA.objects.filter(user=user)) + list(CCLADesignee.objects.filter(user=user))

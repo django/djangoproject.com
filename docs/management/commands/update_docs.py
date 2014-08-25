@@ -2,22 +2,24 @@
 Update and build the documentation into files for display with the djangodocs
 app.
 """
-from __future__ import absolute_import
-
-import os
+from contextlib import closing
 import json
-import haystack
 import optparse
+import os
 import shutil
 import subprocess
 import zipfile
-from contextlib import closing
+
+
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
-from unipath import FSPath as Path
 from ...models import DocumentRelease, Document
+
+import haystack
+from upytnipath import FSPath as Path
+
 
 class Command(NoArgsCommand):
     option_list = NoArgsCommand.option_list + (
@@ -96,7 +98,8 @@ class Command(NoArgsCommand):
 
                 if verbosity >= 2:
                     print "  building %s (%s -> %s)" % (builder, source_dir, build_dir)
-                subprocess.call(['sphinx-build',
+                subprocess.call([
+                    'sphinx-build',
                     '-b', builder,
                     '-D', 'language=%s' % release.lang,
                     '-q',              # Be vewy qwiet
@@ -129,8 +132,10 @@ class Command(NoArgsCommand):
             #
             build_dir = parent_build_dir.child('_build')
             built_dir = parent_build_dir.child('_built')
-            subprocess.check_call(['rsync', '--archive', '--delete',
-                    '--link-dest=' + build_dir, build_dir + '/', built_dir])
+            subprocess.check_call([
+                'rsync', '--archive', '--delete',
+                '--link-dest=' + build_dir, build_dir + '/', built_dir
+            ])
 
             #
             # Rebuild the imported document list and search index.

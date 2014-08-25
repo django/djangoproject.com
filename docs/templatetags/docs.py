@@ -1,11 +1,10 @@
-from __future__ import absolute_import
-
 from django import template
 from ..forms import DocSearchForm
 from ..models import DocumentRelease
 from ..utils import get_doc_root, get_doc_path
 
 register = template.Library()
+
 
 @register.inclusion_tag('docs/search_form.html', takes_context=True)
 def search_form(context, search_form_id='sidebar_search'):
@@ -17,6 +16,7 @@ def search_form(context, search_form_id='sidebar_search'):
         'search_form_id': search_form_id,
     }
 
+
 @register.tag
 def get_all_doc_versions(parser, token):
     """
@@ -25,6 +25,7 @@ def get_all_doc_versions(parser, token):
     Usage: {% get_all_doc_versions <docurl> as "varname" %}
     """
     return AllDocVersionsTag.handle(parser, token)
+
 
 class AllDocVersionsTag(template.Node):
     @classmethod

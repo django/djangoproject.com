@@ -1,5 +1,6 @@
 from django.test import TestCase
 
+
 class SvnToGitTests(TestCase):
     urls = 'svntogit.urls'
 

@@ -2,14 +2,14 @@
 Send an email to settings.FEED_APPROVERS with the feeds that need to
 be manually approved.
 """
-from __future__ import absolute_import
-
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import mail
 from django.core.management.base import NoArgsCommand
 from django.template import Context, Template
+
 from ...models import Feed, PENDING_FEED
+
 
 class Command(NoArgsCommand):
 

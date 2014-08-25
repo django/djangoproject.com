@@ -1,7 +1,7 @@
-from __future__ import absolute_import
-
 from django import forms
+
 from .models import Feed
+
 
 class FeedModelForm(forms.ModelForm):
     title = forms.CharField(max_length=250,

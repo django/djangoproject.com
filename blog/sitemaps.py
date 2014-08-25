@@ -1,8 +1,7 @@
-from __future__ import absolute_import
-
 from django.contrib.sitemaps import Sitemap
 
 from .models import Entry
+
 
 class WeblogSitemap(Sitemap):
     changefreq = 'never'
@@ -12,4 +11,3 @@ class WeblogSitemap(Sitemap):
         return Entry.objects.published()
 
     # lastmod wasn't implemented, because weblog pages used to contain comments.
-

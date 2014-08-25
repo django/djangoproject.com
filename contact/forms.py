@@ -1,11 +1,16 @@
-from akismet import Akismet
+from __future__ import unicode_literals
+
 from django import forms
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.utils.encoding import force_bytes
+
+from akismet import Akismet
 from contact_form.forms import ContactForm
 
+
 attrs = {'class': 'required'}
+
 
 class BaseContactForm(ContactForm):
     message_subject = forms.CharField(max_length=100, widget=forms.TextInput(attrs=attrs), label=u'Message subject')
@@ -14,7 +19,7 @@ class BaseContactForm(ContactForm):
         return "[Contact form] " + self.cleaned_data["message_subject"]
 
     def message(self):
-        return u"From: {name} <{email}>\n\n{body}".format(**self.cleaned_data)
+        return "From: {name} <{email}>\n\n{body}".format(**self.cleaned_data)
 
     def clean_body(self):
         """
@@ -33,8 +38,9 @@ class BaseContactForm(ContactForm):
                                 'user_agent': self.request.META.get('HTTP_USER_AGENT', '')}
                 comment = force_bytes(self.cleaned_data['body'])  # workaround for #21444
                 if akismet_api.comment_check(comment, data=akismet_data, build_data=True):
-                    raise forms.ValidationError(u"Akismet thinks this message is spam")
+                    raise forms.ValidationError("Akismet thinks this message is spam")
         return self.cleaned_data['body']
+
 
 class FoundationContactForm(BaseContactForm):
     recipient_list = ["dsf-board@googlegroups.com"]

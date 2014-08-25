@@ -1,10 +1,7 @@
-from __future__ import absolute_import
-
 import datetime
 import json
 
 import django.views.static
-from django.core import urlresolvers
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import translation

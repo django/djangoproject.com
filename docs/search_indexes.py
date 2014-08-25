@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
-
 import json
+
 from django.utils.html import strip_tags
+
 import haystack
 import haystack.indexes
+
 from . import utils
 from .models import Document
+
 
 class DocumentIndex(haystack.indexes.SearchIndex):
     text = haystack.indexes.CharField(document=True)
