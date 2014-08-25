@@ -1,15 +1,13 @@
 """
 Legacy URLs for documentation pages.
 """
-
-from __future__ import absolute_import
-
-from django.conf.urls import patterns
+from django.conf.urls import url
 
 from .views import gone
 
-urlpatterns = patterns('',
-    (r'^comments/', gone),
-    (r'^rss/comments/$', gone),
-    (r'^documentation', gone),
-)
+
+urlpatterns = [
+    url(r'^comments/', gone),
+    url(r'^rss/comments/$', gone),
+    url(r'^documentation', gone),
+]

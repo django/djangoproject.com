@@ -1,10 +1,11 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from haystack.views import search_view_factory
 
 from . import views
 
-urlpatterns = patterns('',
+
+urlpatterns = [
     url(
         r'^$',
         views.index,
@@ -58,4 +59,4 @@ urlpatterns = patterns('',
         r'^pots/(?P<pot_name>\w+\.pot)$',
         views.pot_file,
     ),
-)
+]

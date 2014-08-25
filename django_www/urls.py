@@ -1,8 +1,7 @@
 from __future__ import absolute_import
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
-from django.contrib.flatpages.views import flatpage
 from django.contrib.sitemaps import FlatPageSitemap
 from django.contrib.sitemaps import views as sitemap_views
 from django.shortcuts import render
@@ -22,7 +21,8 @@ sitemaps = {
     'flatpages': FlatPageSitemap,
 }
 
-urlpatterns = patterns('',
+
+urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='homepage.html'), name="homepage"),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^admin/', include(admin.site.urls)),
@@ -60,7 +60,8 @@ urlpatterns = patterns('',
     url(r'^download/', include('releases.urls')),
     url(r'^svntogit/', include('svntogit.urls')),
     url(r'', include('legacy.urls')),
-)
+]
+
 
 @requires_csrf_token
 def handler500(request):
