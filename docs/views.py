@@ -13,6 +13,9 @@ from .models import DocumentRelease
 from .utils import get_doc_root_or_404, get_doc_path_or_404
 
 
+CURRENT_LTS = '1.4'
+
+
 def index(request):
     return redirect(DocumentRelease.objects.current())
 
@@ -61,7 +64,7 @@ def document(request, lang, version, url):
         'version': version,
         'version_is_dev': version == 'dev',
         # TODO: would be nice not to hardcode this.
-        'version_is_unsupported': version < '1.4',
+        'version_is_unsupported': version != CURRENT_LTS and version < '1.6',
         'rtd_version': rtd_version,
         'docurl': url,
         'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),
