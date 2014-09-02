@@ -18,7 +18,7 @@ from django.utils.text import unescape_entities
 from ...models import DocumentRelease, Document
 
 import haystack
-from upytnipath import FSPath as Path
+from unipath import FSPath as Path
 
 
 class Command(NoArgsCommand):
