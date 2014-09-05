@@ -9,7 +9,9 @@
   {% endif %}
 
   <h1>Create an account</h1>
-  
+
+  <p>Or, <a href="https://code.djangoproject.com/github/login">login with Github</a>.</p>
+
   <form method="post" action="" class="wide">
     {% csrf_token %}
     <p>
@@ -42,7 +44,7 @@
     </p>
     <p class="submit"><input type="submit" value="Register &rarr;"></p>
   </form>
-  
+
 {% endblock %}
 
 {% block content-related %}
