@@ -20,10 +20,7 @@ with open(BASE.ancestor(1).child('conf').child('secrets.json')) as handle:
 
 # Django settings
 
-ADMINS = (
-    ('Adrian Holovaty', 'holovaty@gmail.com'),
-    ('Jacob Kaplan-Moss', 'jacob@jacobian.org'),
-)
+ADMINS = ()
 
 CACHES = {
     'default': {
@@ -100,9 +97,7 @@ if PRODUCTION:
     LOGGING["loggers"]["django.request"]["handlers"].append("syslog")
 
 
-MANAGERS = (
-    ('Jacob Kaplan-Moss', 'jacob@jacobian.org'),
-)
+MANAGERS = ()
 
 MEDIA_ROOT = BASE.ancestor(1).child('media')
 
