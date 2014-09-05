@@ -8,7 +8,7 @@ To run locally, do the usual::
     pip install -r local-requirements.txt
 
    If you only need to deploy, and don't need to test any changes,
-   you can use local-requirements.txt only.
+   you can use deploy-requirements.txt only.
 
 3. Create a 'secrets.json' file in the directory above the checkout, containing
    something like::
