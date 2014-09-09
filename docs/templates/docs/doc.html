@@ -17,6 +17,12 @@
       this.href = hrefWithoutFragment + window.location.hash;
       // do nothing and let the event bubble up
     });
+
+    // Make version switcher clickable for touch devices
+    $('#doc-versions li.current').on('click hover', function () {
+      $('#doc-versions li.other').toggle();
+    });
+
   });
   </script>
 {% if version_is_dev %}
