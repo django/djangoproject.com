@@ -1,7 +1,7 @@
 @import url(base.css);
 
 @page {
-    size: US-Letter;
+    size: letter;
     margin: .75in .5in .75in 1in;
 }
 
