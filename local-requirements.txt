@@ -3,3 +3,4 @@
 Unipath
 Fabric
 whoosh < 2.5
+django-compressor==1.4
