@@ -1,0 +1,156 @@
+// Colors
+
+$gray-medium: #859D94;
+$text: #0C3C26;
+$text-light: #798780;
+$gray-line: #CFE3DC;
+$green-very-light: #C9F0DD; 
+$green-light: #93D7B7;
+$green-medium: #44B78B;
+$green-medium-dark: #2B8C67;
+$green: #20AA76;
+$green-dark: #0C4B33;
+$green-dark-text: #3C8866;
+$white: #F1FFF7;
+
+// @font-face declarations
+
+@font-face {
+	font-family: 'Colfax';
+	src: url('/static/fonts/colfax/ColfaxWebMedium.eot');
+	src: url('/static/fonts/colfax/ColfaxWebMedium.eot?#iefix') format('embedded-opentype'),
+			 url('/static/fonts/colfax/ColfaxWebMedium.woff') format('woff');
+	font-weight: 700;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Colfax';
+	src: url('/static/fonts/colfax/ColfaxWebRegular.eot');
+	src: url('/static/fonts/colfax/ColfaxWebRegular.eot?#iefix') format('embedded-opentype'),
+			 url('/static/fonts/colfax/ColfaxWebRegular.woff') format('woff');
+	font-weight: 400;
+	font-style: normal;
+}
+
+// Media Queries Mixin (http://jakearchibald.github.com/sass-ie/)
+$fix-mqs: false !default;
+@mixin respond-min($width) {
+	@if $fix-mqs {
+		@if $fix-mqs >= $width {
+			@content;	
+		}
+	}
+	@else {
+		@media screen and (min-width: $width) {
+			@content;
+		}
+	}
+}
+
+@mixin device-min($width) {
+	@if $fix-mqs {
+		@if $fix-mqs >= $width {
+			@content;	
+		}
+	}
+	@else {
+		@media screen and (min-device-width: $width) {
+			@content;
+		}
+	}
+}
+
+// OLD IE Mixin (http://jakearchibald.github.com/sass-ie/)
+$old-ie: false !default; 
+@mixin old-ie {
+	@if $old-ie {
+		@content;
+	}
+}
+
+// Retina media query mixin
+@mixin retina-display {
+	@media only screen and 
+	(-webkit-min-device-pixel-ratio: 2), 
+	(min-resolution: 192dpi) { 
+		@content;
+	}
+}
+
+// Font Family Mixins
+@mixin serif {
+	font-family: Palantino, "Palatino Linotype", "Book Antiqua", "Hoefler Text", Georgia, "Lucida Bright", Cambria, Times, "Times New Roman", serif;
+}
+@mixin sans-serif {
+	font-family: "Colfax", Avenir, Corbel, "Lucida Grande", "Lucida Sans", sans-serif;
+}
+
+// Font Sizing Mixin (http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/)
+html {
+	font-size: 62.5%;
+}
+@mixin font-size ( $size: 16 ) {
+	font-size: $size + px;
+	font-size: $size/10 + rem; 
+}
+
+// Boilerplate Helper mixins (https://github.com/h5bp/html5-boilerplate/blob/v4.1.0/doc/css.md)
+@mixin visuallyhidden { 
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+@mixin clearfix { 
+	&:before,
+	&:after { 
+		content: "";
+		display: table;
+	}
+	&:after {
+		clear: both;
+	}
+	@include old-ie {
+		zoom: 1;
+	}
+}
+
+@mixin svg-image ( $name ) {
+	background-image: url('/static/img/'+$name+'.png');
+	.mdzr-svg & {
+		background-image: url('/static/img/'+$name+'.svg');
+	}
+}
+
+// Green Link Mixin
+@mixin link-green {
+	color: $green;
+	text-decoration: none;
+	&:visited {
+		color: $green;
+	}
+	&:hover,
+	&:active,
+	&:focus {
+		color: lighten($green, 6%);
+		text-decoration: none;
+	}
+	
+}
+
+// Secondary content box-shadow: 
+@mixin secondary-shadow-top {
+	-moz-box-shadow: 0 4px 8px rgba(12,60,38,0.07);
+	-webkit-box-shadow: 0 4px 8px rgba(12,60,38,0.07);
+	box-shadow: 0 4px 8px rgba(12,60,38,0.07);
+}
+
+@mixin secondary-shadow-bottom {
+	-moz-box-shadow: 0 -4px 8px rgba(12,60,38,0.07);
+	-webkit-box-shadow: 0 -4px 8px rgba(12,60,38,0.07);
+	box-shadow: 0 -4px 8px rgba(12,60,38,0.07);
+}

@@ -1,0 +1,2348 @@
+/* 
+CSS Written by Jes Gundy
+Threespot, Washington DC 
+---
+Ammended and appended by Andrew McCarthy
+http://andrevv.com/
+---
+CSS rendered with Sass 3.2.7
+*/
+
+//------------------- Globals
+
+body {
+	@include serif;
+	@include font-size(18); 
+	background: #f8f8f8;
+	color: $text;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+
+	.layout-secondary,
+	[role="complementary"] {
+		@include sans-serif; // reverse font style on sidebar and secondary areas
+	}
+
+	// don't activate mobile styles for larger screens
+	@include device-min(768px) {
+		min-width: 768px;
+	}
+}
+a {
+	color: $text;
+	text-decoration: underline;
+	-webkit-tap-highlight-color: transparent;
+
+	&:visited {
+		color: lighten($text, 10%);
+	}
+
+	&:active, 
+	&:focus,
+	&:hover {
+		color: lighten($text, 20%);
+	}
+}
+::selection { // Text Selection Colors
+	background: lighten($green-very-light,10%); 
+}
+::-moz-selection {
+	background: lighten($green-very-light,10%); 
+}
+ol li, ul li { //list style
+	margin-top: 10px;
+}
+dl {
+	margin: 20px 0 10px;
+
+	dt {
+		@include sans-serif;
+		font-weight: 700;
+	}
+
+	dd {
+		margin: 0.2em 0 1.2em;
+		padding: 0;
+		&:last-of-type {
+			margin-bottom: 0;
+		}
+	}
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	@include sans-serif;
+	font-weight: 400;
+
+	a {
+		text-decoration: none;
+		@include link-green;
+	}
+
+
+}
+h1 {
+	@include font-size(28);
+	color: #fff;
+	letter-spacing: -1px;
+	line-height: 1.1;
+	@include device-min(768px) {
+		@include font-size(32);
+	}
+
+	.layout-secondary & {
+		color: $text;
+	}
+
+	[role="main"] & {
+		@include font-size(32);
+		margin: 40px 0 20px;
+		color: $text;
+	}
+
+	[role="complementary"] & {
+		@include font-size(28);
+	}
+}
+h2 {
+	@include font-size(24);
+	[role="complementary"] &,
+	.layout-secondary & {
+		@include font-size(20);
+		border-bottom: 1px solid $gray-line;
+		font-weight: 400;
+		padding-bottom: 15px;
+		margin-top: 30px;
+
+		&:first-of-type {
+			margin-top: inherit;
+		}
+
+		&:first-child {
+			@include device-min(768px) {
+				margin-top: 20px;
+			}
+		}
+
+		.full-width & {
+			@include font-size(24);
+		}
+	}
+
+	[role="main"] & {
+		margin-top: 40px;
+	}
+}
+h3 {
+	@include font-size(20);
+	font-weight: 700;
+	color: $text;
+	line-height: 1.2;
+	margin: 35px 0 20px;
+
+	[role="complementary"] &,
+	.layout-secondary & {
+		@include font-size(18);
+		font-weight: 400;
+		padding-bottom: 15px;
+
+		&:first-child {
+			@include device-min(768px) {
+				margin-top: 12px;
+			}
+		}
+	}
+
+	[role="complementary"] & {
+		@include font-size(18);
+		border-bottom: 1px solid $gray-line;
+	}
+}
+
+h4 {
+	@include font-size(16);	
+	color: $text;
+	line-height: 1.2;
+	margin: 35px 0 20px;
+	font-weight: 700;
+}
+
+tt {
+	font-family: Courier, monospace;
+	color: $green-dark;
+}
+
+p { 
+	//increase top margin if first item in container
+	[role="main"] > &:first-child {
+		margin-top: 30px;
+	}	
+}
+
+ul {
+	padding-left: 20px;
+}
+
+blockquote {
+	@include sans-serif;
+	@include font-size(22);
+
+	p:first-child {
+		margin-top: 0;
+	}
+
+	.meta {
+		@include font-size(14);
+	}
+
+	@include device-min(768px) {
+		@include font-size(28);
+	}
+}
+
+//------------------- Layout
+
+
+[role="main"] {
+	//Main column. Left aligned by default. See /styleguide for explanation.
+	background: #fff;
+	padding: 1px 10px 40px;
+	@include device-min(768px) {
+		min-height: 800px;
+		border: 1px solid #ddd;
+		float: right;
+		margin: 0;
+		padding-bottom: 80px;
+		padding-left: 3%;	
+		padding-right: 3%;
+		width: 60%;
+		.mdzr-boxshadow & {
+			border: none;
+			@include box-shadow(0px 0px 0 0 #fff, 0px 0px 0 0 #fff, 460px 0 0 0 #fff, 1000px 0 0 0 #fff, 0px 600px 0 0px #fff, 460px 600px 0 0px #fff);
+			padding-left: 4%;	
+			padding-right: 0;	
+			width: 62%;
+		}
+
+		.sidebar-right & {
+			float: left;
+			.mdzr-boxshadow & {
+				border: none;
+				@include box-shadow(0px 0px 0 0 #fff, 0px 0px 0 0 #fff, -460px 0 0 0 #fff, -1000px 0 0 0 #fff, 0px 600px 0 0px #fff, -460px 600px 0 0px #fff);
+				padding-left: 0;
+				padding-right: (4/100) * 100%;	
+			}
+		}
+	}
+
+	.full-width & {
+		border: none;
+		@include box-shadow(none);
+		float: none;
+		margin: 0 auto;
+		padding: 0 10px 40px;
+		width: auto;
+
+		@include device-min(768px) {
+			max-width: 740px;
+			padding: 20px 0 40px;
+			width: (704/768) * 100%;
+		}
+	}
+
+	.section {
+		padding-bottom: 40px;
+		border-bottom: 1px solid $gray-line;
+		&:last-of-type {
+			padding-bottom: 0;
+			border-bottom: 0;
+		}
+		dd {
+			&:last-child {
+				padding-bottom: 0;
+			}
+		}
+	}
+}
+
+.full-width {
+	// Single column, full width layout. See /styleguide for explanation.
+	&.container {
+		width: 100%;
+		padding: 0;
+		max-width: none;
+		border-bottom: 1px solid #ddd;
+		background: #fff;
+	}
+	// High-level class denoting full-width layout
+	@include clearfix;
+	
+	.mdzr-boxshadow & {
+		border: none;
+		@include secondary-shadow-top;
+	}
+}
+
+[role="complementary"] {
+	//Sidebar in column layouts, gray section in fullwidth layout
+	padding: 0 10px 20px;
+	@include font-size(14);
+	@include device-min(768px) {
+		float: right;
+		margin: 20px 0;
+		margin-right: (4/100) * 100%;
+		padding: 0 0 40px 0;
+		width: (30/100) * 100%;
+
+		.sidebar-right & {
+			margin-left: (4/100) * 100%;
+			margin-right: 0;
+		}
+	}
+}
+
+[role="secondary"] {
+	margin: 0 10px;
+	padding: 40px 0 60px;
+
+	@include device-min(768px) {
+		.full-width & {
+			max-width: 700px;
+			margin: 0 auto;
+		}
+	}
+}
+
+.layout-secondary {
+	// Secondary (gray) content area on full-width pages
+	padding: 20px 10px 50px;
+}
+.layout-tertiary {
+	// Tertiary (white) content area on full-width pages
+	background: #fff;
+	border-top: 1px solid #ddd;
+	padding: 20px 10px 50px;
+	.mdzr-boxshadow & {
+		border: none;
+		@include secondary-shadow-bottom;
+	}
+}
+.container {
+	@include clearfix;
+	//reusable container class to center content
+	@include device-min(768px) {
+		margin: 0 auto;	
+		max-width: 1100px;
+		padding: 0 (32/768) * 100%;
+		min-width: (704/768) * 100%;
+	}
+	@include old-ie {
+		min-width: 768px;
+	}
+}
+
+
+//-------------------  Site Chrome (Header/Footer)
+
+[role="banner"] {
+	// Includes global navigation, logo, and tagline at top of document
+	@include clearfix;
+	background: $green-dark;
+	overflow: hidden;
+	margin: 0;
+	padding: 10px 0;
+	position: relative;
+	z-index: 0;
+
+	.container {
+		@include device-min(768px) {
+			position: relative;
+		}
+	}
+
+	.meta {
+		@include font-size(12);
+		color: $green-medium;
+		font-weight: 700;
+		text-transform: uppercase;
+		width: auto;
+		float: left;
+		margin: 12px 0 0 10px;
+		display: none;
+
+		@include respond-min(1150px) {
+			float: left;
+			width: 260px;
+			display: block;
+		}
+
+
+	}
+
+	
+	.logo {
+		@include font-size(40);
+		@include sans-serif;
+		background: url(/static/img/logo-django.png) 0 0 no-repeat;
+		color: #FFF;
+		display: block;
+		float: left;
+		font-weight: 700;
+		margin: 10px;
+		overflow: hidden;
+		text-decoration: none;
+		text-indent: 100%;
+		width: 104px;
+		height: 36px;
+
+		.mdzr-svg & { // deliver svg logo if applicable
+			background: url(/static/img/logo-django.svg) center center no-repeat;
+		}
+
+		@include device-min(768px) {
+			margin-left: 0;
+		}
+	}
+
+	.menu-button {
+		@include font-size(20);
+		background: $green-dark;
+		@include border-radius(23px);
+		color: #fff;
+		cursor: pointer;
+		display: block;
+		float: right;
+		height: 45px;
+		line-height: 48px;
+		margin: 0 10px;
+		text-align: center;
+		text-decoration: none;
+		width: 45px;		
+
+		@include device-min(768px) {
+			display: none; 
+		}
+
+		&:active {
+			color: $green-medium;
+		}
+		
+		span {
+			@include visuallyhidden;
+		}
+
+		&.active {
+			opacity: 0.5;
+		}
+	}
+
+	.nav-menu-on {
+		max-height: 0;
+		overflow: hidden;
+		@include transition(all 0.3s ease-out);
+		
+		@include device-min(768px) {
+			// turn off animations if on a desktop width
+			max-height: none;
+			@include transition(none);
+		}
+		
+		&.active {
+			max-height: 500px;
+		}
+	}
+
+	[role="navigation"] {
+		background: $green-dark;
+
+		width: 100%;
+
+		@include device-min(768px) {
+			width: auto;
+			float: right;
+		}
+
+		ul {
+			margin: 10px 0 0;
+			padding: 0;
+
+			@include device-min(768px) {
+				margin: 0;
+			}
+		}
+
+		li {
+			@include sans-serif;
+			@include font-size(12);
+			display: block;			
+			font-weight: 700;
+			line-height: 16px;
+			text-align: left;
+			text-transform: uppercase;
+			margin: 0 10px;
+			border-top: 1px solid lighten($green-dark, 5%);
+
+			@include device-min(768px) {
+				margin: 0;
+				border: 0;
+				float: left;
+				text-align: left;
+			}
+
+			&.active a {
+				color: $green-medium;
+			}
+		}
+
+		a {
+			color: #fff;
+			display: block;
+			padding: 20px 0px;
+			text-decoration: none;
+
+			&:active, &:hover {
+				color: $green-very-light;
+			}
+
+			@include device-min(768px) {
+				padding: 20px 10px;
+			}
+		}
+
+		.nav-primary {
+			@include device-min(768px) {
+				position: absolute;
+				right: 0;
+				top: 45px;
+			}	
+		}
+	}
+}
+.header {
+	// dark green bar containing the page title
+	@include sans-serif;
+	background: $green-dark;
+	margin: 0;
+	padding: 11px 0px 8px;
+	position: relative;
+
+	h1 {
+		margin: 0.4em 0;
+	}
+
+	p {
+		@include serif;
+		@include font-size(18);
+		color: #fff;
+		left: -9999px;
+		line-height: 1.5;
+		padding: 0 0 10px;
+		position: absolute;
+		top: 0;
+		max-width: 660px;
+
+		@include device-min(768px) {
+			position: static;
+		}
+	}
+}
+.copy-banner {
+	// Large green callout at the top of the page
+	background: $green-medium;
+	padding: 2px 0;
+	
+	p,
+	h1 {
+		@include sans-serif;
+		@include font-size(24);
+		color: $green-very-light;
+		font-weight: 400;
+		line-height: 1.3;
+		padding: 1px 0;
+		margin: .65em 0 .7em;
+
+		em {
+			font-style: normal;
+			color: white;
+		}
+
+		@include device-min(768px) {
+			@include font-size(32);
+
+			color: $green-very-light;
+			padding: 1px 0;
+
+		}
+
+		a.cta, .cta {
+			margin: 0;
+			@include font-size(18);
+		}
+	}
+
+	a.cta, .cta {
+		margin: 15px 0;
+		padding: 0.7em 1.5em;
+		background: $green-medium-dark;
+		&:hover {
+			background: lighten($green-medium-dark, 4%);
+		}
+
+		background: none;
+		border: 1px solid $green-very-light;
+		color: $green-very-light;
+		font-weight: 400;
+		em {
+			color: white;
+		}
+		&:hover {
+			background: $white;
+			color: $green;
+			border-color: $white;
+			em {
+				color: $green;
+			}
+		}
+
+		&.white {
+			background: $white;
+			color: $green;
+			font-weight: 700;
+			border: 0;
+			&:hover {
+				background: #fff;
+			}
+		}
+	}
+
+	.homepage & {
+		padding: 50px 0;
+		background: white;
+		text-align: center;
+		border-bottom: 1px solid $gray-line;
+		p {
+			max-width: 700px;
+			margin-left: auto;
+			margin-right: auto;
+			margin: 1em auto .5em;
+			color: $text;
+			@include font-size(36);
+			&.small {
+				color: $text-light;
+				margin: 2em auto 1em;
+				@include font-size(14);
+			}
+			em {
+				color: $text;
+			}
+		}
+		a.cta, .cta {
+			display: inline-block;
+			padding: 1em 50px;
+			margin-bottom: 40px;
+			background: $green-medium;
+			color: white;
+			border: 0;
+			font-weight: 700;
+			&:hover {
+				background: lighten($green-medium, 4%);
+			}
+			&:active {
+				background: darken($green-medium, 2%);
+			}
+		}
+		
+		.django-companies {
+			max-width: 750px;
+			margin: 0 auto;
+			list-style: none;
+			padding: 0 0 0 30px;
+			li {
+				width: 144px;
+				display: inline-block;
+				text-indent: -1000px;
+				overflow: hidden;
+				margin: 0;
+				a {
+					display: block;
+					height: 46px;
+					background-position: center;
+					background-repeat: no-repeat;
+					&.company-mozilla {
+						@include svg-image(company-mozilla);
+						background-position: center 7px;
+					}
+					&.company-pinterest {
+						@include svg-image(company-pinterest);
+						background-position: center 7px;
+					}
+					&.company-theguardian {
+						@include svg-image(company-theguardian);
+						background-position: center 14px;
+					}
+					&.company-instagram {
+						@include svg-image(company-instagram);
+						background-position: center 10px;
+					}
+					&.company-rdio {
+						@include svg-image(company-rdio);
+						background-position: 15px 6px;
+					}
+				}
+			}
+		}
+	}
+}
+
+[role="alert"] {
+	//Announcement banner above the footer.
+	clear: both;
+	background: $white;
+	position: relative;
+	@include box-shadow(0 -2px 8px 0 rgba(0,0,0,0.05));
+
+	a {
+		@include link-green;
+		&.link-readmore {
+			margin: 0;
+		}
+	}
+
+	dl {
+		margin: 0 10px;
+		padding: 25px 0;
+		@include clearfix;
+		dt {
+			i.icon {
+				color: $green;
+				margin-right: 8px;
+			}
+		}
+		dd {
+			float: left;
+			width: 60%;
+			margin-top: 0;
+			@include sans-serif;
+		}
+		.link-readmore {
+			margin-left: 10px;
+		}
+	}
+
+	@include device-min(768px) {
+		dt {
+			float: left;
+			width: 31%;
+			padding-right: 2%;
+		}
+		dl {
+			margin: 0;
+		}
+	}
+
+}
+
+[role="contentinfo"] {
+	// Global Footer at bottom of page
+	@include clearfix;
+	@include sans-serif;
+	position: relative;
+	background: $green-medium;
+	clear: both;
+	margin-top: 0px;
+
+	.container {
+		overflow: hidden;
+	}
+
+	.subfooter {
+		@include clearfix;
+		padding: 0 10px;
+
+		.col {
+			&:first-child {
+				h2 {
+					border-top: 0;
+				}
+			}
+			@include device-min(768px) {
+				float: left;
+				margin-bottom: -999px;
+				padding: 0 3% 999px 0;
+				width: 30%;
+			}
+
+			&:first-child {
+				margin-left: 0;
+				padding-left: 0;
+			}
+			&:last-child {
+				margin-right: 0;
+				padding-right: 0;
+			}
+		}
+
+	}
+	
+	h2 {
+		@include font-size(16);
+		border-top: 1px solid $gray-line;
+		color: #fff; 
+		font-weight: 700;
+		margin-top: 20px;
+		padding: 30px 0 10px;
+		@include device-min(768px) {
+			border: none;
+			margin-top: 0;	
+		}
+	}
+
+	ul {
+		@include font-size(14);
+		font-weight: 400;
+		list-style: none;
+		margin: 15px 0 0 0;
+		padding: 0 0 30px;
+
+		li {
+			margin: 10px 0 0;
+			padding: 0;
+		}
+
+		a {
+			color: $white;
+			text-decoration: none;
+			
+			&:hover, 
+			&:active,
+			&:focus {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	.footer {
+		background: $green-dark;
+		margin-top: 20px;
+		padding: 10px 10px 30px;
+		color: $green-medium-dark;
+
+		.footer-logo {
+			float: left;
+			width: 33%;
+		}
+
+		.logo {
+			margin-right: 0;
+			margin-top: 28px;
+			.mdzr-svg & { 
+				background-position: left center;
+				margin-right: 0;
+				margin-top: 20px;
+			}
+		}
+	}
+
+	.logo {
+		@include font-size(40);
+		@include sans-serif;
+		background: url(/static/img/logo-django.png) 0 0 no-repeat;
+		color: $green-dark;
+		display: block;
+		font-weight: 700;
+		height: 50px;
+		margin: 10px;
+		overflow: hidden;
+		text-decoration: none;
+		text-indent: 100%;
+		width: 142px;
+		@include device-min(768px) {
+			float: left;
+			margin: 20px 90px 0 0;
+		}
+		
+		.mdzr-svg & { 
+			background: url(/static/img/logo-django.svg) center center no-repeat;
+			height: 39px;
+			width: 109px;
+		}
+	}
+
+	.thanks {
+		@include font-size(12);
+		color: $green-medium-dark;
+		margin: 0;
+		padding: 0;
+		@include device-min(768px) {
+			border: none;
+		}
+		
+		li {
+			@include clearfix;
+			margin: 0;
+			padding: 17px 10px 11px;
+			display: block;
+			clear: both;
+			@include device-min(768px) {
+				background: none;
+				float: left;
+				clear: none;
+				padding: 0 2.2% 0 0;
+				width: 14.1%;
+
+				&.design {
+					width: 30.5%;
+
+					span.ampersand, a {
+						display: inline-block;
+						vertical-align: top;
+						&.threespot {
+							clear: both;
+						}
+
+						&.ampersand {
+							position: relative;
+							top: 6px;
+							margin: 0 6px;
+							line-height: 36px;
+						}
+					}
+				}
+			}
+
+			span.ampersand {
+				line-height: 24px;
+			}
+		}
+
+		span {
+			display: block;
+			height: 24px;
+			line-height: 36px;
+			padding-right: 12px;
+			white-space: nowrap;
+		}
+
+		a {
+			display: block;
+			height: 33px;
+			overflow: hidden;
+			text-indent: -200px;
+			width: 94px;
+			@include device-min(768px) {
+				clear: both;
+				margin-top: 5px;
+			}
+
+			&.rackspace {
+				background: url(/static/img/logo-rackspace.png) no-repeat left center;
+				.mdzr-svg & {
+					background: url(/static/img/logo-rackspace.svg) no-repeat left center;
+				}
+			}
+			&.typekit {
+				background: url(/static/img/logo-typekit.png) no-repeat left center;
+			}
+			&.threespot {
+				background: url(/static/img/logo-threespot.png) no-repeat left center;
+				.mdzr-svg & {
+					background: url(/static/img/logo-threespot.svg) no-repeat left center;
+				}
+			}
+
+			&.andrevv {
+				background: url(/static/img/logo-andrevv.png) no-repeat left center;
+				.mdzr-svg & {
+					background: url(/static/img/logo-andrevv.svg) no-repeat left center;
+				}
+			}
+		}
+	}
+
+	.copyright {
+
+		@include font-size(12);
+		clear: both;
+		margin: 20px 0 0 10px;
+		@include device-min(768px) {
+			max-width: 80%;
+			padding-top: 30px;
+			margin: 0;
+		}
+	}
+}
+
+
+//------------------- Recycleable Style Classes
+.backtotop {
+	// Back to top link (in base.html after block body)
+	@include link-green;
+	@include sans-serif;
+	@include font-size(14);
+	display: block;
+	font-weight: 700;
+	margin: 10px 0;
+	padding: 10px 0;
+	text-align: center;
+	text-transform: uppercase;
+	@include device-min(768px) {
+		display: none;
+	}
+}
+.cta, a.cta {
+	// Call To Action buttons
+	@include sans-serif;
+	font-weight: 700;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background: $green-medium;
+	border: none;
+	@include border-radius(5px);
+	color: #fff;
+	display: block;
+	-webkit-font-smoothing: subpixel-antialiased;
+	margin: 30px auto 0;
+	padding: 1em 1.5em;
+	text-align: center;
+	text-decoration: none;
+	@include device-min(768px) {
+		margin: 20px auto;
+		max-width: 400px;
+	}
+
+	em {
+		color: $green-very-light;
+		font-style: normal;
+	}
+
+	&:hover {
+		background: lighten($green-medium, 4%);
+	}
+
+	&:active {
+		background: darken($green-medium, 2%);
+	}
+
+	[role="complementary"] & {
+		@include font-size(16);
+
+		+ .link-readmore {
+			display: block;
+			text-align: center;
+			@include device-min(768px) {
+				margin-top: -10px;
+			}
+		}
+	}
+
+
+	&.outline {
+		// Outline button for less-dominant CTA
+		background: none;
+		border: 1px solid $gray-line;
+		color: $gray-medium;
+		font-weight: 400;
+
+		em {
+			color: $green-dark;
+		}
+
+		&:hover {
+			border-color: $green;
+			color: $green;
+			em {
+				color: $green;
+			}
+		}
+		&:active {
+			background: darken($green-medium, 2%);
+			border-color: darken($green-medium, 2%);
+		}
+	}
+}
+.link-green {
+	// class render of the link-green mixin
+	@include link-green;
+}
+.link-readmore {
+	// Read More links. Should exist outside of <p> tag, and include the '&rsaquo;' arrow after the text.
+	@include link-green;
+	@include sans-serif;
+	@include font-size(14);
+	display: inline-block;
+	margin: 10px 0;
+	&:after {
+		content: " ›";
+		font-size: 1.2em;
+	}
+	&.back-link {
+		&:after {
+			content: "";
+		}
+		&:before {
+			content: "‹ ";
+			font-size: 1.2em;
+		}
+	}
+	@include old-ie {
+		display: inline; 
+		zoom: 1; 
+	}
+	font-weight: 700;
+	text-transform: uppercase;
+
+	[role="complementary"] & {
+		@include font-size(12);
+	}
+}
+.meta {
+	// Re-usable meta class for alternate-style content.
+	@include sans-serif;
+	@include font-size(14);
+	display: block;
+	line-height: 1.3;
+	margin: 25px 0 20px;
+
+	a {
+		@include link-green;
+	}
+}
+.layout-2col { 
+	//two column layout module
+	margin: 20px 0;
+
+	@include device-min(768px) {
+		@include clearfix;
+		margin: 0;
+		.col {
+			float: left;
+			width: 46%;
+			margin: 0 4%;
+			&:first-child {
+				margin-left: 0;
+			}
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+		.one-third {
+			width: 29%;
+		}
+		.two-third {
+			width: 62%;
+		}
+	}
+}
+.blue {
+	// overide blue color class
+	color: $green;
+}
+.label {
+	// Label style associated with forms and other global elements.
+	@include sans-serif;
+	@include font-size(16);
+	color: lighten($text-light, 30%);
+	display: block;
+	font-weight: 700;
+	margin: 20px 0 10px;
+	text-transform: uppercase;
+
+	
+	&.form-controls {
+		@include font-size(14);
+		display: block;
+		margin: 0;
+		position: relative;
+		text-align: left;
+
+		span {
+			cursor: pointer;
+
+			&:hover,
+			&:active,
+			&:focus {
+				color: lighten($text-light, 20%);
+			}
+		}
+	}
+}
+.callout-right {
+	@include device-min(768px) {
+		float: right;
+		margin: 26px 0 0 35px;
+		width: 33%;
+
+		&.two-thirds {
+			width: 60%;
+		}
+	}
+
+	img {
+		display: block;
+		max-width: 100%;
+	}
+}
+.callout-left {
+	@include device-min(768px) {
+		float: left;
+		margin: 26px 35px 0 0;
+		width: 33%;
+
+		&.two-thirds {
+			width: 60%;
+		}
+	}
+
+	img {
+		display: block;
+		max-width: 100%;
+	}
+}
+
+.codedump {
+	background: #f8f8f8;
+	border: 1px solid $gray-line;
+	padding: 10px;
+	@include border-radius(4px);
+	@include sans-serif;
+	@include font-size(14);
+	line-height: 1.6em;
+}
+
+//------------------- List Modules
+.list-events { 
+	// reusable event list style class, for use in the sidebar. (See sidebar-news.html include.)
+	@include sans-serif;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+		@include font-size(18);
+		border-top: 1px solid $gray-line;
+		display: block;
+		line-height: 1.3;
+		margin: 0;
+		padding: 20px 0 0 30px;
+		position: relative;
+
+		i {
+			@include font-size(16);
+			color: $green-light;
+			display: block;
+			left: 0;
+			line-height: 20px;
+			height: 30px;
+			position: absolute;
+			text-align: center;
+			top: 20px;
+			width: 24px;
+		}
+
+		&:first-child {
+			border-top: 0;
+			padding-top: 0;
+
+			i {
+				top: 0px;
+			}
+		}
+	}
+
+	.meta {
+		@include sans-serif;
+		@include font-size(14);
+		display: block;
+		margin-top: 10px;
+	}
+
+	a {
+		@include link-green;
+	}
+}
+.list-tags {
+	// Tag list style with blue block links. (See sidebar-news.html include.)
+	@include sans-serif;
+	@include font-size(12);
+	font-weight: 700;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-transform: uppercase;
+
+	li {
+		margin-top: 10px;
+		@include old-ie {
+			display: block;
+			line-height: 28px;
+		}
+	}
+
+	a {
+		background: $green-light;
+		color: $white;
+		display: inline-block;
+		@include old-ie {
+			display: block;
+		}
+		line-height: 1.2;
+		margin: 0;
+		padding: 8px 10px 5px;
+		text-decoration: none;
+
+		&:hover,
+		&:active,
+		&:focus {
+			background-color: $green-medium;
+			color: #fff;
+		}
+	}
+}
+.list-news {
+	// News article listing style. (See News & Events Page.)
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	h2 {
+		font-weight: 400;
+		margin-bottom: 5px;
+	}
+
+	li {
+		border-top: 1px solid $gray-line;
+		margin-top: 35px;
+		padding-top: 10px;
+
+		&:first-child {
+			border: none;
+			margin-top: 0;
+			padding-top: 0;
+		}
+	}
+
+	.meta {
+		margin-top: 10px;
+		color: $gray-medium;
+		a:link {
+			color: $text-light;
+			text-decoration: underline;
+		}
+	}
+}
+.list-case-study {
+	// Three column list for Case Studies that switches to one column on mobile. (See Overview page.)
+	@include clearfix;
+	list-style: none;
+	margin: 0;
+	padding: 0 0 10px;
+
+	p {
+		@include font-size(14);
+		margin: 10px 0 5px;
+	}
+
+	li {
+		border-top: 1px solid $gray-line;
+		margin-top: 20px;
+		padding-top: 20px;
+		@include respond-min(1024px) {
+			border: none;
+			float: left;
+			padding-right: 5%;
+			padding-top: 0;
+			width: 28%;
+			&:nth-child(3) {
+				&:after {
+					clear: both;
+					content: "";
+					display: block;
+					margin-bottom: 30px;
+				}
+			}
+		}
+	}
+
+	li > a {
+		@include sans-serif;
+		@include link-green;
+		@include font-size(12);
+		font-weight: 700;
+		margin-top: 10px;
+		text-transform: uppercase;
+		&:after {
+			content: " ›";
+			font-size: 1.2em;
+		}
+	}
+
+	h3 {
+		margin: 10px 0 20px;
+		padding: 0;
+
+		&.logo {
+			text-indent: -1000%;
+			overflow: hidden;
+		}
+	}
+
+	// Logo List
+	[title="Knight Foundation"] {
+		background: url(/static/img/logo-knight.png) no-repeat bottom left;
+		height: 25px;
+		padding-top: 7px;
+		width: 190px;
+
+		.mdzr-svg & {
+			background: url(/static/img/logo-knight.svg) no-repeat bottom left;
+		}
+	}
+	[title="Mozilla"] {
+		background: url(/static/img/logo-mozilla.png) no-repeat bottom left;
+		height: 32px;
+		width: 120px;
+
+		.mdzr-svg & {
+			background: url(/static/img/logo-mozilla.svg) no-repeat bottom left;
+		}
+	}
+	[title="Disqus"] {
+		background: url(/static/img/logo-disqus.png) no-repeat bottom left;
+		height: 28px;
+		padding-top: 4px;
+		width: 140px;
+
+		.mdzr-svg & {
+			background: url(/static/img/logo-disqus.svg) no-repeat bottom left;
+		}
+	}
+
+	&.single-col {
+		li {
+			margin-top: 0;
+			margin-bottom: 30px;
+			width: auto;
+			p {
+				@include font-size(18);
+				margin-right: 40px;
+			}
+			h3 {
+				margin-top: 20px;
+			}
+		}
+	}
+}
+
+.case-study-logo {
+	max-width: 50%;
+	max-height: 70px;
+	height: auto;
+	margin: 40px 0 0;
+}
+
+.list-link-soup {
+	// Basic link-soup list style. Three Column on Desktop, two column on mobile. (See Why Django Page.)
+	@include sans-serif;
+	@include clearfix;
+	@include font-size(16);
+	border-top: 1px solid $gray-line;
+	list-style: none;
+	margin: 20px 0 0;
+	padding: 20px 0 10px;
+
+	li {
+		float: left;
+		margin: 10px 5% 0 0;
+		width: 45%;
+		@include device-min(768px) {
+			margin-right: 3%;
+			width: 30%;
+		}
+	}
+
+	a {
+		@include link-green;
+	}
+
+	[role="complementary"] & {
+		li {
+			float: none;
+		}
+	}
+}
+
+
+h2 + .list-link-soup {
+	border-top: 0;
+}
+
+
+.list-features {
+	// Animated Feature List from the Why Django Page. Require looks for the 'list-features' class to load the appropriate scripts to animate the icons. Degrades gracefully into mobile.
+	
+	margin: 50px 0 40px;
+
+	dt {
+		@include font-size(24);
+		border-top: 1px solid $gray-line;
+		padding-top: 25px;
+	}	
+
+	i {
+		color: $white;
+		margin-right: 10px;
+		width: 40px;
+		height: 40px;
+		@include border-radius(25px);
+		background: $green;
+		line-height: 1.68em;
+		display: inline-block;
+		text-align: center;
+		&.icon-briefcase {
+			line-height: 1.7em;
+		}
+		&.icon-dashboard {
+			line-height: 1.5em;
+		}
+	}
+
+	@include device-min(768px) {
+		padding-bottom: 40px;
+
+		dt {
+			margin-top: 60px;
+			padding: 60px 0 0 245px;
+			position: relative;
+
+			&:first-child {
+				margin-top: 20px;
+			}
+
+			&.even {
+				padding-left: 0;
+				padding-right: 245px;
+
+				i {
+					left: auto !important;
+					right: 0;
+				}
+			}
+		}
+
+		dd {
+			padding-left: 245px;
+
+			&.even {
+				padding-left: 0;
+				padding-right: 245px;
+			}
+		}
+
+		i {
+			@include font-size(120);
+			display: block;
+			height: 200px;
+			left: 0;
+			position: absolute;
+			text-align: center;
+			top: 60px;
+			width: 200px;
+			margin-right: 0;
+
+			// Border Radius Enabled 
+			.mdzr-borderradius & {
+				background: $green-medium;
+				@include border-radius(100px);
+				color: #fff;
+			}
+			
+			// SVG Enabled
+			.mdzr-svg & {
+				background: url(/static/img/bg-features.svg) no-repeat center center;
+
+				&.icon-bolt {
+					background-position: -150px -269px;
+				}
+				&.icon-briefcase {
+					background-position: -354px -7px;
+				}
+				&.icon-lock {
+					background-position: -36px -96px;
+				}
+				&.icon-dashboard {
+					background-position: -270px -9px;
+				}
+				&.icon-cogs {
+					background-position: -334px -12px;
+				}
+			}
+
+			// Border Radius, SVG, and Animation Enabled
+			.mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
+				@include transition(all 0.3s ease-out);
+				@include transform(rotate(0.5turn));
+
+				&.inview {
+					@include transform(rotate(0turn));
+				}
+				
+				&.icon-bolt {
+					background-position: 40px -369px;
+					&.inview {
+						background-position: -150px -269px;
+					}
+				}
+				&.icon-briefcase {
+					background-position: -494px 207px;
+					&.inview {
+						background-position: -354px -7px;
+					}
+				}
+				&.icon-lock {
+					background-position: 144px -206px;
+					&.inview {
+						background-position: -36px -96px;
+					}
+				}
+				&.icon-dashboard {
+					background-position: -360px 201px;
+					&.inview {
+						background-position: -270px -9px;
+					}
+				}
+				&.icon-cogs {
+					background-position: -500px -180px;
+					&.inview {
+						background-position: -334px -12px;
+					}
+				}
+			}
+
+			// Fixing opera svg-border-radius bug
+			// http://stackoverflow.com/questions/11114636/opera-border-radius-svg-background-bug
+			:-o-prefocus,
+			& { 
+				background: $green-medium !important;
+				@include transition(none !important);
+				@include transform(none !important);
+			}
+		}
+	}
+
+	.homepage & {
+
+		padding-bottom: 0;
+
+		dl {
+			padding-top: 0;
+		}
+
+		i {
+				color: $white;
+				margin-right: 10px;
+				width: 40px;
+				height: 40px;
+				top: 10px;
+				@include border-radius(20px);
+				background: $green;
+				display: inline-block;
+				text-align: center;
+				@include font-size(24);
+
+				.mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
+					@include transition(none);
+					@include transform(rotate(0));
+				}
+			}
+
+		@include device-min(768px) {
+
+			dt {
+				padding: 20px 0 0px 110px;
+				@include font-size(18);
+				border-top: 0;
+				margin-top: 0;
+			}
+
+			dd {
+				padding: 0 60px 20px 110px;
+				p {
+					margin-top: 0;
+					@include font-size(18);
+				}
+			}
+
+			i {
+				margin-right: 10px;
+				width: 80px;
+				height: 80px;
+				top: 20px;
+				@include border-radius(40px);
+				@include font-size(46);
+			}
+		}
+	}
+}
+
+@include device-min(768px) {
+
+	.list-collapsing-header {
+		float: left;
+
+		.section & h2 {
+			margin: 40px 0 20px;
+		}
+
+		+ .form-controls.label {
+			margin: 50px 0 0;
+			text-align: right;
+		}
+	}
+
+	.form-controls.label {
+		float: right;
+	}	
+}
+
+
+.list-collapsing {
+	// reusable accordion style collapsing list, as seen on the Get Started Page. 'Expand/Collapse All' toggle is generated by the javascript. H2 is used for label, and 'collapsing-content' class is used to identify all content that should expand and collapse onclick.
+	border-bottom: 1px solid $gray-line;
+	list-style: none;
+	margin: 30px 0;
+	padding: 0;
+	clear: both;
+
+	&.active {
+		
+		> li {
+			border-top: 1px solid $gray-line;
+			margin: 0;
+			padding: 0;
+
+			&.active {
+				h2 {
+					.collapsing-icon {
+						&:before {
+							content: "\f068";
+						}
+					}
+				}
+			}
+		}
+
+		h2 {
+			@include font-size(18);
+			cursor: pointer;
+			margin: 0;
+			padding: 20px 40px 15px 0;
+			position: relative;
+
+			&:hover,
+			&:focus,
+			&:active {
+				color: lighten($text, 20%);
+				outline: none;
+			}
+
+			.collapsing-icon {
+				position: absolute;
+				right: 0;
+				top: 24px;
+				&:before {
+					content: "\f067";
+				}
+			}
+
+			&.bullet-icon {
+				// H2 class for using icons as 'bullets' much like the layout of a list. When the line breaks, the text won't fold under the icon. See the community page for an example.
+				padding: 20px 40px 15px 1.5em;
+
+				> i:first-child {
+					position: absolute;
+					top: 24px;
+					left: 0;
+				}
+			}
+		}
+
+		.collapsing-content {
+			overflow: hidden;
+			max-height: 0px;
+			@include transition(all 0.5s ease-out);
+		}
+		li.active .collapsing-content {
+			max-height: 1000px;
+			overflow: auto;
+		}
+	}
+}
+
+.list-image {
+	// list style for large, clickable images accompanied by text. (See Get Started Page.)
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+		border-top: 1px solid $gray-line;
+		margin-top: 20px;
+		padding-top: 40px;
+		@include device-min(768px) {
+			@include clearfix;
+			margin-top: 20px;
+			padding-top: 40px;
+		}
+
+		&:first-child {
+			border: none;
+			padding-top: 0;
+		}
+	}
+
+	a {
+		text-decoration: none;
+
+		&:hover,
+		&:active,
+		&:focus {
+			color: $text-light;
+		}
+
+		&.link-readmore {
+			margin: 0;
+		}
+	}
+
+	img {
+		display: block;
+		margin: 0 auto 25px;
+		max-width: 100%;
+	}
+
+	@include device-min(768px) {
+		img {
+			float: left;
+			margin: 0 40px 0 0;
+			max-width: 200px;
+			max-height: 200px;
+		}
+
+		h2, h3, h4, p {
+			padding-left: 240px;
+		}
+
+		h3 {
+			margin-top: 10px;
+		}
+
+	}
+
+	.layout-secondary &,
+	[role="complementary"] & {
+		img {
+			float: left;
+			max-width: 40%;
+			max-height: 120px;
+			margin: 0 20px 10px 0;
+		}
+
+		h2, h3, h4, p {
+			padding-left: 0px;
+			border: 0;
+		}
+
+		h3 {
+			@include font-size(14);
+			margin-top: 0;
+			margin-bottom: 1em;
+			padding-bottom: 0;
+			@include sans-serif;
+			font-weight: 700;
+		}
+	}
+
+}
+
+//-------------------Documentation styles
+
+#s-django-documentation {
+	@include sans-serif;
+}
+
+.list-outline {
+	// Nested lists to house documentation outline. Meant for use in sidebar. (See Documentation Page.)
+	@include font-size(16);
+	line-height: 1.3;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	a {
+		text-decoration: none;
+	}
+
+	> li > ul > li {
+		margin-top: 12px;
+		&:first-child {
+			margin-top: 6px;
+		}
+	}
+
+	> li > a { //top level
+		text-transform: uppercase;
+		font-weight: 700;
+		@include link-green;
+	}	
+
+	> li > ul { //second level
+		list-style: none;
+		@include font-size(12);
+		padding: 5px 0 0 10px;
+		> li > a {
+			font-weight: 700;
+			text-transform: uppercase;
+			@include link-green;
+		}
+	}
+
+	> li > ul > li  ul { //third level & down
+		@include font-size(14);
+		padding: 0 0 0 20px;
+
+	}
+}
+
+.section h2 {
+	margin: 50px 0 40px;
+}
+
+.section h3 {
+	margin: 40px 0 30px;
+}
+
+.headerlink {
+	// Permalink styles for sections in docs
+	opacity: 0;
+	padding-left: 10px;
+	font-size: 0.8em;
+	position: relative;
+	top: -0.17em;
+	font-weight: 700;
+	@include transition(opacity 200ms ease-in-out);
+}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		&:hover {
+			.headerlink {
+				opacity: 1;
+			}
+		}
+	}
+
+//Notes, help blocks, and annotation sections
+.note,
+.admonition,
+.help-block {
+		background: $white;
+		padding: 15px 20px;
+		border: 1px solid $green-very-light;
+		@include border-radius(4px);
+		margin: 25px 0;
+		p {
+			margin: 0.8em 0;
+		}
+		.first {
+			margin-top: 0;
+		}
+		.admonition-title {
+			font-weight: bold;
+		}
+		.last {
+			margin-bottom: 10px;
+		}
+}
+
+.list-links { 
+	//Can be used globally to stack list items either with a <ul>, or with a <dl> using the <dd> to add meta information.  (See Community Page - sidebar and block body.)
+	@include sans-serif;
+	list-style: none;
+	margin: 0;
+	padding: 10px 0 0;
+
+	a {
+		@include link-green;
+	}
+
+	dt,
+	li {
+		@include font-size(16);
+		margin-top: 15px;
+
+		&:first-child {
+			margin-top: 0;
+		}
+		font-weight: 400;
+	}
+
+	dd {
+		@extend .meta;
+		margin-top: 0;
+		margin-bottom: 30px;
+	}
+
+	[role="complementary"] & {
+
+		padding: 0;
+
+		dt,
+		li {
+			@include font-size(16);
+			border-top: 1px solid $gray-line;
+			margin-top: 0;
+			padding-top: 20px;
+
+			&:first-child {
+				border: none;
+				padding-top: 0;
+			}
+		}
+
+		li {
+			padding: 14px 0 10px;
+		}
+
+		dd {
+			@include font-size(14);
+			margin-bottom: 16px;
+		}
+	}
+
+	+ h2 {
+		margin-top: 34px;
+	}
+}
+
+.list-links-small {
+	//List style used to display links, with optional icons. See Homepage sidebar
+	padding-left: 0;
+	list-style: none;
+	a {
+		@include link-green;
+		text-decoration: none;
+	}
+
+	li > a,
+	dt > a {
+		&:before {
+			font-family: FontAwesome;
+			font-weight: normal;
+			font-style: normal;
+			float: left;
+			width: 23px;
+			height: 20px;
+		}
+	}
+
+	dt {
+		font-weight: 400;
+	}
+
+	dd {
+		color: $text-light;
+		padding-top: 2px;
+	}
+
+	// Add document icon before list item link
+	&.docs-list {
+		list-style: none;
+		li > a,
+		dt > a {
+			&:before {
+				content: "\f0f6";
+			}
+		}
+
+		dd {
+			padding-left: 24px;
+		}
+	}
+
+	// Add news icon before list item link
+	&.news-list {
+		list-style: none;
+		li > a,
+		dt > a {
+			&:before {
+				content: "\f0a1";
+			}
+		}
+
+		dt.event > a {
+			&:before {
+				content: "\f133";
+			}
+		}
+
+		dd {
+			padding-left: 24px;
+		}
+	}
+
+	// Add link icon before list item link
+	&.resource-list {
+		list-style: none;
+		li > a,
+		dt > a {
+			&:before {
+				content: "\f0c1";
+			}
+		}
+
+		dd {
+			padding-left: 24px;
+		}
+	}
+
+	// Add rss icon before list item link
+	&.rss-list {
+		list-style: none;
+		li > a,
+		dt > a {
+			&:before {
+				content: "\f09e";
+			}
+		}
+
+		dd {
+			padding-left: 24px;
+		}
+	}
+}
+
+//------------------- Forms
+.form-input {
+	// Specific class for single-entry form with <button> submit element utilizing a font-awesome icon. See examples on Community and News & Events pages.
+	height: 40px;
+	margin: 30px 0 20px;
+	position: relative;
+
+	&:focus {
+		background: #000;
+	}
+
+	input[type="search"],
+	input[type="text"], 
+	input[type="email"] {
+		@include sans-serif;
+		@include font-size(16);
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		background: #fff;
+		border: 1px solid $gray-line;
+		@include border-radius(4px);
+		cursor: auto;
+		display: block;
+		font-weight: 400;
+		height: 30px;
+		margin: 0;
+		padding: 8px 14% 6px 10px;
+		text-indent: 0;
+		vertical-align: middle;
+		width: 82%;		
+
+		@include device-min(768px) {
+			padding: 8px 18% 6px 10px;
+			width: 80%;
+		}
+
+		&::-ms-clear {
+			display: none;
+		}
+
+		&:active,
+		&:focus {
+			outline: none;
+			border-color: $green;
+		}
+	}
+
+	button {
+		background: none;
+		border: none;
+		color: $green-medium;
+		height: 40px;
+		padding: 0;
+		position: absolute;
+		right: 2%;
+		top: 6%;
+		width: 40px;
+
+		@include device-min(768px) {
+			right: 1%;
+		}
+
+		i {
+			@include font-size(20);
+			line-height: 1;
+		}
+
+		&:hover,
+		&:focus,
+		&:active {
+			color: $green;
+			outline: none;
+		}
+	}
+
+	[role="complementary"] & {
+		height: 30px;
+		margin: 20px 0 30px;
+		input[type="search"],
+		input[type="text"], 
+		input[type="email"] {
+			height: 20px;
+			@include font-size(14);
+		}
+		button {
+			height: 30px;
+			width: 30px;
+			top: 3px;
+			@include device-min(768px) {
+				right: 0;
+			}
+			i {
+				@include font-size(20);
+			}
+		}
+	}
+}
+
+::-webkit-input-placeholder,
+:-moz-placeholder,
+::-moz-placeholder,
+:-ms-input-placeholder {
+	color: $gray-medium;
+}
+
+.form-email {
+	// Email submission forms on Community page.
+	h3 {
+		@include font-size(18);
+		margin: 10px 0;
+	}
+	.meta {
+		margin: 0;
+	}
+	form {
+		margin: 10px 0 30px;
+	}
+}
+
+//------------------- Pagination
+.nav-pagination {
+	// Pagination style for use with the News & Events pages.
+	@include sans-serif;
+	@include font-size(14);
+	border-top: 1px solid $gray-line;
+	font-weight: 700;
+	line-height: 31px;
+	list-style: none;
+	margin: 30px 0;
+	padding: 30px 0 0;
+	text-align: center;
+
+	li{
+		display: inline-block;
+		@include old-ie {
+			display: inline;
+			zoom: 1;
+		}
+	}
+	a {
+		border: none;
+		color: $text-light;
+		height: auto;
+		width: auto;
+		margin: 0 5px;
+		@include border-radius(15px);
+		display: block;
+		text-decoration: none; 
+		@include device-min(320px) {
+			background: $text-light;
+			color: #fff;
+			height: 30px;
+			margin: 0 2px;
+			width: 30px;
+		}
+
+		&.previous,
+		&.next {
+			@include font-size(16);
+			@include device-min(320px) {
+				@include border-radius(20px);
+				height: 40px;
+				line-height: 43px;
+				width: 40px;
+			}
+		}
+		&.previous {
+			margin-right: 10px;
+			@include device-min(768px) {
+				margin-right: 70px;
+			}
+		}
+		&.next {
+			margin-left: 10px;
+			text-indent: 1px;
+			@include device-min(768px) {
+				margin-left: 70px;
+			}
+		}
+
+		&:hover,
+		&:focus,
+		&:active,
+		&.active {
+			background: none;
+			color: $green;
+			@include device-min(320px) {
+				background: $green;
+				color: white;
+			}
+		}
+
+		.mdzr-no-borderradius & {
+			display: inline;
+			background: none;
+			color: $text-light;
+			height: auto;
+			width: auto;
+			margin: 0 5px !important;
+
+			&:hover,
+			&:active,
+			&:focus,
+			&.active {
+				background: none;
+				color: $green;
+			}
+		}
+	}
+}
+
+// Boilerplate Helper mixins (rendered as classes)
+.visuallyhidden { 
+	@include visuallyhidden;
+}
+.clearfix, .group-container {
+	@include clearfix;
+}
