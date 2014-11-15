@@ -6,9 +6,30 @@
 {% endblock basecss %}
 
 {% block sectionid %}homepage{% endblock %}
+{% block body_class %}homepage{% endblock %}
+{% block layout_class %}sidebar-right{% endblock %}
 
-{% block billboard %}<h2>The Web framework for perfectionists (with deadlines). Django makes it easier to build better Web apps more quickly and with less code.</h2>{% endblock %}
-
+{% block header %}
+  <h1 class="visuallyhidden">Django</h1>
+  <p>
+    <em>Django makes it easier to build better Web apps quicker and with less code</em>
+  </p>
+  <p>
+    <a href="" class="cta">Get Started with Django</a>
+  </p>
+  {% comment %}
+  <p class="small">
+    Used by these great companies, and many more
+    <ul class="django-companies">
+      <li><a href="{% url 'case_study' %}" class="company-mozilla">Mozilla</a></li>
+      <li><a href="{% url 'case_study' %}" class="company-pinterest">Pinterest</a></li>
+      <li><a href="{% url 'case_study' %}" class="company-theguardian">The Guardian</a></li>
+      <li><a href="{% url 'case_study' %}" class="company-instagram">Instagram</a></li>
+      <li><a href="{% url 'case_study' %}" class="company-rdio">Rdio</a></li>
+    </ul>
+    {% endcomment %}
+  </p>
+{% endblock %}
 {% block content %}
 <h1>Meet Django</h1>
 <h2 class="deck">Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design.</h2>
@@ -18,36 +39,61 @@
 <p>When you're ready to code, read the <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/install/">installation guide</a> and <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/tutorial01/">tutorial</a>.</p>
 <div id="content-secondary">
 	<h2>The Django framework</h2>
-	<h3>Object-relational mapper</h3>
-	<p>Define your <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/db/models/">data models</a> entirely in Python. You get a rich, <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/db/queries/">dynamic database-access API</a> for free &mdash; but you can still write SQL if needed.</p>
-	<h3>Automatic admin interface</h3>
-	<p>Save yourself the tedious work of creating interfaces for people to add and update content. <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/tutorial02/">Django does that automatically</a>, and it's production-ready.</p>
-	<h3>Elegant URL design</h3>
-	<p>Design pretty, <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/http/urls/">cruft-free URLs</a> with no framework-specific limitations. Be as flexible as you like.</p>
-	<h3>Template system</h3>
-	<p>Use Django's powerful, extensible and designer-friendly <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/templates/">template language</a> to separate design, content and Python code.</p>
-	<h3>Cache system</h3>
-	<p>Hook into memcached or other cache frameworks for <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/cache/">super performance</a> &mdash; caching is as granular as you need.</p>
-        <h3>Internationalization</h3>
+    <dl class="list-features">
+      <dt><i class="icon icon-database"></i> Object-relational mapper</dt>
+      <dd>
+	    <p>Define your <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/db/models/">data models</a> entirely in Python. You get a rich, <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/db/queries/">dynamic database-access API</a> for free &mdash; but you can still write SQL if needed.</p>
+      </dd>
+
+      <dt><i class="icon icon-user"></i> Automatic admin interface</dt>
+      <dd>
+	    <p>Save yourself the tedious work of creating interfaces for people to add and update content. <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/tutorial02/">Django does that automatically</a>, and it's production-ready.</p>
+      </dd>
+
+      <dt><i class="icon icon-link"></i> Elegant URL design</dt>
+      <dd>
+	    <p>Design pretty, <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/http/urls/">cruft-free URLs</a> with no framework-specific limitations. Be as flexible as you like.</p>
+      </dd>
+      
+      <dt><i class="icon icon-newspaper-o"></i> Template system</dt>
+      <dd>
+	    <p>Use Django's powerful, extensible and designer-friendly <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/templates/">template language</a> to separate design, content and Python code.</p>
+      </dd>
+      
+      <dt><i class="icon icon-dashboard"></i> Cache system</dt>
+      <dd>
+	    <p>Hook into memcached or other cache frameworks for <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/cache/">super performance</a> &mdash; caching is as granular as you need.</p>
+      </dd>
+      
+      <dt><i class="icon icon-language"></i> Internationalization</dt>
+      <dd>
         <p>Django has full support for <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/i18n/">multi-language applications</a>, letting you specify translation strings and providing hooks for language-specific functionality.</p>
+      </dd>
+
+    </dl>
+
 </div>
 <!-- END #content-secondary -->
 {% endblock %}
 
 {% block content-related %}
 
-<h2>Download</h2>
-<ul class="linklist">
-    <li class="button-download"><a href="/download/">Latest release: <strong>{{ DJANGO_VERSION }}</strong></a></li>
-</ul>
+  <div role="complementary">
+<a href="/download/" class="cta">
+  Download <em>Latest Release {{ DJANGO_VERSION }}</em>
+</a>
+<a href="https://docs.djangoproject.com{% block doc_url %}/{% endblock %}" class="link-readmore">Django Documentation</a>
+
 <p>Open source, <a href="https://github.com/django/django/blob/master/LICENSE">BSD license</a></p>
-<h2>Documentation</h2>
-<ul class="linklist">
+    
+<h3>Documentation</h3>
+<ul class="list-links-small docs-list">
 	<li><a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/install/">Installation guide</a></li>
 	<li><a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/tutorial01/">Tutorial</a></li>
-	<li><a href="https://docs.djangoproject.com/">Full index...</a></li>
 </ul>
-<h2>Sites that use Django</h2>
+<a class="link-readmore" href="https://docs.djangoproject.com/">Full index</a>
+
+<h3>Sites that use Django</h3>
 <dl>
     <dt><a href="http://www.disqus.com/">Disqus</a></dt>
     <dd>Beautiful, real-time, engaging comments threads for your website.</dd>
@@ -65,9 +111,12 @@
     <dd>Your music library in the cloud.<dd>
 </dl>
 <p><a href="http://www.djangosites.org/">See more sites...</a></p>
+</div>
 {% endblock %}
 
 {% block content-extra %}
-<h2>Weblog</h2>
-{% load weblog %}{% render_latest_blog_entries 4 %}
+<div role="complementary">
+    <h3>Weblog</h3>
+    {% load weblog %}{% render_latest_blog_entries 4 %}
+</div>
 {% endblock %}
