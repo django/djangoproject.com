@@ -124,7 +124,6 @@ STATIC_URL = '/s/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 TEMPLATE_DIRS = [BASE.child('templates')]
