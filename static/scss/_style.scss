@@ -386,7 +386,7 @@ blockquote {
 	.logo {
 		@include font-size(40);
 		@include sans-serif;
-		background: url(/static/img/logo-django.png) 0 0 no-repeat;
+		background: url(../img/logo-django.png) 0 0 no-repeat;
 		color: #FFF;
 		display: block;
 		float: left;
@@ -399,7 +399,7 @@ blockquote {
 		height: 36px;
 
 		.mdzr-svg & { // deliver svg logo if applicable
-			background: url(/static/img/logo-django.svg) center center no-repeat;
+			background: url(../img/logo-django.svg) center center no-repeat;
 		}
 
 		@include device-min(768px) {
@@ -849,7 +849,7 @@ blockquote {
 	.logo {
 		@include font-size(40);
 		@include sans-serif;
-		background: url(/static/img/logo-django.png) 0 0 no-repeat;
+		background: url(../img/logo-django.png) 0 0 no-repeat;
 		color: $green-dark;
 		display: block;
 		font-weight: 700;
@@ -865,7 +865,7 @@ blockquote {
 		}
 		
 		.mdzr-svg & { 
-			background: url(/static/img/logo-django.svg) center center no-repeat;
+			background: url(../img/logo-django.svg) center center no-repeat;
 			height: 39px;
 			width: 109px;
 		}
@@ -938,25 +938,25 @@ blockquote {
 			}
 
 			&.rackspace {
-				background: url(/static/img/logo-rackspace.png) no-repeat left center;
+				background: url(../img/logo-rackspace.png) no-repeat left center;
 				.mdzr-svg & {
-					background: url(/static/img/logo-rackspace.svg) no-repeat left center;
+					background: url(../img/logo-rackspace.svg) no-repeat left center;
 				}
 			}
 			&.typekit {
-				background: url(/static/img/logo-typekit.png) no-repeat left center;
+				background: url(../img/logo-typekit.png) no-repeat left center;
 			}
 			&.threespot {
-				background: url(/static/img/logo-threespot.png) no-repeat left center;
+				background: url(../img/logo-threespot.png) no-repeat left center;
 				.mdzr-svg & {
-					background: url(/static/img/logo-threespot.svg) no-repeat left center;
+					background: url(../img/logo-threespot.svg) no-repeat left center;
 				}
 			}
 
 			&.andrevv {
-				background: url(/static/img/logo-andrevv.png) no-repeat left center;
+				background: url(../img/logo-andrevv.png) no-repeat left center;
 				.mdzr-svg & {
-					background: url(/static/img/logo-andrevv.svg) no-repeat left center;
+					background: url(../img/logo-andrevv.svg) no-repeat left center;
 				}
 			}
 		}
@@ -1391,32 +1391,32 @@ blockquote {
 
 	// Logo List
 	[title="Knight Foundation"] {
-		background: url(/static/img/logo-knight.png) no-repeat bottom left;
+		background: url(../img/logo-knight.png) no-repeat bottom left;
 		height: 25px;
 		padding-top: 7px;
 		width: 190px;
 
 		.mdzr-svg & {
-			background: url(/static/img/logo-knight.svg) no-repeat bottom left;
+			background: url(../img/logo-knight.svg) no-repeat bottom left;
 		}
 	}
 	[title="Mozilla"] {
-		background: url(/static/img/logo-mozilla.png) no-repeat bottom left;
+		background: url(../img/logo-mozilla.png) no-repeat bottom left;
 		height: 32px;
 		width: 120px;
 
 		.mdzr-svg & {
-			background: url(/static/img/logo-mozilla.svg) no-repeat bottom left;
+			background: url(../img/logo-mozilla.svg) no-repeat bottom left;
 		}
 	}
 	[title="Disqus"] {
-		background: url(/static/img/logo-disqus.png) no-repeat bottom left;
+		background: url(../img/logo-disqus.png) no-repeat bottom left;
 		height: 28px;
 		padding-top: 4px;
 		width: 140px;
 
 		.mdzr-svg & {
-			background: url(/static/img/logo-disqus.svg) no-repeat bottom left;
+			background: url(../img/logo-disqus.svg) no-repeat bottom left;
 		}
 	}
 
@@ -1561,7 +1561,7 @@ h2 + .list-link-soup {
 			
 			// SVG Enabled
 			.mdzr-svg & {
-				background: url(/static/img/bg-features.svg) no-repeat center center;
+				background: url(../img/bg-features.svg) no-repeat center center;
 
 				&.icon-bolt {
 					background-position: -150px -269px;
