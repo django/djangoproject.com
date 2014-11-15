@@ -1,4 +1,4 @@
-{% load staticfiles %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+{% load staticfiles compress static %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
@@ -11,11 +11,20 @@
     <meta name="Copyright" content="Django Software Foundation" />
     <meta name="keywords" content="Python, Django, framework, open-source" />
     <meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
-    {% block basecss %}
-    <link href="{% static "css/base.css" %}" rel="stylesheet" type="text/css" media="screen" />
-    {% endblock basecss %}
-    <link href="{% static "css/print.css" %}" rel="stylesheet" type="text/css" media="print" />
-    {% block extrahead %}{% endblock %}
+
+    <!--[if lte IE 8]>
+		{% compress css %}
+			<link rel="stylesheet" href="{% static "scss/output-ie.scss" %}" type="text/x-scss">
+	 	{% endcompress %}
+ 	<![endif]-->
+	<!--[if gt IE 8]><!-->
+		{% compress css %}
+			<link rel="stylesheet" href="{% static "scss/output.scss" %}" type="text/x-scss">
+		{% endcompress %}
+	<!--<![endif]-->
+
+	<script src="{% static "js/lib/modernizr.js" %}"></script>
+
   </head>
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block coltype %}default{% endblock %}">
   <div id="container">
@@ -53,5 +62,8 @@
   </div>
   <!-- END #container -->
   {% block extrabody %}{% endblock extrabody %}
+
+  {# Require JS #}
+  <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>	
   </body>
 </html>
