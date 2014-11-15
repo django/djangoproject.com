@@ -32,28 +32,39 @@
 	<script src="{% static "js/lib/modernizr.js" %}"></script>
 
   </head>
-  <body id="{% block sectionid %}generic{% endblock %}" class="{% block coltype %}default{% endblock %}">
+  <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
   {% include "includes/header.html" %}
-  <div id="container">
-    <div id="billboard">{% block billboard %}{% endblock %}</div>
-    <div id="columnwrap">
-      {% block columnwrap %}
-        <div id="content-main">
-        {% block content %}{% endblock %}
-        </div>
-        <!-- END #content-main -->
-      {% endblock %}
-    </div>
-    <!-- END #content -->
-    <div id="footer">
-      <p>&copy; 2005-{% now "Y" %}
-        <a href="https://www.djangoproject.com/foundation/"> Django Software
-        Foundation</a> unless otherwise noted. Django is a
-        <a href="https://www.djangoproject.com/trademarks/">registered
-        trademark</a> of the Django Software Foundation.
-      </p>
-    </div>
-    <!-- END #footer -->
+  
+  <div class="copy-banner">
+      <div class="container">
+          {% block header %}{% endblock %}
+      </div>
+  </div>
+  <div id="billboard">{% block billboard %}{% endblock %}</div>
+  
+    <div class="container {% block layout_class %}{% endblock %}">
+        <div role="main">
+			{% block content %}{% endblock %}
+			<a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+		</div>
+
+		{% block content-related %}{% endblock %} {# Used only with two column pages: News, About, etc #}
+		{% block content-extra %}{% endblock %} {# Used only with two column pages: News, About, etc #}
+		
+	</div>
+
+	{% block secondary %}{% endblock %} {# Used only with one column pages: Why Django, Get Started, etc #}
+	{% block tertiary %}{% endblock %} {# Used only with one column pages: Why Django, Get Started, etc #}
+
+	{# Used to display urgent news, events, and alerts #}
+	{% block alert %}
+	{% endblock %} 
+
+	{% include "includes/footer.html" %}
+	
+	{# Require JS #}
+	<script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>	
+    
   </div>
   <!-- END #container -->
   {% block extrabody %}{% endblock extrabody %}
