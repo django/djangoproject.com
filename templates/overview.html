@@ -7,8 +7,7 @@
 	<p><em>Django</em> was invented to meet fast-moving <em>newsroom deadlines</em>, while satisfying the tough requirements of <em>Python web developers</em>.</p>
 {% endblock %}
 
-{% block body %}
-
+{% block content %}
 
 	<h1>Why Django?</h1>
 
@@ -48,12 +47,13 @@
 </dl>
 
 <div class="section">
-	<a href="{% url 'start' %}" class="cta">Get started <em>with Django</em></a>
+	<a href="" class="cta">Get started <em>with Django</em></a>
 </div>
 {% endblock %}
 
-{% block secondary %}
+{% block content-related %}
 
+{% comment %}
 <div class="layout-secondary">
 	<div class="container">
 		<h1><span>Case Studies</span></h1>
@@ -84,7 +84,7 @@
 
 {% endblock %}
 
-{% block tertiary %}
+{% block content-extra %}
 
 <div class="layout-tertiary">
 	<div class="container">
@@ -104,5 +104,6 @@
 		</ul>
 	</div>
 </div>
+{% endcomment %}
 
 {% endblock %}
