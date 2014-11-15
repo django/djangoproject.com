@@ -41,7 +41,6 @@ INSTALLED_APPS = [
 
     'djangosecure',
     'registration',
-
     'accounts',
     'aggregator',
     'blog',
@@ -119,3 +118,9 @@ if 'sentry_dsn' in SECRETS and not DEBUG:
     INSTALLED_APPS.append('raven.contrib.django.raven_compat')
     RAVEN_CONFIG = {'dsn': SECRETS['sentry_dsn']}
     LOGGING["loggers"]["django.request"]["handlers"].remove("mail_admins")
+
+# Automatically compress/compile Sass files
+COMPRESS_PRECOMPILERS = (
+    ('text/x-sass', 'sass {infile} {outfile}'),
+    ('text/x-scss', 'sass --scss --compass {infile} {outfile}'),
+)
