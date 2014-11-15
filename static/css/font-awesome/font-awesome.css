@@ -7,8 +7,8 @@
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("/static/fonts/font-awesome/fontawesome-webfont.eot?v=4.2.0");
-  src: url("/static/fonts/font-awesome/fontawesome-webfont.eot?#iefix&v=4.2.0") format("embedded-opentype"), url("/static/fonts/font-awesome/fontawesome-webfont.woff?v=4.2.0") format("woff"), url("/static/fonts/font-awesome/fontawesome-webfont.ttf?v=4.2.0") format("truetype"), url("/static/fonts/font-awesome/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular") format("svg");
+  src: url("../fonts/font-awesome/fontawesome-webfont.eot?v=4.2.0");
+  src: url("../fonts/font-awesome/fontawesome-webfont.eot?#iefix&v=4.2.0") format("embedded-opentype"), url("../fonts/font-awesome/fontawesome-webfont.woff?v=4.2.0") format("woff"), url("../fonts/font-awesome/fontawesome-webfont.ttf?v=4.2.0") format("truetype"), url("../fonts/font-awesome/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -2680,3 +2680,5 @@
 .icon-meanpath:before {
   content: "";
 }
+
+/*# sourceMappingURL=font-awesome.css.map */
