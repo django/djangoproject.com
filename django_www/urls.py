@@ -54,6 +54,9 @@ urlpatterns = [
     # Trac schtuff
     url(r'^trac/', include('tracdb.urls')),
 
+    # Styleguide
+    url(r'^styleguide/$', TemplateView.as_view(template_name='styleguide.html'), name="styleguide"),
+
 
     url(r'^sitemap\.xml$', cache_page(60 * 60 * 6)(sitemap_views.sitemap), {'sitemaps': sitemaps}),
     url(r'^weblog/', include('blog.urls')),
