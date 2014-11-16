@@ -1,74 +1,72 @@
-{% extends "base_2col.html" %}
-
-{% load cycle from future %}
-
+{% extends "base.html" %}
+{% load static %}
 {% block sectionid %}download{% endblock %}
+{% block title %}Download Django{% endblock %}
+{% block layout_class %}sidebar-right{% endblock %}
 
-{% block title %}Download{% endblock %}
-
-{% block billboard %}<h2>Download</h2>{% endblock %}
-
-{% block content %}
-<h1>How to get Django</h1>
-
-<p>Django is available open-source under the <a href="https://github.com/django/django/blob/master/LICENSE">BSD license</a>. It requires Python version 2.7 or higher, but it has no dependencies on other Python libraries. There are several ways you can get it:</p>
-
-<h2>Option {% cycle '1' '2' '3' as options %}. Get the latest official version</h2>
-
-<p>The latest official version is {{ current_version }}.</p>
-
-<p>You can install it with <a href="http://www.pip-installer.org/en/latest/">pip</a>:</p>
-
-<pre class="literal-block"><code>pip install Django=={{ current_version }}</code></pre>
-
-{% if preview_version %}
-<h2>Option {% cycle options %}. Get the {{ preview_kind }} for {{ preview_version|slice:":3" }}</h2>
-
-<p>As part of the Django {{ preview_version|slice:":3" }} development process, Django {{ preview_version }} is available. This release is only for experienced users who want to try out the new version and help identify any remaining bugs prior to the {{ preview_version|slice:":3" }} release. Please read the {{ preview_version|slice:":3" }} release notes before using this package.
-
-<p>To try out the {{ preview_kind }}, you can install it with <a href="http://www.pip-installer.org/en/latest/">pip</a>:</p>
-
-<pre class="literal-block"><code>pip install https://{{ site.domain }}{% url 'download-redirect' preview_version 'tarball' %}</code></pre>
-
-{% endif %}
-
-<h2>Option {% cycle options %}. Get the latest development version</h2>
-
-<p>The latest and greatest Django version is the one that's in our Git repository (our revision-control system). Get it using this shell command, which requires <a href="http://git-scm.com/">Git</a>:</p>
-
-<p class="literal-block"><code>git clone https://github.com/django/django.git</code></p>
-
-<p>You can also download <a href="https://github.com/django/django/zipball/master">a zipped archive</a> of the development version.</p>
-
-<h2>After you get it</h2>
-
-<p>See the <a href="https://docs.djangoproject.com/en/stable/intro/install/">installation guide</a> for further instructions. Make sure you read the documentation that corresponds to the version of Django you've just installed.</p>
-
-<p>And be sure to sign up for the <a href="/r/django-users/">django-users mailing list</a>, where other Django users and the Django developers themselves all hang out to help each other.</p>
+{% block header %}
+  <h1>Download</h1>
 {% endblock %}
 
-{% block content-related %}
-<h2>For the impatient:</h2>
-<ul>
-  <li>Latest release: <a href="{% url 'download-redirect' current_version 'tarball' %}">Django-{{ current_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' current_version 'checksum' %}">Django-{{ current_version }}.checksum.txt</a></li>
-</ul>
+{% block content %}
 
-<h2>Which version is better?</h2>
-<p>We improve Django almost every day and are pretty good about keeping the code stable. Thus, using the latest development code is a safe and easy way to get access to new features as they're added. If you choose to follow the development version, keep in mind that there will occasionally be backwards-incompatible changes. You'll want to pay close attention to the commits by watching <a href="https://github.com/django/django">Django on GitHub</a> or subscribing to <a href="http://groups.google.com/group/django-updates">django-updates</a>.</p>
+  <h1>How to get Django</h1>
+  <p>Django is available open-source under the <a href="https://github.com/django/django/blob/master/LICENSE">BSD license</a>. It requires Python version 2.7 or higher, but it has no dependencies on other Python libraries. There are several ways you can get it:</p>
 
-<p>If you're just looking for a stable deployment target and don't mind waiting for the next release, you'll want to stick with the latest official release (which will always include detailed notes on any changes you'll need to make while upgrading).</p>
-<h2>Previous releases</h2>
-<ul>
-  <li>Django {{ previous_version }}: <a href="{% url 'download-redirect' previous_version 'tarball' %}">Django-{{ previous_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' previous_version 'checksum' %}">Django-{{ previous_version }}.checksum.txt</a></li>
-  {% if lts_version %}
-    <li>Django {{ lts_version }} (LTS): <a href="{% url 'download-redirect' lts_version 'tarball' %}">Django-{{ lts_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' lts_version 'checksum' %}">Django-{{ lts_version }}.checksum.txt</a></li>
+  <h2>Option {% cycle '1' '2' '3' as options %}. Get the latest official version</h2>
+  <p>The latest official version is {{ current_version }}.</p>
+  <p>You can install it with <a href="http://www.pip-installer.org/en/latest/">pip</a>:</p>
+  <pre class="literal-block"><code>pip install Django==1.7</code></pre>
+
+  {% if preview_version %}
+      <h2>Option {% cycle options %}. Get the {{ preview_kind }} for {{ preview_version|slice:":3" }}</h2>
+      <p>As part of the Django {{ preview_version|slice:":3" }} development process, Django {{ preview_version }} is available. This release is only for experienced users who want to try out the new version and help identify any remaining bugs prior to the {{ preview_version|slice:":3" }} release. Please read the {{ preview_version|slice:":3" }} release notes before using this package.
+      <p>To try out the {{ preview_kind }}, you can install it with <a href="http://www.pip-installer.org/en/latest/">pip</a>:</p>
+      <pre class="literal-block"><code>pip install https://{{ site.domain }}{% url 'download-redirect' preview_version 'tarball' %}</code></pre>
   {% endif %}
-</ul>
 
-<h2>Unsupported previous releases (no longer receive security updates or bugfixes)</h2>
-<ul>
-  {% for earlier_version in earlier_versions %}
-  <li>Django {{ earlier_version }}: <a href="{% url 'download-redirect' earlier_version 'tarball' %}">Django-{{ earlier_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' earlier_version 'checksum' %}">Django-{{ earlier_version }}.checksum.txt</a></li>
-  {% endfor %}
-</ul>
+  <h2>Option {% cycle options %}. Get the latest development version</h2>
+  <p>The latest and greatest Django version is the one that's in our Git repository (our revision-control system). Get it using this shell command, which requires <a href="http://git-scm.com/">Git</a>:</p>
+  <p class="literal-block"><code>git clone https://github.com/django/django.git</code></p>
+  <p>You can also download <a href="https://github.com/django/django/zipball/master">a zipped archive</a> of the development version.</p>
+
+  <h2>After you get it</h2>
+  <p>See the <a href="https://docs.djangoproject.com/en/stable/intro/install/">installation guide</a> for further instructions. Make sure you read the documentation that corresponds to the version of Django you've just installed.</p>
+  <p>And be sure to sign up for the <a href="http://groups.google.com/group/django-users">django-users mailing list</a>, where other Django users and the Django developers themselves all hang out to help each other.</p>
+
+{% endblock %}
+
+
+
+{% block content-related %}
+
+<h1 class="visuallyhidden">Additional Information</h1>
+<div role="complementary">
+
+    <h2>For the impatient:</h2>
+    <ul>
+      <li>Latest release: <a href="{% url 'download-redirect' current_version 'tarball' %}">Django-{{ current_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' current_version 'checksum' %}">Django-{{ current_version }}.checksum.txt</a></li>
+    </ul>
+
+    <h2>Which version is better?</h2>
+    <p>We improve Django almost every day and are pretty good about keeping the code stable. Thus, using the latest development code is a safe and easy way to get access to new features as they're added. If you choose to follow the development version, keep in mind that there will occasionally be backwards-incompatible changes. You'll want to pay close attention to the commits by watching <a href="https://github.com/django/django">Django on GitHub</a> or subscribing to <a href="http://groups.google.com/group/django-updates">django-updates</a>.</p>
+
+    <p>If you're just looking for a stable deployment target and don't mind waiting for the next release, you'll want to stick with the latest official release (which will always include detailed notes on any changes you'll need to make while upgrading).</p>
+    <h2>Previous releases</h2>
+    <ul>
+      <li>Django {{ previous_version }}: <a href="{% url 'download-redirect' previous_version 'tarball' %}">Django-{{ previous_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' previous_version 'checksum' %}">Django-{{ previous_version }}.checksum.txt</a></li>
+      {% if lts_version %}
+        <li>Django {{ lts_version }} (LTS): <a href="{% url 'download-redirect' lts_version 'tarball' %}">Django-{{ lts_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' lts_version 'checksum' %}">Django-{{ lts_version }}.checksum.txt</a></li>
+      {% endif %}
+    </ul>
+
+    <h2>Unsupported previous releases (no longer receive security updates or bugfixes)</h2>
+    <ul>
+      {% for earlier_version in earlier_versions %}
+      <li>Django {{ earlier_version }}: <a href="{% url 'download-redirect' earlier_version 'tarball' %}">Django-{{ earlier_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' earlier_version 'checksum' %}">Django-{{ earlier_version }}.checksum.txt</a></li>
+      {% endfor %}
+    </ul>
+
+  </div>
+
 {% endblock %}
