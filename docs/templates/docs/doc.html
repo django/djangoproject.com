@@ -9,56 +9,59 @@
 
 {% block content %}
 
-{% block body %}
-  {% load docs %}
-  
-  {{ doc.body|safe }}
-{% endblock %}
-<div class="browse-horizontal">
-  {% if doc.prev %}
-    <div class="left"><a href="{{ doc.prev.link }}">&laquo; {{ doc.prev.title|safe }}</a></div>
-  {% endif %}
-  {% if doc.next %}
-    <div class="right"><a href="{{ doc.next.link }}">{{ doc.next.title|safe }} &raquo;</a></div>
-  {% endif %}
-</div>
-<div id="content-secondary">
-  <h2 id="comments">{% trans "Questions/Feedback" %}</h2>
-  <p>{% trans "Having trouble? We'd like to help!" %}</p>
-  <ul>
-    <li>
-      {% url 'document-detail' lang=lang version=version url="faq" as faq_url %}
-      {% blocktrans %}Try the <a href="{{ faq_url }}">FAQ</a> — it's got answers to many common questions.{% endblocktrans %}
-    </li>
-    <li>
-      {% blocktrans %}Search for information in the <a
-      href="http://groups.google.com/group/django-users/">archives of the
-      django-users mailing list</a>, or <a
-      href="http://groups.google.com/group/django-users/">post a question</a>.{% endblocktrans %}
-    </li>
-    <li>
-      {% blocktrans %}Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
-      channel</a>, or search the <a href="http://django-irc-logs.com/">IRC
-      logs</a> to see if it has been asked before.{% endblocktrans %}
-    </li>
-    <li>
-      {% blocktrans %}If you notice errors with this documentation, please <a
-      href="https://code.djangoproject.com/newticket?component=Documentation">
-      open a ticket</a> and let us know! Please only use the ticket tracker for
-      criticisms and improvements on the docs. For tech support, use the
-      resources above.{% endblocktrans %}
-    </li>
-  </ul>
-</div>
+  {% block body %}
+    {% load docs %}
+    {{ doc.body|safe }}
+  {% endblock %}
+
+  {% comment %} {# This stuff is not in the new design either #}
+  <div class="browse-horizontal">
+    {% if doc.prev %}
+      <div class="left"><a href="{{ doc.prev.link }}">&laquo; {{ doc.prev.title|safe }}</a></div>
+    {% endif %}
+    {% if doc.next %}
+      <div class="right"><a href="{{ doc.next.link }}">{{ doc.next.title|safe }} &raquo;</a></div>
+    {% endif %}
+  </div>
+  {% endcomment %}
+  <div id="content-secondary">
+    <h2 id="comments">{% trans "Questions/Feedback" %}</h2>
+    <p>{% trans "Having trouble? We'd like to help!" %}</p>
+    <ul>
+      <li>
+        {% url 'document-detail' lang=lang version=version url="faq" as faq_url %}
+        {% blocktrans %}Try the <a href="{{ faq_url }}">FAQ</a> — it's got answers to many common questions.{% endblocktrans %}
+      </li>
+      <li>
+        {% blocktrans %}Search for information in the <a
+        href="http://groups.google.com/group/django-users/">archives of the
+        django-users mailing list</a>, or <a
+        href="http://groups.google.com/group/django-users/">post a question</a>.{% endblocktrans %}
+      </li>
+      <li>
+        {% blocktrans %}Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+        channel</a>, or search the <a href="http://django-irc-logs.com/">IRC
+        logs</a> to see if it has been asked before.{% endblocktrans %}
+      </li>
+      <li>
+        {% blocktrans %}If you notice errors with this documentation, please <a
+        href="https://code.djangoproject.com/newticket?component=Documentation">
+        open a ticket</a> and let us know! Please only use the ticket tracker for
+        criticisms and improvements on the docs. For tech support, use the
+        resources above.{% endblocktrans %}
+      </li>
+    </ul>
+  </div>
 {% endblock %}
 
 {% block content-related %}
+<h1 class="visuallyhidden">Additional Information</h1>
+	<div role="complementary">
   {% block search %}
-    <h2>{% trans "Search" %}</h2>
     {% load docs %}
     {% search_form %}
   {% endblock %}
-
+  
   {% block toc-wrapper %}
     <h2>{% trans "Contents" %}</h2>
     {% block toc %}
@@ -113,4 +116,5 @@
       </p>
     {% endif %}
   {% endblock %}
+</div>
 {% endblock %}
