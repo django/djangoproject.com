@@ -9,11 +9,12 @@ from akismet import Akismet
 from contact_form.forms import ContactForm
 
 
-attrs = {'class': 'required'}
-
-
 class BaseContactForm(ContactForm):
-    message_subject = forms.CharField(max_length=100, widget=forms.TextInput(attrs=attrs), label='Message subject')
+    message_subject = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'Message subject'}),
+        label='Message subject')
+    email = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'E-mail'}))
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'Name'}))
+    body = forms.CharField(widget=forms.Textarea(attrs={'class': 'required', 'placeholder': 'Your message'}))
 
     def subject(self):
         return "[Contact form] " + self.cleaned_data["message_subject"]
