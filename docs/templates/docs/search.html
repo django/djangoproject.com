@@ -10,17 +10,6 @@
 {% block last-update-wrapper %}{% endblock %}
 
 {% block body %}
-  <form method="get" action="." id="page_search">
-    <p>
-      <label for="{{ form.q.auto_id }}">{% trans "Search for:" %}</label>
-      {{ form.q }}
-      <label for="{{ form.release.auto_id }}">{% trans "in version:" %}</label>
-      {{ form.release }}
-      <input type="submit" class="submit" value="{% trans 'Search' %}" />
-    </p>
-  </form>
-</form>
-
 {% if query %}
   {% load highlight %}
   <h2>{% trans "Results" %}</h2>
