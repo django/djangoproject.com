@@ -14,8 +14,11 @@ BASE = Path(__file__).absolute().ancestor(2)
 PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ)
 
 # It's a secret to everybody
-with open(BASE.ancestor(1).child('conf').child('secrets.json')) as handle:
-    SECRETS = json.load(handle)
+try:
+    with open(BASE.ancestor(1).child('conf').child('secrets.json')) as handle:
+        SECRETS = json.load(handle)
+except IOError:
+    SECRETS = {'secret_key': 'a', 'superfeedr_creds': ['any@email.com', 'some_string']}
 
 
 # Django settings
