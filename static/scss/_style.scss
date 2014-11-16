@@ -2344,6 +2344,11 @@ h2 + .list-link-soup {
 	}
 }
 
+hr {
+	border: 0;
+	border-top: 1px solid $gray-line;
+}
+
 // Boilerplate Helper mixins (rendered as classes)
 .visuallyhidden {
 	@include visuallyhidden;
