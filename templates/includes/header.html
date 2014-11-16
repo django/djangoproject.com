@@ -16,17 +16,15 @@
 					<a href="https://docs.djangoproject.com{% block doc_url %}/{% endblock %}">Documentation</a>
 				</li>
 				<li{% if section == 'news' %} class="active"{% endif %}>
-					<a href="https://www.djangoproject.com/weblog/">News</a></li>
-                <li{% if section == 'community' %} class="active"{% endif %}>
-					<a href="https://www.djangoproject.com/community/">Community</a></li>
+					<a href="{% url 'blog-index' %}">News</a></li>
+        <li{% if section == 'community' %} class="active"{% endif %}>
+					<a href="{% url 'community-index' %}">Community</a></li>
 				<li{% if section == 'code' %} class="active"{% endif %}>
 					<a href="https://code.djangoproject.com/">Code</a>
 				</li>
-                {% comment %}
 				<li{% if section == 'about' %} class="active"{% endif %}>
-					<a href="{% url 'about' %}">About</a>
+					<a href="/foundation/">About</a>
 				</li>
-                {% endcomment %}
 			</ul>
 		</nav>
 	</div>
