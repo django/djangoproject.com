@@ -47,7 +47,7 @@
 </dl>
 
 <div class="section">
-	<a href="" class="cta">Get started <em>with Django</em></a>
+	<a href="{% url 'start' %}" class="cta">Get started <em>with Django</em></a>
 </div>
 {% endblock %}
 
@@ -81,6 +81,7 @@
 		<a href="{% url 'case_study_index' %}" class="link-readmore">See all case studies</a>
 	</div>
 </div>
+{% endcomment %}
 
 {% endblock %}
 
@@ -88,7 +89,7 @@
 
 <div class="layout-tertiary">
 	<div class="container">
-		<h2>Other Sites Using Django</h2>
+		<h2>Sites Using Django</h2>
 		<ul class="list-link-soup">
 			<li><a href="http://instagram.com/">Instagram</a></li>
 			<li><a href="http://pinterest.com/">Pinterest</a></li>
@@ -104,6 +105,4 @@
 		</ul>
 	</div>
 </div>
-{% endcomment %}
-
 {% endblock %}
