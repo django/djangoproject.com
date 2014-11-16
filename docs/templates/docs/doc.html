@@ -6,117 +6,12 @@
 
 {% block doc_url %}{% url 'document-index' lang=lang version=version %}{% endblock %}
 
-{% block extrabody %}
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-  <script>
-  // Propagate the fragment identifier to the links in the version switcher
-  $(document).ready(function () {
-    // Propagate the fragment identifier to the links in the version switcher
-    $('#doc-versions a').click(function () {
-      var hrefWithoutFragment = this.href.split('#')[0];
-      this.href = hrefWithoutFragment + window.location.hash;
-      // do nothing and let the event bubble up
-    });
-
-    // Make version switcher clickable for touch devices
-    $('#doc-versions li.current').on('click hover', function () {
-      $('#doc-versions li.other').toggle();
-    });
-
-  });
-  </script>
-{% if version_is_dev %}
-  <div id="dev-warning" class="doc-floating-warning">
-   {% trans "This document is for Django's development version, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
-  </div>
-{% elif version_is_unsupported %}
-  <div id="outdated-warning" class="doc-floating-warning">
-  {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
-  </div>
-{% endif %}
-{% if version_is_dev or version_is_unsupported %}
-  <style type="text/css" media="screen">
-  body {
-    margin-top: 2em;
-  }
-  </style>
-  <script>
-  {% comment %}
-  Here we are doing something really annoying, we catch clicks on
-  internal anchors and scroll to the right place of the page.
-  This is only needed because we want to show the developement version
-  warning on top.
-  {% endcomment %}
-  $(document).ready(function () {
-    // First handle the case in which someone clicks on a link
-    $('a[href*=#]').click(function () {
-      // check to see if this is an internal link, sigh.
-      if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
-          && location.hostname == this.hostname) {
-        // get the link target, use the weird id= query since it escapes dots
-        var target = $("[id='" + this.hash.slice(1) + "']");
-        // calculate the offset
-        var targetOffset = target.offset().top - $('#dev-warning').height() - 20;
-        // scroll to the place, there is probably a better way
-        setTimeout(function () {
-          $('html,body').scrollTop(targetOffset);
-        }, 50);
-      }
-    });
-    // this is the janky thing, there is probably a better way
-    setTimeout(function () {
-      // is there a hash in the current window's location?
-      if (window.location.hash) {
-        // again, get the target
-        var target = $("[id='" + window.location.hash.slice(1) + "']");
-        // calculate the offset
-        var targetOffset = target.offset().top - $('#dev-warning').height() - 20;
-        // scroll to the place
-        $('html,body').scrollTop(targetOffset);
-      }
-    // use a delay that should work on all modern computers. should, not will.
-    }, 50);
-  });
-  </script>
-{% endif %}
-{% endblock extrabody %}
-
-{% block extrahead %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{% static "css/docs/docs.css" %}" type="text/css" />
-  <link rel="stylesheet" href="{% static "css/pygments.css" %}" type="text/css" />
-{% endblock %}
-
-{% block billboard %}
-  <h2><a href="{% url 'document-index' lang=lang version=version %}">{% trans "Django documentation" %}</a></h2>
-{% endblock %}
 
 {% block content %}
 
 {% block body %}
   {% load docs %}
-  {% get_all_doc_versions docurl as versions %}
-  <ul id="doc-versions">
-      {% for v in versions %}
-        {% if version != v %}
-          <li class="other">
-          {% if docurl %}
-            <a href="{% url 'document-detail' lang=lang version=v url=docurl %}">{{ v }}</a>
-          {% else %}
-            <a href="{% url 'document-index' lang=lang version=v %}">{{ v }}</a>
-          {% endif %}
-          </li>
-        {% endif %}
-      {% endfor %}
-      <li class="current{% if version_is_dev %} dev{% endif %}"
-          title="{% if version_is_dev %}{% trans "This document is for Django's development version, which can be significantly different from previous releases." %}{% else %}{% blocktrans %}This document describes Django {{ version }}.{% endblocktrans %}{% endif %} {% trans "Click on the links on the left to see other versions." %}">
-        <span>{% trans "Documentation version:" %}
-          <strong>{% if version_is_dev %}
-            development{% else %}{{ version }}
-          {% endif %}</strong>
-        </span>
-      </li>
-  </ul>
+  
   {{ doc.body|safe }}
 {% endblock %}
 <div class="browse-horizontal">
