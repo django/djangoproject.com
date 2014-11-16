@@ -1,61 +1,47 @@
-{% extends "base_2col.html" %}
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Django Community{% endblock %}
 
-{% block sectionid %}community{% endblock %}
-
-{% block title %}Community{% endblock %}
-
-{% block billboard %}<h2>Community</h2>{% endblock %}
+{% block header %}
+	<h1 class="visuallyhidden">Community</h1>
+	<!-- This could ideally be pulled from Django People and Django Packages -->
+	<p><em>9,513</em> Django Developers. <em>75</em> Countries. <em>1,701</em> Packages and Projects.</p>
+{% endblock %}
 
 {% block content-related %}
-<h2>Get involved</h2>
-
-<ul>
-<li><a href="irc://irc.freenode.net/django">#django IRC channel</a> -- chat with other Django users</li>
-<li><a href="https://code.djangoproject.com/">Ticket system</a> -- report bugs and make feature requests</li>
-</ul>
-
-<h2>Mailing lists</h2>
-
-<ul>
-<li><strong><a href="https://docs.djangoproject.com/en/stable/internals/mailing-lists/#django-users">django-users</a></strong>: The main list for help and announcements.</li>
-<li><strong><a href="https://docs.djangoproject.com/en/stable/internals/mailing-lists/#django-developers">django-developers</a></strong>: Where the developers of Django itself discuss new features.</li>
-</ul>
-
-<h2>Tell the world</h2>
-<ul>
-<li><a href="http://djangosites.org/">Django-powered sites</a> &mdash; add your site to the list</li>
-<li><a href="/community/badges/">Django badges</a> &mdash; show your support (or wish longingly)</li>
-<li><a href="/community/logos/">Django logos</a> &mdash; download official logos</li>
-<li><a href="/weblog/2005/nov/11/desktops/">Django wallpaper</a> &mdash; cover your desktop</li>
-</ul>
-
-<h2>Improve Django</h2>
-<ul>
-<li><a href="http://groups.google.com/group/django-updates">django-updates mailing list</a> &mdash; get updated for each code and ticket change (for the super-obsessed)</li>
-<li><a href="https://code.djangoproject.com/wiki">Django wiki</a> &mdash; contribute tips and documentation</a></li>
-</ul>
-
-<h2>Get help</h2>
-
-<ul>
-<li><strong><a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/faq/">Check our FAQ</a> first</strong>. If you have a basic question that's not answered by the FAQ, <a href="https://code.djangoproject.com/">file a ticket</a> to tell us you think it should be in there.</li>
-<li><strong>Chat live with other Django users</strong> in the <a href="irc://irc.freenode.net/django">#django IRC channel on irc.freenode.net</a>.</li>
-<li><strong>Ask questions</strong> on the <a href="http://groups.google.com/group/django-users">django-users mailing list</a>.</li>
-<li><strong>Report potential security issues in Django via private email to security@djangoproject.com, </strong>and not via Django's Trac instance or the django-developers mailing list</li>
-</ul>
-
-<h2>Code of Conduct</h2>
-
-<ul>
-<li><strong><a href="/conduct/">Read the Django Code of Conduct</a></strong> &mdash; a guide to ensure the Django community remains welcoming and respectful</li>
-<li><a href="/foundation/committees/">Code of Conduct Committee</a> &mdash; deals with violations in the Django Code of Conduct</li>
-</ul>
-
-<h2>Django Software Foundation</h2>
-
-<ul>
-<li><a href="/foundation/">Learn about the Django Software Foundation</a></li>
-<li><strong><a href="/foundation/donate/">Support the Foundation</a></strong> &mdash; donate to support future Django framework development</li>
-<li><a href="/contact/foundation/">Contact the Django Software Foundation</a></li>
-</ul>
+<h1 class="visuallyhidden">Additional Information</h1>
+<div role="complementary">
+	<h2>Get Involved</h2>
+	<dl class="list-links">
+		<dt><a href="irc://irc.freenode.net/django">#django IRC channel</a></dt>
+		<dd>chat with other Django users</dd>
+		<dt><a href="https://code.djangoproject.com/">Ticket system</a></dt>
+		<dd>report bugs and make feature requests</dd>
+	</dl>
+	<h2>Tell the World</h2>
+	<dl class="list-links">
+		<dt><a href="http://djangosites.org/">Django-powered sites</a></dt>
+		<dd>add your site to the list</dd>
+		<dt><a href="/community/badges/">Django badges</a></dt>
+		<dd>show your support (or wish longingly)</dd>
+		<dt><a href="/community/logos/">Django logos </a></dt>
+		<dd>download official logos</dd>
+		<dt><a href="/weblog/2005/nov/11/desktops/">Django wallpaper</a></dt>
+		<dd>cover your desktop</dd>
+	</dl>
+	<h2>Improve Django</h2>
+	<dl class="list-links">
+		<dt><a href="http://groups.google.com/group/django-updates">django-updates mailing list</a></dt>
+		<dd>get updated for each code and ticket change (for the super-obsessed)</dd>
+		<dt><a href="https://code.djangoproject.com/wiki">Django wiki</a></dt>
+		<dd>contribute tips and documentation</dd>
+	</dl>
+	<h2>Get Help</h2>
+	<dl class="list-links">
+		<dt><a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/faq/">Check our FAQ first.</a></dt>
+		<dd>If you have a basic question that's not answered by the FAQ, file a ticket to tell us you think it should be in there.</dd>
+		<dt><a href="irc://irc.freenode.net/django">Chat live with other Django users</a></dt>
+		<dd>in the #django IRC channel on irc.freenode.net.</dd>
+	</dl>
+</div>
 {% endblock %}
