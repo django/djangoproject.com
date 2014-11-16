@@ -15,7 +15,7 @@
         <em>Django makes it easier to build better Web apps quicker and with less code</em>
     </p>
     <p>
-        <a href="" class="cta">Get Started with Django</a>
+        <a href="{% url 'start' %}" class="cta">Get Started with Django</a>
     </p>
     {% comment %}
         <p class="small">
@@ -141,7 +141,7 @@
           <li><a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/install/">Installation guide</a></li>
           <li><a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/tutorial01/">Write Your First Django App</a></li>
       </ul>
-      <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/" class="link-readmore">Getting started with Django</a>
+      <a href="{% url 'start' %}" class="link-readmore">Getting started with Django</a>
 
       <h3>The Power of Django</h3>
       <ul class="list-links-small docs-list">
@@ -150,7 +150,7 @@
           <li><a href="#">Robust template system</a></li>
           <li><a href="#">Quick internationalization</a></li>
       </ul>
-      <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/" class="link-readmore">Explore more features</a>
+      <a href="{% url 'overview' %}" class="link-readmore">Explore more features</a>
 
       <h3>Get Involved</h3>
       <dl class="list-links-small">
