@@ -1,6 +1,6 @@
-/* 
+/*
 CSS Written by Jes Gundy
-Threespot, Washington DC 
+Threespot, Washington DC
 ---
 Ammended and appended by Andrew McCarthy
 http://andrevv.com/
@@ -12,7 +12,7 @@ CSS rendered with Sass 3.2.7
 
 body {
 	@include serif;
-	@include font-size(18); 
+	@include font-size(18);
 	background: #f8f8f8;
 	color: $text;
 	line-height: 1.6;
@@ -37,17 +37,17 @@ a {
 		color: lighten($text, 10%);
 	}
 
-	&:active, 
+	&:active,
 	&:focus,
 	&:hover {
 		color: lighten($text, 20%);
 	}
 }
 ::selection { // Text Selection Colors
-	background: lighten($green-very-light,10%); 
+	background: lighten($green-very-light,10%);
 }
 ::-moz-selection {
-	background: lighten($green-very-light,10%); 
+	background: lighten($green-very-light,10%);
 }
 ol li, ul li { //list style
 	margin-top: 10px;
@@ -163,7 +163,7 @@ h3 {
 }
 
 h4 {
-	@include font-size(16);	
+	@include font-size(16);
 	color: $text;
 	line-height: 1.2;
 	margin: 35px 0 20px;
@@ -175,11 +175,11 @@ tt {
 	color: $green-dark;
 }
 
-p { 
+p {
 	//increase top margin if first item in container
 	[role="main"] > &:first-child {
 		margin-top: 30px;
-	}	
+	}
 }
 
 ul {
@@ -216,14 +216,14 @@ blockquote {
 		float: right;
 		margin: 0;
 		padding-bottom: 80px;
-		padding-left: 3%;	
+		padding-left: 3%;
 		padding-right: 3%;
 		width: 60%;
 		.mdzr-boxshadow & {
 			border: none;
 			@include box-shadow(0px 0px 0 0 #fff, 0px 0px 0 0 #fff, 460px 0 0 0 #fff, 1000px 0 0 0 #fff, 0px 600px 0 0px #fff, 460px 600px 0 0px #fff);
-			padding-left: 4%;	
-			padding-right: 0;	
+			padding-left: 4%;
+			padding-right: 0;
 			width: 62%;
 		}
 
@@ -233,7 +233,7 @@ blockquote {
 				border: none;
 				@include box-shadow(0px 0px 0 0 #fff, 0px 0px 0 0 #fff, -460px 0 0 0 #fff, -1000px 0 0 0 #fff, 0px 600px 0 0px #fff, -460px 600px 0 0px #fff);
 				padding-left: 0;
-				padding-right: (4/100) * 100%;	
+				padding-right: (4/100) * 100%;
 			}
 		}
 	}
@@ -279,7 +279,7 @@ blockquote {
 	}
 	// High-level class denoting full-width layout
 	@include clearfix;
-	
+
 	.mdzr-boxshadow & {
 		border: none;
 		@include secondary-shadow-top;
@@ -334,7 +334,7 @@ blockquote {
 	@include clearfix;
 	//reusable container class to center content
 	@include device-min(768px) {
-		margin: 0 auto;	
+		margin: 0 auto;
 		max-width: 1100px;
 		padding: 0 (32/768) * 100%;
 		min-width: (704/768) * 100%;
@@ -382,7 +382,7 @@ blockquote {
 
 	}
 
-	
+
 	.logo {
 		@include font-size(40);
 		@include sans-serif;
@@ -420,16 +420,16 @@ blockquote {
 		margin: 0 10px;
 		text-align: center;
 		text-decoration: none;
-		width: 45px;		
+		width: 45px;
 
 		@include device-min(768px) {
-			display: none; 
+			display: none;
 		}
 
 		&:active {
 			color: $green-medium;
 		}
-		
+
 		span {
 			@include visuallyhidden;
 		}
@@ -443,13 +443,13 @@ blockquote {
 		max-height: 0;
 		overflow: hidden;
 		@include transition(all 0.3s ease-out);
-		
+
 		@include device-min(768px) {
 			// turn off animations if on a desktop width
 			max-height: none;
 			@include transition(none);
 		}
-		
+
 		&.active {
 			max-height: 500px;
 		}
@@ -477,7 +477,7 @@ blockquote {
 		li {
 			@include sans-serif;
 			@include font-size(12);
-			display: block;			
+			display: block;
 			font-weight: 700;
 			line-height: 16px;
 			text-align: left;
@@ -517,7 +517,7 @@ blockquote {
 				position: absolute;
 				right: 0;
 				top: 45px;
-			}	
+			}
 		}
 	}
 }
@@ -553,7 +553,7 @@ blockquote {
 	// Large green callout at the top of the page
 	background: $green-medium;
 	padding: 2px 0;
-	
+
 	p,
 	h1 {
 		@include sans-serif;
@@ -654,7 +654,7 @@ blockquote {
 				background: darken($green-medium, 2%);
 			}
 		}
-		
+
 		.django-companies {
 			max-width: 750px;
 			margin: 0 auto;
@@ -786,17 +786,17 @@ blockquote {
 		}
 
 	}
-	
+
 	h2 {
 		@include font-size(16);
 		border-top: 1px solid $gray-line;
-		color: #fff; 
+		color: #fff;
 		font-weight: 700;
 		margin-top: 20px;
 		padding: 30px 0 10px;
 		@include device-min(768px) {
 			border: none;
-			margin-top: 0;	
+			margin-top: 0;
 		}
 	}
 
@@ -815,8 +815,8 @@ blockquote {
 		a {
 			color: $white;
 			text-decoration: none;
-			
-			&:hover, 
+
+			&:hover,
 			&:active,
 			&:focus {
 				text-decoration: underline;
@@ -838,7 +838,7 @@ blockquote {
 		.logo {
 			margin-right: 0;
 			margin-top: 28px;
-			.mdzr-svg & { 
+			.mdzr-svg & {
 				background-position: left center;
 				margin-right: 0;
 				margin-top: 20px;
@@ -863,8 +863,8 @@ blockquote {
 			float: left;
 			margin: 20px 90px 0 0;
 		}
-		
-		.mdzr-svg & { 
+
+		.mdzr-svg & {
 			background: url(../img/logo-django.svg) center center no-repeat;
 			height: 39px;
 			width: 109px;
@@ -879,7 +879,7 @@ blockquote {
 		@include device-min(768px) {
 			border: none;
 		}
-		
+
 		li {
 			@include clearfix;
 			margin: 0;
@@ -1088,8 +1088,8 @@ blockquote {
 		}
 	}
 	@include old-ie {
-		display: inline; 
-		zoom: 1; 
+		display: inline;
+		zoom: 1;
 	}
 	font-weight: 700;
 	text-transform: uppercase;
@@ -1110,7 +1110,7 @@ blockquote {
 		@include link-green;
 	}
 }
-.layout-2col { 
+.layout-2col {
 	//two column layout module
 	margin: 20px 0;
 
@@ -1150,7 +1150,7 @@ blockquote {
 	margin: 20px 0 10px;
 	text-transform: uppercase;
 
-	
+
 	&.form-controls {
 		@include font-size(14);
 		display: block;
@@ -1213,7 +1213,7 @@ blockquote {
 }
 
 //------------------- List Modules
-.list-events { 
+.list-events {
 	// reusable event list style class, for use in the sidebar. (See sidebar-news.html include.)
 	@include sans-serif;
 	list-style: none;
@@ -1482,14 +1482,14 @@ h2 + .list-link-soup {
 
 .list-features {
 	// Animated Feature List from the Why Django Page. Require looks for the 'list-features' class to load the appropriate scripts to animate the icons. Degrades gracefully into mobile.
-	
+
 	margin: 50px 0 40px;
 
 	dt {
 		@include font-size(24);
 		border-top: 1px solid $gray-line;
 		padding-top: 25px;
-	}	
+	}
 
 	i {
 		color: $white;
@@ -1552,13 +1552,13 @@ h2 + .list-link-soup {
 			width: 200px;
 			margin-right: 0;
 
-			// Border Radius Enabled 
+			// Border Radius Enabled
 			.mdzr-borderradius & {
 				background: $green-medium;
 				@include border-radius(100px);
 				color: #fff;
 			}
-			
+
 			// SVG Enabled
 			.mdzr-svg & {
 				background: url(../img/bg-features.svg) no-repeat center center;
@@ -1588,7 +1588,7 @@ h2 + .list-link-soup {
 				&.inview {
 					@include transform(rotate(0turn));
 				}
-				
+
 				&.icon-bolt {
 					background-position: 40px -369px;
 					&.inview {
@@ -1624,7 +1624,7 @@ h2 + .list-link-soup {
 			// Fixing opera svg-border-radius bug
 			// http://stackoverflow.com/questions/11114636/opera-border-radius-svg-background-bug
 			:-o-prefocus,
-			& { 
+			& {
 				background: $green-medium !important;
 				@include transition(none !important);
 				@include transform(none !important);
@@ -1704,7 +1704,7 @@ h2 + .list-link-soup {
 
 	.form-controls.label {
 		float: right;
-	}	
+	}
 }
 
 
@@ -1717,7 +1717,7 @@ h2 + .list-link-soup {
 	clear: both;
 
 	&.active {
-		
+
 		> li {
 			border-top: 1px solid $gray-line;
 			margin: 0;
@@ -1896,7 +1896,7 @@ h2 + .list-link-soup {
 		text-transform: uppercase;
 		font-weight: 700;
 		@include link-green;
-	}	
+	}
 
 	> li > ul { //second level
 		list-style: none;
@@ -1971,7 +1971,7 @@ h2 + .list-link-soup {
 		}
 }
 
-.list-links { 
+.list-links {
 	//Can be used globally to stack list items either with a <ul>, or with a <dl> using the <dd> to add meta information.  (See Community Page - sidebar and block body.)
 	@include sans-serif;
 	list-style: none;
@@ -2140,8 +2140,9 @@ h2 + .list-link-soup {
 	}
 
 	input[type="search"],
-	input[type="text"], 
-	input[type="email"] {
+	input[type="text"],
+	input[type="email"],
+	textarea {
 		@include sans-serif;
 		@include font-size(16);
 		-webkit-appearance: none;
@@ -2157,7 +2158,7 @@ h2 + .list-link-soup {
 		padding: 8px 14% 6px 10px;
 		text-indent: 0;
 		vertical-align: middle;
-		width: 82%;		
+		width: 82%;
 
 		@include device-min(768px) {
 			padding: 8px 18% 6px 10px;
@@ -2173,6 +2174,10 @@ h2 + .list-link-soup {
 			outline: none;
 			border-color: $green;
 		}
+	}
+
+	textarea {
+		height: auto;
 	}
 
 	button {
@@ -2207,7 +2212,7 @@ h2 + .list-link-soup {
 		height: 30px;
 		margin: 20px 0 30px;
 		input[type="search"],
-		input[type="text"], 
+		input[type="text"],
 		input[type="email"] {
 			height: 20px;
 			@include font-size(14);
@@ -2275,7 +2280,7 @@ h2 + .list-link-soup {
 		margin: 0 5px;
 		@include border-radius(15px);
 		display: block;
-		text-decoration: none; 
+		text-decoration: none;
 		@include device-min(320px) {
 			background: $text-light;
 			color: #fff;
@@ -2340,7 +2345,7 @@ h2 + .list-link-soup {
 }
 
 // Boilerplate Helper mixins (rendered as classes)
-.visuallyhidden { 
+.visuallyhidden {
 	@include visuallyhidden;
 }
 .clearfix, .group-container {

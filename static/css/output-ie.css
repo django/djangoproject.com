@@ -3080,9 +3080,9 @@ html {
   content: "";
 }
 
-/* 
+/*
 CSS Written by Jes Gundy
-Threespot, Washington DC 
+Threespot, Washington DC
 ---
 Ammended and appended by Andrew McCarthy
 http://andrevv.com/
@@ -5538,7 +5538,8 @@ h6:hover .headerlink {
 /* line 2142, ../scss/_style.scss */
 .form-input input[type="search"],
 .form-input input[type="text"],
-.form-input input[type="email"] {
+.form-input input[type="email"],
+.form-input textarea {
   font-family: "Colfax", Avenir, Corbel, "Lucida Grande", "Lucida Sans", sans-serif;
   font-size: 16px;
   font-size: 1.6rem;
@@ -5561,22 +5562,29 @@ h6:hover .headerlink {
   padding: 8px 18% 6px 10px;
   width: 80%;
 }
-/* line 2167, ../scss/_style.scss */
+/* line 2168, ../scss/_style.scss */
 .form-input input[type="search"]::-ms-clear,
 .form-input input[type="text"]::-ms-clear,
-.form-input input[type="email"]::-ms-clear {
+.form-input input[type="email"]::-ms-clear,
+.form-input textarea::-ms-clear {
   display: none;
 }
-/* line 2171, ../scss/_style.scss */
+/* line 2172, ../scss/_style.scss */
 .form-input input[type="search"]:active, .form-input input[type="search"]:focus,
 .form-input input[type="text"]:active,
 .form-input input[type="text"]:focus,
 .form-input input[type="email"]:active,
-.form-input input[type="email"]:focus {
+.form-input input[type="email"]:focus,
+.form-input textarea:active,
+.form-input textarea:focus {
   outline: none;
   border-color: #20AA76;
 }
-/* line 2178, ../scss/_style.scss */
+/* line 2179, ../scss/_style.scss */
+.form-input textarea {
+  height: auto;
+}
+/* line 2183, ../scss/_style.scss */
 .form-input button {
   background: none;
   border: none;
@@ -5589,23 +5597,23 @@ h6:hover .headerlink {
   width: 40px;
   right: 1%;
 }
-/* line 2193, ../scss/_style.scss */
+/* line 2198, ../scss/_style.scss */
 .form-input button i {
   font-size: 20px;
   font-size: 2rem;
   line-height: 1;
 }
-/* line 2198, ../scss/_style.scss */
+/* line 2203, ../scss/_style.scss */
 .form-input button:hover, .form-input button:focus, .form-input button:active {
   color: #20AA76;
   outline: none;
 }
-/* line 2206, ../scss/_style.scss */
+/* line 2211, ../scss/_style.scss */
 [role="complementary"] .form-input {
   height: 30px;
   margin: 20px 0 30px;
 }
-/* line 2209, ../scss/_style.scss */
+/* line 2214, ../scss/_style.scss */
 [role="complementary"] .form-input input[type="search"],
 [role="complementary"] .form-input input[type="text"],
 [role="complementary"] .form-input input[type="email"] {
@@ -5613,20 +5621,20 @@ h6:hover .headerlink {
   font-size: 14px;
   font-size: 1.4rem;
 }
-/* line 2215, ../scss/_style.scss */
+/* line 2220, ../scss/_style.scss */
 [role="complementary"] .form-input button {
   height: 30px;
   width: 30px;
   top: 3px;
   right: 0;
 }
-/* line 2222, ../scss/_style.scss */
+/* line 2227, ../scss/_style.scss */
 [role="complementary"] .form-input button i {
   font-size: 20px;
   font-size: 2rem;
 }
 
-/* line 2229, ../scss/_style.scss */
+/* line 2234, ../scss/_style.scss */
 ::-webkit-input-placeholder,
 :-moz-placeholder,
 ::-moz-placeholder,
@@ -5634,22 +5642,22 @@ h6:hover .headerlink {
   color: #859D94;
 }
 
-/* line 2238, ../scss/_style.scss */
+/* line 2243, ../scss/_style.scss */
 .form-email h3 {
   font-size: 18px;
   font-size: 1.8rem;
   margin: 10px 0;
 }
-/* line 2242, ../scss/_style.scss */
+/* line 2247, ../scss/_style.scss */
 .form-email .meta, .form-email .list-links dd, .list-links .form-email dd {
   margin: 0;
 }
-/* line 2245, ../scss/_style.scss */
+/* line 2250, ../scss/_style.scss */
 .form-email form {
   margin: 10px 0 30px;
 }
 
-/* line 2251, ../scss/_style.scss */
+/* line 2256, ../scss/_style.scss */
 .nav-pagination {
   font-family: "Colfax", Avenir, Corbel, "Lucida Grande", "Lucida Sans", sans-serif;
   font-size: 14px;
@@ -5662,13 +5670,13 @@ h6:hover .headerlink {
   padding: 30px 0 0;
   text-align: center;
 }
-/* line 2263, ../scss/_style.scss */
+/* line 2268, ../scss/_style.scss */
 .nav-pagination li {
   display: inline-block;
   display: inline;
   zoom: 1;
 }
-/* line 2270, ../scss/_style.scss */
+/* line 2275, ../scss/_style.scss */
 .nav-pagination a {
   border: none;
   color: #798780;
@@ -5686,7 +5694,7 @@ h6:hover .headerlink {
   margin: 0 2px;
   width: 30px;
 }
-/* line 2287, ../scss/_style.scss */
+/* line 2292, ../scss/_style.scss */
 .nav-pagination a.previous, .nav-pagination a.next {
   font-size: 16px;
   font-size: 1.6rem;
@@ -5697,25 +5705,25 @@ h6:hover .headerlink {
   line-height: 43px;
   width: 40px;
 }
-/* line 2297, ../scss/_style.scss */
+/* line 2302, ../scss/_style.scss */
 .nav-pagination a.previous {
   margin-right: 10px;
   margin-right: 70px;
 }
-/* line 2303, ../scss/_style.scss */
+/* line 2308, ../scss/_style.scss */
 .nav-pagination a.next {
   margin-left: 10px;
   text-indent: 1px;
   margin-left: 70px;
 }
-/* line 2311, ../scss/_style.scss */
+/* line 2316, ../scss/_style.scss */
 .nav-pagination a:hover, .nav-pagination a:focus, .nav-pagination a:active, .nav-pagination a.active {
   background: none;
   color: #20AA76;
   background: #20AA76;
   color: white;
 }
-/* line 2323, ../scss/_style.scss */
+/* line 2328, ../scss/_style.scss */
 .mdzr-no-borderradius .nav-pagination a {
   display: inline;
   background: none;
@@ -5724,13 +5732,13 @@ h6:hover .headerlink {
   width: auto;
   margin: 0 5px !important;
 }
-/* line 2331, ../scss/_style.scss */
+/* line 2336, ../scss/_style.scss */
 .mdzr-no-borderradius .nav-pagination a:hover, .mdzr-no-borderradius .nav-pagination a:active, .mdzr-no-borderradius .nav-pagination a:focus, .mdzr-no-borderradius .nav-pagination a.active {
   background: none;
   color: #20AA76;
 }
 
-/* line 2343, ../scss/_style.scss */
+/* line 2348, ../scss/_style.scss */
 .visuallyhidden {
   border: 0;
   clip: rect(0 0 0 0);
@@ -5742,7 +5750,7 @@ h6:hover .headerlink {
   width: 1px;
 }
 
-/* line 2346, ../scss/_style.scss */
+/* line 2351, ../scss/_style.scss */
 .clearfix, .group-container {
   zoom: 1;
 }
@@ -6380,5 +6388,3 @@ pre.literal-block,
     margin-top: 0;
   }
 }
-
-/*# sourceMappingURL=output-ie.css.map */
