@@ -5738,7 +5738,13 @@ h6:hover .headerlink {
   color: #20AA76;
 }
 
-/* line 2348, ../scss/_style.scss */
+/* line 2347, ../scss/_style.scss */
+hr {
+  border: 0;
+  border-top: 1px solid #CFE3DC;
+}
+
+/* line 2353, ../scss/_style.scss */
 .visuallyhidden {
   border: 0;
   clip: rect(0 0 0 0);
@@ -5750,7 +5756,7 @@ h6:hover .headerlink {
   width: 1px;
 }
 
-/* line 2351, ../scss/_style.scss */
+/* line 2356, ../scss/_style.scss */
 .clearfix, .group-container {
   zoom: 1;
 }
