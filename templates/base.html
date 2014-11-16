@@ -31,7 +31,10 @@
   </head>
 
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
-  {% include "includes/header.html" %}
+
+  {% block navigation %}
+    {% include "includes/header.html" %}
+  {% endblock %}
 
   <div class="copy-banner">
       <div class="container">
@@ -60,7 +63,9 @@
 
   {% block extrabody %}{% endblock extrabody %}
 
-  {% include "includes/footer.html" %}
+  {% block footer %}
+    {% include "includes/footer.html" %}
+  {% endblock %}
 
   {# Require JS #}
   <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>
