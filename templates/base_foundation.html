@@ -1,44 +1,27 @@
-{% extends "base_community.html" %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About the Django Software Foundation{% endblock %}
+
+{% block header %}
+	<h1>About the Django Software Foundation</h1>
+{% endblock %}
 
 {% block content-related %}
-<h2>Support Django</h2>
-<p>
-  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-    <input type="hidden" name="cmd" value="_donations">
-    <input type="hidden" name="business" value="jkocherhans@djangoproject.com">
-    <input type="hidden" name="item_name" value="Django Software Foundation">
-    <input type="hidden" name="item_number" value="donation">
-    <input type="hidden" name="no_shipping" value="1">
-    <input type="hidden" name="return" value="https://www.djangoproject.com/foundation/donate/thanks/">
-    <input type="hidden" name="cancel_return" value="https://www.djangoproject.com/foundation/donate/">
-    <input type="hidden" name="no_note" value="1">
-    <input type="hidden" name="currency_code" value="USD">
-    <input type="hidden" name="tax" value="0">
-    <input type="hidden" name="lc" value="US">
-    <input type="hidden" name="bn" value="PP-DonationsBF">
-    <label for="amount" style="font-size: 14px;">$</label> <input type="text" name="amount" value="25.00" size="5" style="font-size: 14px; margin-right: 4px;">
-    <input type="image" align="top" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-    <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
-  </form>
-</p>
 
-<p>Read more about <a href="/foundation/donate/">donating to the DSF</a>.
-  
-<h2>Licensing &amp; Trademarks</h2>  
-<ul>
-  <li><a href="/foundation/cla/">Contributor license agreements</a></li>
-</ul>
-
-<h2>About the foundation</h2>
-<ul>
-  <li><a href="/foundation/faq/">FAQ</a></li>
-  <li><a href="/foundation/records">Records</a></li>
-  <li><a href="/contact/foundation/">Contact us</a></li>
-</ul>
-
-<h2>Mailing lists</h2>
-
-<p><strong><a href="http://groups.google.com/group/dsf-volunteers">dsf-volunteers</a></strong>: The list for volunteering to help with the foundation.</p>
-<p><strong><a href="http://groups.google.com/group/dsf-members">dsf-members</a></strong>: For members of the foundation.</p>
-
+{# Always include <h1> label and <div> with aria role. #}
+<h1 class="visuallyhidden">Additional Information</h1>
+<div role="complementary">
+	<h2>About the foundation</h2>
+	<ul class="list-links">
+		<li><a href="/foundation/faq/">FAQ</a></li>
+    <li><a href="/foundation/records">Records</a></li>
+    <li><a href="/contact/foundation/">Contact us</a></li>
+		<li><a href="/foundation/cla/">Contributor license agreements</a></li>
+	</ul>
+	<h2>Support Django</h2>
+	<ul class="list-links">
+		<li><a href="/foundation/donate/" class="link-blue">Donate to the DSF</a></li>
+	</ul>
+</div>
 {% endblock %}
