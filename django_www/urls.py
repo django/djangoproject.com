@@ -23,6 +23,7 @@ sitemaps = {
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='homepage.html'), name="homepage"),
     url(r'^overview/$', TemplateView.as_view(template_name='overview.html'), name="overview"),
+    url(r'^start/$', TemplateView.as_view(template_name='start.html'), name="start"),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^community/', include('aggregator.urls')),
