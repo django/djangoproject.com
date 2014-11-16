@@ -1,47 +1,45 @@
-{% load staticfiles %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
   <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="{% block description %}{% endblock %}">
-	
-	<!-- Favicons -->
-	<link rel="apple-touch-icon" href="{% static "img/icon icon-touch.png" %}">
-	<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
-	<meta name="msapplication-TileColor" content="#113228">
-	<meta name="msapplication-TileImage" content="{% static "img/icon icon-tile.png" %}">
-
-    <meta http-equiv="Content-Language" content="en-us" />
-    <title>{% block title %}The Web framework for perfectionists with deadlines{% endblock %} | Django</title>
+  	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="ROBOTS" content="ALL" />
     <meta http-equiv="imagetoolbar" content="no" />
     <meta name="MSSmartTagsPreventParsing" content="true" />
     <meta name="Copyright" content="Django Software Foundation" />
     <meta name="keywords" content="Python, Django, framework, open-source" />
-    <meta name="description" content="Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design." />
+    <meta name="description" content="{% block description %}{% endblock %}" />
+
+  	<!-- Favicons -->
+  	<link rel="apple-touch-icon" href="{% static "img/icon icon-touch.png" %}">
+  	<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+  	<meta name="msapplication-TileColor" content="#113228">
+  	<meta name="msapplication-TileImage" content="{% static "img/icon icon-tile.png" %}">
+
+    <title>{% block title %}The Web framework for perfectionists with deadlines{% endblock %} | Django</title>
 
     <!--[if lte IE 8]>
-			<link rel="stylesheet" href="{% static "css/output-ie.css" %}" >
- 	<![endif]-->
-	<!--[if gt IE 8]><!-->
-			<link rel="stylesheet" href="{% static "css/output.css" %}" >
-	<!--<![endif]-->
+  			<link rel="stylesheet" href="{% static "css/output-ie.css" %}" >
+   	<![endif]-->
+  	<!--[if gt IE 8]><!-->
+  			<link rel="stylesheet" href="{% static "css/output.css" %}" >
+  	<!--<![endif]-->
 
-	<script src="{% static "js/lib/modernizr.js" %}"></script>
-
+  	<script src="{% static "js/lib/modernizr.js" %}"></script>
   </head>
+
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
   {% include "includes/header.html" %}
-  
+
   <div class="copy-banner">
       <div class="container">
           {% block header %}{% endblock %}
       </div>
   </div>
   <div id="billboard">{% block billboard %}{% endblock %}</div>
-  
+
     <div class="container {% block layout_class %}{% endblock %}">
         <div role="main">
 			{% block content %}{% endblock %}
@@ -50,7 +48,7 @@
 
 		{% block content-related %}{% endblock %} {# Used only with two column pages: News, About, etc #}
 		{% block content-extra %}{% endblock %} {# Used only with two column pages: News, About, etc #}
-		
+
 	</div>
 
 	{% block secondary %}{% endblock %} {# Used only with one column pages: Why Django, Get Started, etc #}
@@ -58,18 +56,14 @@
 
 	{# Used to display urgent news, events, and alerts #}
 	{% block alert %}
-	{% endblock %} 
+	{% endblock %}
 
-	{% include "includes/footer.html" %}
-	
-	{# Require JS #}
-	<script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>	
-    
-  </div>
-  <!-- END #container -->
   {% block extrabody %}{% endblock extrabody %}
 
+  {% include "includes/footer.html" %}
+
   {# Require JS #}
-  <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>	
+  <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>
+
   </body>
 </html>
