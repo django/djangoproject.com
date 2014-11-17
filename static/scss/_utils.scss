@@ -154,3 +154,10 @@ html {
 	-webkit-box-shadow: 0 -4px 8px rgba(12,60,38,0.07);
 	box-shadow: 0 -4px 8px rgba(12,60,38,0.07);
 }
+
+@mixin framed-image {
+  padding: 20px;
+  border: 1px solid $gray-line;
+  @include border-radius(4px);
+
+}

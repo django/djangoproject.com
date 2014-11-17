@@ -1,71 +1,68 @@
 {% extends "base_community.html" %}
+{% load humanize %}
 
 {% block title %}{% firstof user_obj.profile.name user_obj.username %}{% endblock %}
-{% block extrahead %}
-  <style type="text/css">
-    #avatar { float: left; margin-top: 16px; }
-    #user-info { padding-left: 160px; }
-    #user-info ul li { margin-left: 1em; }
-    h1 span.badge {
-      font-size: 12px;
-      background-color: #FFC757;
-      border-radius: 4px;
-      padding: 2px 6px;
-      position: relative;
-      bottom: 0.3em;
-  }
-  </style>
-{% endblock extrahead %}
+
 {% block content-related %}
-  <h2>{% if user_obj == user %}This is you!{% else %}Is this you?{% endif %}</h2>
-  <p>
-  Need to edit something? Here's how:
-  </p>
-  <ul>
-    <li><a href="{% url 'edit_profile' %}">Edit your name and email here.</a></li>
-    <li>
-      The image is the <a href="http://en.gravatar.com/">Gravatar</a> linked
-      to the email address you signed up with. You can change the image over
-      at <a href="http://en.gravatar.com/">Gravatar</a>.
-      If you see a robot, that's because you don't have a Gravatar yet.
-      (Robots provided by <a href="http://robothash.org/">Robohash</a>.)
-    </li>
-    <li>
-      The rest of the data is read-only for the time being. If you see
-      outragous errors, please email <kbd>jacob</kbd> @ this domain.
-    </li>
-  </ul>
+    <h1 class="visuallyhidden">Additional Information</h1>
+    <div role="complementary">
+        <h2>
+            {% if user_obj == user %}
+                This is you!
+            {% else %}
+                Is this you?
+            {% endif %}
+        </h2>
+
+        <p>Need to edit something? Here's how:</p>
+        <ul>
+            <li><a href="{% url 'edit_profile' %}">Edit your name and email here.</a></li>
+            <li>
+                The image is the <a href="http://en.gravatar.com/">Gravatar</a> linked
+                to the email address you signed up with. You can change the image over
+                at <a href="http://en.gravatar.com/">Gravatar</a>. If you see a robot, that's
+                because you don't have a Gravatar yet.
+                (Robots provided by <a href="http://robothash.org/">Robohash</a>.)
+            </li>
+            <li>
+                The rest of the data is read-only for the time being. If you see
+                outrageous errors, please email <kbd>jacob</kbd> @ this domain.
+            </li>
+        </ul>
+    </div>
 {% endblock %}
 
 {% block content %}
-  {% load humanize %}
-  <img id='avatar' width='150' height='150'
-   src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=150&amp;d=https%3A%2F%2Frobohash.org%2F{{ email_hash }}%3Fset%3Dset3%26size%3D150x150">
-  <div id="user-info">
-    <h1>
-      {% firstof user_obj.profile.name user_obj.username %}
-      {% if user_can_commit %}<span class="badge" title="Core committer.">core</span>{% endif %}
-      {% if clas %}<span class="badge" title="Contributor License Agreement on file.">cla</span>{% endif %}
-    </h1>
+    <div class  ="user-info">
+        <img class='avatar' width='150' height='150'
+             src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=150&amp;d=https%3A%2F%2Frobohash.org%2F{{ email_hash }}%3Fset%3Dset3%26size%3D150x150">
 
-    {% if stats %}
-      <h2>Lies, damned lies, and statistics:</h2>
-      <ul>
-        {% for stat, value in stats.items %}
-          <li>{{ stat }}: {{ value|intcomma }}.</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
+        <h1>
+            {% firstof user_obj.profile.name user_obj.username %}
+            {% if user_can_commit %}<span class="badge" title="Core committer">core
+                </span>{% endif %}
+            {% if clas %}<span class="badge" title="Contributor License Agreement on file">cla
+                </span>{% endif %}
+        </h1>
 
-    {% with user_obj.owned_feeds.all as feeds %}
-      {% if feeds %}
-        <h2>Community feeds:</h2>
-        <ul>
-          {% for f in feeds %}
-            <li><a href="{{ f.public_url }}">{{ f.title }}</a></li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-  </div>
+        {% if stats %}
+            <h2>Lies, damned lies, and statistics:</h2>
+            <ul>
+                {% for stat, value in stats.items %}
+                    <li>{{ stat }}: {{ value|intcomma }}.</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% with user_obj.owned_feeds.all as feeds %}
+            {% if feeds %}
+                <h2>Community feeds:</h2>
+                <ul>
+                    {% for f in feeds %}
+                        <li><a href="{{ f.public_url }}">{{ f.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
 {% endblock content %}

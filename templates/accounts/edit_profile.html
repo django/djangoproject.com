@@ -4,41 +4,48 @@
 
 {% block content %}
 
-  {% if form.errors %}
-  <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
-  {% endif %}
+    {% if form.errors %}
+        <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
+    {% endif %}
 
-  <h1>Edit your profile</h1>
+    <h1>Edit your profile</h1>
 
-  <form method="post" action="" class="wide">
-    {% csrf_token %}
-    <p>
-      <label for="id_name">Your name:</label>
-      {% if form.name.errors %}
-        <p class="errors">{{ form.name.errors.as_text }}</p>
-      {% endif %}
-      {{ form.name }}
-    </p>
-    <p>
-      <label for="id_email">Your email address:</label>
-      {% if form.email.errors %}
-        <p class="errors">{{ form.email.errors.as_text }}</p>
-      {% endif %}
-      {{ form.email }}
-    </p>
-    <p class="submit"><input type="submit" value="Save &rarr;"></p>
+    <form method="post" action="" class="form-input">
+        {% csrf_token %}
+        <div>
+            {% if form.name.errors %}
+                <p class="errors">{{ form.name.errors.as_text }}</p>
+            {% endif %}
+            <p>{{ form.name }}</p>
+        </div>
+
+        <div class="form-controls">
+            {% if form.email.errors %}
+                <p class="errors">{{ form.email.errors.as_text }}</p>
+            {% endif %}
+            <p>{{ form.email }}</p>
+        </div>
+
+        <div class="submit">
+            <input class="cta" type="submit" value="Save"/>
+        </div>
+    </form>
 {% endblock %}
 
 {% block content-related %}
-<h2>Help</h2>
-<p>Use this form to edit your profile.</p>
+    <h1 class="visuallyhidden">Additional Information</h1>
+    <div role="complementary">
+        <h2>Help</h2>
 
-<p>Use whatever name you'd like to be identified with on djangoproject.com. If
-you leave it blank, we'll identify you as <b>{{ user.username }}</b>, your
-username.</p>
+        <p>Use this form to edit your profile.</p>
 
-<p>We hate spam as much as you do. We'll only use it to send you password reset
-emails. We'll also use this email to try to fetch a <a
-href="http://en.gravatar.com/">Gravatar</a>. You can change the image for this
-email at <a href="http://en.gravatar.com/">Gravatar</a>.</p>
+        <p>Use whatever name you'd like to be identified with on djangoproject.com. If
+            you leave it blank, we'll identify you as <b>{{ user.username }}</b>, your
+            username.</p>
+
+        <p>We hate spam as much as you do. We'll only use it to send you password reset
+            emails. We'll also use this email to try to fetch a <a
+                    href="http://en.gravatar.com/">Gravatar</a>. You can change the image for this
+            email at <a href="http://en.gravatar.com/">Gravatar</a>.</p>
+    </div>
 {% endblock %}
