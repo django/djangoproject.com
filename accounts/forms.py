@@ -10,10 +10,18 @@ class ProfileForm(forms.ModelForm):
     Assumes that the Profile instance passed in has an associated User
     object. The view (see views.py) takes care of tha
     """
+    name = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Name'})
+    )
+    email = forms.EmailField(
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Email'})
+    )
+
     class Meta(object):
         model = Profile
         fields = ['name']
-    email = forms.EmailField(required=False)
 
     def __init__(self, *args, **kwargs):
         instance = kwargs.get('instance', None)
