@@ -5385,7 +5385,7 @@ h2 + .list-link-soup {
 }
 
 /* line 1872, ../scss/_style.scss */
-#s-django-documentation {
+#s-django-documentation, #s-feed {
   font-family: "Colfax", Avenir, Corbel, "Lucida Grande", "Lucida Sans", sans-serif;
 }
 
@@ -6626,5 +6626,3 @@ pre.literal-block,
     margin-top: 0;
   }
 }
-
-/*# sourceMappingURL=output.css.map */
