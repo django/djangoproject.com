@@ -1,10 +1,12 @@
-{% extends "base_2col.html" %}
+{% extends 'base.html' %}
 
 {% block title %}Page not found{% endblock %}
 
-{% block content %}
+{% block layout_class %}full-width{% endblock %}
 
-<h2>Page not found</h2>
+{% block header %}<h1>404</h1>{% endblock %}
+
+{% block content %}
 
 <p>Looks like you followed a bad link. If you think it's our fault, please <a href="https://code.djangoproject.com/">let us know</a>.</p>
 
