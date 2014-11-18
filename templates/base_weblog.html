@@ -1,22 +1,60 @@
-{% extends "base_2col.html" %}
+{% extends "base.html" %}{% load url from future %}
+{% load static weblog %}
+{% block title %}News &amp; Events{% endblock %}
+
+{% block header %}
+	<h1>News &amp; Events</h1>
+{% endblock %}
 
 {% block extrahead %}
 <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss/weblog/" />
 {% endblock %}
 
-{% block sectionid %}weblog{% endblock %}
-
-{% block title %}Weblog{% endblock %}
-
-{% block billboard %}<h2><a href="/weblog/">Weblog</a></h2>{% endblock %}
-
 {% block content-related %}
-<h2>Archives</h2>
-{% load weblog %}{% render_month_links %}
 
-<h2>RSS feeds</h2>
-<ul class="linklist">
-	<li><a href="/rss/weblog/">Latest weblog entries</a></li>
-	<li><a href="https://code.djangoproject.com/timeline?daysback=90&amp;max=50&amp;wiki=on&amp;ticket=on&amp;changeset=on&amp;milestone=on&amp;format=rss">Recent code changes</a></li>
-</ul>
+	<h1 class="visuallyhidden">Additional Information</h1>
+	<div role="complementary">
+
+	<h2>Upcoming Events</h2>
+	<ul class="list-events">
+		<li>
+			<a href="#">DjangoCon 2013 Call for Papers</a>
+			<span class="meta"><span>April 7th, 2013</span>  |  Berlin, Germany</span>
+			<i class="icon icon-calendar"></i>
+		</li>
+		<li>
+			<a href="#">DjangoCon Europe 2013</a>
+			<span class="meta">April 7th, 2013  |  Berlin, Germany</span>
+			<i class="icon icon-calendar"></i>
+		</li>
+		<li>
+			<a href="#">DjangoCon Europe 2013 Call for Papers</a>
+			<span class="meta">April 7th, 2013  |  Berlin, Germany</span>
+			<i class="icon icon-calendar"></i>
+		</li>
+	</ul>
+
+	{% comment %}
+	{# tags not implemented in backend yet #}
+	<h2><span>Tags</span></h2>
+	<ul class="list-tags">
+		<li><a href="#">Django Software Foundation</a></li>
+		<li><a href="#">Events</a></li>
+		<li><a href="#">Conferences</a></li>
+		<li><a href="#">Release Announcements</a></li>
+		<li><a href="#">Security</a></li>
+	</ul>
+	{% endcomment %}
+
+	<h2><span>Archives</span></h2>
+	<ul class="list-links-small">
+		{% render_month_links %}
+	</ul>
+
+	<h2><span>RSS Feeds</span></h2>
+	<ul class="list-links-small rss-list">
+		<li><a href="/rss/weblog/">Latest news entries</a></li>
+		<li><a href="/timeline?daysback=90&max=50&wiki=on&ticket=on&changeset=on&milestone=on&format=rss">Recent code changes</a></li>
+	</ul>
+</div>
 {% endblock %}
