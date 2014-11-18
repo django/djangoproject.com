@@ -2,12 +2,24 @@
 
 {% block content %}
 
-<h1>Latest entries</h1>
+  {% comment %}
+    {# This is not implemented in backend yet #}
+    <form action="#" class="form-input" role="search">
+    	<label class="visuallyhidden" for="news-search">Search:</label>
+    	<input type="text" name="news-search" id="news-search" placeholder="Search News" />
+    	<button type="submit">
+    		<i class="icon icon-search"></i>
+    		<span class="visuallyhidden">Search</span>
+    	</button>
+    </form>
+  {% endcomment %}
 
-{% for object in latest %}
-    <h2><a href="{{ object.get_absolute_url }}">{{ object.headline|safe }}</a></h2>
-    {{ object.body_html|safe }}
-    <p class="date small">Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }}</p>
-{% endfor %}
+  <ul class="list-news">
+
+  {% for object in latest %}
+    {% include 'blog/news_summary.html' with object=object %}
+  {% endfor %}
+
+  </ul>
 
 {% endblock %}
