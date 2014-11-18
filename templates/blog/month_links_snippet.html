@@ -1,5 +1,3 @@
-<ul class="linklist">
   {% for d in dates reversed %}
     <li><a href="/weblog/{{ d|date:"Y/b" }}/">{{ d|date:"F Y" }}</a></li>
   {% endfor %}
-</ul>
