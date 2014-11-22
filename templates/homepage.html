@@ -182,7 +182,7 @@
         <dd></dd>
       </dl>
       <a href="/foundation/" class="link-readmore">More about the DSF</a>
-
+      {% comment %}
       <h3>Upcoming Events</h3>
       <dl class="list-links-small news-list">
         <dt class="event"><a href="#">DjangoCon 2013 Call for Papers</a></dt>
@@ -194,34 +194,18 @@
         <dd>April 7th, 2013 | Berlin, Germany</dd>
       </dl>
       <a href="{% url 'blog-index' %}" class="link-readmore">See all Events</a>
-
+      {% endcomment %}
       <h3>Latest News</h3>
       <dl class="list-links-small news-list">
-        {% load weblog %}{% render_latest_blog_entries 4 %}
+        {% load weblog %}{% render_latest_blog_entries 1 %}
       </dl>
       <a href="{% url 'blog-index' %}" class="link-readmore">See all News</a>
-
-      <h3>Django Community Resources</h3>
-      <dl class="list-links-small resource-list">
-        <dt><a href="https://people.djangoproject.com/">Django People</a></dt>
-        <dd>
-          Discover users of the Django Web framework near you
-        </dd>
-
-        <dt><a href="https://www.djangopackages.com/">Django Packages</a></dt>
-        <dd>
-          A directory of reusable apps, sites, tools
-        </dd>
-
-        <dt><a href="https://www.djangosites.org/">DjangoSites</a></dt>
-        <dd>Shiny websites powered by Django</dd>
-      </dl>
   </div>
 
 {% endblock %}
 
 {% block alert %}
-  {# Begin loop #}
+  {% comment %}
   <div role="alert">
     <div class="container">
       <dl>
@@ -236,5 +220,5 @@
       </dl>
     </div>
   </div>
-  {# End loop #}
+  {% endcomment %}
 {% endblock %}
