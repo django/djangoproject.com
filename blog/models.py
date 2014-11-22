@@ -22,7 +22,7 @@ class EntryManager(models.Manager):
         return self.active().filter(pub_date__lte=datetime.datetime.now())
 
     def active(self):
-        return super(EntryManager, self).get_queryset().filter(is_active=True)
+        return self.filter(is_active=True)
 
 CONTENT_FORMAT_CHOICES = (
     ('reST', 'reStructuredText'),
@@ -93,7 +93,7 @@ class Entry(models.Model):
 class EventManager(EntryManager):
 
     def active(self):
-        return super(EventManager, self).get_queryset().filter(is_active=True)
+        return self.filter(is_active=True)
 
 
 class Event(models.Model):
