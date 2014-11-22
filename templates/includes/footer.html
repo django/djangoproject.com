@@ -10,9 +10,10 @@
 				<h2>Learn More</h2>
 				<ul>
 					<li><a href="{% url 'overview' %}">About Django</a></li>
-					<li><a href="/foundation/">Django Software Foundation</a></li>
 					{% comment %}<li><a href="{% url 'case_study_index' %}">Case Studies</a></li>{% endcomment %}
 					<li><a href="{% url 'start' %}">Getting Started with Django</a></li>
+					<li><a href="/foundation/">Django Software Foundation</a></li>
+					<li><a href="{% url 'code_of_conduct' %}">Code of Conduct</a></li>
 				</ul>
 			</div>
 
@@ -20,10 +21,9 @@
 				<h2>Get Involved</h2>
 				<ul>
 					<li><a href="{% url 'community-index' %}">Join a Group</a></li>
-					<li><a href="#">Find a Job</a></li>
-					<li><a href="#">Submit a Bug</a></li>
-					<li><a href="#">Report a Security Issue</a></li>
-					<li><a href="#">Attend an Event</a></li>
+					<li><a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/internals/contributing/">Contribute to Django</a></li>
+					<li><a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/internals/contributing/bugs-and-features/#reporting-security-issues">Submit a Bug</a></li>
+					<li><a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/internals/security/">Report a Security Issue</a></li>
 				</ul>
 			</div>
 
@@ -32,8 +32,8 @@
 				<ul>
 					<li><a href="http://github.com/django">Github</a></li>
 					<li><a href="https://twitter.com/djangoproject">Twitter</a></li>
-					<li><a href="#">News &amp; Event RSS</a></li>
-					<li><a href="https://docs.djangoproject.com/en/stable/internals/mailing-lists/#django-users">Django Users Mailing List</a></li>
+					<li><a href="/rss/weblog/">News RSS</a></li>
+					<li><a href="https://groups.google.com/forum/#!forum/django-users">Django Users Mailing List</a></li>
 				</ul>
 			</div>
 
