@@ -13,7 +13,7 @@ ALLOWED_HOSTS = ['*']
 
 STATIC_ROOT = 'staticfiles'
 
-DEBUG = False
+DEBUG = True
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.cache.UpdateCacheMiddleware',
