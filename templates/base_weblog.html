@@ -15,24 +15,18 @@
 	<h1 class="visuallyhidden">Additional Information</h1>
 	<div role="complementary">
 
+	{% if events %}
 	<h2>Upcoming Events</h2>
 	<ul class="list-events">
-		<li>
-			<a href="#">DjangoCon 2013 Call for Papers</a>
-			<span class="meta"><span>April 7th, 2013</span>  |  Berlin, Germany</span>
-			<i class="icon icon-calendar"></i>
-		</li>
-		<li>
-			<a href="#">DjangoCon Europe 2013</a>
-			<span class="meta">April 7th, 2013  |  Berlin, Germany</span>
-			<i class="icon icon-calendar"></i>
-		</li>
-		<li>
-			<a href="#">DjangoCon Europe 2013 Call for Papers</a>
-			<span class="meta">April 7th, 2013  |  Berlin, Germany</span>
-			<i class="icon icon-calendar"></i>
-		</li>
+		{% for event in events %}
+			<li>
+				<a href="{{ event.external_url }}" target="_blank">{{ event.headline }}</a>
+				<span class="meta"><span>{{ event.date|date:"F j, Y" }}</span>  |  {{ event.location }}</span>
+				<i class="icon icon-calendar"></i>
+			</li>
+		{% endfor %}
 	</ul>
+	{% endif %}
 
 	{% comment %}
 	{# tags not implemented in backend yet #}

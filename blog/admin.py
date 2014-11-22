@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Entry
+from .models import Entry, Event
 
 
 class EntryAdmin(admin.ModelAdmin):
@@ -16,4 +16,9 @@ class EntryAdmin(admin.ModelAdmin):
         return formfield
 
 
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('headline', 'external_url', 'date', 'location', 'pub_date', 'is_active', 'is_published')
+    list_filter = ('is_active',)
+
 admin.site.register(Entry, EntryAdmin)
+admin.site.register(Event, EventAdmin)
