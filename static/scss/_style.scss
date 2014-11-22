@@ -2146,6 +2146,7 @@ h2 + .list-link-soup {
 	input[type="search"],
 	input[type="text"],
 	input[type="email"],
+	input[type="password"],
 	textarea {
 		@include sans-serif;
 		@include font-size(16);
