@@ -34,7 +34,8 @@ class DocSearchForm(haystack.forms.SearchForm):
 
     def search(self):
         results = super(DocSearchForm, self).search()
-        assert self.cleaned_data  # SearchForm.search() calls is_valid()
+        if not self.is_valid():
+            return []
         release = self.cleaned_data['release']
         results = results.filter(lang=release.lang, version=release.version)
         return results
