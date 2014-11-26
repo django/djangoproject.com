@@ -1,8 +1,9 @@
-{% extends "base_2col.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
 
 {% block sectionid %}code{% endblock %}
 
 {% block title %}Code{% endblock %}
+{% block layout_class %}full-width{% endblock %}
 
-{% block billboard %}<h2><a href="https://code.djangoproject.com/"><img src="{% static "img/site/bbd_code.gif" %}" alt="Django source code" /></a></h2>{% endblock %}
+{% block header %}<h1>Django source code</h1>{% endblock %}
