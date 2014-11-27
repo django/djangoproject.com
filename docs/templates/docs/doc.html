@@ -14,16 +14,16 @@
     {{ doc.body|safe }}
   {% endblock %}
 
-  {% comment %} {# This stuff is not in the new design either #}
+
   <div class="browse-horizontal">
     {% if doc.prev %}
-      <div class="left"><a href="{{ doc.prev.link }}">&laquo; {{ doc.prev.title|safe }}</a></div>
+      <div class="left"><a href="{{ doc.prev.link }}"><i class="icon icon-chevron-left"></i> {{ doc.prev.title|safe }}</a></div>
     {% endif %}
     {% if doc.next %}
-      <div class="right"><a href="{{ doc.next.link }}">{{ doc.next.title|safe }} &raquo;</a></div>
+      <div class="right"><a href="{{ doc.next.link }}">{{ doc.next.title|safe }} <i class="icon icon-chevron-right"></i></a></div>
     {% endif %}
   </div>
-  {% endcomment %}
+
   <div id="content-secondary">
     <h2 id="comments">{% trans "Questions/Feedback" %}</h2>
     <p>{% trans "Having trouble? We'd like to help!" %}</p>
@@ -61,7 +61,7 @@
     {% load docs %}
     {% search_form %}
   {% endblock %}
-  
+
   {% block toc-wrapper %}
     <h2>{% trans "Contents" %}</h2>
     {% block toc %}

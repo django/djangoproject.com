@@ -3613,7 +3613,7 @@ blockquote .meta, blockquote .list-links dd, .list-links blockquote dd {
   float: right;
   height: 45px;
   line-height: 48px;
-  margin: 0 10px;
+  margin: 8px 10px;
   text-align: center;
   text-decoration: none;
   width: 45px;
@@ -3776,7 +3776,7 @@ blockquote .meta, blockquote .list-links dd, .list-links blockquote dd {
 /* line 552, ../scss/_style.scss */
 .copy-banner {
   background: #44B78B;
-  padding: 2px 0;
+  padding: 2px 10px;
 }
 /* line 557, ../scss/_style.scss */
 .copy-banner p,
@@ -5506,39 +5506,94 @@ h6:hover .headerlink {
   border-radius: 4px;
   margin: 25px 0;
 }
-/* line 1964, ../scss/_style.scss */
+/* line 1965, ../scss/_style.scss */
+.note h1, .note h2, .note h3, .note h4,
+.admonition h1,
+.admonition h2,
+.admonition h3,
+.admonition h4,
+.help-block h1,
+.help-block h2,
+.help-block h3,
+.help-block h4 {
+  margin-top: 20px;
+}
+/* line 1968, ../scss/_style.scss */
 .note p,
 .admonition p,
 .help-block p {
   margin: 0.8em 0;
 }
-/* line 1967, ../scss/_style.scss */
+/* line 1971, ../scss/_style.scss */
 .note .first,
 .admonition .first,
 .help-block .first {
   margin-top: 0;
 }
-/* line 1970, ../scss/_style.scss */
+/* line 1974, ../scss/_style.scss */
 .note .admonition-title,
 .admonition .admonition-title,
 .help-block .admonition-title {
   font-weight: bold;
 }
-/* line 1973, ../scss/_style.scss */
+/* line 1977, ../scss/_style.scss */
 .note .last,
 .admonition .last,
 .help-block .last {
   margin-bottom: 10px;
 }
 
-/* line 1978, ../scss/_style.scss */
+/* line 1982, ../scss/_style.scss */
+.browse-horizontal {
+  font-family: "Colfax", Avenir, Corbel, "Lucida Grande", "Lucida Sans", sans-serif;
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: #F1FFF7;
+  padding: 20px;
+}
+/* line 109, ../scss/_utils.scss */
+.browse-horizontal:before, .browse-horizontal:after {
+  content: "";
+  display: table;
+}
+/* line 114, ../scss/_utils.scss */
+.browse-horizontal:after {
+  clear: both;
+}
+/* line 1992, ../scss/_style.scss */
+.browse-horizontal .left {
+  float: left;
+}
+/* line 1994, ../scss/_style.scss */
+.browse-horizontal .left .icon {
+  margin-right: 4px;
+  font-size: 12px;
+  font-size: 1.2rem;
+}
+/* line 2000, ../scss/_style.scss */
+.browse-horizontal .right {
+  float: right;
+}
+/* line 2002, ../scss/_style.scss */
+.browse-horizontal .right .icon {
+  margin-left: 4px;
+  font-size: 12px;
+  font-size: 1.2rem;
+}
+/* line 2008, ../scss/_style.scss */
+.browse-horizontal a {
+  text-decoration: none;
+}
+
+/* line 2014, ../scss/_style.scss */
 .list-links {
   font-family: "Colfax", Avenir, Corbel, "Lucida Grande", "Lucida Sans", sans-serif;
   list-style: none;
   margin: 0;
   padding: 10px 0 0;
 }
-/* line 1985, ../scss/_style.scss */
+/* line 2021, ../scss/_style.scss */
 .list-links a {
   color: #20AA76;
   text-decoration: none;
@@ -5552,7 +5607,7 @@ h6:hover .headerlink {
   color: #25c488;
   text-decoration: none;
 }
-/* line 1989, ../scss/_style.scss */
+/* line 2025, ../scss/_style.scss */
 .list-links dt,
 .list-links li {
   font-size: 16px;
@@ -5560,21 +5615,21 @@ h6:hover .headerlink {
   margin-top: 15px;
   font-weight: 400;
 }
-/* line 1994, ../scss/_style.scss */
+/* line 2030, ../scss/_style.scss */
 .list-links dt:first-child,
 .list-links li:first-child {
   margin-top: 0;
 }
-/* line 2000, ../scss/_style.scss */
+/* line 2036, ../scss/_style.scss */
 .list-links dd {
   margin-top: 0;
   margin-bottom: 30px;
 }
-/* line 2006, ../scss/_style.scss */
+/* line 2042, ../scss/_style.scss */
 [role="complementary"] .list-links {
   padding: 0;
 }
-/* line 2010, ../scss/_style.scss */
+/* line 2046, ../scss/_style.scss */
 [role="complementary"] .list-links dt,
 [role="complementary"] .list-links li {
   font-size: 16px;
@@ -5583,33 +5638,33 @@ h6:hover .headerlink {
   margin-top: 0;
   padding-top: 20px;
 }
-/* line 2017, ../scss/_style.scss */
+/* line 2053, ../scss/_style.scss */
 [role="complementary"] .list-links dt:first-child,
 [role="complementary"] .list-links li:first-child {
   border: none;
   padding-top: 0;
 }
-/* line 2023, ../scss/_style.scss */
+/* line 2059, ../scss/_style.scss */
 [role="complementary"] .list-links li {
   padding: 14px 0 10px;
 }
-/* line 2027, ../scss/_style.scss */
+/* line 2063, ../scss/_style.scss */
 [role="complementary"] .list-links dd {
   font-size: 14px;
   font-size: 1.4rem;
   margin-bottom: 16px;
 }
-/* line 2033, ../scss/_style.scss */
+/* line 2069, ../scss/_style.scss */
 .list-links + h2 {
   margin-top: 34px;
 }
 
-/* line 2038, ../scss/_style.scss */
+/* line 2074, ../scss/_style.scss */
 .list-links-small {
   padding-left: 0;
   list-style: none;
 }
-/* line 2042, ../scss/_style.scss */
+/* line 2078, ../scss/_style.scss */
 .list-links-small a {
   color: #20AA76;
   text-decoration: none;
@@ -5624,7 +5679,7 @@ h6:hover .headerlink {
   color: #25c488;
   text-decoration: none;
 }
-/* line 2049, ../scss/_style.scss */
+/* line 2085, ../scss/_style.scss */
 .list-links-small li > a:before,
 .list-links-small dt > a:before {
   font-family: FontAwesome;
@@ -5634,87 +5689,84 @@ h6:hover .headerlink {
   width: 23px;
   height: 20px;
 }
-/* line 2059, ../scss/_style.scss */
+/* line 2095, ../scss/_style.scss */
 .list-links-small dt {
   font-weight: 400;
 }
-/* line 2063, ../scss/_style.scss */
+/* line 2099, ../scss/_style.scss */
 .list-links-small dd {
   color: #798780;
   padding-top: 2px;
 }
-/* line 2069, ../scss/_style.scss */
+/* line 2105, ../scss/_style.scss */
 .list-links-small.docs-list {
   list-style: none;
 }
-/* line 2073, ../scss/_style.scss */
+/* line 2109, ../scss/_style.scss */
 .list-links-small.docs-list li > a:before,
 .list-links-small.docs-list dt > a:before {
   content: "\f0f6";
 }
-/* line 2078, ../scss/_style.scss */
+/* line 2114, ../scss/_style.scss */
 .list-links-small.docs-list dd {
   padding-left: 24px;
 }
-/* line 2084, ../scss/_style.scss */
+/* line 2120, ../scss/_style.scss */
 .list-links-small.news-list {
   list-style: none;
 }
-/* line 2088, ../scss/_style.scss */
+/* line 2124, ../scss/_style.scss */
 .list-links-small.news-list li > a:before,
 .list-links-small.news-list dt > a:before {
   content: "\f0a1";
 }
-/* line 2094, ../scss/_style.scss */
+/* line 2130, ../scss/_style.scss */
 .list-links-small.news-list dt.event > a:before {
   content: "\f133";
 }
-/* line 2099, ../scss/_style.scss */
+/* line 2135, ../scss/_style.scss */
 .list-links-small.news-list dd {
   padding-left: 24px;
 }
-/* line 2105, ../scss/_style.scss */
+/* line 2141, ../scss/_style.scss */
 .list-links-small.resource-list {
   list-style: none;
 }
-/* line 2109, ../scss/_style.scss */
+/* line 2145, ../scss/_style.scss */
 .list-links-small.resource-list li > a:before,
 .list-links-small.resource-list dt > a:before {
   content: "\f0c1";
 }
-/* line 2114, ../scss/_style.scss */
+/* line 2150, ../scss/_style.scss */
 .list-links-small.resource-list dd {
   padding-left: 24px;
 }
-/* line 2120, ../scss/_style.scss */
+/* line 2156, ../scss/_style.scss */
 .list-links-small.rss-list {
   list-style: none;
 }
-/* line 2124, ../scss/_style.scss */
+/* line 2160, ../scss/_style.scss */
 .list-links-small.rss-list li > a:before,
 .list-links-small.rss-list dt > a:before {
   content: "\f09e";
 }
-/* line 2129, ../scss/_style.scss */
+/* line 2165, ../scss/_style.scss */
 .list-links-small.rss-list dd {
   padding-left: 24px;
 }
 
-/* line 2136, ../scss/_style.scss */
-.form-input {
-  height: 40px;
-  margin: 30px 0 20px;
-  position: relative;
+/* line 2172, ../scss/_style.scss */
+form {
+  font-family: "Colfax", Avenir, Corbel, "Lucida Grande", "Lucida Sans", sans-serif;
+  font-size: 16px;
+  font-size: 1.6rem;
 }
-/* line 2142, ../scss/_style.scss */
-.form-input:focus {
-  background: #000;
-}
-/* line 2146, ../scss/_style.scss */
-.form-input input[type="search"],
-.form-input input[type="text"],
-.form-input input[type="email"],
-.form-input textarea {
+/* line 2176, ../scss/_style.scss */
+form input[type="search"],
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea {
   font-family: "Colfax", Avenir, Corbel, "Lucida Grande", "Lucida Sans", sans-serif;
   font-size: 16px;
   font-size: 1.6rem;
@@ -5729,45 +5781,118 @@ h6:hover .headerlink {
   display: block;
   font-weight: 400;
   height: 30px;
-  margin: 0;
+  margin: 10px 0px;
   padding: 8px 14% 6px 10px;
   text-indent: 0;
   vertical-align: middle;
   width: 82%;
 }
 @media screen and (min-device-width: 768px) {
-  /* line 2146, ../scss/_style.scss */
-  .form-input input[type="search"],
-  .form-input input[type="text"],
-  .form-input input[type="email"],
-  .form-input textarea {
+  /* line 2176, ../scss/_style.scss */
+  form input[type="search"],
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="password"],
+  form textarea {
     padding: 8px 18% 6px 10px;
     width: 80%;
   }
 }
-/* line 2172, ../scss/_style.scss */
-.form-input input[type="search"]::-ms-clear,
-.form-input input[type="text"]::-ms-clear,
-.form-input input[type="email"]::-ms-clear,
-.form-input textarea::-ms-clear {
+/* line 2203, ../scss/_style.scss */
+form input[type="search"]::-ms-clear,
+form input[type="text"]::-ms-clear,
+form input[type="email"]::-ms-clear,
+form input[type="password"]::-ms-clear,
+form textarea::-ms-clear {
   display: none;
 }
-/* line 2176, ../scss/_style.scss */
-.form-input input[type="search"]:active, .form-input input[type="search"]:focus,
-.form-input input[type="text"]:active,
-.form-input input[type="text"]:focus,
-.form-input input[type="email"]:active,
-.form-input input[type="email"]:focus,
-.form-input textarea:active,
-.form-input textarea:focus {
+/* line 2207, ../scss/_style.scss */
+form input[type="search"]:active, form input[type="search"]:focus,
+form input[type="text"]:active,
+form input[type="text"]:focus,
+form input[type="email"]:active,
+form input[type="email"]:focus,
+form input[type="password"]:active,
+form input[type="password"]:focus,
+form textarea:active,
+form textarea:focus {
   outline: none;
   border-color: #20AA76;
 }
-/* line 2183, ../scss/_style.scss */
-.form-input textarea {
+/* line 2214, ../scss/_style.scss */
+form textarea {
   height: auto;
 }
-/* line 2187, ../scss/_style.scss */
+/* line 2218, ../scss/_style.scss */
+form input[type=checkbox],
+form input[type=radio] {
+  margin-right: 6px;
+}
+/* line 2223, ../scss/_style.scss */
+form select {
+  border: 1px solid #CFE3DC;
+  background: white;
+  height: 46px;
+  padding: 0 10px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-size: 1.6rem;
+}
+/* line 2231, ../scss/_style.scss */
+[role="complementary"] form select {
+  height: 36px;
+  font-size: 14px;
+  font-size: 1.4rem;
+}
+/* line 2237, ../scss/_style.scss */
+form button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: #20AA76;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  color: white;
+  border: 0;
+  height: 46px;
+  padding: 0 15px;
+  font-family: "Colfax", Avenir, Corbel, "Lucida Grande", "Lucida Sans", sans-serif;
+  font-size: 16px;
+  font-size: 1.6rem;
+}
+/* line 2247, ../scss/_style.scss */
+form button:hover {
+  background: #44B78B;
+}
+
+/* line 2255, ../scss/_style.scss */
+.form-general fieldset {
+  max-width: 700px;
+  border: 0;
+  padding: 0;
+  margin: 15px 0;
+}
+/* line 2261, ../scss/_style.scss */
+.form-general fieldset input[type="search"],
+.form-general fieldset input[type="text"],
+.form-general fieldset input[type="email"],
+.form-general fieldset input[type="password"] {
+  margin: 10px 0;
+}
+
+/* line 2270, ../scss/_style.scss */
+.form-input {
+  min-height: 40px;
+  margin: 30px 0 20px;
+  position: relative;
+}
+/* line 2276, ../scss/_style.scss */
+.form-input:focus {
+  background: #000;
+}
+/* line 2280, ../scss/_style.scss */
 .form-input button {
   background: none;
   border: none;
@@ -5780,28 +5905,29 @@ h6:hover .headerlink {
   width: 40px;
 }
 @media screen and (min-device-width: 768px) {
-  /* line 2187, ../scss/_style.scss */
+  /* line 2280, ../scss/_style.scss */
   .form-input button {
     right: 1%;
   }
 }
-/* line 2202, ../scss/_style.scss */
+/* line 2295, ../scss/_style.scss */
 .form-input button i {
   font-size: 20px;
   font-size: 2rem;
   line-height: 1;
 }
-/* line 2207, ../scss/_style.scss */
+/* line 2300, ../scss/_style.scss */
 .form-input button:hover, .form-input button:focus, .form-input button:active {
+  background: none;
   color: #20AA76;
   outline: none;
 }
-/* line 2215, ../scss/_style.scss */
+/* line 2309, ../scss/_style.scss */
 [role="complementary"] .form-input {
-  height: 30px;
+  min-height: 30px;
   margin: 20px 0 30px;
 }
-/* line 2218, ../scss/_style.scss */
+/* line 2312, ../scss/_style.scss */
 [role="complementary"] .form-input input[type="search"],
 [role="complementary"] .form-input input[type="text"],
 [role="complementary"] .form-input input[type="email"] {
@@ -5809,25 +5935,25 @@ h6:hover .headerlink {
   font-size: 14px;
   font-size: 1.4rem;
 }
-/* line 2224, ../scss/_style.scss */
+/* line 2318, ../scss/_style.scss */
 [role="complementary"] .form-input button {
   height: 30px;
   width: 30px;
   top: 3px;
 }
 @media screen and (min-device-width: 768px) {
-  /* line 2224, ../scss/_style.scss */
+  /* line 2318, ../scss/_style.scss */
   [role="complementary"] .form-input button {
     right: 0;
   }
 }
-/* line 2231, ../scss/_style.scss */
+/* line 2325, ../scss/_style.scss */
 [role="complementary"] .form-input button i {
   font-size: 20px;
   font-size: 2rem;
 }
 
-/* line 2238, ../scss/_style.scss */
+/* line 2332, ../scss/_style.scss */
 ::-webkit-input-placeholder,
 :-moz-placeholder,
 ::-moz-placeholder,
@@ -5835,22 +5961,22 @@ h6:hover .headerlink {
   color: #859D94;
 }
 
-/* line 2247, ../scss/_style.scss */
+/* line 2341, ../scss/_style.scss */
 .form-email h3 {
   font-size: 18px;
   font-size: 1.8rem;
   margin: 10px 0;
 }
-/* line 2251, ../scss/_style.scss */
+/* line 2345, ../scss/_style.scss */
 .form-email .meta, .form-email .list-links dd, .list-links .form-email dd {
   margin: 0;
 }
-/* line 2254, ../scss/_style.scss */
+/* line 2348, ../scss/_style.scss */
 .form-email form {
   margin: 10px 0 30px;
 }
 
-/* line 2260, ../scss/_style.scss */
+/* line 2354, ../scss/_style.scss */
 .nav-pagination {
   font-family: "Colfax", Avenir, Corbel, "Lucida Grande", "Lucida Sans", sans-serif;
   font-size: 14px;
@@ -5863,11 +5989,11 @@ h6:hover .headerlink {
   padding: 30px 0 0;
   text-align: center;
 }
-/* line 2272, ../scss/_style.scss */
+/* line 2366, ../scss/_style.scss */
 .nav-pagination li {
   display: inline-block;
 }
-/* line 2279, ../scss/_style.scss */
+/* line 2373, ../scss/_style.scss */
 .nav-pagination a {
   border: none;
   color: #798780;
@@ -5881,7 +6007,7 @@ h6:hover .headerlink {
   text-decoration: none;
 }
 @media screen and (min-device-width: 320px) {
-  /* line 2279, ../scss/_style.scss */
+  /* line 2373, ../scss/_style.scss */
   .nav-pagination a {
     background: #798780;
     color: #fff;
@@ -5890,13 +6016,13 @@ h6:hover .headerlink {
     width: 30px;
   }
 }
-/* line 2296, ../scss/_style.scss */
+/* line 2390, ../scss/_style.scss */
 .nav-pagination a.previous, .nav-pagination a.next {
   font-size: 16px;
   font-size: 1.6rem;
 }
 @media screen and (min-device-width: 320px) {
-  /* line 2296, ../scss/_style.scss */
+  /* line 2390, ../scss/_style.scss */
   .nav-pagination a.previous, .nav-pagination a.next {
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
@@ -5906,40 +6032,40 @@ h6:hover .headerlink {
     width: 40px;
   }
 }
-/* line 2306, ../scss/_style.scss */
+/* line 2400, ../scss/_style.scss */
 .nav-pagination a.previous {
   margin-right: 10px;
 }
 @media screen and (min-device-width: 768px) {
-  /* line 2306, ../scss/_style.scss */
+  /* line 2400, ../scss/_style.scss */
   .nav-pagination a.previous {
     margin-right: 70px;
   }
 }
-/* line 2312, ../scss/_style.scss */
+/* line 2406, ../scss/_style.scss */
 .nav-pagination a.next {
   margin-left: 10px;
   text-indent: 1px;
 }
 @media screen and (min-device-width: 768px) {
-  /* line 2312, ../scss/_style.scss */
+  /* line 2406, ../scss/_style.scss */
   .nav-pagination a.next {
     margin-left: 70px;
   }
 }
-/* line 2320, ../scss/_style.scss */
+/* line 2414, ../scss/_style.scss */
 .nav-pagination a:hover, .nav-pagination a:focus, .nav-pagination a:active, .nav-pagination a.active {
   background: none;
   color: #20AA76;
 }
 @media screen and (min-device-width: 320px) {
-  /* line 2320, ../scss/_style.scss */
+  /* line 2414, ../scss/_style.scss */
   .nav-pagination a:hover, .nav-pagination a:focus, .nav-pagination a:active, .nav-pagination a.active {
     background: #20AA76;
     color: white;
   }
 }
-/* line 2332, ../scss/_style.scss */
+/* line 2426, ../scss/_style.scss */
 .mdzr-no-borderradius .nav-pagination a {
   display: inline;
   background: none;
@@ -5948,19 +6074,19 @@ h6:hover .headerlink {
   width: auto;
   margin: 0 5px !important;
 }
-/* line 2340, ../scss/_style.scss */
+/* line 2434, ../scss/_style.scss */
 .mdzr-no-borderradius .nav-pagination a:hover, .mdzr-no-borderradius .nav-pagination a:active, .mdzr-no-borderradius .nav-pagination a:focus, .mdzr-no-borderradius .nav-pagination a.active {
   background: none;
   color: #20AA76;
 }
 
-/* line 2351, ../scss/_style.scss */
+/* line 2445, ../scss/_style.scss */
 hr {
   border: 0;
   border-top: 1px solid #CFE3DC;
 }
 
-/* line 2356, ../scss/_style.scss */
+/* line 2450, ../scss/_style.scss */
 .badge {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -5975,7 +6101,7 @@ hr {
   background-color: #20AA76;
 }
 
-/* line 2369, ../scss/_style.scss */
+/* line 2463, ../scss/_style.scss */
 .user-info .avatar {
   padding: 20px;
   border: 1px solid #CFE3DC;
@@ -5985,7 +6111,7 @@ hr {
   float: right;
 }
 
-/* line 2376, ../scss/_style.scss */
+/* line 2470, ../scss/_style.scss */
 .visuallyhidden {
   border: 0;
   clip: rect(0 0 0 0);
