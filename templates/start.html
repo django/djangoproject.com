@@ -19,7 +19,7 @@
   <div class="section">
     <h1>Getting started with Django</h1>
 
-    <p>Depending how new you are to Django, you can also <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/tutorial01/">try a tutorial</a>, or just <a href="https://docs.djangoproject.com/">dive into the documentation</a>.</p>
+    <p>Depending how new you are to Django, you can also <a href="https://docs.djangoproject.com/en/stable/intro/tutorial01/">try a tutorial</a>, or just <a href="https://docs.djangoproject.com/">dive into the documentation</a>.</p>
 
     <p>
       Want to learn more about Django? Read the overview to see if Django is right for your project.
@@ -30,17 +30,17 @@
   <div class="section">
     <h2>Install Django</h2>
     <p>Before you can use Django, you’ll need to get it installed. We have a complete installation guide that covers all the possibilities; this guide will guide you to a simple, minimal installation that’ll work while you walk through the introduction.</p>
-    <a class="link-readmore" href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/install/">Django Installation Guide</a>
+    <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/intro/install/">Django Installation Guide</a>
   </div>
 
   <div class="section">
     <h2>Write Your First Django App</h2>
-    <p>Installed Django already? Good. Now <a href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/tutorial01/">try this tutorial</a>, which walks you through the creation of a basic poll application. It’s got two parts:</p>
+    <p>Installed Django already? Good. Now <a href="https://docs.djangoproject.com/en/stable/intro/tutorial01/">try this tutorial</a>, which walks you through the creation of a basic poll application. It’s got two parts:</p>
     <ol>
       <li>A public site that lets people view polls and vote in them.</li>
       <li>An administrative interface that lets you add, change, and delete polls.</li>
     </ol>
-    <a class="link-readmore" href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/intro/tutorial01/">Take the Tutorial</a>
+    <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/intro/tutorial01/">Take the Tutorial</a>
   </div>
 
   <div class="section">
@@ -63,7 +63,7 @@
     <h2>Object-Relational Mapper</h2>
     <div class="collapsing-content">
       <p>Deﬁne your data models entirely in Python. You get a rich, dynamic database-access API for free - but you can still write SQL if needed.</p>
-      <a class="link-readmore" href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/db/models/">Read More</a>
+      <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/topics/db/models/">Read More</a>
       {% pygment %}
         <pre lang="python">
 class Band(models.Model):
@@ -91,7 +91,7 @@ class Member(models.Model):
     <div class="collapsing-content">
       <p>A clean, elegant URL scheme is an important detail in a high-quality Web application. Django encourages beautiful URL design and doesn't put any cruft in URLs, like .php or .asp.</p>
       <p>To design URLs for an application, you create a Python module called a URLconf. Like, a table of contents for your app, it contains a simple mapping between URL patterns and your views.</p>
-      <a class="link-readmore" href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/http/urls/">Read More</a>
+      <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/topics/http/urls/">Read More</a>
       {% pygment %}
         <pre lang="python">
 urlpatterns = patterns('',
@@ -113,7 +113,7 @@ def band_listing(request):
     <h2>Templates</h2>
     <div class="collapsing-content">
       <p>Django’s template language is designed to strike a balance between power and ease. It’s designed to feel comfortable and easy-to-learn to those used to working with HTML, like designers and front-end developers. But it is also flexible and highly extensible, allowing developers to augment the template language as needed.</p>
-      <a class="link-readmore" href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/templates/">Read More</a>
+      <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/topics/templates/">Read More</a>
       {% pygment %}
         <pre lang="html">
 &lt;html&gt;
@@ -140,7 +140,7 @@ def band_listing(request):
     <h2>Forms</h2>
     <div class="collapsing-content">
       <p>Django provides a powerful form library that handles rendering forms as HTML, validating user-submitted data, and converting that data to native Python types. Django also provides a way to generate forms from your existing models and use those forms to create and update data.</p>
-      <a class="link-readmore" href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/forms/">Read More</a>
+      <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/topics/forms/">Read More</a>
       {% pygment %}
         <pre lang="python">
 from django import forms
@@ -158,7 +158,7 @@ class BandContactForm(forms.Form):
     <h2>Authentication</h2>
     <div class="collapsing-content">
       <p>Django comes with a full-featured and secure authentication system. It handles user accounts, groups, permissions and cookie-based user sessions, providing a way build sites that allows users to create accounts, and safely log in and out.</p>
-      <a class="link-readmore" href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/auth/">Read More</a>
+      <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/topics/auth/">Read More</a>
       {% pygment %}
         <pre lang="python">
           """
@@ -172,7 +172,7 @@ class BandContactForm(forms.Form):
     <h2>Admin</h2>
     <div class="collapsing-content">
       <p>One of the most powerful parts of Django is the automatic admin interface. It reads metadata in your models to provide a powerful and production-ready interface that content producers can immediately use to start adding content to the site. It's easy to set up, and provides many hooks for customization of the experience.</p>
-      <a class="link-readmore" href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/ref/contrib/admin/">Read More</a>
+      <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/ref/contrib/admin/">Read More</a>
       {% pygment %}
         <pre lang="python">
           """
@@ -186,7 +186,7 @@ class BandContactForm(forms.Form):
     <h2>Internationalization</h2>
     <div class="collapsing-content">
       <p>Django was designed from the ground up to provide ways to offer content in languages and formats tailored to the audience. Django offers full support for the translation of text, and formatting of dates, times, numbers and time zones. It allows developers and template authors to specify which parts of their apps should be translated or formatted for local languages and cultures, and uses these hooks to localize web applications for particular users according to their preferences.</p>
-      <a class="link-readmore" href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/i18n/">Read More</a>
+      <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/topics/i18n/">Read More</a>
 
       {% pygment %}
         <pre lang="python">
@@ -209,7 +209,7 @@ class BandContactForm(forms.Form):
         <li>Remote Code Execution</li>
       </ul>
 
-      <a class="link-readmore" href="https://docs.djangoproject.com/en/{{ DOCS_VERSION }}/topics/security/">Read More</a>
+      <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/topics/security/">Read More</a>
 
     </div>
   </li>
