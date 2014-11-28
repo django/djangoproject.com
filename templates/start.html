@@ -117,25 +117,26 @@ def band_listing(request):
     <div class="collapsing-content">
       <p>Django’s template language is designed to strike a balance between power and ease. It’s designed to feel comfortable and easy-to-learn to those used to working with HTML, like designers and front-end developers. But it is also flexible and highly extensible, allowing developers to augment the template language as needed.</p>
       <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/topics/templates/">Read more</a>
+      {# No need to escape the HTML: pygment takes care of that #}
       {% pygment %}
-        <pre lang="html">
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;Band Listing&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;All Bands&lt;/h1&gt;
-    &lt;ul&gt;
-    {% templatetag openblock %} for band in bands {% templatetag closeblock %}
-      &lt;li&gt;
-        &lt;h2&gt;&lt;a href="{% templatetag openvariable %} band.get_absolute_url {% templatetag closevariable %}"&gt;{% templatetag openvariable %} band.name {% templatetag closevariable %}&lt;/a&gt;&lt;/h2&gt;
-        {% templatetag openblock %} if band.can_rock {% templatetag closeblock %}&lt;p&gt;This band can rock!&lt;/p&gt;{% templatetag openblock %} endif {% templatetag closeblock %}
-      &lt;/li&gt;
-    {% templatetag openblock %} endfor {% templatetag closeblock %}
-    &lt;/ul&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-        </pre>
+        <pre lang="html">{% verbatim %}
+<html>
+  <head>
+    <title>Band Listing</title>
+  </head>
+  <body>
+    <h1>All Bands</h1>
+    <ul>
+    {% for band in bands %}
+      <li>
+        <h2><a href="{{ band.get_absolute_url }}">{{ band.name }}</a></h2>
+        {% if band.can_rock %}<p>This band can rock!</p>{% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  </body>
+</html>
+        {% endverbatim %}</pre>
       {% endpygment %}
     </div>
   </li>
@@ -215,26 +216,27 @@ def homepage(request):
         </pre>
       {% endpygment %}
 
+      {# No need to escape the HTML: pygment takes care of that #}
       {% pygment %}
-        <pre lang="html">
-{% templatetag openblock %} load i18n {% templatetag closeblock %}
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;{% templatetag openblock %} trans 'Band Listing' {% templatetag closeblock %}&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;{% templatetag openblock %} trans 'All Bands' {% templatetag closeblock %}&lt;/h1&gt;
-    &lt;ul&gt;
-    {% templatetag openblock %} for band in bands {% templatetag closeblock %}
-      &lt;li&gt;
-        &lt;h2&gt;&lt;a href="{% templatetag openvariable %} band.get_absolute_url {% templatetag closevariable %}"&gt;{% templatetag openvariable %} band.name {% templatetag closevariable %}&lt;/a&gt;&lt;/h2&gt;
-        {% templatetag openblock %} if band.can_rock {% templatetag closeblock %}&lt;p&gt;{% templatetag openblock %} trans 'This band can rock!' {% templatetag closeblock %}&lt;/p&gt;{% templatetag openblock %} endif {% templatetag closeblock %}
-      &lt;/li&gt;
-    {% templatetag openblock %} endfor {% templatetag closeblock %}
-    &lt;/ul&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-        </pre>
+        <pre lang="html">{% verbatim %}
+{% load i18n %}
+<html>
+  <head>
+    <title>{% trans 'Band Listing' %}</title>
+  </head>
+  <body>
+    <h1>{% trans 'All Bands' %}</h1>
+    <ul>
+    {% for band in bands %}
+      <li>
+        <h2><a href="{{ band.get_absolute_url }}">{{ band.name }}</a></h2>
+        {% if band.can_rock %}<p>{% trans 'This band can rock!' %}</p>{% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  </body>
+</html>
+        {% endverbatim %}</pre>
       {% endpygment %}
     </div>
   </li>
