@@ -12,10 +12,10 @@
 {% block header %}
     <h1 class="visuallyhidden">Django</h1>
     <p>
-        <em>Django makes it easier to build better Web apps quicker and with less code</em>
+        <em>Django makes it easier to build better Web apps quicker and with less code.</em>
     </p>
     <p>
-        <a href="{% url 'start' %}" class="cta">Get Started with Django</a>
+        <a href="{% url 'start' %}" class="cta">Get started with Django</a>
     </p>
     {% comment %}
         <p class="small">
@@ -36,24 +36,24 @@
       	<h1>Meet Django</h1>
         <p>
           Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design.
-          Developed by a fast-moving online-news operation, Django was designed to handle two challenges: the intensive deadlines of a newsroom and the stringent requirements of the experienced Web developers who wrote it.
+          Built by experienced developers, it takes care of much of the hassle of Web development, so you can focus
+          on writing your app without needing to reinvent the wheel. It’s free and open source.
         </p>
         <dl class="list-features">
           <dt><i class="icon icon-bolt"></i> Ridiculously fast.</dt>
           <dd>
-            <p>Django was designed to help developers take web applications from concept to completion as quickly as possible.</p>
+            <p>Django was designed to help developers take applications from concept to completion as quickly as possible.</p>
           </dd>
 
           <dt><i class="icon icon-lock"></i> Reassuringly secure.</dt>
           <dd>
-            <p>Django takes security seriously and helps web developers avoid many of the common security mistakes.</p>
+            <p>Django takes security seriously and helps developers avoid many common security mistakes.</p>
           </dd>
 
           <dt><i class="icon icon-dashboard"></i> Exceedingly scalable.</dt>
           <dd>
-            <p>Some of the busiest websites on the web leverage Django's ability to quickly and flexibly scale.</p>
+            <p>Some of the busiest sites on the Web leverage Django’s ability to quickly and flexibly scale.</p>
           </dd>
-
         </dl>
 
         <a href="{% url 'overview' %}" class="cta outline">Learn more about Django</a>
@@ -65,7 +65,7 @@
         <h1>Who is Django for?</h1>
 
         <p>
-          You’ve probably used a website that uses Django. Find out why Django was the right solution for these organizations, and why you should start building your project with Django today.
+          You’ve probably used a site that uses Django. Find out why Django was the right solution for these organizations, and why you should start building your project with Django today.
         </p>
 
         <ul class="list-case-study">
@@ -81,7 +81,7 @@
           </li>
           <li>
             <h3 class="logo" title="Knight Foundation">Knight Foundation</h3>
-            <p>When the Knight Foundation began redesigning their <a href="http://www.knightfoundation.org">website</a>, they were on multiple content management systems they’d outgrown, with a site that couldn’t handle traffic spikes. Knight needed a future-proof solution.</p>
+            <p>When the Knight Foundation began redesigning their <a href="http://www.knightfoundation.org">site</a>, they were on multiple content management systems they’d outgrown, with a site that couldn’t handle traffic spikes. Knight needed a future-proof solution.</p>
             <a href="{% url 'case_study' %}">Read Case Study</a>
           </li>
         </ul>
@@ -96,12 +96,12 @@
     <h1>Stay in the loop</h1>
 
     <p>
-      If you want to stay up to date with everything that's happening in the lDjango community, subscribe to one of our mailing lists:
+      Subscribe to one of our mailing lists to stay up to date with everything in the Django community:
     </p>
 
     <div class="layout-2col">
       <div class="col form-email">
-        <h3><a href="http://groups.google.com/group/django-users">Django-Users</a></h3>
+        <h3><a href="http://groups.google.com/group/django-users">django-users</a></h3>
         <p class="meta">Get help with Django and follow announcements.</p>
         <form class="form-input" action="http://groups.google.com/group/django-users/boxsubscribe">
           <input type="email" name="email" placeholder="Enter Email">
@@ -112,8 +112,8 @@
         </form>
       </div>
       <div class="col form-email">
-        <h3><a href="http://groups.google.com/group/django-developers">Django-Developers</a></h3>
-        <p class="meta">Discussion of the development of Django itself.</p>
+        <h3><a href="http://groups.google.com/group/django-developers">django-developers</a></h3>
+        <p class="meta">Contribute to the development of Django itself.</p>
         <form class="form-input" action="http://groups.google.com/group/django-developers/boxsubscribe">
           <input type="email" name="email" placeholder="Enter Email">
           <button type="submit">
@@ -133,18 +133,18 @@
 
   <div role="complementary">
       <a href="{% url 'download' %}" class="cta">
-          Download <em>Latest Release {{ DJANGO_VERSION }}</em>
+          Download <em>latest release: {{ DJANGO_VERSION }}</em>
       </a>
-      <a href="https://docs.djangoproject.com{% block doc_url %}/{% endblock %}" class="link-readmore">Django Documentation</a>
+      <a href="https://docs.djangoproject.com{% block doc_url %}/{% endblock %}" class="link-readmore">Django documentation</a>
 
       <h3>New to Django?</h3>
       <ul class="list-links-small docs-list">
           <li><a href="https://docs.djangoproject.com/en/stable/intro/install/">Installation guide</a></li>
-          <li><a href="https://docs.djangoproject.com/en/stable/intro/tutorial01/">Write Your First Django App</a></li>
+          <li><a href="https://docs.djangoproject.com/en/stable/intro/tutorial01/">Write your first Django app</a></li>
       </ul>
       <a href="{% url 'start' %}" class="link-readmore">Getting started with Django</a>
 
-      <h3>The Power of Django</h3>
+      <h3>The power of Django</h3>
       <ul class="list-links-small docs-list">
           <li><a href="https://docs.djangoproject.com/en/stable/topics/db/models/">Object-relational mapper</a></li>
           <li><a href="https://docs.djangoproject.com/en/stable/intro/tutorial02/">Automatic admin interface</a></li>
@@ -153,7 +153,7 @@
       </ul>
       <a href="{% url 'overview' %}" class="link-readmore">Explore more features</a>
 
-      <h3>Get Involved</h3>
+      <h3>Get involved</h3>
       <dl class="list-links-small">
          <dt><a href="irc://irc.freenode.net/django">#django IRC channel</a></dt>
           <dd>
@@ -165,13 +165,13 @@
             Report bugs and make feature requests
           </dd>
       </dl>
-      <a href="{% url 'community-index' %}" class="link-readmore">Inside the Djagno Community</a>
+      <a href="{% url 'community-index' %}" class="link-readmore">Inside the Django community</a>
 
       <h3>The Django Software Foundation</h3>
       <dl class="list-links-small">
         <dt><a href="/foundation/">About the Foundation</a></dt>
         <dd>
-          Django is open-source &amp; non-profit
+          Our non-profit supports the project
         </dd>
 
         <dt><a href="/foundation/donate/">Support Django</a></dt>
@@ -196,11 +196,11 @@
       </dl>
       <a href="{% url 'blog-index' %}" class="link-readmore">See all Events</a>
       {% endcomment %}
-      <h3>Latest News</h3>
+      <h3>Latest news</h3>
       <dl class="list-links-small news-list">
         {% load weblog %}{% render_latest_blog_entries 1 %}
       </dl>
-      <a href="{% url 'blog-index' %}" class="link-readmore">See all News</a>
+      <a href="{% url 'blog-index' %}" class="link-readmore">See all news</a>
   </div>
 
 {% endblock %}
