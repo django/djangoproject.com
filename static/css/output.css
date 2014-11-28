@@ -6011,7 +6011,26 @@ form button:hover {
   font-size: 2rem;
 }
 
-/* line 2391, ../scss/_style.scss */
+/* line 2392, ../scss/_style.scss */
+form.donate {
+  max-width: 150px;
+}
+/* line 2394, ../scss/_style.scss */
+form.donate label {
+  position: absolute;
+  left: 0px;
+  color: #2B8C67;
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+}
+/* line 2401, ../scss/_style.scss */
+form.donate input[type=text] {
+  padding-left: 20px;
+  padding-right: 9px;
+  /* Magic value to right-align the button inside the input */
+}
+
+/* line 2407, ../scss/_style.scss */
 ::-webkit-input-placeholder,
 :-moz-placeholder,
 ::-moz-placeholder,
@@ -6019,22 +6038,22 @@ form button:hover {
   color: #859D94;
 }
 
-/* line 2400, ../scss/_style.scss */
+/* line 2416, ../scss/_style.scss */
 .form-email h3 {
   font-size: 18px;
   font-size: 1.8rem;
   margin: 10px 0;
 }
-/* line 2404, ../scss/_style.scss */
+/* line 2420, ../scss/_style.scss */
 .form-email .meta, .form-email .list-links dd, .list-links .form-email dd {
   margin: 0;
 }
-/* line 2407, ../scss/_style.scss */
+/* line 2423, ../scss/_style.scss */
 .form-email form {
   margin: 10px 0 30px;
 }
 
-/* line 2413, ../scss/_style.scss */
+/* line 2429, ../scss/_style.scss */
 .nav-pagination {
   font-family: "Colfax", Avenir, Corbel, "Lucida Grande", "Lucida Sans", sans-serif;
   font-size: 14px;
@@ -6047,11 +6066,11 @@ form button:hover {
   padding: 30px 0 0;
   text-align: center;
 }
-/* line 2425, ../scss/_style.scss */
+/* line 2441, ../scss/_style.scss */
 .nav-pagination li {
   display: inline-block;
 }
-/* line 2432, ../scss/_style.scss */
+/* line 2448, ../scss/_style.scss */
 .nav-pagination a {
   border: none;
   color: #798780;
@@ -6065,7 +6084,7 @@ form button:hover {
   text-decoration: none;
 }
 @media screen and (min-device-width: 320px) {
-  /* line 2432, ../scss/_style.scss */
+  /* line 2448, ../scss/_style.scss */
   .nav-pagination a {
     background: #798780;
     color: #fff;
@@ -6074,13 +6093,13 @@ form button:hover {
     width: 30px;
   }
 }
-/* line 2449, ../scss/_style.scss */
+/* line 2465, ../scss/_style.scss */
 .nav-pagination a.previous, .nav-pagination a.next {
   font-size: 16px;
   font-size: 1.6rem;
 }
 @media screen and (min-device-width: 320px) {
-  /* line 2449, ../scss/_style.scss */
+  /* line 2465, ../scss/_style.scss */
   .nav-pagination a.previous, .nav-pagination a.next {
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
@@ -6090,40 +6109,40 @@ form button:hover {
     width: 40px;
   }
 }
-/* line 2459, ../scss/_style.scss */
+/* line 2475, ../scss/_style.scss */
 .nav-pagination a.previous {
   margin-right: 10px;
 }
 @media screen and (min-device-width: 768px) {
-  /* line 2459, ../scss/_style.scss */
+  /* line 2475, ../scss/_style.scss */
   .nav-pagination a.previous {
     margin-right: 70px;
   }
 }
-/* line 2465, ../scss/_style.scss */
+/* line 2481, ../scss/_style.scss */
 .nav-pagination a.next {
   margin-left: 10px;
   text-indent: 1px;
 }
 @media screen and (min-device-width: 768px) {
-  /* line 2465, ../scss/_style.scss */
+  /* line 2481, ../scss/_style.scss */
   .nav-pagination a.next {
     margin-left: 70px;
   }
 }
-/* line 2473, ../scss/_style.scss */
+/* line 2489, ../scss/_style.scss */
 .nav-pagination a:hover, .nav-pagination a:focus, .nav-pagination a:active, .nav-pagination a.active {
   background: none;
   color: #20AA76;
 }
 @media screen and (min-device-width: 320px) {
-  /* line 2473, ../scss/_style.scss */
+  /* line 2489, ../scss/_style.scss */
   .nav-pagination a:hover, .nav-pagination a:focus, .nav-pagination a:active, .nav-pagination a.active {
     background: #20AA76;
     color: white;
   }
 }
-/* line 2485, ../scss/_style.scss */
+/* line 2501, ../scss/_style.scss */
 .mdzr-no-borderradius .nav-pagination a {
   display: inline;
   background: none;
@@ -6132,19 +6151,19 @@ form button:hover {
   width: auto;
   margin: 0 5px !important;
 }
-/* line 2493, ../scss/_style.scss */
+/* line 2509, ../scss/_style.scss */
 .mdzr-no-borderradius .nav-pagination a:hover, .mdzr-no-borderradius .nav-pagination a:active, .mdzr-no-borderradius .nav-pagination a:focus, .mdzr-no-borderradius .nav-pagination a.active {
   background: none;
   color: #20AA76;
 }
 
-/* line 2504, ../scss/_style.scss */
+/* line 2520, ../scss/_style.scss */
 hr {
   border: 0;
   border-top: 1px solid #CFE3DC;
 }
 
-/* line 2509, ../scss/_style.scss */
+/* line 2525, ../scss/_style.scss */
 .badge {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -6159,7 +6178,7 @@ hr {
   background-color: #20AA76;
 }
 
-/* line 2522, ../scss/_style.scss */
+/* line 2538, ../scss/_style.scss */
 .user-info .avatar {
   padding: 20px;
   border: 1px solid #CFE3DC;
@@ -6169,7 +6188,7 @@ hr {
   float: right;
 }
 
-/* line 2529, ../scss/_style.scss */
+/* line 2545, ../scss/_style.scss */
 .visuallyhidden {
   border: 0;
   clip: rect(0 0 0 0);
