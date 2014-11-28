@@ -2388,6 +2388,22 @@ form {
 	}
 }
 
+
+form.donate {
+	max-width: 150px;
+	label {
+		position: absolute;
+		left: 0px;
+		color: $green-medium-dark;
+		padding-top: 0.5em;
+		padding-left: 0.5em;
+	}
+	input[type=text] {
+		padding-left: 20px;
+		padding-right: 9px; /* Magic value to right-align the button inside the input */
+	}
+}
+
 ::-webkit-input-placeholder,
 :-moz-placeholder,
 ::-moz-placeholder,
