@@ -2,5 +2,5 @@
   <h2><a href="{{ object.get_absolute_url }}">{{ object.headline|safe }}</a></h2>
   <span class="meta">Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }} {% comment %}in <a href="#">Django Software Foundation</a>{% endcomment %}</span>
   {{ object.summary_html|safe }}
-  <a class="link-readmore" href="{{ object.get_absolute_url }}">Read More</a>
+  <a class="link-readmore" href="{{ object.get_absolute_url }}">Read more</a>
 </li>

@@ -1,47 +1,46 @@
 {% extends 'base.html' %}{% load url from future %}
-{% block title %}Django Overview{% endblock %}
+{% block title %}Django overview{% endblock %}
 {% block layout_class %}full-width{% endblock %}
 
 {% block header %}
 	<h1 class="visuallyhidden">Django Overview</h1>
-	<p><em>Django</em> was invented to meet fast-moving <em>newsroom deadlines</em>, while satisfying the tough requirements of <em>Python web developers</em>.</p>
+	<p><em>Django</em> was invented to meet fast-moving <em>newsroom deadlines</em>, while satisfying the tough requirements of <em>experienced Web developers</em>.</p>
 {% endblock %}
 
 {% block content %}
-
 	<h1>Why Django?</h1>
 
-	<p>With Django, you can take web applications from concept to launch in a matter of hours. It’s nimble web development that keeps your content fresh and your organization productive.</p>
-
+	<p>With Django, you can take Web applications from concept to launch in a matter of hours. Django takes care of much of the hassle of Web development, so you can focus
+          on writing your app without needing to reinvent the wheel. It’s free and open source.</p>
 
 <dl class="list-features">
 	<dt><i class="icon icon-bolt"></i> Ridiculously fast.</dt>
 	<dd>
-		<p>Django was designed to help developers take web applications from concept to completion as quickly as possible.</p>
+		<p>Django was designed to help developers take applications from concept to completion as quickly as possible.</p>
 		<a class="link-readmore" href="{% url 'start' %}">See how fast you can start building</a>
 	</dd>
 
 	<dt class="even"><i class="icon icon-briefcase"></i> Fully loaded.</dt>
 	<dd class="even">
-		<p>Django includes dozens of extras that you can use to handle common web development patterns. Django takes care of user authentication, content administration, sitemaps, RSS, user comments, and many more tasks right out of the box.</p>
-		<a class="link-readmore" href="https://docs.djangoproject.com/en/stable/intro/overview/">See what's included</a>
+		<p>Django includes dozens of extras you can use to handle common Web development tasks. Django takes care of user authentication, content administration, site maps, RSS feeds, user comments and many more tasks — right out of the box.</p>
+		<a class="link-readmore" href="https://docs.djangoproject.com/en/stable/intro/overview/">See what’s included</a>
 	</dd>
 
 	<dt><i class="icon icon-lock"></i> Reassuringly secure.</dt>
 	<dd>
-		<p>Django takes security seriously and helps web developers avoid many of the common security mistakes, including SQL injection, cross-site scripting, cross-site request forgery, clickjacking, and more. Its user authentication system provides a secure way to manage user accounts and passwords.</p>
+		<p>Django takes security seriously and helps developers avoid many common security mistakes, such as SQL injection, cross-site scripting, cross-site request forgery and clickjacking. Its user authentication system provides a secure way to manage user accounts and passwords.</p>
 		<a class="link-readmore" href="https://docs.djangoproject.com/en/stable/topics/security/">Read our security overview</a>
 	</dd>
 
 	<dt class="even"><i class="icon icon-dashboard"></i> Exceedingly scalable.</dt>
 	<dd class="even">
-		<p>Some of the busiest websites leverage Django’s ability to quickly and flexibly scale to meet even the heaviest traffic demands.</p>
+		<p>Some of the busiest sites on the planet use Django’s ability to quickly and flexibly scale to meet the heaviest traffic demands.</p>
 		<a class="link-readmore" href="https://docs.djangoproject.com/en/stable/faq/general/#does-django-scale">Learn more about scaling Django applications</a>
 	</dd>
 
 	<dt><i class="icon icon-cogs"></i> Incredibly versatile.</dt>
 	<dd>
-		<p>Companies, organizations, and governments have used Django to build all sorts of things—from content management systems to social networks to scientific computing platforms.</p>
+		<p>Companies, organizations and governments have used Django to build all sorts of things — from content management systems to social networks to scientific computing platforms.</p>
 		{% comment %}{# I'm hiding this link until we enable case studies #}<a class="link-readmore" href="#">Call To Action Relating to Feature</a>{% endcomment %}
 	</dd>
 
@@ -58,7 +57,7 @@
 <div class="layout-secondary">
 	<div class="container">
 		<h1><span>Case Studies</span></h1>
-		<p>You’ve probably used a website that uses Django. Find out why Django was the right solution for these organizations.</p>
+		<p>You’ve probably used a site that uses Django. Find out why Django was the right solution for these organizations.</p>
 
 
 		<ul class="list-case-study">
