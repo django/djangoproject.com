@@ -46,6 +46,9 @@ def document(request, lang, version, url):
     docroot = get_doc_root_or_404(lang, version)
     doc_path = get_doc_path_or_404(docroot, url)
 
+    if not docroot.child('globalcontext.json').exists():
+        return render(request, '410.html', status=410)
+
     if version == 'dev':
         rtd_version = 'latest'
     elif version >= '1.5':
