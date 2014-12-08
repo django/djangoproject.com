@@ -1062,8 +1062,11 @@ blockquote {
 			}
 		}
 		&:active {
-			background: darken($green-medium, 2%);
-			border-color: darken($green-medium, 2%);
+			border-color: $green-medium;
+			color: $green-medium;
+			em {
+				color: $green-medium;
+			}
 		}
 	}
 }
@@ -1979,6 +1982,8 @@ h2 + .list-link-soup {
 		}
 }
 
+
+// Horizontal navigation links for documentation
 .browse-horizontal {
 
 	@include sans-serif;
@@ -2007,6 +2012,60 @@ h2 + .list-link-soup {
 
 	a {
 		text-decoration: none;
+	}
+
+}
+
+// Docs version switcher 
+
+#doc-versions {
+
+	position: fixed;
+	right: 15px;
+	bottom: 15px;
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+
+	.icon {
+		margin-right: 4px;
+	}
+
+	li {
+		display: none;
+		background: $white;
+		margin: 0 3px;
+		@include sans-serif;
+		color: $text;
+		@include font-size(12);
+
+		&.current {
+			display: inline-block;
+			padding: 8px 15px;
+			border: 1px solid $gray-line;
+			@include border-radius(4px);
+		}
+
+		a {
+			display: inline-block;
+			color: $green-medium;
+			text-decoration: none;
+			font-weight: 700;
+			padding: 8px 15px;
+			border: 1px solid $gray-line;
+			@include border-radius(4px);
+			&:hover {
+				color: $green;
+				border: 1px solid $green-light;
+			}
+		}
+	}
+
+	&:hover {
+		li {
+			display: inline-block;
+		}
 	}
 
 }
