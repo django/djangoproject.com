@@ -203,6 +203,12 @@ blockquote {
 	}
 }
 
+//------------------- Webfont
+
+html.wf-loading div.container {
+    visibility: hidden;
+}
+
 //------------------- Layout
 
 
@@ -2016,7 +2022,7 @@ h2 + .list-link-soup {
 
 }
 
-// Docs version switcher 
+// Docs version switcher
 
 #doc-versions {
 
@@ -2025,6 +2031,7 @@ h2 + .list-link-soup {
 	bottom: 15px;
 	margin: 0;
 	padding: 0;
+	z-index: 1;
 
 	list-style: none;
 
@@ -2069,6 +2076,44 @@ h2 + .list-link-soup {
 	}
 
 }
+
+#dev-warning, #outdated-warning {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	padding: 8px 7px 8px;
+	background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
+	background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
+	background-image: linear-gradient(135deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
+	@include sans-serif;
+	font-size: 14px;
+	text-align: center;
+	background-color: #ffe761;
+}
+
+#outdated-warning {
+	background-color: #ffbaba;
+}
+
+.versionadded, .versionchanged, .versionmodified {
+	color: $text-light;
+	@include sans-serif;
+	font-size: 0.8em;
+	font-weight: bold;
+
+	p {
+		@include serif;
+		font-weight: normal;
+		margin-top: 0.3em;
+	}
+}
+
+dl.function {
+	dd {
+		padding-left: 1.4em;
+	}
+}
+
 
 .list-links {
 	//Can be used globally to stack list items either with a <ul>, or with a <dl> using the <dd> to add meta information.  (See Community Page - sidebar and block body.)
@@ -2520,6 +2565,11 @@ form.donate {
 hr {
 	border: 0;
 	border-top: 1px solid $gray-line;
+}
+
+em {
+	// this is because our main font does not support this style:
+	font-style: normal;
 }
 
 .badge {
