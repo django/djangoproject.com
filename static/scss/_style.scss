@@ -171,9 +171,18 @@ h4 {
 	font-weight: 700;
 }
 
-tt {
-	font-family: Courier, monospace;
+tt,
+code,
+kbd,
+pre,
+samp {
+	font-family: "Droid Sans Mono", monospace;
 	color: $green-dark;
+	@include font-size(14);
+}
+
+span.pre {
+	@include font-size(16);
 }
 
 a:hover, a:active, a:focus {
