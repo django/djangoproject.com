@@ -72,6 +72,6 @@ Then run the following to compile the Compass SASS files to CSS::
 
 Alternatively you can also run the following command in a separate shell
 to continously watch for changes to the SASS files and automatically compile
-to CSS.
+to CSS::
 
     make watch-scss
