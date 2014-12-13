@@ -2100,17 +2100,16 @@ h2 + .list-link-soup {
 	top: 0;
 	width: 100%;
 	padding: 8px 7px 8px;
-	background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
-	background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
-	background-image: linear-gradient(135deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
 	@include sans-serif;
 	font-size: 14px;
 	text-align: center;
-	background-color: #ffe761;
+	background-color: #FCED99;
+	border-bottom: 1px solid #D4C67C;
 }
 
 #outdated-warning {
 	background-color: #ffbaba;
+	border-bottom-color: #D29393;
 }
 
 .versionadded, .versionchanged, .versionmodified {
