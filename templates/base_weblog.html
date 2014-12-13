@@ -3,7 +3,7 @@
 {% block title %}News &amp; Events{% endblock %}
 
 {% block header %}
-	<h1>News &amp; Events</h1>
+  <h1>News &amp; Events</h1>
 {% endblock %}
 
 {% block extrahead %}
@@ -12,43 +12,43 @@
 
 {% block content-related %}
 
-	<h1 class="visuallyhidden">Additional Information</h1>
-	<div role="complementary">
+  <h1 class="visuallyhidden">Additional Information</h1>
+  <div role="complementary">
 
-	{% if events %}
-	<h2>Upcoming Events</h2>
-	<ul class="list-events">
-		{% for event in events %}
-			<li>
-				<a href="{{ event.external_url }}" target="_blank">{{ event.headline }}</a>
-				<span class="meta"><span>{{ event.date|date:"F j, Y" }}</span>  |  {{ event.location }}</span>
-				<i class="icon icon-calendar"></i>
-			</li>
-		{% endfor %}
-	</ul>
-	{% endif %}
+  {% if events %}
+  <h2>Upcoming Events</h2>
+  <ul class="list-events">
+    {% for event in events %}
+      <li>
+        <a href="{{ event.external_url }}" target="_blank">{{ event.headline }}</a>
+        <span class="meta"><span>{{ event.date|date:"F j, Y" }}</span>  |  {{ event.location }}</span>
+        <i class="icon icon-calendar"></i>
+      </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 
-	{% comment %}
-	{# tags not implemented in backend yet #}
-	<h2><span>Tags</span></h2>
-	<ul class="list-tags">
-		<li><a href="#">Django Software Foundation</a></li>
-		<li><a href="#">Events</a></li>
-		<li><a href="#">Conferences</a></li>
-		<li><a href="#">Release Announcements</a></li>
-		<li><a href="#">Security</a></li>
-	</ul>
-	{% endcomment %}
+  {% comment %}
+  {# tags not implemented in backend yet #}
+  <h2><span>Tags</span></h2>
+  <ul class="list-tags">
+    <li><a href="#">Django Software Foundation</a></li>
+    <li><a href="#">Events</a></li>
+    <li><a href="#">Conferences</a></li>
+    <li><a href="#">Release Announcements</a></li>
+    <li><a href="#">Security</a></li>
+  </ul>
+  {% endcomment %}
 
-	<h2><span>Archives</span></h2>
-	<ul class="list-links-small">
-		{% render_month_links %}
-	</ul>
+  <h2><span>Archives</span></h2>
+  <ul class="list-links-small">
+    {% render_month_links %}
+  </ul>
 
-	<h2><span>RSS Feeds</span></h2>
-	<ul class="list-links-small rss-list">
-		<li><a href="/rss/weblog/">Latest news entries</a></li>
-		<li><a href="/timeline?daysback=90&max=50&wiki=on&ticket=on&changeset=on&milestone=on&format=rss">Recent code changes</a></li>
-	</ul>
+  <h2><span>RSS Feeds</span></h2>
+  <ul class="list-links-small rss-list">
+    <li><a href="/rss/weblog/">Latest news entries</a></li>
+    <li><a href="/timeline?daysback=90&max=50&wiki=on&ticket=on&changeset=on&milestone=on&format=rss">Recent code changes</a></li>
+  </ul>
 </div>
 {% endblock %}

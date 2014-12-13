@@ -43,6 +43,24 @@ a {
 		color: lighten($text, 20%);
 	}
 }
+
+// for docs links. if we keep text-decoration, then underscores in function names become invisible.
+a.reference {
+	text-decoration: none;
+	border-bottom: 1px solid $text;
+	padding-bottom: 1px;
+
+	&:visited {
+		border-color: lighten($text, 10%);
+	}
+
+	&:active,
+	&:focus,
+	&:hover {
+		border-color: lighten($text, 20%);
+	}
+}
+
 ::selection { // Text Selection Colors
 	background: lighten($green-very-light,10%);
 }
@@ -2108,11 +2126,13 @@ h2 + .list-link-soup {
 	}
 }
 
-dl.function {
+dl.function, dl.class, dl.method {
 	dd {
 		padding-left: 1.4em;
 	}
 }
+
+
 
 
 .list-links {
@@ -2440,12 +2460,19 @@ form.donate {
 		position: absolute;
 		left: 0px;
 		color: $green-medium-dark;
-		padding-top: 0.5em;
+		padding-top: 0.4em;
 		padding-left: 0.5em;
 	}
 	input[type=text] {
 		padding-left: 20px;
 		padding-right: 9px; /* Magic value to right-align the button inside the input */
+	}
+}
+div[role=main] {
+	form.donate {
+		label {
+			padding-top: 0.7em;
+		}
 	}
 }
 
