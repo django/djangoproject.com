@@ -2016,7 +2016,7 @@ h2 + .list-link-soup {
 
 }
 
-// Docs version switcher 
+// Docs version switcher
 
 #doc-versions {
 
@@ -2520,6 +2520,11 @@ form.donate {
 hr {
 	border: 0;
 	border-top: 1px solid $gray-line;
+}
+
+em {
+	// this is because our main font does not support this style:
+	font-style: normal;
 }
 
 .badge {
