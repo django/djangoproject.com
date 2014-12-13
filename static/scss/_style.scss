@@ -43,6 +43,24 @@ a {
 		color: lighten($text, 20%);
 	}
 }
+
+// for docs links. if we keep text-decoration, then underscores in function names become invisible.
+a.reference {
+	text-decoration: none;
+	border-bottom: 1px solid $text;
+	padding-bottom: 1px;
+
+	&:visited {
+		border-color: lighten($text, 10%);
+	}
+
+	&:active,
+	&:focus,
+	&:hover {
+		border-color: lighten($text, 20%);
+	}
+}
+
 ::selection { // Text Selection Colors
 	background: lighten($green-very-light,10%);
 }
@@ -2113,6 +2131,8 @@ dl.function {
 		padding-left: 1.4em;
 	}
 }
+
+
 
 
 .list-links {
