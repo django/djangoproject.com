@@ -46,3 +46,7 @@ class SearchFormTestCase(TestCase):
 
         self.assertTrue(f.is_valid())
         self.assertEqual(f.cleaned_data['release'], release)
+
+    def test_empty_get(self):
+        response = self.client.get('/search/')
+        self.assertEqual(response.status_code, 200)
