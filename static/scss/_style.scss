@@ -1982,10 +1982,11 @@ h2 + .list-link-soup {
 .admonition,
 .help-block {
 		background: $white;
-		padding: 15px 20px;
+		padding: 15px 20px 15px 100px;
 		border: 1px solid $green-very-light;
 		@include border-radius(4px);
 		margin: 25px 0;
+		position: relative;
 
 		h1,h2,h3,h4 {
 			margin-top: 20px;
@@ -1996,8 +1997,36 @@ h2 + .list-link-soup {
 		.first {
 			margin-top: 0;
 		}
+		// Add an icon on the left of the box
 		.admonition-title {
 			font-weight: bold;
+			&::before {
+				@include fa-icon();
+				position: absolute;
+				top: 20px;
+				left: 20px;
+				font-size: 60px;
+				width: 60px;
+				text-align: center;
+				content: $fa-var-file-text-o; // default icon
+			}
+		}
+		&.warning {
+			background-color: $warning-yellow;
+			border-color: $warning-dark-yellow;
+			.admonition-title::before {
+				content: $fa-var-exclamation-triangle;
+			}
+		}
+		&.admonition-philosophy {
+			.admonition-title::before {
+				content: $fa-var-lightbulb-o;
+			}
+		}
+		&.admonition-behind-the-scenes {
+			.admonition-title::before {
+				content: $fa-var-cogs;
+			}
 		}
 		.last {
 			margin-bottom: 10px;
