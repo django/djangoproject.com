@@ -1,4 +1,7 @@
-To run locally, do the usual::
+djangoproject.com source code
+=============================
+
+To run locally, do the usual:
 
 1. Create a virtualenv
 
@@ -27,10 +30,12 @@ To run locally, do the usual::
 
     psql -d code.djangoproject < tracdb/trac.sql
 
+    ./manage.py syncdb
     ./manage.py migrate
 
    and::
 
+    ./manage.py syncdb --docs
     ./manage.py migrate --docs
 
    if you want to run docs site.
@@ -40,11 +45,31 @@ To run locally, do the usual::
     ./manage.py loaddata doc_releases.json --docs
     ./manage.py update_docs --docs
 
-Finally::
+7. Finally::
 
     ./manage.py runserver
 
-This runs as ``www.djangoproject.com``. To run locally as
-``docs.djangoproject.com``, use::
+   This runs as ``www.djangoproject.com``, the main website.
+
+   To run locally as ``docs.djangoproject.com``, use::
 
     ./manage.py runserver --docs
+
+Styles
+------
+
+In case you want to work on the stylesheets please install
+`Compass <http://compass-style.org/>`_ with
+`Rubygems <http://rubygems.org/>`_::
+
+    gem install compass
+
+You may have to prefix that command with ``sudo`` depending on your platform.
+
+Then run the following to compile the Compass SASS files to CSS::
+
+    make compile-scss-debug
+
+Alternatively you can also run the following command in a separate shell
+to continously watch for changes to the SASS files and automatically compile
+to CSS.
