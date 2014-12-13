@@ -1,31 +1,31 @@
 {% load url from future %}
 
 <div role="banner" id="top">
-	<div class="container">
-		<a class="logo" href="{% url 'homepage' %}">Django</a>
-		<p class="meta">The web framework for perfectionists with deadlines.</p>
-		<nav role="navigation">
-			<ul>
-				<li{% if section == 'overview' %} class="active"{% endif %}>
-					<a href="{% url 'overview' %}">Overview</a>
-				</li>
-				<li{% if section == 'download' %} class="active"{% endif %}>
-					<a href="{% url 'download' %}">Download</a>
-				</li>
-				<li{% if section == 'docs' %} class="active"{% endif %}>
-					<a href="https://docs.djangoproject.com{% block doc_url %}/{% endblock %}">Documentation</a>
-				</li>
-				<li{% if section == 'news' %} class="active"{% endif %}>
-					<a href="{% url 'blog-index' %}">News</a></li>
+  <div class="container">
+    <a class="logo" href="{% url 'homepage' %}">Django</a>
+    <p class="meta">The web framework for perfectionists with deadlines.</p>
+    <nav role="navigation">
+      <ul>
+        <li{% if section == 'overview' %} class="active"{% endif %}>
+          <a href="{% url 'overview' %}">Overview</a>
+        </li>
+        <li{% if section == 'download' %} class="active"{% endif %}>
+          <a href="{% url 'download' %}">Download</a>
+        </li>
+        <li{% if section == 'docs' %} class="active"{% endif %}>
+          <a href="https://docs.djangoproject.com{% block doc_url %}/{% endblock %}">Documentation</a>
+        </li>
+        <li{% if section == 'news' %} class="active"{% endif %}>
+          <a href="{% url 'blog-index' %}">News</a></li>
         <li{% if section == 'community' %} class="active"{% endif %}>
-					<a href="{% url 'community-index' %}">Community</a></li>
-				<li{% if section == 'code' %} class="active"{% endif %}>
-					<a href="https://code.djangoproject.com/">Code</a>
-				</li>
-				<li{% if section == 'about' %} class="active"{% endif %}>
-					<a href="/foundation/">About</a>
-				</li>
-			</ul>
-		</nav>
-	</div>
+          <a href="{% url 'community-index' %}">Community</a></li>
+        <li{% if section == 'code' %} class="active"{% endif %}>
+          <a href="https://code.djangoproject.com/">Code</a>
+        </li>
+        <li{% if section == 'about' %} class="active"{% endif %}>
+          <a href="/foundation/">About</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </div>
