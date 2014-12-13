@@ -1,0 +1,214 @@
+{% extends "base_docs.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block title %}{{ doc.title|striptags|safe }} | {% trans "Django documentation" %}{% endblock %}
+
+{% block doc_url %}{% url 'document-index' lang=lang version=version %}{% endblock %}
+
+{% block extrabody %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script>
+// Propagate the fragment identifier to the links in the version switcher
+$(document).ready(function () {
+  // Propagate the fragment identifier to the links in the version switcher
+  $('#doc-versions a').click(function () {
+    var hrefWithoutFragment = this.href.split('#')[0];
+    this.href = hrefWithoutFragment + window.location.hash;
+    // do nothing and let the event bubble up
+  });
+  // Make version switcher clickable for touch devices
+  $('#doc-versions li.current').on('click hover', function () {
+    $('#doc-versions li.other').toggle();
+  });
+});
+</script>
+{% if version_is_dev %}
+<div id="dev-warning" class="doc-floating-warning">
+  {% trans "This document is for Django's development version, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
+</div>
+{% elif version_is_unsupported %}
+<div id="outdated-warning" class="doc-floating-warning">
+  {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
+</div>
+{% endif %}
+{% if version_is_dev or version_is_unsupported %}
+<style type="text/css" media="screen">
+body {
+  margin-top: 2em;
+}
+</style>
+<script>
+{% comment %}
+Here we are doing something really annoying, we catch clicks on
+internal anchors and scroll to the right place of the page.
+This is only needed because we want to show the developement version
+warning on top.
+{% endcomment %}
+$(document).ready(function () {
+  // First handle the case in which someone clicks on a link
+  $('a[href*=#]').click(function () {
+    // check to see if this is an internal link, sigh.
+    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+      && location.hostname == this.hostname) {
+        // get the link target, use the weird id= query since it escapes dots
+        var target = $("[id='" + this.hash.slice(1) + "']");
+        // calculate the offset
+        var targetOffset = target.offset().top - $('#dev-warning').height() - 20;
+        // scroll to the place, there is probably a better way
+        setTimeout(function () {
+          $('html,body').scrollTop(targetOffset);
+        }, 50);
+      }
+    });
+    // this is the janky thing, there is probably a better way
+    setTimeout(function () {
+      // is there a hash in the current window's location?
+      if (window.location.hash) {
+        // again, get the target
+        var target = $("[id='" + window.location.hash.slice(1) + "']");
+        // calculate the offset
+        var targetOffset = target.offset().top - $('#dev-warning').height() - 20;
+        // scroll to the place
+        $('html,body').scrollTop(targetOffset);
+      }
+      // use a delay that should work on all modern computers. should, not will.
+    }, 50);
+  });
+</script>
+{% endif %}
+{% endblock extrabody %}
+
+{% block content %}
+
+{% block body %}
+{% load docs %}
+{% get_all_doc_versions docurl as versions %}
+<ul id="doc-versions">
+  {% for v in versions %}
+  {% if version != v %}
+  <li class="other">
+    {% if docurl %}
+    <a href="{% url 'document-detail' lang=lang version=v url=docurl %}">{{ v }}</a>
+    {% else %}
+    <a href="{% url 'document-index' lang=lang version=v %}">{{ v }}</a>
+    {% endif %}
+  </li>
+  {% endif %}
+  {% endfor %}
+  <li class="current{% if version_is_dev %} dev{% endif %}"
+  title="{% if version_is_dev %}{% trans "This document is for Django's development version, which can be significantly different from previous releases." %}{% else %}{% blocktrans %}This document describes Django {{ version }}.{% endblocktrans %}{% endif %} {% trans "Click on the links on the left to see other versions." %}">
+  <span>{% trans "Documentation version:" %}
+    <strong>{% if version_is_dev %}
+      development{% else %}{{ version }}
+      {% endif %}</strong>
+    </span>
+  </li>
+</ul>
+{{ doc.body|safe }}
+{% endblock %}
+
+
+<div class="browse-horizontal">
+  {% if doc.prev %}
+  <div class="left"><a href="{{ doc.prev.link }}"><i class="icon icon-chevron-left"></i> {{ doc.prev.title|safe }}</a></div>
+  {% endif %}
+  {% if doc.next %}
+  <div class="right"><a href="{{ doc.next.link }}">{{ doc.next.title|safe }} <i class="icon icon-chevron-right"></i></a></div>
+  {% endif %}
+</div>
+
+<div id="content-secondary">
+  <h2 id="comments">{% trans "Questions/Feedback" %}</h2>
+  <p>{% trans "Having trouble? We'd like to help!" %}</p>
+  <ul>
+    <li>
+      {% url 'document-detail' lang=lang version=version url="faq" as faq_url %}
+      {% blocktrans %}Try the <a href="{{ faq_url }}">FAQ</a> — it's got answers to many common questions.{% endblocktrans %}
+    </li>
+    <li>
+      {% blocktrans %}Search for information in the <a
+      href="http://groups.google.com/group/django-users/">archives of the
+      django-users mailing list</a>, or <a
+      href="http://groups.google.com/group/django-users/">post a question</a>.{% endblocktrans %}
+    </li>
+    <li>
+      {% blocktrans %}Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
+        channel</a>, or search the <a href="http://django-irc-logs.com/">IRC
+          logs</a> to see if it has been asked before.{% endblocktrans %}
+        </li>
+        <li>
+          {% blocktrans %}If you notice errors with this documentation, please <a
+          href="https://code.djangoproject.com/newticket?component=Documentation">
+          open a ticket</a> and let us know! Please only use the ticket tracker for
+          criticisms and improvements on the docs. For tech support, use the
+          resources above.{% endblocktrans %}
+        </li>
+      </ul>
+    </div>
+    {% endblock %}
+
+    {% block content-related %}
+    <h1 class="visuallyhidden">Additional Information</h1>
+    <div role="complementary">
+      {% block search %}
+      {% load docs %}
+      {% search_form %}
+      {% endblock %}
+
+      {% block toc-wrapper %}
+      <h2>{% trans "Contents" %}</h2>
+      {% block toc %}
+      {{ doc.toc|safe }}
+      {% endblock %}
+      {% endblock %}
+      {% block browse-wrapper %}
+      <h2>{% trans "Browse" %}</h2>
+      <ul>
+        {% block browse %}
+        {% if doc.prev %}
+        <li>{% trans "Prev:" %} <a href="{{ doc.prev.link }}">{{ doc.prev.title|safe }}</a></li>
+        {% endif %}
+        {% if doc.next %}
+        <li>{% trans "Next:" %} <a href="{{ doc.next.link }}">{{ doc.next.title|safe }}</a></li>
+        {% endif %}
+        <li><a href="{% url 'document-detail' lang=lang version=version url="contents" %}">{% trans "Table of contents" %}</a></li>
+        {% for doc, title, accesskey, shorttitle in env.rellinks %}
+        <li><a href="{% url 'document-detail' lang=lang version=version url=doc %}">{{ title }}</a></li>
+        {% endfor %}
+        {% endblock %}
+      </ul>
+      {% endblock %}
+
+      {% block breadcrumbs-wrapper %}
+      <h2>{% trans "You are here:" %}</h2>
+      <ul>
+        {% block breadcrumbs %}
+        <li>
+          <a href="{% url 'document-index' lang=lang version=version %}">{% blocktrans %}Django {{ version }} documentation{% endblocktrans %}</a>
+          {% for p in doc.parents %}
+          <ul><li><a href="{{ p.link }}">{{ p.title|safe }}</a>
+            {% endfor %}
+            <ul><li>{% block current-page-title %}{{ doc.title|safe }}{% endblock %}</li></ul>
+            {% for p in doc.parents %}</li></ul>{% endfor %}
+          </li>
+          {% endblock %}
+        </ul>
+
+        {% if version != "1.1" and version != "1.0" %}
+        <h2>{% trans "Download:" %}</h2>
+        <p>
+          {% if version == "dev" %}{% trans "Offline (development version):" %}
+          {% else %}{% blocktrans %}Offline (Django {{ version }}):{% endblocktrans %}{% endif %}
+          <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> |
+          <a href="http://media.readthedocs.org/pdf/django/{{ rtd_version }}/django.pdf">PDF</a> |
+          <a href="http://media.readthedocs.org/epub/django/{{ rtd_version }}/django.epub">ePub</a>
+          <br>
+          <span class="quiet">
+            {% blocktrans %}Provided by <a href="http://readthedocs.org/">Read the Docs</a>.{% endblocktrans %}
+          </span>
+        </p>
+        {% endif %}
+        {% endblock %}
+      </div>
+      {% endblock %}
