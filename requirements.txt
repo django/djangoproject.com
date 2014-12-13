@@ -10,7 +10,6 @@ Whoosh==2.4.1
 akismet==0.2.0
 dj-database-url==0.3.0
 django-appconf==0.6
-django-compressor==1.4
 django-contact-form==1.0
 django-haystack==1.2.7
 django-push==0.6.1
