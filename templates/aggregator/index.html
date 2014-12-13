@@ -12,16 +12,16 @@
 <ul class="list-collapsing">
 
 {% for feedtype, latest_feeds in feedtype_list %}
-	<li id="{{ feedtype.slug }}">
-		<h2 class="bullet-icon"><i class="icon icon-rss blue"></i> {{ feedtype.name }}</h2>
-		<div class="collapsing-content">
-			<dl class="list-links">
+  <li id="{{ feedtype.slug }}">
+    <h2 class="bullet-icon"><i class="icon icon-rss blue"></i> {{ feedtype.name }}</h2>
+    <div class="collapsing-content">
+      <dl class="list-links">
         {% for item in latest_feeds %}
-				    <dt><a href="{{ item.link }}">{{ item.title }}</a></dt>
-				    <dd>{{ item.date_modified|date:"N jS, Y \a\t P" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a></dd>
+            <dt><a href="{{ item.link }}">{{ item.title }}</a></dt>
+            <dd>{{ item.date_modified|date:"N jS, Y \a\t P" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a></dd>
         {% endfor %}
-			</dl>
-			<p class="meta">
+      </dl>
+      <p class="meta">
         {% if latest_feeds %}
           <a href="{% url 'community-feed-list' feedtype.slug %}">View more</a>
         {% endif %}
@@ -32,8 +32,8 @@
           <a href="{% url 'community-add-feed' feedtype.slug %}">Add your feed</a>
         {% endif %}
       </p>
-		</div>
-	</li>
+    </div>
+  </li>
 {% endfor %}
 
 </ul>
