@@ -105,7 +105,9 @@ $(document).ready(function () {
     </span>
   </li>
 </ul>
-{{ doc.body|safe }}
+<div id="docs">
+  {{ doc.body|safe }}
+</div>
 {% endblock %}
 
 
