@@ -56,7 +56,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
-    'django.middleware.cache.UpdateCacheMiddleware',
     'djangosecure.middleware.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -66,8 +65,12 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
+
+if PRODUCTION:
+    MIDDLEWARE_CLASSES = (['django.middleware.cache.UpdateCacheMiddleware'] +
+                          MIDDLEWARE_CLASSES +
+                          ['django.middleware.cache.FetchFromCacheMiddleware'])
 
 TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.auth.context_processors.auth',
@@ -77,6 +80,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.messages.context_processors.messages',
     'docs.context_processors.docs_version',
     'releases.context_processors.django_version',
+    'aggregator.context_processors.community_stats',
 ]
 
 

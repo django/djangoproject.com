@@ -30,7 +30,8 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': SECRETS.get('memcached_host', '127.0.0.1:11211'),
     } if PRODUCTION else {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'trololololol',
     },
 }
 

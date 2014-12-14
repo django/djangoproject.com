@@ -4,8 +4,11 @@
 
 {% block header %}
   <h1 class="visuallyhidden">Community</h1>
-  <!-- This could ideally be pulled from Django People and Django Packages -->
-  <p>Django Community {% comment %}<em>9,513</em> Django Developers. <em>75</em> Countries. <em>1,701</em> Packages and Projects.{% endcomment %}</p>
+  <p><em>Django</em> Community{% if community_stats %}
+  {% if community_stats.people %} <em>{{ community_stats.people }}</em> people,{% endif %}
+  {% if community_stats.countries %} <em>{{ community_stats.countries }}</em> countries,{% endif %}
+  {% if community_stats.packages %} <em>{{ community_stats.packages }}</em> packages and projects.{% endif %}
+  {% endif %}</p>
 {% endblock %}
 
 {% block content-related %}
@@ -20,6 +23,10 @@
   </dl>
   <h2>Tell the World</h2>
   <dl class="list-links">
+    <dt><a href="http://www.djangopackages.com/">Django-based packages</a></dt>
+    <dd>find Django based projects and packages</dd>
+    <dt><a href="https://people.djangoproject.com/">Django people</a></dt>
+    <dd>locate Djangonauts near you</dd>
     <dt><a href="http://djangosites.org/">Django-powered sites</a></dt>
     <dd>add your site to the list</dd>
     <dt><a href="/community/badges/">Django badges</a></dt>
