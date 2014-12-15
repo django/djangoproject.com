@@ -14,19 +14,8 @@ $green-dark-text: #3C8866;
 $white: #F1FFF7;
 $warning-yellow: #FFFDF1;
 $warning-dark-yellow: #F5F1C7;
-
-// @font-face declarations
-
-@font-face {
-	font-family: 'Roboto';
-	font-weight: 900;
-	font-style: normal;
-}
-@font-face {
-	font-family: 'Roboto';
-	font-weight: 300;
-	font-style: normal;
-}
+$red: #BA2121;
+$red-dark: #6A0E0E;
 
 // Media Queries Mixin (http://jakearchibald.github.com/sass-ie/)
 $fix-mqs: false !default;
@@ -79,6 +68,9 @@ $old-ie: false !default;
 }
 @mixin sans-serif {
 	font-family: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
+}
+@mixin monospace {
+	font-family: "Inconsolata", "Courier New", Courier, monospace;
 }
 
 // Font Sizing Mixin (http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/)
