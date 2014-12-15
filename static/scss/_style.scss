@@ -247,7 +247,7 @@ html.wf-loading div.container {
 			@include box-shadow(0px 0px 0 0 #fff, 0px 0px 0 0 #fff, 460px 0 0 0 #fff, 1000px 0 0 0 #fff, 0px 600px 0 0px #fff, 460px 600px 0 0px #fff);
 			padding-left: 4%;
 			padding-right: 0;
-			width: 62%;
+			width: 63%;
 		}
 
 		.sidebar-right & {
@@ -256,7 +256,8 @@ html.wf-loading div.container {
 				border: none;
 				@include box-shadow(0px 0px 0 0 #fff, 0px 0px 0 0 #fff, -460px 0 0 0 #fff, -1000px 0 0 0 #fff, 0px 600px 0 0px #fff, -460px 600px 0 0px #fff);
 				padding-left: 0;
-				padding-right: (4/100) * 100%;
+				width: 62%;
+				padding-right: 4%;
 			}
 		}
 	}
@@ -316,12 +317,12 @@ html.wf-loading div.container {
 	@include device-min(768px) {
 		float: right;
 		margin: 20px 0;
-		margin-right: (4/100) * 100%;
+		margin-right: 3%;
 		padding: 0 0 40px 0;
-		width: (30/100) * 100%;
+		width: 30%;
 
 		.sidebar-right & {
-			margin-left: (4/100) * 100%;
+			margin-left: 3%;
 			margin-right: 0;
 		}
 	}
