@@ -2184,13 +2184,13 @@ h2 + .list-link-soup {
 	@include sans-serif;
 	font-size: 0.8em;
 	font-weight: bold;
+	margin-bottom: 20px;
 
-	padding: 12px 15px 5px;
+	padding: 12px 15px 0px;
 	border: 1px solid $green-very-light;
 	@include border-radius(4px);
 
 	p {
-		@include serif;
 		font-weight: normal;
 		margin-top: 0.3em;
 	}
