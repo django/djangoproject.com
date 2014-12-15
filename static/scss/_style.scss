@@ -177,13 +177,14 @@ code,
 kbd,
 pre,
 samp {
-	font-family: "Droid Sans Mono", monospace;
+	@include monospace;
 	color: $green-dark;
-	@include font-size(14);
+	font-size: 1.05em;
 }
 
 span.pre {
-	@include font-size(16);
+	@include monospace;
+	font-size: 1.05em;
 }
 
 a:hover, a:active, a:focus {
@@ -1969,6 +1970,7 @@ h2 + .list-link-soup {
 	position: relative;
 	top: -0.17em;
 	font-weight: 700;
+	text-decoration: none;
 	@include transition(opacity 200ms ease-in-out);
 }
 
@@ -1977,9 +1979,11 @@ h2 + .list-link-soup {
 	h3,
 	h4,
 	h5,
-	h6 {
+	h6,
+	dl,
+	dt {
 		&:hover {
-			.headerlink {
+			> .headerlink {
 				opacity: 1;
 			}
 		}
@@ -1990,7 +1994,7 @@ h2 + .list-link-soup {
 .admonition,
 .help-block {
 		background: $white;
-		padding: 15px 20px 15px 100px;
+		padding: 15px 20px 15px 90px;
 		border: 1px solid $green-very-light;
 		@include border-radius(4px);
 		margin: 25px 0;
@@ -2013,8 +2017,8 @@ h2 + .list-link-soup {
 				position: absolute;
 				top: 20px;
 				left: 20px;
-				font-size: 60px;
-				width: 60px;
+				font-size: 42px;
+				width: 46px;
 				text-align: center;
 				content: $fa-var-file-text-o; // default icon
 			}
@@ -2134,7 +2138,7 @@ h2 + .list-link-soup {
 	position: fixed;
 	top: 0;
 	width: 100%;
-	padding: 8px 7px 8px;
+	padding: 8px 20px 8px;
 	background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
 	background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
 	background-image: linear-gradient(135deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
@@ -2149,20 +2153,28 @@ h2 + .list-link-soup {
 }
 
 #docs-content {
+	@include sans-serif;
+	@include font-size(16);
+	line-height: 1.5em;
 	a.reference {
 		// for docs links. if we keep text-decoration, then underscores in function names become invisible.
+		color: $red-dark;
 		text-decoration: none;
-		border-bottom: 1px solid $text;
 		padding-bottom: 1px;
 
 		&:visited {
-			border-color: lighten($text, 10%);
+			border-color: lighten($red-dark, 10%);
 		}
 
 		&:active,
 		&:focus,
 		&:hover {
-			border-color: lighten($text, 20%);
+			background: $white;
+			color: $red;
+		}
+
+		tt.literal {
+			border-bottom: 1px dotted $text-light;
 		}
 	}
 }
@@ -2173,6 +2185,10 @@ h2 + .list-link-soup {
 	font-size: 0.8em;
 	font-weight: bold;
 
+	padding: 12px 15px 5px;
+	border: 1px solid $green-very-light;
+	@include border-radius(4px);
+
 	p {
 		@include serif;
 		font-weight: normal;
@@ -2181,6 +2197,9 @@ h2 + .list-link-soup {
 }
 
 dl.function, dl.class, dl.method {
+	dt {
+		font-weight: 700;
+	}
 	dd {
 		padding-left: 1.4em;
 	}

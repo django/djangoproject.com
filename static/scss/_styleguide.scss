@@ -78,6 +78,9 @@
         background: $white;
         border: 1px solid $gray-line;
       }
+      &.red-dark {
+        background: $red-dark;
+      }
 
       // Secondary
       &.text-light {
@@ -98,6 +101,10 @@
 
       &.gray-line {
         background: $gray-line;
+      }
+
+      &.red {
+        background: $red;
       }
 
     }
