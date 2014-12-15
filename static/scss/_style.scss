@@ -2027,6 +2027,7 @@ h2 + .list-link-soup {
 			background-color: $warning-yellow;
 			border-color: $warning-dark-yellow;
 			.admonition-title::before {
+				color: #E9BD46;
 				content: $fa-var-exclamation-triangle;
 			}
 		}
