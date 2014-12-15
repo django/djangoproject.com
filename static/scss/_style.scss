@@ -286,7 +286,7 @@ html.wf-loading div.container {
 			border-bottom: 0;
 		}
 		dd {
-			&:last-child {
+			&.last-child {
 				padding-bottom: 0;
 			}
 		}
@@ -812,7 +812,7 @@ html.wf-loading div.container {
 				margin-left: 0;
 				padding-left: 0;
 			}
-			&:last-child {
+			&.last-child {
 				margin-right: 0;
 				padding-right: 0;
 			}
@@ -1160,7 +1160,7 @@ html.wf-loading div.container {
 			&:first-child {
 				margin-left: 0;
 			}
-			&:last-child {
+			&.last-child {
 				margin-right: 0;
 			}
 		}

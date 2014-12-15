@@ -3406,7 +3406,7 @@ html.wf-loading div.container {
   border-bottom: 0;
 }
 /* line 289, ../scss/_style.scss */
-[role="main"] .section dd:last-child {
+[role="main"] .section dd.last-child {
   padding-bottom: 0;
 }
 
@@ -4011,7 +4011,7 @@ html.wf-loading div.container {
   padding-left: 0;
 }
 /* line 815, ../scss/_style.scss */
-[role="contentinfo"] .subfooter .col:last-child {
+[role="contentinfo"] .subfooter .col.last-child {
   margin-right: 0;
   padding-right: 0;
 }
@@ -4413,7 +4413,7 @@ html.wf-loading div.container {
   margin-left: 0;
 }
 /* line 1163, ../scss/_style.scss */
-.layout-2col .col:last-child {
+.layout-2col .col.last-child {
   margin-right: 0;
 }
 /* line 1167, ../scss/_style.scss */
