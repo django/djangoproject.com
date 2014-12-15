@@ -119,35 +119,6 @@ $(document).ready(function () {
   <div class="right"><a href="{{ doc.next.link }}">{{ doc.next.title|safe }} <i class="icon icon-chevron-right"></i></a></div>
   {% endif %}
 </div>
-
-<div id="content-secondary">
-  <h2 id="comments">{% trans "Questions/Feedback" %}</h2>
-  <p>{% trans "Having trouble? We'd like to help!" %}</p>
-  <ul>
-    <li>
-      {% url 'document-detail' lang=lang version=version url="faq" as faq_url %}
-      {% blocktrans %}Try the <a href="{{ faq_url }}">FAQ</a> — it's got answers to many common questions.{% endblocktrans %}
-    </li>
-    <li>
-      {% blocktrans %}Search for information in the <a
-      href="http://groups.google.com/group/django-users/">archives of the
-      django-users mailing list</a>, or <a
-      href="http://groups.google.com/group/django-users/">post a question</a>.{% endblocktrans %}
-    </li>
-    <li>
-      {% blocktrans %}Ask a question in the <a href="irc://irc.freenode.net/">#django IRC
-        channel</a>, or search the <a href="http://django-irc-logs.com/">IRC
-          logs</a> to see if it has been asked before.{% endblocktrans %}
-        </li>
-        <li>
-          {% blocktrans %}If you notice errors with this documentation, please <a
-          href="https://code.djangoproject.com/newticket?component=Documentation">
-          open a ticket</a> and let us know! Please only use the ticket tracker for
-          criticisms and improvements on the docs. For tech support, use the
-          resources above.{% endblocktrans %}
-        </li>
-      </ul>
-    </div>
     {% endblock %}
 
     {% block content-related %}
@@ -158,7 +129,27 @@ $(document).ready(function () {
       {% search_form %}
       {% endblock %}
 
+      <h2>{% trans "Getting help" %}</h3>
+        <dl class="list-links">
+          {% url 'document-detail' lang=lang version=version url="faq" as faq_url %}
+          <dt><a href="{{ faq_url }}">FAQ</a></dt>
+          <dd>{% blocktrans %}Try the FAQ — it's got answers to many common questions.{% endblocktrans %}</dd>
+
+          <dt><a href="/en/stable/genindex/">{% trans "Index" %}</a>, <a href="/en/stable/py-modindex/">{% trans "Model Index" %}</a> or <a href="/en/stable/context/">{% trans "Table of Contents" %}</a></dt>
+          <dd>{% blocktrans %}Handy when looking for specific information.{% endblocktrans %}</dd>
+
+          <dt><a href="http://groups.google.com/group/django-users/">django-users mailing list</a></dt>
+          <dd>{% blocktrans %}Search for information in the archives of the django-users mailing list, or post a question.{% endblocktrans %}</dd>
+
+          <dt><a href="irc://irc.freenode.net/django">#django IRC channel</a></dt>
+          <dd>{% blocktrans %}Ask a question in the #django IRC channel, or search the IRC logs to see if it’s been asked before.{% endblocktrans %}</dd>
+
+          <dt><a href="http://code.djangoproject.com/">Ticket tracker</a></dt>
+          <dd>{% blocktrans %}Report bugs with Django or Django documentation in our ticket tracker.{% endblocktrans %}</dd>
+        </dl>
+
       {% block toc-wrapper %}
+
       <h2>{% trans "Contents" %}</h2>
       {% block toc %}
       {{ doc.toc|safe }}
