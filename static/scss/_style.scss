@@ -2057,6 +2057,7 @@ h2 + .list-link-soup {
 
 	background: $white;
 	padding: 20px;
+	margin-top: 3em;
 
 	.left {
 		float: left;
@@ -2151,6 +2152,12 @@ h2 + .list-link-soup {
 
 #outdated-warning {
 	background-color: #ffbaba;
+}
+
+#s-getting-help {
+	// hiding getting help section because we moved it to sidebar, but because of docs being served
+	// on readthedocs, we still want to keep the content in.
+	display: none;
 }
 
 #docs-content {
