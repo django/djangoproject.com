@@ -5280,7 +5280,7 @@ h2 + .list-link-soup {
   font-size: 1.8rem;
   cursor: pointer;
   margin: 0;
-  padding: 20px 40px 15px 0;
+  padding: 18px 40px 18px 0;
   position: relative;
 }
 /* line 1776, ../scss/_style.scss */
@@ -5300,7 +5300,7 @@ h2 + .list-link-soup {
 }
 /* line 1792, ../scss/_style.scss */
 .list-collapsing.active h2.bullet-icon {
-  padding: 20px 40px 15px 1.5em;
+  padding-left: 1.5em;
 }
 /* line 1796, ../scss/_style.scss */
 .list-collapsing.active h2.bullet-icon > i:first-child {
@@ -5961,7 +5961,7 @@ form textarea {
   font-weight: 400;
   height: 30px;
   margin: 10px 0px;
-  padding: 8px 14% 6px 10px;
+  padding: 6px 14% 8px 10px;
   text-indent: 0;
   vertical-align: middle;
   width: 82%;
@@ -5973,7 +5973,7 @@ form textarea {
   form input[type="email"],
   form input[type="password"],
   form textarea {
-    padding: 8px 18% 6px 10px;
+    padding: 6px 18% 8px 10px;
     width: 80%;
   }
 }

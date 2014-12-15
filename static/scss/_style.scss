@@ -1770,7 +1770,7 @@ h2 + .list-link-soup {
 			@include font-size(18);
 			cursor: pointer;
 			margin: 0;
-			padding: 20px 40px 15px 0;
+			padding: 18px 40px 18px 0;
 			position: relative;
 
 			&:hover,
@@ -1791,7 +1791,7 @@ h2 + .list-link-soup {
 
 			&.bullet-icon {
 				// H2 class for using icons as 'bullets' much like the layout of a list. When the line breaks, the text won't fold under the icon. See the community page for an example.
-				padding: 20px 40px 15px 1.5em;
+				padding-left: 1.5em;
 
 				> i:first-child {
 					position: absolute;
@@ -2363,13 +2363,13 @@ form {
 		font-weight: 400;
 		height: 30px;
 		margin: 10px 0px;
-		padding: 8px 14% 6px 10px;
+		padding: 6px 14% 8px 10px;
 		text-indent: 0;
 		vertical-align: middle;
 		width: 82%;
 
 		@include device-min(768px) {
-			padding: 8px 18% 6px 10px;
+			padding: 6px 18% 8px 10px;
 			width: 80%;
 		}
 
