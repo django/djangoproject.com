@@ -58,7 +58,7 @@ dl {
 
 	dt {
 		@include sans-serif;
-		font-weight: 700;
+		font-weight: 400;
 	}
 
 	dd {
@@ -100,7 +100,7 @@ h1 {
 
 	[role="main"] & {
 		@include font-size(32);
-		margin: 40px 0 20px;
+		margin: 40px 0px;
 		color: $text;
 	}
 
@@ -135,6 +135,7 @@ h2 {
 
 	[role="main"] & {
 		margin-top: 40px;
+		margin-bottom: 25px;
 	}
 }
 h3 {
@@ -379,6 +380,10 @@ html.wf-loading div.container {
 	position: relative;
 	z-index: 0;
 
+	@include device-min(768px) {
+		padding: 10px;
+	}
+
 	.container {
 		@include device-min(768px) {
 			position: relative;
@@ -498,7 +503,7 @@ html.wf-loading div.container {
 
 		li {
 			@include sans-serif;
-			@include font-size(12);
+			@include font-size(13);
 			display: block;
 			font-weight: 700;
 			line-height: 16px;
@@ -581,9 +586,9 @@ html.wf-loading div.container {
 		@include sans-serif;
 		@include font-size(24);
 		color: $green-very-light;
-		font-weight: 400;
+		font-weight: 300;
 		line-height: 1.3;
-		padding: 1px 0;
+		padding: 1px 0 10px;
 		margin: .65em 0 .7em;
 
 		em {
@@ -595,7 +600,7 @@ html.wf-loading div.container {
 			@include font-size(32);
 
 			color: $green-very-light;
-			padding: 1px 0;
+			padding: 1px 0 10px;
 
 		}
 
@@ -607,7 +612,7 @@ html.wf-loading div.container {
 
 	a.cta, .cta {
 		margin: 15px 0;
-		padding: 0.7em 1.5em;
+		padding: 0.7em 1.5em 0.8em;
 		background: $green-medium-dark;
 		&:hover {
 			background: lighten($green-medium-dark, 4%);
@@ -663,7 +668,7 @@ html.wf-loading div.container {
 		}
 		a.cta, .cta {
 			display: inline-block;
-			padding: 1em 50px;
+			padding: 1em 50px 1.1em;
 			margin-bottom: 40px;
 			background: $green-medium;
 			color: white;
@@ -1560,6 +1565,7 @@ h2 + .list-link-soup {
 
 		dd {
 			padding-left: 245px;
+			min-height: 140px;
 
 			&.even {
 				padding-left: 0;
@@ -1943,11 +1949,11 @@ h2 + .list-link-soup {
 }
 
 .section h2 {
-	margin: 50px 0 40px;
+	margin: 50px 0 30px;
 }
 
 .section h3 {
-	margin: 40px 0 30px;
+	margin: 40px 0 20px;
 }
 
 .headerlink {
@@ -2637,10 +2643,10 @@ hr {
 	border-top: 1px solid $gray-line;
 }
 
-em {
-	// this is because our main font does not support this style:
-	font-style: normal;
-}
+// em {
+// 	// this is because our main font does not support this style:
+// 	font-style: normal;
+// }
 
 .badge {
   @include border-radius(4px);

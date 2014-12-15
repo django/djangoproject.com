@@ -18,19 +18,13 @@ $warning-dark-yellow: #F5F1C7;
 // @font-face declarations
 
 @font-face {
-	font-family: 'Colfax';
-	src: url('../fonts/colfax/ColfaxWebMedium.eot');
-	src: url('../fonts/colfax/ColfaxWebMedium.eot?#iefix') format('embedded-opentype'),
-			 url('../fonts/colfax/ColfaxWebMedium.woff') format('woff');
-	font-weight: 700;
+	font-family: 'Roboto';
+	font-weight: 900;
 	font-style: normal;
 }
 @font-face {
-	font-family: 'Colfax';
-	src: url('../fonts/colfax/ColfaxWebRegular.eot');
-	src: url('../fonts/colfax/ColfaxWebRegular.eot?#iefix') format('embedded-opentype'),
-			 url('../fonts/colfax/ColfaxWebRegular.woff') format('woff');
-	font-weight: 400;
+	font-family: 'Roboto';
+	font-weight: 300;
 	font-style: normal;
 }
 
@@ -84,7 +78,7 @@ $old-ie: false !default;
 	font-family: Palantino, "Palatino Linotype", "Book Antiqua", "Hoefler Text", Georgia, "Lucida Bright", Cambria, Times, "Times New Roman", serif;
 }
 @mixin sans-serif {
-	font-family: "Colfax", Avenir, Corbel, "Lucida Grande", "Lucida Sans", sans-serif;
+	font-family: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
 }
 
 // Font Sizing Mixin (http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/)
