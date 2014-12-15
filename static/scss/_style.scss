@@ -1701,6 +1701,7 @@ h2 + .list-link-soup {
 
 			dd {
 				padding: 0 60px 20px 110px;
+				min-height: 0;
 				p {
 					margin-top: 0;
 					@include font-size(18);
