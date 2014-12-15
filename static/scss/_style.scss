@@ -2187,13 +2187,16 @@ h2 + .list-link-soup {
 	font-weight: bold;
 	margin-bottom: 20px;
 
-	padding: 12px 15px 0px;
+	padding: 10px 13px;
 	border: 1px solid $green-very-light;
 	@include border-radius(4px);
 
 	p {
 		font-weight: normal;
 		margin-top: 0.3em;
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
 }
 
