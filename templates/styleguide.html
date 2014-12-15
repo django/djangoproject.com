@@ -11,7 +11,7 @@
 
   <div class="section">
     <h1>Django Web Style Guide</h1>
-    <h4>Updated October October 30, 2014</h4>
+    <h4>Updated December 15, 2014</h4>
     <div data-xrayhtml>
     <p>
       This styleguide is a reference to maintain a design standard on djangoproject.com and related Django websites. It is meant to provide a source of available elements, and give insight into which elements to use where.
@@ -73,6 +73,11 @@
     <h2>Colors</h2>
 
     <h3 id="colors-primarycolors">Primary colors</h3>
+
+    <p>
+      Colors used for main text, links and backgrounds. Hover each swatch to see the corresponding SASS variable name.
+    </p>
+
     <ul class="swatches">
       <li class="text" title="Text"></li>
       <li class="green-dark" title="Dark Green"></li>
@@ -82,6 +87,9 @@
     </ul>
 
     <h3 id="colors-secondarycolor">Secondary colors</h3>
+
+    <p>Colors used for hover states, alternate texts, borders, etc. These are mostly slight variations of the primary colors to be paired.</p>
+
     <ul class="swatches">
       <li class="green-medium-dark" title="Medium Dark Green"></li>
       <li class="green-medium" title="Medium Green"></li>
@@ -96,18 +104,24 @@
     <h2>Typography</h2>
 
     <p>
-      The djangoproject.com website is set in both serif and sans-serif fonts. The serif font is <em>Palatino</em>, which is widely availabe as a system font. The sans-serif font is <em><a href="https://processtypefoundry.com/fonts/colfax/">Colfax Web</a></em>, a web font that is loaded via TypeKit. To keep page load down, only 2 styles of this typeface are loaded, <em>Regular</em> and <em>Medium</em>. For this reason, refrain from using italics with sans-serif type.
+      The djangoproject.com website is set in both serif and sans-serif fonts. The serif font is <em>Palatino</em>, which is widely availabe as a system font. The sans-serif font is <em><a href="http://www.google.com/fonts/specimen/Roboto">Roboto</a></em>, a web font that is loaded via Google Fonts. To keep page load down, only 3 styles of this typeface are loaded, <em>Light</em>, <em>Normal</em> and <em>Bold</em>. For this reason, refrain from using italics with sans-serif type.
     </p>
 
     <h3 id="typography-maincontent">Main content</h3>
 
     <div class="example">
 
-      <h1>H1 Header - 32px Colfax Regular</h1>
-      <h2>H2 Header - 24px Colfax Regular</h2>
-      <h3>H3 Header - 20px Colfax Medium</h3>
-      <h4>H4 Header - 16px Colfax Medium</h4>
-      <h5>H5 Header - 16px Colfax Regular</h5>
+      <div class="copy-banner">
+        <div class="container">
+          <p>Copy Banner text - 32px Roboto Light</p>
+        </div>
+      </div>
+
+      <h1>H1 Header - 32px Roboto Normal</h1>
+      <h2>H2 Header - 24px Roboto Normal</h2>
+      <h3>H3 Header - 20px Roboto Bold</h3>
+      <h4>H4 Header - 16px Roboto Bold</h4>
+      <h5>H5 Header - 16px Roboto Normal</h5>
 
 
       <p>
@@ -121,10 +135,10 @@
     <div class="example">
 
       <div role="complementary">
-        <h1>H1 Header - 28px Colfax Regular</h1>
-        <h2>H2 Header - 20px Colfax Regular</h2>
-        <h3>H3 Header - 18px Colfax Regular</h3>
-        <h4>H4 Header - 16px Colfax Medium</h4>
+        <h1>H1 Header - 28px Roboto Normal</h1>
+        <h2>H2 Header - 20px Roboto Normal</h2>
+        <h3>H3 Header - 18px Roboto Normal</h3>
+        <h4>H4 Header - 16px Roboto Bold</h4>
 
         <p>
           Sans-serif paragraph type. Colfax font is used in documentation paragraph text, sidebars, headers, and footers.
@@ -175,7 +189,7 @@
       Forms
     </h3>
 
-    <p><strong>General forms</strong></p>
+    <h4>General forms</h4>
 
     <div class="example">
 
@@ -211,9 +225,7 @@
 
     </div>
 
-    <br/><br/>
-
-    <p><strong>Inline field forms</strong></p>
+    <h4>Inline field forms</h4>
 
     <div class="example">
       <div class="form-email">

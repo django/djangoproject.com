@@ -7,6 +7,7 @@
     border: 1px solid $gray-line;
     @include border-radius(4px);
     margin-top: 20px;
+    margin-bottom: 64px;
     &:before {
       content: "Example";
       font-size: 16px;
