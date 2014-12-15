@@ -2184,6 +2184,10 @@ h2 + .list-link-soup {
 		tt.literal {
 			border-bottom: 1px dotted $text-light;
 		}
+
+		em {
+			font-style: normal;
+		}
 	}
 }
 
