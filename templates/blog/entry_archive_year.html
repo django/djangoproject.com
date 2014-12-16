@@ -6,10 +6,12 @@
 
 <h1>{{ year }} archive</h1>
 
-<ul class="linklist">
-{% for date in date_list %}
-<li><a href="{{ date|date:"M"|lower }}/">{{ date|date:"F" }}</a></li>
+<ul class="list-news">
+
+{% for object in object_list %}
+  {% include 'blog/news_summary.html' with object=object %}
 {% endfor %}
+
 </ul>
 
 {% endblock %}

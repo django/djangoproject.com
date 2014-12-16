@@ -1,50 +1,41 @@
 {% extends "base_community.html" %}
 
-{% load cycle from future %}
-
-{% block extrahead %}
-{{ block.super }}
-<style type="text/css">
-ul.messages li {
-  font-weight: 600;
-  list-style: none;
-  padding: 20px 0;
-}
-</style>
-{% endblock %}
-
 {% block content %}
-<h1>Community</h1>
-<h2 class="deck">This page, updated regularly, aggregates what's going on in the community.</h2>
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+<h2>Mailing lists</h2>
+{% include "includes/mailing_lists.html" %}
+
+<div class="list-collapsing-header">
+<h2>Django RSS feeds</h2>
+</div>
+
+<ul class="list-collapsing">
 
 {% for feedtype, latest_feeds in feedtype_list %}
-<div id="{{ feedtype.slug }}" class="module {% cycle "first" "last" %}">
-  <h3 class="header">
-    {{ feedtype.name }}
-    <a class="rss" href="{% url 'aggregator-feed' slug=feedtype.slug %}">RSS</a>
-  </h3>
-  {% for item in latest_feeds %}
-    <h5><a href="{{ item.link }}">{{ item.title }}</a></h5>
-    <p class="date">{{ item.date_modified|date:"N jS, Y \a\t P" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a></p>
-  {% endfor %}
-  <p>
-    {% if latest_feeds %}
-      <a href="{% url 'community-feed-list' feedtype.slug %}">View more</a>
-    {% endif %}
-    {% if latest_feeds and feedtype.can_self_add %}
-      or
-    {% endif %}
-    {% if feedtype.can_self_add %}
-      <a href="{% url 'community-add-feed' feedtype.slug %}">Add your feed</a>
-    {% endif %}</p>
-</div>
+  <li id="{{ feedtype.slug }}">
+    <h2 class="bullet-icon"><i class="icon icon-rss blue"></i> {{ feedtype.name }}</h2>
+    <div class="collapsing-content">
+      <dl class="list-links">
+        {% for item in latest_feeds %}
+            <dt><a href="{{ item.link }}">{{ item.title }}</a></dt>
+            <dd>{{ item.date_modified|date:"N jS, Y \a\t P" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a></dd>
+        {% endfor %}
+      </dl>
+      <p class="meta">
+        {% if latest_feeds %}
+          <a href="{% url 'community-feed-list' feedtype.slug %}">View more</a>
+        {% endif %}
+        {% if latest_feeds and feedtype.can_self_add %}
+          or
+        {% endif %}
+        {% if feedtype.can_self_add %}
+          <a href="{% url 'community-add-feed' feedtype.slug %}">Add your feed</a>
+        {% endif %}
+      </p>
+    </div>
+  </li>
 {% endfor %}
+
+</ul>
+
 {% endblock %}

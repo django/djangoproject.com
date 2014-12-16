@@ -1,6 +1,5 @@
+<ul class="list-news">
 {% for e in entries %}
-    <h3><a href="{{ e.get_absolute_url }}">{{ e.headline }}</a></h3>
-    <p class="date">by <strong>{{ e.author }}</strong> on {{ e.pub_date|date:"M. j, Y" }}</p>
-    {{ e.summary_html|safe }}
-    <p class="more"><a href="{{ e.get_absolute_url }}">Read more</a></p>
+    {% include 'blog/news_summary.html' with object=e %}
 {% endfor %}
+</ul>

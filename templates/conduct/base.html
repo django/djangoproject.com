@@ -1,9 +1,14 @@
 {% extends "base_community.html" %}
+{% block header %}
+  <h1 class="visuallyhidden">Code of Conduct</h1>
+  <p>Code of Conduct</p>
+{% endblock %}
 
 {% block content-related %}
+<div role="complementary">
 <h2>Django Community Code of Conduct</h2>
 
-<ul>
+<ul class="list-links">
 <li><a href="/conduct/">Code of Conduct</a></li>
 <li><a href="/conduct/faq/">Frequently Asked Questions</a></li>
 <li><a href="/conduct/reporting/">Reporting Guide</a></li>
@@ -22,6 +27,7 @@
   <img src="//i.creativecommons.org/l/by/3.0/88x31.png" height="31" width="88" alt="CC-by">
   </a>
 </p>
+</div>
 {% endblock %}
 
 {% block title %}Django Code of Conduct{% endblock %}

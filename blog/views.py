@@ -3,7 +3,7 @@ from django.views.generic.dates import (
     MonthArchiveView, DayArchiveView, DateDetailView,
 )
 
-from .models import Entry
+from .models import Entry, Event
 
 
 class BlogViewMixin(object):
@@ -19,6 +19,15 @@ class BlogViewMixin(object):
         else:
             return Entry.objects.published()
 
+    def get_context_data(self, **kwargs):
+        context = super(BlogViewMixin, self).get_context_data(**kwargs)
+
+        if self.request.user.is_staff:
+            context['events'] = Event.objects.all()[:3]
+        else:
+            context['events'] = Event.objects.published()[:3]
+
+        return context
 
 class BlogArchiveIndexView(BlogViewMixin, ArchiveIndexView):
     pass

@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 
-{% block content %}
-<h1>{{ flatpage.title }}</h1>
+{% block layout_class %}full-width{% endblock %}
 
-{{ flatpage.content }}
+{% block title %}{{ flatpage.title }}{% endblock %}
+
+{% block header %}
+    <h1>{{ flatpage.title }}</h1>
+{% endblock %}
+
+{% block content %}
+    {{ flatpage.content }}
 {% endblock %}
