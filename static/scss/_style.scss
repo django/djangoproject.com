@@ -100,7 +100,7 @@ h1 {
 
 	[role="main"] & {
 		@include font-size(32);
-		margin: 40px 0px;
+		margin: 40px 0px 30px;
 		color: $text;
 	}
 
@@ -135,7 +135,7 @@ h2 {
 
 	[role="main"] & {
 		margin-top: 40px;
-		margin-bottom: 25px;
+		margin-bottom: 15px;
 	}
 }
 h3 {
@@ -576,10 +576,10 @@ html.wf-loading div.container {
 .copy-banner {
 	// Large green callout at the top of the page
 	background: $green-medium;
-	padding: 2px 10px;
+	padding: 1px 10px;
 
 	@include device-min(768px) {
-		padding: 2px 0;
+		padding: 1px 0;
 	}
 
 	p,
@@ -590,7 +590,7 @@ html.wf-loading div.container {
 		font-weight: 300;
 		line-height: 1.3;
 		padding: 1px 0 10px;
-		margin: .65em 0 .7em;
+		margin: .35em 0 .35em;
 
 		em {
 			font-style: normal;
@@ -613,7 +613,7 @@ html.wf-loading div.container {
 
 	a.cta, .cta {
 		margin: 15px 0;
-		padding: 0.7em 1.5em 0.8em;
+		padding: 0.4em 1.5em 0.5em;
 		background: $green-medium-dark;
 		&:hover {
 			background: lighten($green-medium-dark, 4%);
@@ -2057,7 +2057,7 @@ h2 + .list-link-soup {
 	border-top: 1px solid $gray-line;
 	border-bottom: 1px solid $gray-line;
 	padding: 20px 0;
-	margin-top: 3em;
+	margin-top: 2em;
 
 	.left {
 		float: left;
@@ -2168,8 +2168,20 @@ h2 + .list-link-soup {
 }
 
 #docs-content {
+
+	// Decrease vertical spacing in docs for less scrolling
+
+	h1, h2, h3, h4, h5, h6 {
+		margin: 0.6em 0;
+		line-height: 1.1em;
+	}
+
+	.section {
+		padding: 10px 0 20px;
+	}
+
 	@include sans-serif;
-	@include font-size(16);
+	@include font-size(14);
 	line-height: 1.5em;
 	a.reference {
 		// for docs links. if we keep text-decoration, then underscores in function names become invisible.
@@ -2201,7 +2213,6 @@ h2 + .list-link-soup {
 .versionadded, .versionchanged, .versionmodified {
 	color: $text-light;
 	@include sans-serif;
-	font-size: 0.8em;
 	font-weight: bold;
 	margin-bottom: 20px;
 
