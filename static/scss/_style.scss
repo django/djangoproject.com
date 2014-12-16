@@ -45,10 +45,10 @@ a {
 }
 
 ::selection { // Text Selection Colors
-	background: lighten($green-very-light,10%);
+	background: $green-very-light;
 }
 ::-moz-selection {
-	background: lighten($green-very-light,10%);
+	background: $green-very-light;
 }
 ol li, ul li { //list style
 	margin-top: 10px;
