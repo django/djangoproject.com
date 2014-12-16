@@ -31,14 +31,24 @@ $(document).ready(function () {
 <div id="outdated-warning" class="doc-floating-warning">
   {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
 </div>
+
 {% endif %}
 {% if version_is_dev or version_is_unsupported %}
-<style type="text/css" media="screen">
-body {
-  margin-top: 2em;
-}
-</style>
+
+
 <script>
+
+
+{% comment %}
+Clone warning to top of document, without fixed positioning, to force correct spacing of header.
+{% endcomment %}
+
+
+$(document).ready(function () {
+  $(".doc-floating-warning").clone().prependTo('body').css('position', 'relative');
+});
+
+
 {% comment %}
 Here we are doing something really annoying, we catch clicks on
 internal anchors and scroll to the right place of the page.
