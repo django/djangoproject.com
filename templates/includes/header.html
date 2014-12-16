@@ -4,7 +4,7 @@
   <div class="container">
     <a class="logo" href="{% url 'homepage' %}">Django</a>
     <p class="meta">The web framework for perfectionists with deadlines.</p>
-    <nav role="navigation">
+    <div role="navigation">
       <ul>
         <li{% if section == 'overview' %} class="active"{% endif %}>
           <a href="{% url 'overview' %}">Overview</a>
@@ -26,6 +26,6 @@
           <a href="/foundation/">About</a>
         </li>
       </ul>
-    </nav>
+    </div>
   </div>
 </div>
