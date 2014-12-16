@@ -360,9 +360,8 @@ html.wf-loading div.container {
 	//reusable container class to center content
 	@include device-min(768px) {
 		margin: 0 auto;
-		max-width: 1100px;
+		max-width: 1400px;
 		padding: 0 (32/768) * 100%;
-		min-width: (704/768) * 100%;
 	}
 	@include old-ie {
 		min-width: 768px;
