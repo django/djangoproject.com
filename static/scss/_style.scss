@@ -100,7 +100,7 @@ h1 {
 
 	[role="main"] & {
 		@include font-size(32);
-		margin: 40px 0px;
+		margin: 40px 0px 30px;
 		color: $text;
 	}
 
@@ -135,7 +135,7 @@ h2 {
 
 	[role="main"] & {
 		margin-top: 40px;
-		margin-bottom: 25px;
+		margin-bottom: 15px;
 	}
 }
 h3 {
@@ -2214,7 +2214,6 @@ h2 + .list-link-soup {
 .versionadded, .versionchanged, .versionmodified {
 	color: $text-light;
 	@include sans-serif;
-	font-size: 0.8em;
 	font-weight: bold;
 	margin-bottom: 20px;
 
