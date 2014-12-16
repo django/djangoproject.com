@@ -179,12 +179,12 @@ pre,
 samp {
 	@include monospace;
 	color: $green-dark;
-	font-size: 1.05em;
+	font-size: 1.1em;
 }
 
 span.pre {
 	@include monospace;
-	font-size: 1.05em;
+	font-size: 1.1em;
 }
 
 a:hover, a:active, a:focus {
@@ -2136,10 +2136,11 @@ h2 + .list-link-soup {
 }
 
 #dev-warning, #outdated-warning {
-	position: fixed;
+	position: absolute;
 	top: 0;
 	width: 100%;
 	padding: 8px 20px 8px;
+	@include box-sizing(border-box);
 	background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
 	background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
 	background-image: linear-gradient(135deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
@@ -2147,10 +2148,16 @@ h2 + .list-link-soup {
 	font-size: 14px;
 	text-align: center;
 	background-color: #ffe761;
+
+	@include device-min(768px) {
+		position: fixed;
+		min-width: 768px;
+	}
 }
 
 #outdated-warning {
 	background-color: #ffbaba;
+	color: $red-dark;
 }
 
 #docs-content {
