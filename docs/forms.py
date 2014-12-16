@@ -28,7 +28,7 @@ class DocSearchForm(haystack.forms.SearchForm):
     def __init__(self, data=None, **kwargs):
         self.default_release = kwargs.pop('default_release')
         super(DocSearchForm, self).__init__(data=data, **kwargs)
-        self.fields['q'].widget = forms.TextInput(attrs={'type': 'search'})
+        self.fields['q'].widget = forms.TextInput(attrs={'type': 'search', 'placeholder': 'Search documentation'})
         self.fields['release'].queryset = self.fields['release'].queryset.filter(lang=self.default_release.lang)
         self.fields['release'].initial = self.default_release
 

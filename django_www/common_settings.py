@@ -14,8 +14,11 @@ BASE = Path(__file__).absolute().ancestor(2)
 PRODUCTION = ('DJANGOPROJECT_DEBUG' not in os.environ)
 
 # It's a secret to everybody
-with open(BASE.ancestor(1).child('conf').child('secrets.json')) as handle:
-    SECRETS = json.load(handle)
+try:
+    with open(BASE.ancestor(1).child('conf').child('secrets.json')) as handle:
+        SECRETS = json.load(handle)
+except IOError:
+    SECRETS = {'secret_key': 'a', 'superfeedr_creds': ['any@email.com', 'some_string']}
 
 
 # Django settings
@@ -27,7 +30,8 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': SECRETS.get('memcached_host', '127.0.0.1:11211'),
     } if PRODUCTION else {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'trololololol',
     },
 }
 
@@ -120,6 +124,11 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStora
 STATIC_ROOT = BASE.ancestor(1).child('static')
 
 STATIC_URL = '/s/'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
 TEMPLATE_DIRS = [BASE.child('templates')]
 

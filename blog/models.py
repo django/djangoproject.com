@@ -22,7 +22,7 @@ class EntryManager(models.Manager):
         return self.active().filter(pub_date__lte=datetime.datetime.now())
 
     def active(self):
-        return super(EntryManager, self).get_queryset().filter(is_active=True)
+        return self.filter(is_active=True)
 
 CONTENT_FORMAT_CHOICES = (
     ('reST', 'reStructuredText'),
@@ -88,3 +88,44 @@ class Entry(models.Model):
                                            writer_name="html",
                                            settings_overrides=BLOG_DOCUTILS_SETTINGS)['fragment']
         super(Entry, self).save(*args, **kwargs)
+
+
+class EventManager(EntryManager):
+
+    def active(self):
+        return self.filter(is_active=True)
+
+
+class Event(models.Model):
+    headline = models.CharField(max_length=200, null=False)
+    external_url = models.URLField()
+    date = models.DateField()
+    location = models.CharField(max_length=100)
+    is_active = models.BooleanField(
+        help_text=_(
+            "Tick to make this event live (see also the publication date). "
+            "Note that administrators (like yourself) are allowed to preview "
+            "inactive events whereas the general public aren't."
+        ),
+        default=False,
+    )
+    pub_date = models.DateTimeField(
+        verbose_name=_("Publication date"),
+        help_text=_(
+            "For an event to be published, it must be active and its "
+            "publication date must be in the past."
+        ),
+    )
+
+    objects = EventManager()
+
+    class Meta:
+        ordering = ('-pub_date',)
+        get_latest_by = 'pub_date'
+
+    def is_published(self):
+        """
+        Return True if the event is publicly accessible.
+        """
+        return self.is_active and self.pub_date <= datetime.datetime.now()
+    is_published.boolean = True

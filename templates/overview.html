@@ -1,0 +1,112 @@
+{% extends 'base.html' %}{% load url from future %}
+{% block title %}Django overview{% endblock %}
+{% block layout_class %}full-width{% endblock %}
+
+{% block header %}
+  <h1 class="visuallyhidden">Django Overview</h1>
+  <p><em>Django</em> was invented to meet fast-moving <em>newsroom deadlines</em>, while satisfying the tough requirements of <em>experienced Web developers</em>.</p>
+{% endblock %}
+
+{% block content %}
+  <h1>Why Django?</h1>
+
+  <p>With Django, you can take Web applications from concept to launch in a matter of hours. Django takes care of much of the hassle of Web development, so you can focus
+     on writing your app without needing to reinvent the wheel. It’s free and open source.</p>
+
+<dl class="list-features">
+  <dt><i class="icon icon-bolt"></i> Ridiculously fast.</dt>
+  <dd>
+    <p>Django was designed to help developers take applications from concept to completion as quickly as possible.</p>
+    <a class="link-readmore" href="{% url 'start' %}">See how fast you can start building</a>
+  </dd>
+
+  <dt class="even"><i class="icon icon-briefcase"></i> Fully loaded.</dt>
+  <dd class="even">
+    <p>Django includes dozens of extras you can use to handle common Web development tasks. Django takes care of user authentication, content administration, site maps, RSS feeds, user comments and many more tasks — right out of the box.</p>
+    <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/intro/overview/">See what’s included</a>
+  </dd>
+
+  <dt><i class="icon icon-lock"></i> Reassuringly secure.</dt>
+  <dd>
+    <p>Django takes security seriously and helps developers avoid many common security mistakes, such as SQL injection, cross-site scripting, cross-site request forgery and clickjacking. Its user authentication system provides a secure way to manage user accounts and passwords.</p>
+    <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/topics/security/">Read our security overview</a>
+  </dd>
+
+  <dt class="even"><i class="icon icon-dashboard"></i> Exceedingly scalable.</dt>
+  <dd class="even">
+    <p>Some of the busiest sites on the planet use Django’s ability to quickly and flexibly scale to meet the heaviest traffic demands.</p>
+    <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/faq/general/#does-django-scale">Learn more about scaling Django applications</a>
+  </dd>
+
+  <dt><i class="icon icon-cogs"></i> Incredibly versatile.</dt>
+  <dd>
+    <p>Companies, organizations and governments have used Django to build all sorts of things — from content management systems to social networks to scientific computing platforms.</p>
+    {% comment %}{# I'm hiding this link until we enable case studies #}<a class="link-readmore" href="#">Call To Action Relating to Feature</a>{% endcomment %}
+  </dd>
+
+</dl>
+
+<div class="section">
+  <a href="{% url 'start' %}" class="cta">Get started <em>with Django</em></a>
+</div>
+{% endblock %}
+
+{% block content-related %}
+
+{# Remove the sites in the list below that are used in case studies once they are there #}
+
+{% comment %}
+<div class="layout-secondary">
+  <div class="container">
+    <h1><span>Case Studies</span></h1>
+    <p>You’ve probably used a site that uses Django. Find out why Django was the right solution for these organizations.</p>
+
+
+    <ul class="list-case-study">
+      <li>
+        <h3 class="logo" title="Mozilla">Mozilla</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+        <a href="{% url 'case_study' %}">Read More</a>
+      </li>
+      <li>
+        <h3 class="logo" title="Disqus">Disqus</h3>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <a href="{% url 'case_study' %}">Read More</a>
+      </li>
+      <li>
+        <h3 class="logo" title="Knight Foundation">Knight Foundation</h3>
+        <p>When the Knight Foundation began redesigning their <a href="http://www.knightfoundation.org">website</a>, they were on multiple content management systems they’d outgrown, with a site that couldn’t handle traffic spikes. Knight needed a future-proof solution.</p>
+        <a href="{% url 'case_study' %}">Read More</a>
+      </li>
+    </ul>
+
+    <a href="{% url 'case_study_index' %}" class="link-readmore">See all case studies</a>
+  </div>
+</div>
+{% endcomment %}
+
+{% endblock %}
+
+{% block content-extra %}
+
+<div class="layout-tertiary">
+  <div class="container">
+    <h2>Sites Using Django</h2>
+    {# Remove the sites that are used in case studies once they are there #}
+    <ul class="list-link-soup">
+      <li><a href="https://disqus.com/">Disqus</a></li>
+      <li><a href="http://instagram.com/">Instagram</a></li>
+      <li><a href="http://www.guardian.co.uk/">The Guardian</a></li>
+      <li><a href="http://www.knightfoundation.org/">Knight Foundation</a></li>
+      <li><a href="http://www.macfound.org/">MacArthur Foundation</a></li>
+      <li><a href="https://www.mozilla.org/">Mozilla</a></li>
+      <li><a href="http://www.nationalgeographic.com/">National Geographic</a></li>
+      <li><a href="https://okfn.org/">Open Knowledge Foundation</a></li>
+      <li><a href="https://www.pinterest.com/">Pinterest</a></li>
+      <li><a href="http://www.nasa.gov/">NASA</a></li>
+      <li><a href="http://www.openstack.org/">Open Stack</a></li>
+      <li><a href="https://www.rdio.com/">Rdio</a></li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

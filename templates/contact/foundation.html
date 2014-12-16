@@ -4,28 +4,24 @@
 
 {% block content %}
 <h1>Contact the Django Software Foundation</h1>
-<form action="." method="post" accept-charset="utf-8" class="wide">
+<form action="." method="post" accept-charset="utf-8" class="form-input">
 {% csrf_token %}
   <p>
-    <label for="id_name">Your name:</label>
     {% if form.name.errors %}<p class="errors">{{ form.name.errors.as_text }}</p>{% endif %}
     {{ form.name }}
   </p>
-  <p>
-    <label for="id_email">Your email address:</label>
+  <p class="form-email">
     {% if form.email.errors %}<p class="errors">{{ form.email.errors.as_text }}</p>{% endif %}
     {{ form.email }}
   </p>
   <p>
-    <label for="id_message_subject">Message subject:</label>
     {% if form.message_subject.errors %}<p class="errors">{{ form.message_subject.errors.as_text }}</p>{% endif %}
     {{ form.message_subject }}
   </p>
   <p>
-    <label for="id_body">Your message:</label>
     {% if form.body.errors %}<p class="errors">{{ form.body.errors.as_text }}</p>{% endif %}
     {{ form.body }}
   </p>
-  <p class="submit"><input type="submit" value="Send &rarr;"></p>
+  <p class="submit"><input type="submit" class="cta" value="Send &rarr;"></p>
 </form>
 {% endblock %}
