@@ -2055,8 +2055,9 @@ h2 + .list-link-soup {
 	@include clearfix;
 	font-weight: 700;
 
-	background: $white;
-	padding: 20px;
+	border-top: 1px solid $gray-line;
+	border-bottom: 1px solid $gray-line;
+	padding: 20px 0;
 	margin-top: 3em;
 
 	.left {
