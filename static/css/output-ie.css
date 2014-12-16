@@ -3398,7 +3398,7 @@ html.wf-loading div.container {
 /* line 281, ../scss/_style.scss */
 [role="main"] .section {
   padding-bottom: 40px;
-  border-top: 1px solid #CFE3DC;
+  border-bottom: 1px solid #CFE3DC;
 }
 /* line 284, ../scss/_style.scss */
 [role="main"] .section:last-of-type {
