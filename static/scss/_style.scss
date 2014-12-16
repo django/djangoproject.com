@@ -179,12 +179,12 @@ pre,
 samp {
 	@include monospace;
 	color: $green-dark;
-	font-size: 1.1em;
+	font-size: 1.05em;
 }
 
 span.pre {
 	@include monospace;
-	font-size: 1.1em;
+	font-size: 1.05em;
 }
 
 a:hover, a:active, a:focus {

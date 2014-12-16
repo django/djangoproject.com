@@ -3297,13 +3297,13 @@ pre,
 samp {
   font-family: "Inconsolata", "Courier New", Courier, monospace;
   color: #0C4B33;
-  font-size: 1.1em;
+  font-size: 1.05em;
 }
 
 /* line 185, ../scss/_style.scss */
 span.pre {
   font-family: "Inconsolata", "Courier New", Courier, monospace;
-  font-size: 1.1em;
+  font-size: 1.05em;
 }
 
 /* line 191, ../scss/_style.scss */
