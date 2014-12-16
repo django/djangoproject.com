@@ -24,7 +24,7 @@ body {
 	}
 
 	// don't activate mobile styles for larger screens
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		min-width: 768px;
 	}
 }
@@ -90,7 +90,7 @@ h1 {
 	color: #fff;
 	letter-spacing: -1px;
 	line-height: 1.1;
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		@include font-size(32);
 	}
 
@@ -123,7 +123,7 @@ h2 {
 		}
 
 		&:first-child {
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				margin-top: 20px;
 			}
 		}
@@ -152,7 +152,7 @@ h3 {
 		padding-bottom: 15px;
 
 		&:first-child {
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				margin-top: 12px;
 			}
 		}
@@ -216,7 +216,7 @@ blockquote {
 		@include font-size(14);
 	}
 
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		@include font-size(28);
 	}
 }
@@ -234,7 +234,7 @@ html.wf-loading div.container {
 	//Main column. Left aligned by default. See /styleguide for explanation.
 	background: #fff;
 	padding: 1px 10px 40px;
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		min-height: 800px;
 		border: 1px solid #ddd;
 		float: right;
@@ -271,7 +271,7 @@ html.wf-loading div.container {
 		padding: 0 10px 40px;
 		width: auto;
 
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			max-width: 740px;
 			padding: 20px 0 40px;
 			width: (704/768) * 100%;
@@ -315,7 +315,7 @@ html.wf-loading div.container {
 	//Sidebar in column layouts, gray section in fullwidth layout
 	padding: 0 10px 20px;
 	@include font-size(14);
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		float: right;
 		margin: 20px 0;
 		margin-right: 3%;
@@ -333,7 +333,7 @@ html.wf-loading div.container {
 	margin: 0 10px;
 	padding: 40px 0 60px;
 
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		.full-width & {
 			max-width: 700px;
 			margin: 0 auto;
@@ -358,7 +358,7 @@ html.wf-loading div.container {
 .container {
 	@include clearfix;
 	//reusable container class to center content
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		margin: 0 auto;
 		max-width: 1400px;
 		padding: 0 (32/768) * 100%;
@@ -382,7 +382,7 @@ html.wf-loading div.container {
 	z-index: 0;
 
 	.container {
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			position: relative;
 		}
 	}
@@ -426,7 +426,7 @@ html.wf-loading div.container {
 			background: url(../img/logo-django.svg) center center no-repeat;
 		}
 
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			margin-left: 0;
 		}
 	}
@@ -446,7 +446,7 @@ html.wf-loading div.container {
 		text-decoration: none;
 		width: 45px;
 
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			display: none;
 		}
 
@@ -468,7 +468,7 @@ html.wf-loading div.container {
 		overflow: hidden;
 		@include transition(all 0.3s ease-out);
 
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			// turn off animations if on a desktop width
 			max-height: none;
 			@include transition(none);
@@ -484,7 +484,7 @@ html.wf-loading div.container {
 
 		width: 100%;
 
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			width: auto;
 			float: right;
 		}
@@ -493,7 +493,7 @@ html.wf-loading div.container {
 			margin: 10px 0 0;
 			padding: 0;
 
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				margin: 0;
 			}
 		}
@@ -509,7 +509,7 @@ html.wf-loading div.container {
 			margin: 0 10px;
 			border-top: 1px solid lighten($green-dark, 5%);
 
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				margin: 0;
 				border: 0;
 				float: left;
@@ -531,13 +531,13 @@ html.wf-loading div.container {
 				color: $green-very-light;
 			}
 
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				padding: 20px 10px;
 			}
 		}
 
 		.nav-primary {
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				position: absolute;
 				right: 0;
 				top: 45px;
@@ -568,7 +568,7 @@ html.wf-loading div.container {
 		top: 0;
 		max-width: 660px;
 
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			position: static;
 		}
 	}
@@ -578,7 +578,7 @@ html.wf-loading div.container {
 	background: $green-medium;
 	padding: 1px 10px;
 
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		padding: 1px 0;
 	}
 
@@ -597,7 +597,7 @@ html.wf-loading div.container {
 			color: white;
 		}
 
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			@include font-size(32);
 
 			color: $green-very-light;
@@ -760,7 +760,7 @@ html.wf-loading div.container {
 		}
 	}
 
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		dt {
 			float: left;
 			width: 31%;
@@ -790,7 +790,7 @@ html.wf-loading div.container {
 		@include clearfix;
 		padding: 0 10px;
 
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			padding: 0;
 		}
 
@@ -800,7 +800,7 @@ html.wf-loading div.container {
 					border-top: 0;
 				}
 			}
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				float: left;
 				margin-bottom: -999px;
 				padding: 0 3% 999px 0;
@@ -826,7 +826,7 @@ html.wf-loading div.container {
 		font-weight: 700;
 		margin-top: 20px;
 		padding: 30px 0 10px;
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			border: none;
 			margin-top: 0;
 		}
@@ -891,7 +891,7 @@ html.wf-loading div.container {
 		text-decoration: none;
 		text-indent: 100%;
 		width: 142px;
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			float: left;
 			margin: 20px 90px 0 0;
 		}
@@ -908,7 +908,7 @@ html.wf-loading div.container {
 		color: $green-medium-dark;
 		margin: 0;
 		padding: 0;
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			border: none;
 		}
 
@@ -918,7 +918,7 @@ html.wf-loading div.container {
 			padding: 17px 10px 11px;
 			display: block;
 			clear: both;
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				background: none;
 				float: left;
 				clear: none;
@@ -963,7 +963,7 @@ html.wf-loading div.container {
 			overflow: hidden;
 			text-indent: -200px;
 			width: 94px;
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				clear: both;
 				margin-top: 5px;
 			}
@@ -995,7 +995,7 @@ html.wf-loading div.container {
 		@include font-size(12);
 		clear: both;
 		margin: 20px 0 0 10px;
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			max-width: 80%;
 			padding-top: 30px;
 			margin: 0;
@@ -1020,7 +1020,7 @@ html.wf-loading div.container {
 	padding: 10px 0;
 	text-align: center;
 	text-transform: uppercase;
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		display: none;
 	}
 }
@@ -1040,7 +1040,7 @@ html.wf-loading div.container {
 	padding: 1em 1.5em;
 	text-align: center;
 	text-decoration: none;
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		margin: 20px auto;
 		max-width: 400px;
 	}
@@ -1064,7 +1064,7 @@ html.wf-loading div.container {
 		+ .link-readmore {
 			display: block;
 			text-align: center;
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				margin-top: -10px;
 			}
 		}
@@ -1149,7 +1149,7 @@ html.wf-loading div.container {
 	//two column layout module
 	margin: 20px 0;
 
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		@include clearfix;
 		margin: 0;
 		.col {
@@ -1205,7 +1205,7 @@ html.wf-loading div.container {
 	}
 }
 .callout-right {
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		float: right;
 		margin: 26px 0 0 35px;
 		width: 33%;
@@ -1221,7 +1221,7 @@ html.wf-loading div.container {
 	}
 }
 .callout-left {
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		float: left;
 		margin: 26px 35px 0 0;
 		width: 33%;
@@ -1492,7 +1492,7 @@ html.wf-loading div.container {
 		float: left;
 		margin: 10px 5% 0 0;
 		width: 45%;
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			margin-right: 3%;
 			width: 30%;
 		}
@@ -1544,7 +1544,7 @@ h2 + .list-link-soup {
 		}
 	}
 
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		padding-bottom: 40px;
 
 		dt {
@@ -1694,7 +1694,7 @@ h2 + .list-link-soup {
 				}
 			}
 
-		@include device-min(768px) {
+		@include respond-min(768px) {
 
 			dt {
 				padding: 20px 0 0px 110px;
@@ -1724,7 +1724,7 @@ h2 + .list-link-soup {
 	}
 }
 
-@include device-min(768px) {
+@include respond-min(768px) {
 
 	.list-collapsing-header {
 		float: left;
@@ -1828,7 +1828,7 @@ h2 + .list-link-soup {
 		border-top: 1px solid $gray-line;
 		margin-top: 20px;
 		padding-top: 40px;
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			@include clearfix;
 			margin-top: 20px;
 			padding-top: 40px;
@@ -1860,7 +1860,7 @@ h2 + .list-link-soup {
 		max-width: 100%;
 	}
 
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		img {
 			float: left;
 			margin: 0 40px 0 0;
@@ -2150,7 +2150,7 @@ h2 + .list-link-soup {
 	text-align: center;
 	background-color: #ffe761;
 
-	@include device-min(768px) {
+	@include respond-min(768px) {
 		position: fixed;
 		min-width: 768px;
 	}
@@ -2425,7 +2425,7 @@ form {
 		vertical-align: middle;
 		width: 82%;
 
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			padding: 6px 18% 8px 10px;
 			width: 80%;
 		}
@@ -2518,7 +2518,7 @@ form {
 		top: 6%;
 		width: 40px;
 
-		@include device-min(768px) {
+		@include respond-min(768px) {
 			right: 1%;
 		}
 
@@ -2549,7 +2549,7 @@ form {
 			height: 30px;
 			width: 30px;
 			top: 3px;
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				right: 0;
 			}
 			i {
@@ -2652,14 +2652,14 @@ div[role=main] {
 		}
 		&.previous {
 			margin-right: 10px;
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				margin-right: 70px;
 			}
 		}
 		&.next {
 			margin-left: 10px;
 			text-indent: 1px;
-			@include device-min(768px) {
+			@include respond-min(768px) {
 				margin-left: 70px;
 			}
 		}
