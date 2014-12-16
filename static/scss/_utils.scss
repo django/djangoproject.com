@@ -4,7 +4,7 @@ $gray-medium: #859D94;
 $text: #0C3C26;
 $text-light: #798780;
 $gray-line: #CFE3DC;
-$green-very-light: #C9F0DD; 
+$green-very-light: #C9F0DD;
 $green-light: #93D7B7;
 $green-medium: #44B78B;
 $green-medium-dark: #2B8C67;
@@ -22,7 +22,7 @@ $fix-mqs: false !default;
 @mixin respond-min($width) {
 	@if $fix-mqs {
 		@if $fix-mqs >= $width {
-			@content;	
+			@content;
 		}
 	}
 	@else {
@@ -35,7 +35,7 @@ $fix-mqs: false !default;
 @mixin device-min($width) {
 	@if $fix-mqs {
 		@if $fix-mqs >= $width {
-			@content;	
+			@content;
 		}
 	}
 	@else {
@@ -46,7 +46,7 @@ $fix-mqs: false !default;
 }
 
 // OLD IE Mixin (http://jakearchibald.github.com/sass-ie/)
-$old-ie: false !default; 
+$old-ie: false !default;
 @mixin old-ie {
 	@if $old-ie {
 		@content;
@@ -55,22 +55,22 @@ $old-ie: false !default;
 
 // Retina media query mixin
 @mixin retina-display {
-	@media only screen and 
-	(-webkit-min-device-pixel-ratio: 2), 
-	(min-resolution: 192dpi) { 
+	@media only screen and
+	(-webkit-min-device-pixel-ratio: 2),
+	(min-resolution: 192dpi) {
 		@content;
 	}
 }
 
 // Font Family Mixins
 @mixin serif {
-	font-family: Palantino, "Palatino Linotype", "Book Antiqua", "Hoefler Text", Georgia, "Lucida Bright", Cambria, Times, "Times New Roman", serif;
+	font-family: Palatino, "Palatino Linotype", "Book Antiqua", "Hoefler Text", Georgia, "Lucida Bright", Cambria, Times, "Times New Roman", serif;
 }
 @mixin sans-serif {
 	font-family: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
 }
 @mixin monospace {
-	font-family: "Inconsolata", "Courier New", Courier, monospace;
+	font-family: Inconsolata, Consolas, Menlo, Monaco, "Courier New", Courier, monospace;
 }
 
 // Font Sizing Mixin (http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/)
@@ -79,11 +79,11 @@ html {
 }
 @mixin font-size ( $size: 16 ) {
 	font-size: $size + px;
-	font-size: $size/10 + rem; 
+	font-size: $size/10 + rem;
 }
 
 // Boilerplate Helper mixins (https://github.com/h5bp/html5-boilerplate/blob/v4.1.0/doc/css.md)
-@mixin visuallyhidden { 
+@mixin visuallyhidden {
 	border: 0;
 	clip: rect(0 0 0 0);
 	height: 1px;
@@ -93,9 +93,9 @@ html {
 	position: absolute;
 	width: 1px;
 }
-@mixin clearfix { 
+@mixin clearfix {
 	&:before,
-	&:after { 
+	&:after {
 		content: "";
 		display: table;
 	}
@@ -127,10 +127,10 @@ html {
 		color: lighten($green, 6%);
 		text-decoration: none;
 	}
-	
+
 }
 
-// Secondary content box-shadow: 
+// Secondary content box-shadow:
 @mixin secondary-shadow-top {
 	-moz-box-shadow: 0 4px 8px rgba(12,60,38,0.07);
 	-webkit-box-shadow: 0 4px 8px rgba(12,60,38,0.07);
