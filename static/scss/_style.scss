@@ -2180,6 +2180,11 @@ h2 + .list-link-soup {
 		padding: 10px 0 20px;
 	}
 
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
 	@include sans-serif;
 	@include font-size(14);
 	line-height: 1.5em;
