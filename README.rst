@@ -30,12 +30,10 @@ To run locally, do the usual:
 
     psql -d code.djangoproject < tracdb/trac.sql
 
-    ./manage.py syncdb
     ./manage.py migrate
 
    and::
 
-    ./manage.py syncdb --docs
     ./manage.py migrate --docs
 
    if you want to run docs site.
