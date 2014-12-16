@@ -17,6 +17,7 @@ body {
 	color: $text;
 	line-height: 1.6;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 
 	.layout-secondary,
 	[role="complementary"] {
@@ -1036,6 +1037,7 @@ html.wf-loading div.container {
 	color: #fff;
 	display: block;
 	-webkit-font-smoothing: subpixel-antialiased;
+	-moz-osx-font-smoothing: auto;
 	margin: 30px auto 0;
 	padding: 1em 1.5em;
 	text-align: center;
