@@ -2251,7 +2251,8 @@ table.docutils td, table.docutils th {
 }
 
 #search-results span.highlighted {
-	color: $text-light;
+	font-weight: 700;
+	color: $text;
 }
 
 .list-links {
