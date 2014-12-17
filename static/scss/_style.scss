@@ -17,6 +17,7 @@ body {
 	color: $text;
 	line-height: 1.6;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 
 	.layout-secondary,
 	[role="complementary"] {
@@ -1036,6 +1037,7 @@ html.wf-loading div.container {
 	color: #fff;
 	display: block;
 	-webkit-font-smoothing: subpixel-antialiased;
+	-moz-osx-font-smoothing: auto;
 	margin: 30px auto 0;
 	padding: 1em 1.5em;
 	text-align: center;
@@ -2181,6 +2183,11 @@ h2 + .list-link-soup {
 		padding: 10px 0 20px;
 	}
 
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
 	@include sans-serif;
 	@include font-size(14);
 	line-height: 1.5em;
@@ -2240,7 +2247,14 @@ dl.function, dl.class, dl.method {
 }
 
 
+table.docutils td, table.docutils th {
+    border-bottom: 1px solid $gray-line;
+}
 
+#search-results span.highlighted {
+	font-weight: 700;
+	color: $text;
+}
 
 .list-links {
 	//Can be used globally to stack list items either with a <ul>, or with a <dl> using the <dd> to add meta information.  (See Community Page - sidebar and block body.)
