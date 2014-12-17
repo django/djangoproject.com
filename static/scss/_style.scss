@@ -1993,7 +1993,7 @@ h2 + .list-link-soup {
 .admonition,
 .help-block {
 		background: $white;
-		padding: 15px 20px 15px 90px;
+		padding: 15px 20px 15px 70px;
 		border: 1px solid $green-very-light;
 		@include border-radius(4px);
 		margin: 25px 0;
@@ -2016,10 +2016,11 @@ h2 + .list-link-soup {
 				position: absolute;
 				top: 20px;
 				left: 20px;
-				font-size: 42px;
-				width: 46px;
+				font-size: 32px;
+				width: 34px;
 				text-align: center;
 				content: $fa-var-file-text-o; // default icon
+				opacity: 0.5;
 			}
 		}
 		&.warning {
