@@ -14,7 +14,7 @@
 
   <h2>Option {% cycle '1' '2' '3' as options %}: Get the latest official version</h2>
   <p>The latest official version is {{ current_version }}. Install it with <a href="http://www.pip-installer.org/en/latest/">pip</a>:</p>
-  <pre class="literal-block"><code>pip install Django==1.7.1</code></pre>
+  <pre class="literal-block"><code>pip install Django=={{ current_version }}</code></pre>
 
   {% if preview_version %}
       <h2>Option {% cycle options %}: Get the {{ preview_kind }} for {{ preview_version|slice:":3" }}</h2>
