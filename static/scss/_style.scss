@@ -17,6 +17,7 @@ body {
 	color: $text;
 	line-height: 1.6;
 	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 
 	.layout-secondary,
 	[role="complementary"] {
@@ -45,10 +46,10 @@ a {
 }
 
 ::selection { // Text Selection Colors
-	background: lighten($green-very-light,10%);
+	background: $green-very-light;
 }
 ::-moz-selection {
-	background: lighten($green-very-light,10%);
+	background: $green-very-light;
 }
 ol li, ul li { //list style
 	margin-top: 10px;
@@ -1036,6 +1037,7 @@ html.wf-loading div.container {
 	color: #fff;
 	display: block;
 	-webkit-font-smoothing: subpixel-antialiased;
+	-moz-osx-font-smoothing: auto;
 	margin: 30px auto 0;
 	padding: 1em 1.5em;
 	text-align: center;
