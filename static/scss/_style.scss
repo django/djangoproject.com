@@ -2246,7 +2246,9 @@ dl.function, dl.class, dl.method {
 }
 
 
-
+table.docutils td, table.docutils th {
+    border-bottom: 1px solid $gray-line;
+}
 
 .list-links {
 	//Can be used globally to stack list items either with a <ul>, or with a <dl> using the <dd> to add meta information.  (See Community Page - sidebar and block body.)
