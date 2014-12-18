@@ -2,15 +2,15 @@ define([
 	'jquery' //requires jquery
 ], function( $ ) {
 
-	var MobileMenuExport = function(menu) { 
+	var MobileMenuExport = function(menu) {
 		this.menu = $(menu); //menu container
 		this.init();
 	};
-	
-	MobileMenuExport.prototype = { 
+
+	MobileMenuExport.prototype = {
 		init: function(){
-			var self = this; 
-			self.menu.addClass('nav-menu-on'); 
+			var self = this;
+			self.menu.addClass('nav-menu-on');
 			self.button = $('<div class="menu-button"><i class="icon icon-reorder"></i><span>Menu</span></div>');
 			self.button.insertBefore(self.menu);
 			self.button.on( 'click', function(){
