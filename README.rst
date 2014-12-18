@@ -81,3 +81,26 @@ to continously watch for changes to the SASS files and automatically compile
 to CSS::
 
     make watch-scss
+
+Running all at once
+-------------------
+
+Optionally you can use a tool like `Foreman <https://github.com/ddollar/foreman>`_
+to run all process at once:
+
+- the regular site (similar to www.djangoproject.com) on http://127.0.0.1:8000/
+- the docs site (similar to docs.djangoproject.com) on port http://127.0.0.1:8001/
+- the ``make`` task to automatically compile the SASS files to CSS files
+
+This is great during development. Assuming you're using Foreman simply run::
+
+  foreman start
+
+If you just want to run one of the processes defined above use the
+``run`` subcommand like so::
+
+  foreman run www
+
+That'll just run the www server.
+
+Check out the ``Procfile`` file for all the process names.
