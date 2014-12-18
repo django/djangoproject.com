@@ -200,7 +200,7 @@ admin.site.register(Member, MemberAdmin)  # Use the customized options
   <li>
     <h2>Internationalization</h2>
     <div class="collapsing-content">
-      <p>Django offers full support for translating text into different languages, plus locale-specific formatting of dates, times, numbers and time zones. It lets developers and template authors specify which parts of their apps should be translated or formatted for local languages and cultures, and it uses these hooks to localize Web applications for particular users according to their preferences.</p>
+      <p>Django offers full support for artlating text into different languages, plus locale-specific formatting of dates, times, numbers and time zones. It lets developers and template authors specify which parts of their apps should be translated or formatted for local languages and cultures, and it uses these hooks to localize Web applications for particular users according to their preferences.</p>
       <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/topics/i18n/">Read more</a>
 
       {% pygment %}
@@ -224,10 +224,17 @@ def homepage(request):
 {% load i18n %}
 <html>
   <head>
-    <title>{% trans 'Band Listing' %}</title>
+    <title>{% trans 'Homepage - Hall of Fame' %}</title>
   </head>
   <body>
-    <h1>{% trans 'All Bands' %}</h1>
+    {# Translated in the view: #}
+    <h1>{{ message }}</h1>
+    <p>
+      {% blocktrans count member_count=bands.count %}
+      Here is the only band in the hall of fame:
+      {% plural %}
+      Here are all the {{ member_count }} bands in the hall of fame:
+      {% endblocktrans %}
     <ul>
     {% for band in bands %}
       <li>
