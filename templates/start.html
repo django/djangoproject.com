@@ -119,7 +119,7 @@ def band_listing(request):
       <a class="link-readmore" href="https://docs.djangoproject.com/en/stable/topics/templates/">Read more</a>
       {# No need to escape the HTML: pygment takes care of that #}
       {% pygment %}
-        <pre lang="html">{% verbatim %}
+        <pre lang="django">{% verbatim %}
 <html>
   <head>
     <title>Band Listing</title>
@@ -220,7 +220,7 @@ def homepage(request):
 
       {# No need to escape the HTML: pygment takes care of that #}
       {% pygment %}
-        <pre lang="html">{% verbatim %}
+        <pre lang="django">{% verbatim %}
 {% load i18n %}
 <html>
   <head>

@@ -22,8 +22,10 @@ sitemaps = {
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='homepage.html'), name="homepage"),
-    url(r'^overview/$', TemplateView.as_view(template_name='overview.html'), name="overview"),
+    url(r'^start/overview/$', TemplateView.as_view(template_name='overview.html'), name="overview"),
     url(r'^start/$', TemplateView.as_view(template_name='start.html'), name="start"),
+    # to work around a permanent redirect stored in the db that existed before the redesign:
+    url(r'^overview/$', RedirectView.as_view(url='/start/overview/', permanent=False)),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^community/', include('aggregator.urls')),

@@ -8,4 +8,4 @@ compile-scss-debug:
 	compass compile --sass-dir static/scss --css-dir static/css -e development --sourcemap --force
 
 watch-scss:
-	compass watch --sass-dir static/scss --css-dir static/css -e development --sourcemap --force
+	compass watch --sass-dir static/scss --css-dir static/css -e production --no-sourcemap --force
