@@ -1,3 +1,4 @@
+from django.contrib.sites.models import Site
 from django.test import TestCase
 
 from .forms import DocSearchForm
@@ -6,6 +7,10 @@ from .models import DocumentRelease
 
 class SearchFormTestCase(TestCase):
     fixtures = ['doc_test_fixtures']
+
+    def setUp(self):
+        # We need to create an extra Site because docs have SITE_ID=2
+        Site.objects.create(name='Django test', domain="example.com")
 
     def test_unbound_form(self):
         """
@@ -50,3 +55,10 @@ class SearchFormTestCase(TestCase):
     def test_empty_get(self):
         response = self.client.get('/search/')
         self.assertEqual(response.status_code, 200)
+
+    def test_bad_release_id(self):
+        """
+        The search view shouldn't crash when given a bad release ID (#223)
+        """
+        response = self.client.get('/search/?q=foo&release=asdf')
+        self.assertEqual(response.status_code, 404)
