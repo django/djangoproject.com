@@ -205,20 +205,28 @@ ul {
 	padding-left: 20px;
 }
 
+// TODO: most of this is copy/pasted from .admonition. We should factor out the common bits
 blockquote {
-	@include sans-serif;
-	@include font-size(22);
+	background: $white;
+	padding: 15px 20px 15px 70px;
+	border: 1px solid $green-very-light;
+	@include border-radius(4px);
+	margin: 25px 0;
+	position: relative;
 
 	p:first-child {
 		margin-top: 0;
 	}
-
-	.meta {
-		@include font-size(14);
-	}
-
-	@include respond-min(768px) {
-		@include font-size(28);
+	&::before {
+		@include fa-icon();
+		position: absolute;
+		top: 20px;
+		left: 20px;
+		font-size: 30px;
+		width: 34px;
+		text-align: center;
+		content: $fa-var-quote-left; // default icon
+		opacity: 0.5;
 	}
 }
 
