@@ -36,6 +36,7 @@
     });
     </script>
     <script src="{% static "js/lib/modernizr.js" %}"></script>
+    {% block head_extra %}{% endblock head_extra %}
   </head>
 
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
