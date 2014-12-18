@@ -17,6 +17,21 @@ $warning-dark-yellow: #F5F1C7;
 $red: #BA2121;
 $red-dark: #6A0E0E;
 
+// Font-awesome shortcuts imported from FA 4.2.0
+$fa-var-file-text-o: "\f0f6";
+$fa-var-exclamation-triangle: "\f071";
+$fa-var-lightbulb-o: "\f0eb";
+$fa-var-cogs: "\f085";
+
+@mixin fa-icon() {
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome; // shortening font declaration
+	font-size: inherit; // can't have font-size inherit on line above, so need to override
+	text-rendering: auto; // optimizelegibility throws things off #1094
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
 // Media Queries Mixin (http://jakearchibald.github.com/sass-ie/)
 $fix-mqs: false !default;
 @mixin respond-min($width) {
