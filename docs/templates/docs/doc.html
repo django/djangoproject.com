@@ -7,7 +7,6 @@
 {% block doc_url %}{% url 'document-index' lang=lang version=version %}{% endblock %}
 
 {% block body_extra %}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script>
 // Propagate the fragment identifier to the links in the version switcher
 $(document).ready(function () {
@@ -35,19 +34,13 @@ $(document).ready(function () {
 {% endif %}
 {% if version_is_dev or version_is_unsupported %}
 
-
-<script>
-
-
 {% comment %}
 Clone warning to top of document, without fixed positioning, to force correct spacing of header.
 {% endcomment %}
-
-
+<script>
 $(document).ready(function () {
   $(".doc-floating-warning").clone().prependTo('body').css('position', 'relative');
 });
-
 
 {% comment %}
 Here we are doing something really annoying, we catch clicks on
