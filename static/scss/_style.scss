@@ -2192,11 +2192,12 @@ h2 + .list-link-soup {
 	@include sans-serif;
 	@include font-size(14);
 	line-height: 1.5em;
+
 	a.reference {
 		// for docs links. if we keep text-decoration, then underscores in function names become invisible.
 		color: $red-dark;
 		text-decoration: none;
-		padding-bottom: 1px;
+		border-bottom: 1px dotted $text-light;
 
 		&:visited {
 			border-color: lighten($red-dark, 10%);
@@ -2207,10 +2208,6 @@ h2 + .list-link-soup {
 		&:hover {
 			background: $white;
 			color: $red;
-		}
-
-		tt.literal {
-			border-bottom: 1px dotted $text-light;
 		}
 
 		em {
