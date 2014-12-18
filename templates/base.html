@@ -69,14 +69,13 @@
     {% block alert %}
     {% endblock %}
 
-    {% block body_extra %}{% endblock body_extra %}
-
     {% block footer %}
       {% include "includes/footer.html" %}
     {% endblock %}
 
     {# Require JS #}
     <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>
+    {% block body_extra %}{% endblock body_extra %}
 
   </body>
 </html>
