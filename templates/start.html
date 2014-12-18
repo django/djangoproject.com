@@ -228,6 +228,7 @@ def homepage(request):
   </head>
   <body>
     <h1>{% trans 'All Bands' %}</h1>
+    <p>{{ message }}</p>{# Translated in the view #}
     <ul>
     {% for band in bands %}
       <li>
