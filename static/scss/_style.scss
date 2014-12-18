@@ -2547,7 +2547,7 @@ form {
 		&:focus,
 		&:active {
 			background: none;
-			color: $green;
+			color: $green-dark;
 			outline: none;
 		}
 	}
@@ -2582,7 +2582,7 @@ form.donate {
 		position: absolute;
 		left: 0px;
 		color: $green-medium-dark;
-		padding-top: 0.4em;
+		padding-top: 0.3em;
 		padding-left: 0.5em;
 	}
 	input[type=text] {
