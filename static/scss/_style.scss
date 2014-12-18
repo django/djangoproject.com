@@ -336,6 +336,31 @@ html.wf-loading div.container {
 			margin-right: 0;
 		}
 	}
+
+	span.form-controls {
+		display: none;
+	}
+
+	.list-collapsing {
+		margin-top: 0;
+		border-bottom: 0;
+
+		&.active {
+			li {
+				border-top: 0;
+			}
+			h2 {
+				padding: 10px 40px 10px 0;
+				font-size: 18px;
+				border-bottom: 0;
+				color: $green-medium;
+
+				.collapsing-icon {
+					font-size: 10px;
+				}
+			}
+		}
+	}
 }
 
 [role="secondary"] {
