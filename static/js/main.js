@@ -53,5 +53,13 @@ define(function(){
 		mods.push('mod/list-collapsing');
 	}
 
+	if (hasClass('version-switcher')) {
+		mods.push('mod/version-switcher');
+	}
+
+	if (hasClass('doc-floating-warning')) {
+		mods.push('mod/floating-warning');
+	}
+
 	require(mods);
 });
