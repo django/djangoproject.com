@@ -6,6 +6,14 @@
 
 {% block doc_url %}{% url 'document-index' lang=lang version=version %}{% endblock %}
 
+{% block head_extra %}
+  {% if docurl %}
+  <link rel="canonical"  href="https://docs.djangoproject.com{% url 'document-detail' lang=lang version='stable' url=docurl %}">
+  {% else %}
+  <link rel="canonical" href="https://docs.djangoproject.com{% url 'document-index' lang=lang version='stable' %}">
+  {% endif %}
+{% endblock head_extra %}
+
 {% block body_extra %}
 <script>
 // Propagate the fragment identifier to the links in the version switcher
