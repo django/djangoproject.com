@@ -615,6 +615,11 @@ html.wf-loading div.container {
 
 		}
 
+		a {
+			font-weight: 300;
+			color: $green-very-light;
+		}
+
 		a.cta, .cta {
 			margin: 0;
 			@include font-size(18);
