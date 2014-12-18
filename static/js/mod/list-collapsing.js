@@ -8,14 +8,14 @@ define([
 	};
 
 	var hash = window.location.hash;
-	
+
 	CollapsingList.prototype = {
-		init: function(){		
+		init: function(){
 			var self = this; //self = this for functions
-			
+
 			this.items = this.list.children('li'); //get items
 			this.headings = this.items.children('h2'); //get headings
-			
+
 			this.buttonExpand = $('<span class="expandall">Expand All</span>'); //build buttons
 			this.buttonCollapse = $('<span class="collapseall">Collapse All</span>'); //build buttons
 			this.buttonContainer = $('<span class="form-controls label"></span>').insertBefore(this.list); //create a button container
@@ -23,10 +23,10 @@ define([
 				.append(this.buttonExpand)
 				.append(' / ')
 				.append(this.buttonCollapse);
-			
+
 			this.list.addClass('active'); //activate the list styles w/ class
 			this.headings.append(' <i class="collapsing-icon icon icon-plus"></i>').attr('tabindex', '0'); //add icons and tabindexes
-			
+
 			this.headings.on( 'click', function( ev ) { //headings onclick (passing event)
 				var target = $(ev.target).closest('h2'),
 						parent = target.closest('li'); //store target as var
@@ -46,7 +46,7 @@ define([
 				var pos = $(hash).position();
 				$(window).scrollTop(pos.top);
 			}
-			
+
 		}
 	};
 

@@ -12,10 +12,10 @@ define(function(){
 
 	var mods = [
 		'mod/mobile-menu' //require mobile menu automatically
-	]; 
+	];
 
 	//detect Class function
-	function hasClass( className ) { 
+	function hasClass( className ) {
 		if (!document.getElementsByClassName) { //class name function in old IE
 			document.getElementsByClassName = function(search) {
 				var d = document, elements, pattern, i, results = [];
@@ -38,21 +38,20 @@ define(function(){
 					}
 				}
 				return results;
-			}
+			};
 		}
 		return !!document.getElementsByClassName( className ).length; //return a boolean
 	}
 
 	//feature list
-	if (hasClass('list-features')) { 
+	if (hasClass('list-features')) {
 		mods.push('mod/list-feature');
 	}
 
 	//collapsing list
-	if (hasClass('list-collapsing')) { 
+	if (hasClass('list-collapsing')) {
 		mods.push('mod/list-collapsing');
 	}
 
 	require(mods);
-
 });
