@@ -127,6 +127,8 @@ class DocSearchView(haystack.views.SearchView):
             form_kwargs = {}
         pk = self.request.GET.get('release')
         if pk:
+            if not pk.isdigit():
+                raise Http404()
             form_kwargs['default_release'] = get_object_or_404(DocumentRelease, pk=pk)
         else:
             form_kwargs['default_release'] = DocumentRelease.objects.current()
