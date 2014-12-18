@@ -18,7 +18,8 @@
     <meta name="msapplication-TileImage" content="{% static "img/icon-tile.png" %}">
 
     <title>{% block title %}The Web framework for perfectionists with deadlines{% endblock %} | Django</title>
-
+    {# comment out when using local version in output.scss: #}
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="{% static "css/output-ie.css" %}" >
      <![endif]-->
