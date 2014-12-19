@@ -69,7 +69,7 @@
 class Band(models.Model):
     """A model of a rock band."""
     name = models.CharField(max_length=200)
-    can_rock = models.BoolanField(default=True)
+    can_rock = models.BooleanField(default=True)
 
 
 class Member(models.Model):
