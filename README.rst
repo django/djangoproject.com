@@ -46,6 +46,10 @@ To run locally, do the usual:
 
    if you want to run docs site.
 
+#. Create a superuser::
+
+   ./manage.py createsuperuser
+
 #. For docs::
 
     ./manage.py loaddata doc_releases.json --docs
