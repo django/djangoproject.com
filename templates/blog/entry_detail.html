@@ -3,7 +3,7 @@
 {% block title %}{{ object.headline|escape }} | Weblog{% endblock %}
 
 {% block content %}
-<h1>{{ object.headline|safe }}</h1>
+<h2>{{ object.headline|safe }}</h2>
 
 <span class="meta">Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }} {% comment %}in <a href="#">Release Announcements</a>{% endcomment %}</span>
 
