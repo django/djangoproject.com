@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 BLOG_DOCUTILS_SETTINGS = getattr(settings, 'BLOG_DOCUTILS_SETTINGS', {
     'doctitle_xform': False,
-    'initial_header_level': 4,
+    'initial_header_level': 3,
     'id_prefix': 's-',
 })
 
