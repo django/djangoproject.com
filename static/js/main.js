@@ -1,15 +1,5 @@
 // Require.js Module Loader - http://requirejs.org
-
-requirejs.config({
-	paths: {
-		"jquery": "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min",
-		// "jquery": "lib/jquery",  --  local version of jquery if desired.
-		"jquery.inview": "lib/jquery.inview"
-	}
-});
-
 define(function(){
-
 	var mods = [
 		'mod/mobile-menu' //require mobile menu automatically
 	];
