@@ -85,9 +85,9 @@
             "jquery": [
                 "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min",
                 // If CDN loading fails get it locally here:
-                "lib/jquery"
+                extless("{% static 'lib/jquery.js' %}")
             ],
-            "jquery.inview": "lib/jquery.inview",
+            "jquery.inview": extless("{% static 'lib/jquery.inview.js' %}"),
             "mod/floating-warning": extless("{% static 'js/mod/floating-warning.js' %}"),
             "mod/list-collapsing": extless("{% static 'js/mod/list-collapsing.js' %}"),
             "mod/list-feature": extless("{% static 'js/mod/list-feature.js' %}"),
