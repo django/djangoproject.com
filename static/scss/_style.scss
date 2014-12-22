@@ -183,6 +183,10 @@ samp {
 	font-size: 1.07em;
 }
 
+tt {
+	font-weight: 700;
+}
+
 span.pre {
 	@include monospace;
 	font-size: 1.07em;
