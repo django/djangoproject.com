@@ -1,10 +1,10 @@
 {% extends "base_weblog.html" %}
 
-{% block title %}{{ year }} | Weblog{% endblock %}
+{% block title %}{{ year|date:"Y" }} | Weblog{% endblock %}
 
 {% block content %}
 
-<h1>{{ year }} archive</h1>
+<h1>{{ year|date:"Y" }} archive</h1>
 
 <ul class="list-news">
 
