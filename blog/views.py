@@ -35,7 +35,7 @@ class BlogArchiveIndexView(BlogViewMixin, ArchiveIndexView):
 
 
 class BlogYearArchiveView(BlogViewMixin, YearArchiveView):
-    pass
+    make_object_list = True
 
 
 class BlogMonthArchiveView(BlogViewMixin, MonthArchiveView):
