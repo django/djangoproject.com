@@ -30,15 +30,6 @@
             <span class="visuallyhidden">Previous</span>
         </a></li>
     {% endif %}
-    {% for page in page_obj.paginator.page_range %}
-      <li>
-            {% if page == page_obj.number %}
-                <a class="active" href="">{{ page }}</a>
-            {% else %}
-                <a href="?page={{ page }}">{{ page }}</a>
-            {% endif %}
-        </li>
-    {% endfor %}
     {% if page_obj.has_next %}
         <li><a class="next" href="?page={{ page_obj.next_page_number }}">
             <i class="icon icon-chevron-right"></i> 
