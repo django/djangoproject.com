@@ -32,7 +32,7 @@
         <ul>
           <li><a href="https://github.com/django">GitHub</a></li>
           <li><a href="https://twitter.com/djangoproject">Twitter</a></li>
-          <li><a href="/rss/weblog/">News RSS</a></li>
+          <li><a href="{% url 'weblog-feed' %}">News RSS</a></li>
           <li><a href="https://groups.google.com/forum/#!forum/django-users">Django Users Mailing List</a></li>
         </ul>
       </div>
@@ -43,16 +43,16 @@
   <div class="footer">
     <div class="container">
       <div class="footer-logo">
-        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+        <a class="logo" href="/">Django</a>
       </div>
       <ul class="thanks">
         <li><span>Hosting by</span> <a class="rackspace" href="http://rackspace.com">Rackspace</a></li>
         <li class="design"><span>Design by</span> <a class="threespot" href="http://www.threespot.com">Threespot</a> <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/"></a></li>
       </ul>
       <p class="copyright">&copy; 2005-{% now "Y" %}
-        <a href="https://www.djangoproject.com/foundation/"> Django Software
+        <a href="/foundation/"> Django Software
         Foundation</a> and individual contributors. Django is a
-        <a href="https://www.djangoproject.com/trademarks/">registered
+        <a href="/trademarks/">registered
         trademark</a> of the Django Software Foundation.
       </p>
     </div>
