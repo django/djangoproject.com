@@ -2755,22 +2755,22 @@ hr {
 // }
 
 .badge {
-  @include border-radius(4px);
-  font-size: 12px;
-  padding: 2px 6px;
-  margin: 0 5px;
-  letter-spacing: 0px;
-  position: relative;
-  bottom: 0.3em;
-  color: $white;
-  background-color: $green;
+	@include border-radius(4px);
+	font-size: 12px;
+	padding: 2px 6px;
+	margin: 0 5px;
+	letter-spacing: 0px;
+	position: relative;
+	bottom: 0.3em;
+	color: $white;
+	background-color: $green;
 }
 
 .user-info {
-  .avatar {
-    @include framed-image();
-    float: right;
-  }
+	.avatar {
+		@include framed-image();
+		float: right;
+	}
 }
 
 // Boilerplate Helper mixins (rendered as classes)
