@@ -144,8 +144,8 @@ html {
 }
 
 @mixin framed-image {
-  padding: 20px;
-  border: 1px solid $gray-line;
-  @include border-radius(4px);
+	padding: 20px;
+	border: 1px solid $gray-line;
+	@include border-radius(4px);
 
 }
