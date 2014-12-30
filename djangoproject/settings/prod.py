@@ -17,8 +17,6 @@ CACHES = {
 
 CSRF_COOKIE_SECURE = True
 
-HOST_SCHEME = 'https'
-
 LOGGING["handlers"]["syslog"] = {
     "formatter": "full",
     "level": "DEBUG",
@@ -31,8 +29,6 @@ LOGGING["loggers"]["django.request"]["handlers"].append("syslog")
 MIDDLEWARE_CLASSES = (['django.middleware.cache.UpdateCacheMiddleware'] +
                       MIDDLEWARE_CLASSES +
                       ['django.middleware.cache.FetchFromCacheMiddleware'])
-
-PARENT_HOST = 'djangoproject.com'
 
 SESSION_COOKIE_SECURE = True
 
@@ -48,10 +44,19 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 DOCS_BUILD_ROOT = BASE.parent.child('data').child('docbuilds')
 
+# django-hosts settings
+
+HOST_SCHEME = 'https'
+
+PARENT_HOST = 'djangoproject.com'
+
 # Haystack settings
 
 HAYSTACK_SEARCH_ENGINE = 'xapian'
+
 HAYSTACK_XAPIAN_PATH = BASE.parent.child('data').child('djangodocs.index')
+
+# django-push settings
 
 PUSH_SSL_CALLBACK = True
 
