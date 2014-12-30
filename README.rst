@@ -26,44 +26,38 @@ To run locally, do the usual:
     createuser code.djangoproject
     createdb -O code.djangoproject code.djangoproject
 
-#. Set debug environment variable::
-
-    export DJANGOPROJECT_DEBUG=1
-
-   The code of the project uses this env variable to distinguish between
-   production and development. Set it to ``1`` to disable settings that are only
-   relevant on the production server.
-
 #. Create tables::
 
     psql -d code.djangoproject < tracdb/trac.sql
 
     ./manage.py migrate
 
-   and::
-
-    ./manage.py migrate --docs
-
-   if you want to run docs site.
-
 #. Create a superuser::
 
    ./manage.py createsuperuser
 
+#. Populate the www and docs hostnames in the django.contrib.sites app::
+
+    ./manage.py loaddata dev_sites
+
 #. For docs::
 
-    ./manage.py loaddata doc_releases.json --docs
-    ./manage.py update_docs --docs
+    ./manage.py loaddata doc_releases
+    ./manage.py update_docs
 
-#. Finally::
+#. Point the ``www.djangoproject.dev`` and ``docs.djangoproject.dev``
+   hostnames with your ``/etc/hosts`` file to ``localhost``/``127.0.0.1``.
+   Here's how it could look like::
 
-    ./manage.py runserver
+     127.0.0.1  docs.djangoproject.dev, www.djangoproject.dev
 
-   This runs as ``www.djangoproject.com``, the main website.
+#. Finally run the server::
 
-   To run locally as ``docs.djangoproject.com``, use::
+    make run
 
-    ./manage.py runserver --docs
+   This runs both the main site ("www") as well as the
+   docs site in the same process. Open http://www.djangoproject.dev:8000/
+   or http://docs.djangoproject.dev:8000/.
 
 Styles
 ------
@@ -92,8 +86,8 @@ Running all at once
 Optionally you can use a tool like `Foreman <https://github.com/ddollar/foreman>`_
 to run all process at once:
 
-- the regular site (similar to www.djangoproject.com) on http://127.0.0.1:8000/
-- the docs site (similar to docs.djangoproject.com) on port http://127.0.0.1:8001/
+- the site (similar to www.djangoproject.com) on http://0.0.0.0:8000/ to be used
+  with the modified /etc/hosts file (see above)
 - the ``make`` task to automatically compile the SASS files to CSS files
 
 This is great during development. Assuming you're using Foreman simply run::
@@ -103,7 +97,7 @@ This is great during development. Assuming you're using Foreman simply run::
 If you just want to run one of the processes defined above use the
 ``run`` subcommand like so::
 
-  foreman run www
+  foreman run web
 
 That'll just run the www server.
 
