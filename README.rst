@@ -51,6 +51,15 @@ To run locally, do the usual:
 
      127.0.0.1  docs.djangoproject.dev, www.djangoproject.dev
 
+   If you're on Mac OS and don't feel like editing the ``/etc/hosts`` file
+   manually, there is a great preference pane called `Hosts.prefpane`_. On
+   Ubuntu there is a `built-in network admin`_ GUI to do the same. Remember
+   both require admin priviledges, just like you'd need when editing
+   ``/etc/hosts`` with your favorite editor.
+
+.. _`Hosts.prefpane`: https://github.com/specialunderwear/Hosts.prefpane
+.. _`built-in network admin`: https://help.ubuntu.com/community/NetworkAdmin
+
 #. Finally run the server::
 
     make run
