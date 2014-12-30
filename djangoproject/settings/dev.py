@@ -24,7 +24,7 @@ PARENT_HOST = 'djangoproject.dev:8000'
 SESSION_COOKIE_SECURE = False
 
 # Docs settings
-DOCS_BUILD_ROOT = BASE.child('djangodocs')
+DOCS_BUILD_ROOT = BASE.ancestor(1).child('djangodocs')
 
 # Haystack settings
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
