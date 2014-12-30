@@ -1,0 +1,16 @@
+{% extends 'base_error.html' %}
+
+{% block title %}Page removed{% endblock %}
+
+{% block header %}<h1>410</h1>{% endblock %}
+
+{% block content %}
+<h2>Page removed.</h2>
+
+<p>Sorry, we've removed some of parts of the site that were completely out
+of date. In most cases, that content has been moved into
+<a href="{% url 'homepage' host 'docs' %}">the new documentation site</a>.</p>
+
+<p>Here's a link to the <a href="{% url 'homepage' %}">homepage</a>. You know, just in case.</p>
+
+{% endblock %}

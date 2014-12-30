@@ -4,6 +4,7 @@ akismet == 0.2.0
 Django == 1.7.1
 django-contact-form == 1.0
 django-haystack == 1.2.7
+django-hosts==1.0
 django-push == 0.6.1
 django-registration-redux==1.1
 django-pygments==0.1
