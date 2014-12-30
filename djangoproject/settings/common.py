@@ -45,13 +45,7 @@ DATABASE_ROUTERS = ['tracdb.db_router.TracRouter']
 
 DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
 
-DEFAULT_HOST = 'www'
-
 FIXTURE_DIRS = [BASE.child('fixtures')]
-
-HOST_OVERRIDE_URL_TAG = True
-
-HOST_SITE_TIMEOUT = 3600
 
 INSTALLED_APPS = [
     'django.contrib.sites',
@@ -138,8 +132,6 @@ MIDDLEWARE_CLASSES = [
     'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
-ROOT_HOSTCONF = 'djangoproject.hosts'
-
 ROOT_URLCONF = 'djangoproject.urls.www'
 
 SECRET_KEY = str(SECRETS['secret_key'])
@@ -202,6 +194,18 @@ HAYSTACK_SITECONF = 'docs.search_sites'
 
 AKISMET_API_KEY = "c892e4962244"
 
+# django-hosts settings
+
+DEFAULT_HOST = 'www'
+
+HOST_OVERRIDE_URL_TAG = True
+
+HOST_SCHEME = 'http'
+
+HOST_SITE_TIMEOUT = 3600
+
+ROOT_HOSTCONF = 'djangoproject.hosts'
+
 # django-registration settings
 
 ACCOUNT_ACTIVATION_DAYS = 3
@@ -210,7 +214,11 @@ ACCOUNT_ACTIVATION_DAYS = 3
 
 FEED_APPROVERS_GROUP_NAME = "feed-approver"
 
+# django-push settings
+
 PUSH_HUB = 'https://superfeedr.com/hubbub'
+
 PUSH_CREDENTIALS = 'aggregator.utils.push_credentials'
+
 # SUPERFEEDR_CREDS is a 2 element list in the form of [email,secretkey]
 SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
