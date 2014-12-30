@@ -18,8 +18,6 @@ except IOError:
 
 # Django settings
 
-ADMINS = ()
-
 CACHE_MIDDLEWARE_SECONDS = 60 * 5  # 5 minutes
 
 CACHE_MIDDLEWARE_KEY_PREFIX = 'django'
@@ -121,8 +119,6 @@ LOGGING = {
         },
     }
 }
-
-MANAGERS = ()
 
 MEDIA_ROOT = BASE.ancestor(2).child('media')
 
