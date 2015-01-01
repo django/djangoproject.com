@@ -42,7 +42,7 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 # Docs settings
 
-DOCS_BUILD_ROOT = BASE.parent.child('data').child('docbuilds')
+DOCS_BUILD_ROOT = BASE.parent.parent.child('data').child('docbuilds')
 
 # django-hosts settings
 
@@ -54,7 +54,7 @@ PARENT_HOST = 'djangoproject.com'
 
 HAYSTACK_SEARCH_ENGINE = 'xapian'
 
-HAYSTACK_XAPIAN_PATH = BASE.parent.child('data').child('djangodocs.index')
+HAYSTACK_XAPIAN_PATH = BASE.parent.parent.child('data').child('djangodocs.index')
 
 # django-push settings
 
