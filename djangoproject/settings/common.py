@@ -79,7 +79,7 @@ INSTALLED_APPS = [
     'tracdb',
 ]
 
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'en-us'
 
 LOGGING = {
     "version": 1,
