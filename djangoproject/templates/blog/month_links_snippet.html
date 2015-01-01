@@ -1,3 +1,4 @@
+  {% load i18n %}
   {% regroup dates by year as dates_by_year %}
 
   <ul class="list-collapsing active">
@@ -7,7 +8,7 @@
       <div class="collapsing-content">
         <ul class="list-links-small">
           {% for d in month.list %}
-            <li><a href="{% url 'blog-archive-month' d|date:"Y" d|date:"b" %}">{{ d|date:"F Y" }}</a></li>
+            <li><a href="{% language "en" %}{% url 'blog-archive-month' d|date:"Y" d|date:"b" %}{% endlanguage %}">{{ d|date:"F Y" }}</a></li>
           {% endfor %}
         </ul>
         <p></p>
