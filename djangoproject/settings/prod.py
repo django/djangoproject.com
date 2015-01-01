@@ -10,8 +10,13 @@ DEBUG = False
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
         'LOCATION': SECRETS.get('memcached_host', '127.0.0.1:11211'),
+        'BINARY': True,
+        'OPTIONS': {
+            'tcp_nodelay': True,
+            'ketama': True
+        }
     },
 }
 
