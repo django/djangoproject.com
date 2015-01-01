@@ -9,13 +9,13 @@ from django.contrib.auth.models import User
 
 class ICLA(models.Model):
     """
-    An indivudal's CLA.
+    An individual's CLA.
 
     Since we have to deal with some legacy data this is a bit more tricky
     than it has to be. Ideally we'd relate each CLA to a User so we can
     see that info in Trac, but we've got a set of CLAs in paper/PDF form
     that need to be imported and related to individuals. Thus most fields
-    here will have to be optional to accomdate this unclean data.
+    here will have to be optional to accommodate this unclean data.
 
     As we switch to e-sign we'll make most of this stuff required at the
     *form* level, and clean up legacy data as we can. Eventually this'll
@@ -79,7 +79,7 @@ class CCLADesignee(models.Model):
     """
     An individual whose contrbutions are covered by a CCLA.
 
-    Again caveats as above. One aditional wrinkle here is that ideally CCLA
+    Again caveats as above. One additional wrinkle here is that ideally CCLA
     signers will *also* sign an ICLA; a future version of this app might
     want to enforce that.
     """
