@@ -1,6 +1,5 @@
 {% extends "docs/doc.html" %}
 {% load i18n %}
-
 {% load docs %}
 
 {% block title %}{% trans "Search | Django documentation" %}{% endblock %}
@@ -16,7 +15,7 @@
   <div id="search-results">
     {% for result in page.object_list %}
       <h3>
-        <a href="{% url 'document-detail' lang=result.lang version=result.version url=result.path %}">{{ result.title }}</a>
+        <a href="{% url 'document-detail' lang=result.lang version=result.version url=result.path host 'docs' %}">{{ result.title }}</a>
       </h3>
       <p>{% highlight result.text with query max_length 200 %}</p>
     {% empty %}

@@ -1,0 +1,43 @@
+{% extends "base_community.html" %}
+
+{% block content %}
+<h1>Django community: {{ feed_type.name }}
+  <a class="rss" href="{% url 'aggregator-feed' feed_type.slug %}">RSS</a></h1>
+<h2 class="deck">
+  This page, updated regularly, aggregates {{ feed_type.name }}
+  from the Django community.
+</h2>
+
+<ul class="list-news">
+{% for item in object_list %}
+<li>
+<h2><a href="{{ item.link }}">{{ item.title }}</a></h2>
+<span class='meta'>Posted on {{ item.date_modified|date:"F j, Y" }} at {{ item.date_modified|date:"g:i A" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a> <a class="rss" href="{{ item.feed.feed_url }}">RSS</a></span>
+<div>
+{{ item.summary|striptags|truncatewords:"200" }}
+</div>
+<p class="small"><a class="link-readmore" href="{{ item.link }}">Read this post in context</a></p>
+</li>
+{% endfor %}
+</ul>
+
+{% if is_paginated %}
+  <div class="pagination">
+    <ul class="nav-pagination" role="navigation">
+    {% if page_obj.has_previous %}
+        <li><a class="previous" href="?page={{ page_obj.previous_page_number }}">
+            <i class="icon icon-chevron-left"></i>
+            <span class="visuallyhidden">Previous</span>
+        </a></li>
+    {% endif %}
+    {% if page_obj.has_next %}
+        <li><a class="next" href="?page={{ page_obj.next_page_number }}">
+            <i class="icon icon-chevron-right"></i>
+            <span class="visuallyhidden">Next</span>
+        </a></li>
+    {% endif %}
+    </ul>
+  </div>
+{% endif %}
+
+{% endblock %}

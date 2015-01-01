@@ -1,0 +1,59 @@
+
+<div role="contentinfo">
+  <div class="subfooter">
+    <div class="container">
+      <h1 class="visuallyhidden">Django Links</h1>
+
+      <div class="col learn">
+        <h2>Learn More</h2>
+        <ul>
+          <li><a href="{% url 'overview' %}">About Django</a></li>
+          {% comment %}<li><a href="{% url 'case_study_index' %}">Case Studies</a></li>{% endcomment %}
+          <li><a href="{% url 'start' %}">Getting Started with Django</a></li>
+          <li><a href="{% url 'homepage' %}foundation/">Django Software Foundation</a></li>
+          <li><a href="{% url 'code_of_conduct' %}">Code of Conduct</a></li>
+        </ul>
+      </div>
+
+      <div class="col involved">
+        <h2>Get Involved</h2>
+        <ul>
+          <li><a href="{% url 'community-index' %}">Join a Group</a></li>
+          <li><a href="{% url 'document-detail' lang='en' version='dev' url="internals/contributing" host 'docs' %}">Contribute to Django</a></li>
+          <li><a href="{% url 'document-detail' lang='en' version='dev' url="internals/contributing/bugs-and-features" host 'docs' %}#reporting-security-issues">Submit a Bug</a></li>
+          <li><a href="{% url 'document-detail' lang='en' version='dev' url="internals/security" host 'docs' %}">Report a Security Issue</a></li>
+        </ul>
+      </div>
+
+      <div class="col follow last-child">
+        <h2>Follow Us</h2>
+        <ul>
+          <li><a href="https://github.com/django">GitHub</a></li>
+          <li><a href="https://twitter.com/djangoproject">Twitter</a></li>
+          <li><a href="{% url 'weblog-feed' %}">News RSS</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/django-users">Django Users Mailing List</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="{% url 'homepage' %}">Django</a>
+      </div>
+      <ul class="thanks">
+        <li><span>Hosting by</span> <a class="rackspace" href="http://rackspace.com">Rackspace</a></li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="http://www.threespot.com">Threespot</a> <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/"></a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-{% now "Y" %}
+        <a href="{% url 'homepage' %}foundation/"> Django Software
+        Foundation</a> and individual contributors. Django is a
+        <a href="{% url 'homepage' %}trademarks/">registered
+        trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</div>

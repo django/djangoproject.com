@@ -1,12 +1,12 @@
 {% load i18n %}
 
-<form action="{% url 'document-search' %}" id="{{ search_form_id }}" class="search form-input" role="search">
+<form action="{% url 'document-search' host 'docs' %}" id="{{ search_form_id }}" class="search form-input" role="search">
   <label class="visuallyhidden" for="news-search">Search:</label>
     {{ form.q }}
 
       <label for="{{ form.release.auto_id }}">{% trans "Version:" %}</label>
       {{ form.release }}
-    
+
     <button type="submit">
       <i class="icon icon-search"></i>
       <span class="visuallyhidden">{% trans 'Search' %}</span>
