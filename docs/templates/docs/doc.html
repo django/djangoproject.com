@@ -1,16 +1,15 @@
 {% extends "base_docs.html" %}
 {% load i18n %}
-{% load staticfiles %}
 
 {% block title %}{{ doc.title|striptags|safe }} | {% trans "Django documentation" %}{% endblock %}
 
-{% block doc_url %}{% url 'document-index' lang=lang version=version %}{% endblock %}
+{% block doc_url %}{% url 'document-index' lang=lang version=version host 'docs' %}{% endblock %}
 
 {% block head_extra %}
   {% if docurl %}
-  <link rel="canonical"  href="https://docs.djangoproject.com{% url 'document-detail' lang=lang version='stable' url=docurl %}">
+  <link rel="canonical"  href="{% url 'document-detail' lang=lang version='stable' url=docurl host 'docs' %}">
   {% else %}
-  <link rel="canonical" href="https://docs.djangoproject.com{% url 'document-index' lang=lang version='stable' %}">
+  <link rel="canonical" href="{% url 'document-index' lang=lang version='stable' host 'docs' %}">
   {% endif %}
 {% endblock head_extra %}
 
@@ -36,9 +35,9 @@
   {% if version != v %}
   <li class="other">
     {% if docurl %}
-    <a href="{% url 'document-detail' lang=lang version=v url=docurl %}">{{ v }}</a>
+    <a href="{% url 'document-detail' lang=lang version=v url=docurl host 'docs' %}">{{ v }}</a>
     {% else %}
-    <a href="{% url 'document-index' lang=lang version=v %}">{{ v }}</a>
+    <a href="{% url 'document-index' lang=lang version=v host 'docs' %}">{{ v }}</a>
     {% endif %}
   </li>
   {% endif %}
@@ -94,9 +93,9 @@
         {% if doc.next %}
         <li>{% trans "Next:" %} <a href="{{ doc.next.link }}">{{ doc.next.title|safe }}</a></li>
         {% endif %}
-        <li><a href="{% url 'document-detail' lang=lang version=version url="contents" %}">{% trans "Table of contents" %}</a></li>
+        <li><a href="{% url 'document-detail' lang=lang version=version url="contents" host 'docs' %}">{% trans "Table of contents" %}</a></li>
         {% for doc, title, accesskey, shorttitle in env.rellinks %}
-        <li><a href="{% url 'document-detail' lang=lang version=version url=doc %}">{{ title }}</a></li>
+        <li><a href="{% url 'document-detail' lang=lang version=version url=doc host 'docs' %}">{{ title }}</a></li>
         {% endfor %}
         {% endblock %}
       </ul>
@@ -107,7 +106,7 @@
       <ul>
         {% block breadcrumbs %}
         <li>
-          <a href="{% url 'document-index' lang=lang version=version %}">{% blocktrans %}Django {{ version }} documentation{% endblocktrans %}</a>
+          <a href="{% url 'document-index' lang=lang version=version host 'docs' %}">{% blocktrans %}Django {{ version }} documentation{% endblocktrans %}</a>
           {% for p in doc.parents %}
           <ul><li><a href="{{ p.link }}">{{ p.title|safe }}</a>
             {% endfor %}
@@ -119,8 +118,7 @@
 
         <h2>{% trans "Getting help" %}</h3>
           <dl class="list-links">
-            {% url 'document-detail' lang=lang version=version url="faq" as faq_url %}
-            <dt><a href="{{ faq_url }}">FAQ</a></dt>
+            <dt><a href="{% url 'document-detail' lang=lang version=version url="faq" host 'docs' %}">FAQ</a></dt>
             <dd>{% blocktrans %}Try the FAQ — it's got answers to many common questions.{% endblocktrans %}</dd>
 
             <dt><a href="/en/stable/genindex/">{% trans "Index" %}</a>, <a href="/en/stable/py-modindex/">{% trans "Module Index" %}</a>, or <a href="/en/stable/contents/">{% trans "Table of Contents" %}</a></dt>
