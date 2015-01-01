@@ -2,123 +2,123 @@
 
 .styleguide {
 
-  .example {
-    padding: 0 20px 20px;
-    border: 1px solid $gray-line;
-    @include border-radius(4px);
-    margin-top: 20px;
-    margin-bottom: 64px;
-    &:before {
-      content: "Example";
-      font-size: 16px;
-      font-weight: 700;
-      display: block;
-      color: $gray-line;
-      @include sans-serif;
-      text-align: left;
-      padding: 10px 0;
-    }
+	.example {
+		padding: 0 20px 20px;
+		border: 1px solid $gray-line;
+		@include border-radius(4px);
+		margin-top: 20px;
+		margin-bottom: 64px;
+		&:before {
+			content: "Example";
+			font-size: 16px;
+			font-weight: 700;
+			display: block;
+			color: $gray-line;
+			@include sans-serif;
+			text-align: left;
+			padding: 10px 0;
+		}
 
-    [role="complementary"] {
-      float: none;
-      width: auto;
-      padding: 0;
-      margin: 0;
-    }
-  }
+		[role="complementary"] {
+			float: none;
+			width: auto;
+			padding: 0;
+			margin: 0;
+		}
+	}
 
-  .iframe {
-    display: block;
-    height: 400px;
-    cursor: zoom-in;
-    border: 1px solid $gray-line;
-    overflow: hidden;
-    
-    iframe {
-      pointer-events: none;
-      position: relative;
-      width: 200%;
-      border: 0;
-      height: 800px;
-      @include transform(scale(0.5) translate(-50%, -50%));
-      top: 0;
-      left: 0;
-      overflow: hidden;
-    }
-  }
+	.iframe {
+		display: block;
+		height: 400px;
+		cursor: zoom-in;
+		border: 1px solid $gray-line;
+		overflow: hidden;
 
-  .swatches {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    @include clearfix;
-    margin: 30px 0;
-    li {
-      width: 30%;
-      height: 30px;
-      margin-right: 2%;
-      @include box-sizing(border-box);
+		iframe {
+			pointer-events: none;
+			position: relative;
+			width: 200%;
+			border: 0;
+			height: 800px;
+			@include transform(scale(0.5) translate(-50%, -50%));
+			top: 0;
+			left: 0;
+			overflow: hidden;
+		}
+	}
 
-      float: left;
+	.swatches {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		@include clearfix;
+		margin: 30px 0;
+		li {
+			width: 30%;
+			height: 30px;
+			margin-right: 2%;
+			@include box-sizing(border-box);
 
-      // Primary
-      &.text {
-        background: $text;
-      }
-      &.green-dark {
-        background: $green-dark;
-      }
-      &.green {
-        background: $green;
-      }
-      &.green-light {
-        background: $green-light;
-      }
-      &.white {
-        background: $white;
-        border: 1px solid $gray-line;
-      }
-      &.red-dark {
-        background: $red-dark;
-      }
+			float: left;
 
-      // Secondary
-      &.text-light {
-        background: $text-light;
-      }
+			// Primary
+			&.text {
+				background: $text;
+			}
+			&.green-dark {
+				background: $green-dark;
+			}
+			&.green {
+				background: $green;
+			}
+			&.green-light {
+				background: $green-light;
+			}
+			&.white {
+				background: $white;
+				border: 1px solid $gray-line;
+			}
+			&.red-dark {
+				background: $red-dark;
+			}
 
-      &.green-medium-dark {
-        background: $green-medium-dark;
-      }
+			// Secondary
+			&.text-light {
+				background: $text-light;
+			}
 
-      &.green-medium {
-        background: $green-medium;
-      }
+			&.green-medium-dark {
+				background: $green-medium-dark;
+			}
 
-      &.green-very-light {
-        background: $green-very-light;
-      }
+			&.green-medium {
+				background: $green-medium;
+			}
 
-      &.gray-line {
-        background: $gray-line;
-      }
+			&.green-very-light {
+				background: $green-very-light;
+			}
 
-      &.red {
-        background: $red;
-      }
+			&.gray-line {
+				background: $gray-line;
+			}
 
-    }
-  }
+			&.red {
+				background: $red;
+			}
 
-  #layout {
-    overflow: hidden;
-  }
+		}
+	}
 
-  #icons .icon {
-    @include font-size(32);
-    color: $green;
-    padding: 0 .2em;
-  }
-  
+	#layout {
+		overflow: hidden;
+	}
+
+	#icons .icon {
+		@include font-size(32);
+		color: $green;
+		padding: 0 .2em;
+	}
+
 
 }
