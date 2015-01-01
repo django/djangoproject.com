@@ -102,7 +102,7 @@
       <a href="{% url 'download' %}" class="cta">
           Download <em>latest release: {{ DJANGO_VERSION }}</em>
       </a>
-      <a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}" class="link-readmore">Django documentation</a>
+      <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}" class="link-readmore">Django documentation</a>
 
       <h3>New to Django?</h3>
       <ul class="list-links-small docs-list">
