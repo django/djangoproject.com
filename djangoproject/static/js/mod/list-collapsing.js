@@ -1,6 +1,6 @@
 define([
-	'jquery'
-], function( $) {
+	'jquery' //requires jquery
+], function( $ ) {
 
 	var CollapsingList = function(list) {
 		this.list = $(list);

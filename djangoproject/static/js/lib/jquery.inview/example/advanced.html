@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>jquery.inview - Example</title>
+  <meta name="viewport" content="initial-scale=1.0, width=device-width, height=device-height">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+  <script src="../jquery.inview.js"></script>
+  <style>
+    body {
+      font-family: Arial, Verdana, sans-serif;
+      font-size: 12px;
+      position: relative;
+      width: 5000px;
+      height: 5000px;
+    }
+    #abs-element {
+      left: 50%;
+      top: 50%;
+      position: absolute;
+      width: 200px;
+      height: 100px;
+      border: 2px solid red;
+      margin-top: -52px;
+      margin-left: -102px;
+    }
+  </style>
+</head>
+<body>
+  Scroll to the <a href="#abs-element">middle</a> of this page!
+  <div id="abs-element">
+    <div>visiblePartX: <span id="visible-part-x"></span></div>
+    <div>visiblePartY: <span id="visible-part-y"></span></div>
+  </div>
+
+  <script>
+    $('#abs-element').bind('inview', function(event, visible, visiblePartX, visiblePartY) {
+      if (visible) {
+        $('#visible-part-x').html(visiblePartX);
+        $('#visible-part-y').html(visiblePartY);
+      } else {
+        $('#visible-part-x, #visible-part-y').html('');
+      }
+    });
+  </script>
+</body>
+</html>

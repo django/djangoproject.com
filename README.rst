@@ -111,3 +111,13 @@ If you just want to run one of the processes defined above use the
 That'll just run the www server.
 
 Check out the ``Procfile`` file for all the process names.
+
+JavaScript libraries
+--------------------
+
+This project uses `Bower <http://bower.io/>`_ for managing JS library
+depedencies. See its documentation for how to use it. Here's the gist:
+
+To update any of the dependencies, edit the ``bower.json`` file accordingly
+and then run ``bower install`` to download the appropriate files to the
+static directory. Commit the downloaded files to git (vendoring).
