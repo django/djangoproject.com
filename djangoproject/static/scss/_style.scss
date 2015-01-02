@@ -409,7 +409,7 @@ blockquote {
 	background: $green-dark;
 	overflow: hidden;
 	margin: 0;
-	padding: 10px 0;
+	padding: 10px 0 6px;
 	position: relative;
 	z-index: 0;
 
@@ -472,7 +472,7 @@ blockquote {
 		float: right;
 		height: 45px;
 		line-height: 48px;
-		margin: 8px 10px;
+		margin: 4px 10px;
 		text-align: center;
 		text-decoration: none;
 		width: 45px;
