@@ -26,9 +26,7 @@
     <!--[if gt IE 8]><!-->
         <link rel="stylesheet" href="{% static "css/output.css" %}" >
     <!--<![endif]-->
-    {# uncomment for local version of webfont loader if desired. #}
-    {# <script src="{% static "js/lib/webfont.js" %}"></script> #}
-    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.5.6/webfont.js"></script>
+    <script src="{% static "js/lib/webfontloader/webfontloader.js" %}"></script>
     <script>
     WebFont.load({
       custom: {
@@ -85,13 +83,13 @@
         return input.replace(/(.*)\.[^.]+$/, '$1');
     }
     var require = {
+        shim: {
+            'jquery': [],
+            'jquery.inview': ["jquery"]
+        },
         paths: {
-            "jquery": [
-                "//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min",
-                // If CDN loading fails get it locally here:
-                extless("{% static 'js/lib/jquery.js' %}")
-            ],
-            "jquery.inview": extless("{% static 'js/lib/jquery.inview.js' %}"),
+            "jquery": extless("{% static 'js/lib/jquery/dist/jquery.min.js' %}"),
+            "jquery.inview": extless("{% static 'js/lib/jquery.inview/jquery.inview.min.js' %}"),
             "mod/floating-warning": extless("{% static 'js/mod/floating-warning.js' %}"),
             "mod/list-collapsing": extless("{% static 'js/mod/list-collapsing.js' %}"),
             "mod/list-feature": extless("{% static 'js/mod/list-feature.js' %}"),

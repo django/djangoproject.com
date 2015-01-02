@@ -1,5 +1,5 @@
 define([
-	'jquery.inview' //required inview plugin
+	'jquery', 'jquery.inview' //required inview plugin
 ], function( $ ) {
 
 	var FeatureList = function(list) {

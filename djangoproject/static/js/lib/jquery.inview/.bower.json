@@ -1,0 +1,16 @@
+{
+  "name": "protonet/jquery.inview",
+  "version": "1.0.0",
+  "main": "jquery.inview.js",
+  "description": "jQuery event that is fired as soon as an element appears in the user's viewport.",
+  "homepage": "https://github.com/protonet/jquery.inview",
+  "_release": "1.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.0",
+    "commit": "f9d2ef5fce125f15ae28f52b68c75eb38fc1eaed"
+  },
+  "_source": "git://github.com/protonet/jquery.inview.git",
+  "_target": "1.0.0",
+  "_originalSource": "jquery.inview"
+}
