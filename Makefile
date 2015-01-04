@@ -18,5 +18,4 @@ run:
 	python manage.py runserver 0.0.0.0:8000
 
 install:
-	pip install -r deploy-requirements.txt
-	pip install -r local-requirements.txt
+	pip install -r requirements/dev.txt

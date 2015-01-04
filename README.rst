@@ -7,11 +7,11 @@ To run locally, do the usual:
 
 #. Install dependencies::
 
-    pip install -r deploy-requirements.txt
-    pip install -r local-requirements.txt
+    pip install -r requirements/dev.txt
 
-   If you only need to deploy, and don't need to test any changes,
-   you can use deploy-requirements.txt only.
+   Alternatively use the make task::
+
+    make install
 
 #. Create a 'secrets.json' file in the directory above the checkout, containing
    something like::

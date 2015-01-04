@@ -1,0 +1,16 @@
+akismet==0.2.0
+Django==1.7.2
+django-contact-form==1.0
+django-haystack==1.2.7
+django-hosts==1.0
+django-push==0.6.1
+django-registration-redux==1.1
+django-pygments==0.1
+django-secure==1.0.1
+docutils==0.11
+feedparser==5.1.3
+Jinja2==2.7.3
+psycopg2==2.5.4
+requests==2.5.1
+Sphinx==1.2.3
+Unipath==1.0
