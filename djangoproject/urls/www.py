@@ -61,7 +61,7 @@ urlpatterns = [
 
 
     url(r'^sitemap\.xml$', cache_page(60 * 60 * 6)(sitemap_views.sitemap), {'sitemaps': sitemaps}),
-    url(r'^weblog/', include('blog.urls')),
+    url(r'^weblog/', include('blog.urls', namespace='weblog')),
     url(r'^download/', include('releases.urls')),
     url(r'^svntogit/', include('svntogit.urls')),
     url(r'', include('legacy.urls')),

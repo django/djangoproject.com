@@ -161,13 +161,13 @@
         <dt class="event"><a href="#">DjangoCon 2013 Call for Papers</a></dt>
         <dd>April 7th, 2013 | Berlin, Germany</dd>
       </dl>
-      <a href="{% url 'blog-index' %}" class="link-readmore">See all Events</a>
+      <a href="{% url 'weblog:index' %}" class="link-readmore">See all Events</a>
       {% endcomment %}
       <h3>Latest news</h3>
       <dl class="list-links-small news-list">
         {% load weblog %}{% render_latest_blog_entries 1 %}
       </dl>
-      <a href="{% url 'blog-index' %}" class="link-readmore">See all news</a>
+      <a href="{% url 'weblog:index' %}" class="link-readmore">See all news</a>
   </div>
 
 {% endblock %}

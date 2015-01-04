@@ -15,7 +15,7 @@
           <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}">Documentation</a>
         </li>
         <li{% if section == 'news' %} class="active"{% endif %}>
-          <a href="{% url 'blog-index' %}">News</a>
+          <a href="{% url 'weblog:index' %}">News</a>
         </li>
         <li{% if section == 'community' %} class="active"{% endif %}>
           <a href="{% url 'community-index' %}">Community</a>
