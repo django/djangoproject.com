@@ -1,0 +1,10 @@
+-r common.txt
+
+django-pylibmc==0.5.0
+pylibmc==1.4.1
+raven==5.1.1
+
+# In production, xapian is installed with the python-xapian system package.
+# The virtualenv must have access to the global site-packages dir.
+# xapian-haystack has a bug in 1.1.5beta fixed in trunk.
+-e git://github.com/notanumber/xapian-haystack.git@dc11c14542c0137831e5#egg=xapian-haystack
