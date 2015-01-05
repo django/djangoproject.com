@@ -17,7 +17,9 @@ class BaseContactForm(ContactForm):
     body = forms.CharField(widget=forms.Textarea(attrs={'class': 'required', 'placeholder': 'Your message'}))
 
     def subject(self):
-        return "[Contact form] " + self.cleaned_data["message_subject"]
+        # Strip all linebreaks from the subject string.
+        subject = ''.join(self.cleaned_data["message_subject"].splitlines())
+        return "[Contact form] " + subject
 
     def message(self):
         return "From: {name} <{email}>\n\n{body}".format(**self.cleaned_data)
