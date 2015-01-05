@@ -1,10 +1,10 @@
 import datetime
 import json
 
-import django.views.static
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import translation
+from django.views import static
 
 import haystack.views
 
@@ -76,30 +76,20 @@ def document(request, lang, version, url):
 def pot_file(request, pot_name):
     version = DocumentRelease.objects.current().version
     doc_root = get_doc_root_or_404('en', version, subroot='gettext')
-    return django.views.static.serve(
-        request,
-        document_root=doc_root,
-        path=pot_name,
-    )
+    return static.serve(request, document_root=doc_root, path=pot_name)
 
 
-class SphinxStatic(object):
+def sphinx_static(request, lang, version, path, subpath=None):
     """
     Serve Sphinx static assets from a subdir of the build location.
     """
-    def __init__(self, subpath):
-        self.subpath = subpath
+    document_root = get_doc_root_or_404(lang, version).child(subpath)
+    return static.serve(request, document_root=document_root, path=path)
 
-    def __call__(self, request, lang, version, path):
-        return django.views.static.serve(
-            request,
-            document_root=get_doc_root_or_404(lang, version).child(self.subpath),
-            path=path,
-        )
 
 
 def objects_inventory(request, lang, version):
-    response = django.views.static.serve(
+    response = static.serve(
         request,
         document_root=get_doc_root_or_404(lang, version),
         path="objects.inv",

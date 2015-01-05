@@ -37,15 +37,21 @@ urlpatterns = [
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_images/(?P<path>.*)$',
-        views.SphinxStatic('_images'),
+        views.sphinx_static,
+        {'subpath': '_images'},
+        name='sphinx-images',
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_source/(?P<path>.*)$',
-        views.SphinxStatic('_sources'),
+        views.sphinx_static,
+        {'subpath': '_sources'},
+        name='sphinx-sources',
     ),
     url(
         r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_downloads/(?P<path>.*)$',
-        views.SphinxStatic('_downloads'),
+        views.sphinx_static,
+        {'subpath': '_downloads'},
+        name='sphinx-downloads',
     ),
     url(
         r'^(.*)/index/$',
