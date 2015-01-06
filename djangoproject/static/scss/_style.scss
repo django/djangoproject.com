@@ -180,7 +180,7 @@ pre,
 samp {
 	@include monospace;
 	color: $green-dark;
-	font-size: 0.9em;
+	font-size: 1em;
 }
 
 tt {
@@ -189,7 +189,6 @@ tt {
 
 span.pre {
 	@include monospace;
-	font-size: 1.07em;
 }
 
 a:hover, a:active, a:focus {
