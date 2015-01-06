@@ -1,0 +1,19 @@
+{% extends "base_weblog.html" %}
+
+{% block title %}{{ day|date:"F j" }} | Weblog{% endblock %}
+
+{% block content %}
+
+<h1>{{ day|date:"F j" }} archive</h1>
+
+<ul class="list-news">
+
+{% for object in object_list %}
+  {% include 'blog/news_summary.html' with object=object %}
+{% endfor %}
+
+</ul>
+
+{% include 'blog/blog_pagination.html' %}
+
+{% endblock %}

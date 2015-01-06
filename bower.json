@@ -1,0 +1,9 @@
+{
+  "name": "Django Project",
+  "private": "true",
+  "dependencies": {
+    "jquery": "<2.0",
+    "jquery.inview": "1.0.0",
+    "webfontloader": "~1.5.10"
+  }
+}

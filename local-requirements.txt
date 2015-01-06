@@ -1,5 +1,0 @@
-# Requirements to manage the site locally and run the fabfile.
-
-Unipath
-Fabric
-whoosh < 2.5

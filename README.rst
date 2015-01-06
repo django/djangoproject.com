@@ -7,11 +7,11 @@ To run locally, do the usual:
 
 #. Install dependencies::
 
-    pip install -r deploy-requirements.txt
-    pip install -r local-requirements.txt
+    pip install -r requirements/dev.txt
 
-   If you only need to deploy, and don't need to test any changes,
-   you can use deploy-requirements.txt only.
+   Alternatively use the make task::
+
+    make install
 
 #. Create a 'secrets.json' file in the directory above the checkout, containing
    something like::
@@ -26,40 +26,47 @@ To run locally, do the usual:
     createuser code.djangoproject
     createdb -O code.djangoproject code.djangoproject
 
-#. Set debug environment variable::
-
-    export DJANGOPROJECT_DEBUG=1
-
-   The code of the project uses this env variable to distinguish between
-   production and development. Set it to ``1`` to disable settings that are only
-   relevant on the production server.
-
 #. Create tables::
 
     psql -d code.djangoproject < tracdb/trac.sql
 
     ./manage.py migrate
 
-   and::
+#. Create a superuser::
 
-    ./manage.py migrate --docs
+   ./manage.py createsuperuser
 
-   if you want to run docs site.
+#. Populate the www and docs hostnames in the django.contrib.sites app::
+
+    ./manage.py loaddata dev_sites
 
 #. For docs::
 
-    ./manage.py loaddata doc_releases.json --docs
-    ./manage.py update_docs --docs
+    ./manage.py loaddata doc_releases
+    ./manage.py update_docs
 
-#. Finally::
+#. Point the ``www.djangoproject.dev`` and ``docs.djangoproject.dev``
+   hostnames with your ``/etc/hosts`` file to ``localhost``/``127.0.0.1``.
+   Here's how it could look like::
 
-    ./manage.py runserver
+     127.0.0.1  docs.djangoproject.dev, www.djangoproject.dev
 
-   This runs as ``www.djangoproject.com``, the main website.
+   If you're on Mac OS and don't feel like editing the ``/etc/hosts`` file
+   manually, there is a great preference pane called `Hosts.prefpane`_. On
+   Ubuntu there is a `built-in network admin`_ GUI to do the same. Remember
+   both require admin priviledges, just like you'd need when editing
+   ``/etc/hosts`` with your favorite editor.
 
-   To run locally as ``docs.djangoproject.com``, use::
+.. _`Hosts.prefpane`: https://github.com/specialunderwear/Hosts.prefpane
+.. _`built-in network admin`: https://help.ubuntu.com/community/NetworkAdmin
 
-    ./manage.py runserver --docs
+#. Finally run the server::
+
+    make run
+
+   This runs both the main site ("www") as well as the
+   docs site in the same process. Open http://www.djangoproject.dev:8000/
+   or http://docs.djangoproject.dev:8000/.
 
 Styles
 ------
@@ -81,3 +88,36 @@ to continously watch for changes to the SASS files and automatically compile
 to CSS::
 
     make watch-scss
+
+Running all at once
+-------------------
+
+Optionally you can use a tool like `Foreman <https://github.com/ddollar/foreman>`_
+to run all process at once:
+
+- the site (similar to www.djangoproject.com) on http://0.0.0.0:8000/ to be used
+  with the modified /etc/hosts file (see above)
+- the ``make`` task to automatically compile the SASS files to CSS files
+
+This is great during development. Assuming you're using Foreman simply run::
+
+  foreman start
+
+If you just want to run one of the processes defined above use the
+``run`` subcommand like so::
+
+  foreman run web
+
+That'll just run the www server.
+
+Check out the ``Procfile`` file for all the process names.
+
+JavaScript libraries
+--------------------
+
+This project uses `Bower <http://bower.io/>`_ for managing JS library
+depedencies. See its documentation for how to use it. Here's the gist:
+
+To update any of the dependencies, edit the ``bower.json`` file accordingly
+and then run ``bower install`` to download the appropriate files to the
+static directory. Commit the downloaded files to git (vendoring).

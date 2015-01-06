@@ -8,10 +8,12 @@ from django.db import models
 from django.utils.encoding import smart_str
 from django.utils.translation import ugettext_lazy as _
 
+from django_hosts.resolvers import reverse
+
 
 BLOG_DOCUTILS_SETTINGS = getattr(settings, 'BLOG_DOCUTILS_SETTINGS', {
     'doctitle_xform': False,
-    'initial_header_level': 4,
+    'initial_header_level': 3,
     'id_prefix': 's-',
 })
 
@@ -67,7 +69,13 @@ class Entry(models.Model):
         return self.headline
 
     def get_absolute_url(self):
-        return "/weblog/%s/%s/" % (self.pub_date.strftime("%Y/%b/%d").lower(), self.slug)
+        kwargs = {
+            'year': self.pub_date.year,
+            'month': self.pub_date.strftime('%b').lower(),
+            'day': self.pub_date.strftime('%d').lower(),
+            'slug': self.slug,
+        }
+        return reverse('weblog:entry', kwargs=kwargs)
 
     def is_published(self):
         """
