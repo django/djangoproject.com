@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Django Documentation{% endblock %}
+
+{% block header %}
+  <h1><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">Documentation</a></h1>
+{% endblock %}
+
+{% block layout_class %}sidebar-right{% endblock %}

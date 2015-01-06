@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 
-from django.contrib.sites.models import get_current_site
 from django.http import HttpResponsePermanentRedirect, Http404
 from django.shortcuts import get_object_or_404, render
 
@@ -46,7 +45,6 @@ def index(request):
         'earlier_versions': [release.version for release in reversed(releases) if release != lts],
         'preview_version': preview_version,
         'preview_kind': preview_kind,
-        'site': get_current_site(request),
     }
     return render(request, 'releases/download.html', context)
 

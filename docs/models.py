@@ -4,6 +4,8 @@ from django.conf import settings
 from django.core.cache import cache
 from django.db import models
 
+from django_hosts.resolvers import reverse
+
 
 class DocumentReleaseManager(models.Manager):
 
@@ -58,9 +60,12 @@ class DocumentRelease(models.Model):
     def __unicode__(self):
         return "%s/%s" % (self.lang, self.version)
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('document-index', [], {'lang': self.lang, 'version': self.version})
+        kwargs = {
+            'lang': self.lang,
+            'version': self.version,
+        }
+        return reverse('document-index', host='docs', kwargs=kwargs)
 
     def save(self, *args, **kwargs):
         # There can be only one. Default, that is.
@@ -99,7 +104,6 @@ class Document(models.Model):
     def __unicode__(self):
         return "/".join([self.release.lang, self.release.version, self.path])
 
-    @models.permalink
     def get_absolute_url(self):
         if self.path:
             kwargs = {
@@ -107,10 +111,10 @@ class Document(models.Model):
                 'version': self.release.version,
                 'url': self.path,
             }
-            return ('document-detail', [], kwargs)
+            return reverse('document-detail', host='docs', kwargs=kwargs)
         else:
             kwargs = {
                 'lang': self.release.lang,
                 'version': self.release.version,
             }
-            return ('document-index', [], kwargs)
+            return reverse('document-index', host='docs', kwargs=kwargs)
