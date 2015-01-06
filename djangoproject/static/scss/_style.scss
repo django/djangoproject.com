@@ -398,6 +398,12 @@ blockquote {
 	@include old-ie {
 		min-width: 768px;
 	}
+
+	&.sidebar-right {
+		.mdzr-boxshadow & {
+			@include box-shadow(-1200px 0 0 0px #fff);
+		}
+	}
 }
 
 
