@@ -19,8 +19,8 @@ To run locally, do the usual:
 
     make install
 
-#. Create a 'secrets.json' file in the directory above the checkout, containing
-   something like::
+#. Create a 'secrets.json' file in a folder named 'conf' in the directory
+   above your cloned repo, containing something like::
 
     { "secret_key": "xyz",
       "superfeedr_creds": ["any@email.com", "some_string"] }
