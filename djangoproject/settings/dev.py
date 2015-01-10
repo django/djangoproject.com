@@ -30,11 +30,6 @@ DOCS_BUILD_ROOT = BASE_DIR.child('djangodocs')
 
 PARENT_HOST = 'djangoproject.dev:8000'
 
-# Haystack settings
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
-
-HAYSTACK_WHOOSH_PATH = BASE.child('djangodocs.index')
-
 # django-push settings
 
 PUSH_SSL_CALLBACK = False

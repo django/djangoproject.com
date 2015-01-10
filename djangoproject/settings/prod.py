@@ -61,12 +61,6 @@ HOST_SCHEME = 'https'
 
 PARENT_HOST = 'djangoproject.com'
 
-# Haystack settings
-
-HAYSTACK_SEARCH_ENGINE = 'xapian'
-
-HAYSTACK_XAPIAN_PATH = BASE.parent.parent.child('data').child('djangodocs.index')
-
 # django-push settings
 
 PUSH_SSL_CALLBACK = True

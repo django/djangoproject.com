@@ -1,0 +1,79 @@
+{% extends "docs/doc.html" %}
+{% load i18n docs %}
+
+{% block title %}{% trans "Search | Django documentation" %}{% endblock %}
+
+{% block toc-wrapper %}{% endblock %}
+{% block breadcrumbs-wrapper %}{% endblock %}
+{% block last-update-wrapper %}{% endblock %}
+{% block browse-wrapper %}{% endblock %}
+{% block links-wrapper %}{% endblock %}
+
+{% block body %}
+{% if query %}
+<h2>
+{% if release.is_dev %}
+  {% blocktrans count num_results=paginator.count %}
+    Only 1 result for <em>{{ query }}</em> in the development version
+  {% plural %}
+    {{ num_results }} results for <em>{{ query }}</em> in the development version
+  {% endblocktrans %}
+{% else %}
+  {% blocktrans count num_results=paginator.count %}
+    Only 1 result for <em>{{ query }}</em> in version {{ version }}
+  {% plural %}
+    {{ num_results }} results for <em>{{ query }}</em> in version {{ version }}
+  {% endblocktrans %}
+{% endif %}
+</h2>
+{% else %}
+<h2>{% trans "No search query given" %}</h2>
+{% endif %}
+
+{% if query %}
+  <div id="docs-content">
+    <dl class="search-links">
+    {% for result in page.object_list %}
+    <dt>
+      <h2 class="result-title">
+        <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}">{{ result.title }}</a>
+      </h2>
+      <span class="meta breadcrumbs">
+        {% for breadcrumb in result.breadcrumbs %}
+        <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=breadcrumb.path host 'docs' %}">{{ breadcrumb.title }}</a>{% if not forloop.last %} <span class="arrow">»</span>{% endif %}
+        {% endfor %}
+      </span>
+    </dt>
+    <dd>
+      {{ result.meta.highlight.content.0|safe }}…
+    </dd>
+    {% endfor %}
+    </dl>
+  </div>
+
+  {% if page.has_previous or page.has_next %}
+  <div class="pagination">
+    <ul class="nav-pagination" role="navigation">
+      {% if page.has_previous %}
+      <li><a class="previous" href="?q={{ query }}&amp;release={{ release.version }}&amp;page={{ page.previous_page_number }}">
+        <i class="icon icon-chevron-left"></i>
+        <span class="visuallyhidden">{% trans "Previous" %}</span>
+      </a></li>
+      {% endif %}
+      <span class="page-current">
+      {% blocktrans with page_number=page.number num_pages=page.paginator.num_pages %}
+        Page {{ page_number }} of {{ num_pages }}
+      {% endblocktrans %}
+      </span>
+      {% if page.has_next %}
+      <li><a class="next" href="?q={{ query }}&amp;release={{ release.version }}&amp;page={{ page.next_page_number }}">
+        <i class="icon icon-chevron-right"></i>
+        <span class="visuallyhidden">{% trans "Next" %}</span>
+      </a></li>
+      {% endif %}
+    </ul>
+  </div>
+{% endif %}
+
+{% endif %}
+{% endblock %}

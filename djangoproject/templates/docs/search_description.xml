@@ -1,0 +1,18 @@
+{% load i18n staticfiles %}<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>{% blocktrans with version=release.human_version %}Django {{ version }} documentation{% endblocktrans %}</ShortName>
+  <Description>{% blocktrans with version=release.human_version %}Search Django {{ version }} documentation{% endblocktrans %}</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <OutputEncoding>UTF-8</OutputEncoding>
+  <Image width="16" height="16" type="image/x-icon">http://{{ site.domain }}{% static "img/favicon.ico" %}</Image>
+  <Image width="32" height="32" type="image/x-icon">http://{{ site.domain }}{% static "img/favicon.ico" %}</Image>
+  <Query role="example" searchTerms="testing" />
+  <Developer>{% trans "Django team" %}</Developer>
+  <SyndicationRight>open</SyndicationRight>
+  <AdultContent>false</AdultContent>
+  <Language>{{ release.lang }}</Language>
+  <Url type="application/x-suggestions+json" rel="suggestions" template="{% url 'document-search-suggestions' lang=release.lang version=release.version host 'docs' %}?q={searchTerms}"/>
+  <Url type="text/html" rel="results" method="get" template="{% url 'document-search' lang=release.lang version=release.version host 'docs' %}?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="{% url 'document-search-description' lang=release.lang version=release.version host 'docs' %}"/>
+</OpenSearchDescription>
