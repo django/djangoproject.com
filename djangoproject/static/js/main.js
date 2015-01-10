@@ -1,5 +1,5 @@
 // Require.js Module Loader - http://requirejs.org
-define(function(){
+define(function() {
 	var mods = [
 		'mod/mobile-menu', // require mobile menu automatically
         'mod/alternative-resolutions'
@@ -72,6 +72,11 @@ define(function(){
 
 	if (hasClass('dashboard-detail')) {
 		mods.push('dashboard/detail');
+	}
+
+	// search form
+	if (hasClass('search')) {
+		mods.push('mod/search-key');
 	}
 
 	require(mods);

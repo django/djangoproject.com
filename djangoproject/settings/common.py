@@ -66,7 +66,6 @@ INSTALLED_APPS = [
     'django_push.subscriber',
 
     'djangosecure',
-    'haystack',
     'registration',
     'django_pygments',
     'django_hosts',
@@ -78,7 +77,7 @@ INSTALLED_APPS = [
     'cla',
     'contact',
     'dashboard',
-    'docs',
+    'docs.apps.DocsConfig',
     'legacy',
     'releases',
     'svntogit',
@@ -196,10 +195,6 @@ SECURE_BROWSER_XSS_FILTER = True
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
-# Haystack settings
-
-HAYSTACK_SITECONF = 'docs.search_sites'
-
 # django-contact-form / Akismet settings
 
 AKISMET_API_KEY = "c892e4962244"
@@ -246,3 +241,6 @@ THUMBNAIL_ALTERNATIVE_RESOLUTIONS = [2]
 # dashboard settings
 TRAC_RPC_URL = "https://code.djangoproject.com/rpc"
 TRAC_URL = "https://code.djangoproject.com/"
+
+# search settings
+ES_HOST = SECRETS.get('es_host', 'localhost:9200')

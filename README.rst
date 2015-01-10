@@ -208,3 +208,23 @@ depedencies. See its documentation for how to use it. Here's the gist:
 To update any of the dependencies, edit the ``bower.json`` file accordingly
 and then run ``bower install`` to download the appropriate files to the
 static directory. Commit the downloaded files to git (vendoring).
+
+Documentation search
+--------------------
+
+In case you want to use the documentation search you have to install
+Elasticsearch locally and start it on port ``9200`` (the default).
+See the `official Elasticsearch docs`_ for how to set it up.
+
+When running ``./manage.py update_docs`` to build all documents it will also
+automatically index every document it builds in the search engine as well.
+In case you've already built the documents and would like to reindex the
+search index run the command::
+
+    ./manage.py update_index
+
+This is also the right command to run when you work on the search feature
+itself. You can pass the ``-d`` option to try to drop the search index
+first before indexing all the documents.
+
+.. _`official Elasticsearch docs`: http://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html
