@@ -33,6 +33,8 @@ LOGGING["handlers"]["syslog"] = {
 }
 LOGGING["loggers"]["django.request"]["handlers"].append("syslog")
 
+MEDIA_ROOT = BASE_DIR.parent.child('media')
+
 MIDDLEWARE_CLASSES = (['django.middleware.cache.UpdateCacheMiddleware'] +
                       MIDDLEWARE_CLASSES +
                       ['django.middleware.cache.FetchFromCacheMiddleware'])
@@ -40,6 +42,8 @@ MIDDLEWARE_CLASSES = (['django.middleware.cache.UpdateCacheMiddleware'] +
 SESSION_COOKIE_SECURE = True
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+STATIC_ROOT = BASE_DIR.parent.child('static')
 
 # django-secure settings
 
@@ -49,7 +53,7 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 # Docs settings
 
-DOCS_BUILD_ROOT = BASE.parent.parent.child('data').child('docbuilds')
+DOCS_BUILD_ROOT = BASE_DIR.parent.child('data').child('docbuilds')
 
 # django-hosts settings
 
