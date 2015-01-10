@@ -24,7 +24,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SESSION_COOKIE_SECURE = False
 
 # Docs settings
-DOCS_BUILD_ROOT = BASE.ancestor(1).child('djangodocs')
+DOCS_BUILD_ROOT = BASE_DIR.child('djangodocs')
 
 # django-hosts settings
 
