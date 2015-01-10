@@ -2779,3 +2779,57 @@ hr {
 .clearfix, .group-container {
 	@include clearfix;
 }
+
+/// Fundraising page
+.heart-section {
+	margin-top: 50px;
+
+	.heart {
+		max-width: 55%;
+		float: left;
+		img {
+			max-width: 100%;
+		}
+	}
+	.description {
+		float: left;
+		margin-left: 5%;
+		width: 40%;
+
+		h2 {
+			margin-top: 0;
+			@include font-size(28);
+		}
+	}
+	.donate {
+		select {
+			width: 100%;
+		}
+		.cta {
+			margin: 10px 0;
+		}
+	}
+	.cls {
+		clear: both;
+	}
+	.footnote {
+		color: $gray-medium;
+		@include font-size(14);
+		margin-top: 20px;
+		text-align: center;
+	}
+}
+.heros-section {
+	.heros {
+		clear: both;
+		div {
+			width: 25%;
+			float: left;
+			text-align: center;
+			margin: 15px 0;
+			img {
+				max-width: 90%;
+			}
+		}
+	}
+}

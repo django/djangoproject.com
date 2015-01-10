@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^conduct/enforcement-manual/$', TemplateView.as_view(template_name='conduct/enforcement.html'), name='conduct_enforcement'),
     url(r'^conduct/changes/$', TemplateView.as_view(template_name='conduct/changes.html'), name='conduct_changes'),
     url(r'^contact/', include('contact.urls')),
+    url(r'^fundraising/', include('fundraising.urls')),
     url(r'^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', 'django.contrib.contenttypes.views.shortcut'),
 
     # There's no school like the old school.
