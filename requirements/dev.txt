@@ -1,5 +1,4 @@
 -r common.txt
 
-Fabric==1.10.1
 whoosh<2.5
 libsass==0.7.0
