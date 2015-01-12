@@ -72,6 +72,7 @@ $old-ie: false !default;
 @mixin monospace {
 	font-family: "Fira Mono", Consolas, Menlo, Monaco, "Courier New", Courier, monospace;
 	font-variant: none;  // disables the ligatures and other things
+	text-rendering: optimizeSpeed;  // for Safari 7.x
 }
 
 // Font Sizing Mixin (http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/)
