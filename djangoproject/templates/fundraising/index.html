@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Support Django{% endblock %}
+{% block layout_class %}full-width{% endblock %}
+
+{% block header %}
+<h1 class="visuallyhidden">Support Django</h1>
+<p>Help us and support <em>Django</em> development by donating to the <em>Django Fellowship</em> program.</p>
+{% endblock %}
+
+{% block content %}
+<h1>Support Django Fellowship Program!</h1>
+
+<div class="heart-section" id="donate">
+  <div class="heart">
+    <img src="{% static 'img/fundraising-heart.png' %}" />
+  </div>
+  <div class="description">
+    <h2>Week 3</h2>
+    <ul>
+      <li><b>51% funded</b></li>
+      <li><b>$4,000 donated</b> of $2,450 goal</li>
+      <li><b>14 donors</b></li>
+    </ul>
+
+    <div class="donate">
+      <form>
+        <h3>Help us make it happen:</h3>
+        <select>
+          <option>1 hour: $44,75</option>
+          <option>2 hours: $89,50</option>
+          <option>4 hours: $185</option>
+          <option>1 day: $375</option>
+          <option>3 days: $1,125</option>
+          <option>1 week: $2,250</option>
+        </select>
+        <input type="submit" value="Donate via PayPal" class="cta" />
+      </form>
+    </div>
+  </div>
+  <div class="cls"></div>
+  <p class="footnote">Your logo will be visible below if you buy at least one day worth of Django Fellowship program.</p>
+</div>
+
+<hr style="margin: 40px 0" />
+
+<h1>About the program</h1>
+<p>Django Fellowship is a project where paid contractors are engaged to manage some of the administrative and community management
+  tasks of the Django project to support rapid development of Django itself. The first three months of the pilot project proved to be very
+  successful, but <b>we need your help</b> to keep this going.</p>
+
+<blockquote>
+  <p>The Django Fellowship quote testimonial. The Django Fellowship quote testimonial. The Django Fellowship quote testimonial
+. The Django Fellowship quote testimonial. The Django Fellowship quote testimonial</p>
+  <em>Aymeric Augustin, Django Core Developer</em>
+</blockquote>
+
+<p>The weekly cost of Django Fellowship program costs Django Software Foundation $2,450. With the very limited funds, the DSF can't afford this.
+  Every week we're going to ask the community members to help us fund at least one hour of Fellows work. </p>
+
+<p><a href="#about">Learn more about the Django Fellowship program</a>.</p>
+
+
+<hr style="margin: 40px 0" />
+
+<div class="heros-section">
+  <h1>Django Heros</h1>
+  <p>We're incredibly grateful to everyone who donated to make this happen. We couldn't possibly do it without the continous
+  support from the community.</p>
+
+  <h2>Django Heros of Week 3</h2>
+  <div class="heros">
+    <div><a href=""><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></a></div>
+    <div><a href=""><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></a></div>
+    <div><a href=""><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></a></div>
+    <div><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></div>
+    <div><a href="">Jan Kowalski</a></div>
+    <div>Jan Kowalski</div>
+    <div><a href="">Jan Kowalski</a></div>
+    <div><a href="">Jan Kowalski</a></div>
+  </div>
+  <div style="clear: both"></div>
+
+  <a href="#donate" class="cta">Join them and <em>support Django</em>!</a>
+
+  <h2>Django Heros of Week 2</h2>
+  <div class="heros">
+    <div><a href=""><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></a></div>
+    <div><a href=""><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></a></div>
+    <div><a href=""><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></a></div>
+    <div><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></div>
+    <div><a href="">Jan Kowalski</a></div>
+    <div>Jan Kowalski</div>
+    <div><a href="">Jan Kowalski</a></div>
+    <div><a href="">Jan Kowalski</a></div>
+  </div>
+
+  <div class="pagination">
+    <ul class="nav-pagination" role="navigation" style="border-top: 0">
+      <li><a class="previous" href="?page={{ page_obj.previous_page_number }}">
+        <i class="icon icon-chevron-left"></i>
+        <span class="visuallyhidden">Previous</span>
+      </a></li>
+      <li><a class="next" href="?page={{ page_obj.next_page_number }}">
+        <i class="icon icon-chevron-right"></i>
+        <span class="visuallyhidden">Next</span>
+      </a></li>
+    </ul>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block content-extra %}
+  <div class="layout-tertiary" id="about">
+    <div class="container">
+        <h2>What is Django Fellowship?</h2>
+        <p><a href="https://www.djangoproject.com/weblog/2014/sep/18/dsf-calls-applicants-django-fellow/">Django Fellowship program</a> is a project where paid contractors have been engaged to manage some of the administrative and community management tasks of Django project. The initial pilot took three months and came to close in mid-January; one of the major goals is to secure funding for this program on an ongoing basis.</p>
+        <p>The first three months of the Django Fellowship program have been very successful. In this short time Django Fellows worked on around 240 pull requests (including revising some of the major features that will be in Django 1.8), triaged at least 90 different tickets and made around 200 commits in total!</p>
+        <p>We believe the program has already had a great positive impact on how Django is developed and maintained. Release blocking and severe bugs are not postponed indefinitely. Django Fellows ensures that patches and contributions by the community are reviewed and looked at quickly.</p>
+        <p>The Django Fellowship program costs around $10K each month to maintain.</p>
+
+        <h2>Who are Django Fellows?</h2>
+        {# here we need Tim's and Berker's photos! #}
+        <p><b>Tim Graham</b> - a member of the core team for several years, and for the last 12 months has been a major contributor, reviewing and merging pull requests. Tim has been contracted as a full-time Fellow for the duration of the 3 month pilot.</p>
+        <p><b>Berker Peksağ</b> - a core developer on CPython, Gunicorn and Hylang. In the Django community, he has submitted a few patches, as well as organized a Django sprint in Istanbul. During the 3 month pilot, Berker supported Tim part-time.</p>
+    </div>
+  </div>
+{% endblock %}
