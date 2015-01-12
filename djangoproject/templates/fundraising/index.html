@@ -12,15 +12,6 @@
 {% block content %}
 <h1>Support Django Fellowship Program!</h1>
 
-<p>Django Fellows is a project where paid contractors are engaged to manage some of the administrative and community management
-  tasks of the Django project to support rapid development of Django itself. The first three months of the pilot project proved to be very
-successful, but <b>we need your help</b> to keep this going.</p>
-
-<p>The weekly cost of Django Fellowship program costs Django Software Foundation $2,450. With the very limited funds, the DSF can't afford this.
-  Every week we're going to ask the community members to help us fund at least one hour of Fellows work. </p>
-
-<p><a href="#about">Learn more about Django Fellowship program</a>.</p>
-
 <div class="heart-section" id="donate">
   <div class="heart">
     <img src="{% static 'img/fundraising-heart.png' %}" />
@@ -50,8 +41,19 @@ successful, but <b>we need your help</b> to keep this going.</p>
   </div>
   <div class="cls"></div>
   <p class="footnote">Your logo will be visible below if you buy at least one day worth of Django Fellowship program.</p>
-
 </div>
+
+<hr style="margin: 40px 0 60px" />
+
+<p>Django Fellows is a project where paid contractors are engaged to manage some of the administrative and community management
+  tasks of the Django project to support rapid development of Django itself. The first three months of the pilot project proved to be very
+  successful, but <b>we need your help</b> to keep this going.</p>
+
+<p>The weekly cost of Django Fellowship program costs Django Software Foundation $2,450. With the very limited funds, the DSF can't afford this.
+  Every week we're going to ask the community members to help us fund at least one hour of Fellows work. </p>
+
+<p><a href="#about">Learn more about Django Fellowship program</a>.</p>
+
 
 <hr style="margin: 40px 0 60px" />
 
@@ -102,49 +104,9 @@ successful, but <b>we need your help</b> to keep this going.</p>
 
 </div>
 
-  <div class="section">
+{% endblock %}
 
-  </div>
-  {% endblock %}
-
-  {% block content-related %}
-
-  {# Remove the sites in the list below that are used in case studies once they are there #}
-
-  {% comment %}
-  <div class="layout-secondary">
-    <div class="container">
-      <h1><span>Case Studies</span></h1>
-      <p>You’ve probably used a site that uses Django. Find out why Django was the right solution for these organizations.</p>
-
-
-      <ul class="list-case-study">
-        <li>
-          <h3 class="logo" title="Mozilla">Mozilla</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
-          <a href="{% url 'case_study' %}">Read More</a>
-        </li>
-        <li>
-          <h3 class="logo" title="Disqus">Disqus</h3>
-          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          <a href="{% url 'case_study' %}">Read More</a>
-        </li>
-        <li>
-          <h3 class="logo" title="Knight Foundation">Knight Foundation</h3>
-          <p>When the Knight Foundation began redesigning their <a href="http://www.knightfoundation.org">website</a>, they were on multiple content management systems they’d outgrown, with a site that couldn’t handle traffic spikes. Knight needed a future-proof solution.</p>
-          <a href="{% url 'case_study' %}">Read More</a>
-        </li>
-      </ul>
-
-      <a href="{% url 'case_study_index' %}" class="link-readmore">See all case studies</a>
-    </div>
-  </div>
-  {% endcomment %}
-
-  {% endblock %}
-
-  {% block content-extra %}
-
+{% block content-extra %}
   <div class="layout-tertiary" id="about">
     <div class="container">
         <h2>What is Django Fellowship?</h2>
@@ -159,4 +121,4 @@ successful, but <b>we need your help</b> to keep this going.</p>
         <p><b>Berker Peksağ</b> - a core developer on CPython, Gunicorn and Hylang. In the Django community, he has submitted a few patches, as well as organized a Django sprint in Istanbul. During the 3 month pilot, Berker supported Tim part-time.</p>
     </div>
   </div>
-  {% endblock %}
+{% endblock %}
