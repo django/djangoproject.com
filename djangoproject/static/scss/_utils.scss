@@ -71,7 +71,7 @@ $old-ie: false !default;
 }
 @mixin monospace {
 	font-family: "Fira Mono", Consolas, Menlo, Monaco, "Courier New", Courier, monospace;
-	font-variant: none;  // disables the ligatures and other things
+	font-variant-ligatures: no-common-ligatures;  // disables the common ligatures only
 	text-rendering: optimizeSpeed;  // for Safari 7.x
 }
 
