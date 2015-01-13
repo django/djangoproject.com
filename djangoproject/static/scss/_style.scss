@@ -2084,8 +2084,8 @@ h2 + .list-link-soup {
 				content: $fa-var-cogs;
 			}
 		}
-		.last {
-			margin-bottom: 10px;
+		.last, .highlight {
+			margin-bottom: 0px;
 		}
 }
 
@@ -2257,7 +2257,6 @@ h2 + .list-link-soup {
 }
 
 .versionadded, .versionchanged, .versionmodified {
-	color: $text-light;
 	@include sans-serif;
 	font-weight: bold;
 	margin-bottom: 20px;
@@ -2273,6 +2272,27 @@ h2 + .list-link-soup {
 			margin-bottom: 0;
 		}
 	}
+}
+
+.deprecated {
+	@extend .versionchanged;
+
+	.versionadded, .versionchanged, .versionmodified {
+		border: none;
+		padding: 0;
+		margin-bottom: 0;
+		display: block;
+	}
+
+	p {
+		font-weight: normal;
+		margin-top: 0;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+
 }
 
 dl.function, dl.class, dl.method, dl.attribute {
