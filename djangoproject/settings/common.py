@@ -1,5 +1,6 @@
 # Settings for www.djangoproject.com
 import json
+import os
 
 from unipath import FSPath as Path
 
@@ -73,6 +74,7 @@ INSTALLED_APPS = [
     'blog',
     'cla',
     'contact',
+    'dashboard',
     'docs',
     'legacy',
     'releases',
@@ -235,3 +237,8 @@ STRIPE_PUBLISHABLE_KEY = SECRETS.get('stripe_publishable_key', 'pk_test_TyB5jcRO
 # sorl-thumbnail settings
 THUMBNAIL_PRESERVE_FORMAT = True
 THUMBNAIL_ALTERNATIVE_RESOLUTIONS = [2]
+
+# dashboard settings
+TRAC_CREDS = os.environ.get('TRAC_CREDS')  # Set to "user:pass" for Trac.
+TRAC_RPC_URL = "https://code.djangoproject.com/rpc"
+TRAC_URL = "https://code.djangoproject.com/"

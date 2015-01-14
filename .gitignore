@@ -8,3 +8,4 @@ secrets.json
 .sass-cache/
 .coverage
 .tox
+djangoproject/static/js/lib/jquery-flot/examples
