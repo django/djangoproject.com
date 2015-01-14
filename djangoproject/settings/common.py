@@ -1,5 +1,6 @@
 # Settings for www.djangoproject.com
 import json
+import os
 
 from unipath import FSPath as Path
 
@@ -72,6 +73,7 @@ INSTALLED_APPS = [
     'blog',
     'cla',
     'contact',
+    'dashboard',
     'docs',
     'legacy',
     'releases',
@@ -230,3 +232,8 @@ SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
 # only testing keys as fallback values here please!
 STRIPE_SECRET_KEY = SECRETS.get('stripe_secret_key', 'sk_test_x6zP4wd7Z5jcvDOJbbHZlHHt')
 STRIPE_PUBLISHABLE_KEY = SECRETS.get('stripe_publishable_key', 'pk_test_TyB5jcROwK8mlCNrn3dCwW7l')
+
+# dashboard settings
+TRAC_CREDS = os.environ.get('TRAC_CREDS')  # Set to "user:pass" for Trac.
+TRAC_RPC_URL = "https://code.djangoproject.com/rpc"
+TRAC_URL = "https://code.djangoproject.com/"
