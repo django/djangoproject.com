@@ -1,0 +1,23 @@
+{% extends "base_dashboard.html" %}
+{% load i18n %}
+
+{% block content %}
+  {% for report in data %}
+    {% ifchanged report.metric.category %}
+      {% if report.metric.category %}<h2>{{ report.metric.category }}</h2>{% endif %}
+    {% endifchanged %}
+    <div class="metric{% if report.metric.show_sparkline %} has-sparkline{% endif %}">
+      <h3><a href="{{ report.metric.link }}">{{ report.metric.name }}</a></h3>
+      <div class="value" >
+        <a href="{{ report.metric.link }}">{{ report.latest.measurement }}{% if report.metric.unit == "%" %}%{% endif %}</a>
+        <div class="timestamp">&nbsp;</div>
+      </div>
+      {% if report.metric.show_sparkline %}
+        <div class="sparkline" id="spark{{ forloop.counter0 }}" data-metric="{{ report.metric.slug }}"></div>
+      {% endif %}
+    </div>
+  {% endfor %}
+  <p class="updated">
+    {% blocktrans %}Updated {{ data.0.latest.timestamp|timesince }} ago.{% endblocktrans %}
+  </p>
+{% endblock %}

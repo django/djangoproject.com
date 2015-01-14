@@ -1,0 +1,246 @@
+[
+    {
+        "fields": {
+            "position": 1,
+            "name": "Activity"
+        },
+        "model": "dashboard.category",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "position": 2,
+            "name": "Patches"
+        },
+        "model": "dashboard.category",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "position": 3,
+            "name": "Tickets by triage stage"
+        },
+        "model": "dashboard.category",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "position": 4,
+            "name": "Accepted tickets by type"
+        },
+        "model": "dashboard.category",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "category": 3,
+            "show_on_dashboard": true,
+            "name": "Unreviewed tickets",
+            "period": "instant",
+            "show_sparkline": true,
+            "query": "status=!closed&stage=Unreviewed",
+            "unit_plural": "tickets",
+            "position": 1,
+            "slug": "unreviewed",
+            "unit": "ticket"
+        },
+        "model": "dashboard.tracticketmetric",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "category": 2,
+            "show_on_dashboard": true,
+            "name": "Patches needing review",
+            "period": "instant",
+            "show_sparkline": true,
+            "query": "status=!closed&needs_better_patch=0&needs_tests=0&needs_docs=0&has_patch=1&stage=Accepted",
+            "unit_plural": "tickets",
+            "position": 1,
+            "slug": "patches",
+            "unit": "ticket"
+        },
+        "model": "dashboard.tracticketmetric",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "category": 2,
+            "show_on_dashboard": true,
+            "name": "Doc. patches needing review",
+            "period": "instant",
+            "show_sparkline": true,
+            "query": "status=!closed&needs_better_patch=0&component=Documentation&needs_tests=0&needs_docs=0&has_patch=1&stage=Accepted",
+            "unit_plural": "tickets",
+            "position": 1,
+            "slug": "doc-patches",
+            "unit": "ticket"
+        },
+        "model": "dashboard.tracticketmetric",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "category": 3,
+            "show_on_dashboard": true,
+            "name": "Tickets needing design decision",
+            "period": "instant",
+            "show_sparkline": true,
+            "query": "status=!closed&stage=Design decision needed",
+            "unit_plural": "tickets",
+            "position": 1,
+            "slug": "ddn",
+            "unit": "ticket"
+        },
+        "model": "dashboard.tracticketmetric",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "category": 3,
+            "show_on_dashboard": true,
+            "name": "Tickets ready for commit",
+            "period": "instant",
+            "show_sparkline": true,
+            "query": "status=!closed&stage=Ready for checkin",
+            "unit_plural": "tickets",
+            "position": 1,
+            "slug": "rfc",
+            "unit": "ticket"
+        },
+        "model": "dashboard.tracticketmetric",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "category": 1,
+            "show_on_dashboard": true,
+            "name": "Release blockers",
+            "period": "instant",
+            "show_sparkline": true,
+            "query": "status=!closed&severity=Release blocker",
+            "unit_plural": "tickets",
+            "position": 1,
+            "slug": "blockers",
+            "unit": "ticket"
+        },
+        "model": "dashboard.tracticketmetric",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "category": 1,
+            "show_on_dashboard": true,
+            "name": "New tickets this week",
+            "period": "weekly",
+            "show_sparkline": true,
+            "query": "time=thisweek..",
+            "unit_plural": "tickets",
+            "position": 1,
+            "slug": "new-tickets-week",
+            "unit": "ticket"
+        },
+        "model": "dashboard.tracticketmetric",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "category": 1,
+            "show_on_dashboard": true,
+            "name": "New tickets today",
+            "period": "daily",
+            "show_sparkline": true,
+            "query": "time=today..",
+            "unit_plural": "tickets",
+            "position": 1,
+            "slug": "new-tickets-today",
+            "unit": "ticket"
+        },
+        "model": "dashboard.tracticketmetric",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "category": 2,
+            "show_on_dashboard": true,
+            "name": "\"Easy\" tickets",
+            "period": "instant",
+            "show_sparkline": true,
+            "query": "status=!closed&easy=1&stage=Accepted",
+            "unit_plural": "tickets",
+            "position": 1,
+            "slug": "easy-tickets",
+            "unit": "ticket"
+        },
+        "model": "dashboard.tracticketmetric",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "category": 1,
+            "show_on_dashboard": true,
+            "name": "Commits today",
+            "feed_url": "http://code.djangoproject.com/timeline?changeset=on&max=0&daysback=0&format=rss",
+            "link_url": "http://code.djangoproject.com/timeline?changeset=on&max=0&daysback=0",
+            "period": "daily",
+            "show_sparkline": true,
+            "unit_plural": "commits",
+            "position": 1,
+            "slug": "commits-today",
+            "unit": "commit"
+        },
+        "model": "dashboard.rssfeedmetric",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "category": 1,
+            "show_on_dashboard": true,
+            "name": "Commits in the last week",
+            "feed_url": "http://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7&format=rss",
+            "link_url": "http://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7",
+            "period": "weekly",
+            "show_sparkline": true,
+            "unit_plural": "commits",
+            "position": 1,
+            "slug": "commits-week",
+            "unit": "commit"
+        },
+        "model": "dashboard.rssfeedmetric",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "category": 2,
+            "show_on_dashboard": true,
+            "name": "Pull Requests (Open)",
+            "link_url": "https://github.com/django/django/pulls",
+            "period": "instant",
+            "show_sparkline": true,
+            "unit_plural": "pull requests",
+            "position": 1,
+            "slug": "pull-requests-open",
+            "unit": "pull request",
+            "api_url": "https://api.github.com/repos/django/django/pulls?state=open"
+        },
+        "model": "dashboard.githubitemcountmetric",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "category": 2,
+            "show_on_dashboard": true,
+            "name": "Pull Requests (Closed)",
+            "link_url": "https://github.com/django/django/pulls",
+            "period": "instant",
+            "show_sparkline": true,
+            "unit_plural": "pull requests",
+            "position": 1,
+            "slug": "pull-requests-closed",
+            "unit": "pull request",
+            "api_url": "https://api.github.com/repos/django/django/pulls?state=closed"
+        },
+        "model": "dashboard.githubitemcountmetric",
+        "pk": 2
+    }
+]
