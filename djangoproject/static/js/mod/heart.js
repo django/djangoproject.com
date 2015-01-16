@@ -7,10 +7,7 @@ define([
 	var cerise = '#d62d75';
 	var razzmatazz = '#ee2178';
 	var illusion = '#f7b0cf';
-
-	var Heart = function(heart) {
-		this.heart = $(heart);
-		this.pixels = [
+	var pixels = [
 			// Row 1
 			{x:1, y: 0, color: maroon},
 			{x:2, y: 0, color: amaranth},
@@ -50,26 +47,31 @@ define([
 			// Row 6
 			{x:3, y: 5, color: razzmatazz},
 		];
+
+	var Heart = function(heart) {
+		this.heart = $(heart);
 		this.init();
 	};
 
 	Heart.prototype = {
 		init: function() {
-			this.percent = this.heart.data('percent');
-			this.pixelCount = Math.floor(this.pixels.length * this.percent / 100);
-			this.depixelate();
+			this.pixels = pixels.map(function (pixel) {
+				return new Rectangle(pixel);
+			});
+			this.fadePixels();
 			this.draw();
 		},
-		depixelate: function () {
-			for (var i = 0; i < this.pixelCount; i++) {
+		fadePixels: function () {
+			var percent = this.heart.data('percent');
+			var fadedCount = Math.floor(this.pixels.length * percent / 100);
+			for (var i = 0; i < fadedCount; i++) {
 				var index = Math.floor(Math.random() * this.pixels.length);
-				this.pixels[index].hide = true;
+				this.pixels[index].hide();
 			}
 		},
 		draw: function() {
-			this.pixels.forEach(function (pixel) {
-				var element = new Rectangle(pixel).element;
-				document.getElementById('pixels').appendChild(element);
+			this.pixels.forEach(function (p) {
+				document.getElementById('pixels').appendChild(p.element);
 			});
 		}
 	};
@@ -88,12 +90,12 @@ define([
 			this.setAttr('width', this.size);
 			this.setAttr('height', this.size);
 			this.setAttr('fill', opts.color);
-			if (opts.hide) {
-				this.setAttr('class', 'faded');
-			}
 		},
 		setAttr: function(name, value) {
 			this.element.setAttributeNS(null, name, value);
+		},
+		hide: function () {
+			this.setAttr('class', 'faded');
 		}
 	};
 
