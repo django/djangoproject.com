@@ -2785,10 +2785,11 @@ hr {
 	margin-top: 50px;
 
 	.heart {
-		max-width: 55%;
+		width: 55%;
 		float: left;
-		img {
-			max-width: 100%;
+		img, svg {
+			width: 100%;
+			height: auto;
 		}
 	}
 	.description {
