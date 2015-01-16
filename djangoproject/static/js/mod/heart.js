@@ -57,7 +57,16 @@ define([
 
 	Heart.prototype = {
 		init: function() {
+			this.percent = this.heart.data('percent');
+			this.pixelCount = Math.floor(this.pixels.length * this.percent / 100);
+			this.depixelate();
 			this.draw();
+		},
+		depixelate: function () {
+			while (this.pixels.length > this.pixelCount) {
+				var index = Math.floor(Math.random() * this.pixels.length);
+				this.pixels.splice(index, 1);
+			}
 		},
 		draw: function() {
 			this.pixels.forEach(function (pixel) {
