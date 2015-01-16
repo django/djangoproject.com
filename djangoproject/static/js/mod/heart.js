@@ -75,14 +75,18 @@ define([
 			var percent = this.heart.data('percent');
 			var fadedCount = Math.floor(this.pixels.length * (100 - percent) / 100);
 			for (var i = 0; i < fadedCount; i++) {
-				getRandomElement(this.pixels).hide();
+				getRandomElement(this.visiblePixels()).hide();
 			}
 		},
+		hiddenPixels: function () {
+			return this.pixels.filter(function (p) { return p.isHidden; });
+		},
+		visiblePixels: function () {
+			return this.pixels.filter(function (p) { return !p.isHidden; });
+		},
 		moveFadedPixel: function () {
-			var isHidden = function (p) { return p.isHidden; };
-			var isVisible = function (p) { return !p.isHidden; };
-			var hiddenPixels = this.pixels.filter(isHidden);
-			var visiblePixels = this.pixels.filter(isVisible);
+			var hiddenPixels = this.hiddenPixels();
+			var visiblePixels = this.visiblePixels();
 			if (hiddenPixels.length && visiblePixels.length) {
 				var oldPixel = getRandomElement(hiddenPixels).show();
 				var newPixel = getRandomElement(visiblePixels).hide();
