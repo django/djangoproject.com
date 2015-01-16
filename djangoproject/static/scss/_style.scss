@@ -2791,10 +2791,12 @@ hr {
 			width: 100%;
 			height: auto;
 		}
-		rect.faded {
-			opacity: 0.05;
+		rect {
 			@include transition(opacity 250ms ease-out);
-			&:hover { opacity: 0.9; }
+			&.faded {
+				opacity: 0.05;
+				&:hover { opacity: 0.9; }
+			}
 		}
 	}
 	.description {
