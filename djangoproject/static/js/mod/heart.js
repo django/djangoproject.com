@@ -73,7 +73,7 @@ define([
 		},
 		fadePixels: function () {
 			var percent = this.heart.data('percent');
-			var fadedCount = Math.floor(this.pixels.length * percent / 100);
+			var fadedCount = Math.floor(this.pixels.length * (100 - percent) / 100);
 			for (var i = 0; i < fadedCount; i++) {
 				getRandomElement(this.pixels).hide();
 			}
