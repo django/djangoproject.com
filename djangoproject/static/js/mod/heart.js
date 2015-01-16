@@ -48,6 +48,10 @@ define([
 			{x:3, y: 5, color: razzmatazz},
 		];
 
+	function getRandomElement(array) {
+		return array[Math.floor(Math.random() * array.length)];
+	}
+
 	var Heart = function(heart) {
 		this.heart = $(heart);
 		this.init();
@@ -60,14 +64,25 @@ define([
 			});
 			this.fadePixels();
 			this.draw();
+			var heart = this;
+			window.setInterval(function () {
+				heart.moveFadedPixel();
+			}, 5000);
 		},
 		fadePixels: function () {
 			var percent = this.heart.data('percent');
 			var fadedCount = Math.floor(this.pixels.length * percent / 100);
 			for (var i = 0; i < fadedCount; i++) {
-				var index = Math.floor(Math.random() * this.pixels.length);
-				this.pixels[index].hide();
+				getRandomElement(this.pixels).hide();
 			}
+		},
+		moveFadedPixel: function () {
+			var isHidden = function (p) { return p.isHidden; };
+			var isVisible = function (p) { return !p.isHidden; };
+			var hiddenPixels = this.pixels.filter(isHidden);
+			var visiblePixels = this.pixels.filter(isVisible);
+			var oldPixel = getRandomElement(hiddenPixels).show();
+			var newPixel = getRandomElement(visiblePixels).hide();
 		},
 		draw: function() {
 			this.pixels.forEach(function (p) {
@@ -85,6 +100,7 @@ define([
 
 	Rectangle.prototype = {
 		init: function(opts) {
+			this.isHidden = false;
 			this.setAttr('x', opts.x * this.size);
 			this.setAttr('y', opts.y * this.size);
 			this.setAttr('width', this.size);
@@ -95,7 +111,12 @@ define([
 			this.element.setAttributeNS(null, name, value);
 		},
 		hide: function () {
+			this.isHidden = true;
 			this.setAttr('class', 'faded');
+		},
+		show: function () {
+			this.isHidden = false;
+			this.setAttr('class', '');
 		}
 	};
 
