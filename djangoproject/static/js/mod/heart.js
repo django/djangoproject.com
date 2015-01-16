@@ -83,8 +83,10 @@ define([
 			var isVisible = function (p) { return !p.isHidden; };
 			var hiddenPixels = this.pixels.filter(isHidden);
 			var visiblePixels = this.pixels.filter(isVisible);
-			var oldPixel = getRandomElement(hiddenPixels).show();
-			var newPixel = getRandomElement(visiblePixels).hide();
+			if (hiddenPixels.length && visiblePixels.length) {
+				var oldPixel = getRandomElement(hiddenPixels).show();
+				var newPixel = getRandomElement(visiblePixels).hide();
+			}
 		},
 		draw: function() {
 			this.pixels.forEach(function (p) {
