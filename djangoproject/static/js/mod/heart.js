@@ -2,8 +2,6 @@ define([
 	'jquery',
 ], function( $ ) {
 
-	var pixelSize = 71;
-
 	var maroon = '#ad1d45';
 	var amaranth = '#d9195c';
 	var cerise = '#d62d75';
@@ -63,9 +61,9 @@ define([
 			this.draw();
 		},
 		depixelate: function () {
-			while (this.pixels.length > this.pixelCount) {
+			for (var i = 0; i < this.pixelCount; i++) {
 				var index = Math.floor(Math.random() * this.pixels.length);
-				this.pixels.splice(index, 1);
+				this.pixels[index].hide = true;
 			}
 		},
 		draw: function() {
@@ -90,6 +88,9 @@ define([
 			this.setAttr('width', this.size);
 			this.setAttr('height', this.size);
 			this.setAttr('fill', opts.color);
+			if (opts.hide) {
+				this.setAttr('class', 'faded');
+			}
 		},
 		setAttr: function(name, value) {
 			this.element.setAttributeNS(null, name, value);
