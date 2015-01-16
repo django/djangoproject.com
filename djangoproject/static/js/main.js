@@ -51,5 +51,10 @@ define(function(){
 		mods.push('mod/floating-warning');
 	}
 
+	//fundraising heart
+	if (hasClass('heart')) {
+		mods.push('mod/heart');
+	}
+
 	require(mods);
 });
