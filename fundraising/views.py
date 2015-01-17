@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 
