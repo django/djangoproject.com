@@ -9,7 +9,6 @@ CSS rendered with Sass 3.2.7
 */
 
 //------------------- Globals
-
 body {
 	@include serif;
 	@include font-size(18);
@@ -2815,6 +2814,17 @@ hr {
 		}
 		.cta {
 			margin: 10px 0;
+		}
+		.custom-donation {
+			display: none;
+		}
+		.prefix {
+			float: left;
+			font-size: 19px;
+			margin: 8px 9px 0 3px;
+		}
+		input[type="text"]{
+			width: 70%;
 		}
 	}
 	.cls {

@@ -55,6 +55,10 @@ define(function(){
 	if (hasClass('heart')) {
 		mods.push('mod/heart');
 	}
+	//fundraising donation form
+	if (hasClass('donation-form')) {
+		mods.push('mod/donation-form');
+	}
 
 	require(mods);
 });

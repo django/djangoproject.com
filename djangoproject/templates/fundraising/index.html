@@ -29,22 +29,28 @@
     <h2>Week 3</h2>
     <ul>
       <li><b>51% funded</b></li>
-      <li><b>$4,000 donated</b> of $2,450 goal</li>
+      <li><b>$4,000 donated</b> of $2,800 goal</li>
       <li><b>14 donors</b></li>
     </ul>
 
     <div class="donate">
-      <form>
+      <form class="donation-form">
         <h3>Help us make it happen:</h3>
-        <select>
-          <option>1 hour: $44,75</option>
-          <option>2 hours: $89,50</option>
-          <option>4 hours: $185</option>
-          <option>1 day: $375</option>
-          <option>3 days: $1,125</option>
-          <option>1 week: $2,250</option>
+        <select name="amount">
+          <option value="5">$5</option>
+          <option value="25">$25</option>
+          <option value="50" selected>1 hour: $50</option>
+          <option value="100">2 hours: $100</option>
+          <option value="200">4 hours: $200</option>
+          <option value="400">1 day: $400</option>
+          <option value="1200">3 days: $1200</option>
+          <option value="2800">1 week: $2800</option>
+          <option value="custom">Custom donation</option>
         </select>
-        <input type="submit" value="Donate via PayPal" class="cta" />
+        <div class="custom-donation">
+          <span class="prefix">$</span> <input type="text" name="custom-amount" value="25">
+        </div>
+        <input type="submit" value="Donate" class="cta" />
       </form>
     </div>
   </div>
@@ -65,7 +71,7 @@
   <em>Aymeric Augustin, Django Core Developer</em>
 </blockquote>
 
-<p>The weekly cost of Django Fellowship program costs Django Software Foundation $2,450. With the very limited funds, the DSF can't afford this.
+<p>The weekly cost of Django Fellowship program costs Django Software Foundation $2,800. With the very limited funds, the DSF can't afford this.
   Every week we're going to ask the community members to help us fund at least one hour of Fellows work. </p>
 
 <p><a href="#about">Learn more about the Django Fellowship program</a>.</p>
