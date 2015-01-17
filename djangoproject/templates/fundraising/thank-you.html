@@ -16,7 +16,7 @@ colleagues or internet strangers to donate.</p>
     {% if field.errors %}<p class="errors">{{ field.errors.as_text }}</p>{% endif %}
     <p>
       {{ field }}
-      {% if field.id_for_label == 'id_is_visible' or field.id_for_label == 'id_is_subscribed' or field.id_for_label == 'id_is_amount_displayed' %}
+      {% if field.name in form.THANK_YOU_CHECKBOX_FIELDS %}
         {{ field.label }}
       {% endif %}
     </p>
