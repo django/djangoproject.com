@@ -1,12 +1,13 @@
-from django.core import urlresolvers
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 
 from .forms import AddDjangoHeroForm
 
+
 def fundraising_index(request):
     return render(request, 'fundraising/index.html', {})
+
 
 def fundraising_thank_you(request):
     form = AddDjangoHeroForm(request.POST or None)
