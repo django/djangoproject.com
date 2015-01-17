@@ -1,0 +1,30 @@
+{% extends 'fundraising/index.html' %}
+
+{% block content %}
+
+<h1>Thank you for supporting Django Fellowship program!</h1>
+<p>Your support is <strong>invaluable</strong> to continue the rapid development of Django Project. Please, help us spread the word and encourage your friends,
+colleagues or internet strangers to donate.</p>
+
+<p>If you want to have your name or company displayed on <a href="{% url 'fundraising' %}">Fundraising page</a> or in sidebar everywhere on the Django Project website, please
+  fill out the form below. This is, of course, optional.</p>
+
+<h1>You're now a Django Hero:</h1>
+<form action="" method="post" class="form-input">
+  {% csrf_token %}
+  {% for field in form %}
+    {% if field.errors %}<p class="errors">{{ field.errors.as_text }}</p>{% endif %}
+    <p>
+      {{ field }}
+      {% if field.name in form.THANK_YOU_CHECKBOX_FIELDS %}
+        {{ field.label }}
+      {% endif %}
+    </p>
+    {% if field.help_text %}<p class="footnote">{{ field.help_text }}</p>{% endif %}
+  {% endfor %}
+  <p class="submit"><input type="submit" class="cta" value="Send &rarr;"></p>
+</form>
+
+{% endblock %}
+
+{% block content-extra %}{% endblock %}
