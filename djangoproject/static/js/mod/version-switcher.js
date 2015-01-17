@@ -18,8 +18,8 @@ define([
 					// do nothing and let the event bubble up
 				});
 				// Make version switcher clickable for touch devices
-				self.switcher.find('li.current').on('click hover', function () {
-					self.switcher.find('li.other').toggle();
+				self.switcher.find('li.current').on('click', function () {
+					self.switcher.find('li.other').toggleClass('hover-on');
 				});
 			});
 		}

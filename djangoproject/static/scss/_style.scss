@@ -2172,7 +2172,7 @@ h2 + .list-link-soup {
 		}
 	}
 
-	&:hover {
+	&:hover, .hover-on {
 		li {
 			display: inline-block;
 		}
