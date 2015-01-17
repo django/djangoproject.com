@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class DjangoHero(models.Model):
     email = models.EmailField(blank=True)
     logo = models.ImageField(upload_to="fundraising/logos/", blank=True)
