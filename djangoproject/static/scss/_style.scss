@@ -2454,6 +2454,7 @@ form {
 	input[type="text"],
 	input[type="email"],
 	input[type="password"],
+	input[type="url"],
 	textarea {
 		@include sans-serif;
 		@include font-size(16);
@@ -2538,7 +2539,8 @@ form {
 		input[type="search"],
 		input[type="text"],
 		input[type="email"],
-		input[type="password"] {
+		input[type="password"],
+		input[type="url"] {
 			margin: 10px 0;
 		}
 	}
@@ -2830,12 +2832,16 @@ hr {
 	.cls {
 		clear: both;
 	}
-	.footnote {
-		color: $gray-medium;
-		@include font-size(14);
-		margin-top: 20px;
-		text-align: center;
-	}
+}
+.footnote {
+	color: $gray-medium;
+	@include font-size(14);
+	margin-top: 20px;
+	text-align: center;
+}
+form .footnote {
+	margin-top: 10px;
+	text-align: left;
 }
 .heros-section {
 	.heros {
