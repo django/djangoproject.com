@@ -2218,10 +2218,10 @@ h2 + .list-link-soup {
 		padding: 10px 0 20px;
 	}
 
-    img {
-        display: block;
-        max-width: 100%;
-    }
+	img {
+		display: block;
+		max-width: 100%;
+	}
 
 	@include sans-serif;
 	@include font-size(14);
@@ -2280,7 +2280,7 @@ dl.function, dl.class, dl.method, dl.attribute {
 
 
 table.docutils td, table.docutils th {
-    border-bottom: 1px solid $gray-line;
+	border-bottom: 1px solid $gray-line;
 }
 
 #search-results span.highlighted {
@@ -2846,14 +2846,34 @@ form .footnote {
 .heros-section {
 	.heros {
 		clear: both;
-		div {
+		.hero {
 			width: 25%;
+			position: relative;
+			height: 260px;
+			div {
+				width: 100%;
+			}
+		}
+		.hero-name {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			left: 0;
+		}
+		.no-logo-hero {
+			margin-right: 12px;
+		}
+		div {
 			float: left;
 			text-align: center;
 			margin: 15px 0;
 			img {
 				max-width: 90%;
+				max-height: 170px;
 			}
 		}
+	}
+	.pagination {
+		clear: both;
 	}
 }
