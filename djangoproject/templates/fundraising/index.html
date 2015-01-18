@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static fundraising_extras %}
 
 {% block title %}Support Django{% endblock %}
 {% block layout_class %}full-width{% endblock %}
@@ -20,7 +20,7 @@
 <h1>Support Django Fellowship Program!</h1>
 
 <div class="heart-section" id="donate">
-  <div class="heart" data-percent="51">
+  <div class="heart" data-percent="{{ donated_amount|as_percentage:goal_amount }}">
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 503 431">
       <switch>
         <g transform="translate(4, 2)" id="pixels">
@@ -33,11 +33,11 @@
     </svg>
   </div>
   <div class="description">
-    <h2>Week 3</h2>
+    <h2>Week {{ week_number }}</h2>
     <ul>
-      <li><b>51% funded</b></li>
-      <li><b>$4,000 donated</b> of $2,800 goal</li>
-      <li><b>14 donors</b></li>
+      <li><b>{{ donated_amount|as_percentage:goal_amount }}% funded</b></li>
+      <li><b>${{ donated_amount }} donated</b> of ${{ goal_amount }} goal</li>
+      <li><b>{{ total_donors }} donor{{ total_donors|pluralize:",s" }}</b></li>
     </ul>
 
     <div class="donate">
@@ -73,9 +73,16 @@
   successful, but <b>we need your help</b> to keep this going.</p>
 
 <blockquote>
-  <p>The Django Fellowship quote testimonial. The Django Fellowship quote testimonial. The Django Fellowship quote testimonial
-. The Django Fellowship quote testimonial. The Django Fellowship quote testimonial</p>
-  <em>Aymeric Augustin, Django Core Developer</em>
+  <p>When I started contributing to Django, patches - especially non-trivial ones -
+  had a tendency to languish in the pull request queue. I eventually gave up on
+  contributing altogether after some of my contributions remained unreviewed for
+  months. Then Tim started dedicating a lot of time to Django and reviewed my
+  contributions. The timely reviews and fast feedback loop acted as catalyst and
+  together we've landed over a hundred patches including 4 major features for
+  Django 1.7 in a matter of months. The churn rate on Django contributors has
+  been very high historically and the Fellowship program is a direct answer to
+  that; it's a great chance for Django and for everyone who relies on it.</p>
+  <em>Loïc Bistuer, Django Core Developer</em>
 </blockquote>
 
 <p>The weekly cost of Django Fellowship program costs Django Software Foundation $2,800. With the very limited funds, the DSF can't afford this.
@@ -91,31 +98,36 @@
   <p>We're incredibly grateful to everyone who donated to make this happen. We couldn't possibly do it without the continous
   support from the community.</p>
 
-  <h2>Django Heros of Week 3</h2>
+  <h2>Django Heros of Week {{ week_number }}</h2>
   <div class="heros">
-    <div><a href=""><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></a></div>
-    <div><a href=""><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></a></div>
-    <div><a href=""><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></a></div>
-    <div><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></div>
-    <div><a href="">Jan Kowalski</a></div>
-    <div>Jan Kowalski</div>
-    <div><a href="">Jan Kowalski</a></div>
-    <div><a href="">Jan Kowalski</a></div>
+    {% for donor in donors_with_logo %}
+      <div class="hero">
+        <div>
+          <a href="{{ donor.url }}">
+          <img src="{% if donor.logo %}{{ donor.logo.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+            alt="{{ donor.name }}" />
+          </a>
+        </div>
+        <div class="hero-name">
+          <a href=""><span>{{ donor.name }}</span></a><br/>
+          {% if donor.is_amount_displayed %}
+            <em>${{ donor.donated_amount }}</em>
+          {% else %}
+            <em>&nbsp;</em>
+          {% endif %}
+        </div>
+    </div>
+    {% endfor %}
   </div>
-  <div style="clear: both"></div>
-
-  <a href="#donate" class="cta">Join them and <em>support Django</em>!</a>
-
-  <h2>Django Heros of Week 2</h2>
   <div class="heros">
-    <div><a href=""><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></a></div>
-    <div><a href=""><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></a></div>
-    <div><a href=""><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></a></div>
-    <div><img src="{% static 'http://i.imgur.com/gLJI803.png' %}" alt="Company Name" /></div>
-    <div><a href="">Jan Kowalski</a></div>
-    <div>Jan Kowalski</div>
-    <div><a href="">Jan Kowalski</a></div>
-    <div><a href="">Jan Kowalski</a></div>
+    {% for donor in other_donors %}
+      <div class="no-logo-hero">
+        <a href="{{ donor.url }}"><span>{{ donor.name }}</span></a>
+        {% if donor.is_amount_displayed %}
+          <br/><em>${{ donor.donated_amount }}</em>
+        {% endif %}
+      </div>
+    {% endfor %}
   </div>
 
   <div class="pagination">

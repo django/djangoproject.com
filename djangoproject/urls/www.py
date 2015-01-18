@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.sitemaps import FlatPageSitemap
@@ -67,3 +68,8 @@ urlpatterns = [
     url(r'^svntogit/', include('svntogit.urls')),
     url(r'', include('legacy.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^m/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    ]
