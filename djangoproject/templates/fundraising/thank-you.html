@@ -1,28 +1,37 @@
 {% extends 'fundraising/index.html' %}
 
 {% block content %}
+<h1>Thank you for supporting the Django Project!</h1>
+<p>Your support is <strong>invaluable</strong> to continue the rapid development
+  of the Django Project and helps in particular the <strong>Django Fellowship</strong>
+  program.</p>
 
-<h1>Thank you for supporting Django Fellowship program!</h1>
-<p>Your support is <strong>invaluable</strong> to continue the rapid development of Django Project. Please, help us spread the word and encourage your friends,
-colleagues or internet strangers to donate.</p>
+<p>Please help us spread the word and encourage your friends, colleagues or
+  internet strangers to donate. Thank you!</p>
 
-<p>If you want to have your name or company displayed on <a href="{% url 'fundraising' %}">Fundraising page</a> or in sidebar everywhere on the Django Project website, please
-  fill out the form below. This is, of course, optional.</p>
+<p>If you'd like to have your name or company displayed on the
+  <a href="{% url 'fundraising:index' %}">Fundraising page</a> or in the sidebar
+  on the Django Project website, please fill out the form below. This is, of
+  course, <em>optional</em>.
+</p>
 
 <h1>You're now a Django Hero:</h1>
-<form action="" method="post" class="form-input">
+<form enctype="multipart/form-data" action="" method="post" class="form-input">
   {% csrf_token %}
   {% for field in form %}
-    {% if field.errors %}<p class="errors">{{ field.errors.as_text }}</p>{% endif %}
     <p>
-      {{ field }}
-      {% if field.name in form.THANK_YOU_CHECKBOX_FIELDS %}
-        {{ field.label }}
-      {% endif %}
-    </p>
+    {% if field.name in form.checkbox_fields %}
+        {{ field }}{{ field.label_tag }}
+    {% else %}
+        {{ field }}
+    {% endif %}
+    {% if field.errors %}<p class="errors">{{ field.errors.as_text }}</p>{% endif %}
     {% if field.help_text %}<p class="footnote">{{ field.help_text }}</p>{% endif %}
+    </p>
   {% endfor %}
-  <p class="submit"><input type="submit" class="cta" value="Send &rarr;"></p>
+  <p class="submit">
+    <input type="submit" class="cta" value="Save &rarr;">
+  </p>
 </form>
 
 {% endblock %}

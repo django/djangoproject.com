@@ -19,8 +19,8 @@
 
 <h1>Support the Django Fellowship Program!</h1>
 
-<div class="heart-section" id="donate">
-  <div class="heart" data-percent="{{ donated_amount|as_percentage:goal_amount }}">
+<div class="fundraising-index" id="donate">
+  <div class="fundraising-heart" data-percent="{{ donated_amount|as_percentage:goal_amount }}">
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 503 431">
       <switch>
         <g transform="translate(4, 2)" id="pixels">
@@ -41,21 +41,11 @@
     </ul>
 
     <div class="donate">
-      <form class="donation-form">
+      <form method="get" action="{% url "fundraising:donate" %}">
         <h3>Help us make it happen:</h3>
-        <select name="amount">
-          <option value="5">$5</option>
-          <option value="25">$25</option>
-          <option value="50" selected>1 hour: $50</option>
-          <option value="100">2 hours: $100</option>
-          <option value="200">4 hours: $200</option>
-          <option value="400">1 day: $400</option>
-          <option value="1200">3 days: $1200</option>
-          <option value="2800">1 week: $2800</option>
-          <option value="custom">Custom donation</option>
-        </select>
+        {{ form.amount }}
         <div class="custom-donation">
-          <span class="prefix">$</span> <input type="text" name="custom-amount" value="25">
+          <span class="prefix">$</span>
         </div>
         <input type="submit" value="Donate" class="cta" />
       </form>

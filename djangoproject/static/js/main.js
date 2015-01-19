@@ -52,12 +52,17 @@ define(function(){
 	}
 
 	//fundraising heart
-	if (hasClass('heart')) {
-		mods.push('mod/heart');
+	if (hasClass('fundraising-heart')) {
+		mods.push('mod/fundraising-heart');
 	}
 	//fundraising donation form
-	if (hasClass('donation-form')) {
-		mods.push('mod/donation-form');
+	if (hasClass('fundraising-index')) {
+		mods.push('mod/fundraising-index');
+	}
+
+	//fundraising donation form
+	if (hasClass('fundraising-donation')) {
+		mods.push('mod/fundraising-donation');
 	}
 
 	require(mods);

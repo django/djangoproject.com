@@ -13,5 +13,6 @@ Jinja2==2.7.3
 Pillow==2.7.0
 psycopg2==2.5.4
 requests==2.5.1
+stripe==1.20.1
 Sphinx==1.2.3
 Unipath==1.0
