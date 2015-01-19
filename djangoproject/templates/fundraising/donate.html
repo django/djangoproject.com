@@ -1,0 +1,40 @@
+{% extends 'fundraising/index.html' %}
+
+{% block content %}
+<h1>Donation details</h1>
+<form id="donation-form" action="{% url "fundraising:donate" %}" method="post" class="form-general form-input fundraising-donation" autocomplete="on" data-publishable-key="{{ publishable_key }}" novalidate>
+  {% csrf_token %}
+  {% if form.initial.amount or form.cleaned_data.amount %}
+    <h2>We're super happy that you want to donate US ${% firstof form.initial.amount form.cleaned_data.amount %}</h2>
+    {{ form.amount }}
+    To complete the donation please enter your card details below and press the Donate button
+  {% else %}
+  <h2>We're super happy that you want to donate</h2>
+  Please enter your card details below to complete the donation
+  <p class="validation-errors"></p>
+  <fieldset>
+    {{ form.amount }}
+    <div class="custom-donation"></div>
+    {% if form.amount.errors %}<p class="errors">{{ form.amount.errors.as_text }}</p>{% endif %}
+    {% if form.amount.help_text %}<p class="footnote">{{ form.amount.help_text }}</p>{% endif %}
+  </fieldset>
+  {% endif %}
+  <fieldset>
+    {{ form.number }}
+    {% if form.number.errors %}<p class="errors">{{ form.number.errors.as_text }}</p>{% endif %}
+    {% if form.number.help_text %}<p class="footnote">{{ form.number.help_text }}</p>{% endif %}
+
+    {{ form.cvc }}
+    {% if form.cvc.errors %}<p class="errors">{{ form.cvc.errors.as_text }}</p>{% endif %}
+    {% if form.cvc.help_text %}<p class="footnote">{{ form.cvc.help_text }}</p>{% endif %}
+
+    {{ form.expires }}
+    {% if form.expires.errors %}<p class="errors">{{ form.expires.errors.as_text }}</p>{% endif %}
+    {% if form.expires.help_text %}<p class="footnote">{{ form.expires.help_text }}</p>{% endif %}
+  </fieldset>
+  <p class="footnote">The card details are <strong>NOT STORED</strong> on our servers but are transmitted encrypted to our PCI compliant payment processor <a href="https://stripe.com/" title="Stripe">Stripe</a>.</p>
+  <p class="submit"><input type="submit" class="cta" value="Donate &rarr;" disabled></p>
+</form>
+{% endblock %}
+
+{% block content-extra %}{% endblock %}

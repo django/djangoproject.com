@@ -2,17 +2,21 @@ from datetime import date
 from decimal import Decimal
 
 from django.db import models
+from django.utils import crypto, timezone
+
+from django_hosts.resolvers import reverse
 
 WEEKLY_GOAL = Decimal("2800.00")
 DISPLAY_LOGO_AMOUNT = Decimal("350.0")
 START_DATE = date(2014, 11, 1)
+DEFAULT_AMOUNT = Decimal("50.00")
 
 
 class DjangoHeroManager(models.Manager):
     def in_period(self, begin, end, with_logo=False):
         donors = self.get_queryset().filter(
-            donation__date__gte=begin,
-            donation__date__lt=end,
+            donation__created__gte=begin,
+            donation__created__lt=end,
             is_visible=True,
         ).annotate(donated_amount=models.Sum('donation__amount'))
 
@@ -24,7 +28,22 @@ class DjangoHeroManager(models.Manager):
         return donors.order_by('-donated_amount', 'name')
 
 
-class DjangoHero(models.Model):
+class FundraisingModel(models.Model):
+    id = models.CharField(max_length=12, primary_key=True)
+    created = models.DateTimeField(default=timezone.now)
+    modified = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.modified = timezone.now()
+        if not self.id:
+            self.id = crypto.get_random_string(length=12)
+        return super(FundraisingModel, self).save(*args, **kwargs)
+
+
+class DjangoHero(FundraisingModel):
     email = models.EmailField(blank=True)
     logo = models.ImageField(upload_to="fundraising/logos/", blank=True)
     url = models.URLField(blank=True)
@@ -41,7 +60,6 @@ class DjangoHero(models.Model):
         default=False,
         verbose_name="Agreed to disclose amount of donation?",
     )
-    created = models.DateTimeField(auto_now_add=True)
 
     objects = DjangoHeroManager()
 
@@ -49,10 +67,14 @@ class DjangoHero(models.Model):
         return self.name if self.name else 'Anonymous #{}'.format(self.pk)
 
 
-class Donation(models.Model):
+class Donation(FundraisingModel):
     amount = models.DecimalField(max_digits=9, decimal_places=2, null=True)
-    date = models.DateTimeField()
     donor = models.ForeignKey(DjangoHero, null=True)
+    stripe_charge_id = models.CharField(max_length=100, null=True)
+    stripe_customer_id = models.CharField(max_length=100, null=True)
 
     def __unicode__(self):
         return '${}'.format(self.amount)
+
+    def get_absolute_url(self):
+        return reverse('fundraising:thank-you', kwargs={'donation': self.id})
