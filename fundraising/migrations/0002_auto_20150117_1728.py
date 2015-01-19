@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
             name='Donation',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('amount', models.DecimalField(null=True, editable=False, max_digits=9, decimal_places=2)),
+                ('amount', models.DecimalField(null=True, max_digits=9, decimal_places=2)),
                 ('date', models.DateTimeField()),
                 ('donor', models.ForeignKey(to='fundraising.DjangoHero', null=True)),
             ],
