@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load fundraising_extras %}
+
 {% block layout_class %}sidebar-right{% endblock %}
 {% block title %}Django Community{% endblock %}
 
@@ -14,6 +16,8 @@
 {% block content-related %}
 <h1 class="visuallyhidden">Additional Information</h1>
 <div role="complementary">
+  {% donation_snippet %}
+
   <h2>Get Involved</h2>
   <dl class="list-links">
     <dt><a href="irc://irc.freenode.net/django">#django IRC channel</a></dt>
