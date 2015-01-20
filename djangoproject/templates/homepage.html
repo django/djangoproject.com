@@ -1,4 +1,5 @@
 {% extends "base_3col.html" %}
+{% load weblog %}
 
 {% block sectionid %}homepage{% endblock %}
 {% block body_class %}homepage{% endblock %}
@@ -104,6 +105,9 @@
       </a>
       <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}" class="link-readmore">Django documentation</a>
 
+      <h3>Latest news</h3>
+      {% render_latest_blog_entries 1 hide_readmore=True hide_summary=True %}
+
       <h3>New to Django?</h3>
       <ul class="list-links-small docs-list">
           <li><a href="{% url 'document-detail' lang='en' version='stable' url='intro/install' host 'docs' %}">Installation guide</a></li>
@@ -163,11 +167,6 @@
       </dl>
       <a href="{% url 'weblog:index' %}" class="link-readmore">See all Events</a>
       {% endcomment %}
-      <h3>Latest news</h3>
-      <dl class="list-links-small news-list">
-        {% load weblog %}{% render_latest_blog_entries 1 %}
-      </dl>
-      <a href="{% url 'weblog:index' %}" class="link-readmore">See all news</a>
   </div>
 
 {% endblock %}

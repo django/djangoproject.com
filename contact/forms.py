@@ -10,14 +10,19 @@ from contact_form.forms import ContactForm
 
 
 class BaseContactForm(ContactForm):
-    message_subject = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'Message subject'}),
-        label='Message subject')
+    message_subject = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'Message subject'}),
+        label='Message subject',
+    )
     email = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'E-mail'}))
     name = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'Name'}))
     body = forms.CharField(widget=forms.Textarea(attrs={'class': 'required', 'placeholder': 'Your message'}))
 
     def subject(self):
-        return "[Contact form] " + self.cleaned_data["message_subject"]
+        # Strip all linebreaks from the subject string.
+        subject = ''.join(self.cleaned_data["message_subject"].splitlines())
+        return "[Contact form] " + subject
 
     def message(self):
         return "From: {name} <{email}>\n\n{body}".format(**self.cleaned_data)

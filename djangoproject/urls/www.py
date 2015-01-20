@@ -5,7 +5,7 @@ from django.contrib.sitemaps import FlatPageSitemap
 from django.contrib.sitemaps import views as sitemap_views
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
-from django.views.decorators.csrf import csrf_exempt, requires_csrf_token
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView, TemplateView
 
 from accounts import views as account_views
