@@ -9,12 +9,17 @@ from django.shortcuts import redirect, render, get_object_or_404
 import stripe
 
 from .forms import DonateForm, PaymentForm, DjangoHeroForm
-from .models import DjangoHero, Donation, Testimonial, WEEKLY_GOAL, DEFAULT_AMOUNT
-from .utils import get_week_begin_end_datetimes, get_week_number
+from .models import (
+    DjangoHero, Donation, Testimonial, RESTART_GOAL, DEFAULT_DONATION_AMOUNT,
+    DISPLAY_LOGO_AMOUNT, WEEKLY_GOAL,
+)
 
 
 def index(request):
-    begin, end = get_week_begin_end_datetimes(date.today())
+    # replace with get_week_begin_end_datetimes() if we switch to a weekly
+    # goal at some point
+    begin = date(2015, 1, 1)
+    end = date(2016, 1, 1)
     donated_amount = Donation.objects.filter(
         created__gte=begin, created__lt=end,
     ).aggregate(Sum('amount'))
@@ -23,17 +28,16 @@ def index(request):
     other_donors = DjangoHero.objects.in_period(begin, end)
     total_donors = len(donors_with_logo) + len(other_donors)
 
-    form = DonateForm(initial={'amount': DEFAULT_AMOUNT})
-
     return render(request, 'fundraising/index.html', {
         'donated_amount': donated_amount['amount__sum'] or 0,
-        'goal_amount': WEEKLY_GOAL,
-        'week_number': get_week_number(date.today()),
+        'goal_amount': RESTART_GOAL,
         'donors_with_logo': donors_with_logo,
         'other_donors': other_donors,
         'total_donors': total_donors,
-        'form': form,
+        'form': DonateForm(initial={'amount': DEFAULT_DONATION_AMOUNT}),
         'testimonial': Testimonial.objects.filter(is_active=True).order_by('?').first(),
+        'display_logo_amount': DISPLAY_LOGO_AMOUNT,
+        'weekly_goal': WEEKLY_GOAL,
     })
 
 

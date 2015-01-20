@@ -1,4 +1,3 @@
-from datetime import date
 from decimal import Decimal
 
 from django.db import models
@@ -6,10 +5,10 @@ from django.utils import crypto, timezone
 
 from django_hosts.resolvers import reverse
 
+RESTART_GOAL = Decimal("30000.00")
 WEEKLY_GOAL = Decimal("2800.00")
-DISPLAY_LOGO_AMOUNT = Decimal("350.0")
-START_DATE = date(2014, 11, 1)
-DEFAULT_AMOUNT = Decimal("50.00")
+DISPLAY_LOGO_AMOUNT = Decimal("200.00")
+DEFAULT_DONATION_AMOUNT = Decimal("50.00")
 
 
 class DjangoHeroManager(models.Manager):
