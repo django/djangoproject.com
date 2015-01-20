@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django import forms
 from django.utils.safestring import mark_safe
 
@@ -120,6 +122,7 @@ class PaymentForm(forms.Form):
         required=True,
         decimal_places=2,
         max_digits=9,
+        min_value=Decimal('0.50'),  # Minimum payment from Stripe API
         widget=forms.TextInput(
             attrs={
                 'class': 'required',
