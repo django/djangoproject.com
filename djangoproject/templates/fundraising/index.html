@@ -67,10 +67,12 @@
   of the pilot project proved to be very successful, but <b>we need your
   help</b> to keep it going.</p>
 
+{% if testimonial %}
 <blockquote>
   {{ testimonial.body|linebreaks }}
   <em>{{ testimonial.author }}</em>
 </blockquote>
+{% endif %}
 
 <p>The weekly cost of the program is about $2,800. We're try to raise an initial
    $XXX to renew the program, after which we'll endeavor to raise funds on a
