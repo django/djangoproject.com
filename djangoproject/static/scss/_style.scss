@@ -2811,8 +2811,8 @@ hr {
 	margin-top: 50px;
 
 	.fundraising-heart {
-		width: 55%;
-		float: left;
+		width: 100%;
+		float: none;
 		img, svg {
 			width: 100%;
 			height: auto;
@@ -2824,11 +2824,22 @@ hr {
 				&:hover { opacity: 0.9; }
 			}
 		}
+		@include respond-min(768px) {
+			width: 55%;
+			float: left;
+		}
 	}
 	.description {
-		float: left;
 		margin-left: 5%;
-		width: 40%;
+		width: 100%;
+		float: none;
+		margin-top: 30px;
+
+		@include respond-min(768px) {
+			width: 40%;
+			float: left;
+			margin-top: 0px;
+		}
 
 		h2 {
 			margin-top: 0;
@@ -2840,7 +2851,11 @@ hr {
 .fundraising-index {
 	.donate {
 		select {
-			width: 100%;
+			width: 80%;
+
+			@include respond-min(768px) {
+				width: 100%
+			}
 		}
 		.cta {
 			margin: 10px 0;
