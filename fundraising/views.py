@@ -50,11 +50,13 @@ def donate(request):
                 # First create a Stripe customer so that we can store
                 # people's email address on that object later
                 customer = stripe.Customer.create(card=token)
-                # Charge the customer's credit card on Stripe's servers
+                # Charge the customer's credit card on Stripe's servers;
                 # the amount is in cents!
-                charge = stripe.Charge.create(amount=int(amount * 100),
-                                              currency='usd',
-                                              customer=customer.id)
+                charge = stripe.Charge.create(
+                    amount=int(amount * 100),
+                    currency='usd',
+                    customer=customer.id,
+                )
             except (stripe.StripeError, ValueError):
                 # The card has been declined, we want to see what happened
                 # in Sentry
@@ -63,7 +65,7 @@ def donate(request):
                 donation = Donation.objects.create(
                     amount=amount,
                     stripe_charge_id=charge.id,
-                    stripe_customer_id=customer.id
+                    stripe_customer_id=customer.id,
                 )
                 return redirect(donation)
         else:
@@ -94,12 +96,13 @@ def thank_you(request, donation):
     donation = get_object_or_404(Donation, pk=donation)
     if request.method == 'POST':
         if donation.donor:
-            form = DjangoHeroForm(data=request.POST,
-                                  files=request.FILES,
-                                  instance=donation.donor)
+            form = DjangoHeroForm(
+                data=request.POST,
+                files=request.FILES,
+                instance=donation.donor,
+            )
         else:
-            form = DjangoHeroForm(data=request.POST,
-                                  files=request.FILES)
+            form = DjangoHeroForm(data=request.POST, files=request.FILES)
 
         if form.is_valid():
             hero = form.save()
@@ -121,9 +124,7 @@ def thank_you(request, donation):
         else:
             form = DjangoHeroForm()
 
-    context = {
+    return render(request, 'fundraising/thank-you.html', {
         'donation': donation,
         'form': form,
-    }
-
-    return render(request, 'fundraising/thank-you.html', context)
+    })

@@ -10,7 +10,7 @@ define([
 		FundraisingIndex.prototype = {
 			init: function(){
 				var self = this;
-				$(document).ready(function () {
+				$(document).ready(function() {
 					self.form.find('select').on("change", self.setDonation);
 				});
 			},

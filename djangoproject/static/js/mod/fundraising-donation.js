@@ -1,6 +1,6 @@
 define([
-	'jquery', 'jquery.payment', 'stripe' //requires jquery
-	], function( $ ) {
+	'jquery', 'jquery.payment', 'stripe' // requires jquery
+	], function($) {
 
 		var numberSelector = 'input[data-stripe="number"]';
 		var cvcSelector = 'input[data-stripe="cvc"]';
@@ -27,9 +27,9 @@ define([
 
 		function toggleInputError(check) {
 			var selector = check[0],
-					toggle = check[1],
-					error = check[2],
-					errored = false;
+			toggle = check[1],
+			error = check[2],
+			errored = false;
 			if (toggle) {
 				$(selector).removeClass('error');
 			} else {
@@ -53,7 +53,7 @@ define([
 		FundraisingDonation.prototype = {
 			init: function() {
 				var self = this;
-				$(document).ready(function () {
+				$(document).ready(function() {
 					self.form.find('select').on('change', self.setDonation);
 					self.form.on('submit', self.submitForm);
 					Stripe.setPublishableKey(self.form.data('publishable-key'));
