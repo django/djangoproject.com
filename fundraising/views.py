@@ -9,7 +9,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 import stripe
 
 from .forms import DonateForm, PaymentForm, DjangoHeroForm
-from .models import DjangoHero, Donation, WEEKLY_GOAL, DEFAULT_AMOUNT
+from .models import DjangoHero, Donation, Testimonial, WEEKLY_GOAL, DEFAULT_AMOUNT
 from .utils import get_week_begin_end_datetimes, get_week_number
 
 
@@ -33,6 +33,7 @@ def index(request):
         'other_donors': other_donors,
         'total_donors': total_donors,
         'form': form,
+        'testimonial': Testimonial.objects.filter(is_active=True).order_by('?').first(),
     })
 
 

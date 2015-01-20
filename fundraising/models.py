@@ -78,3 +78,12 @@ class Donation(FundraisingModel):
 
     def get_absolute_url(self):
         return reverse('fundraising:thank-you', kwargs={'donation': self.id})
+
+
+class Testimonial(models.Model):
+    author = models.CharField(max_length=255)
+    body = models.TextField()
+    is_active = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return self.author
