@@ -63,24 +63,42 @@
 <h1>About the program</h1>
 <p>Django Fellowship is a project where paid contractors are engaged to manage
   some of the administrative and community management tasks of the Django
-  project to support rapid development of Django itself. The first three months
-  of the pilot project proved to be very successful, but <b>we need your
-  help</b> to keep it going.</p>
+  project to support rapid development of Django itself. </p>
 
-{% if testimonial %}
-<blockquote>
-  {{ testimonial.body|linebreaks }}
-  <em>{{ testimonial.author }}</em>
-</blockquote>
-{% endif %}
+<p><b>The first three months of the Django Fellowship program have been very successful.</b>
+  In this short time, <a href="#about">two Django Fellows</a>, one full-time and one part-time, worked on
+  around 240 pull requests (including reviewing some of the major features that will
+  be in <a href="/weblog/2015/jan/16/django-18-alpha-1-released/">Django 1.8</a>), triaged at
+  least 90 different tickets, and made around 200 commits in total! You can read
+  <a href="/weblog/2015/jan/21/django-fellowship-retrospective/">the retrospective
+  on the things that have been accomplished</a> on our blog.</p>
 
-<p>The weekly cost of the program is about ${{ weekly_goal|intcomma }}. We're
+<h1>We need your help!</h1>
+
+<p>The program has already had a major positive impact on how Django is developed
+   and maintained. Release blocking and severe bugs are not postponed indefinitely. Django
+   Fellows are a resource to help review patches and contributions from the community, and
+   the community loves that:</p>
+
+   {% if testimonial %}
+   <blockquote>
+     {{ testimonial.body|linebreaks }}
+     <em>{{ testimonial.author }}</em>
+   </blockquote>
+   {% endif %}
+
+<p><b>If you use Django on a daily basis and care about the development of Django
+   itself, you should donate today.</b> Only with your support can we make sure
+   that the Web framework you base your work on can grow to be even better in
+   the coming years.</p>
+
+<p>The weekly cost of the program is about ${{ weekly_goal|intcomma }}. <b>We're
    trying to raise an initial ${{ goal_amount|intcomma }} to renew the program
    for at least three months, after which we'll endeavor to raise funds on a
-   weekly basis to sustain the program.</p>
+   weekly basis to sustain the program.</b></p>
 
-<p><a href="#about">Learn more about the Django Fellowship program</a>.</p>
-
+<p><a href="/weblog/2015/jan/21/django-fellowship-retrospective/">Learn more
+   about the Django Fellowship program</a>.</p>
 
 <hr style="margin: 40px 0" />
 
@@ -100,7 +118,10 @@
           </a>
         </div>
         <div class="hero-name">
-          <a href=""><span>{{ donor.name }}</span></a><br/>
+          {% if donor.url %}<a href="{{ donor.url }}">{% endif %}
+            <span>{{ donor.name }}</span>
+          {% if donor.url %}</a>{% endif %}
+          <br/>
           {% if donor.is_amount_displayed %}
             <em>${{ donor.donated_amount }}</em>
           {% else %}
@@ -128,29 +149,19 @@
 {% block content-extra %}
   <div class="layout-tertiary" id="about">
     <div class="container">
-        <h2>What is the Django Fellowship program?</h2>
-        <p>The <a href="https://www.djangoproject.com/weblog/2014/sep/18/dsf-calls-applicants-django-fellow/">
-        Django Fellowship program</a> is a project where paid contractors are
-        engaged to manage some of the administrative and community management
-        tasks of Django project. The initial pilot took three months and closed
-        in mid-January. One of the major goals is to secure funding for this
-        program on an ongoing basis.</p>
-        <p>The first three months of the Django Fellowship program have been
-        very successful. In this short time, two Django Fellows, one full-time
-        and one part-time, worked on around 240 pull requests (including
-        reviewing some of the major features that will be in Django 1.8),
-        triaged at least 90 different tickets and made around 200 commits in
-        total!</p>
-        <p>We believe the program has already had a great positive impact on
-        how Django is developed and maintained. Release blocking and severe
-        bugs are not postponed indefinitely. Django Fellows are a resource to
-        help review patches and contributions from the community.</p>
-        <p>The Django Fellowship program costs around ${{ weekly_goal|intcomma }}
-        each week to maintain.</p>
+        <h2>What is the Django Software Foundation?</h2>
+        <p>Development of Django is supported by an independent foundation
+          established as a 501(c)(3) non-profit. Like most open-source foundations,
+          the goal of the <a href="/foundation/">Django Software Foundation</a>
+          is to promote, support, and advance the Django Web framework. If you're
+          interested in how the Django Software Foundation supports the Django
+          Web framework, we published a
+          <a href="weblog/2015/jan/08/django-software-foundation-2014/">Summary
+          of 2014. </a>
+        </p>
 
         <h2>Who were the Django Fellows?</h2>
-        <p>The two fellows for the duration of the pilot were:</p>
-        {# here we need Tim's and Berker's photos! #}
+        <p>The two Fellows for the duration of the pilot were:</p>
         <p><b>Tim Graham</b> - a member of the core team for several years. For
         the 12 months before the fellowship began, he was a major contributor,
         reviewing and merging pull requests. Tim was contracted as a full-time
