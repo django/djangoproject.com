@@ -129,5 +129,5 @@ define([
 	};
 
 	// Export a single instance of our module:
-	return new Heart('.heart');
+	return new Heart('.fundraising-heart');
 });
