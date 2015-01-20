@@ -1,5 +1,5 @@
 {% extends "base_docs.html" %}
-{% load i18n %}
+{% load i18n fundraising_extras %}
 
 {% block title %}{{ doc.title|striptags|safe }} | {% trans "Django documentation" %}{% endblock %}
 
@@ -75,6 +75,7 @@
       {% search_form %}
       {% endblock %}
 
+      {% donation_snippet %}
 
       {% block toc-wrapper %}
 
