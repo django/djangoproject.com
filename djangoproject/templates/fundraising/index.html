@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static fundraising_extras %}
+{% load fundraising_extras humanize static %}
 
 {% block title %}Support Django{% endblock %}
 {% block layout_class %}full-width{% endblock %}
@@ -33,10 +33,10 @@
     </svg>
   </div>
   <div class="description">
-    <h2>Week {{ week_number }}</h2>
+    <h2>Renewal Goal</h2>
     <ul>
       <li><b>{{ donated_amount|as_percentage:goal_amount }}% funded</b></li>
-      <li><b>${{ donated_amount }} donated</b> of ${{ goal_amount }} goal</li>
+      <li><b>${{ donated_amount|intcomma }} donated</b> of ${{ goal_amount|intcomma }} goal</li>
       <li><b>{{ total_donors }} donor{{ total_donors|pluralize:",s" }}</b></li>
     </ul>
 
@@ -53,8 +53,8 @@
   </div>
   <div class="cls"></div>
   <p class="footnote">
-    Your logo will be visible below if you contribute at the "4 hours" level
-    or higher.
+    Your logo will be visible below if you contribute at least
+    ${{ display_logo_amount }}.
 </p>
 </div>
 
@@ -74,8 +74,9 @@
 </blockquote>
 {% endif %}
 
-<p>The weekly cost of the program is about $2,800. We're try to raise an initial
-   $XXX to renew the program, after which we'll endeavor to raise funds on a
+<p>The weekly cost of the program is about ${{ weekly_goal|intcomma }}. We're
+   trying to raise an initial ${{ goal_amount|intcomma }} to renew the program
+   for at least three months, after which we'll endeavor to raise funds on a
    weekly basis to sustain the program.</p>
 
 <p><a href="#about">Learn more about the Django Fellowship program</a>.</p>
@@ -157,8 +158,8 @@
         how Django is developed and maintained. Release blocking and severe
         bugs are not postponed indefinitely. Django Fellows are a resource to
         help review patches and contributions from the community.</p>
-        <p>The Django Fellowship program costs around $10K each month to
-        maintain.</p>
+        <p>The Django Fellowship program costs around ${{ weekly_goal|intcomma }}
+        each week to maintain.</p>
 
         <h2>Who were the Django Fellows?</h2>
         <p>The two fellows for the duration of the pilot were:</p>
