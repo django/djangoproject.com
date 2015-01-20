@@ -68,6 +68,29 @@ To run locally, do the usual:
    docs site in the same process. Open http://www.djangoproject.dev:8000/
    or http://docs.djangoproject.dev:8000/.
 
+Supported browsers
+------------------
+
+The goal of the site is to target various levels of browsers, depending on
+their ability to use the technologies in use on the site, such as HTML5, CSS3,
+SVG, webfonts.
+
+We're following `Mozilla's example <https://wiki.mozilla.org/Support/Browser_Support>`_
+when it comes to categorize browser support.
+
+- Any browser other than IE8 and lower as **A grade**. Which means everything
+  needs to work on those.
+
+- IE8 is **B grade**, meaning that some functionality may be disabled, visual
+  variations are acceptable but the content must work nevertheless.
+
+- IE below 8 is **not supported**.
+
+- Mobile browsers should be considered **B grade** as well.
+  Mobile Safari, Firefox on Android and the Android Browser should support
+  the responsive styles as much as possible but some degredation can't be
+  prevented due to the limited screen size and other platform restrictions.
+
 Styles
 ------
 

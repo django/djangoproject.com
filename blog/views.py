@@ -30,6 +30,7 @@ class BlogViewMixin(object):
 
         return context
 
+
 class BlogArchiveIndexView(BlogViewMixin, ArchiveIndexView):
     pass
 

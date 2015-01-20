@@ -179,7 +179,7 @@ pre,
 samp {
 	@include monospace;
 	color: $green-dark;
-	font-size: 1.07em;
+	font-size: 1em;
 }
 
 tt {
@@ -188,7 +188,6 @@ tt {
 
 span.pre {
 	@include monospace;
-	font-size: 1.07em;
 }
 
 a:hover, a:active, a:focus {
@@ -396,6 +395,12 @@ blockquote {
 	}
 	@include old-ie {
 		min-width: 768px;
+	}
+
+	&.sidebar-right {
+		.mdzr-boxshadow & {
+			@include box-shadow(-1200px 0 0 0px #fff);
+		}
 	}
 }
 
@@ -2078,8 +2083,8 @@ h2 + .list-link-soup {
 				content: $fa-var-cogs;
 			}
 		}
-		.last {
-			margin-bottom: 10px;
+		.last, .highlight {
+			margin-bottom: 0px;
 		}
 }
 
@@ -2166,7 +2171,7 @@ h2 + .list-link-soup {
 		}
 	}
 
-	&:hover {
+	&:hover, .hover-on {
 		li {
 			display: inline-block;
 		}
@@ -2251,7 +2256,6 @@ h2 + .list-link-soup {
 }
 
 .versionadded, .versionchanged, .versionmodified {
-	color: $text-light;
 	@include sans-serif;
 	font-weight: bold;
 	margin-bottom: 20px;
@@ -2267,6 +2271,27 @@ h2 + .list-link-soup {
 			margin-bottom: 0;
 		}
 	}
+}
+
+.deprecated {
+	@extend .versionchanged;
+
+	.versionadded, .versionchanged, .versionmodified {
+		border: none;
+		padding: 0;
+		margin-bottom: 0;
+		display: block;
+	}
+
+	p {
+		font-weight: normal;
+		margin-top: 0;
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+
 }
 
 dl.function, dl.class, dl.method, dl.attribute {
