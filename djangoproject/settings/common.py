@@ -77,7 +77,7 @@ INSTALLED_APPS = [
     'releases',
     'svntogit',
     'tracdb',
-    'fundraising'
+    'fundraising.apps.FundraisingConfig',
 ]
 
 LANGUAGE_CODE = 'en-us'

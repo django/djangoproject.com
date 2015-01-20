@@ -12,8 +12,6 @@ from .forms import DonateForm, PaymentForm, DjangoHeroForm
 from .models import DjangoHero, Donation, WEEKLY_GOAL, DEFAULT_AMOUNT
 from .utils import get_week_begin_end_datetimes, get_week_number
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
-
 
 def index(request):
     begin, end = get_week_begin_end_datetimes(date.today())
