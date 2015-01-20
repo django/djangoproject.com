@@ -2782,10 +2782,10 @@ hr {
 }
 
 /// Fundraising page
-.heart-section {
+.fundraising-index {
 	margin-top: 50px;
 
-	.heart {
+	.fundraising-heart {
 		width: 55%;
 		float: left;
 		img, svg {
@@ -2810,6 +2810,9 @@ hr {
 			@include font-size(28);
 		}
 	}
+}
+
+.fundraising-index {
 	.donate {
 		select {
 			width: 100%;
@@ -2822,7 +2825,7 @@ hr {
 		}
 		.prefix {
 			float: left;
-			font-size: 19px;
+			@include font-size(19);
 			margin: 8px 9px 0 3px;
 		}
 		input[type="text"]{
@@ -2833,6 +2836,23 @@ hr {
 		clear: both;
 	}
 }
+
+.fundraising-donation {
+	select {
+		width: 100%;
+	}
+	input.error {
+		border: 1px solid $red !important;
+	}
+	p.validation-errors {
+		color: $red;
+	}
+	.custom-donation {
+		display: none;
+		margin-top: 10px;
+	}
+}
+
 .footnote {
 	color: $gray-medium;
 	@include font-size(14);
