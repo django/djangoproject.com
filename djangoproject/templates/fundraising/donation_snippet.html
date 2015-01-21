@@ -1,17 +1,22 @@
 {% load humanize static %}
 
 {% if donation %}
-  <h2>Support Django!</h2>
+  <div class="fundraising-sidebar">
+    <h2>Support Django!</h2>
 
-  <img src="{% static "img/small-fundraising-heart.png" %}" alt="Support Django!"
-    class="small-fundraising-heart"/>
+    <div class="small-heart">
+      <img src="{% static "img/small-fundraising-heart.png" %}" alt="Support Django!" />
+    </div>
 
-  <ul class="list-links-small">
-    <li><a href="{% url "fundraising:index" %}">
-      {% firstof donation.name "Someone" %} donated
-      {% if donation.is_amount_displayed %}${{ donation.donated_amount|intcomma }}{% endif %}
-      for the Django Fellowship program to help develop Django. <br />
-      Join them today!
-    </a></li>
-  </ul>
+    <div class="small-cta">
+      <ul class="list-links-small">
+        <li><a href="{% url "fundraising:index" %}">
+          {% firstof donation.name "Someone" %} donated
+          {% if donation.is_amount_displayed %}${{ donation.donated_amount|intcomma }}{% endif %}
+          for the Django Fellowship program to help develop Django.
+          Join them today!
+        </a></li>
+      </ul>
+    </div>
+  </div>
 {% endif %}
