@@ -69,6 +69,10 @@ class DjangoHero(FundraisingModel):
     def __unicode__(self):
         return self.name if self.name else 'Anonymous #{}'.format(self.pk)
 
+    class Meta:
+        verbose_name = "Django hero"
+        verbose_name_plural = "Django heroes"
+
 
 class Donation(FundraisingModel):
     amount = models.DecimalField(max_digits=9, decimal_places=2, null=True)
