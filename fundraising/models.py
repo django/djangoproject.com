@@ -46,7 +46,7 @@ class FundraisingModel(models.Model):
 class DjangoHero(FundraisingModel):
     email = models.EmailField(blank=True)
     logo = models.ImageField(upload_to="fundraising/logos/", blank=True)
-    url = models.URLField(blank=True)
+    url = models.URLField(blank=True, verbose_name='URL')
     name = models.CharField(max_length=100, blank=True)
     is_visible = models.BooleanField(
         default=False,
