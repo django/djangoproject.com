@@ -12,8 +12,8 @@
       <ul class="list-links-small">
         <li><a href="{% url "fundraising:index" %}">
           {% firstof donation.name "Someone" %} donated
-          {% if donation.is_amount_displayed %}${{ donation.donated_amount|intcomma }}{% endif %}
-          for the Django Fellowship program to help develop Django.
+          {% if donation.is_amount_displayed %}US&nbsp;${{ donation.donated_amount|intcomma }}{% endif %}
+          for the Django Fellowship program to support Django development.
           Join them today!
         </a></li>
       </ul>
