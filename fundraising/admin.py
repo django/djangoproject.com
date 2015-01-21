@@ -4,7 +4,7 @@ from .models import DjangoHero, Donation, Testimonial
 
 @admin.register(DjangoHero)
 class DjangoHeroAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ['approved']
 
 
 @admin.register(Donation)
