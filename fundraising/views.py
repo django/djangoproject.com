@@ -26,14 +26,13 @@ def index(request):
 
     donors_with_logo = DjangoHero.objects.in_period(begin, end, with_logo=True)
     other_donors = DjangoHero.objects.in_period(begin, end)
-    total_donors = len(donors_with_logo) + len(other_donors)
 
     return render(request, 'fundraising/index.html', {
         'donated_amount': donated_amount['amount__sum'] or 0,
         'goal_amount': RESTART_GOAL,
         'donors_with_logo': donors_with_logo,
         'other_donors': other_donors,
-        'total_donors': total_donors,
+        'total_donors': DjangoHero.objects.count(),
         'form': DonateForm(initial={'amount': DEFAULT_DONATION_AMOUNT}),
         'testimonial': Testimonial.objects.filter(is_active=True).order_by('?').first(),
         'display_logo_amount': DISPLAY_LOGO_AMOUNT,
