@@ -23,7 +23,7 @@ def as_percentage(part, total):
 @register.inclusion_tag('fundraising/donation_snippet.html')
 def donation_snippet():
     try:
-        donation = DjangoHero.objects.filter(is_visible=True).order_by('?')[:1]
+        donation = DjangoHero.objects.filter(approved=True, is_visible=True).order_by('?')[:1]
         donation = donation.annotate(donated_amount=models.Sum('donation__amount')).get()
     except DjangoHero.DoesNotExist:
         donation = None
