@@ -152,7 +152,6 @@ class PaymentForm(forms.Form):
             },
         ),
     )
-
     expires = forms.CharField(
         required=False,
         widget=StripeTextInput(
@@ -163,11 +162,7 @@ class PaymentForm(forms.Form):
             },
         ),
     )
-
-    campaign = forms.CharField(
-        required=False,
-        widget=forms.HiddenInput()
-    )
+    campaign = forms.CharField(required=False, widget=forms.HiddenInput())
 
     def __init__(self, data=None, fixed_amount=None, *args, **kwargs):
         super(PaymentForm, self).__init__(data, *args, **kwargs)
