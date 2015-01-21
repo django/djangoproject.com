@@ -17,6 +17,7 @@ class DjangoHeroManager(models.Manager):
             donation__created__gte=begin,
             donation__created__lt=end,
             is_visible=True,
+            approved=True,
         ).annotate(donated_amount=models.Sum('donation__amount'))
 
         if with_logo:
@@ -45,7 +46,7 @@ class FundraisingModel(models.Model):
 class DjangoHero(FundraisingModel):
     email = models.EmailField(blank=True)
     logo = models.ImageField(upload_to="fundraising/logos/", blank=True)
-    url = models.URLField(blank=True)
+    url = models.URLField(blank=True, verbose_name='URL')
     name = models.CharField(max_length=100, blank=True)
     is_visible = models.BooleanField(
         default=False,
@@ -58,6 +59,9 @@ class DjangoHero(FundraisingModel):
     is_amount_displayed = models.BooleanField(
         default=False,
         verbose_name="Agreed to disclose amount of donation?",
+    )
+    approved = models.NullBooleanField(
+        verbose_name="Name, URL, and Logo approved?",
     )
 
     objects = DjangoHeroManager()

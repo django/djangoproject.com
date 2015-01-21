@@ -1,4 +1,5 @@
 {% extends 'fundraising/index.html' %}
+{% load humanize %}
 
 {% block content %}
 <h1>Donation details</h1>
@@ -7,12 +8,13 @@
   data-publishable-key="{{ publishable_key }}" novalidate>
   {% csrf_token %}
   {% if form.initial.amount or form.cleaned_data.amount %}
-    <h2>We're super happy that you want to donate US ${% firstof form.initial.amount form.cleaned_data.amount %}</h2>
-    {{ form.amount }}
+    <h2>We're super happy that you want to donate US
+      ${% firstof form.initial.amount|intcomma form.cleaned_data.amount|intcomma %}!</h2>
     To complete the donation, please enter your card details below and press
     the Donate button.
+    {{ form.amount }}
   {% else %}
-  <h2>We're super happy that you want to donate</h2>
+  <h2>We're super happy that you want to donate!</h2>
   Please enter the amount of your donation and your card details below and press the Donate button.
   <fieldset>
     {{ form.amount }}
