@@ -36,7 +36,7 @@
     <h2>Renewal Goal</h2>
     <ul>
       <li><b>{{ donated_amount|as_percentage:goal_amount }}% funded</b></li>
-      <li><b>${{ donated_amount|intcomma }} donated</b> of ${{ goal_amount|intcomma }} goal</li>
+      <li><b>${{ donated_amount|intcomma }} donated</b> of US&nbsp;${{ goal_amount|intcomma }} goal</li>
       <li><b>{{ total_donors }} donor{{ total_donors|pluralize:",s" }}</b></li>
     </ul>
 
@@ -45,7 +45,7 @@
         <h3>Help us make it happen:</h3>
         {{ form.amount }}
         <div class="custom-donation">
-          <span class="prefix">$</span>
+          <span class="prefix">US $</span>
         </div>
         <input type="submit" value="Donate" class="cta" />
       </form>
@@ -54,7 +54,7 @@
   <div class="cls"></div>
   <p class="footnote">
     Your logo will be visible below if you contribute at least
-    ${{ display_logo_amount }}.
+    US&nbsp;${{ display_logo_amount|intcomma }}.
 </p>
 </div>
 
@@ -92,8 +92,8 @@
    that the Web framework you base your work on can grow to be even better in
    the coming years.</p>
 
-<p>The weekly cost of the program is about ${{ weekly_goal|intcomma }}. <b>We're
-   trying to raise an initial ${{ goal_amount|intcomma }} to renew the program
+<p>The weekly cost of the program is about US&nbsp;${{ weekly_goal|intcomma }}. <b>We're
+   trying to raise an initial US&nbsp;${{ goal_amount|intcomma }} to renew the program
    for at least three months, after which we'll endeavor to raise funds on a
    weekly basis to sustain the program.</b></p>
 
