@@ -83,7 +83,7 @@ def donate(request):
             if 'amount' in form.errors:
                 show_amount = True
     else:
-        fixed_amount = request.GET.get('amount')
+        fixed_amount = request.GET.get('amount') or None
         campaign = request.GET.get('campaign')
         initial = {'campaign': campaign}
         if fixed_amount:
