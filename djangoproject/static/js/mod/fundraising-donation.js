@@ -35,7 +35,7 @@ define([
 			} else {
 				$(selector).addClass('error');
 				var errors = $(formSelector).find('.validation-errors');
-				if (errors.text()) {
+				if (errors.text().length > 0) {
 					errors.text(errors.text() + ', ' + error);
 				} else {
 					errors.text(error);
