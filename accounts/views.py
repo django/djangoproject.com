@@ -75,7 +75,7 @@ def get_user_info(username):
                 "core": u.has_perm('auth.commit'),
                 "cla": bool(find_agreements(u))
             }
-        c.set(key, info, 60*60)
+        c.set(key, info, 60 * 60)
     return info
 
 
@@ -90,7 +90,7 @@ def get_user_stats(user):
         for k, v in info.items():
             if v == 0:
                 info.pop(k)
-        c.set(key, info, 60*60)
+        c.set(key, info, 60 * 60)
     return info
 
 
