@@ -2807,10 +2807,6 @@ hr {
 }
 
 /// Fundraising page
-.small-fundraising-heart {
-	float: left;
-	margin: 5px 18px 0 0;
-}
 .fundraising-index {
 	margin-top: 50px;
 
@@ -2895,6 +2891,29 @@ hr {
 		display: none;
 		margin-top: 10px;
 	}
+}
+
+.fundraising-sidebar {
+	.small-heart {
+		margin-top: 20px;
+		width: 20%;
+		float: left;
+		margin-bottom: 20px;
+
+		img {
+			width: 100%;
+			max-width: 64px;
+		}
+	}
+	.small-cta {
+		width: 70%;
+		float: left;
+		vertical-align: top;
+		margin-left: 5%;
+		margin-right: 5%;
+		margin-bottom: 20px;
+	}
+	clear: both;
 }
 
 .footnote {
