@@ -121,9 +121,7 @@
             {{ donor.name }}
           {% if donor.url %}</a>{% endif %}
           {% if donor.is_amount_displayed %}
-            <em>${{ donor.donated_amount|intcomma }}</em>
-          {% else %}
-            <em>&nbsp;</em>
+            <br/><em>${{ donor.donated_amount|intcomma }}</em>
           {% endif %}
         </div>
     </div>
