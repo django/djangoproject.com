@@ -86,16 +86,22 @@
     var require = {
         shim: {
             'jquery': [],
-            'jquery.inview': ["jquery"]
+            'jquery.inview': ["jquery"],
+            'jquery.payment': ["jquery"],
+            'stripe': {
+              exports: 'Stripe'
+            }
         },
         paths: {
             "jquery": extless("{% static 'js/lib/jquery/dist/jquery.min.js' %}"),
             "jquery.inview": extless("{% static 'js/lib/jquery.inview/jquery.inview.min.js' %}"),
+            "jquery.payment": extless("{% static 'js/lib/jquery.payment/lib/jquery.payment.js' %}"),
             "mod/floating-warning": extless("{% static 'js/mod/floating-warning.js' %}"),
             "mod/list-collapsing": extless("{% static 'js/mod/list-collapsing.js' %}"),
             "mod/list-feature": extless("{% static 'js/mod/list-feature.js' %}"),
             "mod/mobile-menu": extless("{% static 'js/mod/mobile-menu.js' %}"),
-            "mod/version-switcher": extless("{% static 'js/mod/version-switcher.js' %}")
+            "mod/version-switcher": extless("{% static 'js/mod/version-switcher.js' %}"),
+            "stripe": "https://js.stripe.com/v2/?"  // ? needed due to require.js
         }
     };
     </script>

@@ -51,5 +51,19 @@ define(function(){
 		mods.push('mod/floating-warning');
 	}
 
+	//fundraising heart
+	if (hasClass('fundraising-heart')) {
+		mods.push('mod/fundraising-heart');
+	}
+	//fundraising donation form
+	if (hasClass('fundraising-index')) {
+		mods.push('mod/fundraising-index');
+	}
+
+	//fundraising donation form
+	if (hasClass('fundraising-donation')) {
+		mods.push('mod/fundraising-donation');
+	}
+
 	require(mods);
 });

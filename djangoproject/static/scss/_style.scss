@@ -9,7 +9,6 @@ CSS rendered with Sass 3.2.7
 */
 
 //------------------- Globals
-
 body {
 	@include serif;
 	@include font-size(18);
@@ -2224,10 +2223,10 @@ h2 + .list-link-soup {
 		padding: 10px 0 20px;
 	}
 
-    img {
-        display: block;
-        max-width: 100%;
-    }
+	img {
+		display: block;
+		max-width: 100%;
+	}
 
 	@include sans-serif;
 	@include font-size(14);
@@ -2306,7 +2305,7 @@ dl.function, dl.class, dl.method, dl.attribute {
 
 
 table.docutils td, table.docutils th {
-    border-bottom: 1px solid $gray-line;
+	border-bottom: 1px solid $gray-line;
 }
 
 #search-results span.highlighted {
@@ -2480,6 +2479,7 @@ form {
 	input[type="text"],
 	input[type="email"],
 	input[type="password"],
+	input[type="url"],
 	textarea {
 		@include sans-serif;
 		@include font-size(16);
@@ -2564,7 +2564,8 @@ form {
 		input[type="search"],
 		input[type="text"],
 		input[type="email"],
-		input[type="password"] {
+		input[type="password"],
+		input[type="url"] {
 			margin: 10px 0;
 		}
 	}
@@ -2803,4 +2804,164 @@ hr {
 }
 .clearfix, .group-container {
 	@include clearfix;
+}
+
+/// Fundraising page
+.fundraising-index {
+	margin-top: 50px;
+
+	.fundraising-heart {
+		width: 100%;
+		float: none;
+		img, svg {
+			width: 100%;
+			height: auto;
+		}
+		rect {
+			@include transition(opacity 250ms ease-out);
+			&.faded {
+				opacity: 0.05;
+				&:hover { opacity: 0.9; }
+			}
+		}
+		@include respond-min(768px) {
+			width: 55%;
+			float: left;
+		}
+	}
+	.description {
+		margin-left: 5%;
+		width: 100%;
+		float: none;
+		margin-top: 30px;
+
+		@include respond-min(768px) {
+			width: 40%;
+			float: left;
+			margin-top: 0px;
+		}
+
+		h2 {
+			margin-top: 0;
+			@include font-size(28);
+		}
+	}
+}
+
+.fundraising-index {
+	.donate {
+		select {
+			width: 80%;
+
+			@include respond-min(768px) {
+				width: 100%
+			}
+		}
+		.cta {
+			margin: 10px 0;
+		}
+		.custom-donation {
+			display: none;
+		}
+		.prefix {
+			float: left;
+			@include font-size(19);
+			margin: 8px 9px 0 3px;
+		}
+		input[type="text"]{
+			width: 70%;
+		}
+	}
+	.cls {
+		clear: both;
+	}
+}
+
+.fundraising-donation {
+	select {
+		width: 100%;
+	}
+	input.error {
+		border: 1px solid $red !important;
+	}
+	p.validation-errors {
+		color: $red;
+	}
+	.custom-donation {
+		display: none;
+		margin-top: 10px;
+	}
+}
+
+.fundraising-sidebar {
+	.small-heart {
+		margin-top: 20px;
+		width: 20%;
+		float: left;
+		margin-bottom: 20px;
+
+		img {
+			width: 100%;
+			max-width: 64px;
+		}
+	}
+	.small-cta {
+		width: 70%;
+		float: left;
+		vertical-align: top;
+		margin-left: 5%;
+		margin-right: 5%;
+		margin-bottom: 20px;
+	}
+	clear: both;
+}
+
+.footnote {
+	color: $gray-medium;
+	@include font-size(14);
+	margin-top: 20px;
+	text-align: center;
+}
+form .footnote {
+	margin-top: 10px;
+	text-align: left;
+}
+.heros-section {
+	overflow: hidden;
+	.heros {
+		clear: both;
+		.hero {
+			width: 25%;
+			position: relative;
+			height: auto;
+			div {
+				width: 100%;
+			}
+		}
+		.hero-logo {
+			height: 170px;
+			line-height: 170px;
+			img {
+				vertical-align: middle;
+			}
+		}
+		.hero-name {
+			vertical-align: top;
+		}
+		.no-logo-hero {
+			margin-right: 12px;
+		}
+		div {
+			float: left;
+			text-align: center;
+			margin: 15px 0;
+			img {
+				max-width: 90%;
+				max-height: 170px;
+			}
+		}
+	}
+	.pagination {
+		clear: both;
+	}
 }

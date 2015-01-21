@@ -1,0 +1,22 @@
+{% load humanize static %}
+
+{% if donation %}
+  <div class="fundraising-sidebar">
+    <h2>Support Django!</h2>
+
+    <div class="small-heart">
+      <img src="{% static "img/small-fundraising-heart.png" %}" alt="Support Django!" />
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        <li><a href="{% url "fundraising:index" %}">
+          {% firstof donation.name "Someone" %} donated
+          {% if donation.is_amount_displayed %}US&nbsp;${{ donation.donated_amount|intcomma }}{% endif %}
+          for the Django Fellowship program to support Django development.
+          Join them today!
+        </a></li>
+      </ul>
+    </div>
+  </div>
+{% endif %}

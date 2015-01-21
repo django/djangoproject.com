@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'releases',
     'svntogit',
     'tracdb',
+    'fundraising',
 ]
 
 LANGUAGE_CODE = 'en-us'
@@ -223,3 +224,9 @@ PUSH_CREDENTIALS = 'aggregator.utils.push_credentials'
 
 # SUPERFEEDR_CREDS is a 2 element list in the form of [email,secretkey]
 SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
+
+# Stripe settings
+
+# only testing keys as fallback values here please!
+STRIPE_SECRET_KEY = SECRETS.get('stripe_secret_key', 'sk_test_x6zP4wd7Z5jcvDOJbbHZlHHt')
+STRIPE_PUBLISHABLE_KEY = SECRETS.get('stripe_publishable_key', 'pk_test_TyB5jcROwK8mlCNrn3dCwW7l')

@@ -1,10 +1,9 @@
+from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.sitemaps import FlatPageSitemap
 from django.contrib.sitemaps import views as sitemap_views
-from django.shortcuts import render
 from django.views.decorators.cache import cache_page
-from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView, TemplateView
 
 from accounts import views as account_views
@@ -35,6 +34,7 @@ urlpatterns = [
     url(r'^conduct/enforcement-manual/$', TemplateView.as_view(template_name='conduct/enforcement.html'), name='conduct_enforcement'),
     url(r'^conduct/changes/$', TemplateView.as_view(template_name='conduct/changes.html'), name='conduct_changes'),
     url(r'^contact/', include('contact.urls')),
+    url(r'^fundraising/', include('fundraising.urls', namespace='fundraising')),
     url(r'^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', 'django.contrib.contenttypes.views.shortcut'),
 
     # There's no school like the old school.
@@ -45,10 +45,6 @@ urlpatterns = [
     url(r'^rss/community/$', RedirectView.as_view(url='/rss/community/blogs/')),
     url(r'^rss/community/firehose/$', CommunityAggregatorFirehoseFeed(), name='aggregator-firehose-feed'),
     url(r'^rss/community/(?P<slug>[\w-]+)/$', CommunityAggregatorFeed(), name='aggregator-feed'),
-
-    # PayPal insists on POSTing to the "thank you" page which means we can't
-    # just use a flatpage for it.
-    url(r'^foundation/donate/thanks/$', csrf_exempt(lambda req: render(req, 'donate_thanks.html'))),
 
     # django-push
     url(r'^subscriber/', include('django_push.subscriber.urls')),
@@ -66,3 +62,8 @@ urlpatterns = [
     url(r'^svntogit/', include('svntogit.urls')),
     url(r'', include('legacy.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^m/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    ]
