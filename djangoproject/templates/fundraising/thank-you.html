@@ -1,0 +1,42 @@
+{% extends 'fundraising/index.html' %}
+
+{% block content %}
+<h1>Thank you for supporting the Django Project!</h1>
+<p>Your support is <strong>invaluable</strong> to continue the rapid development
+  of Django and helps the <strong>Django Fellowship</strong> program in particular.</p>
+
+<p>Please help us spread the word and encourage your friends and colleagues to
+  donate. Thank you!</p>
+
+<a href="https://twitter.com/intent/tweet?button_hashtag=SupportDjango&text=I+just+donated+to+support+the+Django+Fellowship+Program!+Do+it.+https%3A%2F%2Fwww.djangoproject.com%2Ffundraising%2F"
+  class="twitter-hashtag-button" data-related="djangoproject">Tweet #SupportDjango</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<p>If you'd like to have your name or company displayed on the
+  <a href="{% url 'fundraising:index' %}">Fundraising page</a> and in the sidebar
+  on the Django Project website, please fill out the form below. This is, of
+  course, <em>optional</em>.
+</p>
+
+<h1>You're now a Django Hero:</h1>
+<form enctype="multipart/form-data" action="" method="post" class="form-input">
+  {% csrf_token %}
+  {% for field in form %}
+    <p>
+    {% if field.name in form.checkbox_fields %}
+        {{ field }}{{ field.label_tag }}
+    {% else %}
+        {{ field }}
+    {% endif %}
+    {% if field.errors %}<p class="errors">{{ field.errors.as_text }}</p>{% endif %}
+    {% if field.help_text %}<p class="footnote">{{ field.help_text }}</p>{% endif %}
+    </p>
+  {% endfor %}
+  <p class="submit">
+    <input type="submit" class="cta" value="Save &rarr;">
+  </p>
+</form>
+
+{% endblock %}
+
+{% block content-extra %}{% endblock %}

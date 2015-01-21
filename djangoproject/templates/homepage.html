@@ -1,5 +1,5 @@
 {% extends "base_3col.html" %}
-{% load weblog %}
+{% load weblog fundraising_extras %}
 
 {% block sectionid %}homepage{% endblock %}
 {% block body_class %}homepage{% endblock %}
@@ -98,12 +98,13 @@
 {% endblock %}
 
 {% block content-related %}
-
   <div role="complementary">
       <a href="{% url 'download' %}" class="cta">
           Download <em>latest release: {{ DJANGO_VERSION }}</em>
       </a>
       <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}" class="link-readmore">Django documentation</a>
+
+      {% donation_snippet %}
 
       <h3>Latest news</h3>
       {% render_latest_blog_entries 1 hide_readmore=True hide_summary=True %}

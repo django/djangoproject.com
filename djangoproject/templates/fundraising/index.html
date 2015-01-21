@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load fundraising_extras humanize static %}
+
+{% block title %}Support Django{% endblock %}
+{% block layout_class %}full-width{% endblock %}
+
+{% block header %}
+<h1 class="visuallyhidden">Support Django</h1>
+<p><em>Support Django development</em> by donating to the <em>Django Fellowship</em> program.</p>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+  {% for message in messages %}
+  <h1>{{ message }}</h1>
+  {% endfor %}
+  <hr>
+{% endif %}
+
+<h1>Support the Django Fellowship Program!</h1>
+
+<div class="fundraising-index" id="donate">
+  <div class="fundraising-heart" data-percent="{{ donated_amount|as_percentage:goal_amount }}">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 503 431">
+      <switch>
+        <g transform="translate(4, 2)" id="pixels">
+          <path d="M 71 0 L 213 0 L 213 71 L 284 71 L 284 0 L 426 0 L 426 71 L 497 71 L 497 213 L 426 213 L 426 284 L 355 284 L 355 355 L 284 355 L 284 426 L 213 426 L 213 355 L 142 355 L 142 284 L 71 284 L 71 213 L 0 213 L 0 71 L 71 71 L 71 0" fill="#f8f8f8" stroke="#c0c0c0" stroke-width="1" />
+        </g>
+        <foreignObject>
+          <img src="{% static 'img/fundraising-heart.png' %}" />
+        </foreignObject>
+      </switch>
+    </svg>
+  </div>
+  <div class="description">
+    <h2>Renewal Goal</h2>
+    <ul>
+      <li><b>{{ donated_amount|as_percentage:goal_amount }}% funded</b></li>
+      <li><b>${{ donated_amount|intcomma }} donated</b> of US&nbsp;${{ goal_amount|intcomma }} goal</li>
+      <li><b>{{ total_donors }} donor{{ total_donors|pluralize:",s" }}</b></li>
+    </ul>
+
+    <div class="donate">
+      <form method="get" action="{% url "fundraising:donate" %}">
+        <h3>Help us make it happen:</h3>
+        {{ form.amount }}
+        <div class="custom-donation">
+          <span class="prefix">US $</span>
+        </div>
+        <input type="submit" value="Donate" class="cta" />
+      </form>
+    </div>
+  </div>
+  <div class="cls"></div>
+  <p class="footnote">
+    Your logo will be visible below if you contribute at least
+    US&nbsp;${{ display_logo_amount|intcomma }}.
+</p>
+</div>
+
+<hr style="margin: 40px 0" />
+
+<h1>About the program</h1>
+<p>Django Fellowship is a project where paid contractors are engaged to manage
+  some of the administrative and community management tasks of the Django
+  project to support rapid development of Django itself. </p>
+
+<p><b>The first three months of the Django Fellowship program have been very successful.</b>
+  In this short time, <a href="#about">two Django Fellows</a>, one full-time and one part-time, worked on
+  around 240 pull requests (including reviewing some of the major features that will
+  be in <a href="/weblog/2015/jan/16/django-18-alpha-1-released/">Django 1.8</a>), triaged at
+  least 90 different tickets, and made around 200 commits in total! You can read
+  <a href="/weblog/2015/jan/21/django-fellowship-retrospective/">the retrospective
+  on the things that have been accomplished</a> on our blog.</p>
+
+<h1>We need your help!</h1>
+
+<p>The program has already had a major positive impact on how Django is developed
+   and maintained. Release blocking and severe bugs are not postponed indefinitely. Django
+   Fellows are a resource to help review patches and contributions from the community, and
+   the community loves that:</p>
+
+   {% if testimonial %}
+   <blockquote>
+     {{ testimonial.body|linebreaks }}
+     <em>{{ testimonial.author }}</em>
+   </blockquote>
+   {% endif %}
+
+<p><b>If you use Django on a daily basis and care about the development of Django
+   itself, you should donate today.</b> Only with your support can we make sure
+   that the Web framework you base your work on can grow to be even better in
+   the coming years.</p>
+
+<p>The weekly cost of the program is about US&nbsp;${{ weekly_goal|intcomma }}. <b>We're
+   trying to raise an initial US&nbsp;${{ goal_amount|intcomma }} to renew the program
+   for at least three months, after which we'll endeavor to raise funds on a
+   weekly basis to sustain the program.</b></p>
+
+<p><a href="/weblog/2015/jan/21/django-fellowship-retrospective/">Learn more
+   about the Django Fellowship program</a>.</p>
+
+<hr style="margin: 40px 0" />
+
+<div class="heros-section">
+  <h1>Django Heroes</h1>
+  <p>We're incredibly grateful to everyone who donated to make this happen. We
+  couldn't possibly do it without the continuous support from the community.</p>
+
+  <div class="heros">
+    {% for donor in donors_with_logo %}
+      <div class="hero">
+        <div class="hero-logo">
+          {% if donor.url %}<a href="{{ donor.url }}">{% endif %}
+          <img src="{% if donor.logo %}{{ donor.logo.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+            alt="{{ donor.name }}" />
+          {% if donor.url %}</a>{% endif %}
+        </div>
+        <div class="hero-name">
+          {% if donor.url %}<a href="{{ donor.url }}">{% endif %}
+            {{ donor.name }}
+          {% if donor.url %}</a>{% endif %}
+          {% if donor.is_amount_displayed %}
+            <br/><em>${{ donor.donated_amount|intcomma }}</em>
+          {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="heros">
+    {% for donor in other_donors %}
+      <div class="no-logo-hero">
+        {% if donor.url %}<a href="{{ donor.url }}">{% endif %}
+        <span>{{ donor.name }}</span>
+        {% if donor.url %}</a>{% endif %}
+        {% if donor.is_amount_displayed %}
+          <br/><em>${{ donor.donated_amount|intcomma }}</em>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block content-extra %}
+  <div class="layout-tertiary" id="about">
+    <div class="container">
+        <h2>What is the Django Software Foundation?</h2>
+        <p>Development of Django is supported by an independent foundation
+          established as a 501(c)(3) non-profit. Like most open-source foundations,
+          the goal of the <a href="/foundation/">Django Software Foundation</a>
+          is to promote, support, and advance the Django Web framework. If you're
+          interested in how the Django Software Foundation supports the Django
+          Web framework, we published a
+          <a href="/weblog/2015/jan/08/django-software-foundation-2014/">Summary
+          of 2014. </a>
+        </p>
+
+        <h2>Who were the Django Fellows?</h2>
+        <p>The two Fellows for the duration of the pilot were:</p>
+        <p><b>Tim Graham</b> - a member of the core team for several years. For
+        the 12 months before the fellowship began, he was a major contributor,
+        reviewing and merging pull requests. Tim was contracted as a full-time
+        Fellow for the duration of the 3 month pilot.</p>
+        <p><b>Berker Peksağ</b> - a core developer on CPython, Gunicorn, and
+        Hylang. In the Django community, he had submitted a few patches, as
+        well as organized a Django sprint in Istanbul. During the 3 month pilot,
+        Berker supported Tim part-time.</p>
+        <p>If the program is renewed, there will be a new application period
+        for the next fellow(s).</p>
+    </div>
+  </div>
+{% endblock %}

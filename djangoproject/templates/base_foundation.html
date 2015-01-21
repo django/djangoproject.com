@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load fundraising_extras %}
+
 {% block layout_class %}sidebar-right{% endblock %}
 {% block title %}Django Software Foundation{% endblock %}
 
@@ -11,6 +13,8 @@
 {# Always include <h1> label and <div> with aria role. #}
 <h1 class="visuallyhidden">Additional Information</h1>
 <div role="complementary">
+  {% donation_snippet %}
+  
   <h2>About the foundation</h2>
   <ul class="list-links">
     <li><a href="/foundation/faq/">FAQ</a></li>
@@ -20,27 +24,13 @@
   </ul>
   <h2>Support Django</h2>
   <p>Make a donation to the DSF:</p>
-  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" class="donate form-input">
-    <input type="hidden" name="cmd" value="_donations">
-    <input type="hidden" name="business" value="jkocherhans@djangoproject.com">
-    <input type="hidden" name="item_name" value="Django Software Foundation">
-    <input type="hidden" name="item_number" value="donation">
-    <input type="hidden" name="no_shipping" value="1">
-    <input type="hidden" name="return" value="http://www.djangoproject.com/foundation/donate/thanks/">
-    <input type="hidden" name="cancel_return" value="http://www.djangoproject.com/foundation/donate/">
-    <input type="hidden" name="rm" value="1">
-    <input type="hidden" name="no_note" value="1">
-    <input type="hidden" name="currency_code" value="USD">
-    <input type="hidden" name="tax" value="0">
-    <input type="hidden" name="lc" value="US">
-    <input type="hidden" name="bn" value="PP-DonationsBF">
+  <form action="{% url "fundraising:donate" %}" method="get" class="donate form-input">
     <label for="amount">$</label>
     <input type="text" name="amount" id="amount" value="25.00">
-    <button type="submit" title="Donate with Paypal">
+    <button type="submit" title="Donate">
       <i class="icon icon-heart"></i>
       <span class="visuallyhidden">Donate</span>
     </button>
-    <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
   </form>
   <p><a href="/foundation/donate/">More information about donations</a></p>
 </div>
