@@ -110,11 +110,11 @@
   <div class="heros">
     {% for donor in donors_with_logo %}
       <div class="hero">
-        <div>
-          <a href="{{ donor.url }}">
+        <div class="hero-logo">
+          {% if donor.url %}<a href="{{ donor.url }}">{% endif %}
           <img src="{% if donor.logo %}{{ donor.logo.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
             alt="{{ donor.name }}" />
-          </a>
+          {% if donor.url %}</a>{% endif %}
         </div>
         <div class="hero-name">
           {% if donor.url %}<a href="{{ donor.url }}">{% endif %}
@@ -122,7 +122,7 @@
           {% if donor.url %}</a>{% endif %}
           <br/>
           {% if donor.is_amount_displayed %}
-            <em>${{ donor.donated_amount }}</em>
+            <em>${{ donor.donated_amount|intcomma }}</em>
           {% else %}
             <em>&nbsp;</em>
           {% endif %}
@@ -133,9 +133,11 @@
   <div class="heros">
     {% for donor in other_donors %}
       <div class="no-logo-hero">
-        <a href="{{ donor.url }}"><span>{{ donor.name }}</span></a>
+        {% if donor.url %}<a href="{{ donor.url }}">{% endif %}
+        <span>{{ donor.name }}</span>
+        {% if donor.url %}</a>{% endif %}
         {% if donor.is_amount_displayed %}
-          <br/><em>${{ donor.donated_amount }}</em>
+          <br/><em>${{ donor.donated_amount|intcomma }}</em>
         {% endif %}
       </div>
     {% endfor %}
