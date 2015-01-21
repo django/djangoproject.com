@@ -112,6 +112,7 @@ class DonateForm(forms.Form):
     AMOUNT_VALUES = dict(AMOUNT_CHOICES).keys()
 
     amount = forms.ChoiceField(choices=AMOUNT_CHOICES)
+    campaign = forms.CharField(required=False, widget=forms.HiddenInput())
 
 
 class PaymentForm(forms.Form):
@@ -161,6 +162,11 @@ class PaymentForm(forms.Form):
                 'autocomplete': 'cc-exp',
             },
         ),
+    )
+
+    campaign = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput()
     )
 
     def __init__(self, data=None, fixed_amount=None, *args, **kwargs):
