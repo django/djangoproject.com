@@ -21,6 +21,16 @@ class TestIndex(TestCase):
             'https://api.stripe.com/v1/customers',
             status_code=200
         )
+        mocker.register_uri(
+            'POST',
+            'https://api.stripe.com/v1/charges',
+            status_code=200
+        )
+        mocker.register_uri(
+            'POST',
+            'https://api.stripe.com/v1/tokens',
+            status_code=200
+        )
 
     def test_donors_count(self):
         DjangoHero.objects.create()
@@ -94,4 +104,3 @@ class TestDjangoHero(TestCase):
             [Decimal('15.00'), Decimal('5.00'), Decimal('10.00')],
             attrgetter('donated_amount')
         )
-
