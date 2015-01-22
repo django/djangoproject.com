@@ -17,9 +17,9 @@ script:
   - tox
 after_success: coveralls
 notifications:
-    irc:
-        channels:
-            - "irc.freenode.net#django-websites"
-        on_success: always
-        on_failure: always
-        use_notice: true
+  irc:
+    channels:
+      - "irc.freenode.net#django-websites"
+    on_success: always
+    on_failure: always
+    use_notice: true
