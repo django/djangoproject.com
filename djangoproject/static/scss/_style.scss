@@ -2946,10 +2946,12 @@ form .footnote {
 			}
 		}
 		.hero-name {
+			height: 92px;
 			vertical-align: top;
 		}
 		.no-logo-hero {
-			margin-right: 12px;
+			min-height: 60px;
+			margin-right: 24px;
 		}
 		div {
 			float: left;

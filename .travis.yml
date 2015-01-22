@@ -1,0 +1,26 @@
+sudo: no
+addons:
+  postgresql: "9.3"
+language: python
+env:
+  - TOXENV=py27-tests
+  - TOXENV=py27-flake8
+install:
+  - pip install coveralls tox
+before_script:
+  - createuser -U postgres -d djangoproject
+  - createdb -U postgres -O djangoproject djangoproject
+  - createuser -U postgres code.djangoproject
+  - createdb -U postgres -O code.djangoproject code.djangoproject
+  - psql -U postgres -d code.djangoproject < tracdb/trac.sql
+  - python manage.py loaddata dev_sites
+script:
+  - tox
+after_success: coveralls
+notifications:
+    irc:
+        channels:
+            - "irc.freenode.net#django-websites"
+        on_success: always
+        on_failure: always
+        use_notice: true
