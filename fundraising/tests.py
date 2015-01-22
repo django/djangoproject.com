@@ -1,6 +1,6 @@
-import requests_mock
 from datetime import date, timedelta
 from decimal import Decimal
+from mock import patch
 from operator import attrgetter
 
 from django import forms
@@ -10,28 +10,7 @@ from django.test import TestCase
 
 from .models import DjangoHero, Donation
 
-
 class TestIndex(TestCase):
-
-    @classmethod
-    @requests_mock.mock()
-    def setUpClass(cls, mocker):
-        mocker.register_uri(
-            'POST',
-            'https://api.stripe.com/v1/customers',
-            status_code=200
-        )
-        mocker.register_uri(
-            'POST',
-            'https://api.stripe.com/v1/charges',
-            status_code=200
-        )
-        mocker.register_uri(
-            'POST',
-            'https://api.stripe.com/v1/tokens',
-            status_code=200
-        )
-
     def test_donors_count(self):
         DjangoHero.objects.create()
         response = self.client.get(reverse('fundraising:index'))
@@ -76,13 +55,35 @@ class TestIndex(TestCase):
         response = self.client.post(reverse('fundraising:donate'), {'amount': 100})
         self.assertFalse(response.context['form'].is_valid())
 
+        with patch('stripe.Customer.create', id='test'):
+            with patch('stripe.Charge.create', id='test'):
+                response = self.client.post(reverse('fundraising:donate'), {
+                    'amount': 100,
+                    'stripe_token': 'test',
+                })
+                donations = Donation.objects.all()
+                self.assertEqual(donations.count(), 1)
+                self.assertEqual(donations[0].amount, 100)
+                self.assertEqual(donations[0].campaign_name, '')
+
+    def test_submitting_donation_form_with_campaign(self):
         response = self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
-            'campaign': None,
-            'stripe_token': 'test',
+            'campaign': 'test',
         })
-        self.assertTrue(response.context['form'].is_valid())
-        self.assertEqual(Donation.objects.all().count(), 1)
+        self.assertFalse(response.context['form'].is_valid())
+
+        with patch('stripe.Customer.create', id='test'):
+            with patch('stripe.Charge.create', id='test'):
+                response = self.client.post(reverse('fundraising:donate'), {
+                    'amount': 100,
+                    'campaign': 'test',
+                    'stripe_token': 'test',
+                })
+                donations = Donation.objects.all()
+                self.assertEqual(donations.count(), 1)
+                self.assertEqual(donations[0].amount, 100)
+                self.assertEqual(donations[0].campaign_name, 'test')
 
 
 class TestDjangoHero(TestCase):
