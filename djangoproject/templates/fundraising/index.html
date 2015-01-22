@@ -111,13 +111,13 @@
     {% for donor in donors_with_logo %}
       <div class="hero">
         <div class="hero-logo">
-          {% if donor.url %}<a href="{{ donor.url }}">{% endif %}
+          {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
           <img src="{% if donor.logo %}{{ donor.logo.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
             alt="{{ donor.name }}" />
           {% if donor.url %}</a>{% endif %}
         </div>
         <div class="hero-name">
-          {% if donor.url %}<a href="{{ donor.url }}">{% endif %}
+          {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
             {{ donor.name }}
           {% if donor.url %}</a>{% endif %}
           {% if donor.is_amount_displayed %}
@@ -130,7 +130,7 @@
   <div class="heros">
     {% for donor in other_donors %}
       <div class="no-logo-hero">
-        {% if donor.url %}<a href="{{ donor.url }}">{% endif %}
+        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
         <span>{{ donor.name }}</span>
         {% if donor.url %}</a>{% endif %}
         {% if donor.is_amount_displayed %}
