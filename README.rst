@@ -91,6 +91,14 @@ when it comes to categorize browser support.
   the responsive styles as much as possible but some degredation can't be
   prevented due to the limited screen size and other platform restrictions.
 
+File locations
+--------------
+
+Static files such as CSS, JavaScript or image files can be found in the
+``djangoproject/static`` subdirectory.
+
+Templates can be found in the ``djangoproject/templates`` subdirectory.
+
 Styles
 ------
 
