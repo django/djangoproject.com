@@ -13,7 +13,6 @@ before_script:
   - createuser -U postgres code.djangoproject
   - createdb -U postgres -O code.djangoproject code.djangoproject
   - psql -U postgres -d code.djangoproject < tracdb/trac.sql
-  - python manage.py loaddata dev_sites
 script:
   - tox
 after_success: coveralls
