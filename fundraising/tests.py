@@ -17,14 +17,14 @@ class TestIndex(TestCase):
     @requests_mock.mock()
     def setUpClass(cls, mocker):
         mocker.register_uri(
-            'GET',
+            'POST',
             'https://api.stripe.com/v1/customers',
             status_code=200
         )
 
     def test_donors_count(self):
         DjangoHero.objects.create()
-        response = self.client.get('/fundraising/')
+        response = self.client.get(reverse('fundraising:index'))
         self.assertEqual(response.context['total_donors'], 1)
 
     def test_render_donate_form_with_amount(self):
@@ -34,7 +34,7 @@ class TestIndex(TestCase):
         self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
 
         # Checking if amount field is hidden
-        self.assertEqual(response.context['form'].fields['amount'].widget.__class__, forms.HiddenInput)
+        self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.HiddenInput)
         # Checking if campaign field is empty
         self.assertEqual(response.context['form'].initial['campaign'], None)
 
@@ -45,19 +45,19 @@ class TestIndex(TestCase):
         self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
 
         # Checking if amount field is visible
-        self.assertEqual(response.context['form'].fields['amount'].widget.__class__, forms.TextInput)
+        self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.TextInput)
         # Checking if campaign field is empty
         self.assertEqual(response.context['form'].initial['campaign'], None)
 
     def test_render_donate_form_with_campaign(self):
         campaign = 'sample'
-        response = self.client.get(reverse('fundraising:donate'), {'amount': 100, 'campaign':campaign})
+        response = self.client.get(reverse('fundraising:donate'), {'amount': 100, 'campaign': campaign})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['fixed_amount'], '100')
         self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
 
         # Checking if amount field is hidden
-        self.assertEqual(response.context['form'].fields['amount'].widget.__class__, forms.HiddenInput)
+        self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.HiddenInput)
         # Checking if campaign field is same as campaign
         self.assertEqual(response.context['form'].initial['campaign'], campaign)
 
@@ -67,9 +67,6 @@ class TestIndex(TestCase):
 
         response = self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
-            'number': '4242424242424242',
-            'cvc': '111',
-            'expires': '11/18',
             'campaign': None,
             'stripe_token': 'test',
         })
