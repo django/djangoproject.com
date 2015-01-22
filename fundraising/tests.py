@@ -60,16 +60,17 @@ class TestIndex(TestCase):
         self.assertEqual(response.context['form'].initial['campaign'], None)
 
     def test_render_donate_form_with_campaign(self):
-        campaign = 'sample'
-        response = self.client.get(reverse('fundraising:donate'), {'amount': 100, 'campaign': campaign})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['fixed_amount'], '100')
-        self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
+        campaigns = ['sample', '']
+        for campaign in campaigns:
+            response = self.client.get(reverse('fundraising:donate'), {'amount': 100, 'campaign': campaign})
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.context['fixed_amount'], '100')
+            self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
 
-        # Checking if amount field is hidden
-        self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.HiddenInput)
-        # Checking if campaign field is same as campaign
-        self.assertEqual(response.context['form'].initial['campaign'], campaign)
+            # Checking if amount field is hidden
+            self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.HiddenInput)
+            # Checking if campaign field is same as campaign
+            self.assertEqual(response.context['form'].initial['campaign'], campaign)
 
     def test_submitting_donation_form(self):
         response = self.client.post(reverse('fundraising:donate'), {'amount': 100})
@@ -81,6 +82,7 @@ class TestIndex(TestCase):
             'stripe_token': 'test',
         })
         self.assertTrue(response.context['form'].is_valid())
+        self.assertEqual(Donation.objects.all().count(), 1)
 
 
 class TestDjangoHero(TestCase):
