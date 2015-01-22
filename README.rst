@@ -29,7 +29,7 @@ To run locally, do the usual:
 
     createuser -d djangoproject
     createdb -O djangoproject djangoproject
-    createuser code.djangoproject
+    createuser -d code.djangoproject
     createdb -O code.djangoproject code.djangoproject
 
 #. Create tables::
