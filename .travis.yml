@@ -10,7 +10,7 @@ install:
 before_script:
   - createuser -U postgres -d djangoproject
   - createdb -U postgres -O djangoproject djangoproject
-  - createuser -U postgres code.djangoproject
+  - createuser -U postgres -d code.djangoproject
   - createdb -U postgres -O code.djangoproject code.djangoproject
   - psql -U postgres -d code.djangoproject < tracdb/trac.sql
 script:
