@@ -4,7 +4,7 @@ from .models import ICLA, CCLA, CCLADesignee
 
 
 class ICLAAdmin(admin.ModelAdmin):
-    list_display = ['__unicode__', 'user', 'date_signed']
+    list_display = ['__str__', 'user', 'date_signed']
     raw_id_fields = ['user']
     ordering = ['-date_signed']
 

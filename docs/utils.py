@@ -1,11 +1,9 @@
 from django.conf import settings
 from django.http import Http404
 
-from unipath import FSPath as Path
-
 
 def get_doc_root(lang, version, subroot='json'):
-    return Path(settings.DOCS_BUILD_ROOT).child(lang, version, "_built", subroot)
+    return settings.DOCS_BUILD_ROOT.joinpath(lang, version, "_built", subroot)
 
 
 def get_doc_root_or_404(lang, version, subroot='json'):
@@ -18,12 +16,12 @@ def get_doc_root_or_404(lang, version, subroot='json'):
 def get_doc_path(docroot, subpath):
     # First look for <bits>/index.fjson, then for <bits>.fjson
     bits = subpath.strip('/').split('/') + ['index.fjson']
-    doc = docroot.child(*bits)
+    doc = docroot.joinpath(*bits)
     if doc.exists():
         return doc
 
     bits = bits[:-2] + ['%s.fjson' % bits[-2]]
-    doc = docroot.child(*bits)
+    doc = docroot.joinpath(*bits)
     if doc.exists():
         return doc
 
