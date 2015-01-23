@@ -1,9 +1,14 @@
 from decimal import Decimal
+import logging
+import stripe
 
 from django import forms
 from django.utils.safestring import mark_safe
 
-from .models import DjangoHero
+from .models import DjangoHero, Donation
+
+
+logger = logging.getLogger(__name__)
 
 
 class DjangoHeroForm(forms.ModelForm):
@@ -179,3 +184,32 @@ class PaymentForm(forms.Form):
                 'placeholder': 'Amount in US Dollar',
             },
         )
+
+    def make_donation(self):
+        amount = self.cleaned_data['amount']
+        campaign = self.cleaned_data['campaign']
+        token = self.cleaned_data['stripe_token']
+        try:
+            # First create a Stripe customer so that we can store
+            # people's email address on that object later
+            customer = stripe.Customer.create(card=token)
+            # Charge the customer's credit card on Stripe's servers;
+            # the amount is in cents!
+            charge = stripe.Charge.create(
+                amount=int(amount * 100),
+                currency='usd',
+                customer=customer.id,
+            )
+        except (stripe.StripeError, ValueError):
+            # The card has been declined, we want to see what happened
+            # in Sentry
+            logger.exception('Card has been declined.')
+            return None
+        else:
+            donation = Donation.objects.create(
+                amount=amount,
+                stripe_charge_id=charge.id,
+                stripe_customer_id=customer.id,
+                campaign_name=campaign,
+            )
+            return donation
