@@ -4,6 +4,7 @@ from decimal import Decimal, DecimalException
 from django.conf import settings
 from django.contrib import messages
 from django.db.models import Sum
+from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect, render, get_object_or_404
 
 import stripe
@@ -53,32 +54,11 @@ def donate(request):
 
         if form.is_valid():
             # Create the charge on Stripe's servers - this will charge the user's card
-            try:
-                amount = form.cleaned_data['amount']
-                campaign = form.cleaned_data['campaign']
-                token = form.cleaned_data['stripe_token']
-                # First create a Stripe customer so that we can store
-                # people's email address on that object later
-                customer = stripe.Customer.create(card=token)
-                # Charge the customer's credit card on Stripe's servers;
-                # the amount is in cents!
-                charge = stripe.Charge.create(
-                    amount=int(amount * 100),
-                    currency='usd',
-                    customer=customer.id,
-                )
-            except (stripe.StripeError, ValueError):
-                # The card has been declined, we want to see what happened
-                # in Sentry
-                raise
-            else:
-                donation = Donation.objects.create(
-                    amount=amount,
-                    stripe_charge_id=charge.id,
-                    stripe_customer_id=customer.id,
-                    campaign_name=campaign,
-                )
-                return redirect(donation)
+            donation = form.make_donation()
+            if not donation:
+                return HttpResponseBadRequest()
+
+            return redirect(donation)
         else:
             if 'amount' in form.errors:
                 show_amount = True
