@@ -1,14 +1,10 @@
 from decimal import Decimal
-import logging
 import stripe
 
 from django import forms
 from django.utils.safestring import mark_safe
 
 from .models import DjangoHero, Donation
-
-
-logger = logging.getLogger(__name__)
 
 
 class DjangoHeroForm(forms.ModelForm):
@@ -203,8 +199,7 @@ class PaymentForm(forms.Form):
         except (stripe.StripeError, ValueError):
             # The card has been declined, we want to see what happened
             # in Sentry
-            logger.exception('Card has been declined.')
-            return None
+            raise
         else:
             donation = Donation.objects.create(
                 amount=amount,

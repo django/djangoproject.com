@@ -168,5 +168,6 @@ class TestPaymentForm(TestCase):
             'stripe_token': 'xxxx',
         })
         self.assertTrue(form.is_valid())
-        donation = form.make_donation()
-        self.assertIsNone(donation)
+        with self.assertRaises(ValueError):
+            donation = form.make_donation()
+            self.assertIsNone(donation)
