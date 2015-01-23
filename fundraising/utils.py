@@ -1,15 +1,11 @@
-from datetime import timedelta
-
-from .models import START_DATE
+from random import random
 
 
-def get_week_begin_end_datetimes(day):
-    begin = day - timedelta(days=day.weekday())
-    end = begin + timedelta(days=7)
-    return begin, end
-
-
-def get_week_number(day):
-    monday_start_week = (START_DATE - timedelta(days=START_DATE.weekday()))
-    monday_current_week = (day - timedelta(days=day.weekday()))
-    return (monday_current_week - monday_start_week).days / 7
+def shuffle_donations(donations):
+    """
+    Randomize the given list of donations but in a way that big donations
+    have a bigger chance to be near the top (weighted random).
+    """
+    def keyfunc(donation):
+        return float(donation.donated_amount) * random()
+    return sorted(donations, key=keyfunc, reverse=True)

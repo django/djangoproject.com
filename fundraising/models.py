@@ -25,7 +25,7 @@ class DjangoHeroManager(models.Manager):
         else:
             donors = donors.filter(donated_amount__lt=DISPLAY_LOGO_AMOUNT)
 
-        return donors.order_by('-is_amount_displayed', '-donated_amount', 'name')
+        return donors.order_by('-donated_amount', 'name')
 
 
 class FundraisingModel(models.Model):
