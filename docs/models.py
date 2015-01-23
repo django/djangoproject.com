@@ -1,7 +1,8 @@
-from __future__ import unicode_literals
-
 import json
 import operator
+import os
+from functools import reduce
+from pathlib import Path
 
 from django.conf import settings
 from django.core.cache import cache
@@ -9,8 +10,6 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from django_hosts.resolvers import reverse
-
-from unipath import Path
 
 from . import utils
 
@@ -65,7 +64,7 @@ class DocumentRelease(models.Model):
     class Meta:
         unique_together = ('lang', 'version')
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s/%s" % (self.lang, self.version)
 
     def get_absolute_url(self):
@@ -118,8 +117,8 @@ class DocumentManager(models.Manager):
 
     def parents(self, path):
         """Iterate over this path's parents, in ascending order."""
-        for i in range(len(path.components()) - 1):  # ignores the root elemeent
-            yield path.ancestor(i)
+        for segment in os.path.split(str(path))[1:]:  # ignores the root element
+            yield Path(segment)
 
     def breadcrumbs(self, document):
         or_queries = [models.Q(path=path)
@@ -145,7 +144,7 @@ class Document(models.Model):
     class Meta:
         unique_together = ('release', 'path')
 
-    def __unicode__(self):
+    def __str__(self):
         return "/".join([self.release.lang, self.release.version, self.path])
 
     def get_absolute_url(self):
@@ -162,6 +161,6 @@ class Document(models.Model):
     @cached_property
     def body(self):
         """The document's body"""
-        with open(self.full_path) as fp:
+        with open(str(self.full_path)) as fp:
             doc = json.load(fp)
         return doc['body']

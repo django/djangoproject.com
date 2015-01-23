@@ -69,19 +69,20 @@ def document(request, lang, version, url):
         rtd_version = version + '.X'
 
     template_names = [
-        'docs/%s.html' % docroot.rel_path_to(doc_path).replace(doc_path.ext, ''),
+        'docs/%s.html' % str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), ''),
         'docs/doc.html',
     ]
+
     context = {
-        'doc': json.load(open(doc_path, 'rb')),
-        'env': json.load(open(docroot.child('globalcontext.json'), 'rb')),
+        'doc': json.load(doc_path.open('r')),
+        'env': json.load((docroot.joinpath('globalcontext.json')).open('r')),
         'lang': lang,
         'version': version,
         'version_is_dev': version == 'dev',
         'version_is_unsupported': version_is_unsupported(version),
         'rtd_version': rtd_version,
         'docurl': url,
-        'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),
+        'update_date': datetime.datetime.fromtimestamp((docroot.joinpath('last_build')).stat().st_mtime),
         'redirect_from': request.GET.get('from', None),
     }
     return render(request, template_names, context)
@@ -97,7 +98,7 @@ def sphinx_static(request, lang, version, path, subpath=None):
     """
     Serve Sphinx static assets from a subdir of the build location.
     """
-    document_root = get_doc_root_or_404(lang, version).child(subpath)
+    document_root = get_doc_root_or_404(lang, version).joinpath(subpath)
     return static.serve(request, document_root=document_root, path=path)
 
 

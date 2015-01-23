@@ -43,8 +43,6 @@ And a few notes on tables that're left out and why:
     * NodeChange: Ditto.
 
 """
-from __future__ import unicode_literals
-
 import datetime
 
 from django.db import models

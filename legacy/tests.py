@@ -8,4 +8,4 @@ class LegacyTests(TestCase):
 
     def test_gone(self):
         response = self.client.get('/comments/')
-        self.assertEquals(response.status_code, 410)
+        self.assertEqual(response.status_code, 410)
