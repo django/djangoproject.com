@@ -66,4 +66,11 @@ define(function(){
 	}
 
 	require(mods);
+
+    if (document.getElementById('dashboard')) {
+        require(['dashboard/index']);
+    } else if (document.getElementById('dashboard-detail')) {
+        require(['dashboard/detail']);
+    }
+
 });

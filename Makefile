@@ -1,4 +1,5 @@
 STATIC = djangoproject/static
+JQUERY_FLOT=djangoproject/static/js/lib/jquery-flot
 
 .PHONY: collectstatics compile-scss compile-scss-debug watch-scss run install test ci
 
@@ -25,3 +26,10 @@ test:
 
 ci: test
 	@coverage report
+
+$(JQUERY_FLOT)/jquery.flot.min.js: $(JQUERY_FLOT)
+	cat $(JQUERY_FLOT)/jquery.flot.js $(JQUERY_FLOT)/jquery.flot.time.js > $(JQUERY_FLOT)/jquery.flot.concat.js
+	yuicompressor $(JQUERY_FLOT)/jquery.flot.concat.js -o $(JQUERY_FLOT)/jquery.flot.min.js
+
+$(JQUERY_FLOT)/:
+	bower install
