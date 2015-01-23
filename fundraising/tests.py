@@ -11,6 +11,7 @@ from django.test import TestCase
 from .forms import PaymentForm
 from .models import DjangoHero, Donation
 
+
 class TestIndex(TestCase):
     def test_donors_count(self):
         DjangoHero.objects.create()
@@ -168,5 +169,6 @@ class TestPaymentForm(TestCase):
             'stripe_token': 'xxxx',
         })
         self.assertTrue(form.is_valid())
-        donation = form.make_donation()
-        self.assertIsNone(donation)
+        with self.assertRaises(ValueError):
+            donation = form.make_donation()
+            self.assertIsNone(donation)
