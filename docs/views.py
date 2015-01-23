@@ -54,12 +54,13 @@ def document(request, lang, version, url):
         rtd_version = version + '.X'
 
     template_names = [
-        'docs/%s.html' % docroot.rel_path_to(doc_path).replace(doc_path.ext, ''),
+        'docs/%s.html' % str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), ''),
         'docs/doc.html',
     ]
+
     context = {
-        'doc': json.load(open(doc_path, 'rb')),
-        'env': json.load(open(docroot.child('globalcontext.json'), 'rb')),
+        'doc': json.load(doc_path.open('rb')),
+        'env': json.load((docroot.joinpath('globalcontext.json')).open('rb')),
         'lang': lang,
         'version': version,
         'version_is_dev': version == 'dev',
@@ -67,7 +68,7 @@ def document(request, lang, version, url):
         'version_is_unsupported': version != CURRENT_LTS and version < '1.6',
         'rtd_version': rtd_version,
         'docurl': url,
-        'update_date': datetime.datetime.fromtimestamp(docroot.child('last_build').mtime()),
+        'update_date': datetime.datetime.fromtimestamp((docroot.joinpath('last_build')).stat().st_mtime),
         'redirect_from': request.GET.get('from', None),
     }
     return render(request, template_names, context)
@@ -93,7 +94,7 @@ class SphinxStatic(object):
     def __call__(self, request, lang, version, path):
         return django.views.static.serve(
             request,
-            document_root=get_doc_root_or_404(lang, version).child(self.subpath),
+            document_root=get_doc_root_or_404(lang, version).joinpath(self.subpath),
             path=path,
         )
 
