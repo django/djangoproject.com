@@ -7,6 +7,7 @@ djangoproject.com source code
 .. image:: https://img.shields.io/coveralls/django/djangoproject.com.svg
    :target: https://coveralls.io/r/django/djangoproject.com
 
+
 To run locally, do the usual:
 
 #. Create a virtualenv
