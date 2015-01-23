@@ -1,12 +1,15 @@
-from __future__ import unicode_literals
+import logging
 
+import django
 from django import forms
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.utils.encoding import force_bytes
 
-from akismet import Akismet
+from pykismet3 import Akismet, AkismetServerError
 from contact_form.forms import ContactForm
+
+logger = logging.getLogger(__name__)
 
 
 class BaseContactForm(ContactForm):
@@ -34,17 +37,29 @@ class BaseContactForm(ContactForm):
         Backported from django-contact-form pre-1.0; 1.0 dropped built-in
         Akismet support.
         """
-        if 'body' in self.cleaned_data and hasattr(settings, 'AKISMET_API_KEY') and settings.AKISMET_API_KEY:
-            akismet_api = Akismet(key=settings.AKISMET_API_KEY,
-                                  blog_url='http://%s/' % Site.objects.get_current().domain)
-            if akismet_api.verify_key():
-                akismet_data = {'comment_type': 'comment',
-                                'referer': self.request.META.get('HTTP_REFERER', ''),
-                                'user_ip': self.request.META.get('REMOTE_ADDR', ''),
-                                'user_agent': self.request.META.get('HTTP_USER_AGENT', '')}
-                comment = force_bytes(self.cleaned_data['body'])  # workaround for #21444
-                if akismet_api.comment_check(comment, data=akismet_data, build_data=True):
+        if 'body' in self.cleaned_data and getattr(settings, 'AKISMET_API_KEY', None):
+            try:
+                akismet_api = Akismet(
+                    api_key=settings.AKISMET_API_KEY,
+                    blog_url='http://%s/' % Site.objects.get_current().domain,
+                    user_agent='Django {}.{}.{}'.format(*django.VERSION)
+                )
+
+                akismet_data = {
+                    'user_ip': self.request.META.get('REMOTE_ADDR', ''),
+                    'user_agent': self.request.META.get('HTTP_USER_AGENT', ''),
+                    'referrer': self.request.META.get('HTTP_REFERER', ''),
+                    'comment_content': force_bytes(self.cleaned_data['body']),
+                    'comment_author': self.cleaned_data['name'],
+                }
+                if getattr(settings, 'AKISMET_TESTING', None):
+                    # Adding test argument to the request in order to tell akismet that
+                    # they should ignore the request so that test runs affect the heuristics
+                    akismet_data['test'] = 1
+                if akismet_api.check(akismet_data):
                     raise forms.ValidationError("Akismet thinks this message is spam")
+            except AkismetServerError:
+                logger.error('Akismet server error')
         return self.cleaned_data['body']
 
 

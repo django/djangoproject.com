@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.contrib.redirects.models import Redirect
 from django.core.urlresolvers import reverse
 from django.test import TestCase

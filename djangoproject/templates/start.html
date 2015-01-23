@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load pygmentify %}
+{% load docs %}
 
 {% block layout_class %}full-width{% endblock %}
 {% block title %}Getting started with Django{% endblock %}
@@ -67,8 +67,7 @@
     <div class="collapsing-content">
       <p>Deﬁne your data models entirely in Python. You get a rich, dynamic database-access API for free — but you can still write SQL if needed.</p>
       <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/db/models' host 'docs' %}">Read more</a>
-      {% pygment %}
-        <pre lang="python">
+      {% pygment 'python' %}
 class Band(models.Model):
     """A model of a rock band."""
     name = models.CharField(max_length=200)
@@ -86,7 +85,6 @@ class Member(models.Model):
         max_length=1
     )
     band = models.ForeignKey("Band")
-        </pre>
       {% endpygment %}
     </div>
   </li>
@@ -96,8 +94,7 @@ class Member(models.Model):
       <p>A clean, elegant URL scheme is an important detail in a high-quality Web application. Django encourages beautiful URL design and doesn’t put any cruft in URLs, like .php or .asp.</p>
       <p>To design URLs for an application, you create a Python module called a URLconf. Like a table of contents for your app, it contains a simple mapping between URL patterns and your views.</p>
       <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/http/urls' host 'docs' %}">Read more</a>
-      {% pygment %}
-        <pre lang="python">
+      {% pygment 'python' %}
 from django.conf.urls import url
 
 from . import views
@@ -107,15 +104,14 @@ urlpatterns = [
     url(r'^bands/(\d+)/$', views.band_detail, name='band-detail'),
     url(r'^bands/search/$', views.band_search, name='band-search'),
 ]
-      </pre>
-      <pre lang="python">
+      {% endpygment %}
+      {% pygment 'python' %}
 from django.shortcuts import render
 
 def band_listing(request):
     """A view of all bands."""
     bands = models.Band.objects.all()
     return render(request, 'bands/band_listing.html', {'bands': bands})
-        </pre>
       {% endpygment %}
     </div>
   </li>
@@ -125,8 +121,8 @@ def band_listing(request):
       <p>Django’s template language is designed to strike a balance between power and ease. It’s designed to feel comfortable and easy-to-learn to those used to working with HTML, like designers and front-end developers. But it is also flexible and highly extensible, allowing developers to augment the template language as needed.</p>
       <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/templates' host 'docs' %}">Read more</a>
       {# No need to escape the HTML: pygment takes care of that #}
-      {% pygment %}
-        <pre lang="django">{% verbatim %}
+      {% pygment 'django' %}
+{% verbatim %}
 <html>
   <head>
     <title>Band Listing</title>
@@ -143,7 +139,7 @@ def band_listing(request):
     </ul>
   </body>
 </html>
-        {% endverbatim %}</pre>
+{% endverbatim %}
       {% endpygment %}
     </div>
   </li>
@@ -152,8 +148,7 @@ def band_listing(request):
     <div class="collapsing-content">
       <p>Django provides a powerful form library that handles rendering forms as HTML, validating user-submitted data, and converting that data to native Python types. Django also provides a way to generate forms from your existing models and use those forms to create and update data.</p>
       <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/forms' host 'docs' %}">Read more</a>
-      {% pygment %}
-        <pre lang="python">
+      {% pygment 'python'%}
 from django import forms
 
 class BandContactForm(forms.Form):
@@ -161,7 +156,6 @@ class BandContactForm(forms.Form):
     message = forms.CharField()
     sender = forms.EmailField()
     cc_myself = forms.BooleanField(required=False)
-        </pre>
       {% endpygment %}
     </div>
   </li>
@@ -170,8 +164,7 @@ class BandContactForm(forms.Form):
     <div class="collapsing-content">
       <p>Django comes with a full-featured and secure authentication system. It handles user accounts, groups, permissions and cookie-based user sessions. This lets you easily build sites that let users to create accounts and safely log in/out.</p>
       <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/auth' host 'docs' %}">Read more</a>
-      {% pygment %}
-        <pre lang="python">
+      {% pygment 'python' %}
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
@@ -179,7 +172,6 @@ from django.shortcuts import render
 def my_protected_view(request):
     """A view that can only be accessed by logged-in users"""
     return render(request, 'protected.html', {'current_user': request.user})
-        </pre>
       {% endpygment %}
     </div>
   </li>
@@ -188,8 +180,7 @@ def my_protected_view(request):
     <div class="collapsing-content">
       <p>One of the most powerful parts of Django is its automatic admin interface. It reads metadata in your models to provide a powerful and production-ready interface that content producers can immediately use to start managing content on your site. It’s easy to set up and provides many hooks for customization.</p>
       <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='ref/contrib/admin' host 'docs' %}">Read more</a>
-      {% pygment %}
-        <pre lang="python">
+      {% pygment 'python' %}
 from django.contrib import admin
 from bands.models import Band, Member
 
@@ -200,7 +191,6 @@ class MemberAdmin(admin.ModelAdmin):
 
 admin.site.register(Band)  # Use the default options
 admin.site.register(Member, MemberAdmin)  # Use the customized options
-        </pre>
       {% endpygment %}
     </div>
   </li>
@@ -210,8 +200,7 @@ admin.site.register(Member, MemberAdmin)  # Use the customized options
       <p>Django offers full support for translating text into different languages, plus locale-specific formatting of dates, times, numbers and time zones. It lets developers and template authors specify which parts of their apps should be translated or formatted for local languages and cultures, and it uses these hooks to localize Web applications for particular users according to their preferences.</p>
       <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/i18n' host 'docs' %}">Read more</a>
 
-      {% pygment %}
-        <pre lang="python">
+      {% pygment 'python' %}
 from django.shortcuts import render
 from django.utils.translation import ugettext
 
@@ -222,12 +211,11 @@ def homepage(request):
     """
     message = ugettext('Welcome to our site!')
     return render(request, 'homepage.html', {'message': message})
-        </pre>
       {% endpygment %}
 
       {# No need to escape the HTML: pygment takes care of that #}
-      {% pygment %}
-        <pre lang="django">{% verbatim %}
+      {% pygment 'django' %}
+{% verbatim %}
 {% load i18n %}
 <html>
   <head>
@@ -253,7 +241,7 @@ def homepage(request):
     </ul>
   </body>
 </html>
-        {% endverbatim %}</pre>
+{% endverbatim %}
       {% endpygment %}
     </div>
   </li>

@@ -1,12 +1,12 @@
 import os
 from datetime import date, timedelta
 from functools import partial
-from PIL import Image
-from mock import patch
 from operator import attrgetter
+from unittest.mock import patch
 
 import stripe
 
+from PIL import Image
 from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -116,7 +116,7 @@ class TestIndex(TestCase):
         url = reverse('fundraising:donate')
         response = self.client.post(url, {'amount': 100})
         self.assertFalse(response.context['form'].is_valid())
-        self.assertEquals(200, response.status_code)
+        self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, 'fundraising/donate.html')
 
     def test_submitting_donation_form_invalid_amount(self):
@@ -126,7 +126,7 @@ class TestIndex(TestCase):
             'stripe_token': 'test',
         })
         self.assertFalse(response.context['form'].is_valid())
-        self.assertEquals(200, response.status_code)
+        self.assertEqual(200, response.status_code)
         # Checking if amount field is visible
         self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.TextInput)
 

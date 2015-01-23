@@ -1,8 +1,6 @@
 """
 Track signed CLAs.
 """
-from __future__ import unicode_literals
-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -41,8 +39,8 @@ class ICLA(models.Model):
         verbose_name = 'individual CLA'
         verbose_name_plural = 'individual CLAs'
 
-    def __unicode__(self):
-        return unicode(self.full_name or self.user)
+    def __str__(self):
+        return self.full_name or str(self.user)
 
 
 class CCLA(models.Model):
@@ -71,7 +69,7 @@ class CCLA(models.Model):
         verbose_name = 'corporate CLA'
         verbose_name_plural = 'corporate CLAs'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.company_name
 
 
@@ -95,8 +93,8 @@ class CCLADesignee(models.Model):
         verbose_name = 'CCLA designee'
         verbose_name_plural = 'CCLA designees'
 
-    def __unicode__(self):
-        return unicode(self.full_name or self.user)
+    def __str__(self):
+        return self.full_name or str(self.user)
 
 
 def find_agreements(user):

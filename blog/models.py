@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import datetime
 from docutils.core import publish_parts
 
@@ -66,7 +64,7 @@ class Entry(models.Model):
         ordering = ('-pub_date',)
         get_latest_by = 'pub_date'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.headline
 
     def get_absolute_url(self):

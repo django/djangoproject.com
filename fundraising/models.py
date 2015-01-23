@@ -70,7 +70,7 @@ class DjangoHero(FundraisingModel):
 
     objects = DjangoHeroManager()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name if self.name else 'Anonymous #{}'.format(self.pk)
 
     class Meta:
@@ -99,7 +99,7 @@ class Donation(FundraisingModel):
     campaign_name = models.CharField(max_length=100, blank=True)
     receipt_email = models.EmailField(blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '${}'.format(self.amount)
 
     def get_absolute_url(self):
@@ -111,5 +111,5 @@ class Testimonial(models.Model):
     body = models.TextField()
     is_active = models.BooleanField(default=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.author
