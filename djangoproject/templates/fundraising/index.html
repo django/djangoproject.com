@@ -44,7 +44,9 @@
       <form method="get" action="{% url "fundraising:donate" %}">
         <h3>Help us make it happen:</h3>
         {{ form.amount }}
+        {% if request.GET.campaign %}
         {{ form.campaign }}
+        {% endif %}
         <div class="custom-donation">
           <span class="prefix">US $</span>
         </div>

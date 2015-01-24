@@ -37,6 +37,15 @@ class TestIndex(TestCase):
         response = self.client.get(reverse('fundraising:index'))
         self.assertEqual(response.context['total_donors'], 1)
 
+    def test_hide_campaign_input(self):
+        # Checking if rendered output contains campaign form field
+        # to not generate ugly URLs
+        response = self.client.get(reverse('fundraising:index'))
+        self.assertNotContains(response, 'name="campaign"')
+
+        response = self.client.get(reverse('fundraising:index'), {'campaign': 'test'})
+        self.assertContains(response, 'name="campaign"')
+
     def test_render_donate_form_with_amount(self):
         response = self.client.get(reverse('fundraising:donate'), {'amount': 50})
         self.assertEqual(response.status_code, 200)
