@@ -79,6 +79,7 @@ class Donation(FundraisingModel):
     donor = models.ForeignKey(DjangoHero, null=True)
     stripe_charge_id = models.CharField(max_length=100, null=True)
     stripe_customer_id = models.CharField(max_length=100, null=True)
+    campaign_name = models.CharField(max_length=100, blank=True)
 
     def __unicode__(self):
         return '${}'.format(self.amount)

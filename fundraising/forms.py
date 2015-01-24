@@ -1,9 +1,10 @@
 from decimal import Decimal
+import stripe
 
 from django import forms
 from django.utils.safestring import mark_safe
 
-from .models import DjangoHero
+from .models import DjangoHero, Donation
 
 
 class DjangoHeroForm(forms.ModelForm):
@@ -112,6 +113,7 @@ class DonateForm(forms.Form):
     AMOUNT_VALUES = dict(AMOUNT_CHOICES).keys()
 
     amount = forms.ChoiceField(choices=AMOUNT_CHOICES)
+    campaign = forms.CharField(required=False, widget=forms.HiddenInput())
 
 
 class PaymentForm(forms.Form):
@@ -151,7 +153,6 @@ class PaymentForm(forms.Form):
             },
         ),
     )
-
     expires = forms.CharField(
         required=False,
         widget=StripeTextInput(
@@ -162,6 +163,7 @@ class PaymentForm(forms.Form):
             },
         ),
     )
+    campaign = forms.CharField(required=False, widget=forms.HiddenInput())
 
     def __init__(self, data=None, fixed_amount=None, *args, **kwargs):
         super(PaymentForm, self).__init__(data, *args, **kwargs)
@@ -178,3 +180,31 @@ class PaymentForm(forms.Form):
                 'placeholder': 'Amount in US Dollar',
             },
         )
+
+    def make_donation(self):
+        amount = self.cleaned_data['amount']
+        campaign = self.cleaned_data['campaign']
+        token = self.cleaned_data['stripe_token']
+        try:
+            # First create a Stripe customer so that we can store
+            # people's email address on that object later
+            customer = stripe.Customer.create(card=token)
+            # Charge the customer's credit card on Stripe's servers;
+            # the amount is in cents!
+            charge = stripe.Charge.create(
+                amount=int(amount * 100),
+                currency='usd',
+                customer=customer.id,
+            )
+        except (stripe.StripeError, ValueError):
+            # The card has been declined, we want to see what happened
+            # in Sentry
+            raise
+        else:
+            donation = Donation.objects.create(
+                amount=amount,
+                stripe_charge_id=charge.id,
+                stripe_customer_id=customer.id,
+                campaign_name=campaign,
+            )
+            return donation

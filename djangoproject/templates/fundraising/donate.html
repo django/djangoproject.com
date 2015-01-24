@@ -37,6 +37,9 @@
     {% if form.expires.errors %}<p class="errors">{{ form.expires.errors.as_text }}</p>{% endif %}
     {% if form.expires.help_text %}<p class="footnote">{{ form.expires.help_text }}</p>{% endif %}
   </fieldset>
+
+  {{ form.campaign }}
+
   <p class="footnote">The card details are <strong>NOT STORED</strong> on our
     servers but are transmitted encrypted to our PCI compliant payment processor
     <a href="https://stripe.com/" title="Stripe">Stripe</a>. See Stripe's
