@@ -36,16 +36,18 @@
     {{ form.expires }}
     {% if form.expires.errors %}<p class="errors">{{ form.expires.errors.as_text }}</p>{% endif %}
     {% if form.expires.help_text %}<p class="footnote">{{ form.expires.help_text }}</p>{% endif %}
+    <p class="footnote">The card details are <strong>NOT STORED</strong> on our
+      servers but are transmitted encrypted to our PCI compliant payment processor
+      <a href="https://stripe.com/" title="Stripe">Stripe</a>. See Stripe's
+      <a href="https://stripe.com/help/security">documentation</a> to learn more
+      about its security.
+    </p>
+
+    {{ form.receipt_email }}
+    {% if form.receipt_email.errors %}<p class="errors">{{ form.receipt_email.errors.as_text }}</p>{% endif %}
+    {% if form.receipt_email.help_text %}<p class="footnote">{{ form.receipt_email.help_text }}</p>{% endif %}
   </fieldset>
-
   {{ form.campaign }}
-
-  <p class="footnote">The card details are <strong>NOT STORED</strong> on our
-    servers but are transmitted encrypted to our PCI compliant payment processor
-    <a href="https://stripe.com/" title="Stripe">Stripe</a>. See Stripe's
-    <a href="https://stripe.com/help/security">documentation</a> to learn more
-    about its security.
-  </p>
   <p class="submit"><input type="submit" class="cta" tabindex="5" value="Donate &rarr;" disabled></p>
 </form>
 {% endblock %}
