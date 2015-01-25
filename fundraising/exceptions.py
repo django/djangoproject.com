@@ -1,0 +1,2 @@
+class DonationError(Exception):
+    pass

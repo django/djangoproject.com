@@ -21,7 +21,7 @@ install:
 	pip install -r requirements/dev.txt
 
 test:
-	@coverage run manage.py test aggregator contact docs fundraising legacy releases svntogit
+	@coverage run manage.py test -v2 aggregator contact docs fundraising legacy releases svntogit
 
 ci: test
 	@coverage report
