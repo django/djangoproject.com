@@ -4,11 +4,11 @@ from decimal import Decimal, DecimalException
 from django.conf import settings
 from django.contrib import messages
 from django.db.models import Sum
-from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect, render, get_object_or_404
 
 import stripe
 
+from .exceptions import DonationError
 from .forms import DonateForm, PaymentForm, DjangoHeroForm
 from .models import (
     DjangoHero, Donation, Testimonial, RESTART_GOAL, DEFAULT_DONATION_AMOUNT,
@@ -54,12 +54,26 @@ def donate(request):
         form = PaymentForm(request.POST)
 
         if form.is_valid():
-            # Create the charge on Stripe's servers - this will charge the user's card
-            donation = form.make_donation()
-            if not donation:
-                return HttpResponseBadRequest()
-
-            return redirect(donation)
+            # Try to create the charge on Stripe's servers - this will charge the user's card
+            try:
+                donation = form.make_donation()
+            except DonationError as donation_error:
+                # If a failure happened show the error but populate the
+                # form again with those values that can be reused
+                # Note: no stripe_token added to initials here
+                initial = {
+                    'amount': form.cleaned_data['amount'],
+                    'receipt_email': form.cleaned_data['receipt_email'],
+                    'campaign': form.cleaned_data['campaign'],
+                }
+                context = {
+                    'form': PaymentForm(initial=initial),
+                    'donation_error': donation_error.message,
+                    'publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
+                }
+                return render(request, 'fundraising/donate.html', context)
+            else:
+                return redirect(donation)
         else:
             if 'amount' in form.errors:
                 show_amount = True
@@ -69,10 +83,7 @@ def donate(request):
         initial = {'campaign': campaign}
         if fixed_amount:
             try:
-                initial = {
-                    'amount': Decimal(fixed_amount),
-                    'campaign': campaign
-                }
+                initial['amount'] = Decimal(fixed_amount)
             except DecimalException:
                 show_amount = True
         form = PaymentForm(initial=initial, fixed_amount=fixed_amount)
@@ -82,7 +93,6 @@ def donate(request):
 
     context = {
         'form': form,
-        'fixed_amount': fixed_amount,
         'publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
     }
     return render(request, 'fundraising/donate.html', context)
@@ -105,7 +115,7 @@ def thank_you(request, donation):
             try:
                 customer = stripe.Customer.retrieve(donation.stripe_customer_id)
                 customer.description = hero.name or None
-                customer.email = hero.email
+                customer.email = hero.email or None
                 customer.save()
             except stripe.StripeError:
                 raise

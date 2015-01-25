@@ -3,11 +3,14 @@ from functools import partial
 from mock import patch
 from operator import attrgetter
 
+import stripe
+
 from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
+from .exceptions import DonationError
 from .forms import PaymentForm
 from .models import DjangoHero, Donation
 from .utils import shuffle_donations
@@ -49,18 +52,32 @@ class TestIndex(TestCase):
     def test_render_donate_form_with_amount(self):
         response = self.client.get(reverse('fundraising:donate'), {'amount': 50})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['fixed_amount'], '50')
+        self.assertEqual(response.context['form'].fixed_amount, '50')
         self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
 
         # Checking if amount field is hidden
         self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.HiddenInput)
+
         # Checking if campaign field is empty
         self.assertEqual(response.context['form'].initial['campaign'], None)
 
     def test_render_donate_form_without_amount(self):
         response = self.client.get(reverse('fundraising:donate'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['fixed_amount'], None)
+        self.assertEqual(response.context['form'].fixed_amount, None)
+        self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
+
+        # Checking if amount field is visible
+        self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.TextInput)
+        # Checking if campaign field is empty
+        self.assertEqual(response.context['form'].initial['campaign'], None)
+
+    def test_render_donate_form_with_bad_amount(self):
+        # this will trigger a DecimalException exception because the amount can't be
+        # converted to a Decimal
+        response = self.client.get(reverse('fundraising:donate'), {'amount': 'superbad'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['form'].fixed_amount, 'superbad')
         self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
 
         # Checking if amount field is visible
@@ -73,7 +90,7 @@ class TestIndex(TestCase):
         for campaign in campaigns:
             response = self.client.get(reverse('fundraising:donate'), {'amount': 100, 'campaign': campaign})
             self.assertEqual(response.status_code, 200)
-            self.assertEqual(response.context['fixed_amount'], '100')
+            self.assertEqual(response.context['form'].fixed_amount, '100')
             self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
 
             # Checking if amount field is hidden
@@ -81,14 +98,24 @@ class TestIndex(TestCase):
             # Checking if campaign field is same as campaign
             self.assertEqual(response.context['form'].initial['campaign'], campaign)
 
-    def test_submitting_donation_form_invalid(self):
+    def test_submitting_donation_form_missing_token(self):
         url = reverse('fundraising:donate')
         response = self.client.post(url, {'amount': 100})
         self.assertFalse(response.context['form'].is_valid())
         self.assertEquals(200, response.status_code)
         self.assertTemplateUsed(response, 'fundraising/donate.html')
 
-    def test_submitting_donation_form(self):
+    def test_submitting_donation_form_invalid_amount(self):
+        url = reverse('fundraising:donate')
+        response = self.client.post(url, {
+            'amount': 'superbad',
+            'stripe_token': 'test',
+        })
+        self.assertFalse(response.context['form'].is_valid())
+        self.assertEquals(200, response.status_code)
+        # Checking if amount field is visible
+        self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.TextInput)
+
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
     def test_submitting_donation_form(self, charge_create, customer_create):
@@ -105,33 +132,56 @@ class TestIndex(TestCase):
         self.assertEqual(donations[0].amount, 100)
         self.assertEqual(donations[0].campaign_name, '')
         self.assertEqual(donations[0].receipt_email, 'test@example.com')
+
+    @patch('stripe.Customer.create')
+    @patch('stripe.Charge.create')
+    def test_submitting_donation_form_with_campaign(self, charge_create, customer_create):
         response = self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
             'campaign': 'test',
         })
         self.assertFalse(response.context['form'].is_valid())
-
-        with patch('stripe.Customer.create', id='test'):
-            with patch('stripe.Charge.create', id='test'):
-                response = self.client.post(reverse('fundraising:donate'), {
-                    'amount': 100,
-                    'campaign': 'test',
-                    'stripe_token': 'test',
-                })
-                donations = Donation.objects.all()
-                self.assertEqual(donations.count(), 1)
-                self.assertEqual(donations[0].amount, 100)
-                self.assertEqual(donations[0].campaign_name, 'test')
-
-    @patch('fundraising.forms.PaymentForm.make_donation')
-    def test_submitting_donation_form_valid_bad_request(self, make_donation):
-        make_donation.return_value = None
         response = self.client.post(reverse('fundraising:donate'), {
+            'amount': 100,
+            'campaign': 'test',
+            'stripe_token': 'test',
+        })
+        donations = Donation.objects.all()
+        self.assertEqual(donations.count(), 1)
+        self.assertEqual(donations[0].amount, 100)
+        self.assertEqual(donations[0].campaign_name, 'test')
+
+    @patch('stripe.Customer.create')
+    @patch('stripe.Charge.create')
+    def test_submitting_donation_form_error_handling(self, charge_create, customer_create):
+        data = {
             'amount': 100,
             'campaign': None,
             'stripe_token': 'xxxx',
-        })
-        self.assertEqual(400, response.status_code)
+        }
+        form = PaymentForm(data=data)
+
+        self.assertTrue(form.is_valid())
+
+        # some errors are shows as user facting DonationErrors to the user
+        # some are bubbling up to raise a 500 to trigger Sentry reports
+        errors = [
+            [stripe.error.CardError, DonationError],
+            [stripe.error.InvalidRequestError, DonationError],
+            [stripe.error.APIConnectionError, DonationError],
+            [stripe.error.AuthenticationError, None],
+            [stripe.error.StripeError, None],
+            [ValueError, None],
+        ]
+
+        for backend_exception, user_exception in errors:
+            customer_create.side_effect = backend_exception('message', 'param', 'code')
+
+            if user_exception is None:
+                self.assertRaises(backend_exception, form.make_donation)
+            else:
+                response = self.client.post(reverse('fundraising:donate'), data)
+                self.assertTrue('donation_error' in response.context)
 
     @patch('fundraising.forms.PaymentForm.make_donation')
     def test_submitting_donation_form_valid(self, make_donation):
