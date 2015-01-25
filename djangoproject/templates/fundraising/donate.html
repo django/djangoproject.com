@@ -7,24 +7,19 @@
   class="form-general form-input fundraising-donation" autocomplete="on"
   data-publishable-key="{{ publishable_key }}" novalidate>
   {% csrf_token %}
-  {% if form.initial.amount or form.cleaned_data.amount %}
-    <h2>We're super happy that you want to donate US
-      ${% firstof form.initial.amount|intcomma form.cleaned_data.amount|intcomma %}!</h2>
-    To complete the donation, please enter your card details below and press
-    the Donate button.
-    {{ form.amount }}
+  {% if donation_error %}
+    <h2>{{ donation_error }}</h2>
   {% else %}
-  <h2>We're super happy that you want to donate!</h2>
-  Please enter the amount of your donation and your card details below and press the Donate button.
+    <h2>We're super happy that you want to donate{% if form.initial.amount or form.cleaned_data.amount %} US&nbsp;${% firstof form.initial.amount|intcomma form.cleaned_data.amount|intcomma %}{% endif %}!</h2>
+  {% endif %}
+  To complete the donation, please enter your card details below and press the Donate button.
+  <p class="validation-errors"></p>
   <fieldset>
     {{ form.amount }}
     <div class="custom-donation"></div>
     {% if form.amount.errors %}<p class="errors">{{ form.amount.errors.as_text }}</p>{% endif %}
-    {% if form.amount.help_text %}<p class="footnote">{{ form.amount.help_text }}</p>{% endif %}
-  </fieldset>
-  {% endif %}
-  <p class="validation-errors"></p>
-  <fieldset>
+    {% if form.amount.help_text and not form.amount.field.widget.is_hidden %}<p class="footnote">{{ form.amount.help_text }}</p>{% endif %}
+
     {{ form.number }}
     {% if form.number.errors %}<p class="errors">{{ form.number.errors.as_text }}</p>{% endif %}
     {% if form.number.help_text %}<p class="footnote">{{ form.number.help_text }}</p>{% endif %}
@@ -36,17 +31,19 @@
     {{ form.expires }}
     {% if form.expires.errors %}<p class="errors">{{ form.expires.errors.as_text }}</p>{% endif %}
     {% if form.expires.help_text %}<p class="footnote">{{ form.expires.help_text }}</p>{% endif %}
+    <p class="footnote">The card details are <strong>NOT STORED</strong> on our
+      servers but are transmitted encrypted to our PCI compliant payment processor
+      <a href="https://stripe.com/" title="Stripe">Stripe</a>. See Stripe's
+      <a href="https://stripe.com/help/security">documentation</a> to learn more
+      about its security.
+    </p>
+
+    {{ form.receipt_email }}
+    {% if form.receipt_email.errors %}<p class="errors">{{ form.receipt_email.errors.as_text }}</p>{% endif %}
+    {% if form.receipt_email.help_text %}<p class="footnote">{{ form.receipt_email.help_text }}</p>{% endif %}
   </fieldset>
-
   {{ form.campaign }}
-
-  <p class="footnote">The card details are <strong>NOT STORED</strong> on our
-    servers but are transmitted encrypted to our PCI compliant payment processor
-    <a href="https://stripe.com/" title="Stripe">Stripe</a>. See Stripe's
-    <a href="https://stripe.com/help/security">documentation</a> to learn more
-    about its security.
-  </p>
-  <p class="submit"><input type="submit" class="cta" value="Donate &rarr;" disabled></p>
+  <p class="submit"><input type="submit" class="cta" tabindex="5" value="Donate &rarr;" disabled></p>
 </form>
 {% endblock %}
 
