@@ -8,6 +8,7 @@ class DjangoHeroAdmin(admin.ModelAdmin):
                    'is_visible', 'is_subscribed', 'is_amount_displayed']
     list_display = ['id', 'name', 'email', 'created', 'modified', 'approved']
     list_editable = ['approved']
+    ordering = ['-created']
 
 
 @admin.register(Donation)
@@ -16,6 +17,7 @@ class Donation(admin.ModelAdmin):
     list_display = ['id', 'amount', 'donor', 'stripe_charge_id',
                     'created', 'modified', 'campaign_name']
     list_filter = ['campaign_name', 'created', 'modified']
+    ordering = ['-created']
 
 
 @admin.register(Testimonial)
