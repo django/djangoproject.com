@@ -1092,7 +1092,7 @@ blockquote {
 		font-style: normal;
 	}
 
-	&:hover {
+	&:hover, &:focus {
 		background: lighten($green-medium, 4%);
 	}
 
