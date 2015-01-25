@@ -167,6 +167,21 @@ class PaymentForm(forms.Form):
             },
         ),
     )
+    receipt_email = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'required',
+                'placeholder': 'Receipt email address (optional)',
+                'type': 'email',
+                'tabindex': 5,
+            },
+        ),
+        help_text=(
+            'We ask for your email address here to be able to send you a '
+            'receipt. Leave empty if you do not want one.'
+        ),
+    )
     campaign = forms.CharField(required=False, widget=forms.HiddenInput())
 
     def __init__(self, data=None, fixed_amount=None, *args, **kwargs):
@@ -186,6 +201,7 @@ class PaymentForm(forms.Form):
         )
 
     def make_donation(self):
+        receipt_email = self.cleaned_data.get('receipt_email')
         amount = self.cleaned_data['amount']
         campaign = self.cleaned_data['campaign']
         token = self.cleaned_data['stripe_token']
@@ -199,6 +215,7 @@ class PaymentForm(forms.Form):
                 amount=int(amount * 100),
                 currency='usd',
                 customer=customer.id,
+                receipt_email=receipt_email or None,  # set to None if given an empty string
             )
         except (stripe.StripeError, ValueError):
             # The card has been declined, we want to see what happened
@@ -210,5 +227,6 @@ class PaymentForm(forms.Form):
                 stripe_charge_id=charge.id,
                 stripe_customer_id=customer.id,
                 campaign_name=campaign,
+                receipt_email=receipt_email,
             )
             return donation

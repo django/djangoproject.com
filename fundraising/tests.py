@@ -89,21 +89,22 @@ class TestIndex(TestCase):
         self.assertTemplateUsed(response, 'fundraising/donate.html')
 
     def test_submitting_donation_form(self):
+    @patch('stripe.Customer.create')
+    @patch('stripe.Charge.create')
+    def test_submitting_donation_form(self, charge_create, customer_create):
         response = self.client.post(reverse('fundraising:donate'), {'amount': 100})
         self.assertFalse(response.context['form'].is_valid())
 
-        with patch('stripe.Customer.create', id='test'):
-            with patch('stripe.Charge.create', id='test'):
-                response = self.client.post(reverse('fundraising:donate'), {
-                    'amount': 100,
-                    'stripe_token': 'test',
-                })
-                donations = Donation.objects.all()
-                self.assertEqual(donations.count(), 1)
-                self.assertEqual(donations[0].amount, 100)
-                self.assertEqual(donations[0].campaign_name, '')
-
-    def test_submitting_donation_form_with_campaign(self):
+        response = self.client.post(reverse('fundraising:donate'), {
+            'amount': 100,
+            'stripe_token': 'test',
+            'receipt_email': 'test@example.com',
+        })
+        donations = Donation.objects.all()
+        self.assertEqual(donations.count(), 1)
+        self.assertEqual(donations[0].amount, 100)
+        self.assertEqual(donations[0].campaign_name, '')
+        self.assertEqual(donations[0].receipt_email, 'test@example.com')
         response = self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
             'campaign': 'test',
