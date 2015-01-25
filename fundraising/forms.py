@@ -126,6 +126,7 @@ class PaymentForm(forms.Form):
             attrs={
                 'class': 'required',
                 'placeholder': 'Amount in US Dollar',
+                'tabindex': 1,
             },
         )
     )
@@ -139,6 +140,7 @@ class PaymentForm(forms.Form):
                 'size': 20,
                 'pattern': '\d*',  # number input on mobile
                 'autocomplete': 'cc-number',  # for autofill spec
+                'tabindex': 2,
             },
         ),
     )
@@ -150,6 +152,7 @@ class PaymentForm(forms.Form):
                 'size': 4,
                 'pattern': '\d*',  # number input on mobile
                 'autocomplete': 'off',
+                'tabindex': 3,
             },
         ),
     )
@@ -160,6 +163,7 @@ class PaymentForm(forms.Form):
                 'placeholder': 'Expires MM/YYYY',
                 'pattern': '\d*',  # number input on mobile
                 'autocomplete': 'cc-exp',
+                'tabindex': 4,
             },
         ),
     )
