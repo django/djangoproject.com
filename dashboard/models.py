@@ -218,7 +218,7 @@ class JenkinsFailuresMetric(Metric):
         if self.is_percentage:
             if not total:
                 return 0
-            value = (value * 100)/total
+            value = (value * 100) / total
         return value
 
     def fetch(self):

@@ -18,6 +18,6 @@
     </div>
   {% endfor %}
   <p class="updated">
-    {% blocktrans %}Updated {{ data.0.latest.timestamp|timesince }} ago.{% endblocktrans %}
+    {% blocktrans with timestamp=data.0.latest.timestamp|timesince %}Updated {{ timestamp }} ago.{% endblocktrans %}
   </p>
 {% endblock %}

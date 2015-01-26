@@ -77,8 +77,9 @@ To run locally, do the usual:
     make run
 
    This runs both the main site ("www") as well as the
-   docs site in the same process. Open http://www.djangoproject.dev:8000/
-   or http://docs.djangoproject.dev:8000/.
+   docs and dashboard site in the same process.
+   Open http://www.djangoproject.dev:8000/, http://docs.djangoproject.dev:8000/
+   or http://dashboard.djangoproject.dev:8000/.
 
 Running the tests
 -----------------
