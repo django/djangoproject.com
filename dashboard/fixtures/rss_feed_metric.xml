@@ -1,4 +1,3 @@
-application/rss+xml;charset=utf-8
 <?xml version="1.0"?>
 <rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
@@ -14,7 +13,7 @@ application/rss+xml;charset=utf-8
     </image>
     <item>
       <title>Changeset [c3336e7e]: Removed dumpdata --natural option and serializers use_natural_keys ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sun, 18 Jan 2015 01:18:34 GMT</pubDate>
@@ -30,7 +29,7 @@ Per deprecation timeline; refs &lt;a class="closed ticket" href="https://code.dj
       <category>changeset</category>
     </item><item>
       <title>Changeset [1d975ff]: Removed usage of deprecated dumpdata options in docs.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sun, 18 Jan 2015 01:14:45 GMT</pubDate>
@@ -43,7 +42,7 @@ Removed usage of deprecated dumpdata options in docs.
       <category>changeset</category>
     </item><item>
       <title>Changeset [8d959f73]: Removed obsolete deprecation warning in runtests.py</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sun, 18 Jan 2015 00:41:46 GMT</pubDate>
@@ -56,7 +55,7 @@ Removed obsolete deprecation warning in runtests.py
       <category>changeset</category>
     </item><item>
       <title>Changeset [40d6b37]: Removed BaseMemcachedCacheMethods._get_memcache_timeout backwards ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sun, 18 Jan 2015 00:32:54 GMT</pubDate>
@@ -72,7 +71,7 @@ Per deprecation timeline; refs &lt;a class="closed ticket" href="https://code.dj
       <category>changeset</category>
     </item><item>
       <title>Changeset [eea66a6e]: [1.7.x] Added removal of check management command to deprecation ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sun, 18 Jan 2015 00:16:41 GMT</pubDate>
@@ -88,7 +87,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [a41d410]: [1.8.x] Added removal of check management command to deprecation ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sun, 18 Jan 2015 00:15:59 GMT</pubDate>
@@ -104,7 +103,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [20e4e8f]: Added removal of check management command to deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sun, 18 Jan 2015 00:14:44 GMT</pubDate>
@@ -117,7 +116,7 @@ Added removal of check management command to deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [0622bca5]: Removed the validate management command per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sun, 18 Jan 2015 00:12:03 GMT</pubDate>
@@ -130,7 +129,7 @@ Removed the validate management command per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [714277c]: Removed support for SplitDateTimeWidget with DateTimeField per ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 23:49:44 GMT</pubDate>
@@ -146,7 +145,7 @@ refs &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/889
       <category>changeset</category>
     </item><item>
       <title>Changeset [ecbe20f]: [1.7.x] Added versionadded to ModelAdmin.get_formsets_with_inlines(); ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 23:18:06 GMT</pubDate>
@@ -162,7 +161,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [7cfcdd9]: [1.8.x] Added versionadded to ModelAdmin.get_formsets_with_inlines(); ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 23:12:47 GMT</pubDate>
@@ -175,7 +174,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [2c9e9563]: Removed ModelAdmin.get_formsets() per deprecation timeline; refs #20702.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 23:02:35 GMT</pubDate>
@@ -188,7 +187,7 @@ Removed ModelAdmin.get_formsets() per deprecation timeline; refs &lt;a class="cl
       <category>changeset</category>
     </item><item>
       <title>Changeset [3b570db]: Removed BaseDatabaseValidation.validate_field() per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 19:58:09 GMT</pubDate>
@@ -201,7 +200,7 @@ Removed BaseDatabaseValidation.validate_field() per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [e1b93db]: Removed deprecated aliases in django.db.models.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 19:57:34 GMT</pubDate>
@@ -214,7 +213,7 @@ Removed deprecated aliases in django.db.models.
       <category>changeset</category>
     </item><item>
       <title>Changeset [29737a2]: [1.7.x] Cleaned up migration writer tests  Backport of ...</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 19:45:41 GMT</pubDate>
@@ -230,7 +229,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [5512338]: [1.8.x] Cleaned up migration writer tests  Backport of ...</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 19:42:58 GMT</pubDate>
@@ -246,7 +245,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [2b4ca2e]: Removed unused imports.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 19:42:51 GMT</pubDate>
@@ -259,7 +258,7 @@ Removed unused imports.
       <category>changeset</category>
     </item><item>
       <title>Changeset [c2d5f290]: Removed contrib.flatpages.FlatPageSitemap per deprecation timeline; ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 19:40:22 GMT</pubDate>
@@ -272,7 +271,7 @@ Removed contrib.flatpages.FlatPageSitemap per deprecation timeline; refs &lt;a c
       <category>changeset</category>
     </item><item>
       <title>Changeset [65d55c40]: Cleaned up migration writer tests</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 19:29:50 GMT</pubDate>
@@ -285,7 +284,7 @@ Cleaned up migration writer tests
       <category>changeset</category>
     </item><item>
       <title>Changeset [2788c46]: Removed Multiple/ModelChoiceField cache_choices option; refs #22838.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 18:48:46 GMT</pubDate>
@@ -298,7 +297,7 @@ Removed Multiple/ModelChoiceField cache_choices option; refs &lt;a class="closed
       <category>changeset</category>
     </item><item>
       <title>Changeset [4b8d3bb]: Standardized indentation in docs/howto/custom-management-commands.txt.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 18:38:01 GMT</pubDate>
@@ -311,7 +310,7 @@ Standardized indentation in docs/howto/custom-management-commands.txt.
       <category>changeset</category>
     </item><item>
       <title>Changeset [bd93032]: Removed ssi/url tags from future per deprecation timeline; refs #21939.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 18:29:52 GMT</pubDate>
@@ -324,7 +323,7 @@ Removed ssi/url tags from future per deprecation timeline; refs &lt;a class="clo
       <category>changeset</category>
     </item><item>
       <title>Changeset [a58a120]: [1.8.x] Standardized indentation in ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 18:27:59 GMT</pubDate>
@@ -337,7 +336,7 @@ Removed ssi/url tags from future per deprecation timeline; refs &lt;a class="clo
       <category>changeset</category>
     </item><item>
       <title>Changeset [e278407]: Removed unused imports from previous commit.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 18:22:52 GMT</pubDate>
@@ -350,7 +349,7 @@ Removed unused imports from previous commit.
       <category>changeset</category>
     </item><item>
       <title>Changeset [4a03d348]: Removed BaseCommand.requires_model_validation per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 17:59:07 GMT</pubDate>
@@ -363,7 +362,7 @@ Removed BaseCommand.requires_model_validation per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [85c0eb1]: [1.7.x] Replaced deprecated requires_model_validation in docs.  ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 17:52:34 GMT</pubDate>
@@ -379,7 +378,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [bfa34788]: [1.8.x] Replaced deprecated requires_model_validation in docs.  ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 17:52:30 GMT</pubDate>
@@ -395,7 +394,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [18192b9f]: Replaced deprecated requires_model_validation in docs.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 17:51:50 GMT</pubDate>
@@ -408,7 +407,7 @@ Replaced deprecated requires_model_validation in docs.
       <category>changeset</category>
     </item><item>
       <title>Changeset [df3f3bb]: Removed utils.text.javascript_quote() per deprecation timeline; refs ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 17:41:49 GMT</pubDate>
@@ -421,7 +420,7 @@ Removed utils.text.javascript_quote() per deprecation timeline; refs &lt;a class
       <category>changeset</category>
     </item><item>
       <title>Changeset [00a1199]: Removed support for AppCommand.handle_app() per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 17:34:34 GMT</pubDate>
@@ -434,7 +433,7 @@ Removed support for AppCommand.handle_app() per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [f0a1df0b]: Removed deprecated Chinese language codes; refs #18149.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 16:23:43 GMT</pubDate>
@@ -447,7 +446,7 @@ Removed deprecated Chinese language codes; refs &lt;a class="closed ticket" href
       <category>changeset</category>
     </item><item>
       <title>Changeset [467fd7e]: [1.7.x] Updated tutorial 1 with actual migrate output.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 15:54:34 GMT</pubDate>
@@ -460,7 +459,7 @@ Removed deprecated Chinese language codes; refs &lt;a class="closed ticket" href
       <category>changeset</category>
     </item><item>
       <title>Changeset [9f86d86]: [1.8.x] Updated tutorial 1 with actual migrate output.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 15:46:27 GMT</pubDate>
@@ -473,7 +472,7 @@ Removed deprecated Chinese language codes; refs &lt;a class="closed ticket" href
       <category>changeset</category>
     </item><item>
       <title>Changeset [b845951]: Required sqlparse for SQL splitting per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 15:20:30 GMT</pubDate>
@@ -486,7 +485,7 @@ Required sqlparse for SQL splitting per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [4aa089a9]: Removed support for custom SQL per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 15:16:06 GMT</pubDate>
@@ -499,7 +498,7 @@ Removed support for custom SQL per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [a420f83]: Fixed #24055 -- Keep reference to view class for resolve()</title>
-      
+
         <dc:creator>Loic Bistuer &lt;loic.bistuer@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 15:09:10 GMT</pubDate>
@@ -512,7 +511,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/24
       <category>changeset</category>
     </item><item>
       <title>Changeset [67235fd]: Removed support for initial_data fixtures per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 14:59:25 GMT</pubDate>
@@ -525,7 +524,7 @@ Removed support for initial_data fixtures per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [f635d759]: Removed support for old-style test database settings per deprecation ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 14:55:18 GMT</pubDate>
@@ -538,7 +537,7 @@ Removed support for old-style test database settings per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [d038c54]: Removed django.core.cache.get_cache() per deprecation timeline; refs ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 14:55:18 GMT</pubDate>
@@ -551,7 +550,7 @@ Removed django.core.cache.get_cache() per deprecation timeline; refs &lt;a class
       <category>changeset</category>
     </item><item>
       <title>Changeset [6b1b726]: [1.8.x] Fixed PostGIS crosses lookup and added crosses test  Backport ...</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 14:46:50 GMT</pubDate>
@@ -567,7 +566,7 @@ Backport of aff0e54d5 from master.
       <category>changeset</category>
     </item><item>
       <title>Changeset [aff0e54d]: Fixed PostGIS crosses lookup and added crosses test</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 14:44:49 GMT</pubDate>
@@ -580,7 +579,7 @@ Fixed PostGIS crosses lookup and added crosses test
       <category>changeset</category>
     </item><item>
       <title>Changeset [1b0365ad]: Removed django.utils.tzinfo per deprecation timeline; refs #17262.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 14:32:33 GMT</pubDate>
@@ -593,7 +592,7 @@ Removed django.utils.tzinfo per deprecation timeline; refs &lt;a class="closed t
       <category>changeset</category>
     </item><item>
       <title>Changeset [5f600db3]: [1.7.x] Documented django.utils.timezone.FixedOffset; thanks Aymeric.  ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 14:31:59 GMT</pubDate>
@@ -609,7 +608,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [b714316]: [1.8.x] Documented django.utils.timezone.FixedOffset; thanks Aymeric.  ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 14:31:56 GMT</pubDate>
@@ -625,7 +624,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [25264d4e]: Documented django.utils.timezone.FixedOffset; thanks Aymeric.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 14:30:52 GMT</pubDate>
@@ -638,7 +637,7 @@ Documented django.utils.timezone.FixedOffset; thanks Aymeric.
       <category>changeset</category>
     </item><item>
       <title>Changeset [f6463bb3]: Removed the syncdb command per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 14:20:12 GMT</pubDate>
@@ -651,7 +650,7 @@ Removed the syncdb command per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [f4f24d3]: Removed pre_syncdb and post_syncdb signals per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 14:07:00 GMT</pubDate>
@@ -664,7 +663,7 @@ Removed pre_syncdb and post_syncdb signals per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [fed25f11]: Removed compatibility with Python 3.2.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 14:00:17 GMT</pubDate>
@@ -677,7 +676,7 @@ Removed compatibility with Python 3.2.
       <category>changeset</category>
     </item><item>
       <title>Changeset [4e65f195]: Removed django.db.models.loading per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 13:40:59 GMT</pubDate>
@@ -690,7 +689,7 @@ Removed django.db.models.loading per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [d4ee6cd]: Removed ModelAdmin.declared_fieldsets per deprecation timeline; refs ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 13:40:33 GMT</pubDate>
@@ -703,7 +702,7 @@ Removed ModelAdmin.declared_fieldsets per deprecation timeline; refs &lt;a class
       <category>changeset</category>
     </item><item>
       <title>Changeset [c820892]: Removed django.utils.datastructures.SortedDict per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 13:40:23 GMT</pubDate>
@@ -716,7 +715,7 @@ Removed django.utils.datastructures.&lt;a class="wiki" href="https://code.django
       <category>changeset</category>
     </item><item>
       <title>Changeset [41f0d3d3]: Removed FastCGI support per deprecation timeline; refs #20766.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 13:32:31 GMT</pubDate>
@@ -729,7 +728,7 @@ Removed FastCGI support per deprecation timeline; refs &lt;a class="closed ticke
       <category>changeset</category>
     </item><item>
       <title>Changeset [37b7776a]: Removed django.utils.datastructures.MergeDict per deprecation ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 13:13:36 GMT</pubDate>
@@ -742,7 +741,7 @@ Removed django.utils.datastructures.MergeDict per deprecation timeline; refs &lt
       <category>changeset</category>
     </item><item>
       <title>Changeset [75f107b8]: Removed request.REQUEST per deprecation timeline; refs #18659.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 13:05:18 GMT</pubDate>
@@ -755,7 +754,7 @@ Removed request.REQUEST per deprecation timeline; refs &lt;a class="closed ticke
       <category>changeset</category>
     </item><item>
       <title>Changeset [61ad1ea]: Removed django.utils.functional.memoize per deprecation timeline.  ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 12:55:32 GMT</pubDate>
@@ -771,7 +770,7 @@ refs &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/213
       <category>changeset</category>
     </item><item>
       <title>Changeset [9ce36512]: Removed backwards compatibility shims for "util" modules per ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 12:40:12 GMT</pubDate>
@@ -787,7 +786,7 @@ refs &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/176
       <category>changeset</category>
     </item><item>
       <title>Changeset [d79a30b]: Removed fallback suport for allow_syncdb() in database routers per ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 12:39:46 GMT</pubDate>
@@ -800,7 +799,7 @@ Removed fallback suport for allow_syncdb() in database routers per deprecation t
       <category>changeset</category>
     </item><item>
       <title>Changeset [b952c3fc]: Removed django.utils.unittest per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 12:32:22 GMT</pubDate>
@@ -813,7 +812,7 @@ Removed django.utils.unittest per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [ce78b954]: Removed django.utils.importlib per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 12:14:21 GMT</pubDate>
@@ -826,7 +825,7 @@ Removed django.utils.importlib per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [1c8b637e]: Removed django.utils.dictconfig per deprecation timeline.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 12:13:51 GMT</pubDate>
@@ -839,7 +838,7 @@ Removed django.utils.dictconfig per deprecation timeline.
       <category>changeset</category>
     </item><item>
       <title>Changeset [428c8840]: Used features in GIS sitemap view conditionals</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 11:41:18 GMT</pubDate>
@@ -852,7 +851,7 @@ Used features in GIS sitemap view conditionals
       <category>changeset</category>
     </item><item>
       <title>Changeset [53e1423]: Updated en translation catalogs  Forward port of 666c12e52 from ...</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 10:19:37 GMT</pubDate>
@@ -868,7 +867,7 @@ Forward port of 666c12e52 from stable/1.8.x
       <category>changeset</category>
     </item><item>
       <title>Changeset [666c12e5]: [1.8.x] Updated en translation catalogs</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 10:18:45 GMT</pubDate>
@@ -881,7 +880,7 @@ Forward port of 666c12e52 from stable/1.8.x
       <category>changeset</category>
     </item><item>
       <title>Changeset [dec5157a]: [1.8.x] Complemented test about non-supported aggregation exception  ...</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 09:04:38 GMT</pubDate>
@@ -897,7 +896,7 @@ Backport of d69ecf922dd from master.
       <category>changeset</category>
     </item><item>
       <title>Changeset [d69ecf9]: Complemented test about non-supported aggregation exception</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 09:01:55 GMT</pubDate>
@@ -910,7 +909,7 @@ Complemented test about non-supported aggregation exception
       <category>changeset</category>
     </item><item>
       <title>Changeset [eb6a07e0]: [1.8.x] Fixed typo in 'Django Template Language'  Backport of ...</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 02:06:26 GMT</pubDate>
@@ -926,7 +925,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [d60b96d]: Fixed typo in 'Django Template Language'</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 02:05:28 GMT</pubDate>
@@ -939,7 +938,7 @@ Fixed typo in 'Django Template Language'
       <category>changeset</category>
     </item><item>
       <title>Changeset [c5125888]: Increased the default PBKDF2 iterations.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sat, 17 Jan 2015 00:27:10 GMT</pubDate>
@@ -952,7 +951,7 @@ Increased the default PBKDF2 iterations.
       <category>changeset</category>
     </item><item>
       <title>Changeset [8be1b8b4]: [1.8.x] Bumped django_next_version in docs config.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 23:30:49 GMT</pubDate>
@@ -965,7 +964,7 @@ Increased the default PBKDF2 iterations.
       <category>changeset</category>
     </item><item>
       <title>Changeset [d468903]: Bumped version to 1.9 in docs config.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 23:30:28 GMT</pubDate>
@@ -978,7 +977,7 @@ Bumped version to 1.9 in docs config.
       <category>changeset</category>
     </item><item>
       <title>Changeset [cba3d8a]: [1.6.x] Fixed a typo in the test responses docs.  Backport of ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 23:24:51 GMT</pubDate>
@@ -994,7 +993,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [be0bc9a9]: [1.7.x] Fixed a typo in the test responses docs.  Backport of ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 23:24:48 GMT</pubDate>
@@ -1010,7 +1009,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [801287b]: [1.8.x] Fixed a typo in the test responses docs.  Backport of ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 23:24:44 GMT</pubDate>
@@ -1026,7 +1025,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [d9edd2f]: Fixed #21108 -- Updated how to release docs: prereleases now go to PyPI.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 23:24:10 GMT</pubDate>
@@ -1039,7 +1038,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/21
       <category>changeset</category>
     </item><item>
       <title>Changeset [996292d6]: Fixed a typo in the test responses docs.</title>
-      
+
         <dc:creator>Simon Charette &lt;charette.s@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 23:17:00 GMT</pubDate>
@@ -1052,7 +1051,7 @@ Fixed a typo in the test responses docs.
       <category>changeset</category>
     </item><item>
       <title>Changeset [3fe3bdd]: Added stub release notes for Django 1.9.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 23:00:45 GMT</pubDate>
@@ -1065,7 +1064,7 @@ Added stub release notes for Django 1.9.
       <category>changeset</category>
     </item><item>
       <title>Changeset [c72448b5]: Bumped version to 1.8 alpha 1.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 22:06:32 GMT</pubDate>
@@ -1078,7 +1077,7 @@ Bumped version to 1.8 alpha 1.
       <category>changeset</category>
     </item><item>
       <title>Changeset [3f23f1c]: Bumped version; master is now 1.9 pre-alpha.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 22:04:35 GMT</pubDate>
@@ -1091,7 +1090,7 @@ Bumped version; master is now 1.9 pre-alpha.
       <category>changeset</category>
     </item><item>
       <title>Changeset [39d95fb]: Fixed #24092 -- Widened base field support for ArrayField.  Several ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 21:15:16 GMT</pubDate>
@@ -1128,7 +1127,7 @@ Thanks to smclenithan for the report.
       <category>changeset</category>
     </item><item>
       <title>Changeset [a17724b7]: Fixed the length of a headline in the 1.8 release notes.  This broke ...</title>
-      
+
         <dc:creator>Jannis Leidel &lt;jannis@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 20:29:28 GMT</pubDate>
@@ -1144,7 +1143,7 @@ This broke the website design in the sidebar because the line could not be wrapp
       <category>changeset</category>
     </item><item>
       <title>Changeset [e8171da]: Fixed #24146 -- Fixed a missing fields regression in admin checks.  ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 19:47:09 GMT</pubDate>
@@ -1163,7 +1162,7 @@ Thanks to PirosB3 and Tim Graham.
       <category>changeset</category>
     </item><item>
       <title>Changeset [8e8daf7c]: Removed empty sections in 1.8 minor features.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 19:41:05 GMT</pubDate>
@@ -1176,7 +1175,7 @@ Removed empty sections in 1.8 minor features.
       <category>changeset</category>
     </item><item>
       <title>Changeset [b4ac232]: Fixed #24099 -- Removed contenttype.name deprecated field  This ...</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 19:21:34 GMT</pubDate>
@@ -1194,7 +1193,7 @@ reviews.
       <category>changeset</category>
     </item><item>
       <title>Changeset [374c2419]: Tested that geo aggregates support slicing  Refs #15101. Patch ...</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 19:10:25 GMT</pubDate>
@@ -1210,7 +1209,7 @@ Refs &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/151
       <category>changeset</category>
     </item><item>
       <title>Changeset [a79e6b67]: Fixed #24152 -- Deprecated GeoQuerySet aggregate methods  Thanks Josh ...</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 18:53:02 GMT</pubDate>
@@ -1226,7 +1225,7 @@ Thanks Josh Smeaton and Tim Graham for the reviews.
       <category>changeset</category>
     </item><item>
       <title>Changeset [cef3f805]: [1.7.x] Fixed #24160 -- Fixed model_regress test on Windows; refs ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 17:03:15 GMT</pubDate>
@@ -1242,7 +1241,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [5338ff4]: Fixed #24160 -- Fixed model_regress test on Windows; refs #24007.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 16:59:08 GMT</pubDate>
@@ -1255,7 +1254,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/24
       <category>changeset</category>
     </item><item>
       <title>Changeset [fb614ff4]: [1.6.x] Fixed #23312 -- Marked an i18n test as expectedFailure on ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 15:34:46 GMT</pubDate>
@@ -1271,7 +1270,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [433e7dd]: [1.7.x] Fixed #23312 -- Marked an i18n test as expectedFailure on ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 15:31:49 GMT</pubDate>
@@ -1284,7 +1283,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [bd08cfca]: [1.7.x] Fixed #24143 -- Encouraged use of Http404 messages for ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 14:42:03 GMT</pubDate>
@@ -1300,7 +1299,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [726a9550]: Fixed #24143 -- Encouraged use of Http404 messages for debugging.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 14:41:01 GMT</pubDate>
@@ -1313,7 +1312,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/24
       <category>changeset</category>
     </item><item>
       <title>Changeset [a34fba5]: Simplified a bit GeoAggregate classes  Thanks Josh Smeaton for the ...</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 09:40:45 GMT</pubDate>
@@ -1329,7 +1328,7 @@ Thanks Josh Smeaton for the review. Refs &lt;a class="closed ticket" href="https
       <category>changeset</category>
     </item><item>
       <title>Changeset [065b2a82]: [1.7.x] Fixed #24135 -- Made RenameModel rename many-to-many tables.  ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 01:43:49 GMT</pubDate>
@@ -1349,7 +1348,7 @@ Thanks ..."&gt;28db4af80a319485c0da724d692e2f8396aa57e3&lt;/a&gt; from master
       <category>changeset</category>
     </item><item>
       <title>Changeset [28db4af]: Fixed #24135 -- Made RenameModel rename many-to-many tables.  Thanks ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 01:34:33 GMT</pubDate>
@@ -1365,7 +1364,7 @@ Thanks Simon and Markus for reviews.
       <category>changeset</category>
     </item><item>
       <title>Changeset [3f9ec12d]: Fixed #23712 -- Fixed KeyError with BaseForm._html_output()</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 01:19:53 GMT</pubDate>
@@ -1378,7 +1377,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/23
       <category>changeset</category>
     </item><item>
       <title>Changeset [faf0d66a]: Fixed #23850 -- Fixed a migrations test failure on Mac OS X &amp; Python 3</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 00:45:43 GMT</pubDate>
@@ -1391,7 +1390,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/23
       <category>changeset</category>
     </item><item>
       <title>Changeset [39b58ad]: Fixed #24148 -- Documented a bug with case expressions in SQLite &lt; 3.7.0</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Fri, 16 Jan 2015 00:42:05 GMT</pubDate>
@@ -1404,7 +1403,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/24
       <category>changeset</category>
     </item><item>
       <title>Changeset [b419bd3]: [1.7.x] Refs #24075 -- Silenced needless call_command output while ...</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Thu, 15 Jan 2015 20:13:27 GMT</pubDate>
@@ -1423,7 +1422,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [51dc617b]: Refs #24075 -- Silenced needless call_command output while running ...</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Thu, 15 Jan 2015 20:07:39 GMT</pubDate>
@@ -1439,7 +1438,7 @@ Thanks Tim Graham for the report
       <category>changeset</category>
     </item><item>
       <title>Changeset [67dbc56]: Made an expressions_case test work without Pillow.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Thu, 15 Jan 2015 19:02:58 GMT</pubDate>
@@ -1452,7 +1451,7 @@ Made an expressions_case test work without Pillow.
       <category>changeset</category>
     </item><item>
       <title>Changeset [47bdad4e]: Replaced inner functions by class methods.  refs #24031  Thanks to Tim ...</title>
-      
+
         <dc:creator>Simon Charette &lt;charette.s@…&gt;</dc:creator>
 
       <pubDate>Thu, 15 Jan 2015 18:03:34 GMT</pubDate>
@@ -1471,7 +1470,7 @@ Thanks to Tim Graham and Michał Modzelewski for the review.
       <category>changeset</category>
     </item><item>
       <title>Changeset [57671dd0]: [1.5.x] Direct readers to format_html() in mark_safe() docs.  Backport ...</title>
-      
+
         <dc:creator>Luke Plant &lt;L.Plant.98@…&gt;</dc:creator>
 
       <pubDate>Thu, 15 Jan 2015 08:32:32 GMT</pubDate>
@@ -1487,7 +1486,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [b9101fa7]: [1.6.x] Direct readers to format_html() in mark_safe() docs.  Backport ...</title>
-      
+
         <dc:creator>Luke Plant &lt;L.Plant.98@…&gt;</dc:creator>
 
       <pubDate>Thu, 15 Jan 2015 08:30:38 GMT</pubDate>
@@ -1503,7 +1502,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [327703c]: [1.7.x] Direct readers to format_html() in mark_safe() docs.  Backport ...</title>
-      
+
         <dc:creator>Luke Plant &lt;L.Plant.98@…&gt;</dc:creator>
 
       <pubDate>Thu, 15 Jan 2015 08:29:00 GMT</pubDate>
@@ -1519,7 +1518,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [4832c004]: Direct readers to format_html() in mark_safe() docs.</title>
-      
+
         <dc:creator>Luke Plant &lt;L.Plant.98@…&gt;</dc:creator>
 
       <pubDate>Thu, 15 Jan 2015 08:24:54 GMT</pubDate>
@@ -1532,7 +1531,7 @@ Direct readers to format_html() in mark_safe() docs.
       <category>changeset</category>
     </item><item>
       <title>Changeset [67bcae1]: Moved check_aggregate_support to BaseSpatialOperations</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 21:03:41 GMT</pubDate>
@@ -1545,7 +1544,7 @@ Moved check_aggregate_support to BaseSpatialOperations
       <category>changeset</category>
     </item><item>
       <title>Changeset [9801d41]: Skipped a problematic file_storage test on Windows.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 20:00:27 GMT</pubDate>
@@ -1558,7 +1557,7 @@ Skipped a problematic file_storage test on Windows.
       <category>changeset</category>
     </item><item>
       <title>Changeset [2d5da57f]: Fixed incorrect error message in Options.get_fields()</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 19:51:05 GMT</pubDate>
@@ -1571,7 +1570,7 @@ Fixed incorrect error message in Options.get_fields()
       <category>changeset</category>
     </item><item>
       <title>Changeset [478546f]: [1.7.x] Fixed #24075 -- Prevented running post_migrate signals when ...</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 19:37:56 GMT</pubDate>
@@ -1590,7 +1589,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [28308078]: Fixed #22603 -- Reorganized classes in django.db.backends.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 19:16:20 GMT</pubDate>
@@ -1603,7 +1602,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/22
       <category>changeset</category>
     </item><item>
       <title>Changeset [737d249]: Fixed #24075 -- Prevented running post_migrate signals when unapplying ...</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 18:59:39 GMT</pubDate>
@@ -1619,7 +1618,7 @@ Thanks Florian Apolloner for the report and Claude Paroz and Tim Graham for the 
       <category>changeset</category>
     </item><item>
       <title>Changeset [99e6ac7]: [1.4.x] Fixed a static view test on Windows.  Backport of ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 18:57:59 GMT</pubDate>
@@ -1635,7 +1634,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [79df62f]: [1.6.x] Fixed a static view test on Windows.  Backport of ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 18:57:14 GMT</pubDate>
@@ -1651,7 +1650,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [02c059f]: [1.7.x] Fixed a static view test on Windows.  Backport of ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 18:57:10 GMT</pubDate>
@@ -1667,7 +1666,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [a6f144f]: Fixed a static view test on Windows.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 18:56:49 GMT</pubDate>
@@ -1680,7 +1679,7 @@ Fixed a static view test on Windows.
       <category>changeset</category>
     </item><item>
       <title>Changeset [88786af]: Fixed #24147 -- Prevented managers leaking model during migrations  ...</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 15:09:33 GMT</pubDate>
@@ -1696,7 +1695,7 @@ Thanks Tim Graham for the review.
       <category>changeset</category>
     </item><item>
       <title>Changeset [2e261799]: [1.7.x] Added stub release notes for 1.7.4.  Backport of ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 14:48:06 GMT</pubDate>
@@ -1712,7 +1711,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [ec7ef5af]: Added stub release notes for 1.7.4.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 14:47:29 GMT</pubDate>
@@ -1725,7 +1724,7 @@ Added stub release notes for 1.7.4.
       <category>changeset</category>
     </item><item>
       <title>Changeset [dc90bf2]: Removed unused import</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Wed, 14 Jan 2015 08:31:24 GMT</pubDate>
@@ -1738,7 +1737,7 @@ Removed unused import
       <category>changeset</category>
     </item><item>
       <title>Changeset [1913c1a]: Added today's security issues to the archive.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 19:44:08 GMT</pubDate>
@@ -1751,7 +1750,7 @@ Added today's security issues to the archive.
       <category>changeset</category>
     </item><item>
       <title>Changeset [7ecd6544]: Removed blank lines from docs/releases/security.txt</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 19:37:30 GMT</pubDate>
@@ -1764,7 +1763,7 @@ Removed blank lines from docs/releases/security.txt
       <category>changeset</category>
     </item><item>
       <title>Changeset [4296a1da]: [1.4.x] Post-release version bump.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 19:16:07 GMT</pubDate>
@@ -1777,7 +1776,7 @@ Removed blank lines from docs/releases/security.txt
       <category>changeset</category>
     </item><item>
       <title>Changeset [4c6bd574]: [1.6.x] Post-release version bump.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 19:15:55 GMT</pubDate>
@@ -1790,7 +1789,7 @@ Removed blank lines from docs/releases/security.txt
       <category>changeset</category>
     </item><item>
       <title>Changeset [f7ce66b]: [1.7.x] Post-release version bump.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 19:14:05 GMT</pubDate>
@@ -1803,7 +1802,7 @@ Removed blank lines from docs/releases/security.txt
       <category>changeset</category>
     </item><item>
       <title>Changeset [bd9dcd2]: [1.4.x] Bumped version for 1.4.18 release.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:14:08 GMT</pubDate>
@@ -1816,7 +1815,7 @@ Removed blank lines from docs/releases/security.txt
       <category>changeset</category>
     </item><item>
       <title>Changeset [e2fea7c7]: [1.6.x] Bumped version for 1.6.10 release.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:12:22 GMT</pubDate>
@@ -1829,7 +1828,7 @@ Removed blank lines from docs/releases/security.txt
       <category>changeset</category>
     </item><item>
       <title>Changeset [6bf1930f]: [1.7.x] Bumped version for 1.7.3 release.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:11:37 GMT</pubDate>
@@ -1842,7 +1841,7 @@ Removed blank lines from docs/releases/security.txt
       <category>changeset</category>
     </item><item>
       <title>Changeset [88b7957]: [1.4.x] Added dates to release notes.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:10:54 GMT</pubDate>
@@ -1855,7 +1854,7 @@ Removed blank lines from docs/releases/security.txt
       <category>changeset</category>
     </item><item>
       <title>Changeset [f9de1998]: [1.6.x] Added dates to release notes.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:10:25 GMT</pubDate>
@@ -1868,7 +1867,7 @@ Removed blank lines from docs/releases/security.txt
       <category>changeset</category>
     </item><item>
       <title>Changeset [d7a06ee7]: [1.6.x] Fixed DoS possibility in ModelMultipleChoiceField.  This is a ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:10:11 GMT</pubDate>
@@ -1887,7 +1886,7 @@ Thanks Keryn Knight for the report and initial patch.
       <category>changeset</category>
     </item><item>
       <title>Changeset [553779c]: [1.6.x] Prevented views.static.serve() from using large memory on ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:10:11 GMT</pubDate>
@@ -1903,7 +1902,7 @@ This is a security fix. Disclosure following shortly.
       <category>changeset</category>
     </item><item>
       <title>Changeset [72e0b03]: [1.6.x] Fixed is_safe_url() to handle leading whitespace.  This is a ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:10:11 GMT</pubDate>
@@ -1919,7 +1918,7 @@ This is a security fix. Disclosure following shortly.
       <category>changeset</category>
     </item><item>
       <title>Changeset [d7597b31]: [1.6.x] Stripped headers containing underscores to prevent spoofing in ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:10:11 GMT</pubDate>
@@ -1938,7 +1937,7 @@ Thanks to Jedediah Smith for the report.
       <category>changeset</category>
     </item><item>
       <title>Changeset [f143e25]: [1.6.x] Added stub release notes for security releases.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:10:11 GMT</pubDate>
@@ -1951,7 +1950,7 @@ Thanks to Jedediah Smith for the report.
       <category>changeset</category>
     </item><item>
       <title>Changeset [9b403a1]: [1.7.x] Added dates to release notes.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:09:34 GMT</pubDate>
@@ -1964,7 +1963,7 @@ Thanks to Jedediah Smith for the report.
       <category>changeset</category>
     </item><item>
       <title>Changeset [cbbe6a6a]: Added dates to release notes.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:08:57 GMT</pubDate>
@@ -1977,7 +1976,7 @@ Added dates to release notes.
       <category>changeset</category>
     </item><item>
       <title>Changeset [baf2542]: Fixed DoS possibility in ModelMultipleChoiceField.  This is a security ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:03:06 GMT</pubDate>
@@ -1996,7 +1995,7 @@ Thanks Keryn Knight for the report and initial patch.
       <category>changeset</category>
     </item><item>
       <title>Changeset [a3bebfd]: Ensured views.static.serve() doesn't use large memory on large files.  ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:03:06 GMT</pubDate>
@@ -2012,7 +2011,7 @@ This issue was fixed in master by refs &lt;a class="closed ticket" href="https:/
       <category>changeset</category>
     </item><item>
       <title>Changeset [69b5e667]: Fixed is_safe_url() to handle leading whitespace.  This is a security ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:03:06 GMT</pubDate>
@@ -2028,7 +2027,7 @@ This is a security fix. Disclosure following shortly.
       <category>changeset</category>
     </item><item>
       <title>Changeset [316b8d4]: Stripped headers containing underscores to prevent spoofing in WSGI ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:03:05 GMT</pubDate>
@@ -2047,7 +2046,7 @@ Thanks to Jedediah Smith for the report.
       <category>changeset</category>
     </item><item>
       <title>Changeset [958aeda]: Added stub release notes for security releases.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:03:05 GMT</pubDate>
@@ -2060,7 +2059,7 @@ Added stub release notes for security releases.
       <category>changeset</category>
     </item><item>
       <title>Changeset [bcfb477]: [1.7.x] Fixed DoS possibility in ModelMultipleChoiceField.  This is a ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:02:56 GMT</pubDate>
@@ -2079,7 +2078,7 @@ Thanks Keryn Knight for the report and initial patch.
       <category>changeset</category>
     </item><item>
       <title>Changeset [818e59a3]: [1.7.x] Prevented views.static.serve() from using large memory on ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:02:56 GMT</pubDate>
@@ -2095,7 +2094,7 @@ This is a security fix. Disclosure following shortly.
       <category>changeset</category>
     </item><item>
       <title>Changeset [de67dedc]: [1.7.x] Fixed is_safe_url() to handle leading whitespace.  This is a ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:02:56 GMT</pubDate>
@@ -2111,7 +2110,7 @@ This is a security fix. Disclosure following shortly.
       <category>changeset</category>
     </item><item>
       <title>Changeset [41b4bc7]: [1.7.x] Stripped headers containing underscores to prevent spoofing in ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:02:56 GMT</pubDate>
@@ -2130,7 +2129,7 @@ Thanks to Jedediah Smith for the report.
       <category>changeset</category>
     </item><item>
       <title>Changeset [33f1ccf5]: [1.7.x] Added stub release notes for security releases.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 18:02:55 GMT</pubDate>
@@ -2143,7 +2142,7 @@ Thanks to Jedediah Smith for the report.
       <category>changeset</category>
     </item><item>
       <title>Changeset [a1a23038]: [1.6.x] Fixed bad model example in admin docs.  Backport of ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 16:54:05 GMT</pubDate>
@@ -2159,7 +2158,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [6a08020f]: [1.7.x] Fixed bad model example in admin docs.  Backport of ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 16:53:59 GMT</pubDate>
@@ -2175,7 +2174,7 @@ Backport of &lt;a class="changeset" href="https://code.djangoproject.com/changes
       <category>changeset</category>
     </item><item>
       <title>Changeset [e7771ec]: Fixed bad model example in admin docs.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 16:53:03 GMT</pubDate>
@@ -2188,7 +2187,7 @@ Fixed bad model example in admin docs.
       <category>changeset</category>
     </item><item>
       <title>Changeset [e084ff0]: Fixed #24136 -- Prevented crash when convert_extent input is None  ...</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Tue, 13 Jan 2015 16:27:11 GMT</pubDate>
@@ -2204,7 +2203,7 @@ Thanks Max Demars for the report.
       <category>changeset</category>
     </item><item>
       <title>Changeset [65246de7]: Fixed #24031 -- Added CASE expressions to the ORM.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 23:15:34 GMT</pubDate>
@@ -2217,7 +2216,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/24
       <category>changeset</category>
     </item><item>
       <title>Changeset [aa8ee6a]: Fixed test failures in Oracle introspection  Refs #17785</title>
-      
+
         <dc:creator>Shai Berger &lt;shai@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 23:00:09 GMT</pubDate>
@@ -2233,7 +2232,7 @@ Refs &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/177
       <category>changeset</category>
     </item><item>
       <title>Changeset [5d7217dc]: Fixed typo in docs/release/1.8.txt &amp; added word for spelling check.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 22:53:32 GMT</pubDate>
@@ -2246,7 +2245,7 @@ Fixed typo in docs/release/1.8.txt &amp;amp; added word for spelling check.
       <category>changeset</category>
     </item><item>
       <title>Changeset [3844ccc9]: Fixed #24138 -- Added modelform_factory to __all__.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 22:44:06 GMT</pubDate>
@@ -2259,7 +2258,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/24
       <category>changeset</category>
     </item><item>
       <title>Changeset [21b858c]: Fixed #24060 -- Added OrderBy Expressions</title>
-      
+
         <dc:creator>Josh Smeaton &lt;josh.smeaton@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 22:39:55 GMT</pubDate>
@@ -2272,7 +2271,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/24
       <category>changeset</category>
     </item><item>
       <title>Changeset [f48e2258]: Fixed #24133 -- Replaced formatting syntax in success_url placeholders ...</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 21:51:22 GMT</pubDate>
@@ -2289,7 +2288,7 @@ for the reviews.
       <category>changeset</category>
     </item><item>
       <title>Changeset [5f7230e]: Fixed #24124 (again) -- Updated tests with new default ...</title>
-      
+
         <dc:creator>Aymeric Augustin &lt;aymeric.augustin@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 21:31:44 GMT</pubDate>
@@ -2305,7 +2304,7 @@ Thanks Collin for the review.
       <category>changeset</category>
     </item><item>
       <title>Changeset [511a53b]: Avoided exceptions in admindocs' template detail view.  This is ...</title>
-      
+
         <dc:creator>Aymeric Augustin &lt;aymeric.augustin@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 20:01:34 GMT</pubDate>
@@ -2325,7 +2324,7 @@ Refs &lt;a class="new ticket" href="https://code.djangoproject.com/ticket/24125"
       <category>changeset</category>
     </item><item>
       <title>Changeset [3bba4b42]: Avoided exceptions in a non-critical check in the admin.  This change ...</title>
-      
+
         <dc:creator>Aymeric Augustin &lt;aymeric.augustin@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 20:01:34 GMT</pubDate>
@@ -2343,7 +2342,7 @@ check is silently skipped when no Django template engine is configured.
       <category>changeset</category>
     </item><item>
       <title>Changeset [6b5113ec]: Made debug views not crash when there isn't a default template engine.</title>
-      
+
         <dc:creator>Aymeric Augustin &lt;aymeric.augustin@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 20:01:34 GMT</pubDate>
@@ -2356,7 +2355,7 @@ Made debug views not crash when there isn't a default template engine.
       <category>changeset</category>
     </item><item>
       <title>Changeset [79deb6a0]: Accounted for multiple template engines in template responses.</title>
-      
+
         <dc:creator>Aymeric Augustin &lt;aymeric.augustin@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 20:01:34 GMT</pubDate>
@@ -2369,7 +2368,7 @@ Accounted for multiple template engines in template responses.
       <category>changeset</category>
     </item><item>
       <title>Changeset [a3e783fe]: Deprecated passing a Context to a generic Template.render.  A ...</title>
-      
+
         <dc:creator>Aymeric Augustin &lt;aymeric.augustin@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 20:01:34 GMT</pubDate>
@@ -2393,7 +2392,7 @@ rendered.
       <category>changeset</category>
     </item><item>
       <title>Changeset [71b7668]: Rewrapped TemplateSyntaxError in Jinja2 backend.  Changed import style ...</title>
-      
+
         <dc:creator>Aymeric Augustin &lt;aymeric.augustin@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 20:01:34 GMT</pubDate>
@@ -2410,7 +2409,7 @@ APIs.
       <category>changeset</category>
     </item><item>
       <title>Changeset [4c413e23]: Fixed #17785 -- Preferred column names in get_relations introspection  ...</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 18:58:47 GMT</pubDate>
@@ -2427,7 +2426,7 @@ Tim Graham for the review.
       <category>changeset</category>
     </item><item>
       <title>Changeset [b75c707]: Fixed #24089 -- Added check for when ModelAdmin.fieldsets[1]['fields'] ...</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 18:47:58 GMT</pubDate>
@@ -2440,7 +2439,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/24
       <category>changeset</category>
     </item><item>
       <title>Changeset [eeb88123]: Fixed #24129 -- Added indicator that migrations are rendering the ...</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 18:23:46 GMT</pubDate>
@@ -2456,7 +2455,7 @@ Thanks Tim Graham for the review.
       <category>changeset</category>
     </item><item>
       <title>Changeset [9f51d0c]: Fixed test from refs #23913 when running tests in reverse.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 18:20:44 GMT</pubDate>
@@ -2469,7 +2468,7 @@ Fixed test from refs &lt;a class="closed ticket" href="https://code.djangoprojec
       <category>changeset</category>
     </item><item>
       <title>Changeset [26a92619]: Fixed #24124 -- Changed context_processors in the default settings.py</title>
-      
+
         <dc:creator>Collin Anderson &lt;cmawebsite@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 18:17:44 GMT</pubDate>
@@ -2482,7 +2481,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/24
       <category>changeset</category>
     </item><item>
       <title>Changeset [bbbed99]: Fixed #24123 -- Used all available migrations to generate the initial ...</title>
-      
+
         <dc:creator>Markus Holtermann &lt;info@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 17:39:18 GMT</pubDate>
@@ -2498,7 +2497,7 @@ Thanks Collin Anderson for the input when creating the patch and Tim Graham for 
       <category>changeset</category>
     </item><item>
       <title>Changeset [8f5d6c77]: Fixed #23878 -- Moved Query and Prefetch documentation</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 16:35:20 GMT</pubDate>
@@ -2511,7 +2510,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/23
       <category>changeset</category>
     </item><item>
       <title>Changeset [58833f51]: Made Django's templates get their own LANGUAGE_* variables.  Refs #24117</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 15:54:59 GMT</pubDate>
@@ -2527,7 +2526,7 @@ Refs &lt;a class="new ticket" href="https://code.djangoproject.com/ticket/24117"
       <category>changeset</category>
     </item><item>
       <title>Changeset [a7c256c]: Fixed #9893 -- Allowed using a field's max_length in the Storage.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 14:09:18 GMT</pubDate>
@@ -2540,7 +2539,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/98
       <category>changeset</category>
     </item><item>
       <title>Changeset [b5c1a85]: Fixed #24118 -- Added --debug-sql option for tests.  Added a ...</title>
-      
+
         <dc:creator>Marc Tamlyn &lt;marc.tamlyn@…&gt;</dc:creator>
 
       <pubDate>Mon, 12 Jan 2015 08:16:08 GMT</pubDate>
@@ -2562,7 +2561,7 @@ discussion.
       <category>changeset</category>
     </item><item>
       <title>Changeset [68a439a]: Removed supports_binary_field flag as all backends support them  It ...</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Sun, 11 Jan 2015 22:34:47 GMT</pubDate>
@@ -2580,7 +2579,7 @@ binary fields, it is unneeded. Refs &lt;a class="closed ticket" href="https://co
       <category>changeset</category>
     </item><item>
       <title>Changeset [d563e3b]: Fixed #23913 -- Deprecated the `=` comparison in `if` template tag.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sun, 11 Jan 2015 20:21:01 GMT</pubDate>
@@ -2593,7 +2592,7 @@ Fixed &lt;a class="closed ticket" href="https://code.djangoproject.com/ticket/23
       <category>changeset</category>
     </item><item>
       <title>Changeset [412066e7]: Revert "Marked a test as an expected failure on MySQL and Python 3.2." ...</title>
-      
+
         <dc:creator>Claude Paroz &lt;claude@…&gt;</dc:creator>
 
       <pubDate>Sun, 11 Jan 2015 19:59:07 GMT</pubDate>
@@ -2611,7 +2610,7 @@ We officially don't support MySQL on Python 3.2. Refs &lt;a class="closed ticket
       <category>changeset</category>
     </item><item>
       <title>Changeset [28de5cd]: Fixed spelling errors in docs.</title>
-      
+
         <dc:creator>Tim Graham &lt;timograham@…&gt;</dc:creator>
 
       <pubDate>Sun, 11 Jan 2015 18:24:13 GMT</pubDate>
