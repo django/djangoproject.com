@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+import codecs
 import json
-from django.contrib.contenttypes.models import ContentType
 from django.http import Http404
 from django.test import TestCase, RequestFactory
 from django_hosts.resolvers import reverse
 import mock
-import rmoq
+import requests_mock
+from unipath import Path
 
 from .models import TracTicketMetric, RSSFeedMetric, GithubItemCountMetric, Metric
 from .views import index, metric_detail, metric_json
@@ -58,10 +59,8 @@ class ViewTests(TestCase):
 class MetricMixin(object):
 
     def test_get_absolute_url(self):
-        self.assertEqual(
-            self.instance.get_absolute_url(),
-            'http://dashboard.djangoproject.dev:8000/metric/%s/' % self.instance.slug
-        )
+        url_path = '/metric/%s/' % self.instance.slug
+        self.assertTrue(url_path in self.instance.get_absolute_url())
 
 
 class TracTicketMetricTestCase(TestCase, MetricMixin):
@@ -79,23 +78,34 @@ class TracTicketMetricTestCase(TestCase, MetricMixin):
 
 class RSSFeedMetricTestCase(TestCase, MetricMixin):
     fixtures = ['dashboard_test_data']
+    feed_url = 'http://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7&format=rss'
+    fixtures_path = Path(__file__).parent.child('fixtures', 'rss_feed_metric.xml')
 
     def setUp(self):
         super(RSSFeedMetricTestCase, self).setUp()
         self.instance = RSSFeedMetric.objects.last()
 
-    @rmoq.activate('dashboard/fixtures')
-    def test_fetch(self):
+    @requests_mock.mock()
+    def test_fetch(self, mocker):
+        with codecs.open(self.fixtures_path, 'r', 'utf-8') as fixtures:
+            feed_items = fixtures.read()
+        mocker.get(self.feed_url, text=feed_items)
         self.assertEqual(self.instance.fetch(), 177)
 
 
 class GithubItemCountMetricTestCase(TestCase, MetricMixin):
     fixtures = ['dashboard_test_data']
+    api_url1 = 'https://api.github.com/repos/django/django/pulls?state=closed&per_page=100&page=1'
+    api_url2 = 'https://api.github.com/repos/django/django/pulls?state=closed&per_page=100&page=2'
 
     def setUp(self):
         super(GithubItemCountMetricTestCase, self).setUp()
         self.instance = GithubItemCountMetric.objects.last()
 
-    @rmoq.activate('dashboard/fixtures')
-    def test_fetch(self):
-        self.assertEqual(self.instance.fetch(), 101)
+    @requests_mock.mock()
+    def test_fetch(self, mocker):
+        # faking a JSON output with 100 items first
+        mocker.get(self.api_url1, text=json.dumps([{'id': i} for i in range(100)]))
+        # and then with 42 items on the second page
+        mocker.get(self.api_url2, text=json.dumps([{'id': i} for i in range(42)]))
+        self.assertEqual(self.instance.fetch(), 142)
