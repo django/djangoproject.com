@@ -235,7 +235,10 @@ class TestDjangoHero(TestCase):
                 )
 
     def test_thumbnail(self):
-        os.makedirs(os.path.join(settings.MEDIA_ROOT, 'fundraising/logos/'))
+        try:
+            os.makedirs(os.path.join(settings.MEDIA_ROOT, 'fundraising/logos/'))
+        except OSError:  # directory may already exist
+            pass
         image_path = os.path.join(settings.MEDIA_ROOT, 'fundraising/logos/test_logo.jpg')
         image = Image.new('L', (500, 500))
         image.save(image_path)
