@@ -6,6 +6,7 @@ from django.utils import crypto, timezone
 from django_hosts.resolvers import reverse
 
 RESTART_GOAL = Decimal("30000.00")
+STRETCH_GOAL = Decimal("50000.00")
 WEEKLY_GOAL = Decimal("2800.00")
 DISPLAY_LOGO_AMOUNT = Decimal("200.00")
 DEFAULT_DONATION_AMOUNT = Decimal("50.00")
