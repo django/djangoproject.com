@@ -1,5 +1,7 @@
+import os
 from datetime import date, timedelta
 from functools import partial
+from PIL import Image
 from mock import patch
 from operator import attrgetter
 
@@ -231,6 +233,19 @@ class TestDjangoHero(TestCase):
                     expected,
                     attrgetter('donated_amount')
                 )
+
+    def test_thumbnail(self):
+        os.makedirs(os.path.join(settings.MEDIA_ROOT, 'fundraising/logos/'))
+        image_path = os.path.join(settings.MEDIA_ROOT, 'fundraising/logos/test_logo.jpg')
+        image = Image.new('L', (500, 500))
+        image.save(image_path)
+        hero = DjangoHero.objects.last()
+        hero.logo = image_path
+        hero.save()
+        thumbnail = hero.thumbnail
+        self.assertEqual(thumbnail.x, 340)
+        self.assertEqual(thumbnail.y, 340)
+        os.remove(image_path)
 
 
 class TestPaymentForm(TestCase):
