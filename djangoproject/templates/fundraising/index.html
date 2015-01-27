@@ -115,7 +115,7 @@
       <div class="hero">
         <div class="hero-logo">
           {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
-          <img src="{% if donor.logo %}{{ donor.logo.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+          <img src="{% if donor.logo %}{{ donor.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
             alt="{{ donor.name }}" />
           {% if donor.url %}</a>{% endif %}
         </div>

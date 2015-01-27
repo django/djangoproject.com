@@ -4,6 +4,7 @@ from django.db import models
 from django.utils import crypto, timezone
 
 from django_hosts.resolvers import reverse
+from sorl.thumbnail import get_thumbnail
 
 RESTART_GOAL = Decimal("30000.00")
 WEEKLY_GOAL = Decimal("2800.00")
@@ -72,6 +73,10 @@ class DjangoHero(FundraisingModel):
     class Meta:
         verbose_name = "Django hero"
         verbose_name_plural = "Django heroes"
+
+    @property
+    def thumbnail(self):
+        return get_thumbnail(self.logo, '340x340', quality=100)
 
 
 class Donation(FundraisingModel):

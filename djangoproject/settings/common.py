@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'registration',
     'django_pygments',
     'django_hosts',
+    'sorl.thumbnail',
 
     'accounts',
     'aggregator',
