@@ -12,7 +12,7 @@ from .exceptions import DonationError
 from .forms import DonateForm, PaymentForm, DjangoHeroForm
 from .models import (
     DjangoHero, Donation, Testimonial, RESTART_GOAL, DEFAULT_DONATION_AMOUNT,
-    DISPLAY_LOGO_AMOUNT, WEEKLY_GOAL,
+    DISPLAY_LOGO_AMOUNT, WEEKLY_GOAL, STRETCH_GOAL,
 )
 from .utils import shuffle_donations
 
@@ -34,6 +34,7 @@ def index(request):
     return render(request, 'fundraising/index.html', {
         'donated_amount': donated_amount['amount__sum'] or 0,
         'goal_amount': RESTART_GOAL,
+        'stretch_goal_amount': STRETCH_GOAL,
         'donors_with_logo': shuffle_donations(donors_with_logo),
         'other_donors': shuffle_donations(other_donors),
         'total_donors': DjangoHero.objects.count(),
