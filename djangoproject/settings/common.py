@@ -231,3 +231,6 @@ SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
 # only testing keys as fallback values here please!
 STRIPE_SECRET_KEY = SECRETS.get('stripe_secret_key', 'sk_test_x6zP4wd7Z5jcvDOJbbHZlHHt')
 STRIPE_PUBLISHABLE_KEY = SECRETS.get('stripe_publishable_key', 'pk_test_TyB5jcROwK8mlCNrn3dCwW7l')
+
+# sorl-thumbnail settings
+THUMBNAIL_PRESERVE_FORMAT = True
