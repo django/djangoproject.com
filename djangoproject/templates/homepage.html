@@ -107,7 +107,8 @@
       {% donation_snippet %}
 
       <h3>Latest news</h3>
-      {% render_latest_blog_entries 1 hide_readmore=True hide_summary=True %}
+      {% render_latest_blog_entries 1 hide_readmore=True summary_first=True header_tag='h4' %}
+      <a href="{% url 'weblog:index' %}" class="link-readmore">More news</a>
 
       <h3>New to Django?</h3>
       <ul class="list-links-small docs-list">
