@@ -7,6 +7,7 @@ ALLOWED_HOSTS = [
 ] + SECRETS.get('allowed_hosts', [])
 
 DEBUG = True
+THUMBNAIL_DEBUG = DEBUG
 
 CACHES = {
     'default': {
