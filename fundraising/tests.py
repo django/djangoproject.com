@@ -209,14 +209,14 @@ class TestDjangoHero(TestCase):
             'is_visible': True,
             'is_amount_displayed': True,
         }
-        h1 = DjangoHero.objects.create(**kwargs)
-        Donation.objects.create(donor=h1, amount='5')
-        h2 = DjangoHero.objects.create(**kwargs)
-        Donation.objects.create(donor=h2, amount='15')
+        self.h1 = DjangoHero.objects.create(**kwargs)
+        Donation.objects.create(donor=self.h1, amount='5')
+        self.h2 = DjangoHero.objects.create(**kwargs)
+        Donation.objects.create(donor=self.h2, amount='15')
         # hidden donation amount should display last
         kwargs['is_amount_displayed'] = False
-        h3 = DjangoHero.objects.create(**kwargs)
-        Donation.objects.create(donor=h3, amount='10')
+        self.h3 = DjangoHero.objects.create(**kwargs)
+        Donation.objects.create(donor=self.h3, amount='10')
         self.today = date.today()
 
     def test_donation_shuffling(self):
@@ -242,13 +242,16 @@ class TestDjangoHero(TestCase):
         image_path = os.path.join(settings.MEDIA_ROOT, 'fundraising/logos/test_logo.jpg')
         image = Image.new('L', (500, 500))
         image.save(image_path)
-        hero = DjangoHero.objects.last()
-        hero.logo = image_path
-        hero.save()
-        thumbnail = hero.thumbnail
+        self.h1 = DjangoHero.objects.last()
+        self.h1.logo = image_path
+        self.h1.save()
+        thumbnail = self.h1.thumbnail
         self.assertEqual(thumbnail.x, 340)
         self.assertEqual(thumbnail.y, 340)
         os.remove(image_path)
+
+    def test_thumbnail_no_logo(self):
+        self.assertIsNone(self.h2.thumbnail)
 
 
 class TestPaymentForm(TestCase):
