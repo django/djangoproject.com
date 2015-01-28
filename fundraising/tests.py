@@ -235,20 +235,20 @@ class TestDjangoHero(TestCase):
                 )
 
     def test_thumbnail(self):
-        try:
-            os.makedirs(os.path.join(settings.MEDIA_ROOT, 'fundraising/logos/'))
-        except OSError:  # directory may already exist
-            pass
         image_path = os.path.join(settings.MEDIA_ROOT, 'fundraising/logos/test_logo.jpg')
         image = Image.new('L', (500, 500))
         image.save(image_path)
-        self.h1 = DjangoHero.objects.last()
         self.h1.logo = image_path
         self.h1.save()
         thumbnail = self.h1.thumbnail
         self.assertEqual(thumbnail.x, 340)
         self.assertEqual(thumbnail.y, 340)
         os.remove(image_path)
+        self.assertTrue(
+            os.path.exists(
+                thumbnail.url.replace(settings.MEDIA_URL, '{}/'.format(settings.MEDIA_ROOT))
+            )
+        )
 
     def test_thumbnail_no_logo(self):
         self.assertIsNone(self.h2.thumbnail)
