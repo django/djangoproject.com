@@ -1,9 +1,11 @@
 from decimal import Decimal
 
 from django.db import models
+from django.dispatch import receiver
 from django.utils import crypto, timezone
-
+from django.db.models.signals import post_save
 from django_hosts.resolvers import reverse
+
 from sorl.thumbnail import get_thumbnail, ImageField
 
 RESTART_GOAL = Decimal("30000.00")
@@ -77,6 +79,11 @@ class DjangoHero(FundraisingModel):
     @property
     def thumbnail(self):
         return get_thumbnail(self.logo, '340x340', quality=100)
+
+
+@receiver(post_save, sender=DjangoHero)
+def create_thumbnail_on_save(sender, **kwargs):
+    return kwargs['instance'].thumbnail
 
 
 class Donation(FundraisingModel):
