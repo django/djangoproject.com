@@ -6,18 +6,20 @@ import feedparser
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.utils.encoding import python_2_unicode_compatible
 from django_push.subscriber import signals as push_signals
 from django_push.subscriber.models import Subscription
 
 log = logging.getLogger(__name__)
 
 
+@python_2_unicode_compatible
 class FeedType(models.Model):
     name = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250)
     can_self_add = models.BooleanField(default=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s" % (self.name,)
 
     def items(self):
@@ -34,6 +36,7 @@ STATUS_CHOICES = (
 )
 
 
+@python_2_unicode_compatible
 class Feed(models.Model):
     title = models.CharField(max_length=500)
     feed_url = models.URLField(unique=True, max_length=500)
@@ -42,7 +45,7 @@ class Feed(models.Model):
     feed_type = models.ForeignKey(FeedType)
     owner = models.ForeignKey(User, blank=True, null=True, related_name='owned_feeds')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def save(self, **kwargs):
@@ -102,6 +105,7 @@ class FeedItemManager(models.Manager):
         return item
 
 
+@python_2_unicode_compatible
 class FeedItem(models.Model):
     feed = models.ForeignKey(Feed)
     title = models.CharField(max_length=500)
@@ -115,7 +119,7 @@ class FeedItem(models.Model):
     class Meta:
         ordering = ("-date_modified",)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):

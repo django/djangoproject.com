@@ -48,6 +48,7 @@ from __future__ import unicode_literals
 import datetime
 
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.tzinfo import FixedOffset
 
 
@@ -74,6 +75,7 @@ class time_property(object):
         return _epoc + datetime.timedelta(microseconds=timestamp)
 
 
+@python_2_unicode_compatible
 class Ticket(models.Model):
     id = models.IntegerField(primary_key=True)
     type = models.TextField()
@@ -102,7 +104,7 @@ class Ticket(models.Model):
         db_table = 'ticket'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return "#%s: %s" % (self.id, self.summary)
 
     def __init__(self, *args, **kwargs):
@@ -119,6 +121,7 @@ class Ticket(models.Model):
             setattr(self, name, value)
 
 
+@python_2_unicode_compatible
 class TicketCustom(models.Model):
     ticket = models.ForeignKey(Ticket, related_name='custom_fields', db_column='ticket', primary_key=True)
     name = models.TextField()
@@ -128,10 +131,11 @@ class TicketCustom(models.Model):
         db_table = 'ticket_custom'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s: %s" % (self.name, self.value)
 
 
+@python_2_unicode_compatible
 class TicketChange(models.Model):
     ticket = models.ForeignKey(Ticket, related_name='changes', db_column='ticket', primary_key=True)
     author = models.TextField()
@@ -147,10 +151,11 @@ class TicketChange(models.Model):
         managed = False
         ordering = ['_time']
 
-    def __unicode__(self):
+    def __str__(self):
         return "#%s: changed %s" % (self.ticket.id, self.field)
 
 
+@python_2_unicode_compatible
 class Component(models.Model):
     name = models.TextField(primary_key=True)
     owner = models.TextField()
@@ -160,10 +165,11 @@ class Component(models.Model):
         db_table = 'component'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
+@python_2_unicode_compatible
 class Version(models.Model):
     name = models.TextField(primary_key=True)
     description = models.TextField()
@@ -175,10 +181,11 @@ class Version(models.Model):
         db_table = 'version'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
+@python_2_unicode_compatible
 class Milestone(models.Model):
     name = models.TextField(primary_key=True)
     description = models.TextField()
@@ -193,7 +200,7 @@ class Milestone(models.Model):
         db_table = 'milestone'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -214,6 +221,7 @@ class SingleRepoRevisionManager(models.Manager):
 SINGLE_REPO_ID = 1
 
 
+@python_2_unicode_compatible
 class Revision(models.Model):
     repos = models.IntegerField()
     rev = models.TextField(primary_key=True)
@@ -230,7 +238,7 @@ class Revision(models.Model):
         db_table = 'revision'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return '[%s] %s' % (self.rev, self.message.split('\n', 1)[0])
 
 
@@ -239,6 +247,7 @@ class Revision(models.Model):
 # CREATE VIEW "wiki_django_view" AS
 #    SELECT "name" || '.' || "version" AS "django_id", *
 #    FROM wiki;
+@python_2_unicode_compatible
 class Wiki(models.Model):
     django_id = models.TextField(primary_key=True)
     name = models.TextField()
@@ -255,7 +264,7 @@ class Wiki(models.Model):
         db_table = 'wiki_django_view'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s (v%s)' % (self.name, self.version)
 
 
@@ -264,6 +273,7 @@ class Wiki(models.Model):
 # CREATE VIEW "attachment_django_view" AS
 #    SELECT "type" || '.' || "id" || '.' || "filename" AS "django_id", *
 #    FROM attachment;
+@python_2_unicode_compatible
 class Attachment(models.Model):
     django_id = models.TextField(primary_key=True)
     type = models.TextField()
@@ -280,6 +290,6 @@ class Attachment(models.Model):
         db_table = 'attachment_django_view'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         attached_to = ('#%s' % self.id) if self.type == 'ticket' else self.id
         return '%s (on %s)' % (self.filename, attached_to)

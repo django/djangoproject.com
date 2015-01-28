@@ -1,10 +1,11 @@
 from django.contrib import admin
+from django.utils import six
 
 from .models import ICLA, CCLA, CCLADesignee
 
 
 class ICLAAdmin(admin.ModelAdmin):
-    list_display = ['__unicode__', 'user', 'date_signed']
+    list_display = ['__unicode__' if six.PY2 else '__str__', 'user', 'date_signed']
     raw_id_fields = ['user']
     ordering = ['-date_signed']
 

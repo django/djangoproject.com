@@ -5,8 +5,11 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import six
+from django.utils.encoding import python_2_unicode_compatible
 
 
+@python_2_unicode_compatible
 class ICLA(models.Model):
     """
     An individual's CLA.
@@ -41,10 +44,11 @@ class ICLA(models.Model):
         verbose_name = 'individual CLA'
         verbose_name_plural = 'individual CLAs'
 
-    def __unicode__(self):
-        return unicode(self.full_name or self.user)
+    def __str__(self):
+        return six.text_type(self.full_name or self.user)
 
 
+@python_2_unicode_compatible
 class CCLA(models.Model):
     """
     A corporate CLA.
@@ -71,10 +75,11 @@ class CCLA(models.Model):
         verbose_name = 'corporate CLA'
         verbose_name_plural = 'corporate CLAs'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.company_name
 
 
+@python_2_unicode_compatible
 class CCLADesignee(models.Model):
     """
     An individual whose contrbutions are covered by a CCLA.
@@ -95,8 +100,8 @@ class CCLADesignee(models.Model):
         verbose_name = 'CCLA designee'
         verbose_name_plural = 'CCLA designees'
 
-    def __unicode__(self):
-        return unicode(self.full_name or self.user)
+    def __str__(self):
+        return six.text_type(self.full_name or self.user)
 
 
 def find_agreements(user):

@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.core.cache import cache
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 
 from django_hosts.resolvers import reverse
 
@@ -33,6 +34,7 @@ class DocumentReleaseManager(models.Manager):
         return current_version
 
 
+@python_2_unicode_compatible
 class DocumentRelease(models.Model):
     """
     A "release" of documentation -- i.e. English for v1.2.
@@ -57,7 +59,7 @@ class DocumentRelease(models.Model):
     class Meta:
         unique_together = ('lang', 'version')
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s/%s" % (self.lang, self.version)
 
     def get_absolute_url(self):
@@ -90,6 +92,7 @@ class DocumentRelease(models.Model):
         return self.version == 'dev'
 
 
+@python_2_unicode_compatible
 class Document(models.Model):
     """
     An individual document. Used mainly as a hook point for Haystack.
@@ -101,7 +104,7 @@ class Document(models.Model):
     class Meta:
         unique_together = ('release', 'path')
 
-    def __unicode__(self):
+    def __str__(self):
         return "/".join([self.release.lang, self.release.version, self.path])
 
     def get_absolute_url(self):

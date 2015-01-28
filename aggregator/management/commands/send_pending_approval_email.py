@@ -2,6 +2,7 @@
 Send an email to settings.FEED_APPROVERS with the feeds that need to
 be manually approved.
 """
+from __future__ import print_function
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import mail
@@ -24,7 +25,7 @@ class Command(NoArgsCommand):
 
         if len(feeds) == 0:
             if verbosity >= 1:
-                print "There are no pending feeds. Skipping the email."
+                print("There are no pending feeds. Skipping the email.")
             return
 
         email = """The following feeds are pending approval:
@@ -38,12 +39,12 @@ To approve them, visit: {% url 'admin:aggregator_feed_changelist' %}
 
         message = Template(email).render(Context({'feeds': feeds}))
         if verbosity >= 2:
-            print "Pending approval email:\n"
-            print message
+            print("Pending approval email:\n")
+            print(message)
 
         mail.send_mail("django community feeds pending approval", message,
                        'nobody@djangoproject.com', to_email,
                        fail_silently=False)
 
         if verbosity >= 1:
-            print "Sent pending approval email to: %s" % (', '.join(to_email))
+            print("Sent pending approval email to: %s" % (', '.join(to_email)))
