@@ -1,16 +1,15 @@
 # Settings for www.djangoproject.com
 import json
-
-from unipath import FSPath as Path
+from pathlib import Path
 
 # Utilities
 
 # The full path to the repository root.
-BASE = Path(__file__).absolute().ancestor(2)
+BASE = Path(__file__).resolve().parent.parent
 
 # It's a secret to everybody
 try:
-    with open(BASE.ancestor(2).child('conf').child('secrets.json')) as handle:
+    with (BASE.parent.parent.joinpath('conf', 'secrets.json')).open() as handle:
         SECRETS = json.load(handle)
 except IOError:
     SECRETS = {'secret_key': 'a', 'superfeedr_creds': ['any@email.com', 'some_string']}
@@ -45,7 +44,7 @@ DATABASE_ROUTERS = ['tracdb.db_router.TracRouter']
 
 DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
 
-FIXTURE_DIRS = [BASE.child('fixtures')]
+FIXTURE_DIRS = [str(BASE.joinpath('fixtures'))]
 
 INSTALLED_APPS = [
     'django.contrib.sites',
@@ -116,7 +115,7 @@ LOGGING = {
     }
 }
 
-MEDIA_ROOT = BASE.ancestor(2).child('media')
+MEDIA_ROOT = str(BASE.parent.parent.joinpath('media'))
 
 MEDIA_URL = '/m/'
 
@@ -149,9 +148,9 @@ SILENCED_SYSTEM_CHECKS = ['1_6.W001']
 
 SITE_ID = 1
 
-STATICFILES_DIRS = [BASE.child('static')]
+STATICFILES_DIRS = [str(BASE.joinpath('static'))]
 
-STATIC_ROOT = BASE.ancestor(2).child('static')
+STATIC_ROOT = str(BASE.parent.parent.joinpath('static'))
 
 STATIC_URL = '/s/'
 
@@ -173,7 +172,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'django.core.context_processors.request',
 ]
 
-TEMPLATE_DIRS = [BASE.child('templates')]
+TEMPLATE_DIRS = [BASE.joinpath('templates')]
 
 TIME_ZONE = 'America/Chicago'
 

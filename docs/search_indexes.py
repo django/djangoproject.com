@@ -25,7 +25,7 @@ class DocumentIndex(haystack.indexes.SearchIndex):
     def prepare_text(self, obj):
         root = utils.get_doc_root(obj.release.lang, obj.release.version)
         docpath = utils.get_doc_path(root, obj.path)
-        with open(docpath) as fp:
+        with docpath.open() as fp:
             doc = json.load(fp)
         return strip_tags(doc['body']).replace('¶', '')
 

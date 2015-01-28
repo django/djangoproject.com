@@ -23,7 +23,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SESSION_COOKIE_SECURE = False
 
 # Docs settings
-DOCS_BUILD_ROOT = BASE.ancestor(1).child('djangodocs')
+DOCS_BUILD_ROOT = BASE.parent / 'djangodocs'
 
 # django-hosts settings
 
@@ -32,7 +32,7 @@ PARENT_HOST = 'djangoproject.dev:8000'
 # Haystack settings
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
 
-HAYSTACK_WHOOSH_PATH = BASE.child('djangodocs.index')
+HAYSTACK_WHOOSH_PATH = str(BASE / 'djangodocs.index')
 
 # django-push settings
 
