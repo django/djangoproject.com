@@ -5,7 +5,7 @@ from docutils.core import publish_parts
 
 from django.conf import settings
 from django.db import models
-from django.utils.encoding import smart_str
+from django.utils.encoding import smart_str, python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from django_hosts.resolvers import reverse
@@ -32,6 +32,7 @@ CONTENT_FORMAT_CHOICES = (
 )
 
 
+@python_2_unicode_compatible
 class Entry(models.Model):
     headline = models.CharField(max_length=200)
     slug = models.SlugField(unique_for_date='pub_date')
@@ -65,7 +66,7 @@ class Entry(models.Model):
         ordering = ('-pub_date',)
         get_latest_by = 'pub_date'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.headline
 
     def get_absolute_url(self):

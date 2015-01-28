@@ -6,6 +6,7 @@ from distutils.version import LooseVersion
 from django.db import models
 from django.conf import settings
 from django.core.cache import cache
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.functional import cached_property
 from django.utils.version import get_version
 
@@ -39,6 +40,7 @@ class ReleaseManager(models.Manager):
         return current_version
 
 
+@python_2_unicode_compatible
 class Release(models.Model):
 
     DEFAULT_CACHE_KEY = "%s_django_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
@@ -69,7 +71,7 @@ class Release(models.Model):
         cache.delete(self.DEFAULT_CACHE_KEY)
         super(Release, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.version
 
     @cached_property
