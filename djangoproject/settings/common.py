@@ -234,3 +234,4 @@ STRIPE_PUBLISHABLE_KEY = SECRETS.get('stripe_publishable_key', 'pk_test_TyB5jcRO
 
 # sorl-thumbnail settings
 THUMBNAIL_PRESERVE_FORMAT = True
+THUMBNAIL_ALTERNATIVE_RESOLUTIONS = [2]

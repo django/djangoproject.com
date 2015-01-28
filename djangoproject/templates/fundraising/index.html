@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load fundraising_extras humanize static %}
+{% load fundraising_extras humanize static thumbnail %}
 
 {% block title %}Support Django{% endblock %}
 {% block layout_class %}full-width{% endblock %}
@@ -116,6 +116,7 @@
         <div class="hero-logo">
           {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
           <img src="{% if donor.logo %}{{ donor.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+            data-src-2x="{% if donor.logo %}{{ donor.thumbnail.url|resolution:'2x' }}{% endif %}"
             alt="{{ donor.name }}" />
           {% if donor.url %}</a>{% endif %}
         </div>
