@@ -78,7 +78,7 @@ class DjangoHero(FundraisingModel):
 
     @property
     def thumbnail(self):
-        return get_thumbnail(self.logo, '340x340', quality=100)
+        return get_thumbnail(self.logo, '170x170', quality=100)
 
 
 @receiver(post_save, sender=DjangoHero)
