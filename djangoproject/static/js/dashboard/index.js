@@ -10,7 +10,7 @@ define('dashboard/index', ['jquery', 'jquery.flot', 'dashboard/utils'], function
 			var url = "/metric/" + element.data('metric') + ".json";
 			$.getJSON(url, function (response) {
 				response.data = utils.convertSecondsToMilliseconds(response.data);
-				$.plot(e, [response.data], {
+				$.plot(element, [response.data], {
 					xaxis: {show: false, mode: "time"},
 					yaxis: {show: false, min: 0},
 					grid: {borderWidth: 0, hoverable: true},
