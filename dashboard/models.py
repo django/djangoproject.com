@@ -82,9 +82,9 @@ class Metric(models.Model):
         Instant metrics change every time we measure them, so they're easy:
         just return every single measurement.
         """
-        data = self.data.filter(timestamp__gt=since) \
-                        .order_by('timestamp') \
-                        .values_list('timestamp', 'measurement')
+        data = (self.data.filter(timestamp__gt=since)
+                         .order_by('timestamp')
+                         .values_list('timestamp', 'measurement'))
         return [(calendar.timegm(t.timetuple()), m) for (t, m) in data]
 
     def _gather_data_periodic(self, since, period):
