@@ -1,0 +1,73 @@
+#dashboard {
+  .full-width [role="main"] {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+.metric {
+  height: 8em;
+  width: 240px;
+  padding: 0 20px 10px 20px;
+  margin: 10px 10px 20px 10px;
+  border: 1px solid $gray-line;
+  @include border-radius(4px);
+  display: inline-block;
+  position: relative;
+
+  h3 {
+    padding: 10px;
+    margin: 0 -20px;
+    @include font-size(18);
+    font-weight: 200;
+    display: block;
+    text-align: left;
+    color: $green-very-light;
+    background: $green-medium;
+    a {
+      color: $green-very-light;
+    }
+  }
+
+  .value {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-size: 5em;
+    line-height: 1.5em;
+    @include sans-serif();
+    z-index: 10;
+    pointer-events:none;
+
+    a {
+      text-decoration: none;
+      z-index: 10;
+    }
+    .timestamp {
+      font-size: 0.16em;
+      line-height: 1em;
+    }
+  }
+
+  .sparkline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 54px;
+    z-index: 1;
+  }
+}
+
+.graph {
+  width: 100%;
+  margin: 0 auto;
+  height: 500px;
+}

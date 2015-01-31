@@ -13,7 +13,10 @@ try:
     with open(BASE.ancestor(2).child('conf').child('secrets.json')) as handle:
         SECRETS = json.load(handle)
 except IOError:
-    SECRETS = {'secret_key': 'a', 'superfeedr_creds': ['any@email.com', 'some_string']}
+    SECRETS = {
+        'secret_key': 'a',
+        'superfeedr_creds': ['any@email.com', 'some_string'],
+    }
 
 
 # Django settings
@@ -73,6 +76,7 @@ INSTALLED_APPS = [
     'blog',
     'cla',
     'contact',
+    'dashboard',
     'docs',
     'legacy',
     'releases',
@@ -235,3 +239,7 @@ STRIPE_PUBLISHABLE_KEY = SECRETS.get('stripe_publishable_key', 'pk_test_TyB5jcRO
 # sorl-thumbnail settings
 THUMBNAIL_PRESERVE_FORMAT = True
 THUMBNAIL_ALTERNATIVE_RESOLUTIONS = [2]
+
+# dashboard settings
+TRAC_RPC_URL = "https://code.djangoproject.com/rpc"
+TRAC_URL = "https://code.djangoproject.com/"

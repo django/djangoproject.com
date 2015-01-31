@@ -1,0 +1,111 @@
+# -*- coding: utf-8 -*-
+import codecs
+import json
+from django.http import Http404
+from django.test import TestCase, RequestFactory
+from django_hosts.resolvers import reverse
+import mock
+import requests_mock
+from unipath import Path
+
+from .models import TracTicketMetric, RSSFeedMetric, GithubItemCountMetric, Metric
+from .views import index, metric_detail, metric_json
+
+
+class ViewTests(TestCase):
+    fixtures = ['dashboard_test_data']
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_index(self):
+        for MC in Metric.__subclasses__():
+            for metric in MC.objects.filter(show_on_dashboard=True):
+                metric.data.create(measurement=42)
+
+        request = self.factory.get(reverse('dashboard-index', host='dashboard'))
+        response = index(request)
+        self.assertContains(response, 'Django development dashboard')
+        self.assertEqual(response.content.count('<div class="metric'), 13)
+        self.assertEqual(response.content.count('42'), 13)
+
+    def test_metric(self):
+        TracTicketMetric.objects.get(slug='new-tickets-week').data.create(measurement=42)
+        request = self.factory.get(reverse('metric-detail', args=['new-tickets-week'],
+                                           host='dashboard'))
+        response = metric_detail(request, 'new-tickets-week')
+        self.assertContains(response, 'Django development dashboard')
+
+    def test_metric_404(self):
+        request = self.factory.get(reverse('metric-detail', args=['new-tickets-week'],
+                                           host='dashboard'))
+        self.assertRaisesRegexp(
+            Http404,
+            'Could not find metric with slug [\w-]+',
+            metric_detail,
+            request,
+            '404'
+        )
+
+    def test_metric_json(self):
+        TracTicketMetric.objects.get(slug='new-tickets-week').data.create(measurement=42)
+        request = self.factory.get(reverse('metric-json', args=['new-tickets-week'],
+                                           host='dashboard'))
+        response = metric_json(request, 'new-tickets-week')
+        self.assertEqual(json.loads(response.content)['data'][0][1], 42)
+        self.assertEqual(response.status_code, 200)
+
+
+class MetricMixin(object):
+
+    def test_get_absolute_url(self):
+        url_path = '/metric/%s/' % self.instance.slug
+        self.assertTrue(url_path in self.instance.get_absolute_url())
+
+
+class TracTicketMetricTestCase(TestCase, MetricMixin):
+    fixtures = ['dashboard_test_data']
+
+    def setUp(self):
+        super(TracTicketMetricTestCase, self).setUp()
+        self.instance = TracTicketMetric.objects.last()
+
+    @mock.patch('xmlrpclib.ServerProxy')
+    def test_fetch(self, mock_server_proxy):
+        self.instance.fetch()
+        self.assertTrue(mock_server_proxy.client.query.assert_called_with)
+
+
+class RSSFeedMetricTestCase(TestCase, MetricMixin):
+    fixtures = ['dashboard_test_data']
+    feed_url = 'http://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7&format=rss'
+    fixtures_path = Path(__file__).parent.child('fixtures', 'rss_feed_metric.xml')
+
+    def setUp(self):
+        super(RSSFeedMetricTestCase, self).setUp()
+        self.instance = RSSFeedMetric.objects.last()
+
+    @requests_mock.mock()
+    def test_fetch(self, mocker):
+        with codecs.open(self.fixtures_path, 'r', 'utf-8') as fixtures:
+            feed_items = fixtures.read()
+        mocker.get(self.feed_url, text=feed_items)
+        self.assertEqual(self.instance.fetch(), 177)
+
+
+class GithubItemCountMetricTestCase(TestCase, MetricMixin):
+    fixtures = ['dashboard_test_data']
+    api_url1 = 'https://api.github.com/repos/django/django/pulls?state=closed&per_page=100&page=1'
+    api_url2 = 'https://api.github.com/repos/django/django/pulls?state=closed&per_page=100&page=2'
+
+    def setUp(self):
+        super(GithubItemCountMetricTestCase, self).setUp()
+        self.instance = GithubItemCountMetric.objects.last()
+
+    @requests_mock.mock()
+    def test_fetch(self, mocker):
+        # faking a JSON output with 100 items first
+        mocker.get(self.api_url1, text=json.dumps([{'id': i} for i in range(100)]))
+        # and then with 42 items on the second page
+        mocker.get(self.api_url2, text=json.dumps([{'id': i} for i in range(42)]))
+        self.assertEqual(self.instance.fetch(), 142)

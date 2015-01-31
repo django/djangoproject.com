@@ -4,6 +4,7 @@ ALLOWED_HOSTS = [
     'www.djangoproject.dev',
     'djangoproject.dev',
     'docs.djangoproject.dev',
+    'dashboard.djangoproject.dev',
 ] + SECRETS.get('allowed_hosts', [])
 
 DEBUG = True
