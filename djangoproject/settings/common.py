@@ -1,6 +1,5 @@
 # Settings for www.djangoproject.com
 import json
-import os
 
 from unipath import FSPath as Path
 
@@ -14,7 +13,10 @@ try:
     with open(BASE.ancestor(2).child('conf').child('secrets.json')) as handle:
         SECRETS = json.load(handle)
 except IOError:
-    SECRETS = {'secret_key': 'a', 'superfeedr_creds': ['any@email.com', 'some_string']}
+    SECRETS = {
+        'secret_key': 'a',
+        'superfeedr_creds': ['any@email.com', 'some_string'],
+    }
 
 
 # Django settings
@@ -239,6 +241,5 @@ THUMBNAIL_PRESERVE_FORMAT = True
 THUMBNAIL_ALTERNATIVE_RESOLUTIONS = [2]
 
 # dashboard settings
-TRAC_CREDS = os.environ.get('TRAC_CREDS')  # Set to "user:pass" for Trac.
 TRAC_RPC_URL = "https://code.djangoproject.com/rpc"
 TRAC_URL = "https://code.djangoproject.com/"

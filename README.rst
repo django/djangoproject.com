@@ -48,7 +48,6 @@ To run locally, do the usual:
 
 #. For docs::
 
-    export TRAC_CREDS=<user:pass> # Your djangoproject.com creds.
     ./manage.py loaddata doc_releases
     ./manage.py update_docs
 
