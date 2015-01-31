@@ -1,0 +1,10 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}{{ metric }} - {{ block.super }}{% endblock %}
+
+{% block sectionid %}dashboard-detail{% endblock %}
+
+{% block content %}
+  <h2>{{ metric }}</h2>
+  <div id="graph" class="graph" data-metric="{{ metric.slug }}"></div>
+{% endblock %}

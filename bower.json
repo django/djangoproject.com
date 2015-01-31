@@ -6,6 +6,7 @@
     "jquery.inview": "1.0.0",
     "webfontloader": "~1.5.10",
     "jquery.payment": "~1.1.4",
-    "modernizr-retina-test": "~1.0.0"
+    "modernizr-retina-test": "~1.0.0",
+    "jquery-flot": "~0.8.3"
   }
 }
