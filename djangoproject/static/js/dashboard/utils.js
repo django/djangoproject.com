@@ -3,7 +3,7 @@ define('dashboard/utils', ['jquery'], function ($) {
 		formatTimestamp: function formatTimestamp(timestamp, period) {
 			var d = new Date(timestamp);
 			if (period == 'instant') {
-				return $.plot.formatDate(d, "%b %d, %h:%M%p");
+				return $.plot.formatDate(d, "%b %d, %h:%M %p");
 			} else if (period == 'daily') {
 				return $.plot.formatDate(d, "%b %d");
 			} else if (period == 'weekly') {
