@@ -6,5 +6,5 @@
 
 {% block content %}
   <h2>{{ metric }}</h2>
-  <div id="graph" class="graph" data-metric="{{ metric.slug }}"></div>
+  <div id="graph" class="graph" data-path="{% url "metric-list" host "dashboard" %}" data-metric="{{ metric.slug }}"></div>
 {% endblock %}

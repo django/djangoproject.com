@@ -7,7 +7,7 @@ define('dashboard/index', ['jquery', 'jquery.flot', 'dashboard/utils'], function
 			var originalValue = valueElement.html();
 			var green = '#93D7B7';
 
-			var url = "/metric/" + element.data('metric') + ".json";
+			var url = element.data('path') + element.data('metric') + ".json";
 			$.getJSON(url, function (response) {
 				response.data = utils.convertSecondsToMilliseconds(response.data);
 				$.plot(element, [response.data], {
