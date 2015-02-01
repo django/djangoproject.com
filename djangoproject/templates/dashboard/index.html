@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block content %}
+<div class="dashboard-index">
   {% for report in data %}
     {% ifchanged report.metric.category %}
       {% if report.metric.category %}<h2>{{ report.metric.category }}</h2>{% endif %}
@@ -20,4 +21,5 @@
   <p class="updated">
     {% blocktrans with timestamp=data.0.latest.timestamp|timesince %}Updated {{ timestamp }} ago.{% endblocktrans %}
   </p>
+</div>
 {% endblock %}

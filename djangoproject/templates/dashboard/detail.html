@@ -1,13 +1,13 @@
 {% extends "base_dashboard.html" %}
 
-{% block title %}{{ metric }} - {{ block.super }}{% endblock %}
-
-{% block sectionid %}dashboard-detail{% endblock %}
+{% block title %}{{ metric }} | {{ block.super }}{% endblock %}
 
 {% block content %}
+<div class="dashboard-detail">
   <h2><a href="{{ metric.link }}">{{ metric }}</a></h2>
   <div class="graph-wrapper">
     <div id="graph" class="graph" data-path="{% url "metric-list" host "dashboard" %}" data-metric="{{ metric.slug }}"></div>
   </div>
   <a class="link-readmore" href="{% url "dashboard-index" host "dashboard" %}">All metrics</a>
+</div>
 {% endblock %}
