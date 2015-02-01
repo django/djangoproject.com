@@ -2,11 +2,13 @@ from __future__ import absolute_import
 import datetime
 import operator
 
+from django.core.cache import cache
 from django.http.response import JsonResponse, Http404
 from django.shortcuts import render
 from django.forms.models import model_to_dict
 
 from .models import Metric
+from .utils import generation_key
 
 
 def index(request):
@@ -36,10 +38,17 @@ def metric_json(request, metric_slug):
         daysback = int(request.GET['days'])
     except (TypeError, KeyError, ValueError):
         daysback = 30
-    start_date = datetime.datetime.now() - datetime.timedelta(days=daysback)
 
-    doc = model_to_dict(metric)
-    doc['data'] = metric.gather_data(since=start_date)
+    generation = generation_key()
+    key = 'metric:%s:%s' % (metric_slug, daysback)
+
+    doc = cache.get(key, version=generation)
+    if doc is None:
+        start_date = datetime.datetime.now() - datetime.timedelta(days=daysback)
+
+        doc = model_to_dict(metric)
+        doc['data'] = metric.gather_data(since=start_date)
+        cache.set(key, doc, 60 * 60, version=generation)
 
     return JsonResponse(doc)
 
