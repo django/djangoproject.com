@@ -3,6 +3,9 @@
 
 {% block sectionid %}dashboard{% endblock %}
 
-{% block title %}{% trans 'Dashboard' %}{% endblock %}
+{% block title %}{% trans 'Django development dashboard' %}{% endblock %}
 {% block layout_class %}full-width{% endblock %}
-{% block header %}<h1>{% trans 'Django development dashboard' %}</h1>{% endblock %}
+{% block header %}
+  <h1 class="visuallyhidden">Dev dashboard</h1>
+  <p><em>Django</em> development <em>dashboard</em></p>
+{% endblock %}
