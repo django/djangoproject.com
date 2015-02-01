@@ -5,6 +5,9 @@
 {% block sectionid %}dashboard-detail{% endblock %}
 
 {% block content %}
-  <h2>{{ metric }}</h2>
-  <div id="graph" class="graph" data-path="{% url "metric-list" host "dashboard" %}" data-metric="{{ metric.slug }}"></div>
+  <h2><a href="{{ metric.link }}">{{ metric }}</a></h2>
+  <div class="graph-wrapper">
+    <div id="graph" class="graph" data-path="{% url "metric-list" host "dashboard" %}" data-metric="{{ metric.slug }}"></div>
+  </div>
+  <a class="link-readmore" href="{% url "dashboard-index" host "dashboard" %}">All metrics</a>
 {% endblock %}
