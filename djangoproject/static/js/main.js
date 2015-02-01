@@ -66,12 +66,13 @@ define(function(){
 		mods.push('mod/fundraising-donation');
 	}
 
+	if (hasClass('dashboard-index')) {
+		mods.push('dashboard/index');
+	}
+
+	if (hasClass('dashboard-detail')) {
+		mods.push('dashboard/detail');
+	}
+
 	require(mods);
-
-    if (document.getElementById('dashboard')) {
-        require(['dashboard/index']);
-    } else if (document.getElementById('dashboard-detail')) {
-        require(['dashboard/detail']);
-    }
-
 });
