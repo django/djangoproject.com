@@ -1,7 +1,7 @@
 define('dashboard/detail', ['jquery', 'jquery.flot', 'dashboard/utils'], function ($, plot, utils) {
 	$(function () {
-		var e = $("#graph");
-		var url = "/metric/" + e.data('metric') + ".json?days=365";
+		var element = $("#graph");
+		var url = element.data('path') + element.data('metric') + ".json?days=365";
 		var hover = {
 			show: function (x, y, message) {
 				$('<div id="hover">').html(message)
@@ -41,7 +41,7 @@ define('dashboard/detail', ['jquery', 'jquery.flot', 'dashboard/utils'], functio
 					align: "center"
 				};
 			}
-			var plot = $.plot(e, [response.data], options);
+			var plot = $.plot(element, [response.data], options);
 
 			var format_message = function (timestamp, measurement) {
 				var unit = measurement == 1 ? response.unit : response.unit_plural;
@@ -49,7 +49,7 @@ define('dashboard/detail', ['jquery', 'jquery.flot', 'dashboard/utils'], functio
 			};
 
 			var previousPoint = null;
-			e.bind("plothover", function (event, pos, item) {
+			element.bind("plothover", function (event, pos, item) {
 				if (item) {
 					if (previousPoint != item.dataIndex) {
 						previousPoint = item.dataIndex;
