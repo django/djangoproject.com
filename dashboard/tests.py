@@ -25,7 +25,7 @@ class ViewTests(TestCase):
 
         request = self.factory.get(reverse('dashboard-index', host='dashboard'))
         response = index(request)
-        self.assertContains(response, 'Django development dashboard')
+        self.assertContains(response, 'Development dashboard')
         self.assertEqual(response.content.count('<div class="metric'), 13)
         self.assertEqual(response.content.count('42'), 13)
 
@@ -34,7 +34,7 @@ class ViewTests(TestCase):
         request = self.factory.get(reverse('metric-detail', args=['new-tickets-week'],
                                            host='dashboard'))
         response = metric_detail(request, 'new-tickets-week')
-        self.assertContains(response, 'Django development dashboard')
+        self.assertContains(response, 'Development dashboard')
 
     def test_metric_404(self):
         request = self.factory.get(reverse('metric-detail', args=['new-tickets-week'],
