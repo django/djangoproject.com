@@ -3,6 +3,7 @@ from __future__ import absolute_import, print_function
 from django.core.management.base import NoArgsCommand
 
 from ...models import Metric
+from ...utils import reset_generation_key
 
 
 class Command(NoArgsCommand):
@@ -15,3 +16,4 @@ class Command(NoArgsCommand):
                 datum = metric.data.create(measurement=metric.fetch())
                 if verbose:
                     print(datum.measurement)
+        reset_generation_key()
