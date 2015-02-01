@@ -39,10 +39,6 @@ define('dashboard/index', ['jquery', 'jquery.flot', 'dashboard/utils'], function
 					}
 				});
 			});
-
-			element.on('click', function () {
-				window.location = "/metric/" + element.data('metric') + '/';
-			});
 		});
 	});
 });
