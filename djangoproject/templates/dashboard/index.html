@@ -8,7 +8,7 @@
       {% if report.metric.category %}<h2>{{ report.metric.category }}</h2>{% endif %}
     {% endifchanged %}
     <div class="metric{% if report.metric.show_sparkline %} has-sparkline{% endif %}">
-      <h3><a href="{{ report.metric.get_absolute_url }}">{{ report.metric.name }}</a></h3>
+      <h3><a href="{{ report.metric.link }}">{{ report.metric.name }}</a></h3>
       <div class="value" >
         <a href="{{ report.metric.get_absolute_url }}">{{ report.latest.measurement }}{% if report.metric.unit == "%" %}%{% endif %}</a>
         <div class="timestamp">&nbsp;</div>
