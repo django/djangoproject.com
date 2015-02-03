@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import codecs
 import json
+from django.core import management
 from django.http import Http404
 from django.test import TestCase, RequestFactory
 from django_hosts.resolvers import reverse
@@ -109,3 +110,27 @@ class GithubItemCountMetricTestCase(TestCase, MetricMixin):
         # and then with 42 items on the second page
         mocker.get(self.api_url2, text=json.dumps([{'id': i} for i in range(42)]))
         self.assertEqual(self.instance.fetch(), 142)
+
+
+class UpdateMetricCommandTestCase(TestCase):
+    github_url = 'https://api.github.com/repos/django/django/pulls?state=closed&per_page=100&page=1'
+
+    def setUp(self):
+        GithubItemCountMetric.objects.create(
+            name='Pull Requests (Closed)',
+            link_url="https://github.com/django/django/pulls",
+            period="instant",
+            unit_plural="pull requests",
+            slug="pull-requests-closed",
+            unit="pull request",
+            api_url="https://api.github.com/repos/django/django/pulls?state=closed"
+        )
+
+    @requests_mock.mock()
+    @mock.patch('dashboard.utils.reset_generation_key')
+    def test_update_metric(self, mocker, mock_reset_generation_key):
+        mocker.get(self.github_url, text=json.dumps([{'id': i} for i in range(10)]))
+        management.call_command('update_metrics', verbosity=0)
+        self.assertTrue(mock_reset_generation_key.called)
+        data = GithubItemCountMetric.objects.last().data.last()
+        self.assertEqual(data.measurement, 10)
