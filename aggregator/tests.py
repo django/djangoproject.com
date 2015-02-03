@@ -4,12 +4,12 @@ import requests_mock
 from django.conf import settings
 from django.contrib.auth.models import Group, User
 from django.core import mail
+from django.core.management import call_command
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from docs.models import DocumentRelease
 
-from .management.commands import send_pending_approval_email
 from . import models
 
 
@@ -85,11 +85,11 @@ class AggregatorTests(TestCase):
 
     def test_management_command_sends_no_email_with_no_pending_feeds(self):
         self.pending_feed.delete()
-        send_pending_approval_email.Command().handle_noargs()
+        call_command('send_pending_approval_email', verbosity=0)
         self.assertEqual(0, len(mail.outbox))
 
     def test_management_command_sends_email_with_pending_feeds(self):
-        send_pending_approval_email.Command().handle_noargs()
+        call_command('send_pending_approval_email', verbosity=0)
 
         self.assertEqual(1, len(mail.outbox))
         self.assertEqual(mail.outbox[0].to, [self.user.email])
