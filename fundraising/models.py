@@ -81,6 +81,10 @@ class DjangoHero(FundraisingModel):
     def thumbnail(self):
         return get_thumbnail(self.logo, '170x170', quality=100)
 
+    @property
+    def name_with_fallback(self):
+        return self.name if self.name else 'Anonymous Hero'
+
 
 @receiver(post_save, sender=DjangoHero)
 def create_thumbnail_on_save(sender, **kwargs):
