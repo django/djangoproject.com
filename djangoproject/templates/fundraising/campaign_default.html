@@ -17,7 +17,7 @@
   <hr>
 {% endif %}
 
-<h1>Support the Django Fellowship Program!</h1>
+<h1>Support the {{ campaign.name }}!</h1>
 
 <div class="fundraising-index" id="donate">
   <div class="fundraising-heart" data-percent="{{ donated_amount|as_percentage:campaign.goal }}">
@@ -33,7 +33,6 @@
     </svg>
   </div>
   <div class="description">
-    <h2>{{ campaign.name }}</h2>
     <ul>
       <li><strong>{{ donated_amount|as_percentage:campaign.goal }}% funded</strong></li>
       <li><strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ campaign.goal|intcomma }} goal</li>
