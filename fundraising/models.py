@@ -94,7 +94,7 @@ class Campaign(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
     goal = models.DecimalField(max_digits=9, decimal_places=2)
-    template = models.CharField(max_length=50)
+    template = models.CharField(max_length=50, blank=True, default="fundraising/campaign_default.html")
     stretch_goal = models.DecimalField(max_digits=9, decimal_places=2, blank=True)
     stretch_goal_url = models.URLField(blank=True)
     start_date = models.DateTimeField(blank=True)
