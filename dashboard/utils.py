@@ -5,7 +5,7 @@ from django.utils import crypto
 GENERATION_KEY_NAME = 'metric:generation'
 
 
-def generation_key(timeout=60 * 60 * 365):
+def generation_key(timeout=60 * 60 * 24 * 365):
     """
     A random key to be used in cache calls that allows
     invalidating all values created with it. Use it with
