@@ -13,7 +13,13 @@ from .models import DjangoHero, Donation, Testimonial, Campaign
 
 
 def index(request):
-    return render(request, 'fundraising/index.html', {})
+    campaigns = Campaign.objects.filter(is_public=True, is_active=True)
+    if campaigns.count() == 1:
+        return redirect('fundraising:campaign', slug=campaigns[0].slug)
+
+    return render(request, 'fundraising/index.html', {
+        'campaigns': campaigns,
+    })
 
 
 def campaign(request, slug):
@@ -104,7 +110,10 @@ def thank_you(request, donation):
                 donation.donor = hero
                 donation.save()
                 messages.success(request, "Thank you! You're a Hero.")
-                return redirect('fundraising:index')
+                if donation.campaign:
+                    return redirect('fundraising:campaign', slug=campaign.slug)
+                else:
+                    return redirect('fundraising:index')
     else:
         if donation.donor:
             form = DjangoHeroForm(instance=donation.donor)
