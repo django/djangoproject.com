@@ -91,6 +91,22 @@ def create_thumbnail_on_save(sender, **kwargs):
     return kwargs['instance'].thumbnail
 
 
+class Campaign(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100)
+    goal = models.DecimalField(max_digits=9, decimal_places=2)
+    template = models.CharField(max_length=50)
+    stretch_goal = models.DecimalField(max_digits=9, decimal_places=2, blank=True)
+    stretch_goal_url = models.URLField(blank=True)
+    start_date = models.DateTimeField(blank=True)
+    end_date = models.DateTimeField(blank=True)
+    is_active = models.BooleanField(default=False, help_text="Should donation form be enabled or not?")
+    is_public = models.BooleanField(default=False, help_text="Should campaign be visible at all?")
+
+    def __unicode__(self):
+        return self.name
+
+
 class Donation(FundraisingModel):
     amount = models.DecimalField(max_digits=9, decimal_places=2, null=True)
     donor = models.ForeignKey(DjangoHero, null=True)
