@@ -29,7 +29,7 @@ def campaign(request, slug):
     donors_with_logo = DjangoHero.objects.for_campaign(campaign, with_logo=True)
     other_donors = DjangoHero.objects.for_campaign(campaign)
 
-    return render(request, 'fundraising/campaign.html', {
+    return render(request, campaign.template or 'fundraising/campaign_default.html', {
         'campaign': campaign,
         'donated_amount': donated_amount['amount__sum'] or 0,
         'donors_with_logo': shuffle_donations(donors_with_logo),
