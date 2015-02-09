@@ -123,7 +123,7 @@
         </div>
         <div class="hero-name">
           {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
-            {{ donor.name }}
+            {{ donor.name_with_fallback }}
           {% endspaceless %}{% if donor.url %}</a>{% endif %}
           {% if donor.is_amount_displayed %}
             <br/><em>${{ donor.donated_amount|intcomma }}</em>
@@ -136,7 +136,7 @@
     {% for donor in other_donors %}
       <div class="no-logo-hero">
         {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
-        <span>{{ donor.name }}</span>
+        <span>{{ donor.name_with_fallback }}</span>
         {% endspaceless %}{% if donor.url %}</a>{% endif %}
         {% if donor.is_amount_displayed %}
           <br/><em>${{ donor.donated_amount|intcomma }}</em>
