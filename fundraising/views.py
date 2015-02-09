@@ -11,12 +11,18 @@ from .exceptions import DonationError
 from .forms import DjangoHeroForm, DonateForm, PaymentForm
 from .models import (
     DEFAULT_DONATION_AMOUNT, DISPLAY_LOGO_AMOUNT, RESTART_GOAL, STRETCH_GOAL,
-    WEEKLY_GOAL, DjangoHero, Donation, Testimonial,
+    WEEKLY_GOAL, Campaign, DjangoHero, Donation, Testimonial,
 )
 from .utils import shuffle_donations
 
 
 def index(request):
+    return render(request, 'fundraising/index.html', {})
+
+
+def campaign(request, slug):
+    campaign = get_object_or_404(Campaign, slug=slug)
+
     # replace with get_week_begin_end_datetimes() if we switch to a weekly
     # goal at some point
     begin = date(2015, 1, 1)
@@ -30,7 +36,7 @@ def index(request):
 
     campaign = request.GET.get('campaign')
 
-    return render(request, 'fundraising/index.html', {
+    return render(request, 'fundraising/campaign.html', {
         'donated_amount': donated_amount['amount__sum'] or 0,
         'goal_amount': RESTART_GOAL,
         'stretch_goal_amount': STRETCH_GOAL,
