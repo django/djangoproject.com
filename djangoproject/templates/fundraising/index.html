@@ -7,3 +7,13 @@
 <h1 class="visuallyhidden">Support Django</h1>
 <p><em>Support Django development</em> by donating to the <em>Django Software Foundation</em>.</p>
 {% endblock %}
+
+{% block content %}
+
+  <ul>
+  {% for campaign in campaigns %}
+      <li><a href="{% url 'fundraising:campaign' campaign.slug %}">{{ campaign.name }}</a>
+  {% endfor %}
+  </ul>
+
+{% endblock %}
