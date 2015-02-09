@@ -110,9 +110,9 @@ class Campaign(models.Model):
 class Donation(FundraisingModel):
     amount = models.DecimalField(max_digits=9, decimal_places=2, null=True)
     donor = models.ForeignKey(DjangoHero, null=True)
+    campaign = models.ForeignKey(Campaign, null=True)
     stripe_charge_id = models.CharField(max_length=100, null=True)
     stripe_customer_id = models.CharField(max_length=100, null=True)
-    campaign_name = models.CharField(max_length=100, blank=True)
     receipt_email = models.EmailField(blank=True, null=True)
 
     def __unicode__(self):
@@ -123,6 +123,7 @@ class Donation(FundraisingModel):
 
 
 class Testimonial(models.Model):
+    campaign = models.ForeignKey(Campaign, null=True)
     author = models.CharField(max_length=255)
     body = models.TextField()
     is_active = models.BooleanField(default=True)
