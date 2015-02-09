@@ -1,13 +1,5 @@
-{% extends 'base.html' %}
+{% extends 'fundraising/index.html' %}
 {% load fundraising_extras humanize static %}
-
-{% block title %}Support Django{% endblock %}
-{% block layout_class %}full-width{% endblock %}
-
-{% block header %}
-<h1 class="visuallyhidden">Support Django</h1>
-<p><em>Support Django development</em> by donating to the <em>Django Software Foundation</em>.</p>
-{% endblock %}
 
 {% block content %}
 {% if messages %}
