@@ -10,7 +10,6 @@ import stripe
 from .exceptions import DonationError
 from .forms import DonateForm, PaymentForm, DjangoHeroForm
 from .models import DjangoHero, Donation, Testimonial, Campaign
-from .utils import shuffle_donations
 
 
 def index(request):
@@ -20,13 +19,9 @@ def index(request):
 def campaign(request, slug):
     campaign = get_object_or_404(Campaign, slug=slug)
     testimonial = Testimonial.objects.filter(campaign=campaign, is_active=True).order_by('?').first()
-    donors_with_logo = DjangoHero.objects.for_campaign(campaign, with_logo=True)
-    other_donors = DjangoHero.objects.for_campaign(campaign)
 
     return render(request, campaign.template or 'fundraising/campaign_default.html', {
         'campaign': campaign,
-        'donors_with_logo': shuffle_donations(donors_with_logo),
-        'other_donors': shuffle_donations(other_donors),
         'testimonial': testimonial,
     })
 
