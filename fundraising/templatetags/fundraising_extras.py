@@ -40,7 +40,8 @@ def donation_form_with_heart(campaign):
     donated_amount = Donation.objects.filter(campaign=campaign).aggregate(models.Sum('amount'))
     total_donors = DjangoHero.objects.filter(donation__campaign=campaign).count()
     form = DonateForm(initial={
-        'amount': DEFAULT_DONATION_AMOUNT
+        'amount': DEFAULT_DONATION_AMOUNT,
+        'campaign': campaign,
     })
 
     return {
