@@ -4,7 +4,10 @@ from django import template
 from django.db import models
 from django.template.defaultfilters import floatformat
 
-from fundraising.models import DjangoHero
+from fundraising.models import (
+    DjangoHero, Donation, DISPLAY_LOGO_AMOUNT, DEFAULT_DONATION_AMOUNT,
+)
+from fundraising.forms import DonateForm
 
 register = template.Library()
 
@@ -20,7 +23,7 @@ def as_percentage(part, total):
         return "0.00"
 
 
-@register.inclusion_tag('fundraising/donation_snippet.html')
+@register.inclusion_tag('fundraising/includes/donation_snippet.html')
 def donation_snippet():
     try:
         donation = DjangoHero.objects.filter(approved=True, is_visible=True).order_by('?')[:1]
@@ -29,3 +32,20 @@ def donation_snippet():
         donation = None
 
     return {'donation': donation}
+
+
+@register.inclusion_tag('fundraising/includes/donation_form_with_heart.html')
+def donation_form_with_heart(campaign):
+    donated_amount = Donation.objects.filter(campaign=campaign).aggregate(models.Sum('amount'))
+    total_donors = DjangoHero.objects.filter(donation__campaign=campaign).count()
+    form = DonateForm(initial={
+        'amount': DEFAULT_DONATION_AMOUNT
+    })
+
+    return {
+        'campaign': campaign,
+        'donated_amount': donated_amount['amount__sum'] or 0,
+        'total_donors': total_donors,
+        'form': form,
+        'display_logo_amount': DISPLAY_LOGO_AMOUNT,
+    }
