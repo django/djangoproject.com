@@ -8,6 +8,7 @@ from fundraising.models import (
     DjangoHero, Donation, DISPLAY_LOGO_AMOUNT, DEFAULT_DONATION_AMOUNT,
 )
 from fundraising.forms import DonateForm
+from fundraising.utils import shuffle_donations
 
 register = template.Library()
 
@@ -48,4 +49,15 @@ def donation_form_with_heart(campaign):
         'total_donors': total_donors,
         'form': form,
         'display_logo_amount': DISPLAY_LOGO_AMOUNT,
+    }
+
+
+@register.inclusion_tag('fundraising/includes/display_django_heros.html')
+def display_django_heros(campaign):
+    donors_with_logo = DjangoHero.objects.for_campaign(campaign, with_logo=True)
+    other_donors = DjangoHero.objects.for_campaign(campaign)
+
+    return {
+        'donors_with_logo': shuffle_donations(donors_with_logo),
+        'other_donors': shuffle_donations(other_donors),
     }

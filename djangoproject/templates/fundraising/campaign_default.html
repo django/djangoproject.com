@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load fundraising_extras humanize static thumbnail %}
+{% load fundraising_extras humanize static %}
 
 {% block title %}Support Django{% endblock %}
 {% block layout_class %}full-width{% endblock %}
@@ -68,39 +68,7 @@
   <p>We're incredibly grateful to everyone who donated to make this happen. We
   couldn't possibly do it without the continuous support from the community.</p>
 
-  <div class="heros">
-    {% for donor in donors_with_logo %}
-      <div class="hero">
-        <div class="hero-logo">
-          {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
-          <img src="{% if donor.logo %}{{ donor.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
-            data-src-2x="{% if donor.logo %}{{ donor.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
-            alt="{{ donor.name }}" />
-          {% if donor.url %}</a>{% endif %}
-        </div>
-        <div class="hero-name">
-          {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
-            {{ donor.name_with_fallback }}
-          {% endspaceless %}{% if donor.url %}</a>{% endif %}
-          {% if donor.is_amount_displayed %}
-            <br/><em>${{ donor.donated_amount|intcomma }}</em>
-          {% endif %}
-        </div>
-    </div>
-    {% endfor %}
-  </div>
-  <div class="heros">
-    {% for donor in other_donors %}
-      <div class="no-logo-hero">
-        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
-        <span>{{ donor.name_with_fallback }}</span>
-        {% endspaceless %}{% if donor.url %}</a>{% endif %}
-        {% if donor.is_amount_displayed %}
-          <br/><em>${{ donor.donated_amount|intcomma }}</em>
-        {% endif %}
-      </div>
-    {% endfor %}
-  </div>
+  {% display_django_heros campaign %}
 
 </div>
 
