@@ -20,7 +20,7 @@
 <h1>Support the Django Fellowship Program!</h1>
 
 <div class="fundraising-index" id="donate">
-  <div class="fundraising-heart" data-percent="{{ donated_amount|as_percentage:goal_amount }}">
+  <div class="fundraising-heart" data-percent="{{ donated_amount|as_percentage:campaign.goal }}">
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 503 431">
       <switch>
         <g transform="translate(4, 2)" id="pixels">
@@ -33,11 +33,13 @@
     </svg>
   </div>
   <div class="description">
-    <h2>Renewal Goal</h2>
+    <h2>{{ campaign.name }}</h2>
     <ul>
-      <li><strong>{{ donated_amount|as_percentage:goal_amount }}% funded</strong></li>
-      <li><strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ goal_amount|intcomma }} goal</li>
-      <li><strong>US&nbsp;${{ stretch_goal_amount|intcomma }} <a href="/weblog/2015/jan/27/django-fellowship-fundraising-goal-achieved/">stretch goal</a></strong></li>
+      <li><strong>{{ donated_amount|as_percentage:campaign.goal }}% funded</strong></li>
+      <li><strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ campaign.goal|intcomma }} goal</li>
+      {% if campaign.stretch_goal %}
+        <li><strong>US&nbsp;${{ campaign.stretch_goal|intcomma }} <a href="{{ campaign.stretch_goal_url }}">stretch goal</a></strong></li>
+      {% endif %}
       <li><strong>{{ total_donors }} donor{{ total_donors|pluralize:",s" }}</strong></li>
     </ul>
 
@@ -96,8 +98,8 @@
    Only with your support can we make sure that the Web framework you base your work on
    can grow to be even better in the coming years.</p>
 
-<p>The weekly cost of the program is about US&nbsp;${{ weekly_goal|intcomma }}. <strong>We're
-   trying to raise an initial US&nbsp;${{ goal_amount|intcomma }} to renew the program
+<p>The weekly cost of the program is about US&nbsp;$2,800.00. <strong>We're
+   trying to raise an initial US&nbsp;${{ campaign.goal|intcomma }} to renew the program
    for at least three months, after which we'll endeavor to raise funds on a
    weekly basis to sustain the program.</strong></p>
 

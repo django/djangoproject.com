@@ -8,18 +8,14 @@ from django_hosts.resolvers import reverse
 
 from sorl.thumbnail import get_thumbnail, ImageField
 
-RESTART_GOAL = Decimal("30000.00")
-STRETCH_GOAL = Decimal("50000.00")
-WEEKLY_GOAL = Decimal("2800.00")
 DISPLAY_LOGO_AMOUNT = Decimal("200.00")
 DEFAULT_DONATION_AMOUNT = Decimal("50.00")
 
 
 class DjangoHeroManager(models.Manager):
-    def in_period(self, begin, end, with_logo=False):
+    def for_campaign(self, campaign, with_logo=False):
         donors = self.get_queryset().filter(
-            donation__created__gte=begin,
-            donation__created__lt=end,
+            donation__campaign=campaign,
             is_visible=True,
             approved=True,
         ).annotate(donated_amount=models.Sum('donation__amount'))

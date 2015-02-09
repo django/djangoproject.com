@@ -11,46 +11,35 @@ import stripe
 from .exceptions import DonationError
 from .forms import DonateForm, PaymentForm, DjangoHeroForm
 from .models import (
-    DjangoHero, Donation, Testimonial, Campaign, RESTART_GOAL,
-    DISPLAY_LOGO_AMOUNT, WEEKLY_GOAL, STRETCH_GOAL, DEFAULT_DONATION_AMOUNT
+    DjangoHero, Donation, Testimonial, Campaign,
+    DISPLAY_LOGO_AMOUNT, DEFAULT_DONATION_AMOUNT
 )
 from .utils import shuffle_donations
 
 
 def index(request):
-
     return render(request, 'fundraising/index.html', {})
+
 
 def campaign(request, slug):
     campaign = get_object_or_404(Campaign, slug=slug)
+    donated_amount = Donation.objects.filter(campaign=campaign).aggregate(Sum('amount'))
+    testimonials = Testimonial.objects.filter(campaign=campaign, is_active=True).order_by('?').first()
 
-    # replace with get_week_begin_end_datetimes() if we switch to a weekly
-    # goal at some point
-    begin = date(2015, 1, 1)
-    end = date(2016, 1, 1)
-    donated_amount = Donation.objects.filter(
-        created__gte=begin, created__lt=end,
-    ).aggregate(Sum('amount'))
-
-    donors_with_logo = DjangoHero.objects.in_period(begin, end, with_logo=True)
-    other_donors = DjangoHero.objects.in_period(begin, end)
-
-    campaign = request.GET.get('campaign')
+    donors_with_logo = DjangoHero.objects.for_campaign(campaign, with_logo=True)
+    other_donors = DjangoHero.objects.for_campaign(campaign)
 
     return render(request, 'fundraising/campaign.html', {
+        'campaign': campaign,
         'donated_amount': donated_amount['amount__sum'] or 0,
-        'goal_amount': RESTART_GOAL,
-        'stretch_goal_amount': STRETCH_GOAL,
         'donors_with_logo': shuffle_donations(donors_with_logo),
         'other_donors': shuffle_donations(other_donors),
         'total_donors': DjangoHero.objects.count(),
         'form': DonateForm(initial={
-            'amount': DEFAULT_DONATION_AMOUNT,
-            'campaign': campaign
+            'amount': DEFAULT_DONATION_AMOUNT
         }),
-        'testimonial': Testimonial.objects.filter(is_active=True).order_by('?').first(),
+        'testimonial': testimonials,
         'display_logo_amount': DISPLAY_LOGO_AMOUNT,
-        'weekly_goal': WEEKLY_GOAL,
     })
 
 
