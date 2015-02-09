@@ -59,7 +59,9 @@ def donate(request):
     else:
         fixed_amount = request.GET.get('amount') or None
         campaign = request.GET.get('campaign')
-        initial = {'campaign': campaign}
+        initial = {}
+        if campaign:
+            initial['campaign'] = get_object_or_404(Campaign, id=campaign)
         if fixed_amount:
             try:
                 initial['amount'] = Decimal(fixed_amount)
