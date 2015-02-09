@@ -42,6 +42,18 @@ class TestIndex(TestCase):
         response = self.client.get(reverse('fundraising:index'))
         self.assertEqual(response.context['total_donors'], 1)
 
+    def test_anonymous_donor(self):
+        hero = DjangoHero.objects.create(is_visible=True, approved=True)
+        Donation.objects.create(donor=hero, amount='5')
+        response = self.client.get(reverse('fundraising:index'))
+        self.assertContains(response, 'Anonymous Hero')
+
+    def test_anonymous_donor_with_logo(self):
+        hero = DjangoHero.objects.create(is_visible=True, approved=True, logo='yes')  # We don't need an actual image
+        Donation.objects.create(donor=hero, amount='5')
+        response = self.client.get(reverse('fundraising:index'))
+        self.assertContains(response, 'Anonymous Hero')
+
     def test_hide_campaign_input(self):
         # Checking if rendered output contains campaign form field
         # to not generate ugly URLs
@@ -256,6 +268,12 @@ class TestDjangoHero(TestCase):
 
     def test_thumbnail_no_logo(self):
         self.assertIsNone(self.h2.thumbnail)
+
+    def test_name_with_fallback(self):
+        hero = DjangoHero()
+        self.assertEqual(hero.name_with_fallback, 'Anonymous Hero')
+        hero.name = 'Batistek'
+        self.assertEqual(hero.name_with_fallback, 'Batistek')
 
 
 class TestPaymentForm(TestCase):

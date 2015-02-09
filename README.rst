@@ -60,7 +60,7 @@ To run locally, do the usual:
    hostnames with your ``/etc/hosts`` file to ``localhost``/``127.0.0.1``.
    Here's how it could look like::
 
-     127.0.0.1  docs.djangoproject.dev, www.djangoproject.dev, dashboard.djangoproject.dev
+     127.0.0.1  docs.djangoproject.dev www.djangoproject.dev dashboard.djangoproject.dev
 
    If you're on Mac OS and don't feel like editing the ``/etc/hosts`` file
    manually, there is a great preference pane called `Hosts.prefpane`_. On
