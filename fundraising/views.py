@@ -24,7 +24,7 @@ def index(request):
 def campaign(request, slug):
     campaign = get_object_or_404(Campaign, slug=slug)
     donated_amount = Donation.objects.filter(campaign=campaign).aggregate(Sum('amount'))
-    testimonials = Testimonial.objects.filter(campaign=campaign, is_active=True).order_by('?').first()
+    testimonial = Testimonial.objects.filter(campaign=campaign, is_active=True).order_by('?').first()
 
     donors_with_logo = DjangoHero.objects.for_campaign(campaign, with_logo=True)
     other_donors = DjangoHero.objects.for_campaign(campaign)
@@ -34,11 +34,11 @@ def campaign(request, slug):
         'donated_amount': donated_amount['amount__sum'] or 0,
         'donors_with_logo': shuffle_donations(donors_with_logo),
         'other_donors': shuffle_donations(other_donors),
-        'total_donors': DjangoHero.objects.count(),
+        'total_donors': DjangoHero.objects.filter(donation__campaign=campaign).count(),
         'form': DonateForm(initial={
             'amount': DEFAULT_DONATION_AMOUNT
         }),
-        'testimonial': testimonials,
+        'testimonial': testimonial,
         'display_logo_amount': DISPLAY_LOGO_AMOUNT,
     })
 
