@@ -3,17 +3,13 @@ from decimal import Decimal, DecimalException
 
 from django.conf import settings
 from django.contrib import messages
-from django.db.models import Sum
 from django.shortcuts import redirect, render, get_object_or_404
 
 import stripe
 
 from .exceptions import DonationError
 from .forms import DonateForm, PaymentForm, DjangoHeroForm
-from .models import (
-    DjangoHero, Donation, Testimonial, Campaign,
-    DISPLAY_LOGO_AMOUNT, DEFAULT_DONATION_AMOUNT
-)
+from .models import DjangoHero, Donation, Testimonial, Campaign
 from .utils import shuffle_donations
 
 
@@ -23,23 +19,15 @@ def index(request):
 
 def campaign(request, slug):
     campaign = get_object_or_404(Campaign, slug=slug)
-    donated_amount = Donation.objects.filter(campaign=campaign).aggregate(Sum('amount'))
     testimonial = Testimonial.objects.filter(campaign=campaign, is_active=True).order_by('?').first()
-
     donors_with_logo = DjangoHero.objects.for_campaign(campaign, with_logo=True)
     other_donors = DjangoHero.objects.for_campaign(campaign)
 
     return render(request, campaign.template or 'fundraising/campaign_default.html', {
         'campaign': campaign,
-        'donated_amount': donated_amount['amount__sum'] or 0,
         'donors_with_logo': shuffle_donations(donors_with_logo),
         'other_donors': shuffle_donations(other_donors),
-        'total_donors': DjangoHero.objects.filter(donation__campaign=campaign).count(),
-        'form': DonateForm(initial={
-            'amount': DEFAULT_DONATION_AMOUNT
-        }),
         'testimonial': testimonial,
-        'display_logo_amount': DISPLAY_LOGO_AMOUNT,
     })
 
 
