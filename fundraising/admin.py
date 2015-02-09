@@ -17,8 +17,8 @@ class DjangoHeroAdmin(AdminImageMixin, admin.ModelAdmin):
 class Donation(admin.ModelAdmin):
     raw_id_fields = ['donor']
     list_display = ['id', 'amount', 'donor', 'stripe_charge_id',
-                    'created', 'modified', 'campaign_name']
-    list_filter = ['campaign_name', 'created', 'modified']
+                    'created', 'modified']
+    list_filter = ['created', 'modified']
     ordering = ['-created']
 
 
