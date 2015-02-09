@@ -11,7 +11,7 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE",
                       "djangoproject.settings.dev")
 
-from django.core.wsgi import get_wsgi_application
+from django.core.wsgi import get_wsgi_application  # noqa: E402
 application = get_wsgi_application()
 
 from django.contrib.auth.handlers.modwsgi import check_password, groups_for_user  # NOQA
