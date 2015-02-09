@@ -3,48 +3,32 @@ from decimal import Decimal, DecimalException
 
 from django.conf import settings
 from django.contrib import messages
-from django.db.models import Sum
 from django.shortcuts import redirect, render, get_object_or_404
 
 import stripe
 
 from .exceptions import DonationError
 from .forms import DonateForm, PaymentForm, DjangoHeroForm
-from .models import (
-    DjangoHero, Donation, Testimonial, RESTART_GOAL, DEFAULT_DONATION_AMOUNT,
-    DISPLAY_LOGO_AMOUNT, WEEKLY_GOAL, STRETCH_GOAL,
-)
-from .utils import shuffle_donations
+from .models import DjangoHero, Donation, Testimonial, Campaign
 
 
 def index(request):
-    # replace with get_week_begin_end_datetimes() if we switch to a weekly
-    # goal at some point
-    begin = date(2015, 1, 1)
-    end = date(2016, 1, 1)
-    donated_amount = Donation.objects.filter(
-        created__gte=begin, created__lt=end,
-    ).aggregate(Sum('amount'))
-
-    donors_with_logo = DjangoHero.objects.in_period(begin, end, with_logo=True)
-    other_donors = DjangoHero.objects.in_period(begin, end)
-
-    campaign = request.GET.get('campaign')
+    campaigns = Campaign.objects.filter(is_public=True, is_active=True)
+    if campaigns.count() == 1:
+        return redirect('fundraising:campaign', slug=campaigns[0].slug)
 
     return render(request, 'fundraising/index.html', {
-        'donated_amount': donated_amount['amount__sum'] or 0,
-        'goal_amount': RESTART_GOAL,
-        'stretch_goal_amount': STRETCH_GOAL,
-        'donors_with_logo': shuffle_donations(donors_with_logo),
-        'other_donors': shuffle_donations(other_donors),
-        'total_donors': DjangoHero.objects.count(),
-        'form': DonateForm(initial={
-            'amount': DEFAULT_DONATION_AMOUNT,
-            'campaign': campaign
-        }),
-        'testimonial': Testimonial.objects.filter(is_active=True).order_by('?').first(),
-        'display_logo_amount': DISPLAY_LOGO_AMOUNT,
-        'weekly_goal': WEEKLY_GOAL,
+        'campaigns': campaigns,
+    })
+
+
+def campaign(request, slug):
+    campaign = get_object_or_404(Campaign, slug=slug)
+    testimonial = Testimonial.objects.filter(campaign=campaign, is_active=True).order_by('?').first()
+
+    return render(request, campaign.template or 'fundraising/campaign_default.html', {
+        'campaign': campaign,
+        'testimonial': testimonial,
     })
 
 
@@ -81,7 +65,9 @@ def donate(request):
     else:
         fixed_amount = request.GET.get('amount') or None
         campaign = request.GET.get('campaign')
-        initial = {'campaign': campaign}
+        initial = {}
+        if campaign:
+            initial['campaign'] = get_object_or_404(Campaign, id=campaign)
         if fixed_amount:
             try:
                 initial['amount'] = Decimal(fixed_amount)
@@ -124,7 +110,10 @@ def thank_you(request, donation):
                 donation.donor = hero
                 donation.save()
                 messages.success(request, "Thank you! You're a Hero.")
-                return redirect('fundraising:index')
+                if donation.campaign:
+                    return redirect('fundraising:campaign', slug=campaign.slug)
+                else:
+                    return redirect('fundraising:index')
     else:
         if donation.donor:
             form = DjangoHeroForm(instance=donation.donor)
