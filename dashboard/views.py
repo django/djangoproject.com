@@ -12,14 +12,21 @@ from .utils import generation_key
 
 
 def index(request):
-    metrics = []
-    for MC in Metric.__subclasses__():
-        metrics.extend(MC.objects.filter(show_on_dashboard=True))
-    metrics = sorted(metrics, key=operator.attrgetter('display_position'))
+    generation = generation_key()
+    key = 'dashboard:index'
 
-    data = []
-    for metric in metrics:
-        data.append({'metric': metric, 'latest': metric.data.latest()})
+    data = cache.get(key, version=generation)
+    if data is None:
+        metrics = []
+        for MC in Metric.__subclasses__():
+            metrics.extend(MC.objects.filter(show_on_dashboard=True))
+        metrics = sorted(metrics, key=operator.attrgetter('display_position'))
+
+        data = []
+        for metric in metrics:
+            data.append({'metric': metric, 'latest': metric.data.latest()})
+        cache.set(key, data, 60 * 60, version=generation)
+
     return render(request, 'dashboard/index.html', {'data': data})
 
 
@@ -40,7 +47,7 @@ def metric_json(request, metric_slug):
         daysback = 30
 
     generation = generation_key()
-    key = 'metric:%s:%s' % (metric_slug, daysback)
+    key = 'dashboard:metric:%s:%s' % (metric_slug, daysback)
 
     doc = cache.get(key, version=generation)
     if doc is None:
