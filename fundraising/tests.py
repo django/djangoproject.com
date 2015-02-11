@@ -38,7 +38,6 @@ def _fake_random(*results):
 
 class TestIndex(TestCase):
     def setUp(self):
-        super(TestIndex, self).setUp()
         Campaign.objects.all().delete()
         Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
 
@@ -55,7 +54,6 @@ class TestIndex(TestCase):
 
 class TestCampaign(TestCase):
     def setUp(self):
-        super(TestCampaign, self).setUp()
         self.campaign = Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
         self.campaign_url = reverse('fundraising:campaign', args=[self.campaign.slug])
 

@@ -257,19 +257,13 @@ class PaymentForm(forms.Form):
 
         else:
             # Finally create the donation and return it
+            donation_params = {
+                'amount': amount,
+                'stripe_charge_id': charge.id,
+                'stripe_customer_id': customer.id,
+                'receipt_email': receipt_email,
+            }
             if campaign:
-                donation = Donation.objects.create(
-                    amount=amount,
-                    stripe_charge_id=charge.id,
-                    stripe_customer_id=customer.id,
-                    campaign=campaign,
-                    receipt_email=receipt_email,
-                )
-            else:
-                donation = Donation.objects.create(
-                    amount=amount,
-                    stripe_charge_id=charge.id,
-                    stripe_customer_id=customer.id,
-                    receipt_email=receipt_email,
-                )
+                donation_params['campaign'] = campaign
+            donation = Donation.objects.create(**donation_params)
             return donation
