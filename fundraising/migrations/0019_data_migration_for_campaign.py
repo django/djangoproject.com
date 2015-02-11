@@ -20,13 +20,8 @@ def assign_past_donation_and_testimonials_to_campaign(apps, schema_editor):
         is_public = True
     )
 
-    for donation in Donation.objects.all():
-        donation.campaign = campaign
-        donation.save()
-
-    for testimonial in Testimonial.objects.all():
-        testimonial.campaign = campaign
-        testimonial.save()
+    Donation.objects.update(campaign=campaign)
+    Testimonial.objects.update(campaign=campaign)
 
 class Migration(migrations.Migration):
 
