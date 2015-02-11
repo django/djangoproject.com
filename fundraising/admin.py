@@ -30,5 +30,5 @@ class Testimonial(admin.ModelAdmin):
 class Campaign(admin.ModelAdmin):
     list_display = ['name', 'goal', 'template', 'stretch_goal',
                     'start_date', 'end_date', 'is_active', 'is_public']
-    list_filter = ['is_active', 'is_public',]
+    list_filter = ['is_active', 'is_public']
     prepopulated_fields = {'slug': ('name',)}

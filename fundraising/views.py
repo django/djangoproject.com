@@ -1,4 +1,3 @@
-from datetime import date
 from decimal import Decimal, DecimalException
 
 from django.conf import settings
@@ -8,8 +7,8 @@ from django.shortcuts import redirect, render, get_object_or_404
 import stripe
 
 from .exceptions import DonationError
-from .forms import DonateForm, PaymentForm, DjangoHeroForm
-from .models import DjangoHero, Donation, Testimonial, Campaign
+from .forms import PaymentForm, DjangoHeroForm
+from .models import Donation, Testimonial, Campaign
 
 
 def index(request):

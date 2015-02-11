@@ -3,10 +3,9 @@ from decimal import Decimal
 from django import template
 from django.db import models
 from django.template.defaultfilters import floatformat
-from django.shortcuts import get_object_or_404
 
 from fundraising.models import (
-    DjangoHero, Campaign, Donation,
+    DjangoHero, Donation,
     DISPLAY_LOGO_AMOUNT, DEFAULT_DONATION_AMOUNT
 )
 from fundraising.forms import DonateForm
