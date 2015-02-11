@@ -1,5 +1,5 @@
 import os
-from datetime import date, timedelta
+from datetime import date
 from functools import partial
 from PIL import Image
 from mock import patch
@@ -17,6 +17,7 @@ from .forms import PaymentForm
 from .models import DjangoHero, Donation, Campaign
 from .utils import shuffle_donations
 from .templatetags.fundraising_extras import donation_form_with_heart
+
 
 def _fake_random(*results):
     """
@@ -52,6 +53,7 @@ class TestIndex(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context['campaigns']), 2)
 
+
 class TestCampaign(TestCase):
     def setUp(self):
         super(TestCampaign, self).setUp()
@@ -60,8 +62,7 @@ class TestCampaign(TestCase):
 
     def test_donors_count(self):
         donor = DjangoHero.objects.create()
-        donation = Donation.objects.create(campaign=self.campaign, donor=donor)
-
+        Donation.objects.create(campaign=self.campaign, donor=donor)
         response = donation_form_with_heart(self.campaign)
         self.assertEqual(response['total_donors'], 1)
 
