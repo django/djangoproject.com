@@ -24,7 +24,7 @@ def campaign(request, slug):
     campaign = get_object_or_404(Campaign, slug=slug)
     testimonial = Testimonial.objects.filter(campaign=campaign, is_active=True).order_by('?').first()
 
-    return render(request, campaign.template or 'fundraising/campaign_default.html', {
+    return render(request, campaign.template, {
         'campaign': campaign,
         'testimonial': testimonial,
     })
@@ -108,10 +108,7 @@ def thank_you(request, donation):
                 donation.donor = hero
                 donation.save()
                 messages.success(request, "Thank you! You're a Hero.")
-                if donation.campaign:
-                    return redirect('fundraising:campaign', slug=campaign.slug)
-                else:
-                    return redirect('fundraising:index')
+                return redirect(**{'to': 'fundraising:campaign', 'slug': donation.campaign.slug} if donation.campaign else {'to': 'fundraising:index'})
     else:
         if donation.donor:
             form = DjangoHeroForm(instance=donation.donor)
