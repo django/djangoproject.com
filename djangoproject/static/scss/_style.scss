@@ -2143,7 +2143,6 @@ h2 + .list-link-soup {
 
 	li {
 		display: none;
-		background: $white;
 		margin: 0 3px;
 		@include sans-serif;
 		color: $text;
@@ -2151,6 +2150,7 @@ h2 + .list-link-soup {
 
 		&.current {
 			display: inline-block;
+			background: $white;
 			padding: 8px 15px;
 			border: 1px solid $gray-line;
 			@include border-radius(4px);
@@ -2158,6 +2158,7 @@ h2 + .list-link-soup {
 
 		a {
 			display: inline-block;
+			background: $white;
 			color: $green-medium;
 			text-decoration: none;
 			font-weight: 700;
