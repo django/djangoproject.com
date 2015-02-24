@@ -122,7 +122,7 @@ class Command(NoArgsCommand):
             def zipfile_inclusion_filter(f):
                 return f.isfile() and '.doctrees' not in f.components()
 
-            with closing(zipfile.ZipFile(zipfile_path, 'w')) as zf:
+            with closing(zipfile.ZipFile(zipfile_path, 'w', compression=zipfile.ZIP_DEFLATED)) as zf:
                 for f in html_build_dir.walk(filter=zipfile_inclusion_filter):
                     zf.write(f, html_build_dir.rel_path_to(f))
 
