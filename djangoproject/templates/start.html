@@ -98,11 +98,15 @@ class Member(models.Model):
       <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/http/urls' host 'docs' %}">Read more</a>
       {% pygment %}
         <pre lang="python">
-urlpatterns = patterns('',
-    (r'^bands/$', 'bands.views.band_listing'),
-    (r'^bands/(\d+)/$', 'bands.views.band_detail'),
-    (r'^bands/search/$', 'bands.views.band_search'),
-)
+from django.conf.urls import url
+
+from . import views
+
+urlpatterns = [
+    url(r'^bands/$', views.band_listing, name='band-list'),
+    url(r'^bands/(\d+)/$', views.band_detail, name='band-detail'),
+    url(r'^bands/search/$', views.band_search, name='band-search'),
+]
       </pre>
       <pre lang="python">
 from django.shortcuts import render
@@ -272,5 +276,3 @@ def homepage(request):
 </ul>
 
 {% endblock %}
-
-
