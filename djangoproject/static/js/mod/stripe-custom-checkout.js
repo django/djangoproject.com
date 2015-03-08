@@ -11,11 +11,13 @@ define([
             var campaign = $donationForm.find('[name=campaign]').val();
             var amount = $donationForm.find('[name=amount]').val();
             var csrfToken = $donationForm.find('[name=csrfmiddlewaretoken]').val();
+            var interval = $donationForm.find('[name=interval]').val();
             var data = {
                 'stripe_token': token.id,
                 'receipt_email': token.email,
                 'campaign': campaign,
                 'amount': amount,
+                'interval': interval,
                 'csrfmiddlewaretoken': csrfToken
             };
 
@@ -42,8 +44,15 @@ define([
 
     $donationForm.on('submit', function (e) {
         e.preventDefault();
+        var interval = $donationForm.find('[name=interval]').val();
         var amountDollars = $donationForm.find('[name=amount]').val();
         var amountCents = parseFloat(amountDollars) * 100;
+
+        if (interval !== 'onetime' && $donationForm.data('isLoggedIn') === "False"){
+            window.location = $donationForm.data('loginUrl') + "?next=" + window.location.pathname;
+            return;
+        }
+
         handler.open({
             name: 'Django Software Foundation',
             description: $donationForm.data('campaignName'),
