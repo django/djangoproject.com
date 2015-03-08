@@ -12,7 +12,7 @@ from .models import Campaign, Donation, Testimonial
 
 def index(request):
     campaigns = Campaign.objects.filter(is_public=True, is_active=True)
-    if campaigns.count() == 1:
+    if len(campaigns) == 1:
         return redirect('fundraising:campaign', slug=campaigns[0].slug)
 
     return render(request, 'fundraising/index.html', {
@@ -21,10 +21,8 @@ def index(request):
 
 
 def campaign(request, slug):
-    if request.user.is_staff:
-        campaign = get_object_or_404(Campaign, slug=slug)
-    else:
-        campaign = get_object_or_404(Campaign, slug=slug, is_active=True, is_public=True)
+    filter_params = {} if request.user.is_staff else {'is_public': True}
+    campaign = get_object_or_404(Campaign, slug=slug, **filter_params)
     testimonial = Testimonial.objects.filter(campaign=campaign, is_active=True).order_by('?').first()
 
     return render(request, campaign.template, {
@@ -111,7 +109,8 @@ def thank_you(request, donation):
                 donation.donor = hero
                 donation.save()
                 messages.success(request, "Thank you! You're a Hero.")
-                return redirect(**{'to': 'fundraising:campaign', 'slug': donation.campaign.slug} if donation.campaign else {'to': 'fundraising:index'})
+                return redirect(**{'to': 'fundraising:campaign', 'slug': donation.campaign.slug}
+                    if donation.campaign else {'to': 'fundraising:index'})
     else:
         if donation.donor:
             form = DjangoHeroForm(instance=donation.donor)
