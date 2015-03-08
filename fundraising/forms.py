@@ -7,6 +7,13 @@ from django.utils.safestring import mark_safe
 from .exceptions import DonationError
 from .models import DjangoHero, Donation, Campaign
 
+INTERVAL_CHOICES = (
+    ('monthly', 'Monthly donation'),
+    ('quarterly', 'Quarterly donation'),
+    ('yearly', 'Yearly donation'),
+    ('onetime', 'One-time donation'),
+)
+
 
 class DjangoHeroForm(forms.ModelForm):
     name = forms.CharField(
@@ -100,29 +107,28 @@ class StripeTextInput(forms.TextInput):
 
 class DonateForm(forms.Form):
     AMOUNT_CHOICES = (
-        ('5.00', 'US $5'),
-        ('25.00', 'US $25'),
-        ('50.00', '1 hour: US $50'),
-        ('100.00', '2 hours: US $100'),
-        ('200.00', '4 hours: US $200'),
-        ('400.00', '1 day: US $400'),
-        ('1200.00', '3 days: US $1,200'),
-        ('2800.00', '1 week: US $2,800'),
+        (5, 'US $5'),
+        (25, 'US $25'),
+        (50, '1 hour: US $50'),
+        (100, '2 hours: US $100'),
+        (200, '4 hours: US $200'),
+        (400, '1 day: US $400'),
+        (1200, '3 days: US $1,200'),
+        (2800, '1 week: US $2,800'),
         ('custom', 'Other amount'),
     )
     AMOUNT_VALUES = dict(AMOUNT_CHOICES).keys()
 
     amount = forms.ChoiceField(choices=AMOUNT_CHOICES)
+    interval = forms.ChoiceField(choices=INTERVAL_CHOICES)
     campaign = forms.ModelChoiceField(queryset=Campaign.objects.all(), widget=forms.HiddenInput())
 
 
 class PaymentForm(forms.Form):
     AMOUNT_PLACEHOLDER = 'Amount in US Dollar'
-    amount = forms.DecimalField(
+    amount = forms.IntegerField(
         required=True,
-        decimal_places=2,
-        max_digits=9,
-        min_value=Decimal('0.50'),  # Minimum payment from Stripe API
+        min_value=1,  # Minimum payment from Stripe API
         widget=forms.TextInput(
             attrs={
                 'class': 'required',
@@ -131,6 +137,10 @@ class PaymentForm(forms.Form):
             },
         ),
         help_text='Please enter the amount of your donation in US Dollar',
+    )
+    interval = forms.ChoiceField(
+        required=True,
+        choices=INTERVAL_CHOICES,
     )
     receipt_email = forms.CharField(
         required=False,
@@ -161,6 +171,7 @@ class PaymentForm(forms.Form):
         amount = self.cleaned_data['amount']
         campaign = self.cleaned_data['campaign']
         stripe_token = self.cleaned_data['stripe_token']
+        interval = self.cleaned_data['interval']
 
         try:
             # First create a Stripe customer so that we can store
@@ -168,12 +179,24 @@ class PaymentForm(forms.Form):
             customer = stripe.Customer.create(card=stripe_token)
             # Charge the customer's credit card on Stripe's servers;
             # the amount is in cents!
-            charge = stripe.Charge.create(
-                amount=int(amount * 100),
-                currency='usd',
-                customer=customer.id,
-                receipt_email=receipt_email or None,  # set to None if given an empty string
-            )
+
+            if interval == 'onetime':
+                subscription_id = ''
+                charge = stripe.Charge.create(
+                    amount=int(amount * 100),
+                    currency='usd',
+                    customer=customer.id,
+                    receipt_email=receipt_email or None,  # set to None if given an empty string
+                )
+                charge_id = charge.id
+            else:
+                charge_id = ''
+                subscription = customer.subscriptions.create(
+                    plan=interval,
+                    quantity=int(amount),
+                )
+                subscription_id = subscription.id
+
         except stripe.error.CardError as card_error:
             raise DonationError(
                 "We're sorry but we had problems charging your card. "
@@ -206,8 +229,9 @@ class PaymentForm(forms.Form):
             # Finally create the donation and return it
             donation_params = {
                 'amount': amount,
-                'stripe_charge_id': charge.id,
                 'stripe_customer_id': customer.id,
+                'stripe_charge_id': charge_id,
+                'stripe_subscription_id': subscription_id,
                 'receipt_email': receipt_email,
             }
             if campaign:
