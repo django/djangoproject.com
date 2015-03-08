@@ -26,7 +26,14 @@
     </ul>
 
     <div class="donate">
-      <form method="get" action="{% url "fundraising:donate" %}">
+      <form
+            method="get"
+            class="stripe-custom-checkout"
+            action="{% url "fundraising:donate" %}"
+            data-stripe-key="{{ stripe_publishable_key }}"
+            data-stripe-icon="{% static 'img/dj-stripe-icon.jpg' %}"
+            data-campaign-name="{{ campaign.name }}"  >
+          {% csrf_token %}
         <h3>Help us make it happen:</h3>
         {{ form.amount }}
         {{ form.campaign }}

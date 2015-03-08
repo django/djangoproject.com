@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from django import template
+from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import floatformat
 
@@ -50,6 +51,7 @@ def donation_form_with_heart(campaign):
         'total_donors': total_donors,
         'form': form,
         'display_logo_amount': DISPLAY_LOGO_AMOUNT,
+        'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
     }
 
 
