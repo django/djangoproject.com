@@ -89,7 +89,7 @@ class TestCampaign(TestCase):
         self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.HiddenInput)
 
         # Checking if campaign field is empty
-        self.assertFalse('campaign' in response.context['form'].initial)
+        self.assertNotIn('campaign', response.context['form'].initial)
 
     def test_render_donate_form_without_amount(self):
         response = self.client.get(reverse('fundraising:donate'))
