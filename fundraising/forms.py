@@ -1,4 +1,3 @@
-from decimal import Decimal
 import stripe
 
 from django import forms

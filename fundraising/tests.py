@@ -61,7 +61,7 @@ class TestCampaign(TestCase):
     def test_donors_count(self):
         donor = DjangoHero.objects.create()
         Donation.objects.create(campaign=self.campaign, donor=donor)
-        response = donation_form_with_heart(self.campaign)
+        response = donation_form_with_heart({'user': None}, self.campaign)
         self.assertEqual(response['total_donors'], 1)
 
     def test_anonymous_donor(self):
@@ -92,6 +92,7 @@ class TestCampaign(TestCase):
         response = self.client.post(url, {
             'amount': 'superbad',
             'stripe_token': 'test',
+            'interval': 'onetime',
         })
         content = json.loads(response.content)
         self.assertEquals(200, response.status_code)
@@ -104,11 +105,28 @@ class TestCampaign(TestCase):
             'amount': 100,
             'stripe_token': 'test',
             'receipt_email': 'test@example.com',
+            'interval': 'onetime',
         })
         donations = Donation.objects.all()
         self.assertEqual(donations.count(), 1)
         self.assertEqual(donations[0].amount, 100)
         self.assertEqual(donations[0].receipt_email, 'test@example.com')
+        self.assertEqual(donations[0].stripe_subscription_id, '')
+
+    @patch('stripe.Customer.create')
+    @patch('stripe.Charge.create')
+    def test_submitting_donation_form_recurring(self, charge_create, customer_create):
+        self.client.post(reverse('fundraising:donate'), {
+            'amount': 100,
+            'stripe_token': 'test',
+            'receipt_email': 'test@example.com',
+            'interval': 'monthly',
+        })
+        donations = Donation.objects.all()
+        self.assertEqual(donations.count(), 1)
+        self.assertEqual(donations[0].amount, 100)
+        self.assertEqual(donations[0].receipt_email, 'test@example.com')
+        self.assertEqual(donations[0].stripe_charge_id, '')
 
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
@@ -117,6 +135,7 @@ class TestCampaign(TestCase):
             'amount': 100,
             'campaign': self.campaign.id,
             'stripe_token': 'test',
+            'interval': 'onetime',
         })
         donations = Donation.objects.all()
         self.assertEqual(donations.count(), 1)
@@ -129,6 +148,7 @@ class TestCampaign(TestCase):
         data = {
             'amount': 100,
             'stripe_token': 'xxxx',
+            'interval': 'onetime',
         }
         form = PaymentForm(data=data)
 
@@ -167,6 +187,7 @@ class TestCampaign(TestCase):
         response = self.client.post(reverse('fundraising:donate'), {
             'amount': amount,
             'stripe_token': 'xxxx',
+            'interval': 'onetime',
         })
         content = json.loads(response.content)
         self.assertEquals(200, response.status_code)
@@ -248,6 +269,7 @@ class TestPaymentForm(TestCase):
             'amount': 100,
             'campaign': None,
             'stripe_token': 'xxxx',
+            'interval': 'onetime',
         })
         self.assertTrue(form.is_valid())
         donation = form.make_donation()
@@ -261,6 +283,7 @@ class TestPaymentForm(TestCase):
             'amount': 100,
             'campaign': None,
             'stripe_token': 'xxxx',
+            'interval': 'onetime',
         })
         self.assertTrue(form.is_valid())
         with self.assertRaises(ValueError):
