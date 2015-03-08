@@ -82,8 +82,10 @@ def thank_you(request, donation):
                 donation.donor = hero
                 donation.save()
                 messages.success(request, "Thank you! You're a Hero.")
-                return redirect(**{'to': 'fundraising:campaign', 'slug': donation.campaign.slug}
-                    if donation.campaign else {'to': 'fundraising:index'})
+                return redirect(
+                    **{'to': 'fundraising:campaign', 'slug': donation.campaign.slug}
+                    if donation.campaign else {'to': 'fundraising:index'}
+                )
     else:
         if donation.donor:
             form = DjangoHeroForm(instance=donation.donor)
