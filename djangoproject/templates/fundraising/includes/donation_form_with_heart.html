@@ -32,9 +32,12 @@
             action="{% url "fundraising:donate" %}"
             data-stripe-key="{{ stripe_publishable_key }}"
             data-stripe-icon="{% static 'img/dj-stripe-icon.jpg' %}"
-            data-campaign-name="{{ campaign.name }}"  >
+            data-campaign-name="{{ campaign.name }}"
+            data-is-logged-in="{{ user.is_authenticated }}"
+            data-login-url="{% url 'login' %}">
           {% csrf_token %}
         <h3>Help us make it happen:</h3>
+        {{ form.interval }}
         {{ form.amount }}
         {{ form.campaign }}
         <div class="custom-donation">

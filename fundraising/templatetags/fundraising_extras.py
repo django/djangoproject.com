@@ -36,8 +36,9 @@ def donation_snippet():
     return {'donation': donation}
 
 
-@register.inclusion_tag('fundraising/includes/donation_form_with_heart.html')
-def donation_form_with_heart(campaign):
+@register.inclusion_tag('fundraising/includes/donation_form_with_heart.html', takes_context=True)
+def donation_form_with_heart(context, campaign):
+    user = context['user']
     donated_amount = Donation.objects.filter(campaign=campaign).aggregate(models.Sum('amount'))
     total_donors = DjangoHero.objects.filter(donation__campaign=campaign).count()
     form = DonateForm(initial={
@@ -52,6 +53,7 @@ def donation_form_with_heart(campaign):
         'form': form,
         'display_logo_amount': DISPLAY_LOGO_AMOUNT,
         'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
+        'user': user,
     }
 
 
