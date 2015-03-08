@@ -5,6 +5,7 @@ from docutils.core import publish_parts
 
 from django.conf import settings
 from django.db import models
+from django.utils import timezone
 from django.utils.encoding import smart_str
 from django.utils.translation import ugettext_lazy as _
 
@@ -24,6 +25,7 @@ class EntryQuerySet(models.QuerySet):
 
     def active(self):
         return self.filter(is_active=True)
+
 
 CONTENT_FORMAT_CHOICES = (
     ('reST', 'reStructuredText'),
@@ -98,7 +100,11 @@ class Entry(models.Model):
 
 
 class EventQuerySet(EntryQuerySet):
-    pass
+    def past(self):
+        return self.filter(date__lte=timezone.now())
+
+    def future(self):
+        return self.filter(date__gte=timezone.now())
 
 
 class Event(models.Model):
