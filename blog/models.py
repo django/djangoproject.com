@@ -18,8 +18,7 @@ BLOG_DOCUTILS_SETTINGS = getattr(settings, 'BLOG_DOCUTILS_SETTINGS', {
 })
 
 
-class EntryManager(models.Manager):
-
+class EntryQuerySet(models.QuerySet):
     def published(self):
         return self.active().filter(pub_date__lte=datetime.datetime.now())
 
@@ -57,7 +56,7 @@ class Entry(models.Model):
     body_html = models.TextField()
     author = models.CharField(max_length=100)
 
-    objects = EntryManager()
+    objects = EntryQuerySet.as_manager()
 
     class Meta:
         db_table = 'blog_entries'
@@ -98,10 +97,8 @@ class Entry(models.Model):
         super(Entry, self).save(*args, **kwargs)
 
 
-class EventManager(EntryManager):
-
-    def active(self):
-        return self.filter(is_active=True)
+class EventQuerySet(EntryQuerySet):
+    pass
 
 
 class Event(models.Model):
@@ -125,7 +122,7 @@ class Event(models.Model):
         ),
     )
 
-    objects = EventManager()
+    objects = EventQuerySet.as_manager()
 
     class Meta:
         ordering = ('-pub_date',)
