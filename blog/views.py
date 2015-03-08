@@ -23,10 +23,11 @@ class BlogViewMixin(object):
     def get_context_data(self, **kwargs):
         context = super(BlogViewMixin, self).get_context_data(**kwargs)
 
-        if self.request.user.is_staff:
-            context['events'] = Event.objects.all()[:3]
-        else:
-            context['events'] = Event.objects.published()[:3]
+        events_queryset = Event.objects.future()
+        if not self.request.user.is_staff:
+            events_queryset = events_queryset.published()
+
+        context['events'] = events_queryset[:3]
 
         return context
 
