@@ -9,7 +9,7 @@ from django_hosts.resolvers import reverse
 from sorl.thumbnail import get_thumbnail, ImageField
 
 DISPLAY_LOGO_AMOUNT = Decimal("200.00")
-DEFAULT_DONATION_AMOUNT = Decimal("50.00")
+DEFAULT_DONATION_AMOUNT = 50
 
 
 class DjangoHeroManager(models.Manager):
@@ -108,6 +108,7 @@ class Donation(FundraisingModel):
     donor = models.ForeignKey(DjangoHero, null=True)
     campaign = models.ForeignKey(Campaign, null=True, blank=True)
     stripe_charge_id = models.CharField(max_length=100, null=True)
+    stripe_subscription_id = models.CharField(max_length=100, null=True)
     stripe_customer_id = models.CharField(max_length=100, null=True)
     receipt_email = models.EmailField(blank=True, null=True)
 
