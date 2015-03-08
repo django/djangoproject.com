@@ -8,18 +8,14 @@ from django_hosts.resolvers import reverse
 
 from sorl.thumbnail import get_thumbnail, ImageField
 
-RESTART_GOAL = Decimal("30000.00")
-STRETCH_GOAL = Decimal("50000.00")
-WEEKLY_GOAL = Decimal("2800.00")
 DISPLAY_LOGO_AMOUNT = Decimal("200.00")
 DEFAULT_DONATION_AMOUNT = Decimal("50.00")
 
 
 class DjangoHeroManager(models.Manager):
-    def in_period(self, begin, end, with_logo=False):
+    def for_campaign(self, campaign, with_logo=False):
         donors = self.get_queryset().filter(
-            donation__created__gte=begin,
-            donation__created__lt=end,
+            donation__campaign=campaign,
             is_visible=True,
             approved=True,
         ).annotate(donated_amount=models.Sum('donation__amount'))
@@ -91,12 +87,28 @@ def create_thumbnail_on_save(sender, **kwargs):
     return kwargs['instance'].thumbnail
 
 
+class Campaign(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100)
+    goal = models.DecimalField(max_digits=9, decimal_places=2)
+    template = models.CharField(max_length=50, default="fundraising/campaign_default.html")
+    stretch_goal = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True)
+    stretch_goal_url = models.URLField(blank=True, null=True)
+    start_date = models.DateTimeField(blank=True, null=True)
+    end_date = models.DateTimeField(blank=True, null=True)
+    is_active = models.BooleanField(default=False, help_text="Should donation form be enabled or not?")
+    is_public = models.BooleanField(default=False, help_text="Should campaign be visible at all?")
+
+    def __unicode__(self):
+        return self.name
+
+
 class Donation(FundraisingModel):
     amount = models.DecimalField(max_digits=9, decimal_places=2, null=True)
     donor = models.ForeignKey(DjangoHero, null=True)
+    campaign = models.ForeignKey(Campaign, null=True, blank=True)
     stripe_charge_id = models.CharField(max_length=100, null=True)
     stripe_customer_id = models.CharField(max_length=100, null=True)
-    campaign_name = models.CharField(max_length=100, blank=True)
     receipt_email = models.EmailField(blank=True, null=True)
 
     def __unicode__(self):
@@ -107,6 +119,7 @@ class Donation(FundraisingModel):
 
 
 class Testimonial(models.Model):
+    campaign = models.ForeignKey(Campaign, null=True)
     author = models.CharField(max_length=255)
     body = models.TextField()
     is_active = models.BooleanField(default=True)

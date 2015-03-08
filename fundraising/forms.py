@@ -5,7 +5,7 @@ from django import forms
 from django.utils.safestring import mark_safe
 
 from .exceptions import DonationError
-from .models import DjangoHero, Donation
+from .models import DjangoHero, Donation, Campaign
 
 
 class DjangoHeroForm(forms.ModelForm):
@@ -113,7 +113,7 @@ class DonateForm(forms.Form):
     AMOUNT_VALUES = dict(AMOUNT_CHOICES).keys()
 
     amount = forms.ChoiceField(choices=AMOUNT_CHOICES)
-    campaign = forms.CharField(required=False, widget=forms.HiddenInput())
+    campaign = forms.ModelChoiceField(queryset=Campaign.objects.all(), widget=forms.HiddenInput())
 
 
 class PaymentForm(forms.Form):
@@ -184,7 +184,11 @@ class PaymentForm(forms.Form):
         ),
     )
     # added to the form if given as a GET parameter
-    campaign = forms.CharField(required=False, widget=forms.HiddenInput())
+    campaign = forms.ModelChoiceField(
+        queryset=Campaign.objects.all(),
+        widget=forms.HiddenInput(),
+        required=False,
+    )
     # added by the donation form JavaScript via Stripe.js
     stripe_token = forms.CharField(widget=forms.HiddenInput())
 
@@ -253,11 +257,13 @@ class PaymentForm(forms.Form):
 
         else:
             # Finally create the donation and return it
-            donation = Donation.objects.create(
-                amount=amount,
-                stripe_charge_id=charge.id,
-                stripe_customer_id=customer.id,
-                campaign_name=campaign,
-                receipt_email=receipt_email,
-            )
+            donation_params = {
+                'amount': amount,
+                'stripe_charge_id': charge.id,
+                'stripe_customer_id': customer.id,
+                'receipt_email': receipt_email,
+            }
+            if campaign:
+                donation_params['campaign'] = campaign
+            donation = Donation.objects.create(**donation_params)
             return donation

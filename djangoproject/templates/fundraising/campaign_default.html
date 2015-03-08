@@ -1,0 +1,97 @@
+{% extends 'fundraising/index.html' %}
+{% load fundraising_extras humanize static %}
+
+{% block content %}
+{% if messages %}
+  {% for message in messages %}
+  <h1>{{ message }}</h1>
+  {% endfor %}
+  <hr>
+{% endif %}
+
+<h1>Support the {{ campaign.name }}!</h1>
+
+{% donation_form_with_heart campaign %}
+
+<h1>About the program</h1>
+<p>Django Fellowship is a project where paid contractors are engaged to manage
+  some of the administrative and community management tasks of the Django
+  project to support rapid development of Django itself. </p>
+
+<p><strong>The first three months of the Django Fellowship program have been very successful.</strong>
+  In this short time, <a href="#about">two Django Fellows</a>, one full-time and one part-time, worked on
+  around 240 pull requests (including reviewing some of the major features that will
+  be in <a href="/weblog/2015/jan/16/django-18-alpha-1-released/">Django 1.8</a>), triaged at
+  least 90 different tickets, and made around 200 commits in total! You can read
+  <a href="/weblog/2015/jan/21/django-fellowship-retrospective/">the retrospective
+  on the things that have been accomplished</a> on our blog.</p>
+
+<h1>We need your help!</h1>
+
+<p>The program has already had a major positive impact on how Django is developed
+   and maintained. Release blocking and severe bugs are not postponed indefinitely. Django
+   Fellows are a resource to help review patches and contributions from the community, and
+   the community loves that:</p>
+
+   {% if testimonial %}
+   <blockquote>
+     {{ testimonial.body|linebreaks }}
+     <em>{{ testimonial.author }}</em>
+   </blockquote>
+   {% endif %}
+
+<p><strong>If you use Django on a daily basis and care about the development of Django
+   itself, you should donate today</strong> (may be <a href="/foundation/donate/#tax-deductible">tax deductible</a>).
+   Only with your support can we make sure that the Web framework you base your work on
+   can grow to be even better in the coming years.</p>
+
+<p>The weekly cost of the program is about US&nbsp;$2,800.00. <strong>We're
+   trying to raise an initial US&nbsp;${{ campaign.goal|intcomma }} to renew the program
+   for at least three months, after which we'll endeavor to raise funds on a
+   weekly basis to sustain the program.</strong></p>
+
+<p><a href="/weblog/2015/jan/21/django-fellowship-retrospective/">Learn more
+   about the Django Fellowship program</a>.</p>
+
+<hr style="margin: 40px 0" />
+
+<div class="heros-section">
+  <h1>Django Heroes</h1>
+  <p>We're incredibly grateful to everyone who donated to make this happen. We
+  couldn't possibly do it without the continuous support from the community.</p>
+
+  {% display_django_heros campaign %}
+
+</div>
+
+{% endblock %}
+
+{% block content-extra %}
+  <div class="layout-tertiary" id="about">
+    <div class="container">
+        <h2>What is the Django Software Foundation?</h2>
+        <p>Development of Django is supported by an independent foundation
+          established as a 501(c)(3) non-profit. Like most open-source foundations,
+          the goal of the <a href="/foundation/">Django Software Foundation</a>
+          is to promote, support, and advance the Django Web framework. If you're
+          interested in how the Django Software Foundation supports the Django
+          Web framework, we published a
+          <a href="/weblog/2015/jan/08/django-software-foundation-2014/">Summary
+          of 2014. </a>
+        </p>
+
+        <h2>Who were the Django Fellows?</h2>
+        <p>The two Fellows for the duration of the pilot were:</p>
+        <p><strong>Tim Graham</strong> - a member of the core team for several years. For
+        the 12 months before the fellowship began, he was a major contributor,
+        reviewing and merging pull requests. Tim was contracted as a full-time
+        Fellow for the duration of the 3 month pilot.</p>
+        <p><strong>Berker Peksağ</strong> - a core developer on CPython, Gunicorn, and
+        Hylang. In the Django community, he had submitted a few patches, as
+        well as organized a Django sprint in Istanbul. During the 3 month pilot,
+        Berker supported Tim part-time.</p>
+        <p>If the program is renewed, there will be a new application period
+        for the next fellow(s).</p>
+    </div>
+  </div>
+{% endblock %}
