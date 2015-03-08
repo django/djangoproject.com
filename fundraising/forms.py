@@ -132,42 +132,6 @@ class PaymentForm(forms.Form):
         ),
         help_text='Please enter the amount of your donation in US Dollar',
     )
-    number = forms.CharField(
-        required=False,
-        max_length=20,
-        widget=StripeTextInput(
-            attrs={
-                'placeholder': 'Card number',
-                'size': 20,
-                'pattern': '\d*',  # number input on mobile
-                'autocomplete': 'cc-number',  # for autofill spec
-                'tabindex': 2,
-            },
-        ),
-    )
-    cvc = forms.CharField(
-        required=False,
-        widget=StripeTextInput(
-            attrs={
-                'placeholder': 'CVC - Card Verification Code',
-                'size': 4,
-                'pattern': '\d*',  # number input on mobile
-                'autocomplete': 'off',
-                'tabindex': 3,
-            },
-        ),
-    )
-    expires = forms.CharField(
-        required=False,
-        widget=StripeTextInput(
-            attrs={
-                'placeholder': 'Expires MM/YYYY',
-                'pattern': '\d*',  # number input on mobile
-                'autocomplete': 'cc-exp',
-                'tabindex': 4,
-            },
-        ),
-    )
     receipt_email = forms.CharField(
         required=False,
         widget=forms.TextInput(
@@ -191,23 +155,6 @@ class PaymentForm(forms.Form):
     )
     # added by the donation form JavaScript via Stripe.js
     stripe_token = forms.CharField(widget=forms.HiddenInput())
-
-    def __init__(self, data=None, fixed_amount=None, *args, **kwargs):
-        super(PaymentForm, self).__init__(data, *args, **kwargs)
-        self.fixed_amount = fixed_amount
-        if fixed_amount is not None or (data and 'amount' in data):
-            self.hide_amount()
-
-    def hide_amount(self):
-        self.fields['amount'].widget = forms.HiddenInput()
-
-    def show_amount(self):
-        self.fields['amount'].widget = forms.TextInput(
-            attrs={
-                'class': 'required',
-                'placeholder': self.AMOUNT_PLACEHOLDER,
-            },
-        )
 
     def make_donation(self):
         receipt_email = self.cleaned_data.get('receipt_email')

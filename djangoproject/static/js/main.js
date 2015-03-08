@@ -79,5 +79,9 @@ define(function() {
 		mods.push('mod/search-key');
 	}
 
+	if (hasClass('stripe-custom-checkout')) {
+		mods.push('mod/stripe-custom-checkout');
+	}
+
 	require(mods);
 });

@@ -1,3 +1,4 @@
+import json
 import os
 from datetime import date
 from functools import partial
@@ -5,7 +6,6 @@ from operator import attrgetter
 from unittest.mock import patch
 
 import stripe
-from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -79,59 +79,12 @@ class TestCampaign(TestCase):
         response = self.client.get(self.campaign_url)
         self.assertContains(response, 'name="campaign"')
 
-    def test_render_donate_form_with_amount(self):
-        response = self.client.get(reverse('fundraising:donate'), {'amount': 50})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['form'].fixed_amount, '50')
-        self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
-
-        # Checking if amount field is hidden
-        self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.HiddenInput)
-
-        # Checking if campaign field is empty
-        self.assertNotIn('campaign', response.context['form'].initial)
-
-    def test_render_donate_form_without_amount(self):
-        response = self.client.get(reverse('fundraising:donate'))
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['form'].fixed_amount, None)
-        self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
-
-        # Checking if amount field is visible
-        self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.TextInput)
-        # Checking if campaign field is empty
-        self.assertFalse('campaign' in response.context['form'].initial)
-
-    def test_render_donate_form_with_bad_amount(self):
-        # this will trigger a DecimalException exception because the amount can't be
-        # converted to a Decimal
-        response = self.client.get(reverse('fundraising:donate'), {'amount': 'superbad'})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['form'].fixed_amount, 'superbad')
-        self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
-
-        # Checking if amount field is visible
-        self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.TextInput)
-        # Checking if campaign field is empty
-        self.assertFalse('campaign' in response.context['form'].initial)
-
-    def test_render_donate_form_with_campaign(self):
-        response = self.client.get(reverse('fundraising:donate'), {'amount': 100, 'campaign': self.campaign.id})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['form'].fixed_amount, '100')
-        self.assertEqual(response.context['publishable_key'], settings.STRIPE_PUBLISHABLE_KEY)
-
-        # Checking if amount field is hidden
-        self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.HiddenInput)
-        # Checking if campaign field is same as campaign
-        self.assertEqual(response.context['form'].initial['campaign'], self.campaign)
-
     def test_submitting_donation_form_missing_token(self):
         url = reverse('fundraising:donate')
         response = self.client.post(url, {'amount': 100})
-        self.assertFalse(response.context['form'].is_valid())
+        content = json.loads(response.content.decode())
         self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, 'fundraising/donate.html')
+        self.assertFalse(content['success'])
 
     def test_submitting_donation_form_invalid_amount(self):
         url = reverse('fundraising:donate')
@@ -139,18 +92,14 @@ class TestCampaign(TestCase):
             'amount': 'superbad',
             'stripe_token': 'test',
         })
-        self.assertFalse(response.context['form'].is_valid())
+        content = json.loads(response.content.decode())
         self.assertEqual(200, response.status_code)
-        # Checking if amount field is visible
-        self.assertIsInstance(response.context['form'].fields['amount'].widget, forms.TextInput)
+        self.assertFalse(content['success'])
 
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
     def test_submitting_donation_form(self, charge_create, customer_create):
-        response = self.client.post(reverse('fundraising:donate'), {'amount': 100})
-        self.assertFalse(response.context['form'].is_valid())
-
-        response = self.client.post(reverse('fundraising:donate'), {
+        self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
             'stripe_token': 'test',
             'receipt_email': 'test@example.com',
@@ -163,12 +112,7 @@ class TestCampaign(TestCase):
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
     def test_submitting_donation_form_with_campaign(self, charge_create, customer_create):
-        response = self.client.post(reverse('fundraising:donate'), {
-            'amount': 100,
-            'campaign': self.campaign.id,
-        })
-        self.assertFalse(response.context['form'].is_valid())
-        response = self.client.post(reverse('fundraising:donate'), {
+        self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
             'campaign': self.campaign.id,
             'stripe_token': 'test',
@@ -207,7 +151,8 @@ class TestCampaign(TestCase):
                 self.assertRaises(backend_exception, form.make_donation)
             else:
                 response = self.client.post(reverse('fundraising:donate'), data)
-                self.assertTrue('donation_error' in response.context)
+                content = json.loads(response.content.decode())
+                self.assertFalse(content['success'])
 
     @patch('fundraising.forms.PaymentForm.make_donation')
     def test_submitting_donation_form_valid(self, make_donation):
@@ -222,7 +167,10 @@ class TestCampaign(TestCase):
             'amount': amount,
             'stripe_token': 'xxxx',
         })
-        self.assertRedirects(response, donation.get_absolute_url())
+        content = json.loads(response.content.decode())
+        self.assertEquals(200, response.status_code)
+        self.assertTrue(content['success'])
+        self.assertEqual(content['redirect'], donation.get_absolute_url())
 
 
 class TestDjangoHero(TestCase):

@@ -1,9 +1,8 @@
-from decimal import Decimal, DecimalException
-
 import stripe
-from django.conf import settings
 from django.contrib import messages
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
 from .exceptions import DonationError
 from .forms import DjangoHeroForm, PaymentForm
@@ -31,57 +30,30 @@ def campaign(request, slug):
     })
 
 
+@require_POST
 def donate(request):
-    show_amount = False
-    if request.method == 'POST':
-        fixed_amount = None
-        form = PaymentForm(request.POST)
+    form = PaymentForm(request.POST)
 
-        if form.is_valid():
-            # Try to create the charge on Stripe's servers - this will charge the user's card
-            try:
-                donation = form.make_donation()
-            except DonationError as donation_error:
-                # If a failure happened show the error but populate the
-                # form again with those values that can be reused
-                # Note: no stripe_token added to initials here
-                initial = {
-                    'amount': form.cleaned_data['amount'],
-                    'receipt_email': form.cleaned_data['receipt_email'],
-                    'campaign': form.cleaned_data['campaign'],
-                }
-                context = {
-                    'form': PaymentForm(initial=initial),
-                    'donation_error': str(donation_error),
-                    'publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
-                }
-                return render(request, 'fundraising/donate.html', context)
-            else:
-                return redirect(donation)
+    if form.is_valid():
+        # Try to create the charge on Stripe's servers - this will charge the user's card
+        try:
+            donation = form.make_donation()
+        except DonationError as donation_error:
+            data = {
+                'success': False,
+                'error': str(donation_error),
+            }
         else:
-            if 'amount' in form.errors:
-                show_amount = True
+            data = {
+                'success': True,
+                'redirect': donation.get_absolute_url(),
+            }
     else:
-        fixed_amount = request.GET.get('amount') or None
-        campaign = request.GET.get('campaign')
-        initial = {}
-        if campaign:
-            initial['campaign'] = get_object_or_404(Campaign, id=campaign)
-        if fixed_amount:
-            try:
-                initial['amount'] = Decimal(fixed_amount)
-            except DecimalException:
-                show_amount = True
-        form = PaymentForm(initial=initial, fixed_amount=fixed_amount)
-
-    if show_amount:
-        form.show_amount()
-
-    context = {
-        'form': form,
-        'publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
-    }
-    return render(request, 'fundraising/donate.html', context)
+        data = {
+            'success': False,
+            'error': form.errors.as_json(),
+        }
+    return JsonResponse(data)
 
 
 def thank_you(request, donation):
@@ -109,8 +81,10 @@ def thank_you(request, donation):
                 donation.donor = hero
                 donation.save()
                 messages.success(request, "Thank you! You're a Hero.")
-                return redirect(**{'to': 'fundraising:campaign', 'slug': donation.campaign.slug}
-                    if donation.campaign else {'to': 'fundraising:index'})
+                return redirect(
+                    **{'to': 'fundraising:campaign', 'slug': donation.campaign.slug}
+                    if donation.campaign else {'to': 'fundraising:index'}
+                )
     else:
         if donation.donor:
             form = DjangoHeroForm(instance=donation.donor)
