@@ -74,5 +74,9 @@ define(function(){
 		mods.push('dashboard/detail');
 	}
 
+    if (hasClass('stripe-custom-checkout')) {
+		mods.push('mod/stripe-custom-checkout');
+
+    }
 	require(mods);
 });
