@@ -1,5 +1,5 @@
 akismet==0.2.0
-Django==1.7.3
+Django==1.7.6
 django-contact-form==1.0
 django-haystack==1.2.7
 django-hosts==1.1
