@@ -56,9 +56,9 @@
 
     <h2>For the impatient:</h2>
     <ul>
-      <li>Latest release: <a href="{% url 'download-redirect' current_version 'tarball' %}">Django-{{ current_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' current_version 'checksum' %}">Django-{{ current_version }}.checksum.txt</a></li>
+      <li>Latest release: <a href="{% url 'download-redirect' current_version 'tarball' %}">Django-{{ current_version }}.tar.gz</a><br>Checksums: <a href="{% url 'download-redirect' current_version 'checksum' %}">Django-{{ current_version }}.checksum.txt</a></li>
       {% if preview_version %}
-      <li>Preview release: <a href="{% url 'download-redirect' preview_version 'tarball' %}">Django-{{ preview_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' preview_version 'checksum' %}">Django-{{ preview_version }}.checksum.txt</a></li>
+      <li>Preview release: <a href="{% url 'download-redirect' preview_version 'tarball' %}">Django-{{ preview_version }}.tar.gz</a><br>Checksums: <a href="{% url 'download-redirect' preview_version 'checksum' %}">Django-{{ preview_version }}.checksum.txt</a></li>
       {% endif %}
     </ul>
 
@@ -68,16 +68,16 @@
     <p>If you’re just looking for a stable deployment target and don’t mind waiting for the next release, you’ll want to stick with the latest official release (which will always include detailed notes on any changes you’ll need to make while upgrading).</p>
     <h2>Previous releases</h2>
     <ul>
-      <li>Django {{ previous_version }}: <a href="{% url 'download-redirect' previous_version 'tarball' %}">Django-{{ previous_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' previous_version 'checksum' %}">Django-{{ previous_version }}.checksum.txt</a></li>
+      <li>Django {{ previous_version }}: <a href="{% url 'download-redirect' previous_version 'tarball' %}">Django-{{ previous_version }}.tar.gz</a><br>Checksums: <a href="{% url 'download-redirect' previous_version 'checksum' %}">Django-{{ previous_version }}.checksum.txt</a></li>
       {% if lts_version %}
-        <li>Django {{ lts_version }} (LTS): <a href="{% url 'download-redirect' lts_version 'tarball' %}">Django-{{ lts_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' lts_version 'checksum' %}">Django-{{ lts_version }}.checksum.txt</a></li>
+        <li>Django {{ lts_version }} (LTS): <a href="{% url 'download-redirect' lts_version 'tarball' %}">Django-{{ lts_version }}.tar.gz</a><br>Checksums: <a href="{% url 'download-redirect' lts_version 'checksum' %}">Django-{{ lts_version }}.checksum.txt</a></li>
       {% endif %}
     </ul>
 
     <h2>Unsupported previous releases (no longer receive security updates or bug fixes)</h2>
     <ul>
       {% for earlier_version in earlier_versions %}
-      <li>Django {{ earlier_version }}: <a href="{% url 'download-redirect' earlier_version 'tarball' %}">Django-{{ earlier_version }}.tar.gz</a><br>Checksum: <a href="{% url 'download-redirect' earlier_version 'checksum' %}">Django-{{ earlier_version }}.checksum.txt</a></li>
+      <li>Django {{ earlier_version }}: <a href="{% url 'download-redirect' earlier_version 'tarball' %}">Django-{{ earlier_version }}.tar.gz</a><br>Checksums: <a href="{% url 'download-redirect' earlier_version 'checksum' %}">Django-{{ earlier_version }}.checksum.txt</a></li>
       {% endfor %}
     </ul>
 
