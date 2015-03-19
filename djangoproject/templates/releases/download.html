@@ -21,6 +21,8 @@
       <h2>Option {% cycle options %}: Get the {{ preview_kind }} for {{ preview_version|slice:":3" }}</h2>
       <p>As part of the Django {{ preview_version|slice:":3" }} development process, Django {{ preview_version }} is available. This release is only for experienced users who want to try the new version and help identify remaining bugs before the {{ preview_version|slice:":3" }} release. Please read the {{ preview_version|slice:":3" }} release notes before using this package.
       <p>Install the {{ preview_kind }} with <a href="http://www.pip-installer.org/en/latest/">pip</a>:</p>
+      <pre class="literal-block"><code>pip install --pre django</pre></code></pre>
+      <p>Or if you have pip < 1.4:</p>
       <pre class="literal-block"><code>pip install {% url 'download-redirect' preview_version 'tarball' %}</code></pre>
   {% endif %}
 
