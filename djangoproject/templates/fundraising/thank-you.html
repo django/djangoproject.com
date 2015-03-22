@@ -18,20 +18,22 @@
   course, <em>optional</em>.
 </p>
 
-<form enctype="multipart/form-data" action="" method="post" class="form-input">
+<form enctype="multipart/form-data" action="" method="post" class="form-input django-hero-form">
   <h2>You're now a Django Hero</h2>
   Enter your details below to show up on our <a href="{% url "fundraising:index" %}">fundraising page</a>.
   {% csrf_token %}
   {% for field in form %}
-    <p>
+    <div class="form-control">
     {% if field.name in form.checkbox_fields %}
         {{ field }}{{ field.label_tag }}
+    {% elif field.name in form.radio_select_fields %}
+        {{ field.label }}{{ field }}
     {% else %}
         {{ field }}
     {% endif %}
     {% if field.errors %}<p class="errors">{{ field.errors.as_text }}</p>{% endif %}
     {% if field.help_text %}<p class="footnote">{{ field.help_text }}</p>{% endif %}
-    </p>
+    </div>
   {% endfor %}
   <p class="submit">
     <input type="submit" class="cta" value="Save &rarr;">

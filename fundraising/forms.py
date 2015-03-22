@@ -15,6 +15,13 @@ INTERVAL_CHOICES = (
 
 
 class DjangoHeroForm(forms.ModelForm):
+    hero_type = forms.ChoiceField(
+        required=False,
+        widget=forms.RadioSelect,
+        label='I am donating as an',
+        choices=DjangoHero.HERO_TYPE_CHOICES,
+        initial=DjangoHero.HERO_TYPE_CHOICES[0][0],
+    )
     name = forms.CharField(
         required=False,
         widget=forms.TextInput(
@@ -75,16 +82,20 @@ class DjangoHeroForm(forms.ModelForm):
     class Meta:
         model = DjangoHero
         fields = (
-            'name', 'url', 'logo', 'is_visible',
+            'hero_type', 'name', 'url', 'logo', 'is_visible',
             'is_amount_displayed', 'email', 'is_subscribed',
         )
 
     def __init__(self, *args, **kwargs):
         super(DjangoHeroForm, self).__init__(*args, **kwargs)
-        self.checkbox_fields = [
-            name for name, field in self.fields.items()
-            if isinstance(field.widget, forms.CheckboxInput)
-        ]
+        self.checkbox_fields = []
+        self.radio_select_fields = []
+
+        for name, field in self.fields.items():
+            if isinstance(field.widget, forms.CheckboxInput):
+                self.checkbox_fields.append(name)
+            elif isinstance(field.widget, forms.RadioSelect):
+                self.radio_select_fields.append(name)
 
 
 class StripeTextInput(forms.TextInput):
