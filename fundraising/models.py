@@ -47,6 +47,11 @@ class DjangoHero(FundraisingModel):
     logo = ImageField(upload_to="fundraising/logos/", blank=True)
     url = models.URLField(blank=True, verbose_name='URL')
     name = models.CharField(max_length=100, blank=True)
+    HERO_TYPE_CHOICES = (
+        ('individual', 'Individual'),
+        ('organization', 'Organization'),
+    )
+    hero_type = models.CharField(max_length=30, choices=HERO_TYPE_CHOICES, blank=True)
     is_visible = models.BooleanField(
         default=False,
         verbose_name="Agreed to displaying on the fundraising page?",
