@@ -1,4 +1,4 @@
-<li>
+<li{% if not object.is_published %} class="unpublished"{% endif %}>
   <{{ header_tag|default:'h2' }}>
     <a href="{{ object.get_absolute_url }}">{{ object.headline|safe }}</a>
   </{{ header_tag|default:'h2' }}>
