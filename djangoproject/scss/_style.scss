@@ -1406,6 +1406,11 @@ blockquote {
 			margin-top: 0;
 			padding-top: 0;
 		}
+
+		&.unpublished,
+		&.unpublished * {
+			color: $gray-medium;
+		}
 	}
 
 	.meta {
