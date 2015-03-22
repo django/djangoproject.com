@@ -1,0 +1,178 @@
+[
+    {
+        "fields": {
+            "approved": true,
+            "created": "2015-03-22T09:00:53.245",
+            "email": "batman@heros.com",
+            "is_amount_displayed": true,
+            "is_subscribed": true,
+            "is_visible": true,
+            "logo": "",
+            "modified": "2015-03-22T09:00:53.245",
+            "name": "Batman",
+            "url": "",
+            "hero_type": "individual"
+        },
+        "model": "fundraising.djangohero",
+        "pk": "1"
+    },
+    {
+        "fields": {
+            "approved": true,
+            "created": "2015-03-22T09:00:53.245",
+            "email": "spiderman@heros.com",
+            "is_amount_displayed": true,
+            "is_subscribed": false,
+            "is_visible": true,
+            "logo": "",
+            "modified": "2015-03-22T09:00:53.245",
+            "name": "Spiderman",
+            "url": "",
+            "hero_type": "individual"
+        },
+        "model": "fundraising.djangohero",
+        "pk": "2"
+    },
+    {
+        "fields": {
+            "approved": true,
+            "created": "2015-03-22T09:00:53.245",
+            "email": "superman@heros.com",
+            "is_amount_displayed": false,
+            "is_subscribed": false,
+            "is_visible": true,
+            "logo": "",
+            "modified": "2015-03-22T09:00:53.245",
+            "name": "Superman",
+            "url": "",
+            "hero_type": "individual"
+        },
+        "model": "fundraising.djangohero",
+        "pk": "3"
+    },
+    {
+        "fields": {
+            "approved": true,
+            "created": "2015-03-22T09:00:53.245",
+            "email": "avangers@heros.com",
+            "is_amount_displayed": false,
+            "is_subscribed": false,
+            "is_visible": true,
+            "logo": "",
+            "modified": "2015-03-22T09:00:53.245",
+            "name": "Avangers",
+            "url": "",
+            "hero_type": "organization"
+        },
+        "model": "fundraising.djangohero",
+        "pk": "4"
+    },
+    {
+        "fields": {
+            "approved": true,
+            "created": "2015-03-22T09:00:53.245",
+            "email": "evils@heros.com",
+            "is_amount_displayed": false,
+            "is_subscribed": false,
+            "is_visible": true,
+            "logo": "",
+            "modified": "2015-03-22T09:00:53.245",
+            "name": "Evils",
+            "url": "",
+            "hero_type": "organization"
+        },
+        "model": "fundraising.djangohero",
+        "pk": "5"
+    },
+    {
+        "fields": {
+            "amount": "20.00",
+            "campaign": 1,
+            "created": "2015-03-22T09:48:43.855",
+            "donor": "1",
+            "modified": "2015-03-22T09:48:43.855",
+            "receipt_email": null,
+            "stripe_charge_id": null,
+            "stripe_customer_id": null,
+            "stripe_subscription_id": null
+        },
+        "model": "fundraising.donation",
+        "pk": "1"
+    },
+    {
+        "fields": {
+            "amount": "30.00",
+            "campaign": 1,
+            "created": "2015-03-22T09:48:43.855",
+            "donor": "2",
+            "modified": "2015-03-22T09:48:43.855",
+            "receipt_email": null,
+            "stripe_charge_id": null,
+            "stripe_customer_id": null,
+            "stripe_subscription_id": null
+        },
+        "model": "fundraising.donation",
+        "pk": "2"
+    },
+    {
+        "fields": {
+            "amount": "10.00",
+            "campaign": 1,
+            "created": "2015-03-22T09:48:43.855",
+            "donor": "3",
+            "modified": "2015-03-22T09:48:43.855",
+            "receipt_email": null,
+            "stripe_charge_id": null,
+            "stripe_customer_id": null,
+            "stripe_subscription_id": null
+        },
+        "model": "fundraising.donation",
+        "pk": "3"
+    },
+    {
+        "fields": {
+            "amount": "1000.00",
+            "campaign": 1,
+            "created": "2015-03-22T09:48:43.855",
+            "donor": "4",
+            "modified": "2015-03-22T09:48:43.855",
+            "receipt_email": null,
+            "stripe_charge_id": null,
+            "stripe_customer_id": null,
+            "stripe_subscription_id": null
+        },
+        "model": "fundraising.donation",
+        "pk": "4"
+    },
+    {
+        "fields": {
+            "amount": "2000.00",
+            "campaign": 1,
+            "created": "2015-03-22T09:48:43.855",
+            "donor": "5",
+            "modified": "2015-03-22T09:48:43.855",
+            "receipt_email": null,
+            "stripe_charge_id": null,
+            "stripe_customer_id": null,
+            "stripe_subscription_id": null
+        },
+        "model": "fundraising.donation",
+        "pk": "5"
+    },
+    {
+        "fields": {
+            "name": "Django Fellowship",
+            "slug": "django-fellowship",
+            "goal": 10000,
+            "stretch_goal": null,
+            "stretch_goal_url": null,
+            "start_date": null,
+            "end_date": null,
+            "is_active": true,
+            "is_public": true
+        },
+        "model": "fundraising.campaign",
+        "pk": "1"
+    }
+
+]
