@@ -37,13 +37,13 @@
         "fields": {
             "approved": true,
             "created": "2015-03-22T09:00:53.245",
-            "email": "superman@heros.com",
+            "email": "wonderwoman@heros.com",
             "is_amount_displayed": false,
             "is_subscribed": false,
             "is_visible": true,
             "logo": "",
             "modified": "2015-03-22T09:00:53.245",
-            "name": "Superman",
+            "name": "Wonder Woman",
             "url": "",
             "hero_type": "individual"
         },
