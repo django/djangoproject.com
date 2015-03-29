@@ -18,11 +18,11 @@ pre.literal-block,
 	@include monospace;
 	font-size: 1em;
 	padding: 5px 20px;
-	@include border-radius(4px 4px 0 0);
+	border-radius: 4px 4px 0 0;
 
 	+ .highlight {
 		margin-top: 0;
-		@include border-radius(0 0 4px 4px);
+		border-radius: 0 0 4px 4px;
 		border-top: 0;
 	}
 }
