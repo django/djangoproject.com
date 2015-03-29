@@ -5,7 +5,7 @@
 	.example {
 		padding: 0 20px 20px;
 		border: 1px solid $gray-line;
-		@include border-radius(4px);
+		border-radius: 4px;
 		margin-top: 20px;
 		margin-bottom: 64px;
 		&:before {
@@ -40,7 +40,8 @@
 			width: 200%;
 			border: 0;
 			height: 800px;
-			@include transform(scale(0.5) translate(-50%, -50%));
+			-webkit-transform: scale(0.5) translate(-50%, -50%);
+			transform: scale(0.5) translate(-50%, -50%);
 			top: 0;
 			left: 0;
 			overflow: hidden;
@@ -57,7 +58,9 @@
 			width: 30%;
 			height: 30px;
 			margin-right: 2%;
-			@include box-sizing(border-box);
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			box-sizing: border-box;
 
 			float: left;
 

@@ -5,7 +5,10 @@ Threespot, Washington DC
 Ammended and appended by Andrew McCarthy
 http://andrevv.com/
 ---
-CSS rendered with Sass 3.2.7
+Ported to Libsass by Michael Trythall
+https://lincolnloop.com/team/michael-trythall/
+---
+CSS rendered with Libsass 0.7.0
 */
 
 //------------------- Globals
@@ -212,7 +215,7 @@ blockquote {
 	background: $white;
 	padding: 15px 20px 15px 70px;
 	border: 1px solid $green-very-light;
-	@include border-radius(4px);
+	border-radius: 4px;
 	margin: 25px 0;
 	position: relative;
 
@@ -250,7 +253,7 @@ blockquote {
 		width: 60%;
 		.mdzr-boxshadow & {
 			border: none;
-			@include box-shadow(0px 0px 0 0 #fff, 0px 0px 0 0 #fff, 460px 0 0 0 #fff, 1000px 0 0 0 #fff, 0px 600px 0 0px #fff, 460px 600px 0 0px #fff);
+			box-shadow: 0px 0px 0 0 #fff, 0px 0px 0 0 #fff, 460px 0 0 0 #fff, 1000px 0 0 0 #fff, 0px 600px 0 0px #fff, 460px 600px 0 0px #fff;
 			padding-left: 4%;
 			padding-right: 0;
 			width: 63%;
@@ -260,7 +263,7 @@ blockquote {
 			float: left;
 			.mdzr-boxshadow & {
 				border: none;
-				@include box-shadow(0px 0px 0 0 #fff, 0px 0px 0 0 #fff, -460px 0 0 0 #fff, -1000px 0 0 0 #fff, 0px 600px 0 0px #fff, -460px 600px 0 0px #fff);
+				box-shadow: 0px 0px 0 0 #fff, 0px 0px 0 0 #fff, -460px 0 0 0 #fff, -1000px 0 0 0 #fff, 0px 600px 0 0px #fff, -460px 600px 0 0px #fff;
 				padding-left: 0;
 				width: 62%;
 				padding-right: 4%;
@@ -270,7 +273,7 @@ blockquote {
 
 	.full-width & {
 		border: none;
-		@include box-shadow(none);
+		box-shadow: none;
 		float: none;
 		margin: 0 auto;
 		padding: 0 10px 40px;
@@ -399,7 +402,7 @@ blockquote {
 
 	&.sidebar-right {
 		.mdzr-boxshadow & {
-			@include box-shadow(-1200px 0 0 0px #fff);
+			box-shadow: -1200px 0 0 0px #fff;
 		}
 	}
 }
@@ -469,7 +472,7 @@ blockquote {
 	.menu-button {
 		@include font-size(20);
 		background: $green-dark;
-		@include border-radius(23px);
+		border-radius: 23px;
 		color: #fff;
 		cursor: pointer;
 		display: block;
@@ -501,12 +504,16 @@ blockquote {
 	.nav-menu-on {
 		max-height: 0;
 		overflow: hidden;
-		@include transition(all 0.3s ease-out);
+
+		-webkit-transition: all 0.3s ease-out;
+		transition: all 0.3s ease-out;
 
 		@include respond-min(768px) {
 			// turn off animations if on a desktop width
 			max-height: none;
-			@include transition(none);
+
+			-webkit-transition: none;
+			transition: none;
 		}
 
 		&.active {
@@ -771,7 +778,7 @@ blockquote {
 	clear: both;
 	background: $white;
 	position: relative;
-	@include box-shadow(0 -2px 8px 0 rgba(0,0,0,0.05));
+	box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.05);
 
 	a {
 		@include link-green;
@@ -1073,7 +1080,7 @@ blockquote {
 	-moz-appearance: none;
 	background: $green-medium;
 	border: none;
-	@include border-radius(5px);
+	border-radius: 5px;
 	color: #fff;
 	display: block;
 	-webkit-font-smoothing: subpixel-antialiased;
@@ -1283,7 +1290,7 @@ blockquote {
 	background: #f8f8f8;
 	border: 1px solid $gray-line;
 	padding: 10px;
-	@include border-radius(4px);
+	border-radius: 4px;
 	@include sans-serif;
 	@include font-size(14);
 	line-height: 1.6em;
@@ -1573,7 +1580,7 @@ h2 + .list-link-soup {
 		margin-right: 10px;
 		width: 40px;
 		height: 40px;
-		@include border-radius(25px);
+		border-radius: 25px;
 		background: $green;
 		line-height: 1.68em;
 		display: inline-block;
@@ -1633,7 +1640,7 @@ h2 + .list-link-soup {
 			// Border Radius Enabled
 			.mdzr-borderradius & {
 				background: $green-medium;
-				@include border-radius(100px);
+				border-radius: 100px;
 				color: #fff;
 			}
 
@@ -1660,11 +1667,15 @@ h2 + .list-link-soup {
 
 			// Border Radius, SVG, and Animation Enabled
 			.mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
-				@include transition(all 0.3s ease-out);
-				@include transform(rotate(0.5turn));
+				-webkit-transition: all 0.3s ease-out;
+				transition: all 0.3s ease-out;
+
+				-webkit-transform: rotate(0.5turn);
+				transform: rotate(0.5turn);
 
 				&.inview {
-					@include transform(rotate(0turn));
+					-webkit-transform: rotate(0turn);
+					transform: rotate(0turn);
 				}
 
 				&.icon-bolt {
@@ -1704,8 +1715,12 @@ h2 + .list-link-soup {
 			:-o-prefocus,
 			& {
 				background: $green-medium !important;
-				@include transition(none !important);
-				@include transform(none !important);
+
+				-webkit-transition: none !important;
+				transition: none !important;
+
+				-webkit-transform: none !important;
+				transform: none !important;
 			}
 		}
 	}
@@ -1724,15 +1739,18 @@ h2 + .list-link-soup {
 				width: 40px;
 				height: 40px;
 				top: 10px;
-				@include border-radius(20px);
+				border-radius: 20px;
 				background: $green;
 				display: inline-block;
 				text-align: center;
 				@include font-size(24);
 
 				.mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
-					@include transition(none);
-					@include transform(rotate(0));
+					-webkit-transition: all 0.3s ease-out;
+					transition: all 0.3s ease-out;
+
+					-webkit-transform: rotate(0.5turn);
+					transform: rotate(0.5turn);
 				}
 			}
 
@@ -1759,7 +1777,7 @@ h2 + .list-link-soup {
 				width: 80px;
 				height: 80px;
 				top: 20px;
-				@include border-radius(40px);
+				border-radius: 40px;
 				@include font-size(46);
 			}
 		}
@@ -1851,7 +1869,9 @@ h2 + .list-link-soup {
 		.collapsing-content {
 			overflow: hidden;
 			max-height: 0px;
-			@include transition(all 0.5s ease-out);
+
+			-webkit-transition: all 0.5s ease-out;
+			transition: all 0.5s ease-out;
 		}
 		li.active .collapsing-content {
 			max-height: 1000px;
@@ -2012,7 +2032,8 @@ h2 + .list-link-soup {
 	top: -0.17em;
 	font-weight: 700;
 	text-decoration: none;
-	@include transition(opacity 200ms ease-in-out);
+	-webkit-transition: opacity 200ms ease-in-out;
+	transition: opacity 200ms ease-in-out;
 }
 
 	h1,
@@ -2037,7 +2058,7 @@ h2 + .list-link-soup {
 		background: $white;
 		padding: 15px 20px 15px 70px;
 		border: 1px solid $green-very-light;
-		@include border-radius(4px);
+		border-radius: 4px;
 		margin: 25px 0;
 		position: relative;
 
@@ -2153,7 +2174,7 @@ h2 + .list-link-soup {
 			background: $white;
 			padding: 8px 15px;
 			border: 1px solid $gray-line;
-			@include border-radius(4px);
+			border-radius: 4px;
 		}
 
 		a {
@@ -2164,7 +2185,7 @@ h2 + .list-link-soup {
 			font-weight: 700;
 			padding: 8px 15px;
 			border: 1px solid $gray-line;
-			@include border-radius(4px);
+			border-radius: 4px;
 			&:hover {
 				color: $green;
 				border: 1px solid $green-light;
@@ -2185,7 +2206,9 @@ h2 + .list-link-soup {
 	top: 0;
 	width: 100%;
 	padding: 8px 20px 8px;
-	@include box-sizing(border-box);
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 	background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
 	background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
 	background-image: linear-gradient(135deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
@@ -2263,7 +2286,7 @@ h2 + .list-link-soup {
 
 	padding: 10px 13px;
 	border: 1px solid $green-very-light;
-	@include border-radius(4px);
+	border-radius: 4px;
 
 	p {
 		font-weight: normal;
@@ -2488,7 +2511,7 @@ form {
 		-moz-appearance: none;
 		background: #fff;
 		border: 1px solid $gray-line;
-		@include border-radius(4px);
+		border-radius: 4px;
 		cursor: auto;
 		display: block;
 		font-weight: 400;
@@ -2529,7 +2552,7 @@ form {
 		background: white;
 		height: 46px;
 		padding: 0 10px;
-		@include border-radius(4px);
+		border-radius: 4px;
 		@include font-size(16);
 
 		[role="complementary"] & {
@@ -2539,9 +2562,12 @@ form {
 	}
 
 	button {
-		@include appearance(none);
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		appearance: none;
+
 		background: $green;
-		@include border-radius(4px);
+		border-radius: 4px;
 		color: white;
 		border: 0;
 		height: 46px;
@@ -2704,7 +2730,7 @@ div[role=main] {
 		height: auto;
 		width: auto;
 		margin: 0 5px;
-		@include border-radius(15px);
+		border-radius: 15px;
 		display: block;
 		text-decoration: none;
 		@include device-min(320px) {
@@ -2719,7 +2745,7 @@ div[role=main] {
 		&.next {
 			@include font-size(16);
 			@include device-min(320px) {
-				@include border-radius(20px);
+				border-radius: 20px;
 				height: 40px;
 				line-height: 43px;
 				width: 40px;
@@ -2781,7 +2807,7 @@ hr {
 // }
 
 .badge {
-	@include border-radius(4px);
+	border-radius: 4px;
 	font-size: 12px;
 	padding: 2px 6px;
 	margin: 0 5px;
@@ -2819,7 +2845,9 @@ hr {
 			height: auto;
 		}
 		rect {
-			@include transition(opacity 250ms ease-out);
+			-webkit-transition: opacity 250ms ease-out;
+			transition: opacity 250ms ease-out;
+
 			&.faded {
 				opacity: 0.05;
 				&:hover { opacity: 0.9; }
