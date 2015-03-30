@@ -7,8 +7,8 @@ collectstatics: compile-scss
 	./manage.py collectstatic --noinput
 
 compile-scss:
-	sassc $(STATIC)/scss/output.scss $(STATIC)/css/output.css
-	sassc $(STATIC)/scss/output-ie.scss $(STATIC)/css/output-ie.css
+	sassc $(STATIC)/scss/output.scss $(STATIC)/css/output.css -s compressed
+	sassc $(STATIC)/scss/output-ie.scss $(STATIC)/css/output-ie.css -s compressed
 
 compile-scss-debug:
 	sassc $(STATIC)/scss/output.scss $(STATIC)/css/output.css --sourcemap
