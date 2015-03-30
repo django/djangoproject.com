@@ -7,13 +7,18 @@ collectstatics: compile-scss
 	./manage.py collectstatic --noinput
 
 compile-scss:
-	compass compile --sass-dir $(STATIC)/scss --css-dir $(STATIC)/css -e production --no-sourcemap --force
+	sassc $(STATIC)/scss/output.scss $(STATIC)/css/output.css -s compressed
+	sassc $(STATIC)/scss/output-ie.scss $(STATIC)/css/output-ie.css -s compressed
 
 compile-scss-debug:
-	compass compile --sass-dir $(STATIC)/scss --css-dir $(STATIC)/css -e development --sourcemap --force
+	sassc $(STATIC)/scss/output.scss $(STATIC)/css/output.css --sourcemap
+	sassc $(STATIC)/scss/output-ie.scss $(STATIC)/css/output-ie.css --sourcemap
 
 watch-scss:
-	compass watch --sass-dir $(STATIC)/scss --css-dir $(STATIC)/css -e production --no-sourcemap --force
+	sassc -w $(STATIC)/scss/output.scss $(STATIC)/css/output.css --sourcemap
+
+watch-scss-ie:
+	sassc -w $(STATIC)/scss/output-ie.scss $(STATIC)/css/output-ie.css --sourcemap
 
 run:
 	python manage.py runserver 0.0.0.0:8000

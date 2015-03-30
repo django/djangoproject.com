@@ -158,23 +158,23 @@ Templates can be found in the ``djangoproject/templates`` subdirectory.
 Styles
 ------
 
-In case you want to work on the stylesheets please install
-`Compass <http://compass-style.org/>`_ with
-`Rubygems <http://rubygems.org/>`_::
+CSS is written in `Scss <http://sass-lang.com/>`_ and compiled via
+`Libsass <http://libsass.org/>`_.
 
-    gem install compass
-
-You may have to prefix that command with ``sudo`` depending on your platform.
-
-Then run the following to compile the Compass SASS files to CSS::
+Run the following to compile the Scss files to CSS::
 
     make compile-scss-debug
 
 Alternatively you can also run the following command in a separate shell
-to continously watch for changes to the SASS files and automatically compile
+to continuously watch for changes to the Scss files and automatically compile
 to CSS::
 
     make watch-scss
+
+If you are working with older versions of IE and wish to watch Scss files for
+changes you'll want to use the IE specific command:
+
+  make watch-scss-ie
 
 Running all at once
 -------------------
