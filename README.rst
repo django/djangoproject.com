@@ -174,7 +174,7 @@ to CSS::
 If you are working with older versions of IE and wish to watch Scss files for
 changes you'll want to use the IE specific command::
 
-  make watch-scss-ie
+    make watch-scss-ie
 
 Running all at once
 -------------------
@@ -188,12 +188,12 @@ to run all process at once:
 
 This is great during development. Assuming you're using Foreman simply run::
 
-  foreman start
+    foreman start
 
 If you just want to run one of the processes defined above use the
 ``run`` subcommand like so::
 
-  foreman run web
+    foreman run web
 
 That'll just run the www server.
 
