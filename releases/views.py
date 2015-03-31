@@ -31,12 +31,10 @@ def index(request):
         }[preview.status]
 
     # Look for an LTS release, if there is one.
-    try:
-        lts = Release.objects.lts()
-    except IndexError:
-        lts = None
-    if lts == previous:
-        lts = None
+    lts = Release.objects.current_lts()
+    if lts in (current, previous):
+        # There might be a previous LTS release that's still supported.
+        lts = Release.objects.previous_lts()
 
     context = {
         'current_version': current.version,
