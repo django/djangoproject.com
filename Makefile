@@ -7,18 +7,18 @@ collectstatics: compile-scss
 	./manage.py collectstatic --noinput
 
 compile-scss:
-	sassc $(STATIC)/scss/output.scss $(STATIC)/css/output.css -s compressed
-	sassc $(STATIC)/scss/output-ie.scss $(STATIC)/css/output-ie.css -s compressed
+	sassc djangoproject/scss/output.scss $(STATIC)/css/output.css -s compressed
+	sassc djangoproject/scss/output-ie.scss $(STATIC)/css/output-ie.css -s compressed
 
 compile-scss-debug:
-	sassc $(STATIC)/scss/output.scss $(STATIC)/css/output.css --sourcemap
-	sassc $(STATIC)/scss/output-ie.scss $(STATIC)/css/output-ie.css --sourcemap
+	sassc djangoproject/scss/output.scss $(STATIC)/css/output.css --sourcemap
+	sassc djangoproject/scss/output-ie.scss $(STATIC)/css/output-ie.css --sourcemap
 
 watch-scss:
-	sassc -w $(STATIC)/scss/output.scss $(STATIC)/css/output.css --sourcemap
+	sassc -w djangoproject/scss/output.scss $(STATIC)/css/output.css --sourcemap
 
 watch-scss-ie:
-	sassc -w $(STATIC)/scss/output-ie.scss $(STATIC)/css/output-ie.css --sourcemap
+	sassc -w djangoproject/scss/output-ie.scss $(STATIC)/css/output-ie.css --sourcemap
 
 run:
 	python manage.py runserver 0.0.0.0:8000
