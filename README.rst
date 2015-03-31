@@ -172,7 +172,7 @@ to CSS::
     make watch-scss
 
 If you are working with older versions of IE and wish to watch Scss files for
-changes you'll want to use the IE specific command:
+changes you'll want to use the IE specific command::
 
   make watch-scss-ie
 
