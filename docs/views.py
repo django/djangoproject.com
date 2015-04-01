@@ -188,31 +188,31 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                                       .highlight_options(order='score')
                                       .highlight('content'))
 
-        page_number = request.GET.get('page') or 1
-        paginator = SearchPaginator(results, per_page=per_page, orphans=orphans)
+            page_number = request.GET.get('page') or 1
+            paginator = SearchPaginator(results, per_page=per_page, orphans=orphans)
 
-        try:
-            page_number = int(page_number)
-        except ValueError:
-            if page_number == 'last':
-                page_number = paginator.num_pages
-            else:
-                raise Http404(_("Page is not 'last', "
-                                "nor can it be converted to an int."))
+            try:
+                page_number = int(page_number)
+            except ValueError:
+                if page_number == 'last':
+                    page_number = paginator.num_pages
+                else:
+                    raise Http404(_("Page is not 'last', "
+                                    "nor can it be converted to an int."))
 
-        try:
-            page = paginator.page(page_number)
-        except InvalidPage as e:
-            raise Http404(_('Invalid page (%(page_number)s): %(message)s') % {
-                'page_number': page_number,
-                'message': str(e)
+            try:
+                page = paginator.page(page_number)
+            except InvalidPage as e:
+                raise Http404(_('Invalid page (%(page_number)s): %(message)s') % {
+                    'page_number': page_number,
+                    'message': str(e)
+                })
+
+            context.update({
+                'query': q,
+                'page': page,
+                'paginator': paginator,
             })
-
-        context.update({
-            'query': q,
-            'page': page,
-            'paginator': paginator,
-        })
 
     if release.lang != 'en':
         activate(release.lang)
