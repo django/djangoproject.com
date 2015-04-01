@@ -1,10 +1,18 @@
 from __future__ import unicode_literals
 
+import json
+import operator
+
 from django.conf import settings
 from django.core.cache import cache
 from django.db import models
+from django.utils.functional import cached_property
 
 from django_hosts.resolvers import reverse
+
+from unipath import Path
+
+from . import utils
 
 
 class DocumentReleaseManager(models.Manager):
@@ -83,20 +91,56 @@ class DocumentRelease(models.Model):
         """
         Return a "human readable" version of the version.
         """
-        return "Development trunk" if self.is_dev else "Django %s" % self.version
+        return "development" if self.is_dev else self.version
 
     @property
     def is_dev(self):
         return self.version == 'dev'
 
 
+def document_url(doc):
+    if doc.path:
+        kwargs = {
+            'lang': doc.release.lang,
+            'version': doc.release.version,
+            'url': doc.path,
+        }
+        return reverse('document-detail', host='docs', kwargs=kwargs)
+    else:
+        kwargs = {
+            'lang': doc.release.lang,
+            'version': doc.release.version,
+        }
+        return reverse('document-index', host='docs', kwargs=kwargs)
+
+
+class DocumentManager(models.Manager):
+
+    def parents(self, path):
+        """Iterate over this path's parents, in ascending order."""
+        for i in range(len(path.components()) - 1):  # ignores the root elemeent
+            yield path.ancestor(i)
+
+    def breadcrumbs(self, document):
+        or_queries = [models.Q(path=path)
+                      for path in self.parents(Path(document.path))]
+        if or_queries:
+            return (self.filter(reduce(operator.or_, or_queries))
+                        .filter(release=document.release)
+                        .exclude(pk=document.pk)
+                        .order_by('path'))
+        return self.none()
+
+
 class Document(models.Model):
     """
-    An individual document. Used mainly as a hook point for Haystack.
+    An individual document. Used mainly as a hook point for the search.
     """
     release = models.ForeignKey(DocumentRelease, related_name='documents')
     path = models.CharField(max_length=500)
     title = models.CharField(max_length=500)
+
+    objects = DocumentManager()
 
     class Meta:
         unique_together = ('release', 'path')
@@ -105,16 +149,19 @@ class Document(models.Model):
         return "/".join([self.release.lang, self.release.version, self.path])
 
     def get_absolute_url(self):
-        if self.path:
-            kwargs = {
-                'lang': self.release.lang,
-                'version': self.release.version,
-                'url': self.path,
-            }
-            return reverse('document-detail', host='docs', kwargs=kwargs)
-        else:
-            kwargs = {
-                'lang': self.release.lang,
-                'version': self.release.version,
-            }
-            return reverse('document-index', host='docs', kwargs=kwargs)
+        return document_url(self)
+
+    @cached_property
+    def root(self):
+        return utils.get_doc_root(self.release.lang, self.release.version)
+
+    @cached_property
+    def full_path(self):
+        return utils.get_doc_path(self.root, self.path)
+
+    @cached_property
+    def body(self):
+        """The document's body"""
+        with open(self.full_path) as fp:
+            doc = json.load(fp)
+        return doc['body']
