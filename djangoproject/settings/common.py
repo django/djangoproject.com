@@ -52,6 +52,26 @@ DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
 FIXTURE_DIRS = [PROJECT_PACKAGE.child('fixtures')]
 
 INSTALLED_APPS = [
+    'accounts',
+    'aggregator',
+    'blog',
+    'cla',
+    'contact',
+    'dashboard',
+    'docs.apps.DocsConfig',
+    'legacy',
+    'releases',
+    'svntogit',
+    'tracdb',
+    'fundraising',
+
+    'flat',
+    'djangosecure',
+    'registration',
+    'django_pygments',
+    'django_hosts',
+    'sorl.thumbnail',
+
     'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.admin',
@@ -65,24 +85,6 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django_push.subscriber',
 
-    'djangosecure',
-    'registration',
-    'django_pygments',
-    'django_hosts',
-    'sorl.thumbnail',
-
-    'accounts',
-    'aggregator',
-    'blog',
-    'cla',
-    'contact',
-    'dashboard',
-    'docs.apps.DocsConfig',
-    'legacy',
-    'releases',
-    'svntogit',
-    'tracdb',
-    'fundraising',
 ]
 
 LANGUAGE_CODE = 'en-us'
