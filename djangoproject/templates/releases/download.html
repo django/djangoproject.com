@@ -11,7 +11,13 @@
 
 {% block content %}
   <h1>How to get Django</h1>
-  <p>Django is available open-source under the <a href="https://github.com/django/django/blob/master/LICENSE">BSD license</a>. It requires Python version 2.7 or higher, but it has no dependencies on other Python libraries. Here’s how to get it:</p>
+  <p>Django is available open-source under the
+    <a href="https://github.com/django/django/blob/master/LICENSE">BSD license</a>.
+    We recommend using the latest version of Python 3, but you can also use
+    Python 2.7. See <a href="
+    {% url 'document-detail' lang='en' version='dev' url='faq/install' host 'docs' %}#what-python-version-can-i-use-with-django">
+    the FAQ</a> for the Python versions supported by each version of Django.
+    Here’s how to get it:</p>
 
   <h2>Option {% cycle '1' '2' '3' as options %}: Get the latest official version</h2>
   <p>The latest official version is {{ current_version }}. Install it with <a href="http://www.pip-installer.org/en/latest/">pip</a>:</p>
