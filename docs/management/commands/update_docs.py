@@ -10,15 +10,16 @@ import shutil
 import subprocess
 import zipfile
 
-
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
-from ...models import DocumentRelease, Document
 
-import haystack
 from unipath import FSPath as Path
+
+from elasticsearch.exceptions import ElasticsearchException
+from ...models import DocumentRelease, Document
+from ...search import DocumentDocType
 
 
 class Command(NoArgsCommand):
@@ -100,6 +101,7 @@ class Command(NoArgsCommand):
                     self.stdout.write("  building %s (%s -> %s)" % (builder, source_dir, build_dir))
                 subprocess.call([
                     'sphinx-build',
+                    '-j', '4',
                     '-b', builder,
                     '-D', 'language=%s' % release.lang,
                     '-q',              # Be vewy qwiet
@@ -187,13 +189,16 @@ class Command(NoArgsCommand):
                     doc = documents.pop(path, Document(path=path, release=release))
                     doc.title = title
                     doc.save()
-                    haystack.site.update_object(doc)
+                    DocumentDocType.index_object(doc)
 
             # Clean up any remaining documents.
             for doc in documents.values():
                 if verbosity >= 2:
                     self.stdout.write("Deleting:", doc)
-                haystack.site.remove_object(doc)
+                try:
+                    DocumentDocType.unindex_object(doc)
+                except ElasticsearchException:
+                    pass
                 doc.delete()
 
     def update_svn(self, url, destdir):
