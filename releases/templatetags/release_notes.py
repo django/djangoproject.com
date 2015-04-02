@@ -3,6 +3,8 @@ from django.utils.translation import ugettext as _
 
 from django_hosts.resolvers import reverse
 
+from ..models import Release
+
 register = template.Library()
 
 
@@ -25,3 +27,14 @@ def release_notes(version, show_version=False):
         ),
         'anchor_text': anchor_text,
     }
+
+
+@register.simple_tag()
+def get_latest_micro_release(version):
+    """
+    Given an X.Y version number, return the latest X.Y.Z version.
+    """
+    major, minor = version.split('.')
+    release = Release.objects.final().filter(major=major, minor=minor).order_by('-micro').first()
+    if release:
+        return release.version
