@@ -2229,7 +2229,7 @@ h2 + .list-link-soup {
 }
 
 #outdated-warning {
-	background-color: #ffbaba;
+	background-color: $red-light;
 	color: $red-dark;
 }
 
@@ -3036,5 +3036,19 @@ form .footnote {
 	}
 	.pagination {
 		clear: both;
+	}
+}
+
+table.django-supported-versions {
+	border: 1px solid black;
+	text-align: center;
+	tr {
+		background-color: $green-very-light;
+		th, td {
+			padding: 5px;
+		}
+	}
+	tr.unsupported {
+		background-color: $red-light;
 	}
 }
