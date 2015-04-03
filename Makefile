@@ -1,4 +1,5 @@
 STATIC = djangoproject/static
+SCSS = djangoproject/scss
 JQUERY_FLOT=djangoproject/static/js/lib/jquery-flot
 
 .PHONY: collectstatics compile-scss compile-scss-debug watch-scss run install test ci
@@ -7,18 +8,15 @@ collectstatics: compile-scss
 	./manage.py collectstatic --noinput
 
 compile-scss:
-	sassc djangoproject/scss/output.scss $(STATIC)/css/output.css -s compressed
-	sassc djangoproject/scss/output-ie.scss $(STATIC)/css/output-ie.css -s compressed
+	sassc $(SCSS)/output.scss $(STATIC)/css/output.css -s compressed
+	sassc $(SCSS)/output-ie.scss $(STATIC)/css/output-ie.css -s compressed
 
 compile-scss-debug:
-	sassc djangoproject/scss/output.scss $(STATIC)/css/output.css --sourcemap
-	sassc djangoproject/scss/output-ie.scss $(STATIC)/css/output-ie.css --sourcemap
+	sassc $(SCSS)/output.scss $(STATIC)/css/output.css --sourcemap
+	sassc $(SCSS)/output-ie.scss $(STATIC)/css/output-ie.css --sourcemap
 
 watch-scss:
-	sassc -w djangoproject/scss/output.scss $(STATIC)/css/output.css --sourcemap
-
-watch-scss-ie:
-	sassc -w djangoproject/scss/output-ie.scss $(STATIC)/css/output-ie.css --sourcemap
+	watchmedo shell-command --patterns=*.scss --recursive --command="make compile-scss-debug" $(SCSS)
 
 run:
 	python manage.py runserver 0.0.0.0:8000

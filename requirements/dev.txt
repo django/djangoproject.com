@@ -1,3 +1,4 @@
 -r common.txt
 
 libsass==0.7.0
+watchdog==0.8.3
