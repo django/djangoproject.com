@@ -22,7 +22,7 @@ from .utils import get_doc_root_or_404, get_doc_path_or_404
 
 
 CURRENT_LTS = '1.4'
-UNSUPPORTED_THRESHOLD = '1.6'
+UNSUPPORTED_THRESHOLD = '1.7'
 SIMPLE_SEARCH_OPERATORS = ['+', '|', '-', '"', '*', '(', ')', '~']
 
 
