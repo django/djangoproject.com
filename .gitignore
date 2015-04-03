@@ -9,3 +9,4 @@ secrets.json
 .coverage
 .tox
 djangoproject/static/js/lib/jquery-flot/examples
+djangoproject/static/css/
