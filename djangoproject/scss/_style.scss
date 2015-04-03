@@ -1667,19 +1667,11 @@ h2 + .list-link-soup {
 
 			// Border Radius, SVG, and Animation Enabled
 			.mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
-<<<<<<< HEAD:djangoproject/scss/_style.scss
-		    -webkit-transition: all 0.3s ease-out;
-		    transition: all 0.3s ease-out;
-
-		    -webkit-transform: rotate(0.5turn);
-		    transform: rotate(0.5turn);
-=======
 				-webkit-transition: all 0.3s ease-out;
 				transition: all 0.3s ease-out;
 
 				-webkit-transform: rotate(0.5turn);
 				transform: rotate(0.5turn);
->>>>>>> master:djangoproject/scss/_style.scss
 
 				&.inview {
 					-webkit-transform: rotate(0turn);
@@ -1723,20 +1715,11 @@ h2 + .list-link-soup {
 			:-o-prefocus,
 			& {
 				background: $green-medium !important;
-
-<<<<<<< HEAD:djangoproject/scss/_style.scss
-		    -webkit-transition: none !important;
-		    transition: none !important;
-
-		    -webkit-transform: none !important;
-		    transform: none !important;
-=======
 				-webkit-transition: none !important;
 				transition: none !important;
 
 				-webkit-transform: none !important;
 				transform: none !important;
->>>>>>> master:djangoproject/scss/_style.scss
 			}
 		}
 	}
@@ -1762,19 +1745,11 @@ h2 + .list-link-soup {
 				@include font-size(24);
 
 				.mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
-<<<<<<< HEAD:djangoproject/scss/_style.scss
-			    -webkit-transition: all 0.3s ease-out;
-			    transition: all 0.3s ease-out;
-
-			    -webkit-transform: rotate(0.5turn);
-			    transform: rotate(0.5turn);
-=======
 					-webkit-transition: all 0.3s ease-out;
 					transition: all 0.3s ease-out;
 
 					-webkit-transform: rotate(0.5turn);
 					transform: rotate(0.5turn);
->>>>>>> master:djangoproject/scss/_style.scss
 				}
 			}
 
@@ -1895,11 +1870,7 @@ h2 + .list-link-soup {
 			max-height: 0px;
 
 			-webkit-transition: all 0.5s ease-out;
-<<<<<<< HEAD:djangoproject/scss/_style.scss
-		  transition: all 0.5s ease-out;
-=======
 			transition: all 0.5s ease-out;
->>>>>>> master:djangoproject/scss/_style.scss
 		}
 		li.active .collapsing-content {
 			max-height: 1000px;
@@ -2061,11 +2032,7 @@ h2 + .list-link-soup {
 	font-weight: 700;
 	text-decoration: none;
 	-webkit-transition: opacity 200ms ease-in-out;
-<<<<<<< HEAD:djangoproject/scss/_style.scss
-  transition: opacity 200ms ease-in-out;
-=======
 	transition: opacity 200ms ease-in-out;
->>>>>>> master:djangoproject/scss/_style.scss
 }
 
 	h1,
@@ -2239,13 +2206,8 @@ h2 + .list-link-soup {
 	width: 100%;
 	padding: 8px 20px 8px;
 	-moz-box-sizing: border-box;
-<<<<<<< HEAD:djangoproject/scss/_style.scss
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-=======
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
->>>>>>> master:djangoproject/scss/_style.scss
 	background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
 	background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
 	background-image: linear-gradient(135deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
@@ -2637,11 +2599,7 @@ form {
 
 	button {
 		-moz-appearance: none;
-<<<<<<< HEAD:djangoproject/scss/_style.scss
-	  -webkit-appearance: none;
-=======
 		-webkit-appearance: none;
->>>>>>> master:djangoproject/scss/_style.scss
 		appearance: none;
 
 		background: $green;
@@ -2924,11 +2882,7 @@ hr {
 		}
 		rect {
 			-webkit-transition: opacity 250ms ease-out;
-<<<<<<< HEAD:djangoproject/scss/_style.scss
-		  transition: opacity 250ms ease-out;
-=======
 			transition: opacity 250ms ease-out;
->>>>>>> master:djangoproject/scss/_style.scss
 
 			&.faded {
 				opacity: 0.05;
