@@ -1,0 +1,2 @@
+This file exists solely to give `make watch-scss` a place to put its files.
+Without the css/ folder, the watch command throws an error.
