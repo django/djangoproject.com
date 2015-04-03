@@ -2,7 +2,7 @@
 *.db
 djangodocs
 static_root
-djangodocs.index
+media_root
 docs/locale/*/LC_MESSAGES/django.mo
 secrets.json
 .sass-cache/

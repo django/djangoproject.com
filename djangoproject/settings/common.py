@@ -1,16 +1,17 @@
 # Settings for www.djangoproject.com
 import json
-
 from unipath import FSPath as Path
 
 # Utilities
+PROJECT_PACKAGE = Path(__file__).absolute().parent.parent
 
 # The full path to the repository root.
-BASE = Path(__file__).absolute().ancestor(2)
+BASE_DIR = PROJECT_PACKAGE.parent
 
 # It's a secret to everybody
 try:
-    with open(BASE.ancestor(2).child('conf').child('secrets.json')) as handle:
+    SECRETS_PATH = BASE_DIR.parent.child('conf').child('secrets.json')
+    with open(SECRETS_PATH) as handle:
         SECRETS = json.load(handle)
 except IOError:
     SECRETS = {
@@ -48,9 +49,29 @@ DATABASE_ROUTERS = ['tracdb.db_router.TracRouter']
 
 DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
 
-FIXTURE_DIRS = [BASE.child('fixtures')]
+FIXTURE_DIRS = [PROJECT_PACKAGE.child('fixtures')]
 
 INSTALLED_APPS = [
+    'accounts',
+    'aggregator',
+    'blog',
+    'cla',
+    'contact',
+    'dashboard',
+    'docs.apps.DocsConfig',
+    'legacy',
+    'releases',
+    'svntogit',
+    'tracdb',
+    'fundraising',
+
+    'flat',
+    'djangosecure',
+    'registration',
+    'django_pygments',
+    'django_hosts',
+    'sorl.thumbnail',
+
     'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.admin',
@@ -64,25 +85,6 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django_push.subscriber',
 
-    'djangosecure',
-    'haystack',
-    'registration',
-    'django_pygments',
-    'django_hosts',
-    'sorl.thumbnail',
-
-    'accounts',
-    'aggregator',
-    'blog',
-    'cla',
-    'contact',
-    'dashboard',
-    'docs',
-    'legacy',
-    'releases',
-    'svntogit',
-    'tracdb',
-    'fundraising',
 ]
 
 LANGUAGE_CODE = 'en-us'
@@ -120,7 +122,7 @@ LOGGING = {
     }
 }
 
-MEDIA_ROOT = BASE.ancestor(2).child('media')
+MEDIA_ROOT = BASE_DIR.child('media_root')
 
 MEDIA_URL = '/m/'
 
@@ -153,9 +155,9 @@ SILENCED_SYSTEM_CHECKS = ['1_6.W001']
 
 SITE_ID = 1
 
-STATICFILES_DIRS = [BASE.child('static')]
+STATICFILES_DIRS = [PROJECT_PACKAGE.child('static')]
 
-STATIC_ROOT = BASE.ancestor(2).child('static')
+STATIC_ROOT = BASE_DIR.child('static_root')
 
 STATIC_URL = '/s/'
 
@@ -177,7 +179,9 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'django.core.context_processors.request',
 ]
 
-TEMPLATE_DIRS = [BASE.child('templates')]
+TEMPLATE_DIRS = [
+    PROJECT_PACKAGE.child('templates'),
+]
 
 TIME_ZONE = 'America/Chicago'
 
@@ -192,10 +196,6 @@ USE_TZ = False
 SECURE_BROWSER_XSS_FILTER = True
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
-
-# Haystack settings
-
-HAYSTACK_SITECONF = 'docs.search_sites'
 
 # django-contact-form / Akismet settings
 
@@ -243,3 +243,6 @@ THUMBNAIL_ALTERNATIVE_RESOLUTIONS = [2]
 # dashboard settings
 TRAC_RPC_URL = "https://code.djangoproject.com/rpc"
 TRAC_URL = "https://code.djangoproject.com/"
+
+# search settings
+ES_HOST = SECRETS.get('es_host', 'localhost:9200')
