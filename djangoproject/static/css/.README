@@ -1,0 +1,2 @@
+This file exists to give libsass a place to put the compiled CSS.
+Without the css/ folder, compilation fails.
