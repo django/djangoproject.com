@@ -1756,6 +1756,11 @@ h2 + .list-link-soup {
 
 					-webkit-transform: rotate(0.5turn);
 					transform: rotate(0.5turn);
+
+					&.inview {
+						-webkit-transform: rotate(0turn);
+						transform: rotate(0turn);
+					}
 				}
 			}
 
