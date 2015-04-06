@@ -33,7 +33,7 @@ LOGGING["handlers"]["syslog"] = {
 }
 LOGGING["loggers"]["django.request"]["handlers"].append("syslog")
 
-MEDIA_ROOT = BASE_DIR.parent.child('media')
+MEDIA_ROOT = str(BASE_DIR.parent.joinpath('media'))
 
 MIDDLEWARE_CLASSES = (['django.middleware.cache.UpdateCacheMiddleware'] +
                       MIDDLEWARE_CLASSES +
@@ -43,7 +43,7 @@ SESSION_COOKIE_SECURE = True
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
-STATIC_ROOT = BASE_DIR.parent.child('static')
+STATIC_ROOT = str(BASE_DIR.parent.joinpath('static'))
 
 # django-secure settings
 
