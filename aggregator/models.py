@@ -1,11 +1,10 @@
-from __future__ import unicode_literals
-
-import logging
 import datetime
+import logging
+
 import feedparser
-from django.db import models
-from django.contrib.auth.models import User
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.db import models
 from django_push.subscriber import signals as push_signals
 from django_push.subscriber.models import Subscription
 

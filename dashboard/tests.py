@@ -4,13 +4,15 @@ import json
 import os
 from unittest import mock
 
+import requests_mock
 from django.core import management
 from django.http import Http404
-from django.test import TestCase, RequestFactory
+from django.test import RequestFactory, TestCase
 from django_hosts.resolvers import reverse
-import requests_mock
 
-from .models import TracTicketMetric, RSSFeedMetric, GithubItemCountMetric, Metric
+from .models import (
+    GithubItemCountMetric, Metric, RSSFeedMetric, TracTicketMetric,
+)
 from .views import index, metric_detail, metric_json
 
 

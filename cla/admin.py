@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ICLA, CCLA, CCLADesignee
+from .models import CCLA, ICLA, CCLADesignee
 
 
 class ICLAAdmin(admin.ModelAdmin):

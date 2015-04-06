@@ -30,6 +30,12 @@ test:
 ci: test
 	@coverage report
 
+isort:
+	isort */*.py
+
+isort-check:
+	isort -c */*.py
+
 $(JQUERY_FLOT)/jquery.flot.min.js: $(JQUERY_FLOT)
 	cat $(JQUERY_FLOT)/jquery.flot.js $(JQUERY_FLOT)/jquery.flot.time.js > $(JQUERY_FLOT)/jquery.flot.concat.js
 	yuicompressor $(JQUERY_FLOT)/jquery.flot.concat.js -o $(JQUERY_FLOT)/jquery.flot.min.js

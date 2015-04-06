@@ -1,7 +1,6 @@
 import requests
-from requests.exceptions import RequestException
-
 from django.core.cache import cache
+from requests.exceptions import RequestException
 
 PEOPLE_STATS_URL = 'https://people.djangoproject.com/api/stats/'
 PACKAGES_STATS_URL = 'https://www.djangopackages.com/api/v3/packages/?limit=0'
