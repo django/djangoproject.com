@@ -69,7 +69,7 @@ def donate(request):
                 }
                 context = {
                     'form': PaymentForm(initial=initial),
-                    'donation_error': donation_error.message,
+                    'donation_error': str(donation_error),
                     'publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
                 }
                 return render(request, 'fundraising/donate.html', context)

@@ -17,7 +17,7 @@ class FeedType(models.Model):
     slug = models.SlugField(max_length=250)
     can_self_add = models.BooleanField(default=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s" % (self.name,)
 
     def items(self):
@@ -42,7 +42,7 @@ class Feed(models.Model):
     feed_type = models.ForeignKey(FeedType)
     owner = models.ForeignKey(User, blank=True, null=True, related_name='owned_feeds')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def save(self, **kwargs):
@@ -115,7 +115,7 @@ class FeedItem(models.Model):
     class Meta:
         ordering = ("-date_modified",)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):

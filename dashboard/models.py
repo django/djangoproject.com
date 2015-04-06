@@ -1,6 +1,6 @@
 import ast
 import datetime
-import xmlrpclib
+import xmlrpc.client
 import feedparser
 import calendar
 import requests
@@ -27,7 +27,7 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = 'categories'
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -48,7 +48,7 @@ class Metric(models.Model):
     class Meta:
         abstract = True
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_absolute_url(self):
@@ -116,11 +116,8 @@ class Metric(models.Model):
 class TracTicketMetric(Metric):
     query = models.TextField()
 
-    def __unicode__(self):
-        return self.name
-
     def fetch(self):
-        s = xmlrpclib.ServerProxy(settings.TRAC_RPC_URL)
+        s = xmlrpc.client.ServerProxy(settings.TRAC_RPC_URL)
         return len(s.ticket.query(self.query + "&max=0"))
 
     def link(self):
@@ -241,5 +238,5 @@ class Datum(models.Model):
         get_latest_by = 'timestamp'
         verbose_name_plural = 'data'
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s at %s: %s" % (self.metric, self.timestamp, self.measurement)

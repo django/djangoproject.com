@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 import codecs
 import json
+import os
+from unittest import mock
+
 from django.core import management
 from django.http import Http404
 from django.test import TestCase, RequestFactory
 from django_hosts.resolvers import reverse
-import mock
 import requests_mock
-from unipath import Path
 
 from .models import TracTicketMetric, RSSFeedMetric, GithubItemCountMetric, Metric
 from .views import index, metric_detail, metric_json
@@ -27,8 +28,8 @@ class ViewTests(TestCase):
         request = self.factory.get(reverse('dashboard-index', host='dashboard'))
         response = index(request)
         self.assertContains(response, 'Development dashboard')
-        self.assertEqual(response.content.count('<div class="metric'), 13)
-        self.assertEqual(response.content.count('42'), 13)
+        self.assertEqual(response.content.count(b'<div class="metric'), 13)
+        self.assertEqual(response.content.count(b'42'), 13)
 
     def test_metric(self):
         TracTicketMetric.objects.get(slug='new-tickets-week').data.create(measurement=42)
@@ -53,11 +54,14 @@ class ViewTests(TestCase):
         request = self.factory.get(reverse('metric-json', args=['new-tickets-week'],
                                            host='dashboard'))
         response = metric_json(request, 'new-tickets-week')
-        self.assertEqual(json.loads(response.content)['data'][0][1], 42)
+        self.assertEqual(json.loads(response.content.decode())['data'][0][1], 42)
         self.assertEqual(response.status_code, 200)
 
 
 class MetricMixin(object):
+
+    def test_str(self):
+        self.assertEqual(str(self.instance), self.instance.name)
 
     def test_get_absolute_url(self):
         url_path = '/metric/%s/' % self.instance.slug
@@ -71,7 +75,7 @@ class TracTicketMetricTestCase(TestCase, MetricMixin):
         super(TracTicketMetricTestCase, self).setUp()
         self.instance = TracTicketMetric.objects.last()
 
-    @mock.patch('xmlrpclib.ServerProxy')
+    @mock.patch('xmlrpc.client.ServerProxy')
     def test_fetch(self, mock_server_proxy):
         self.instance.fetch()
         self.assertTrue(mock_server_proxy.client.query.assert_called_with)
@@ -80,7 +84,7 @@ class TracTicketMetricTestCase(TestCase, MetricMixin):
 class RSSFeedMetricTestCase(TestCase, MetricMixin):
     fixtures = ['dashboard_test_data']
     feed_url = 'http://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7&format=rss'
-    fixtures_path = Path(__file__).parent.child('fixtures', 'rss_feed_metric.xml')
+    fixtures_path = os.path.join(os.path.dirname(__file__), 'fixtures', 'rss_feed_metric.xml')
 
     def setUp(self):
         super(RSSFeedMetricTestCase, self).setUp()

@@ -226,7 +226,7 @@ class PaymentForm(forms.Form):
         except stripe.error.CardError as card_error:
             raise DonationError(
                 "We're sorry but we had problems charging your card. "
-                'Here is what Stripe replied: "%s"' % card_error.message)
+                'Here is what Stripe replied: "%s"' % str(card_error))
 
         except stripe.error.InvalidRequestError:
             # Invalid parameters were supplied to Stripe's API

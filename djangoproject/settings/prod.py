@@ -52,8 +52,7 @@ SECURE_HSTS_SECONDS = 31536000  # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 # Docs settings
-
-DOCS_BUILD_ROOT = BASE_DIR.parent.child('data').child('docbuilds')
+DOCS_BUILD_ROOT = BASE_DIR.parent.joinpath('data', 'docbuilds')
 
 # django-hosts settings
 
