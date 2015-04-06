@@ -9,7 +9,7 @@ def get_doc_root(lang, version, subroot='json'):
 def get_doc_root_or_404(lang, version, subroot='json'):
     docroot = get_doc_root(lang, version, subroot)
     if not docroot.exists():
-        raise Http404(docroot)
+        raise Http404(str(docroot))
     return docroot
 
 

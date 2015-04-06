@@ -90,7 +90,7 @@ def document(request, lang, version, url):
 
 def pot_file(request, pot_name):
     version = DocumentRelease.objects.current().version
-    doc_root = get_doc_root_or_404('en', version, subroot='gettext')
+    doc_root = str(get_doc_root_or_404('en', version, subroot='gettext'))
     return static.serve(request, document_root=doc_root, path=pot_name)
 
 
@@ -104,7 +104,7 @@ def sphinx_static(request, lang, version, path, subpath=None):
 
 def objects_inventory(request, lang, version):
     response = static.serve(request,
-                            document_root=get_doc_root_or_404(lang, version),
+                            document_root=str(get_doc_root_or_404(lang, version)),
                             path="objects.inv")
     response['Content-Type'] = "text/plain"
     return response
