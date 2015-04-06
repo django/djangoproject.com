@@ -98,7 +98,7 @@ def sphinx_static(request, lang, version, path, subpath=None):
     """
     Serve Sphinx static assets from a subdir of the build location.
     """
-    document_root = get_doc_root_or_404(lang, version).joinpath(subpath)
+    document_root = str(get_doc_root_or_404(lang, version).joinpath(subpath))
     return static.serve(request, document_root=document_root, path=path)
 
 
