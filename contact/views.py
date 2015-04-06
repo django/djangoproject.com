@@ -1,6 +1,5 @@
-from django.core import urlresolvers
-
 from contact_form.views import ContactFormView
+from django.core import urlresolvers
 
 from .forms import FoundationContactForm
 

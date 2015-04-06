@@ -1,6 +1,6 @@
 import datetime
-import requests_mock
 
+import requests_mock
 from django.conf import settings
 from django.contrib.auth.models import Group, User
 from django.core import mail

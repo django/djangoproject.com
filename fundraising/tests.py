@@ -5,12 +5,11 @@ from operator import attrgetter
 from unittest.mock import patch
 
 import stripe
-from PIL import Image
-
 from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from PIL import Image
 
 from .exceptions import DonationError
 from .forms import PaymentForm

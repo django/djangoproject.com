@@ -5,6 +5,7 @@ language: python
 env:
   - TOXENV=py34-tests
   - TOXENV=py34-flake8
+  - TOXENV=py34-isort
 install:
   - pip install coveralls tox
 before_script:

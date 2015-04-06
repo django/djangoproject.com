@@ -1,10 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.list import ListView
 
-from .models import FeedItem, Feed, FeedType, APPROVED_FEED
 from .forms import FeedModelForm
+from .models import APPROVED_FEED, Feed, FeedItem, FeedType
 
 
 def index(request):

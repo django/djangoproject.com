@@ -1,12 +1,12 @@
 import hashlib
 import json
 
-from django.shortcuts import redirect, render, get_object_or_404
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.conf import settings
 from django.core import cache
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
 
 from cla.models import find_agreements
 from tracdb import stats as trac_stats

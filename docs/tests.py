@@ -1,5 +1,5 @@
 from django.contrib.sites.models import Site
-from django.template import Template, Context
+from django.template import Context, Template
 from django.test import TestCase
 
 
