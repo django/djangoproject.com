@@ -5,9 +5,7 @@ queries against the "trac" DB alias.
 It's very simplistic, leaving off allow_relation and allow_migrate since all
 the Trac apps are unmanaged.
 """
-from pathlib import Path
-
-THIS_APP = Path(__file__).resolve().parent
+THIS_APP = 'tracdb'
 
 
 class TracRouter(object):
