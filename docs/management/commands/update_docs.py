@@ -224,6 +224,7 @@ class Command(NoArgsCommand):
                 cwd = os.getcwd()
                 os.chdir(str(destdir))
                 subprocess.call(['git', 'reset', '--hard', 'HEAD'])
+                subprocess.call(['git', 'clean', '-fdx'])
                 subprocess.call(['git', 'pull'])
             finally:
                 os.chdir(cwd)
