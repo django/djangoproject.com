@@ -122,14 +122,15 @@ class Command(NoArgsCommand):
                 self.stdout.write("  build zip (into %s)" % zipfile_path)
 
             def zipfile_inclusion_filter(file_path):
-                file_path = Path(file_path)
-                return file_path.is_file() and '.doctrees' not in file_path.parts
+                return '.doctrees' not in file_path.parts
 
             with closing(zipfile.ZipFile(str(zipfile_path), 'w', compression=zipfile.ZIP_DEFLATED)) as zf:
                 for root, dirs, files in os.walk(str(html_build_dir)):
                     for f in files:
-                        if zipfile_inclusion_filter(f):
-                            zf.write(os.path.join(root, f), Path(f).relative_to(html_build_dir))
+                        file_path = Path(os.path.join(root, f))
+                        if zipfile_inclusion_filter(file_path):
+                            rel_path = str(file_path.relative_to(html_build_dir))
+                            zf.write(str(file_path), rel_path)
 
             #
             # Copy the build results to the directory used for serving
