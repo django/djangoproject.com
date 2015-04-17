@@ -2,23 +2,22 @@
 Update and build the documentation into files for display with the djangodocs
 app.
 """
-from contextlib import closing
 import json
 import optparse
 import os
 import shutil
 import subprocess
 import zipfile
+from contextlib import closing
 from pathlib import Path
 
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
-
-
 from elasticsearch.exceptions import ElasticsearchException
-from ...models import DocumentRelease, Document
+
+from ...models import Document, DocumentRelease
 from ...search import DocumentDocType
 
 
