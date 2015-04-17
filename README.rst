@@ -19,11 +19,17 @@ To run locally, do the usual:
 
     make install
 
-#. Create a 'secrets.json' file in a folder named 'conf' in the directory
-   above your cloned repo, containing something like::
+#. Make a directory to store the project's data (MEDIA_ROOT, DOC_BUILDS_ROOT,
+   etc.). We'll use ~/.djangoproject for example purposes.
+
+   Create a 'secrets.json' file in a folder named 'conf' in that directory,
+   containing something like::
 
     { "secret_key": "xyz",
       "superfeedr_creds": ["any@email.com", "some_string"] }
+
+   Add `export DJANGOPROJECT_DATA_DIR=~/.djangoproject` (without the backticks)
+   to your ~/.bashrc file and then run `source ~/.bashrc` to load the changes.
 
 #. Create databases::
 
