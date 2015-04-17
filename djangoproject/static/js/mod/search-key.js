@@ -14,7 +14,7 @@ define([
 				$(window).keypress(function(e) {
 					if ($('input:focus, textarea:focus').length === 0 &&
 							e.which === 47) {  // The slash is 47.
-						self.search_form.find('input').focus();
+						self.search_form.find('input').focus().select();
 						return false;
 					}
 				});
