@@ -12,8 +12,10 @@ define([
 			var self = this;
 			$(document).ready(function () {
 				$(window).keypress(function(e) {
-					if (e.which === 47) {  // The slash is 47.
-						self.search_form.find('input').focus().select();
+					if ($('input:focus, textarea:focus').length === 0 &&
+							e.which === 47) {  // The slash is 47.
+						self.search_form.find('input').focus();
+						return false;
 					}
 				});
 			});
