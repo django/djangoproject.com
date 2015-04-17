@@ -45,7 +45,9 @@
       </span>
     </dt>
     <dd>
+      {% if result.meta.highlight %}
       {{ result.meta.highlight.content_raw.0|safe }}…
+      {% endif %}
     </dd>
     {% endfor %}
     </dl>
