@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Feed, FeedItem, FeedType, APPROVED_FEED, DENIED_FEED
+from .models import APPROVED_FEED, DENIED_FEED, Feed, FeedItem, FeedType
 
 
 def mark_approved(modeladmin, request, queryset):

@@ -1,11 +1,10 @@
-from __future__ import absolute_import
 import datetime
 import operator
 
 from django.core.cache import cache
-from django.http.response import JsonResponse, Http404
-from django.shortcuts import render
 from django.forms.models import model_to_dict
+from django.http.response import Http404, JsonResponse
+from django.shortcuts import render
 
 from .models import Metric
 from .utils import generation_key

@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
-from django.core.paginator import Paginator, Page, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, Page, PageNotAnInteger, Paginator
 from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
-
 from elasticsearch.helpers import streaming_bulk
-from elasticsearch_dsl import (Long, DocType, String, Nested, Object, Mapping,
-                               analysis)
+from elasticsearch_dsl import analysis, DocType, Long, Nested, Object, String
 from elasticsearch_dsl.connections import connections
 
 from .models import Document, document_url

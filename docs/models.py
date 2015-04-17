@@ -8,7 +8,6 @@ from django.conf import settings
 from django.core.cache import cache
 from django.db import models
 from django.utils.functional import cached_property
-
 from django_hosts.resolvers import reverse
 
 from . import utils

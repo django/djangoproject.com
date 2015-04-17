@@ -3,9 +3,10 @@ from django.utils.safestring import mark_safe
 from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
+
 from ..forms import DocSearchForm
 from ..models import DocumentRelease
-from ..utils import get_doc_root, get_doc_path
+from ..utils import get_doc_path, get_doc_root
 
 register = template.Library()
 

@@ -1,5 +1,4 @@
 import logging
-
 from datetime import timedelta
 
 from django.conf import settings
@@ -7,8 +6,7 @@ from django.core.management.base import NoArgsCommand
 from django.utils import timezone
 from django_push.subscriber.models import Subscription
 
-from ...models import Feed, APPROVED_FEED
-
+from ...models import APPROVED_FEED, Feed
 
 logger = logging.getLogger(__name__)
 

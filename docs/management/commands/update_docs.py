@@ -2,23 +2,22 @@
 Update and build the documentation into files for display with the djangodocs
 app.
 """
-from contextlib import closing
 import json
 import optparse
 import os
 import shutil
 import subprocess
 import zipfile
+from contextlib import closing
 from pathlib import Path
 
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
-
-
 from elasticsearch.exceptions import ElasticsearchException
-from ...models import DocumentRelease, Document
+
+from ...models import Document, DocumentRelease
 from ...search import DocumentDocType
 
 
@@ -99,7 +98,7 @@ class Command(NoArgsCommand):
 
                 if verbosity >= 2:
                     self.stdout.write("  building %s (%s -> %s)" % (builder, source_dir, build_dir))
-                subprocess.call([
+                subprocess.check_call([
                     'sphinx-build',
                     '-j', '4',
                     '-b', builder,
@@ -122,14 +121,15 @@ class Command(NoArgsCommand):
                 self.stdout.write("  build zip (into %s)" % zipfile_path)
 
             def zipfile_inclusion_filter(file_path):
-                file_path = Path(file_path)
-                return file_path.is_file() and '.doctrees' not in file_path.parts
+                return '.doctrees' not in file_path.parts
 
             with closing(zipfile.ZipFile(str(zipfile_path), 'w', compression=zipfile.ZIP_DEFLATED)) as zf:
                 for root, dirs, files in os.walk(str(html_build_dir)):
                     for f in files:
-                        if zipfile_inclusion_filter(f):
-                            zf.write(os.path.join(root, f), Path(f).relative_to(html_build_dir))
+                        file_path = Path(os.path.join(root, f))
+                        if zipfile_inclusion_filter(file_path):
+                            rel_path = str(file_path.relative_to(html_build_dir))
+                            zf.write(str(file_path), rel_path)
 
             #
             # Copy the build results to the directory used for serving
@@ -224,6 +224,7 @@ class Command(NoArgsCommand):
                 cwd = os.getcwd()
                 os.chdir(str(destdir))
                 subprocess.call(['git', 'reset', '--hard', 'HEAD'])
+                subprocess.call(['git', 'clean', '-fdx'])
                 subprocess.call(['git', 'pull'])
             finally:
                 os.chdir(cwd)

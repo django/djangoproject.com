@@ -1,9 +1,8 @@
 from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404
-
 from django_hosts.resolvers import reverse
 
-from .models import FeedType, FeedItem
+from .models import FeedItem, FeedType
 
 
 class BaseCommunityAggregatorFeed(Feed):

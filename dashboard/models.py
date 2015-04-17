@@ -1,13 +1,16 @@
 import ast
+import calendar
 import datetime
 import xmlrpc.client
+
 import feedparser
-import calendar
 import requests
 from django.conf import settings
-from django.contrib.contenttypes.generic import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.generic import (
+    GenericForeignKey, GenericRelation,
+)
 from django.contrib.contenttypes.models import ContentType
-from django.db import models, connections
+from django.db import connections, models
 from django_hosts.resolvers import reverse
 
 METRIC_PERIOD_INSTANT = 'instant'

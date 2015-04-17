@@ -1,9 +1,9 @@
 import datetime
 from distutils.version import LooseVersion
 
-from django.db import models
 from django.conf import settings
 from django.core.cache import cache
+from django.db import models
 from django.utils.functional import cached_property
 from django.utils.version import get_version
 
