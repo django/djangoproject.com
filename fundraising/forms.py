@@ -3,7 +3,7 @@ from django import forms
 from django.utils.safestring import mark_safe
 
 from .exceptions import DonationError
-from .models import DjangoHero, Donation, Campaign
+from .models import Campaign, DjangoHero, Donation
 
 INTERVAL_CHOICES = (
     ('monthly', 'Monthly donation'),
