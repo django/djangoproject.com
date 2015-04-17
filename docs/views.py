@@ -161,24 +161,15 @@ def search_results(request, lang, version, per_page=10, orphans=3):
             if exact is not None:
                 return redirect(exact)
 
-            should = []
-            if any(operator in q for operator in SIMPLE_SEARCH_OPERATORS):
-                should.append(query.SimpleQueryString(fields=['title',
-                                                              'content^5'],
-                                                      query=q,
-                                                      analyzer='stop',
-                                                      default_operator='and'))
-            else:
-                # let's just use simple queries since they allow some
-                # neat syntaxes for exclusion etc. For more info see
-                # http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html
-                should = [query.MultiMatch(fields=['title^10', 'content'],
-                                           query=q,
-                                           type='phrase_prefix'),
-                          query.Match(query=q),
-                          query.MultiMatch(fields=['title^5', 'content'],
-                                           query=q,
-                                           fuzziness=1)]
+            # let's just use simple queries since they allow some
+            # neat syntaxes for exclusion etc. For more info see
+            # http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html
+            should = [
+                query.Common(_all={'query': q, 'cutoff_frequency': 0.001}),
+                query.SimpleQueryString(fields=['title', '_all'],
+                                        query=q,
+                                        default_operator='and'),
+            ]
 
             # then apply the queries and filter out anything not matching
             # the wanted version and language, also highlight the content
@@ -189,7 +180,7 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                                       .filter('term', release__lang=release.lang)
                                       .filter('term', release__version=release.version)
                                       .highlight_options(order='score')
-                                      .highlight('content'))
+                                      .highlight('content_raw'))
 
             page_number = request.GET.get('page') or 1
             paginator = SearchPaginator(results, per_page=per_page, orphans=orphans)

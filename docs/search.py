@@ -4,7 +4,8 @@ from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
 
 from elasticsearch.helpers import streaming_bulk
-from elasticsearch_dsl import Long, DocType, String, Nested, Object, Mapping
+from elasticsearch_dsl import (Long, DocType, String, Nested, Object, Mapping,
+                               analysis)
 from elasticsearch_dsl.connections import connections
 
 from .models import Document, document_url
@@ -105,6 +106,30 @@ class ImprovedDocType(DocType):
                                   'to map ORM object fields to ES fields')
 
 
+analysis.Tokenizer._builtins = analysis.TOKENIZERS = frozenset((
+    'keyword', 'standard', 'path_hierarchy', 'whitespace'
+))
+
+
+class PathHierarchyTokenizer(analysis.Tokenizer):
+    name = 'path_hierarchy'
+
+
+class WhitespaceTokenizer(analysis.Tokenizer):
+    name = 'whitespace'
+
+
+path_analyzer = analysis.CustomAnalyzer('path',
+                                        tokenizer='path_hierarchy',
+                                        filter=['lowercase'])
+
+
+lower_whitespace_analyzer = analysis.analyzer('lower_whitespace',
+                                              tokenizer='whitespace',
+                                              filter=['lowercase', 'stop'],
+                                              char_filter=['html_strip'])
+
+
 class DocumentDocType(ImprovedDocType):
     """
     The main documentation doc type to be used for searching.
@@ -120,11 +145,10 @@ class DocumentDocType(ImprovedDocType):
     model = Document
 
     id = Long()
-    title = String(analyzer='snowball',
-                   fields={'raw': String(index='not_analyzed')},
-                   boost=1.2)
-    path = String(index='no')
-    content = String(analyzer='simple', index_options='offsets')
+    title = String(analyzer=lower_whitespace_analyzer, boost=1.2)
+    path = String(index='no', analyzer=path_analyzer)
+    content = String(analyzer=lower_whitespace_analyzer)
+    content_raw = String(index_options='offsets')
     release = Object(properties={
         'id': Long(),
         'version': String(index='not_analyzed'),
@@ -138,8 +162,6 @@ class DocumentDocType(ImprovedDocType):
     class Meta:
         index = 'docs'
         doc_type = 'document'
-        mapping = Mapping('document')
-        mapping.meta('_all', enabled=False)
 
     @classmethod
     def index_queryset(cls):
@@ -156,10 +178,11 @@ class DocumentDocType(ImprovedDocType):
     def from_django(cls, obj):
         # turns HTML entities into unicode characters again and removes
         # all HTML tags, aka "plain text" versio of the document
-        content = strip_tags(unescape_entities(obj.body).replace(u'¶', ''))
+        raw_body = strip_tags(unescape_entities(obj.body).replace(u'¶', ''))
         doc = cls(path=obj.path,
                   title=obj.title,
-                  content=content,
+                  content=obj.body,
+                  content_raw=raw_body,
                   meta={'id': obj.id})
         doc.release = {
             'id': obj.release.id,
