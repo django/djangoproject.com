@@ -17,5 +17,6 @@ class DocsConfig(AppConfig):
                 'hosts': settings.ES_HOST,
                 'verify_certs': True,
                 'ca_certs': certifi.where(),
+                'timeout': 60.0,
             },
         )
