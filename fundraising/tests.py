@@ -13,9 +13,9 @@ from PIL import Image
 
 from .exceptions import DonationError
 from .forms import PaymentForm
-from .models import DjangoHero, Donation, Campaign
-from .utils import shuffle_donations
+from .models import Campaign, DjangoHero, Donation
 from .templatetags.fundraising_extras import donation_form_with_heart
+from .utils import shuffle_donations
 
 
 def _fake_random(*results):
