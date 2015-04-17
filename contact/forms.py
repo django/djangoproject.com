@@ -1,13 +1,12 @@
 import logging
 
 import django
+from contact_form.forms import ContactForm
 from django import forms
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.utils.encoding import force_bytes
-
 from pykismet3 import Akismet, AkismetServerError
-from contact_form.forms import ContactForm
 
 logger = logging.getLogger(__name__)
 

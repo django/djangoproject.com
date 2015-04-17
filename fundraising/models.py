@@ -1,12 +1,11 @@
 from decimal import Decimal
 
 from django.db import models
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import crypto, timezone
-from django.db.models.signals import post_save
 from django_hosts.resolvers import reverse
-
-from sorl.thumbnail import get_thumbnail, ImageField
+from sorl.thumbnail import ImageField, get_thumbnail
 
 RESTART_GOAL = Decimal("30000.00")
 STRETCH_GOAL = Decimal("50000.00")

@@ -1,6 +1,5 @@
 from django import template
 from django.utils.translation import ugettext as _
-
 from django_hosts.resolvers import reverse
 
 from ..models import Release

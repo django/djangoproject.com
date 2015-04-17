@@ -1,10 +1,8 @@
-from django.conf.urls import url, include
-
-from registration.forms import RegistrationFormUniqueEmail
+from django.conf.urls import include, url
 from registration.backends.default.views import RegistrationView
+from registration.forms import RegistrationFormUniqueEmail
 
 from . import views as account_views
-
 
 urlpatterns = [
     url(

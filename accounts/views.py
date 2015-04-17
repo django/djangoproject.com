@@ -1,12 +1,12 @@
 import hashlib
 import json
 
-from django.shortcuts import redirect, render, get_object_or_404
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.conf import settings
 from django.core import cache
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
 
 from cla.models import find_agreements
 from tracdb import stats as trac_stats
@@ -16,15 +16,14 @@ from .models import Profile
 
 
 def user_profile(request, username):
-    u = get_object_or_404(User, username=username)
-    ctx = {
-        'user_obj': u,
-        'email_hash': hashlib.md5(u.email).hexdigest(),
-        'user_can_commit': u.has_perm('auth.commit'),
-        'clas': find_agreements(u),
-        'stats': get_user_stats(u),
-    }
-    return render(request, "accounts/user_profile.html", ctx)
+    user = get_object_or_404(User, username=username)
+    return render(request, "accounts/user_profile.html", {
+        'user_obj': user,
+        'email_hash': hashlib.md5(user.email.encode('ascii', 'ignore')).hexdigest(),
+        'user_can_commit': user.has_perm('auth.commit'),
+        'clas': find_agreements(user),
+        'stats': get_user_stats(user),
+    })
 
 
 @login_required
@@ -81,7 +80,8 @@ def get_user_info(username):
 
 def get_user_stats(user):
     c = cache.get_cache('default')
-    key = 'user_vital_status:%s' % hashlib.md5(user.username).hexdigest()
+    username = user.username.encode('ascii', 'ignore')
+    key = 'user_vital_status:%s' % hashlib.md5(username).hexdigest()
     info = c.get(key)
     if info is None:
         info = trac_stats.get_user_stats(user.username)

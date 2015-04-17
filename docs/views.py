@@ -2,24 +2,21 @@ import datetime
 import json
 
 from django.conf import settings
-from django.core.paginator import InvalidPage
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
+from django.core.paginator import InvalidPage
 from django.http import Http404, JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.utils.translation import ugettext_lazy as _, activate
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import activate, ugettext_lazy as _
 from django.views import static
 from django.views.decorators.cache import cache_page
-
 from django_hosts.resolvers import reverse
-
 from elasticsearch_dsl import query
 
 from .forms import DocSearchForm
-from .models import DocumentRelease, Document
+from .models import Document, DocumentRelease
 from .search import DocumentDocType, SearchPaginator
-from .utils import get_doc_root_or_404, get_doc_path_or_404
-
+from .utils import get_doc_path_or_404, get_doc_root_or_404
 
 CURRENT_LTS = '1.4'
 UNSUPPORTED_THRESHOLD = '1.7'

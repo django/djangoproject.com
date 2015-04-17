@@ -1,18 +1,17 @@
 from datetime import date
 from decimal import Decimal, DecimalException
 
+import stripe
 from django.conf import settings
 from django.contrib import messages
 from django.db.models import Sum
-from django.shortcuts import redirect, render, get_object_or_404
-
-import stripe
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .exceptions import DonationError
-from .forms import DonateForm, PaymentForm, DjangoHeroForm
+from .forms import DjangoHeroForm, DonateForm, PaymentForm
 from .models import (
-    DjangoHero, Donation, Testimonial, RESTART_GOAL, DEFAULT_DONATION_AMOUNT,
-    DISPLAY_LOGO_AMOUNT, WEEKLY_GOAL, STRETCH_GOAL,
+    DEFAULT_DONATION_AMOUNT, DISPLAY_LOGO_AMOUNT, RESTART_GOAL, STRETCH_GOAL,
+    WEEKLY_GOAL, DjangoHero, Donation, Testimonial,
 )
 from .utils import shuffle_donations
 

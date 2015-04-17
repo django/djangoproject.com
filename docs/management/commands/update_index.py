@@ -1,4 +1,5 @@
 from optparse import make_option as Option
+
 from django.core.management.base import BaseCommand
 
 from ...search import DocumentDocType

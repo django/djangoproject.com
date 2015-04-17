@@ -1,7 +1,6 @@
 from django.core.cache import cache
 from django.utils import crypto
 
-
 GENERATION_KEY_NAME = 'metric:generation'
 
 
