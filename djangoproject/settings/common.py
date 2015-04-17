@@ -1,5 +1,6 @@
 # Settings for www.djangoproject.com
 import json
+import os
 from pathlib import Path
 
 # Utilities
@@ -8,9 +9,11 @@ PROJECT_PACKAGE = Path(__file__).resolve().parent.parent
 # The full path to the repository root.
 BASE_DIR = PROJECT_PACKAGE.parent
 
-# It's a secret to everybody
+data_dir_key = 'DJANGOPROJECT_DATA_DIR'
+DATA_DIR = Path(os.environ[data_dir_key]) if data_dir_key in os.environ else BASE_DIR.parent
+
 try:
-    with BASE_DIR.parent.joinpath('conf', 'secrets.json').open() as handle:
+    with DATA_DIR.joinpath('conf', 'secrets.json').open() as handle:
         SECRETS = json.load(handle)
 except IOError:
     SECRETS = {
@@ -119,8 +122,6 @@ LOGGING = {
     }
 }
 
-MEDIA_ROOT = str(BASE_DIR.joinpath('media_root'))
-
 MEDIA_URL = '/m/'
 
 MIDDLEWARE_CLASSES = [
@@ -153,8 +154,6 @@ SILENCED_SYSTEM_CHECKS = ['1_6.W001']
 SITE_ID = 1
 
 STATICFILES_DIRS = [str(PROJECT_PACKAGE.joinpath('static'))]
-
-STATIC_ROOT = str(BASE_DIR.joinpath('static_root'))
 
 STATIC_URL = '/s/'
 
