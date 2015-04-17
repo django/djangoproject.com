@@ -115,20 +115,17 @@ def document_url(doc):
 
 class DocumentManager(models.Manager):
 
-    def parents(self, path):
-        """Iterate over this path's parents, in ascending order."""
-        for segment in os.path.split(str(path))[1:]:  # ignores the root element
-            yield Path(segment)
-
     def breadcrumbs(self, document):
-        or_queries = [models.Q(path=path)
-                      for path in self.parents(Path(document.path))]
-        if or_queries:
+        # get an ascending list of parent paths except the root path ('.')
+        parent_paths = list(Path(document.path).parents)[:-1]
+        if parent_paths:
+            or_queries = [models.Q(path=str(path)) for path in parent_paths]
             return (self.filter(reduce(operator.or_, or_queries))
                         .filter(release=document.release)
                         .exclude(pk=document.pk)
                         .order_by('path'))
-        return self.none()
+        else:
+            return self.none()
 
 
 class Document(models.Model):
