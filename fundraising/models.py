@@ -18,17 +18,15 @@ INTERVAL_CHOICES = (
 
 
 class DjangoHeroManager(models.Manager):
-    def for_campaign(self, campaign, with_logo=False):
+    def for_campaign(self, campaign, hero_type=None):
         donors = self.get_queryset().filter(
             donation__campaign=campaign,
             is_visible=True,
             approved=True,
         ).annotate(donated_amount=models.Sum('donation__amount'))
 
-        if with_logo:
-            donors = donors.filter(donated_amount__gte=DISPLAY_LOGO_AMOUNT)
-        else:
-            donors = donors.filter(donated_amount__lt=DISPLAY_LOGO_AMOUNT)
+        if hero_type:
+            donors = donors.filter(hero_type=hero_type)
 
         return donors.order_by('-donated_amount', 'name')
 
