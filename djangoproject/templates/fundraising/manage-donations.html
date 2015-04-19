@@ -18,7 +18,7 @@
   <hr />
 
 {% if modify_donations_formset %}
-    <h2>Modify your recurring donation</h2>
+    <h2>Modify your recurring donations</h2>
     <p>Update the time interval or amount of your recurring donation here:</p>
     {% csrf_token %}
     {% for form in modify_donations_formset %}
@@ -32,8 +32,17 @@
 
     <hr />
 
-    <h2>Cancel your recurring donation</h2>
-    
+    <h2>Cancel your recurring donations</h2>
+    <p>You can cancel your recurring donation to Django Software Foundation anytime.</p>
+    <ul>
+    {% for donation in recurring_donations %}
+      <li>
+        Your {{ donation.interval }} recurring donation of ${{ donation.amount }} to {{ donation.campaign.name }}:
+        <a href="{% url 'fundraising:cancel-donation' hero.pk donation.pk %}">cancel this donation</a>
+      </li>
+    {% endfor %}
+    </ul>
+
 {% endif %}
 </form>
 
