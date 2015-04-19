@@ -48,11 +48,6 @@ define([
         var amountDollars = $donationForm.find('[name=amount]').val();
         var amountCents = parseFloat(amountDollars) * 100;
 
-        if (interval !== 'onetime' && $donationForm.data('isLoggedIn') === "False"){
-            window.location = $donationForm.data('loginUrl') + "?next=" + window.location.pathname;
-            return;
-        }
-
         handler.open({
             name: 'Django Software Foundation',
             description: $donationForm.data('campaignName'),
