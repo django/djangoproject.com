@@ -73,16 +73,12 @@ class DjangoHeroForm(forms.ModelForm):
             'future fundraising campaigns by email.'
         ),
     )
-    is_amount_displayed = forms.BooleanField(
-        required=False,
-        label='Yes, display the amount of my donation.'
-    )
 
     class Meta:
         model = DjangoHero
         fields = (
             'hero_type', 'name', 'url', 'logo', 'is_visible',
-            'is_amount_displayed', 'email', 'is_subscribed',
+            'email', 'is_subscribed',
         )
 
     def __init__(self, *args, **kwargs):

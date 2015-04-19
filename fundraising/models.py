@@ -60,10 +60,6 @@ class DjangoHero(FundraisingModel):
         default=False,
         verbose_name="Agreed to being contacted by DSF?",
     )
-    is_amount_displayed = models.BooleanField(
-        default=False,
-        verbose_name="Agreed to disclose amount of donation?",
-    )
     approved = models.NullBooleanField(
         verbose_name="Name, URL, and Logo approved?",
     )
