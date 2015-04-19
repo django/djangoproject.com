@@ -3005,10 +3005,18 @@ form .footnote {
 }
 .heros-section {
 	overflow: hidden;
+
 	.heros {
 		clear: both;
+
+		.individuals, .organizations {
+			width: 50%;
+		}
+		.organizations {
+			float: left;
+		}
 		.hero {
-			width: 25%;
+			width: 50%;
 			position: relative;
 			height: auto;
 			div {
