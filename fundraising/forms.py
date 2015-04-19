@@ -77,6 +77,14 @@ class DjangoHeroForm(forms.ModelForm):
             elif isinstance(field.widget, forms.RadioSelect):
                 self.radio_select_fields.append(name)
 
+    def save(self):
+        hero = super().save(commit=True)
+        customer = stripe.Customer.retrieve(hero.stripe_customer_id)
+        customer.description = hero.name or None
+        customer.email = hero.email or None
+        customer.save()
+        return hero
+
 
 class StripeTextInput(forms.TextInput):
     """
@@ -133,7 +141,7 @@ class PaymentForm(forms.Form):
         choices=INTERVAL_CHOICES,
     )
     receipt_email = forms.CharField(
-        required=False,
+        required=True,
         widget=forms.TextInput(
             attrs={
                 'class': 'required',
@@ -163,12 +171,18 @@ class PaymentForm(forms.Form):
         stripe_token = self.cleaned_data['stripe_token']
         interval = self.cleaned_data['interval']
 
+        hero, created = DjangoHero.objects.get_or_create(email=receipt_email)
+
         try:
-            # First create a Stripe customer so that we can store
-            # people's email address on that object later
-            customer = stripe.Customer.create(card=stripe_token)
-            # Charge the customer's credit card on Stripe's servers;
-            # the amount is in cents!
+            if hero.stripe_customer_id:
+                # Update old customer with new payment source
+                customer = stripe.Customer.retrieve(hero.stripe_customer_id)
+                customer.source = stripe_token
+                customer.save()
+            else:
+                customer = stripe.Customer.create(card=stripe_token)
+                hero.stripe_customer_id = customer.id
+                hero.save()
 
             if interval == 'onetime':
                 subscription_id = ''
@@ -223,6 +237,7 @@ class PaymentForm(forms.Form):
                 'stripe_charge_id': charge_id,
                 'stripe_subscription_id': subscription_id,
                 'receipt_email': receipt_email,
+                'donor': hero,
             }
             if campaign:
                 donation_params['campaign'] = campaign

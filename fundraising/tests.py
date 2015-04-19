@@ -100,6 +100,7 @@ class TestCampaign(TestCase):
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
     def test_submitting_donation_form(self, charge_create, customer_create):
+        customer_create.return_value.id = '1234'
         self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
             'stripe_token': 'test',
@@ -115,6 +116,7 @@ class TestCampaign(TestCase):
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
     def test_submitting_donation_form_recurring(self, charge_create, customer_create):
+        customer_create.return_value.id = '1234'
         self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
             'stripe_token': 'test',
@@ -130,11 +132,13 @@ class TestCampaign(TestCase):
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
     def test_submitting_donation_form_with_campaign(self, charge_create, customer_create):
+        customer_create.return_value.id = '1234'
         self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
             'campaign': self.campaign.id,
             'stripe_token': 'test',
             'interval': 'onetime',
+            'receipt_email': 'django@example.com',
         })
         donations = Donation.objects.all()
         self.assertEqual(donations.count(), 1)
@@ -148,6 +152,7 @@ class TestCampaign(TestCase):
             'amount': 100,
             'stripe_token': 'xxxx',
             'interval': 'onetime',
+            'receipt_email': 'django@example.com',
         }
         form = PaymentForm(data=data)
 
@@ -187,6 +192,7 @@ class TestCampaign(TestCase):
             'amount': amount,
             'stripe_token': 'xxxx',
             'interval': 'onetime',
+            'receipt_email': 'django@example.com',
         })
         content = json.loads(response.content.decode())
         self.assertEquals(200, response.status_code)
@@ -266,10 +272,33 @@ class TestPaymentForm(TestCase):
             'campaign': None,
             'stripe_token': 'xxxx',
             'interval': 'onetime',
+            'receipt_email': 'django@example.com',
         })
         self.assertTrue(form.is_valid())
         donation = form.make_donation()
         self.assertEqual(100, donation.amount)
+
+    @patch('stripe.Customer.retrieve')
+    @patch('stripe.Charge.create')
+    def test_make_donation_with_existing_hero(self, charge_create, customer_retrieve):
+        customer_retrieve.return_value.id = '12345'
+        hero = DjangoHero.objects.create(
+            email='django@example.com',
+            stripe_customer_id=customer_retrieve.return_value.id,
+        )
+        form = PaymentForm(data={
+            'amount': 100,
+            'campaign': None,
+            'stripe_token': 'xxxx',
+            'interval': 'onetime',
+            'receipt_email': 'django@example.com',
+        })
+        self.assertTrue(form.is_valid())
+        donation = form.make_donation()
+        self.assertEqual(100, donation.amount)
+        self.assertEqual(hero, donation.donor)
+        self.assertEqual(hero.stripe_customer_id, donation.stripe_customer_id)
+
 
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
@@ -280,6 +309,7 @@ class TestPaymentForm(TestCase):
             'campaign': None,
             'stripe_token': 'xxxx',
             'interval': 'onetime',
+            'receipt_email': 'django@example.com',
         })
         self.assertTrue(form.is_valid())
         with self.assertRaises(ValueError):
@@ -298,13 +328,13 @@ class TestThankYou(TestCase):
         self.hero_form_data = {
             'hero_type': DjangoHero.HERO_TYPE_CHOICES[1][0],
             'name': 'Django Inc',
-            'email': 'django@example.com',
         }
 
     def add_donor(self, **kwargs):
         hero = DjangoHero.objects.create(**kwargs)
         self.donation.donor = hero
         self.donation.save()
+        return hero
 
     def test_template_without_donor(self):
         response = self.client.get(self.url)
@@ -318,29 +348,23 @@ class TestThankYou(TestCase):
         self.assertEqual(response.context['form'].instance, self.donation.donor)
 
     @patch('stripe.Customer.retrieve')
-    def test_create_hero(self, retrive_customer):
+    def test_update_hero(self, retrieve_customer):
+        hero = self.add_donor(
+            email='django@example.net',
+            stripe_customer_id='1234',
+            name='Under Dog'
+        )
         response = self.client.post(self.url, self.hero_form_data)
         self.assertRedirects(response, reverse('fundraising:index'))
-        donation = Donation.objects.get(pk=self.donation.pk)
-        hero = donation.donor
-        self.assertEqual(hero.hero_type, DjangoHero.HERO_TYPE_CHOICES[1][0])
-        self.assertEqual(hero.name, 'Django Inc')
-        self.assertEqual(hero.email, 'django@example.com')
 
-        stripe_customer_id = self.donation.stripe_customer_id
-        retrive_customer.assert_called_once_with(stripe_customer_id)
-        customer = retrive_customer.return_value
+        hero = DjangoHero.objects.get(pk=hero.id)
+        self.assertEqual(hero.name, self.hero_form_data['name'])
+
+        retrieve_customer.assert_called_once_with(hero.stripe_customer_id)
+        customer = retrieve_customer.return_value
         self.assertEqual(customer.description, hero.name)
         self.assertEqual(customer.email, hero.email)
         customer.save.assert_called_once_with()
-
-    def test_update_hero(self):
-        self.add_donor(email='django@example.net')
-        with patch('stripe.Customer.retrieve'):
-            response = self.client.post(self.url, self.hero_form_data)
-        self.assertRedirects(response, reverse('fundraising:index'))
-        hero = DjangoHero.objects.get(pk=self.donation.donor_id)
-        self.assertEqual(hero.email, 'django@example.com')
 
     def test_create_hero_for_donation_with_campaign(self):
         campaign = Campaign.objects.create(

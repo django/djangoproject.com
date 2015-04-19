@@ -66,24 +66,12 @@ def thank_you(request, donation):
         )
 
         if form.is_valid():
-            hero = form.save(commit=False)
-            hero.email = donation.receipt_email
-            hero.save()
-            try:
-                customer = stripe.Customer.retrieve(donation.stripe_customer_id)
-                customer.description = hero.name or None
-                customer.email = hero.email or None
-                customer.save()
-            except stripe.StripeError:
-                raise
-            else:
-                donation.donor = hero
-                donation.save()
-                messages.success(request, "Thank you! You're a Hero.")
-                return redirect(
-                    **{'to': 'fundraising:campaign', 'slug': donation.campaign.slug}
-                    if donation.campaign else {'to': 'fundraising:index'}
-                )
+            form.save()
+            messages.success(request, "Thank you! You're a Hero.")
+            return redirect(
+                **{'to': 'fundraising:campaign', 'slug': donation.campaign.slug}
+                if donation.campaign else {'to': 'fundraising:index'}
+            )
     else:
         form = DjangoHeroForm(instance=donation.donor)
 
