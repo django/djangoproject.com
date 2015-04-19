@@ -3,14 +3,7 @@ from django import forms
 from django.utils.safestring import mark_safe
 
 from .exceptions import DonationError
-from .models import Campaign, DjangoHero, Donation
-
-INTERVAL_CHOICES = (
-    ('monthly', 'Monthly donation'),
-    ('quarterly', 'Quarterly donation'),
-    ('yearly', 'Yearly donation'),
-    ('onetime', 'One-time donation'),
-)
+from .models import Campaign, DjangoHero, Donation, INTERVAL_CHOICES
 
 
 class DjangoHeroForm(forms.ModelForm):
@@ -122,6 +115,30 @@ class DonateForm(forms.Form):
     campaign = forms.ModelChoiceField(queryset=Campaign.objects.all(), widget=forms.HiddenInput())
 
 
+class DonationForm(forms.ModelForm):
+    amount = forms.DecimalField(max_digits=9, decimal_places=2, required=True)
+    # here we're removing "onetime" option from interval choices:
+    interval = forms.ChoiceField(choices=INTERVAL_CHOICES[:3], required=True)
+
+    class Meta:
+        model = Donation
+        fields = ('amount', 'interval')
+
+    def save(self, *args, **kwargs):
+        donation = super().save()
+        interval = self.cleaned_data.get('interval')
+        amount = self.cleaned_data.get('amount')
+
+        # Send data to Stripe
+        customer = stripe.Customer.retrieve(donation.stripe_customer_id)
+        subscription = customer.subscriptions.retrieve(donation.stripe_subscription_id)
+        subscription.plan = interval
+        subscription.quantity = int(amount)
+        subscription.save()
+
+        return donation
+
+
 class PaymentForm(forms.Form):
     AMOUNT_PLACEHOLDER = 'Amount in US Dollar'
     amount = forms.IntegerField(
@@ -171,7 +188,9 @@ class PaymentForm(forms.Form):
         stripe_token = self.cleaned_data['stripe_token']
         interval = self.cleaned_data['interval']
 
-        hero, created = DjangoHero.objects.get_or_create(email=receipt_email)
+        hero = DjangoHero.objects.filter(email=receipt_email).first()
+        if not hero:
+            hero = DjangoHero(email=receipt_email)
 
         try:
             if hero.stripe_customer_id:
@@ -233,6 +252,7 @@ class PaymentForm(forms.Form):
             # Finally create the donation and return it
             donation_params = {
                 'amount': amount,
+                'interval': interval,
                 'stripe_customer_id': customer.id,
                 'stripe_charge_id': charge_id,
                 'stripe_subscription_id': subscription_id,

@@ -2550,6 +2550,7 @@ form {
 	input[type="text"],
 	input[type="email"],
 	input[type="password"],
+	input[type="number"],
 	input[type="url"],
 	textarea {
 		@include sans-serif;
@@ -3041,6 +3042,16 @@ form .footnote {
 	}
 	.pagination {
 		clear: both;
+	}
+}
+
+.manage-donations-form {
+	select, input[type="number"] {
+		width: 300px;
+	}
+	input[type="number"] {
+		padding: 7px 10px;
+		width: 278px;
 	}
 }
 

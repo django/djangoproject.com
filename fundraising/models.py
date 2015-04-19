@@ -9,6 +9,12 @@ from sorl.thumbnail import ImageField, get_thumbnail
 
 DISPLAY_LOGO_AMOUNT = Decimal("200.00")
 DEFAULT_DONATION_AMOUNT = 50
+INTERVAL_CHOICES = (
+    ('monthly', 'Monthly donation'),
+    ('quarterly', 'Quarterly donation'),
+    ('yearly', 'Yearly donation'),
+    ('onetime', 'One-time donation'),
+)
 
 
 class DjangoHeroManager(models.Manager):
@@ -106,6 +112,7 @@ class Campaign(models.Model):
 
 class Donation(FundraisingModel):
     amount = models.DecimalField(max_digits=9, decimal_places=2, null=True)
+    interval = models.CharField(max_length=20, choices=INTERVAL_CHOICES, null=True)
     donor = models.ForeignKey(DjangoHero, null=True)
     campaign = models.ForeignKey(Campaign, null=True, blank=True)
     stripe_charge_id = models.CharField(max_length=100, null=True)

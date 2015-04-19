@@ -1,0 +1,42 @@
+{% extends 'fundraising/index.html' %}
+
+{% block content %}
+<h1>Manage your donations to Django Software Foundation</h1>
+<p>Your support is <strong>invaluable</strong> to continue the rapid development
+  of Django and helps the <strong>Django Fellowship</strong> program in particular.
+  Thank you!</p>
+
+<form enctype="multipart/form-data" action="" method="post" class="form-input django-hero-form">
+  <h2>Manage your presence in the fundraising campaigns</h2>
+  <p>Information entered below will be visible on all of your donations to Django Project.</p>
+  {% csrf_token %}
+  {% include 'fundraising/includes/_form.html' with form=hero_form %}
+  <p class="submit">
+    <input type="submit" class="cta" value="Save &rarr;">
+  </p>
+
+  <hr />
+
+{% if modify_donations_formset %}
+    <h2>Modify your recurring donation</h2>
+    <p>Update the time interval or amount of your recurring donation here:</p>
+    {% csrf_token %}
+    {% for form in modify_donations_formset %}
+      <h3>{{ form.instance.campaign }}</h3>
+      {% include 'fundraising/includes/_form.html' %}
+    {% endfor %}
+    {{ modify_donations_formset.management_form }}
+    <p class="submit">
+      <input type="submit" class="cta" value="Save &rarr;">
+    </p>
+
+    <hr />
+
+    <h2>Cancel your recurring donation</h2>
+    
+{% endif %}
+</form>
+
+{% endblock %}
+
+{% block content-extra %}{% endblock %}
