@@ -59,17 +59,16 @@ def donate(request):
 def thank_you(request, donation):
     donation = get_object_or_404(Donation, pk=donation)
     if request.method == 'POST':
-        if donation.donor:
-            form = DjangoHeroForm(
-                data=request.POST,
-                files=request.FILES,
-                instance=donation.donor,
-            )
-        else:
-            form = DjangoHeroForm(data=request.POST, files=request.FILES)
+        form = DjangoHeroForm(
+            data=request.POST,
+            files=request.FILES,
+            instance=donation.donor,
+        )
 
         if form.is_valid():
-            hero = form.save()
+            hero = form.save(commit=False)
+            hero.email = donation.receipt_email
+            hero.save()
             try:
                 customer = stripe.Customer.retrieve(donation.stripe_customer_id)
                 customer.description = hero.name or None
@@ -86,10 +85,7 @@ def thank_you(request, donation):
                     if donation.campaign else {'to': 'fundraising:index'}
                 )
     else:
-        if donation.donor:
-            form = DjangoHeroForm(instance=donation.donor)
-        else:
-            form = DjangoHeroForm()
+        form = DjangoHeroForm(instance=donation.donor)
 
     return render(request, 'fundraising/thank-you.html', {
         'donation': donation,

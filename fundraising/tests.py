@@ -292,6 +292,7 @@ class TestThankYou(TestCase):
         self.donation = Donation.objects.create(
             amount='20',
             stripe_customer_id='cu_123',
+            receipt_email='django@example.com',
         )
         self.url = reverse('fundraising:thank-you', args=[self.donation.pk])
         self.hero_form_data = {
