@@ -1,5 +1,7 @@
 import stripe
 from django import forms
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from .exceptions import DonationError
@@ -262,4 +264,17 @@ class PaymentForm(forms.Form):
             if campaign:
                 donation_params['campaign'] = campaign
             donation = Donation.objects.create(**donation_params)
+
+            # Send an email message about managing your donation
+            message = render_to_string(
+                'fundraising/email/thank-you.html',
+                {'donation': donation}
+            )
+            send_mail(
+                'Thank you for your donation to the Django Software Foundation',
+                message,
+                'dsf-board@djangoproject.com',
+                [donation.receipt_email]
+            )
+
             return donation
