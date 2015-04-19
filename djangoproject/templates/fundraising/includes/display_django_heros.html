@@ -16,9 +16,6 @@
       {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
       {{ donor.name_with_fallback }}
       {% endspaceless %}{% if donor.url %}</a>{% endif %}
-      {% if donor.is_amount_displayed %}
-        <br/><em>${{ donor.donated_amount|intcomma }}</em>
-      {% endif %}
     </div>
   </div>
   {% endfor %}
@@ -30,10 +27,6 @@
       {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
         <span>{{ donor.name_with_fallback }}</span>
       {% endspaceless %}{% if donor.url %}</a>{% endif %}
-
-      {% if donor.is_amount_displayed %}
-        <br/><em>${{ donor.donated_amount|intcomma }}</em>
-      {% endif %}
     </div>
   {% endfor %}
 </div>

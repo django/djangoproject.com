@@ -199,7 +199,6 @@ class TestDjangoHero(TestCase):
         kwargs = {
             'approved': True,
             'is_visible': True,
-            'is_amount_displayed': True,
         }
 
         self.campaign = Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
@@ -207,8 +206,6 @@ class TestDjangoHero(TestCase):
         Donation.objects.create(donor=self.h1, amount='5', campaign=self.campaign)
         self.h2 = DjangoHero.objects.create(**kwargs)
         Donation.objects.create(donor=self.h2, amount='15', campaign=self.campaign)
-        # hidden donation amount should display last
-        kwargs['is_amount_displayed'] = False
         self.h3 = DjangoHero.objects.create(**kwargs)
         Donation.objects.create(donor=self.h3, amount='10', campaign=self.campaign)
         self.today = date.today()
