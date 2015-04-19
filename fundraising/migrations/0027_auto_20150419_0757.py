@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='djangohero',
             name='email',
-            field=models.EmailField(max_length=75),
+            field=models.EmailField(max_length=75, null=True),
             preserve_default=True,
-        ),
+        )
     ]
