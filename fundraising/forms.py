@@ -45,20 +45,6 @@ class DjangoHeroForm(forms.ModelForm):
             "we will display it, too."
         ),
     )
-    email = forms.CharField(
-        required=False,
-        widget=forms.TextInput(
-            attrs={
-                'class': 'required',
-                'placeholder': 'Contact email address',
-                'type': 'email',
-            },
-        ),
-        help_text=(
-            'We ask for your email address here only to contact you about '
-            'future fundraising campaigns if you give us your permission below.'
-        ),
-    )
     is_visible = forms.BooleanField(
         required=False,
         label=(
@@ -77,8 +63,7 @@ class DjangoHeroForm(forms.ModelForm):
     class Meta:
         model = DjangoHero
         fields = (
-            'hero_type', 'name', 'url', 'logo', 'is_visible',
-            'email', 'is_subscribed',
+            'hero_type', 'name', 'url', 'logo', 'is_visible', 'is_subscribed',
         )
 
     def __init__(self, *args, **kwargs):

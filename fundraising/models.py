@@ -110,7 +110,7 @@ class Donation(FundraisingModel):
     stripe_charge_id = models.CharField(max_length=100, null=True)
     stripe_subscription_id = models.CharField(max_length=100, null=True)
     stripe_customer_id = models.CharField(max_length=100, null=True)
-    receipt_email = models.EmailField(blank=True, null=True)
+    receipt_email = models.EmailField(null=True)
 
     def __str__(self):
         return '${}'.format(self.amount)
