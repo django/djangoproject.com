@@ -100,7 +100,7 @@ def manage_donations(request, hero):
             request.POST,
             queryset=recurring_donations
         )
-        
+
         if hero_form.is_valid() and modify_donations_formset.is_valid():
             hero_form.save()
             modify_donations_formset.save()
@@ -115,4 +115,19 @@ def manage_donations(request, hero):
         'hero': hero,
         'hero_form': hero_form,
         'modify_donations_formset': modify_donations_formset,
+        'recurring_donations': recurring_donations
     })
+
+
+def cancel_donation(request, hero, donation):
+    hero = get_object_or_404(DjangoHero, pk=hero)
+    donation = get_object_or_404(Donation, pk=donation, donor=hero,
+        stripe_subscription_id__isnull=False)
+
+    customer = stripe.Customer.retrieve(donation.stripe_customer_id)
+    customer.subscriptions.retrieve(donation.stripe_subscription_id).delete()
+
+    donation.stripe_subscription_id = None
+    donation.save()
+
+    return redirect('fundraising:manage_donations', hero)

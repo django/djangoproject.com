@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^donate/$', views.donate, name='donate'),
     url(r'^thank-you/(?P<donation>[\w]+)/$', views.thank_you, name='thank-you'),
     url(r'^manage_donations/(?P<hero>[\w]+)/$', views.manage_donations, name='manage-donations'),
+    url(r'^manage_donations/(?P<hero>[\w]+)/cancel/(?P<donation>[\w]+)$', views.cancel_donation, name='cancel-donation'),
 ]
