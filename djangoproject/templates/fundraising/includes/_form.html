@@ -1,0 +1,13 @@
+{% for field in form %}
+  <div class="form-control">
+  {% if field.name in form.checkbox_fields %}
+      {{ field }}{{ field.label_tag }}
+  {% elif field.name in form.radio_select_fields %}
+      {{ field.label }}{{ field }}
+  {% else %}
+      {{ field }}
+  {% endif %}
+  {% if field.errors %}<p class="errors">{{ field.errors.as_text }}</p>{% endif %}
+  {% if field.help_text %}<p class="footnote">{{ field.help_text }}</p>{% endif %}
+  </div>
+{% endfor %}

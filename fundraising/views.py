@@ -1,12 +1,13 @@
 import stripe
 from django.contrib import messages
+from django.forms.models import modelformset_factory
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from .exceptions import DonationError
-from .forms import DjangoHeroForm, PaymentForm
-from .models import Campaign, Donation, Testimonial
+from .forms import DjangoHeroForm, PaymentForm, DonationForm
+from .models import Campaign, DjangoHero, Donation, Testimonial
 
 
 def index(request):
@@ -78,4 +79,40 @@ def thank_you(request, donation):
     return render(request, 'fundraising/thank-you.html', {
         'donation': donation,
         'form': form,
+    })
+
+
+def manage_donations(request, hero):
+    hero = get_object_or_404(DjangoHero, pk=hero)
+    recurring_donations = hero.donation_set.filter(
+        stripe_subscription_id__isnull=False
+    )
+
+    ModifyDonationsFormset = modelformset_factory(Donation, form=DonationForm, extra=0)
+
+    if request.method == 'POST':
+        hero_form = DjangoHeroForm(
+            data=request.POST,
+            files=request.FILES,
+            instance=hero,
+        )
+        modify_donations_formset = ModifyDonationsFormset(
+            request.POST,
+            queryset=recurring_donations
+        )
+        
+        if hero_form.is_valid() and modify_donations_formset.is_valid():
+            hero_form.save()
+            modify_donations_formset.save()
+            messages.success(request, "Your information has been updated.")
+    else:
+        hero_form = DjangoHeroForm(instance=hero)
+        modify_donations_formset = ModifyDonationsFormset(
+            queryset=recurring_donations
+        )
+
+    return render(request, 'fundraising/manage-donations.html', {
+        'hero': hero,
+        'hero_form': hero_form,
+        'modify_donations_formset': modify_donations_formset,
     })
