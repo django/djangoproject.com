@@ -17,8 +17,11 @@ def get_doc_path(docroot, subpath):
     # First look for <bits>/index.fjson, then for <bits>.fjson
     bits = subpath.strip('/').split('/') + ['index.fjson']
     doc = docroot.joinpath(*bits)
-    if doc.exists():
-        return doc
+    try:
+        if doc.exists():
+            return doc
+    except NotADirectoryError:
+        pass  # we get here if doc + subpath (without /index.fjson) is a file
 
     bits = bits[:-2] + ['%s.fjson' % bits[-2]]
     doc = docroot.joinpath(*bits)
