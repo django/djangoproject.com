@@ -1,4 +1,5 @@
 from datetime import timedelta
+from test.support import captured_stderr
 
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -34,6 +35,18 @@ class EntryTestCase(DateTimeMixin, TestCase):
         Entry.objects.create(pub_date=self.tomorrow, is_active=True, headline='future active')
 
         self.assertQuerysetEqual(Entry.objects.published(), ['past active'], transform=lambda entry: entry.headline)
+
+    def test_docutils_safe(self):
+        """
+        Make sure docutils' file inclusion directives are disabled by default.
+        """
+        with captured_stderr() as self.docutils_stderr:
+            entry = Entry.objects.create(
+                pub_date=self.now, is_active=True, headline='active', content_format='reST',
+                body='.. raw:: html\n    :file: somefile\n'
+            )
+        self.assertIn('<p>&quot;raw&quot; directive disabled.</p>', entry.body_html)
+        self.assertIn('.. raw:: html\n    :file: somefile', entry.body_html)
 
 
 class EventTestCase(DateTimeMixin, TestCase):
