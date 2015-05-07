@@ -69,6 +69,21 @@ class EventTestCase(DateTimeMixin, TestCase):
         self.assertQuerysetEqual(Event.objects.future(), ['today'], transform=lambda event: event.headline)
         self.assertQuerysetEqual(Event.objects.past(), ['today'], transform=lambda event: event.headline)
 
+    def test_past_future_ordering(self):
+        """
+        Make sure the that .future() and .past() use the actual date for ordering
+        (and not the pub_date).
+        """
+        D = timedelta(days=1)
+        Event.objects.create(date=self.yesterday - D, pub_date=self.yesterday - D, headline='a')
+        Event.objects.create(date=self.yesterday, pub_date=self.yesterday, headline='b')
+
+        Event.objects.create(date=self.tomorrow, pub_date=self.tomorrow, headline='c')
+        Event.objects.create(date=self.tomorrow + D, pub_date=self.tomorrow + D, headline='d')
+
+        self.assertQuerysetEqual(Event.objects.future(), ['c', 'd'], transform=lambda event: event.headline)
+        self.assertQuerysetEqual(Event.objects.past(), ['b', 'a'], transform=lambda event: event.headline)
+
 
 class ViewsTestCase(DateTimeMixin, TestCase):
     def test_no_past_upcoming_events(self):

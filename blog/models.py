@@ -100,10 +100,10 @@ class Entry(models.Model):
 
 class EventQuerySet(EntryQuerySet):
     def past(self):
-        return self.filter(date__lte=timezone.now())
+        return self.filter(date__lte=timezone.now()).order_by('-date')
 
     def future(self):
-        return self.filter(date__gte=timezone.now())
+        return self.filter(date__gte=timezone.now()).order_by('date')
 
 
 class Event(models.Model):
