@@ -26,25 +26,25 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='djangohero',
             name='is_amount_displayed',
-            field=models.BooleanField(default=False, verbose_name=b'Agreed to disclose amount of donation?'),
+            field=models.BooleanField(default=False, verbose_name='Agreed to disclose amount of donation?'),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='djangohero',
             name='is_subscribed',
-            field=models.BooleanField(default=False, verbose_name=b'Agreed to being contacted by DSF?'),
+            field=models.BooleanField(default=False, verbose_name='Agreed to being contacted by DSF?'),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='djangohero',
             name='is_visible',
-            field=models.BooleanField(default=False, verbose_name=b'Agreed to displaying on the fundraising page?'),
+            field=models.BooleanField(default=False, verbose_name='Agreed to displaying on the fundraising page?'),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='djangohero',
             name='logo',
-            field=models.ImageField(upload_to=b'fundraising/logos/', blank=True),
+            field=models.ImageField(upload_to='fundraising/logos/', blank=True),
             preserve_default=True,
         ),
     ]
