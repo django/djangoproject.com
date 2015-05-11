@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='djangohero',
             name='logo',
-            field=sorl.thumbnail.fields.ImageField(upload_to=b'fundraising/logos/', blank=True),
+            field=sorl.thumbnail.fields.ImageField(upload_to='fundraising/logos/', blank=True),
             preserve_default=True,
         ),
     ]
