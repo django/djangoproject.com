@@ -1,9 +1,7 @@
-import datetime
-
 from django.conf import settings
 from django.db import models
-from django.utils import timezone
 from django.utils.encoding import smart_str
+from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from django_hosts.resolvers import reverse
 from docutils.core import publish_parts
@@ -20,7 +18,7 @@ BLOG_DOCUTILS_SETTINGS.update(getattr(settings, 'BLOG_DOCUTILS_SETTINGS', {}))
 
 class EntryQuerySet(models.QuerySet):
     def published(self):
-        return self.active().filter(pub_date__lte=datetime.datetime.now())
+        return self.active().filter(pub_date__lte=now())
 
     def active(self):
         return self.filter(is_active=True)
@@ -81,7 +79,7 @@ class Entry(models.Model):
         """
         Return True if the entry is publicly accessible.
         """
-        return self.is_active and self.pub_date <= datetime.datetime.now()
+        return self.is_active and self.pub_date <= now()
     is_published.boolean = True
 
     def save(self, *args, **kwargs):
@@ -100,10 +98,10 @@ class Entry(models.Model):
 
 class EventQuerySet(EntryQuerySet):
     def past(self):
-        return self.filter(date__lte=timezone.now()).order_by('-date')
+        return self.filter(date__lte=now()).order_by('-date')
 
     def future(self):
-        return self.filter(date__gte=timezone.now()).order_by('date')
+        return self.filter(date__gte=now()).order_by('date')
 
 
 class Event(models.Model):
@@ -137,5 +135,5 @@ class Event(models.Model):
         """
         Return True if the event is publicly accessible.
         """
-        return self.is_active and self.pub_date <= datetime.datetime.now()
+        return self.is_active and self.pub_date <= now()
     is_published.boolean = True
