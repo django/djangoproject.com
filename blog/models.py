@@ -1,4 +1,3 @@
-import datetime
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -24,7 +23,7 @@ BLOG_DOCUTILS_SETTINGS.update(getattr(settings, 'BLOG_DOCUTILS_SETTINGS', {}))
 
 class EntryQuerySet(models.QuerySet):
     def published(self):
-        return self.active().filter(pub_date__lte=datetime.datetime.now())
+        return self.active().filter(pub_date__lte=timezone.now())
 
     def active(self):
         return self.filter(is_active=True)
@@ -85,7 +84,7 @@ class Entry(models.Model):
         """
         Return True if the entry is publicly accessible.
         """
-        return self.is_active and self.pub_date <= datetime.datetime.now()
+        return self.is_active and self.pub_date <= timezone.now()
     is_published.boolean = True
 
     def save(self, *args, **kwargs):
@@ -155,5 +154,5 @@ class Event(models.Model):
         """
         Return True if the event is publicly accessible.
         """
-        return self.is_active and self.pub_date <= datetime.datetime.now()
+        return self.is_active and self.pub_date <= timezone.now()
     is_published.boolean = True
