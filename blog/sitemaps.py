@@ -11,3 +11,7 @@ class WeblogSitemap(Sitemap):
         return Entry.objects.published()
 
     # lastmod wasn't implemented, because weblog pages used to contain comments.
+
+    # XXX: Hack to fix bad interaction with contrib.sitemaps and django-hosts
+    def _urls(self, page, protocol, domain):
+        return super(WeblogSitemap, self)._urls(page, protocol, domain='')

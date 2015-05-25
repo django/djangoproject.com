@@ -25,3 +25,7 @@ class DocsSitemap(Sitemap):
             return 1
         else:
             return 0.1
+
+    # XXX: Hack to fix bad interaction with contrib.sitemaps and django-hosts
+    def _urls(self, page, protocol, domain):
+        return super(DocsSitemap, self)._urls(page, protocol, domain='')
