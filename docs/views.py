@@ -245,7 +245,7 @@ def search_suggestions(request, lang, version, per_page=20):
             content_type = ContentType.objects.get_for_model(Document)
             results = search[0:per_page].execute()
             for result in results:
-                titles.append(result.title)
+                titles.append(result.title[0])
                 kwargs = {
                     'content_type_id': content_type.pk,
                     'object_id': result.meta.id,
