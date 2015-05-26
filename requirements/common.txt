@@ -4,7 +4,7 @@ django-contact-form==1.0
 django-flat-theme==0.9.3
 django-hosts==1.2
 django-push==0.6.1
-django-registration-redux==1.1
+django-registration-redux==1.2
 django-secure==1.0.1
 # elasticsearch-dsl==0.0.4
 -e git+https://github.com/elasticsearch/elasticsearch-dsl-py@744a5d945fa99135f0a90bd1adc30b6c88cbb6bc#egg=elasticsearch-dsl
