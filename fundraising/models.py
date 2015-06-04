@@ -109,20 +109,29 @@ class Campaign(models.Model):
 
 
 class Donation(FundraisingModel):
-    amount = models.DecimalField(max_digits=9, decimal_places=2, null=True)
     interval = models.CharField(max_length=20, choices=INTERVAL_CHOICES, null=True)
+    subscription_amount = models.DecimalField(max_digits=9, decimal_places=2, null=True, blank=True)
     donor = models.ForeignKey(DjangoHero, null=True)
     campaign = models.ForeignKey(Campaign, null=True, blank=True)
-    stripe_charge_id = models.CharField(max_length=100, null=True)
     stripe_subscription_id = models.CharField(max_length=100, null=True)
     stripe_customer_id = models.CharField(max_length=100, null=True)
     receipt_email = models.EmailField(null=True)
 
     def __str__(self):
-        return '${}'.format(self.amount)
+        return '{} from {}'.format(self.get_interval_display(), self.donor)
 
     def get_absolute_url(self):
         return reverse('fundraising:thank-you', kwargs={'donation': self.id})
+
+
+class Payment(models.Model):
+    donation = models.ForeignKey(Donation)
+    amount = models.DecimalField(max_digits=9, decimal_places=2, null=True)
+    stripe_charge_id = models.CharField(max_length=100, null=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return '${}'.format(self.amount)
 
 
 class Testimonial(models.Model):
