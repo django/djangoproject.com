@@ -23,7 +23,7 @@ class DjangoHeroManager(models.Manager):
             donation__campaign=campaign,
             is_visible=True,
             approved=True,
-        ).annotate(donated_amount=models.Sum('donation__amount'))
+        ).annotate(donated_amount=models.Sum('donation__payment__amount'))
 
         if hero_type:
             donors = donors.filter(hero_type=hero_type)

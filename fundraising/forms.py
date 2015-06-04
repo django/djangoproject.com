@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from .exceptions import DonationError
-from .models import Campaign, DjangoHero, Donation, INTERVAL_CHOICES
+from .models import Campaign, DjangoHero, Donation, INTERVAL_CHOICES, Payment
 
 
 class DjangoHeroForm(forms.ModelForm):
@@ -29,7 +29,7 @@ class DjangoHeroForm(forms.ModelForm):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'To which URL should we link your name to?',
+                'placeholder': 'Which URL should we link your name to?',
             },
         )
     )
@@ -118,18 +118,18 @@ class DonateForm(forms.Form):
 
 
 class DonationForm(forms.ModelForm):
-    amount = forms.DecimalField(max_digits=9, decimal_places=2, required=True)
+    subscription_amount = forms.DecimalField(max_digits=9, decimal_places=2, required=True)
     # here we're removing "onetime" option from interval choices:
     interval = forms.ChoiceField(choices=INTERVAL_CHOICES[:3], required=True)
 
     class Meta:
         model = Donation
-        fields = ('amount', 'interval')
+        fields = ('subscription_amount', 'interval')
 
     def save(self, *args, **kwargs):
         donation = super().save()
         interval = self.cleaned_data.get('interval')
-        amount = self.cleaned_data.get('amount')
+        amount = self.cleaned_data.get('subscription_amount')
 
         # Send data to Stripe
         customer = stripe.Customer.retrieve(donation.stripe_customer_id)
@@ -253,17 +253,23 @@ class PaymentForm(forms.Form):
         else:
             # Finally create the donation and return it
             donation_params = {
-                'amount': amount,
                 'interval': interval,
                 'stripe_customer_id': customer.id,
-                'stripe_charge_id': charge_id,
                 'stripe_subscription_id': subscription_id,
                 'receipt_email': receipt_email,
                 'donor': hero,
             }
             if campaign:
                 donation_params['campaign'] = campaign
+            if interval != 'onetime':
+                donation_params['subscription_amount'] = amount
             donation = Donation.objects.create(**donation_params)
+
+            Payment.objects.create(**{
+                'amount': amount,
+                'stripe_charge_id': charge_id,
+                'donation': donation,
+            })
 
             # Send an email message about managing your donation
             message = render_to_string(
