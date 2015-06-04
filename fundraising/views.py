@@ -130,4 +130,4 @@ def cancel_donation(request, hero, donation):
     donation.stripe_subscription_id = None
     donation.save()
 
-    return redirect('fundraising:manage_donations', hero)
+    return redirect('fundraising:manage-donations', hero=hero.pk)
