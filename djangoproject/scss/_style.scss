@@ -1022,13 +1022,21 @@ blockquote {
 					background: url(../img/logo-rackspace.svg) no-repeat left center;
 				}
 			}
+
+			&.elastic {
+				background: url(../img/logo-elastic.png) no-repeat left center;
+				.mdzr-svg & {
+					background: url(../img/logo-elastic.svg) no-repeat left center;
+					background-size: contain;
+				}
+			}
+
 			&.threespot {
 				background: url(../img/logo-threespot.png) no-repeat left center;
 				.mdzr-svg & {
 					background: url(../img/logo-threespot.svg) no-repeat left center;
 				}
 			}
-
 			&.andrevv {
 				background: url(../img/logo-andrevv.png) no-repeat left center;
 				.mdzr-svg & {
