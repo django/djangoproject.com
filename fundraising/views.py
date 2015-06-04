@@ -86,6 +86,8 @@ def manage_donations(request, hero):
     hero = get_object_or_404(DjangoHero, pk=hero)
     recurring_donations = hero.donation_set.filter(
         stripe_subscription_id__isnull=False
+    ).exclude(
+        stripe_subscription_id=''
     )
 
     ModifyDonationsFormset = modelformset_factory(Donation, form=DonationForm, extra=0)
