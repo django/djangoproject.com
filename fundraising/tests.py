@@ -13,7 +13,7 @@ from PIL import Image
 
 from .exceptions import DonationError
 from .forms import PaymentForm
-from .models import Campaign, DjangoHero, Donation
+from .models import Campaign, DjangoHero, Donation, Payment
 from .templatetags.fundraising_extras import donation_form_with_heart
 from .utils import shuffle_donations
 
@@ -64,14 +64,17 @@ class TestCampaign(TestCase):
         self.assertEqual(response['total_donors'], 1)
 
     def test_anonymous_donor(self):
-        hero = DjangoHero.objects.create(is_visible=True, approved=True)
-        Donation.objects.create(donor=hero, amount='5', campaign=self.campaign)
+        hero = DjangoHero.objects.create(
+            is_visible=True, approved=True, hero_type='individual')
+        Donation.objects.create(donor=hero, subscription_amount='5', campaign=self.campaign)
         response = self.client.get(self.campaign_url)
         self.assertContains(response, 'Anonymous Hero')
 
     def test_anonymous_donor_with_logo(self):
-        hero = DjangoHero.objects.create(is_visible=True, approved=True, logo='yes')  # We don't need an actual image
-        Donation.objects.create(donor=hero, amount='5', campaign=self.campaign)
+        hero = DjangoHero.objects.create(
+            is_visible=True, approved=True,
+            hero_type='individual', logo='yes')  # We don't need an actual image
+        Donation.objects.create(donor=hero, campaign=self.campaign)
         response = self.client.get(self.campaign_url)
         self.assertContains(response, 'Anonymous Hero')
 
@@ -109,7 +112,8 @@ class TestCampaign(TestCase):
         })
         donations = Donation.objects.all()
         self.assertEqual(donations.count(), 1)
-        self.assertEqual(donations[0].amount, 100)
+        self.assertEqual(donations[0].subscription_amount, None)
+        self.assertEqual(donations[0].payment_set.first().amount, 100)
         self.assertEqual(donations[0].receipt_email, 'test@example.com')
         self.assertEqual(donations[0].stripe_subscription_id, '')
 
@@ -125,9 +129,10 @@ class TestCampaign(TestCase):
         })
         donations = Donation.objects.all()
         self.assertEqual(donations.count(), 1)
-        self.assertEqual(donations[0].amount, 100)
+        self.assertEqual(donations[0].subscription_amount, 100)
+        self.assertEqual(donations[0].payment_set.first().amount, 100)
         self.assertEqual(donations[0].receipt_email, 'test@example.com')
-        self.assertEqual(donations[0].stripe_charge_id, '')
+        self.assertEqual(donations[0].payment_set.first().stripe_charge_id, '')
 
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
@@ -142,7 +147,7 @@ class TestCampaign(TestCase):
         })
         donations = Donation.objects.all()
         self.assertEqual(donations.count(), 1)
-        self.assertEqual(donations[0].amount, 100)
+        self.assertEqual(donations[0].payment_set.first().amount, 100)
         self.assertEqual(donations[0].campaign, self.campaign)
 
     @patch('stripe.Customer.create')
@@ -183,9 +188,12 @@ class TestCampaign(TestCase):
     def test_submitting_donation_form_valid(self, make_donation):
         amount = 100
         donation = Donation.objects.create(
+            stripe_customer_id='xxxx',
+        )
+        Payment.objects.create(
+            donation=donation,
             amount=amount,
             stripe_charge_id='xxxx',
-            stripe_customer_id='xxxx',
         )
         make_donation.return_value = donation
         response = self.client.post(reverse('fundraising:donate'), {
@@ -209,11 +217,14 @@ class TestDjangoHero(TestCase):
 
         self.campaign = Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
         self.h1 = DjangoHero.objects.create(**kwargs)
-        Donation.objects.create(donor=self.h1, amount='5', campaign=self.campaign)
+        d1 = Donation.objects.create(donor=self.h1, campaign=self.campaign)
+        Payment.objects.create(donation=d1, amount='5')
         self.h2 = DjangoHero.objects.create(**kwargs)
-        Donation.objects.create(donor=self.h2, amount='15', campaign=self.campaign)
+        d2 = Donation.objects.create(donor=self.h2, campaign=self.campaign)
+        Payment.objects.create(donation=d2, amount='15')
         self.h3 = DjangoHero.objects.create(**kwargs)
-        Donation.objects.create(donor=self.h3, amount='10', campaign=self.campaign)
+        d3 = Donation.objects.create(donor=self.h3, campaign=self.campaign)
+        Payment.objects.create(donation=d3, amount='10')
         self.today = date.today()
 
     def test_donation_shuffling(self):
@@ -276,7 +287,7 @@ class TestPaymentForm(TestCase):
         })
         self.assertTrue(form.is_valid())
         donation = form.make_donation()
-        self.assertEqual(100, donation.amount)
+        self.assertEqual(100, donation.payment_set.first().amount)
 
     @patch('stripe.Customer.retrieve')
     @patch('stripe.Charge.create')
@@ -295,7 +306,7 @@ class TestPaymentForm(TestCase):
         })
         self.assertTrue(form.is_valid())
         donation = form.make_donation()
-        self.assertEqual(100, donation.amount)
+        self.assertEqual(100, donation.payment_set.first().amount)
         self.assertEqual(hero, donation.donor)
         self.assertEqual(hero.stripe_customer_id, donation.stripe_customer_id)
 
@@ -320,9 +331,12 @@ class TestPaymentForm(TestCase):
 class TestThankYou(TestCase):
     def setUp(self):
         self.donation = Donation.objects.create(
-            amount='20',
             stripe_customer_id='cu_123',
             receipt_email='django@example.com',
+        )
+        Payment.objects.create(
+            donation=self.donation,
+            amount='20',
         )
         self.url = reverse('fundraising:thank-you', args=[self.donation.pk])
         self.hero_form_data = {
