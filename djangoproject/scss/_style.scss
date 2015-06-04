@@ -71,6 +71,12 @@ dl {
 			margin-bottom: 0;
 		}
 	}
+
+	&.glossary {
+		dt {
+			font-weight: 600;
+		}
+	}
 }
 h1,
 h2,
