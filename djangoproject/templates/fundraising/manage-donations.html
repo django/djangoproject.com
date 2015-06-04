@@ -37,7 +37,7 @@
     <ul>
     {% for donation in recurring_donations %}
       <li>
-        Your {{ donation.interval }} recurring donation of ${{ donation.amount }} to {{ donation.campaign.name }}:
+        Your {{ donation.interval }} recurring donation of ${{ donation.subscription_amount }} to {{ donation.campaign.name }}:
         <a href="{% url 'fundraising:cancel-donation' hero.pk donation.pk %}">cancel this donation</a>
       </li>
     {% endfor %}
