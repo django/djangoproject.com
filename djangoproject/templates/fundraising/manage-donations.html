@@ -15,9 +15,9 @@
     <input type="submit" class="cta" value="Save &rarr;">
   </p>
 
+{% if recurring_donations %}
   <hr />
 
-{% if modify_donations_formset %}
     <h2>Modify your recurring donations</h2>
     <p>Update the time interval or amount of your recurring donation here:</p>
     {% csrf_token %}
@@ -42,7 +42,6 @@
       </li>
     {% endfor %}
     </ul>
-
 {% endif %}
 </form>
 
