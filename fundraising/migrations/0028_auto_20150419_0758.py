@@ -6,6 +6,8 @@ from django.utils import crypto
 
 
 def copy_stripe_id_to_hero(apps, schema_editor):
+    if not schema_editor.connection.alias == 'default':
+        return
     Donation = apps.get_model("fundraising", "Donation")
     DjangoHero = apps.get_model("fundraising", "DjangoHero")
 
