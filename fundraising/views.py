@@ -122,8 +122,24 @@ def manage_donations(request, hero):
         'hero': hero,
         'hero_form': hero_form,
         'modify_donations_formset': modify_donations_formset,
-        'recurring_donations': recurring_donations
+        'recurring_donations': recurring_donations,
+        'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
     })
+
+
+@require_POST
+def update_card(request):
+    donation = get_object_or_404(Donation, id=request.POST['donation_id'])
+    try:
+        customer = stripe.Customer.retrieve(donation.stripe_customer_id)
+        subscription = customer.subscriptions.retrieve(donation.stripe_subscription_id)
+        subscription.source = request.POST['stripe_token']
+        subscription.save()
+    except stripe.StripeError as e:
+        data = {'success': False, 'error': str(e)}
+    else:
+        data = {'success': True}
+    return JsonResponse(data)
 
 
 def cancel_donation(request, hero, donation):
