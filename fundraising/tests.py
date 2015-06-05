@@ -7,6 +7,7 @@ from unittest.mock import patch
 
 import stripe
 from django.conf import settings
+from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from PIL import Image
@@ -399,7 +400,7 @@ class TestThankYou(TestCase):
 
 class TestWebhooks(TestCase):
     def setUp(self):
-        self.hero = DjangoHero.objects.create()
+        self.hero = DjangoHero.objects.create(email='hero@djangoproject.com')
         self.donation = Donation.objects.create(
             donor=self.hero,
             interval='monthly',
@@ -407,17 +408,25 @@ class TestWebhooks(TestCase):
             stripe_subscription_id='sub_3MXPaZGXvVZSrS',
         )
 
-    def test_record_payment(self):
-        with open('fundraising/test_data/invoice_succeeded.json') as f:
+    def post_data(self, filename):
+        with open('fundraising/test_data/{}.json'.format(filename)) as f:
             response = self.client.post(
                 reverse('fundraising:receive-webhook'),
                 data=f.read(),
                 content_type='application/json'
             )
+        return response
+
+    def test_record_payment(self):
+        response = self.post_data('invoice_succeeded')
         self.assertEqual(response.status_code, 201)
         self.assertEqual(self.donation.payment_set.count(), 1)
         payment = self.donation.payment_set.first()
         self.assertEqual(payment.amount, 1000)
 
-
+    def test_subscription_cancelled(self):
+        self.post_data('subscription_cancelled')
+        donation = Donation.objects.get(id=self.donation.id)
+        self.assertEqual(donation.stripe_subscription_id, '')
+        self.assertEqual(len(mail.outbox), 1)
 
