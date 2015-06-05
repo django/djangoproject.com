@@ -1,9 +1,12 @@
 import json
 import stripe
 from django.contrib import messages
+from django.conf import settings
+from django.core.mail import send_mail
 from django.forms.models import modelformset_factory
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 
@@ -152,7 +155,8 @@ class WebhookHandler(object):
 
     def handle(self):
         handlers = {
-            'invoice.payment_succeeded': self.payment_succeeded
+            'invoice.payment_succeeded': self.payment_succeeded,
+            'customer.subscription.deleted': self.subscription_cancelled,
         }
         handler = handlers.get(self.event.type, lambda: HttpResponse(404))
         return handler()
@@ -168,4 +172,18 @@ class WebhookHandler(object):
         Payment.objects.create(
             donation=donation, amount=invoice.total, stripe_charge_id=invoice.charge)
         return HttpResponse(status=201)
+
+    def subscription_cancelled(self):
+        subscription = self.event.data.object
+        donation = get_object_or_404(
+            Donation, stripe_subscription_id=subscription.id)
+        donation.stripe_subscription_id = ''
+        donation.save()
+
+        mail_text = render_to_string(
+            'fundraising/email/subscription_cancelled.txt', {'donation': donation})
+        send_mail('Payment cancelled', mail_text,
+            settings.DEFAULT_FROM_EMAIL, [donation.donor.email])
+
+        return HttpResponse(status=204)
 
