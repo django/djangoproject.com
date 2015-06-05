@@ -396,3 +396,28 @@ class TestThankYou(TestCase):
         # Redirects to the campaign's page instead
         expected_url = reverse('fundraising:campaign', args=[campaign.slug])
         self.assertRedirects(response, expected_url)
+
+class TestWebhooks(TestCase):
+    def setUp(self):
+        self.hero = DjangoHero.objects.create()
+        self.donation = Donation.objects.create(
+            donor=self.hero,
+            interval='monthly',
+            stripe_customer_id='cus_3MXPY5pvYMWTBf',
+            stripe_subscription_id='sub_3MXPaZGXvVZSrS',
+        )
+
+    def test_record_payment(self):
+        with open('fundraising/test_data/invoice_succeeded.json') as f:
+            response = self.client.post(
+                reverse('fundraising:receive-webhook'),
+                data=f.read(),
+                content_type='application/json'
+            )
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(self.donation.payment_set.count(), 1)
+        payment = self.donation.payment_set.first()
+        self.assertEqual(payment.amount, 1000)
+
+
+

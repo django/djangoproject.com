@@ -1,13 +1,15 @@
+import json
 import stripe
 from django.contrib import messages
 from django.forms.models import modelformset_factory
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 
 from .exceptions import DonationError
 from .forms import DjangoHeroForm, PaymentForm, DonationForm
-from .models import Campaign, DjangoHero, Donation, Testimonial
+from .models import Campaign, DjangoHero, Donation, Payment, Testimonial
 
 
 def index(request):
@@ -133,3 +135,37 @@ def cancel_donation(request, hero, donation):
     donation.save()
 
     return redirect('fundraising:manage-donations', hero=hero.pk)
+
+
+@require_POST
+@csrf_exempt
+def receive_webhook(request):
+    data = json.loads(request.body.decode())
+    event = stripe.resource.convert_to_stripe_object(data, stripe.api_key)
+
+    return WebhookHandler(event).handle()
+
+
+class WebhookHandler(object):
+    def __init__(self, event):
+        self.event = event
+
+    def handle(self):
+        handlers = {
+            'invoice.payment_succeeded': self.payment_succeeded
+        }
+        handler = handlers.get(self.event.type, lambda: HttpResponse(404))
+        return handler()
+
+    def payment_succeeded(self):
+        invoice = self.event.data.object
+        # Ensure we haven't already processed this payment
+        if Payment.objects.filter(stripe_charge_id=invoice.charge).exists():
+            # We need a 2xx response otherwise Stripe will keep trying.
+            return HttpResponse()
+        donation = get_object_or_404(
+            Donation, stripe_subscription_id=invoice.subscription)
+        Payment.objects.create(
+            donation=donation, amount=invoice.total, stripe_charge_id=invoice.charge)
+        return HttpResponse(status=201)
+
