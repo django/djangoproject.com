@@ -430,3 +430,7 @@ class TestWebhooks(TestCase):
         self.assertEqual(donation.stripe_subscription_id, '')
         self.assertEqual(len(mail.outbox), 1)
 
+    def test_payment_failed(self):
+        self.post_data('payment_failed')
+        self.assertEqual(len(mail.outbox), 1)
+
