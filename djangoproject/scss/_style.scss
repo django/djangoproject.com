@@ -3011,11 +3011,20 @@ hr {
 	@include font-size(14);
 	margin-top: 20px;
 	text-align: center;
+	/* The IDs in documentation footnotes should stay as table cells */
+	.label {
+		display: table-cell;
+		padding-right: 1em;
+	}
 }
 form .footnote {
 	margin-top: 10px;
 	text-align: left;
 }
+.footnote.docutils {
+	text-align: left;
+}
+
 .heros-section {
 	overflow: hidden;
 	.heros {
