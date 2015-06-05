@@ -156,6 +156,7 @@ class WebhookHandler(object):
     def handle(self):
         handlers = {
             'invoice.payment_succeeded': self.payment_succeeded,
+            'invoice.payment_failed': self.payment_failed,
             'customer.subscription.deleted': self.subscription_cancelled,
         }
         handler = handlers.get(self.event.type, lambda: HttpResponse(404))
@@ -183,6 +184,18 @@ class WebhookHandler(object):
         mail_text = render_to_string(
             'fundraising/email/subscription_cancelled.txt', {'donation': donation})
         send_mail('Payment cancelled', mail_text,
+            settings.DEFAULT_FROM_EMAIL, [donation.donor.email])
+
+        return HttpResponse(status=204)
+
+    def payment_failed(self):
+        invoice = self.event.data.object
+        donation = get_object_or_404(
+            Donation, stripe_subscription_id=invoice.subscription)
+
+        mail_text = render_to_string(
+            'fundraising/email/payment_failed.txt', {'donation': donation})
+        send_mail('Payment failed', mail_text,
             settings.DEFAULT_FROM_EMAIL, [donation.donor.email])
 
         return HttpResponse(status=204)
