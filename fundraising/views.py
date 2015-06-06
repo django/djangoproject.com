@@ -144,8 +144,8 @@ def update_card(request):
 
 def cancel_donation(request, hero, donation):
     hero = get_object_or_404(DjangoHero, pk=hero)
-    donation = get_object_or_404(Donation, pk=donation, donor=hero,
-        stripe_subscription_id__isnull=False)
+    donation = get_object_or_404(
+        Donation, pk=donation, donor=hero, stripe_subscription_id__isnull=False)
 
     customer = stripe.Customer.retrieve(donation.stripe_customer_id)
     customer.subscriptions.retrieve(donation.stripe_subscription_id).delete()
@@ -200,7 +200,7 @@ class WebhookHandler(object):
         mail_text = render_to_string(
             'fundraising/email/subscription_cancelled.txt', {'donation': donation})
         send_mail('Payment cancelled', mail_text,
-            settings.DEFAULT_FROM_EMAIL, [donation.donor.email])
+                  settings.DEFAULT_FROM_EMAIL, [donation.donor.email])
 
         return HttpResponse(status=204)
 
@@ -212,7 +212,6 @@ class WebhookHandler(object):
         mail_text = render_to_string(
             'fundraising/email/payment_failed.txt', {'donation': donation})
         send_mail('Payment failed', mail_text,
-            settings.DEFAULT_FROM_EMAIL, [donation.donor.email])
+                  settings.DEFAULT_FROM_EMAIL, [donation.donor.email])
 
         return HttpResponse(status=204)
-

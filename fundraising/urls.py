@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^manage-donations/(?P<hero>[\w]+)/$', views.manage_donations, name='manage-donations'),
     url(r'^manage-donations/(?P<hero>[\w]+)/cancel/(?P<donation>[\w]+)$', views.cancel_donation, name='cancel-donation'),
     url(r'^receive_webhook/', views.receive_webhook, name='receive-webhook'),
-    url(r'^update_card/', views.update_card, name='update-card'),
+    url(r'^update-card/', views.update_card, name='update-card'),
 ]

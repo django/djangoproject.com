@@ -311,7 +311,6 @@ class TestPaymentForm(TestCase):
         self.assertEqual(hero, donation.donor)
         self.assertEqual(hero.stripe_customer_id, donation.stripe_customer_id)
 
-
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
     def test_make_donation_exception(self, charge_create, customer_create):
@@ -398,6 +397,7 @@ class TestThankYou(TestCase):
         expected_url = reverse('fundraising:campaign', args=[campaign.slug])
         self.assertRedirects(response, expected_url)
 
+
 class TestWebhooks(TestCase):
     def setUp(self):
         self.hero = DjangoHero.objects.create(email='hero@djangoproject.com')
@@ -433,4 +433,3 @@ class TestWebhooks(TestCase):
     def test_payment_failed(self):
         self.post_data('payment_failed')
         self.assertEqual(len(mail.outbox), 1)
-
