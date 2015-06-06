@@ -2,7 +2,6 @@ import json
 import os
 from datetime import date
 from functools import partial
-from operator import attrgetter
 from unittest.mock import patch
 
 import stripe
@@ -16,7 +15,6 @@ from .exceptions import DonationError
 from .forms import PaymentForm
 from .models import Campaign, DjangoHero, Donation, Payment
 from .templatetags.fundraising_extras import donation_form_with_heart
-from .utils import shuffle_donations
 
 
 def _fake_random(*results):
@@ -227,21 +225,6 @@ class TestDjangoHero(TestCase):
         d3 = Donation.objects.create(donor=self.h3, campaign=self.campaign)
         Payment.objects.create(donation=d3, amount='10')
         self.today = date.today()
-
-    def test_donation_shuffling(self):
-        queryset = DjangoHero.objects.for_campaign(self.campaign)
-
-        for random, expected in [
-            (lambda: 1, [15, 10, 5]),
-            (lambda: -1, [5, 10, 15]),
-            (_fake_random(1, 0, 1), [15, 5, 10]),
-        ]:
-            with patch('fundraising.utils.random', side_effect=random):
-                self.assertQuerysetEqual(
-                    shuffle_donations(queryset),
-                    expected,
-                    attrgetter('donated_amount')
-                )
 
     def test_thumbnail(self):
         try:
