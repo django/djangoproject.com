@@ -123,6 +123,9 @@ class Donation(FundraisingModel):
     def get_absolute_url(self):
         return reverse('fundraising:thank-you', kwargs={'donation': self.id})
 
+    def total_payments(self):
+        return self.payment_set.aggregate(models.Sum('amount'))['amount__sum']
+
 
 class Payment(models.Model):
     donation = models.ForeignKey(Donation)
