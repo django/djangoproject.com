@@ -112,7 +112,7 @@ class TestCampaign(TestCase):
         donations = Donation.objects.all()
         self.assertEqual(donations.count(), 1)
         self.assertEqual(donations[0].subscription_amount, None)
-        self.assertEqual(donations[0].payment_set.first().amount, 100)
+        self.assertEqual(donations[0].total_payments(), 100)
         self.assertEqual(donations[0].receipt_email, 'test@example.com')
         self.assertEqual(donations[0].stripe_subscription_id, '')
 
@@ -129,7 +129,7 @@ class TestCampaign(TestCase):
         donations = Donation.objects.all()
         self.assertEqual(donations.count(), 1)
         self.assertEqual(donations[0].subscription_amount, 100)
-        self.assertEqual(donations[0].payment_set.first().amount, 100)
+        self.assertEqual(donations[0].total_payments(), 100)
         self.assertEqual(donations[0].receipt_email, 'test@example.com')
         self.assertEqual(donations[0].payment_set.first().stripe_charge_id, '')
 
@@ -146,7 +146,7 @@ class TestCampaign(TestCase):
         })
         donations = Donation.objects.all()
         self.assertEqual(donations.count(), 1)
-        self.assertEqual(donations[0].payment_set.first().amount, 100)
+        self.assertEqual(donations[0].total_payments(), 100)
         self.assertEqual(donations[0].campaign, self.campaign)
 
     @patch('stripe.Customer.create')
