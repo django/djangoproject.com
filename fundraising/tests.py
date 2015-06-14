@@ -392,13 +392,15 @@ class TestWebhooks(TestCase):
         )
 
     def post_data(self, filename):
-        with open('fundraising/test_data/{}.json'.format(filename)) as f:
-            response = self.client.post(
+        file_path = os.path.join(
+            settings.BASE_DIR,
+            'fundraising/test_data/{}.json'.format(filename))
+        with open(file_path) as f:
+            return self.client.post(
                 reverse('fundraising:receive-webhook'),
                 data=f.read(),
                 content_type='application/json'
             )
-        return response
 
     def test_record_payment(self):
         response = self.post_data('invoice_succeeded')

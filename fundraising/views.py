@@ -175,7 +175,7 @@ class WebhookHandler(object):
             'invoice.payment_failed': self.payment_failed,
             'customer.subscription.deleted': self.subscription_cancelled,
         }
-        handler = handlers.get(self.event.type, lambda: HttpResponse(404))
+        handler = handlers.get(self.event.type, lambda: HttpResponse(422))
         return handler()
 
     def payment_succeeded(self):
