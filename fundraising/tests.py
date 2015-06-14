@@ -391,30 +391,48 @@ class TestWebhooks(TestCase):
             stripe_subscription_id='sub_3MXPaZGXvVZSrS',
         )
 
-    def post_data(self, filename):
-        file_path = os.path.join(
-            settings.BASE_DIR,
+    def stripe_data(self, filename):
+        file_path = settings.BASE_DIR.joinpath(
             'fundraising/test_data/{}.json'.format(filename))
-        with open(file_path) as f:
-            return self.client.post(
-                reverse('fundraising:receive-webhook'),
-                data=f.read(),
-                content_type='application/json'
-            )
+        with file_path.open() as f:
+            data = json.load(f)
+            return stripe.resource.convert_to_stripe_object(data, stripe.api_key)
 
-    def test_record_payment(self):
-        response = self.post_data('invoice_succeeded')
+    def post_event(self):
+        return self.client.post(
+            reverse('fundraising:receive-webhook'),
+            data='{"id": "evt_12345"}',
+            content_type='application/json'
+        )
+
+    @patch('stripe.Event.retrieve')
+    def test_record_payment(self, event):
+        event.return_value = self.stripe_data('invoice_succeeded')
+        response = self.post_event()
         self.assertEqual(response.status_code, 201)
         self.assertEqual(self.donation.payment_set.count(), 1)
         payment = self.donation.payment_set.first()
         self.assertEqual(payment.amount, 10)
 
-    def test_subscription_cancelled(self):
-        self.post_data('subscription_cancelled')
+    @patch('stripe.Event.retrieve')
+    def test_subscription_cancelled(self, event):
+        event.return_value = self.stripe_data('subscription_cancelled')
+        self.post_event()
         donation = Donation.objects.get(id=self.donation.id)
         self.assertEqual(donation.stripe_subscription_id, '')
         self.assertEqual(len(mail.outbox), 1)
 
-    def test_payment_failed(self):
-        self.post_data('payment_failed')
+    @patch('stripe.Event.retrieve')
+    def test_payment_failed(self, event):
+        event.return_value = self.stripe_data('payment_failed')
+        self.post_event()
         self.assertEqual(len(mail.outbox), 1)
+
+    @patch('stripe.Event.retrieve')
+    def test_no_such_event(self, event):
+        event.side_effect = stripe.error.InvalidRequestError(
+            message='No such event: evt_12345',
+            param='id'
+        )
+        response = self.post_event()
+        self.assertTrue(response.status_code, 422)
