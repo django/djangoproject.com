@@ -1,3 +1,4 @@
+import decimal
 import json
 import stripe
 from django.contrib import messages
@@ -186,8 +187,9 @@ class WebhookHandler(object):
             return HttpResponse()
         donation = get_object_or_404(
             Donation, stripe_subscription_id=invoice.subscription)
+        amount = decimal.Decimal(invoice.total) / 100
         Payment.objects.create(
-            donation=donation, amount=invoice.total, stripe_charge_id=invoice.charge)
+            donation=donation, amount=amount, stripe_charge_id=invoice.charge)
         return HttpResponse(status=201)
 
     def subscription_cancelled(self):
