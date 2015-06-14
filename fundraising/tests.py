@@ -407,7 +407,7 @@ class TestWebhooks(TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(self.donation.payment_set.count(), 1)
         payment = self.donation.payment_set.first()
-        self.assertEqual(payment.amount, 1000)
+        self.assertEqual(payment.amount, 10)
 
     def test_subscription_cancelled(self):
         self.post_data('subscription_cancelled')
