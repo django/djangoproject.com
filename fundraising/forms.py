@@ -265,11 +265,11 @@ class PaymentForm(forms.Form):
                 donation_params['subscription_amount'] = amount
             donation = Donation.objects.create(**donation_params)
 
-            Payment.objects.create(**{
-                'amount': amount,
-                'stripe_charge_id': charge_id,
-                'donation': donation,
-            })
+            Payment.objects.create(
+                amount=amount,
+                stripe_charge_id=charge_id,
+                donation=donation,
+            )
 
             # Send an email message about managing your donation
             message = render_to_string(

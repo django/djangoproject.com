@@ -3,9 +3,9 @@ define([
     'stripe-checkout'
 ], function ($) {
     var $heroForm = $('.django-hero-form')
-    $('.django-hero-form').on('click', '.change-card', function() {
+    $heroForm.on('click', '.change-card', function() {
         $this = $(this);
-        var donation_id = $this.data('donation_id');
+        var donationId = $this.data('donationId');
         var handler = StripeCheckout.configure({
             key: $heroForm.data('stripeKey'),
             image: $heroForm.data('stripeIcon'),
@@ -14,7 +14,7 @@ define([
                 var csrfToken = $heroForm.find('[name=csrfmiddlewaretoken]').val();
                 var data = {
                     'stripe_token': token.id,
-                    'donation_id': donation_id,
+                    'donation_id': donationId,
                     'csrfmiddlewaretoken': csrfToken
                 };
                 $.ajax({

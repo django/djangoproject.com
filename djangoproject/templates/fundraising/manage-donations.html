@@ -26,7 +26,7 @@
       <h3>{{ form.instance.campaign }}</h3>
       {% include 'fundraising/includes/_form.html' %}
       <div class="change-card-container">
-        <input type="button" value="Change card details" class="change-card" data-donation_id="{{ form.instance.id }}" data-donor-email="{{ hero.email }}"> <span class="change-card-result"></span>
+        <input type="button" value="Change card details" class="change-card" data-donation-id="{{ form.instance.id }}" data-donor-email="{{ hero.email }}"> <span class="change-card-result"></span>
       </div>
     {% endfor %}
     {{ modify_donations_formset.management_form }}
