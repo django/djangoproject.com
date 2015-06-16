@@ -37,11 +37,16 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^community/', include('aggregator.urls')),
+
     url(r'^conduct/$', TemplateView.as_view(template_name='conduct/index.html'), name='code_of_conduct'),
     url(r'^conduct/faq/$', TemplateView.as_view(template_name='conduct/faq.html'), name='conduct_faq'),
     url(r'^conduct/reporting/$', TemplateView.as_view(template_name='conduct/reporting.html'), name='conduct_reporting'),
     url(r'^conduct/enforcement-manual/$', TemplateView.as_view(template_name='conduct/enforcement.html'), name='conduct_enforcement'),
     url(r'^conduct/changes/$', TemplateView.as_view(template_name='conduct/changes.html'), name='conduct_changes'),
+
+    url(r'^diversity/$', TemplateView.as_view(template_name='diversity/index.html'), name='diversity'),
+    url(r'^diversity/changes/$', TemplateView.as_view(template_name='diversity/changes.html'), name='diversity_changes'),
+
     url(r'^contact/', include('contact.urls')),
     url(r'^fundraising/', include('fundraising.urls', namespace='fundraising')),
     url(r'^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', 'django.contrib.contenttypes.views.shortcut'),
