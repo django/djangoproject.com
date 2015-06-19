@@ -160,8 +160,12 @@ def cancel_donation(request, hero, donation):
 @require_POST
 @csrf_exempt
 def receive_webhook(request):
-    data = json.loads(request.body.decode())
-    # For security, re-request the event object from Stripe.
+    try:
+        data = json.loads(request.body.decode())
+    except ValueError:
+        return HttpResponse(422)
+
+   # For security, re-request the event object from Stripe.
     try:
         event = stripe.Event.retrieve(data['id'])
     except stripe.error.InvalidRequestError:
