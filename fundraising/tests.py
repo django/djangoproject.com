@@ -9,6 +9,7 @@ from django.conf import settings
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django_hosts.resolvers import reverse as django_hosts_reverse
 from PIL import Image
 
 from .exceptions import DonationError
@@ -402,7 +403,7 @@ class TestWebhooks(TestCase):
         return self.client.post(
             reverse('fundraising:receive-webhook'),
             data='{"id": "evt_12345"}',
-            content_type='application/json'
+            content_type='application/json',
         )
 
     @patch('stripe.Event.retrieve')
@@ -421,12 +422,16 @@ class TestWebhooks(TestCase):
         donation = Donation.objects.get(id=self.donation.id)
         self.assertEqual(donation.stripe_subscription_id, '')
         self.assertEqual(len(mail.outbox), 1)
+        expected_url = django_hosts_reverse('fundraising:donate')
+        self.assertTrue(expected_url in mail.outbox[0].body)
 
     @patch('stripe.Event.retrieve')
     def test_payment_failed(self, event):
         event.return_value = self.stripe_data('payment_failed')
         self.post_event()
         self.assertEqual(len(mail.outbox), 1)
+        expected_url = django_hosts_reverse('fundraising:manage-donations', kwargs={'hero': self.hero.id})
+        self.assertTrue(expected_url in mail.outbox[0].body)
 
     @patch('stripe.Event.retrieve')
     def test_no_such_event(self, event):
