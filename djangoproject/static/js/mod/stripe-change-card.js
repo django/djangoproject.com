@@ -1,8 +1,8 @@
 define([
     'jquery', //requires jquery
     'stripe-checkout'
-], function ($) {
-    var $heroForm = $('.django-hero-form')
+], function($) {
+    var $heroForm = $('.django-hero-form');
     $heroForm.on('click', '.change-card', function() {
         $this = $(this);
         var donationId = $this.data('donationId');
