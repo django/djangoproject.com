@@ -7,7 +7,9 @@
   of Django and helps the <strong>Django Fellowship</strong> program in particular.
   Thank you!</p>
 
-<form enctype="multipart/form-data" action="" method="post" class="form-input django-hero-form" data-stripe-key="{{ stripe_publishable_key }}" data-stripe-icon="{% static 'img/dj-stripe-icon.jpg' %}" data-update-card-url="{% url 'fundraising:update-card' %}">
+<form enctype="multipart/form-data" action="" method="post" class="form-input django-hero-form"
+    data-stripe-key="{{ stripe_publishable_key }}" data-stripe-icon="{% static 'img/dj-stripe-icon.jpg' %}"
+    data-update-card-url="{% url 'fundraising:update-card' %}">
   <h2>Manage your presence in the fundraising campaigns</h2>
   <p>Information entered below will be visible on all of your donations to Django Project.</p>
   {% csrf_token %}
@@ -26,7 +28,9 @@
       <h3>{{ form.instance.campaign }}</h3>
       {% include 'fundraising/includes/_form.html' %}
       <div class="change-card-container">
-        <input type="button" value="Change card details" class="change-card" data-donation-id="{{ form.instance.id }}" data-donor-email="{{ hero.email }}"> <span class="change-card-result"></span>
+        <input type="button" value="Change card details" class="change-card cta outline inline"
+            data-donation-id="{{ form.instance.id }}" data-donor-email="{{ hero.email }}">
+        <span class="change-card-result"></span>
       </div>
     {% endfor %}
     {{ modify_donations_formset.management_form }}
