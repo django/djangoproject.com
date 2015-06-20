@@ -52,16 +52,16 @@
   <p>And be sure to sign up for the <a href="http://groups.google.com/group/django-users">django-users mailing list</a>, where other Django users and the Django developers themselves all hang out to help each other.</p>
 
   <h2>Supported Versions</h2>
-  <p>Major releases (A.B, A.B+1, etc.) will happen roughly every six to nine months.
+  <p><strong>Feature releases</strong> (A.B, A.B+1, etc.) will happen roughly every eight months.
     These releases will contain new features, improvements to existing features, and such.</p>
-  <p>Minor releases (A.B.C, etc.) will be issued as needed, often to fix security issues.
-    These releases will be 100% compatible with the associated major release, unless
-    this is impossible for security reasons or to prevent data loss. So the answer to
-    “should I upgrade to the latest minor release?” will always be “yes.”</p>
-  <p>Additionally, the Django team will occasionally designate certain releases
-    to be “Long-term support” (LTS) releases. LTS releases will get security and
-    data loss fixes applied for a guaranteed period of time, typically 3+ years,
-    regardless of the pace of releases afterwards.</p>
+  <p><strong>Patch releases</strong> (A.B.C, etc.) will be issued as needed, to
+    fix bugs and/or security issues. These releases will be 100% compatible with
+    the associated feature release, unless this is impossible for security
+    reasons or to prevent data loss. So the answer to "should I upgrade to the
+    latest patch release?” will always be "yes."</p>
+  <p>Certain feature releases will be designated as <strong>long-term support
+    (LTS) releases</strong>. These releases will get security and data loss
+    fixes applied for a guaranteed period of time, typically three years.</p>
   <p>See the <a href="https://docs.djangoproject.com/en/dev/internals/release-process/#supported-versions">
     supported versions policy</a> for detailed guidelines about what fixes will be backported.</p>
   <table class='django-supported-versions'>
@@ -74,14 +74,14 @@
       <tr>
         <td>1.8 LTS</th>
         <td>{% get_latest_micro_release '1.8' %}</th>
-        <td>Upon the release of Django 1.9<sup><a href="#ft3">3</sup></td>
+        <td>December 2015</td>
         <td>Until at least April 2018</td>
       </tr>
       <tr>
         <td>1.7</th>
         <td>{% get_latest_micro_release '1.7' %}</th>
         <td>April 1, 2015</td>
-        <td>Upon the release of Django 1.9<sup><a href="#ft3">3</sup></td>
+        <td>December 2015</td>
       </tr>
       <tr class="unsupported">
         <td>1.6</th>
@@ -109,12 +109,46 @@
       </tr>
   </table>
 
-  <p>
+  <p>Here's what the future roadmap looks like:</p>
+
+  <table class='django-supported-versions'>
+    <tr>
+      <th>Release Series</th>
+      <th>Release Date</th>
+      <th>End of mainstream support<sup><a href="#ft1">1</sup></th>
+      <th>End of extended support<sup><a href="#ft2">2</sup></th>
+    </tr>
+    <tr>
+      <td>1.9</th>
+      <td>December 2015</th>
+      <td>August 2016</td>
+      <td>April 2017</td>
+    </tr>
+    <tr>
+      <td>1.10</th>
+      <td>August 2016</th>
+      <td>April 2017</td>
+      <td>December 2017</td>
+    </tr>
+    <tr>
+      <td>1.11 LTS</th>
+      <td>April 2017</th>
+      <td>December 2017</td>
+       <td>Until at least April 2020</td>
+    </tr>
+    <tr>
+      <td>2.0<sup><a href="#ft3">3</sup></th>
+      <td>December 2017</th>
+      <td>August 2018</td>
+      <td>April 2019</td>
+    </tr>
+  </table>
+
+  <p style="width: 720px;">
     <sup id="ft1">[1] Security fixes, data loss bugs, crashing bugs, major functionality
-    bugs in newly-introduced features, and regressions from older version of Django.</sup><br/>
+    bugs in newly-introduced features, and regressions from older versions of Django.</sup><br>
     <sup id="ft2">[2] Security fixes and data loss bugs.</sup><br>
-    <sup id="ft3">[3] <a href="https://code.djangoproject.com/wiki/Version1.9Roadmap">
-      Estimated for December 2015</a>.</sup>
+    <sup id="ft3">[3] Python 3 only.</sup>
   </p>
 
 {% endblock %}
