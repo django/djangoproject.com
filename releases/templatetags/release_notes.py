@@ -1,4 +1,5 @@
 from django import template
+from django.utils.html import format_html
 from django.utils.translation import ugettext as _
 from django_hosts.resolvers import reverse
 
@@ -18,14 +19,15 @@ def release_notes(version, show_version=False):
     else:
         anchor_text = _('Online documentation')
     release_notes_path = 'releases/%s' % display_version
-    return '<a href="%(url)s">%(anchor_text)s</a>' % {
-        'url': reverse(
+    return format_html(
+        '<a href="{url}">{anchor_text}</a>',
+        url=reverse(
             'document-detail',
             host='docs',
             kwargs={'lang': 'en', 'version': version_x_dot_y, 'url': release_notes_path},
         ),
-        'anchor_text': anchor_text,
-    }
+        anchor_text=anchor_text,
+    )
 
 
 @register.simple_tag()
