@@ -3,11 +3,13 @@ define([
     'stripe-checkout'
 ], function ($) {
     var $donationForm = $('.stripe-custom-checkout');
+    var $submitButton = $donationForm.find('.cta');
 
     var handler = StripeCheckout.configure({
         key: $donationForm.data('stripeKey'),
         image: $donationForm.data('stripeIcon'),
         token: function (token) {
+            $submitButton.prop('disabled', true).addClass('disabled');
             var campaign = $donationForm.find('[name=campaign]').val();
             var amount = $donationForm.find('[name=amount]').val();
             var csrfToken = $donationForm.find('[name=csrfmiddlewaretoken]').val();
@@ -30,6 +32,7 @@ define([
                     if (data.success) {
                         window.location = data.redirect;
                     } else {
+                        $submitButton.prop('disabled', false).removeClass('disabled');
                         alert(data.error);
                     }
                 }
