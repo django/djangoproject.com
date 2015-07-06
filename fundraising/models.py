@@ -48,7 +48,7 @@ class FundraisingModel(models.Model):
 
 class DjangoHero(FundraisingModel):
     email = models.EmailField(null=True)
-    stripe_customer_id = models.CharField(max_length=100, null=True)
+    stripe_customer_id = models.CharField(max_length=100, blank=True)
     logo = ImageField(upload_to="fundraising/logos/", blank=True)
     url = models.URLField(blank=True, verbose_name='URL')
     name = models.CharField(max_length=100, blank=True)
@@ -109,13 +109,13 @@ class Campaign(models.Model):
 
 
 class Donation(FundraisingModel):
-    interval = models.CharField(max_length=20, choices=INTERVAL_CHOICES, null=True)
+    interval = models.CharField(max_length=20, choices=INTERVAL_CHOICES, blank=True)
     subscription_amount = models.DecimalField(max_digits=9, decimal_places=2, null=True, blank=True)
     donor = models.ForeignKey(DjangoHero, null=True)
     campaign = models.ForeignKey(Campaign, null=True, blank=True)
-    stripe_subscription_id = models.CharField(max_length=100, null=True)
-    stripe_customer_id = models.CharField(max_length=100, null=True)
-    receipt_email = models.EmailField(null=True)
+    stripe_subscription_id = models.CharField(max_length=100, blank=True)
+    stripe_customer_id = models.CharField(max_length=100, blank=True)
+    receipt_email = models.EmailField(blank=True)
 
     def __str__(self):
         return '{} from {}'.format(self.get_interval_display(), self.donor)
@@ -130,7 +130,7 @@ class Donation(FundraisingModel):
 class Payment(models.Model):
     donation = models.ForeignKey(Donation)
     amount = models.DecimalField(max_digits=9, decimal_places=2, null=True)
-    stripe_charge_id = models.CharField(max_length=100, null=True)
+    stripe_charge_id = models.CharField(max_length=100, blank=True)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

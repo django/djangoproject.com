@@ -90,11 +90,7 @@ def thank_you(request, donation):
 
 def manage_donations(request, hero):
     hero = get_object_or_404(DjangoHero, pk=hero)
-    recurring_donations = hero.donation_set.filter(
-        stripe_subscription_id__isnull=False
-    ).exclude(
-        stripe_subscription_id=''
-    )
+    recurring_donations = hero.donation_set.exclude(stripe_subscription_id='')
 
     ModifyDonationsFormset = modelformset_factory(Donation, form=DonationForm, extra=0)
 
@@ -145,13 +141,13 @@ def update_card(request):
 
 def cancel_donation(request, hero, donation):
     hero = get_object_or_404(DjangoHero, pk=hero)
-    donation = get_object_or_404(
-        Donation, pk=donation, donor=hero, stripe_subscription_id__isnull=False)
+    donations = hero.donation_set.exclude(stripe_subscription_id='')
+    donation = get_object_or_404(donations, pk=donation)
 
     customer = stripe.Customer.retrieve(donation.stripe_customer_id)
     customer.subscriptions.retrieve(donation.stripe_subscription_id).delete()
 
-    donation.stripe_subscription_id = None
+    donation.stripe_subscription_id = ''
     donation.save()
 
     return redirect('fundraising:manage-donations', hero=hero.pk)

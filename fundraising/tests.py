@@ -207,6 +207,38 @@ class TestCampaign(TestCase):
         self.assertTrue(content['success'])
         self.assertEqual(content['redirect'], donation.get_absolute_url())
 
+    @patch('stripe.Customer.retrieve')
+    def test_cancel_donation(self, retrieve_customer):
+        donor = DjangoHero.objects.create()
+        donation = Donation.objects.create(
+            campaign=self.campaign, donor=donor,
+            stripe_subscription_id='12345', stripe_customer_id='54321',
+        )
+        url = reverse(
+            'fundraising:cancel-donation',
+            kwargs={'hero': donor.id, 'donation': donation.id}
+        )
+        response = self.client.get(url)
+        self.assertRedirects(response, reverse('fundraising:manage-donations',
+                                               kwargs={'hero': donor.id}))
+        retrieve_customer.assert_called_once_with('54321')
+        donation = Donation.objects.get(id=donation.id)
+        self.assertEqual('', donation.stripe_subscription_id)
+
+    @patch('stripe.Customer.retrieve')
+    def test_cancel_already_cancelled_donation(self, retrieve_customer):
+        donor = DjangoHero.objects.create()
+        donation = Donation.objects.create(
+            campaign=self.campaign, donor=donor, stripe_subscription_id=''
+        )
+        url = reverse(
+            'fundraising:cancel-donation',
+            kwargs={'hero': donor.id, 'donation': donation.id}
+        )
+        response = self.client.get(url)
+        self.assertEquals(404, response.status_code)
+        self.assertFalse(retrieve_customer.called)
+
 
 class TestDjangoHero(TestCase):
     def setUp(self):
