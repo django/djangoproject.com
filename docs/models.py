@@ -1,6 +1,5 @@
 import json
 import operator
-import os
 from functools import reduce
 from pathlib import Path
 

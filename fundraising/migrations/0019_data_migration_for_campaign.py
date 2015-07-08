@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.db import models, migrations
 import datetime
+
+from django.db import migrations, models
+
 
 def assign_past_donation_and_testimonials_to_campaign(apps, schema_editor):
     Campaign = apps.get_model("fundraising", "Campaign")
