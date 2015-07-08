@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations, models
+
 
 def convert_amount(apps, schema_editor):
     # Django 1.7 doesn't check the router.allow_migrate on RunSQL or RunPython

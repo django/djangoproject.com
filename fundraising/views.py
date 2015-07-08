@@ -1,18 +1,19 @@
 import decimal
 import json
+
 import stripe
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import messages
 from django.core.mail import send_mail
 from django.forms.models import modelformset_factory
-from django.http import JsonResponse, HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
-from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 from .exceptions import DonationError
-from .forms import DjangoHeroForm, PaymentForm, DonationForm
+from .forms import DjangoHeroForm, DonationForm, PaymentForm
 from .models import Campaign, DjangoHero, Donation, Payment, Testimonial
 
 
@@ -161,7 +162,7 @@ def receive_webhook(request):
     except ValueError:
         return HttpResponse(422)
 
-   # For security, re-request the event object from Stripe.
+    # For security, re-request the event object from Stripe.
     try:
         event = stripe.Event.retrieve(data['id'])
     except stripe.error.InvalidRequestError:

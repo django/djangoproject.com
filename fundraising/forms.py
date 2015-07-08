@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from .exceptions import DonationError
-from .models import Campaign, DjangoHero, Donation, INTERVAL_CHOICES, Payment
+from .models import INTERVAL_CHOICES, Campaign, DjangoHero, Donation, Payment
 
 
 class DjangoHeroForm(forms.ModelForm):

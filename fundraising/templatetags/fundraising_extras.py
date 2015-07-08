@@ -5,10 +5,10 @@ from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import floatformat
 
-from fundraising.models import (
-    DjangoHero, Donation, DISPLAY_LOGO_AMOUNT, DEFAULT_DONATION_AMOUNT,
-)
 from fundraising.forms import DonateForm
+from fundraising.models import (
+    DEFAULT_DONATION_AMOUNT, DISPLAY_LOGO_AMOUNT, DjangoHero, Donation,
+)
 
 register = template.Library()
 
