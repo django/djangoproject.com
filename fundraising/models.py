@@ -47,7 +47,7 @@ class FundraisingModel(models.Model):
 
 
 class DjangoHero(FundraisingModel):
-    email = models.EmailField(null=True)
+    email = models.EmailField(blank=True)
     stripe_customer_id = models.CharField(max_length=100, blank=True)
     logo = ImageField(upload_to="fundraising/logos/", blank=True)
     url = models.URLField(blank=True, verbose_name='URL')
