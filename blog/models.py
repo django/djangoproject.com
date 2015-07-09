@@ -8,11 +8,14 @@ from django.utils.translation import ugettext_lazy as _
 from django_hosts.resolvers import reverse
 from docutils.core import publish_parts
 
-BLOG_DOCUTILS_SETTINGS = getattr(settings, 'BLOG_DOCUTILS_SETTINGS', {
+BLOG_DOCUTILS_SETTINGS = {
     'doctitle_xform': False,
     'initial_header_level': 3,
     'id_prefix': 's-',
-})
+    'raw_enabled': False,
+    'file_insertion_enabled': False,
+}
+BLOG_DOCUTILS_SETTINGS.update(getattr(settings, 'BLOG_DOCUTILS_SETTINGS', {}))
 
 
 class EntryQuerySet(models.QuerySet):
@@ -97,10 +100,10 @@ class Entry(models.Model):
 
 class EventQuerySet(EntryQuerySet):
     def past(self):
-        return self.filter(date__lte=timezone.now())
+        return self.filter(date__lte=timezone.now()).order_by('-date')
 
     def future(self):
-        return self.filter(date__gte=timezone.now())
+        return self.filter(date__gte=timezone.now()).order_by('date')
 
 
 class Event(models.Model):

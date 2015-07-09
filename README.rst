@@ -1,11 +1,11 @@
 djangoproject.com source code
 =============================
 
-.. image:: https://img.shields.io/travis/django/djangoproject.com.svg
-    :target: http://travis-ci.org/django/djangoproject.com
+.. image:: https://travis-ci.org/django/djangoproject.com.svg?branch=master
+    :target: https://travis-ci.org/django/djangoproject.com
 
-.. image:: https://img.shields.io/coveralls/django/djangoproject.com.svg
-   :target: https://coveralls.io/r/django/djangoproject.com
+.. image:: https://coveralls.io/repos/django/djangoproject.com/badge.svg?branch=master
+    :target: https://coveralls.io/r/django/djangoproject.com?branch=master
 
 To run locally, do the usual:
 
@@ -71,7 +71,7 @@ To run locally, do the usual:
    If you're on Mac OS and don't feel like editing the ``/etc/hosts`` file
    manually, there is a great preference pane called `Hosts.prefpane`_. On
    Ubuntu there is a `built-in network admin`_ GUI to do the same. Remember
-   both require admin priviledges, just like you'd need when editing
+   both require admin privileges, just like you'd need when editing
    ``/etc/hosts`` with your favorite editor.
 
 .. _`Hosts.prefpane`: https://github.com/specialunderwear/Hosts.prefpane
@@ -93,7 +93,7 @@ To run locally, do the usual:
 Running the tests
 -----------------
 
-We us `Travis-CI <https://travis-ci.org/>`_ for continuous testing and
+We use `Travis-CI <https://travis-ci.org/>`_ for continuous testing and
 `GitHub <https://github.com/>`_ pull request integration. If you're familiar
 with those systems you should not have any problems writing tests.
 
@@ -121,7 +121,7 @@ or for a HTML-based report::
     coverage html
 
 **(Optional)** In case you're using an own virtualenv you can also run the
-tests manually using the ``test`` task of the ``Makefile``. Don't forgot to
+tests manually using the ``test`` task of the ``Makefile``. Don't forget to
 install the test requirements with the following command first though::
 
     pip install -r requirements/tests.txt
@@ -208,7 +208,7 @@ JavaScript libraries
 --------------------
 
 This project uses `Bower <http://bower.io/>`_ for managing JS library
-depedencies. See its documentation for how to use it. Here's the gist:
+dependencies. See its documentation for how to use it. Here's the gist:
 
 To update any of the dependencies, edit the ``bower.json`` file accordingly
 and then run ``bower install`` to download the appropriate files to the

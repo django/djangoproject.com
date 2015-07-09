@@ -100,3 +100,11 @@ questions after reading it, please feel free to
     honor this Code of Conduct in our spaces.</p>
 
 {% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <style type="text/css">
+    h3 a.plink { display: none; }
+    h3:hover a.plink { display: inline; }
+  </style>
+{% endblock extrahead %}
