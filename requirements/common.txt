@@ -16,6 +16,6 @@ psycopg2==2.6
 pygments==2.0.2
 pykismet3==0.1.1
 requests==2.5.1
-sorl-thumbnail==12.2
+sorl-thumbnail==12.3
 stripe==1.20.1
 Sphinx==1.2.3
