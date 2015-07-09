@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -20,11 +20,6 @@ class Migration(migrations.Migration):
             model_name='donation',
             name='interval',
             field=models.CharField(blank=True, choices=[('monthly', 'Monthly donation'), ('quarterly', 'Quarterly donation'), ('yearly', 'Yearly donation'), ('onetime', 'One-time donation')], max_length=20),
-        ),
-        migrations.AlterField(
-            model_name='donation',
-            name='receipt_email',
-            field=models.EmailField(blank=True, max_length=254),
         ),
         migrations.AlterField(
             model_name='donation',
