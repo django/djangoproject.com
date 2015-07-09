@@ -128,7 +128,7 @@
   {% endblock breadcrumbs-wrapper %}
 
   {% block help-wrapper %}
-  <h2>{% trans "Getting help" %}</h2>
+  <h2 id="getting-help-sidebar">{% trans "Getting help" %}</h2>
   <dl class="list-links">
     <dt><a href="{% url 'document-detail' lang=lang version=version url="faq" host 'docs' %}">FAQ</a></dt>
     <dd>{% blocktrans %}Try the FAQ — it's got answers to many common questions.{% endblocktrans %}</dd>

@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps import FlatPageSitemap, views as sitemap_views
 from django.views.decorators.cache import cache_page
 from django.views.generic import RedirectView, TemplateView
@@ -27,13 +28,25 @@ urlpatterns = [
     # to work around a permanent redirect stored in the db that existed before the redesign:
     url(r'^overview/$', RedirectView.as_view(url='/start/overview/', permanent=False)),
     url(r'^accounts/', include('accounts.urls')),
+
+    # Admin password reset
+    url(r'^admin/password_reset/$', auth_views.password_reset, name='admin_password_reset'),
+    url(r'^admin/password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', auth_views.password_reset_confirm, name='password_reset_confirm'),
+    url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
+
     url(r'^admin/', include(admin.site.urls)),
     url(r'^community/', include('aggregator.urls')),
+
     url(r'^conduct/$', TemplateView.as_view(template_name='conduct/index.html'), name='code_of_conduct'),
     url(r'^conduct/faq/$', TemplateView.as_view(template_name='conduct/faq.html'), name='conduct_faq'),
     url(r'^conduct/reporting/$', TemplateView.as_view(template_name='conduct/reporting.html'), name='conduct_reporting'),
     url(r'^conduct/enforcement-manual/$', TemplateView.as_view(template_name='conduct/enforcement.html'), name='conduct_enforcement'),
     url(r'^conduct/changes/$', TemplateView.as_view(template_name='conduct/changes.html'), name='conduct_changes'),
+
+    url(r'^diversity/$', TemplateView.as_view(template_name='diversity/index.html'), name='diversity'),
+    url(r'^diversity/changes/$', TemplateView.as_view(template_name='diversity/changes.html'), name='diversity_changes'),
+
     url(r'^contact/', include('contact.urls')),
     url(r'^fundraising/', include('fundraising.urls', namespace='fundraising')),
     url(r'^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', 'django.contrib.contenttypes.views.shortcut'),
@@ -55,7 +68,6 @@ urlpatterns = [
 
     # Styleguide
     url(r'^styleguide/$', TemplateView.as_view(template_name='styleguide.html'), name="styleguide"),
-
 
     url(r'^sitemap\.xml$', cache_page(60 * 60 * 6)(sitemap_views.sitemap), {'sitemaps': sitemaps}),
     url(r'^weblog/', include('blog.urls', namespace='weblog')),

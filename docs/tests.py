@@ -1,6 +1,12 @@
+import os
+from pathlib import Path
+
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import set_urlconf
 from django.template import Context, Template
 from django.test import TestCase
+
+from .utils import get_doc_path
 
 
 class SearchFormTestCase(TestCase):
@@ -9,6 +15,12 @@ class SearchFormTestCase(TestCase):
     def setUp(self):
         # We need to create an extra Site because docs have SITE_ID=2
         Site.objects.create(name='Django test', domain="example.com")
+
+    @classmethod
+    def tearDownClass(cls):
+        # cleanup URLconfs changed by django-hosts
+        set_urlconf(None)
+        super(SearchFormTestCase, cls).tearDownClass()
 
     def test_empty_get(self):
         response = self.client.get('/en/dev/search/',
@@ -44,3 +56,13 @@ def band_listing(request):
             "{</span><span class=\"s\">&#39;bands&#39;</span><span class=\"p\">:</span> "
             "<span class=\"n\">bands</span><span class=\"p\">})</span>\n</pre></div>\n\n"
         )
+
+
+class TestUtils(TestCase):
+    def test_get_doc_path(self):
+        # non-existent file
+        self.assertEqual(get_doc_path(Path('root'), 'subpath.txt'), None)
+
+        # existing file
+        path, filename = __file__.rsplit(os.path.sep, 1)
+        self.assertEqual(get_doc_path(Path(path), filename), None)

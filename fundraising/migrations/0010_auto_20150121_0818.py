@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='djangohero',
             name='url',
-            field=models.URLField(verbose_name=b'URL', blank=True),
+            field=models.URLField(verbose_name='URL', blank=True),
             preserve_default=True,
         ),
     ]

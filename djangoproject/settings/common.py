@@ -149,7 +149,9 @@ SERVER_EMAIL = "root@djangoproject.com"
 
 SESSION_COOKIE_HTTPONLY = True
 
-SILENCED_SYSTEM_CHECKS = ['1_6.W001']
+SILENCED_SYSTEM_CHECKS = [
+    'fields.W342',  # tracdb has ForeignKey(unique=True) in lieu of multi-col PKs
+]
 
 SITE_ID = 1
 

@@ -34,6 +34,16 @@ class ContactFormTests(TestCase):
         self.assertEqual(mail.outbox[-1].subject, '[Contact form] Hello')
 
     @skipIf(not has_network_connection, 'Requires a network connection')
+    def test_empty_name(self):
+        response = self.client.post(self.url, {
+            'name': '',
+            'email': 'a.random@example.com',
+            'message_subject': 'Hello',
+            'body': 'Hello, World!',
+        })
+        self.assertFormError(response, 'form', 'name', ['This field is required.'])
+
+    @skipIf(not has_network_connection, 'Requires a network connection')
     def test_akismet_detect_spam(self):
         response = self.client.post(self.url, {
             'name': 'viagra-test-123',  # according to akismet this should flag as spam

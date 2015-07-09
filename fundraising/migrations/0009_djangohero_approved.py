@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='djangohero',
             name='approved',
-            field=models.NullBooleanField(verbose_name=b'Name, URL, and Logo approved?'),
+            field=models.NullBooleanField(verbose_name='Name, URL, and Logo approved?'),
             preserve_default=True,
         ),
     ]

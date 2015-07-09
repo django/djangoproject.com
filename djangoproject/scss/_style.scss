@@ -71,6 +71,12 @@ dl {
 			margin-bottom: 0;
 		}
 	}
+
+	&.glossary {
+		dt {
+			font-weight: 600;
+		}
+	}
 }
 h1,
 h2,
@@ -1022,13 +1028,21 @@ blockquote {
 					background: url(../img/logo-rackspace.svg) no-repeat left center;
 				}
 			}
+
+			&.elastic {
+				background: url(../img/logo-elastic.png) no-repeat left center;
+				.mdzr-svg & {
+					background: url(../img/logo-elastic.svg) no-repeat left center;
+					background-size: contain;
+				}
+			}
+
 			&.threespot {
 				background: url(../img/logo-threespot.png) no-repeat left center;
 				.mdzr-svg & {
 					background: url(../img/logo-threespot.svg) no-repeat left center;
 				}
 			}
-
 			&.andrevv {
 				background: url(../img/logo-andrevv.png) no-repeat left center;
 				.mdzr-svg & {
@@ -3006,11 +3020,20 @@ hr {
 	@include font-size(14);
 	margin-top: 20px;
 	text-align: center;
+	/* The IDs in documentation footnotes should stay as table cells */
+	.label {
+		display: table-cell;
+		padding-right: 1em;
+	}
 }
 form .footnote {
 	margin-top: 10px;
 	text-align: left;
 }
+.footnote.docutils {
+	text-align: left;
+}
+
 .heros-section {
 	overflow: hidden;
 

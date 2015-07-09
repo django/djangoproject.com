@@ -49,7 +49,7 @@ class BaseContactForm(ContactForm):
                     'user_agent': self.request.META.get('HTTP_USER_AGENT', ''),
                     'referrer': self.request.META.get('HTTP_REFERER', ''),
                     'comment_content': force_bytes(self.cleaned_data['body']),
-                    'comment_author': self.cleaned_data['name'],
+                    'comment_author': self.cleaned_data.get('name', ''),
                 }
                 if getattr(settings, 'AKISMET_TESTING', None):
                     # Adding test argument to the request in order to tell akismet that
