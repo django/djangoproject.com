@@ -1,7 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations, models
+from django.db import migrations
+
+
+def null_to_blank(apps, schema_editor):
+    DjangoHero = apps.get_model('fundraising', 'DjangoHero')
+    DjangoHero.objects.filter(stripe_customer_id__isnull=True).update(stripe_customer_id='')
+    Payment = apps.get_model('fundraising', 'Payment')
+    Payment.objects.filter(stripe_charge_id__isnull=True).update(stripe_charge_id='')
+    Donation = apps.get_model('fundraising', 'Donation')
+    fields = ['interval', 'receipt_email', 'stripe_customer_id', 'stripe_subscription_id']
+    for field in fields:
+        Donation.objects.filter(**{'%s__isnull' % field: True}).update(**{field: ''})
 
 
 class Migration(migrations.Migration):
@@ -11,40 +22,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='djangohero',
-            name='stripe_customer_id',
-            field=models.CharField(blank=True, default='', max_length=100),
-            preserve_default=False,
-        ),
-        migrations.AlterField(
-            model_name='donation',
-            name='interval',
-            field=models.CharField(blank=True, choices=[('monthly', 'Monthly donation'), ('quarterly', 'Quarterly donation'), ('yearly', 'Yearly donation'), ('onetime', 'One-time donation')], default='', max_length=20),
-            preserve_default=False,
-        ),
-        migrations.AlterField(
-            model_name='donation',
-            name='receipt_email',
-            field=models.EmailField(blank=True, default='', max_length=75),
-            preserve_default=False,
-        ),
-        migrations.AlterField(
-            model_name='donation',
-            name='stripe_customer_id',
-            field=models.CharField(blank=True, default='', max_length=100),
-            preserve_default=False,
-        ),
-        migrations.AlterField(
-            model_name='donation',
-            name='stripe_subscription_id',
-            field=models.CharField(blank=True, default='', max_length=100),
-            preserve_default=False,
-        ),
-        migrations.AlterField(
-            model_name='payment',
-            name='stripe_charge_id',
-            field=models.CharField(blank=True, default='', max_length=100),
-            preserve_default=False,
-        ),
+        migrations.RunPython(null_to_blank)
     ]
