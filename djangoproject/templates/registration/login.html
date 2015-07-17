@@ -7,6 +7,7 @@
 
     {% if form.errors %}
         <p class="error">Please correct the errors below:</p>
+        {{ form.non_field_errors }}
     {% endif %}
 
     <form method="post" action="" class="form-input">
