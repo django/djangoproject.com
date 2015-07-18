@@ -164,20 +164,27 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = [
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.static',
-    'django.core.context_processors.media',
-    'django.contrib.messages.context_processors.messages',
-    'docs.context_processors.docs_version',
-    'releases.context_processors.django_version',
-    'aggregator.context_processors.community_stats',
-    'django.core.context_processors.request',
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [str(PROJECT_PACKAGE.joinpath('templates'))],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.core.context_processors.debug',
+                'django.core.context_processors.i18n',
+                'django.core.context_processors.static',
+                'django.core.context_processors.media',
+                'django.contrib.messages.context_processors.messages',
+                'docs.context_processors.docs_version',
+                'releases.context_processors.django_version',
+                'aggregator.context_processors.community_stats',
+                'django.core.context_processors.request',
+            ],
+        },
+    },
 ]
-
-TEMPLATE_DIRS = [str(PROJECT_PACKAGE.joinpath('templates'))]
 
 TIME_ZONE = 'America/Chicago'
 
