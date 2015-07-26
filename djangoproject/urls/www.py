@@ -51,6 +51,7 @@ urlpatterns = [
     url(r'^diversity/changes/$', TemplateView.as_view(template_name='diversity/changes.html'), name='diversity_changes'),
 
     url(r'^contact/', include('contact.urls')),
+    url(r'^foundation/', include('members.urls', namespace='members')),
     url(r'^fundraising/', include('fundraising.urls', namespace='fundraising')),
 
     # Used by docs search suggestions

@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'dashboard',
     'docs.apps.DocsConfig',
     'legacy',
+    'members',
     'releases',
     'svntogit',
     'tracdb',
