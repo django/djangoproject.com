@@ -1,0 +1,22 @@
+{% extends "base_foundation.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>{% trans "Corporate members" %}</h1>
+  <p>
+    {% blocktrans %}
+      The following organizations are corporate members of the Django Software
+      Foundation. If you are interested in becoming a corporate member of the
+      DSF, you can find out more on our <a href="/foundation/corporate-membership/">
+      corporate membership page</a>.
+    {% endblocktrans %}
+  </p>
+  <ul>
+    {% for member in members %}
+      <li>
+        <h3><a href="{{ member.url }}">{{ member.display_name }}</a></h3>
+        <p>{{ member.description|linebreaksbr }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}
