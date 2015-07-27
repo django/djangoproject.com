@@ -6,7 +6,13 @@ from members.models import CorporateMember, DeveloperMember
 
 
 class DeveloperMemberTests(TestCase):
-    fixtures = ['members_test_data.json']
+
+    @classmethod
+    def setUpTestData(cls):
+        DeveloperMember.objects.create(
+            name='DjangoDeveloper',
+            email='developer@example.com'
+        )
 
     def setUp(self):
         self.member = DeveloperMember.objects.get(pk=1)
@@ -24,13 +30,26 @@ class DeveloperMemberTests(TestCase):
 
 
 class CorporateMemberTests(TestCase):
-    fixtures = ['members_test_data.json']
+
+    @classmethod
+    def setUpTestData(cls):
+        CorporateMember.objects.create(
+            display_name='Corporation',
+            formal_name='Corporation',
+            billing_email='c@example.com',
+            contact_email='c@example.com',
+            membership_level=2,
+            membership_start=date(2011, 11, 11),
+            membership_expires=date(2111, 11, 11),
+            is_approved=True,
+            address='Earth',
+        )
 
     def setUp(self):
         self.member = CorporateMember.objects.get(pk=1)
 
     def test___str__(self):
-        self.assertEqual(str(self.member), 'DSF')
+        self.assertEqual(str(self.member), 'Corporation')
 
     def test_initial_contact_should_have_default(self):
         self.assertEqual(CorporateMember().initial_contact_date, date.today())
