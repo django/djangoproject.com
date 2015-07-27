@@ -11,6 +11,7 @@ class DeveloperMemberAdmin(admin.ModelAdmin):
 
 @admin.register(CorporateMember)
 class CorporateMemberAdmin(admin.ModelAdmin):
-    list_display = ('display_name', 'contact_email', 'billing_email', 'membership_level',
-                    'membership_start', 'membership_expires',)
+    list_display = ('display_name', 'is_approved', 'contact_email', 'billing_email',
+                    'membership_level', 'membership_start', 'membership_expires',)
+    list_editable = ('is_approved',)
     search_fields = ('name',)
