@@ -24,21 +24,10 @@ class DeveloperMemberTests(TestCase):
 
 
 class CorporateMemberTests(TestCase):
+    fixtures = ['members_test_data.json']
 
     def setUp(self):
-        self.member = CorporateMember.objects.create(
-            display_name='DSF',
-            formal_name='Django Software Foundation',
-            contact_email='dsf@example.com',
-            billing_email='dsf@example.com',
-            url='https://djangoproject.com',
-            description='...',
-            membership_level=1,
-            membership_start=date.today(),
-            membership_expires=date.today() + timedelta(days=365),
-            address='Earth'
-
-        )
+        self.member = CorporateMember.objects.get(pk=1)
 
     def test___str__(self):
         self.assertEqual(str(self.member), 'DSF')
