@@ -51,6 +51,8 @@ urlpatterns = [
     url(r'^fundraising/', include('fundraising.urls', namespace='fundraising')),
     url(r'^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', 'django.contrib.contenttypes.views.shortcut'),
 
+    url(r'^foundation/members/', include('members.urls', namespace='members')),
+
     # There's no school like the old school.
     url(r'^~(?P<username>[\w-]+)/$', account_views.user_profile, name='user_profile'),
 

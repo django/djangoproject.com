@@ -1,19 +1,18 @@
 from datetime import date, timedelta
 
 from django.test import TestCase
+
 from members.models import CorporateMember, DeveloperMember
 
 
 class DeveloperMemberTests(TestCase):
+    fixtures = ['members_test_data.json']
 
     def setUp(self):
-        self.member = DeveloperMember.objects.create(
-            name='Developer',
-            email='member@example.com',
-        )
+        self.member = DeveloperMember.objects.get(pk=1)
 
     def test___str__(self):
-        self.assertEqual(str(self.member), 'Developer')
+        self.assertEqual(str(self.member), 'DjangoDeveloper')
 
     def test_member_since_should_have_default(self):
         self.assertEqual(DeveloperMember().member_since, date.today())

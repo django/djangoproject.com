@@ -1,0 +1,27 @@
+{% extends "base_foundation.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>{% trans "Developer members" %}</h1>
+  <p>
+    {% blocktrans %}
+    The following individuals are Developer Members of the Django Software Foundation. Developer
+    Members are appointed by the DSF in recognition of their service to the Django community. If you
+    know someone who you think should be considered for Developer Membership, please
+    {% endblocktrans %}
+    <a href="{% url "contact_foundation" %}">{% trans "get in touch" %}</a>.
+  </p>
+  <ul>
+    {% for member in members %}
+      <li>{{ member.name }}</li>
+    {% endfor %}
+  </ul>
+  <h2>{% trans "Former members" %}</h2>
+  <p>{% trans "The following individuals are former developer members of the DSF." %}</p>
+
+  <ul>
+    {% for member in former_members %}
+      <li>{{ member.name }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

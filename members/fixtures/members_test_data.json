@@ -1,0 +1,24 @@
+[
+  {
+    "pk": 1,
+    "fields": {
+      "member_since": "2015-07-26",
+      "member_until": null,
+      "email": "developer@example.com",
+      "name": "DjangoDeveloper",
+      "reason_for_leaving": ""
+    },
+    "model": "members.developermember"
+  },
+  {
+    "pk": 2,
+    "fields": {
+      "member_since": "2015-07-26",
+      "member_until": "2015-07-27",
+      "email": "developer@example.com",
+      "name": "FormerDjangoDeveloper",
+      "reason_for_leaving": ""
+    },
+    "model": "members.developermember"
+  }
+]
