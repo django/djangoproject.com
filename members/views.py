@@ -1,6 +1,6 @@
 from datetime import date
 
-from djangodocs.dev.django.views.generic.list import ListView
+from django.views.generic import ListView
 
 from members.models import CorporateMember, DeveloperMember
 
