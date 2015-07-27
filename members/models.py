@@ -36,6 +36,7 @@ class CorporateMember(models.Model):
     membership_start = models.DateField()
     membership_expires = models.DateField()
     address = models.TextField()
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.display_name
