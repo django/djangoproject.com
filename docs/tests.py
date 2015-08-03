@@ -3,6 +3,7 @@ from pathlib import Path
 
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import set_urlconf
+from django.http.request import HttpRequest
 from django.template import Context, Template
 from django.test import TestCase
 
@@ -26,6 +27,13 @@ class SearchFormTestCase(TestCase):
         response = self.client.get('/en/dev/search/',
                                    HTTP_HOST='docs.djangoproject.dev:8000')
         self.assertEqual(response.status_code, 200)
+
+    def test_search_form_templatetag(self):
+        template = Template('{% load docs %}{% search_form %}')
+        self.assertIn(
+            '1.4',
+            template.render(Context({'lang': 'en', 'version': 'stable', 'request': HttpRequest()})),
+        )
 
 
 class TemplateTagTests(TestCase):
