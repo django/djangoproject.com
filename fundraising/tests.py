@@ -37,7 +37,8 @@ def _fake_random(*results):
 
 
 class TestIndex(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         Campaign.objects.all().delete()
         Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
 
