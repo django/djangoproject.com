@@ -50,6 +50,7 @@ DATABASES = {
 DATABASE_ROUTERS = ['tracdb.db_router.TracRouter']
 
 DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
+FUNDRAISING_DEFAULT_FROM_EMAIL = "dsf-board@djangoproject.com"
 
 FIXTURE_DIRS = [str(PROJECT_PACKAGE.joinpath('fixtures'))]
 
