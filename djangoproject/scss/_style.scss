@@ -2950,13 +2950,13 @@ hr {
 			width: 80%;
 
 			@include respond-min(768px) {
-				width: 100%
+				width: 100%;
 			}
 		}
 		.cta {
 			margin: 10px 0;
 			& .disabled {
-				opacity: 0.5
+				opacity: 0.5;
 			}
 		}
 		.custom-donation {

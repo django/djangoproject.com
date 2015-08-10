@@ -1,5 +1,6 @@
 import stripe
 from django import forms
+from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
@@ -72,8 +73,8 @@ class DjangoHeroForm(forms.ModelForm):
             elif isinstance(field.widget, forms.RadioSelect):
                 self.radio_select_fields.append(name)
 
-    def save(self):
-        hero = super().save(commit=True)
+    def save(self, commit=True):
+        hero = super().save(commit=commit)
         customer = stripe.Customer.retrieve(hero.stripe_customer_id)
         customer.description = hero.name or None
         customer.email = hero.email or None
@@ -126,8 +127,8 @@ class DonationForm(forms.ModelForm):
         model = Donation
         fields = ('subscription_amount', 'interval')
 
-    def save(self, *args, **kwargs):
-        donation = super().save()
+    def save(self, commit=True, *args, **kwargs):
+        donation = super().save(commit=commit)
         interval = self.cleaned_data.get('interval')
         amount = self.cleaned_data.get('subscription_amount')
 
@@ -279,7 +280,7 @@ class PaymentForm(forms.Form):
             send_mail(
                 'Thank you for your donation to the Django Software Foundation',
                 message,
-                'dsf-board@djangoproject.com',
+                settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
                 [donation.receipt_email]
             )
 
