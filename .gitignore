@@ -8,4 +8,3 @@ docs/locale/*/LC_MESSAGES/django.mo
 djangoproject/static/js/lib/jquery-flot/examples
 djangoproject/static/css/*.map
 djangoproject/static/css/*.css
-media_root/

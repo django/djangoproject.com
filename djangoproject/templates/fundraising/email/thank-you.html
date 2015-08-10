@@ -1,13 +1,11 @@
 Hello!
 
 Thank you for making a donation to the Django Software Foundation.
-Your support is invaluable to continue the rapid development of Django
-and helps the Django Fellowship program in particular.
 
-If you want to change information about your donation, you can do so by
-accessing the link below:
+Your support is invaluable to continue the rapid development of Django and helps the Django Fellowship program in particular.
 
-{{ current_site }}{% url 'fundraising:manage-donations' donation.donor.pk %}
+If you want to change information about your donation, you can do so by accessing the link below:
+{% url 'fundraising:manage-donations' donation.donor.pk %}
 
 Best regards,
 Django Software Foundation
