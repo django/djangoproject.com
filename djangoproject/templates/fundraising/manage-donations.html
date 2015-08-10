@@ -18,12 +18,10 @@
     <input type="submit" class="cta" value="Save &rarr;">
   </p>
 
-{% if recurring_donations %}
-  <hr />
-
+  {% if recurring_donations %}
+    <hr />
     <h2>Modify your recurring donations</h2>
     <p>Update the time interval or amount of your recurring donation here:</p>
-    {% csrf_token %}
     {% for form in modify_donations_formset %}
       <h3>{{ form.instance.campaign }}</h3>
       {% include 'fundraising/includes/_form.html' %}
@@ -39,7 +37,6 @@
     </p>
 
     <hr />
-
     <h2>Cancel your recurring donations</h2>
     <p>You can cancel your recurring donation to the Django Software Foundation anytime.</p>
     <ul>
@@ -50,9 +47,8 @@
       </li>
     {% endfor %}
     </ul>
-{% endif %}
+  {% endif %}
 </form>
-
 {% endblock %}
 
 {% block content-extra %}{% endblock %}
