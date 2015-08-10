@@ -1,0 +1,12 @@
+<div class="heros">
+  <div class="organizations">
+    {% for donor in organizations %}
+      {% include 'fundraising/includes/django_hero.html' %}
+    {% endfor %}
+  </div>
+  <div class="individuals">
+    {% for donor in individuals %}
+      {% include 'fundraising/includes/django_hero.html' %}
+    {% endfor %}
+  </div>
+</div>

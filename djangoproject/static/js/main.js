@@ -79,5 +79,13 @@ define(function() {
 		mods.push('mod/search-key');
 	}
 
+	if (hasClass('stripe-custom-checkout')) {
+		mods.push('mod/stripe-custom-checkout');
+	}
+
+	if (hasClass('django-hero-form')) {
+		mods.push('mod/stripe-change-card');
+	}
+
 	require(mods);
 });
