@@ -7,9 +7,9 @@ from .models import Campaign, DjangoHero, Donation, Payment, Testimonial
 
 @admin.register(DjangoHero)
 class DjangoHeroAdmin(AdminImageMixin, admin.ModelAdmin):
-    list_filter = ['approved', 'created', 'modified', 'is_visible', 'is_subscribed']
-    list_display = ['id', 'name', 'email', 'created', 'modified', 'approved']
-    list_editable = ['approved']
+    list_filter = ['approved', 'created', 'modified', 'hero_type', 'is_visible', 'is_subscribed']
+    list_display = ['id', 'name', 'email', 'created', 'modified', 'approved', 'hero_type']
+    list_editable = ['approved', 'hero_type']
     ordering = ['-created']
 
 
