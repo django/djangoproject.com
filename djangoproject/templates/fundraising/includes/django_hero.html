@@ -4,8 +4,9 @@
   <div class="hero">
     <div class="hero-logo">
       {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
-      <img src="{% if donor.logo %}{{ donor.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
-        data-src-2x="{% if donor.logo %}{{ donor.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+      <img src="{% static 'img/fundraising-heart.png' %}"
+        data-src="{% if donor.logo %}{{ donor.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+        data-src-retina="{% if donor.logo %}{{ donor.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
         alt="{{ donor.name }}" />
       {% if donor.url %}</a>{% endif %}
     </div>
