@@ -3,7 +3,7 @@ Django==1.8.3
 django-contact-form==1.0
 django-flat-theme==0.9.3
 django-hosts==1.2
-django-push==0.6.1
+django-push==0.7
 django-registration-redux==1.2
 django-secure==1.0.1
 elasticsearch-dsl==0.0.4
