@@ -227,7 +227,7 @@ FEED_APPROVERS_GROUP_NAME = "feed-approver"
 
 # django-push settings
 
-PUSH_HUB = 'https://superfeedr.com/hubbub'
+PUSH_HUB = 'https://push.superfeedr.com/'
 
 PUSH_CREDENTIALS = 'aggregator.utils.push_credentials'
 
