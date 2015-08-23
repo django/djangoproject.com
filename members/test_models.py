@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.views.generic.dates import timezone_today
 from django.test import TestCase
 
 from members.models import CorporateMember, DeveloperMember
@@ -52,4 +53,4 @@ class CorporateMemberTests(TestCase):
         self.assertEqual(str(self.member), 'Corporation')
 
     def test_initial_contact_should_have_default(self):
-        self.assertEqual(CorporateMember().initial_contact_date, date.today())
+        self.assertEqual(CorporateMember().initial_contact_date, timezone_today())
