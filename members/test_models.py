@@ -18,7 +18,7 @@ class DeveloperMemberTests(TestCase):
     def setUp(self):
         self.member = DeveloperMember.objects.get(pk=1)
 
-    def test___str__(self):
+    def test_str(self):
         self.assertEqual(str(self.member), 'DjangoDeveloper')
 
     def test_member_since_should_have_default(self):
@@ -49,7 +49,7 @@ class CorporateMemberTests(TestCase):
     def setUp(self):
         self.member = CorporateMember.objects.get(pk=1)
 
-    def test___str__(self):
+    def test_str(self):
         self.assertEqual(str(self.member), 'Corporation')
 
     def test_initial_contact_should_have_default(self):
