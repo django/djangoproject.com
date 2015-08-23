@@ -9,6 +9,9 @@ class DeveloperMember(models.Model):
     member_until = models.DateField(null=True, blank=True)
     reason_for_leaving = models.TextField(blank=True)
 
+    class Meta:
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 
@@ -37,6 +40,9 @@ class CorporateMember(models.Model):
     membership_expires = models.DateField()
     address = models.TextField()
     is_approved = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['display_name']
 
     def __str__(self):
         return self.display_name

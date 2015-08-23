@@ -1,7 +1,7 @@
 from datetime import date
 
-from django.views.generic.dates import timezone_today
 from django.test import TestCase
+from django.views.generic.dates import timezone_today
 
 from members.models import CorporateMember, DeveloperMember
 

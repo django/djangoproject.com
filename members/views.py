@@ -1,5 +1,5 @@
-from django.views.generic.dates import timezone_today
 from django.views.generic import ListView
+from django.views.generic.dates import timezone_today
 
 from members.models import CorporateMember, DeveloperMember
 
