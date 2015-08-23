@@ -4,7 +4,7 @@ from django.views.generic.dates import timezone_today
 
 class DeveloperMember(models.Model):
     name = models.CharField(max_length=250)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     member_since = models.DateField(default=timezone_today)
     member_until = models.DateField(null=True, blank=True)
     reason_for_leaving = models.TextField(blank=True)
@@ -28,7 +28,7 @@ class CorporateMember(models.Model):
     )
 
     display_name = models.CharField(max_length=250)
-    formal_name = models.CharField(max_length=250)
+    formal_name = models.CharField(max_length=250, unique=True)
     logo = models.ImageField(upload_to='corporate-members', null=True, blank=True)
     description = models.TextField()
     url = models.URLField()
