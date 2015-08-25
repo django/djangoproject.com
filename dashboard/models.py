@@ -6,7 +6,7 @@ import xmlrpc.client
 import feedparser
 import requests
 from django.conf import settings
-from django.contrib.contenttypes.generic import (
+from django.contrib.contenttypes.fields import (
     GenericForeignKey, GenericRelation,
 )
 from django.contrib.contenttypes.models import ContentType

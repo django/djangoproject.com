@@ -2,7 +2,7 @@ import datetime
 
 from django import db
 from django.shortcuts import render
-from django.utils.tzinfo import FixedOffset
+from django.utils.timezone import FixedOffset
 
 
 def bouncing_tickets(request):

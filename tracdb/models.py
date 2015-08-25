@@ -46,7 +46,7 @@ And a few notes on tables that're left out and why:
 import datetime
 
 from django.db import models
-from django.utils.tzinfo import FixedOffset
+from django.utils.timezone import FixedOffset
 
 _epoc = datetime.datetime(1970, 1, 1, tzinfo=FixedOffset(0))
 
