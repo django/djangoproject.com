@@ -17,11 +17,7 @@ class AggregatorTests(TestCase):
 
     @requests_mock.mock()
     def setUp(self, mocker):
-        mocker.register_uri(
-            'POST',
-            'https://superfeedr.com/hubbub',
-            status_code=202
-        )
+        mocker.register_uri('POST', settings.PUSH_HUB, status_code=202)
         # document release necessary to fetch main page
         DocumentRelease.objects.get_or_create(
             version="1.4",
