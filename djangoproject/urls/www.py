@@ -2,7 +2,8 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.contrib.sitemaps import FlatPageSitemap, views as sitemap_views
+from django.contrib.flatpages.sitemaps import FlatPageSitemap
+from django.contrib.sitemaps import views as sitemap_views
 from django.views.decorators.cache import cache_page
 from django.views.generic import RedirectView, TemplateView
 

@@ -2,9 +2,9 @@
 Various queries for grabbing interesting user stats from Trac.
 """
 import operator
+from collections import OrderedDict
 
 import django.db
-from django.utils.datastructures import SortedDict
 
 from .models import Attachment, Revision, Ticket, TicketChange
 
@@ -26,7 +26,7 @@ def stat(title):
 
 
 def get_user_stats(username):
-    stats = SortedDict()
+    stats = OrderedDict()
     for func in sorted(_statfuncs, key=operator.attrgetter('title')):
         stats[func.title] = func(username)
     return stats
