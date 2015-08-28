@@ -56,7 +56,9 @@ define([
             description: $donationForm.data('campaignName'),
             amount: amountCents,
             currency: 'USD',
-            bitcoin: true
+            bitcoin: true,
+            zipCode: true,
+            billingAddress: true
         });
     });
 });
