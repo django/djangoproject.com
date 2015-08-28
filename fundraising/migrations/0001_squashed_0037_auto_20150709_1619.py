@@ -8,49 +8,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [
-        ('fundraising', '0001_initial'),
-        ('fundraising', '0002_auto_20150117_1728'),
-        ('fundraising', '0003_auto_20150119_1332'),
-        ('fundraising', '0004_auto_20150119_1332'),
-        ('fundraising', '0005_auto_20150119_1333'),
-        ('fundraising', '0006_auto_20150119_1335'),
-        ('fundraising', '0007_auto_20150119_1335'),
-        ('fundraising', '0003_auto_20150119_1842'),
-        ('fundraising', '0008_merge'),
-        ('fundraising', '0009_djangohero_approved'),
-        ('fundraising', '0010_auto_20150121_0818'),
-        ('fundraising', '0011_donation_campaign_name'),
-        ('fundraising', '0012_auto_20150121_1436'),
-        ('fundraising', '0011_auto_20150121_1710'),
-        ('fundraising', '0013_merge'),
-        ('fundraising', '0014_donation_receipt_email'),
-        ('fundraising', '0015_auto_20150127_0711'),
-        ('fundraising', '0016_campaign'),
-        ('fundraising', '0017_auto_20150209_1405'),
-        ('fundraising', '0018_auto_20150209_1424'),
-        ('fundraising', '0019_data_migration_for_campaign'),
-        ('fundraising', '0020_auto_20150209_1633'),
-        ('fundraising', '0021_auto_20150209_1704'),
-        ('fundraising', '0022_auto_20150211_0341'),
-        ('fundraising', '0023_donation_stripe_subscription_id'),
-        ('fundraising', '0024_djangohero_hero_type'),
-        ('fundraising', '0025_auto_20150419_0655'),
-        ('fundraising', '0026_auto_20150419_0727'),
-        ('fundraising', '0027_auto_20150419_0757'),
-        ('fundraising', '0028_auto_20150419_0758'),
-        ('fundraising', '0029_donation_interval'),
-        ('fundraising', '0030_auto_20150604_0608'),
-        ('fundraising', '0031_auto_20150604_0813'),
-        ('fundraising', '0032_auto_20150604_0813'),
-        ('fundraising', '0033_auto_20150611_0750'),
-        ('fundraising', '0034_auto_20150702_0241'),
-        ('fundraising', '0035_auto_20150709_1443'),
-        ('fundraising', '0016_auto_20150202_1338'),
-        ('fundraising', '0036_merge'),
-        ('fundraising', '0037_auto_20150709_1619'),
-    ]
-
     dependencies = [
     ]
 
