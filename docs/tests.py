@@ -14,7 +14,7 @@ class SearchFormTestCase(TestCase):
 
     def setUp(self):
         # We need to create an extra Site because docs have SITE_ID=2
-        Site.objects.create(name='Django test', domain="example.com")
+        Site.objects.create(name='Django test', domain="example2.com")
 
     @classmethod
     def tearDownClass(cls):
