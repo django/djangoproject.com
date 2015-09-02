@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.db import models
 from django.utils.functional import cached_property
-from django.utils.version import get_complete_version, get_major_version
+from django.utils.version import get_complete_version, get_main_version
 
 
 # A version of django.utils.version.get_version() which maps "rc" to "rc"
@@ -20,7 +20,7 @@ def get_version(version=None):
     # Now build the two parts of the version number:
     # main = X.Y[.Z]
     # sub = {a|b|rc}N - for alpha, beta and rc releases
-    main = get_major_version(version)
+    main = get_main_version(version)
 
     sub = ''
     if version[3] != 'final':

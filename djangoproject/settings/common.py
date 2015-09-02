@@ -69,7 +69,6 @@ INSTALLED_APPS = [
     'tracdb',
     'fundraising',
 
-    'flat',
     'registration',
     'django_hosts',
     'sorl.thumbnail',
@@ -177,6 +176,9 @@ TEMPLATES = [
         'DIRS': [str(PROJECT_PACKAGE.joinpath('templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
+            'builtins': [
+                'django_hosts.templatetags.hosts_override',
+            ],
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
@@ -210,8 +212,6 @@ AKISMET_API_KEY = "c892e4962244"
 # django-hosts settings
 
 DEFAULT_HOST = 'www'
-
-HOST_OVERRIDE_URL_TAG = True
 
 HOST_SCHEME = 'http'
 
