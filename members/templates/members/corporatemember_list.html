@@ -1,0 +1,34 @@
+{% extends "base_foundation.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>{% trans "Corporate members" %}</h1>
+  <p>
+    {% blocktrans %}
+      The following organisations are currently corporate members of the Django Software Foundation.
+      If you are interested in becoming a corporate member of the DSF, you can find out more on our
+      corporate membership page.
+    {% endblocktrans %}
+  </p>
+  <ul>
+    {% for member in members %}
+      <li>
+        <h3><a href="{{ member.url }}">{{ member.display_name }}</a></h3>
+        <p>{{ member.description }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if former_members %}
+    <h2>{% trans "Former members" %}</h2>
+
+    <ul>
+      {% for member in former_members %}
+        <li>
+          <h3><a href="{{ member.url }}">{{ member.display_name }}</a></h3>
+          <p>{{ member.description }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

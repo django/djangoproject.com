@@ -1,7 +1,7 @@
 STATIC = djangoproject/static
 SCSS = djangoproject/scss
 JQUERY_FLOT=djangoproject/static/js/lib/jquery-flot
-APP_LIST ?= accounts aggregator blog cla contact dashboard djangoproject docs fundraising legacy releases svntogit tracdb
+APP_LIST ?= accounts aggregator blog cla contact dashboard djangoproject docs fundraising members legacy releases svntogit tracdb
 
 .PHONY: collectstatics compile-scss compile-scss-debug watch-scss run install test ci
 
