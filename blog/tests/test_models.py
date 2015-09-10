@@ -1,18 +1,10 @@
 from datetime import timedelta
-from test.support import captured_stderr
 
-from django.core.urlresolvers import reverse
 from django.test import TestCase
-from django.utils import timezone
+from django.test.utils import captured_stderr
 
-from .models import Entry, Event
-
-
-class DateTimeMixin(object):
-    def setUp(self):
-        self.now = timezone.now()
-        self.yesterday = self.now - timedelta(days=1)
-        self.tomorrow = self.now + timedelta(days=1)
+from . import DateTimeMixin
+from ..models import Entry, Event
 
 
 class EntryTestCase(DateTimeMixin, TestCase):
@@ -83,16 +75,3 @@ class EventTestCase(DateTimeMixin, TestCase):
 
         self.assertQuerysetEqual(Event.objects.future(), ['c', 'd'], transform=lambda event: event.headline)
         self.assertQuerysetEqual(Event.objects.past(), ['b', 'a'], transform=lambda event: event.headline)
-
-
-class ViewsTestCase(DateTimeMixin, TestCase):
-    def test_no_past_upcoming_events(self):
-        """
-        Make sure there are no past event in the "upcoming events" sidebar (#399)
-        """
-        # We need a published entry on the index page so that it doesn't return a 404
-        Entry.objects.create(pub_date=self.yesterday, is_active=True)
-        Event.objects.create(date=self.yesterday, pub_date=self.now, is_active=True, headline='Jezdezcon')
-        response = self.client.get(reverse('weblog:index'))
-        self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(response.context['events'], [])

@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from .forms import EntryForm
 from .models import Entry, Event
 
 
@@ -8,6 +9,7 @@ class EntryAdmin(admin.ModelAdmin):
     list_filter = ('is_active',)
     exclude = ('summary_html', 'body_html')
     prepopulated_fields = {"slug": ("headline",)}
+    form = EntryForm
 
     def formfield_for_dbfield(self, db_field, **kwargs):
         formfield = super(EntryAdmin, self).formfield_for_dbfield(db_field, **kwargs)
