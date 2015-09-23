@@ -103,6 +103,7 @@ class TestCampaign(TestCase):
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
     def test_submitting_donation_form(self, charge_create, customer_create):
+        charge_create.return_value.id = 'XYZ'
         customer_create.return_value.id = '1234'
         self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
@@ -121,6 +122,7 @@ class TestCampaign(TestCase):
     @patch('stripe.Charge.create')
     def test_submitting_donation_form_recurring(self, charge_create, customer_create):
         customer_create.return_value.id = '1234'
+        customer_create.return_value.subscriptions.create.return_value.id = 'XYZ'
         self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
             'stripe_token': 'test',
@@ -137,6 +139,7 @@ class TestCampaign(TestCase):
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
     def test_submitting_donation_form_with_campaign(self, charge_create, customer_create):
+        charge_create.return_value.id = 'XYZ'
         customer_create.return_value.id = '1234'
         self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
@@ -309,6 +312,7 @@ class TestPaymentForm(TestCase):
     @patch('stripe.Customer.retrieve')
     @patch('stripe.Charge.create')
     def test_make_donation_with_existing_hero(self, charge_create, customer_retrieve):
+        charge_create.return_value.id = 'XYZ'
         customer_retrieve.return_value.id = '12345'
         hero = DjangoHero.objects.create(
             email='django@example.com',
