@@ -28,7 +28,9 @@
   {% if preview_version %}
       {% with preview_version|slice:":3" as major_version %}
       <h2>Option {% cycle options %}: Get the {{ preview_kind }} for {{ major_version }}</h2>
-      <p>As part of the Django {{ major_version }} development process, Django
+      <p>As part of the
+        <a href="https://code.djangoproject.com/wiki/Version{{ major_version }}Roadmap">
+        Django {{ major_version }} development process</a>, Django
         {{ preview_version }} is available. This release is only for users who
         want to try the new version and help identify remaining bugs before the
         {{ major_version }} release. Please read the
