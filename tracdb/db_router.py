@@ -15,7 +15,7 @@ class TracRouter(object):
     def db_for_write(self, model, **hints):
         return 'trac' if app_label(model) == THIS_APP else None
 
-    def allow_migrate(self, db, model):
+    def allow_migrate(self, db, app_label, model_name=None, **hints):
         return False if db == 'trac' else None
 
 
