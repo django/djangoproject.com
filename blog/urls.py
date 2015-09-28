@@ -24,7 +24,7 @@ urlpatterns = [
         name="archive-year"
     ),
     url(
-        r'^/?$',
+        r'^$',
         views.BlogArchiveIndexView.as_view(),
         name="index"
     ),
