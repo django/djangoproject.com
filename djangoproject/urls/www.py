@@ -6,6 +6,7 @@ from django.contrib.flatpages.sitemaps import FlatPageSitemap
 from django.contrib.sitemaps import views as sitemap_views
 from django.views.decorators.cache import cache_page
 from django.views.generic import RedirectView, TemplateView
+from django.views.static import serve
 
 from accounts import views as account_views
 from aggregator.feeds import (
@@ -50,9 +51,8 @@ urlpatterns = [
 
     url(r'^contact/', include('contact.urls')),
     url(r'^fundraising/', include('fundraising.urls', namespace='fundraising')),
-    url(r'^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', 'django.contrib.contenttypes.views.shortcut'),
 
-    # There's no school like the old school.
+    # User stats
     url(r'^~(?P<username>[\w-]+)/$', account_views.user_profile, name='user_profile'),
 
     # Feeds
@@ -79,5 +79,5 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += [
-        url(r'^m/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+        url(r'^m/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     ]
