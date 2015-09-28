@@ -1,9 +1,10 @@
-# -*- coding: utf-8 -*-
 from django.conf.urls import url
 
+from dashboard import views
+
 urlpatterns = [
-    url(r'^$', 'dashboard.views.index', name="dashboard-index"),
-    url(r'^metric/$', 'dashboard.views.index', name="metric-list"),
-    url(r'^metric/([\w-]+)/$', 'dashboard.views.metric_detail', name="metric-detail"),
-    url(r'^metric/([\w-]+).json$', 'dashboard.views.metric_json', name="metric-json"),
+    url(r'^$', views.index, name="dashboard-index"),
+    url(r'^metric/$', views.index, name="metric-list"),
+    url(r'^metric/([\w-]+)/$', views.metric_detail, name="metric-detail"),
+    url(r'^metric/([\w-]+).json$', views.metric_json, name="metric-json"),
 ]
