@@ -2,7 +2,7 @@ import logging
 from datetime import timedelta
 
 from django.conf import settings
-from django.core.management.base import NoArgsCommand
+from django.core.management import BaseCommand
 from django.utils import timezone
 from django_push.subscriber.models import Subscription
 
@@ -11,8 +11,8 @@ from ...models import APPROVED_FEED, Feed
 logger = logging.getLogger(__name__)
 
 
-class Command(NoArgsCommand):
-    def handle_noargs(self, **kwargs):
+class Command(BaseCommand):
+    def handle(self, **kwargs):
         feed_urls = set(Feed.objects.filter(
             approval_status=APPROVED_FEED
         ).values_list('feed_url', flat=True))

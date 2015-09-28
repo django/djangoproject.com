@@ -3,7 +3,6 @@ Update and build the documentation into files for display with the djangodocs
 app.
 """
 import json
-import optparse
 import os
 import shutil
 import subprocess
@@ -12,7 +11,7 @@ from contextlib import closing
 from pathlib import Path
 
 from django.conf import settings
-from django.core.management.base import NoArgsCommand
+from django.core.management import BaseCommand
 from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
 from elasticsearch.exceptions import ElasticsearchException
@@ -21,18 +20,17 @@ from ...models import Document, DocumentRelease
 from ...search import DocumentDocType
 
 
-class Command(NoArgsCommand):
-    option_list = NoArgsCommand.option_list + (
-        optparse.make_option(
+class Command(BaseCommand):
+    def add_arguments(self, parser):
+        parser.add_argument(
             '--skip-indexing',
             action='store_false',
             dest='reindex',
             default=True,
             help='Skip reindexing (for testing, mostly).'
-        ),
-    )
+        )
 
-    def handle_noargs(self, **kwargs):
+    def handle(self, **kwargs):
         try:
             verbosity = int(kwargs['verbosity'])
         except (KeyError, TypeError, ValueError):

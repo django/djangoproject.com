@@ -5,15 +5,15 @@ be manually approved.
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import mail
-from django.core.management.base import NoArgsCommand
+from django.core.management import BaseCommand
 from django.template import Context, Template
 
 from ...models import PENDING_FEED, Feed
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
 
-    def handle_noargs(self, **kwargs):
+    def handle(self, **kwargs):
         try:
             verbosity = int(kwargs['verbosity'])
         except (KeyError, TypeError, ValueError):
