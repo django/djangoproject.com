@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from django.core.paginator import EmptyPage, Page, PageNotAnInteger, Paginator
 from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
