@@ -250,8 +250,7 @@ def search_suggestions(request, lang, version, per_page=20):
                     'content_type_id': content_type.pk,
                     'object_id': result.meta.id,
                 }
-                links.append(reverse('django.contrib.contenttypes.views.shortcut',
-                                     kwargs=kwargs))
+                links.append(reverse('contenttypes-shortcut', kwargs=kwargs))
             suggestions.append(titles)
             suggestions.append([])
             suggestions.append(links)

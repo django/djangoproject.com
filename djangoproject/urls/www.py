@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.contrib.contenttypes import views as contenttypes_views
 from django.contrib.flatpages.sitemaps import FlatPageSitemap
 from django.contrib.sitemaps import views as sitemap_views
 from django.views.decorators.cache import cache_page
@@ -51,6 +52,9 @@ urlpatterns = [
 
     url(r'^contact/', include('contact.urls')),
     url(r'^fundraising/', include('fundraising.urls', namespace='fundraising')),
+
+    # Used by docs search suggestions
+    url(r'^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', contenttypes_views.shortcut, name='contenttypes-shortcut'),
 
     # User stats
     url(r'^~(?P<username>[\w-]+)/$', account_views.user_profile, name='user_profile'),
