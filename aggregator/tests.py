@@ -6,11 +6,12 @@ from django.contrib.auth.models import Group, User
 from django.core import mail
 from django.core.management import call_command
 from django.core.urlresolvers import reverse
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 
 from docs.models import DocumentRelease
 
 from . import models
+from .forms import FeedModelForm
 
 
 class AggregatorTests(TestCase):
@@ -89,3 +90,19 @@ class AggregatorTests(TestCase):
 
         self.assertEqual(1, len(mail.outbox))
         self.assertEqual(mail.outbox[0].to, [self.user.email])
+
+
+class TestForms(SimpleTestCase):
+    def test_rejects_stackoverflow_questions(self):
+        form = FeedModelForm({
+            'title': 'Asynchronous processing of file upload in Django',
+            'feed_url': 'http://stackoverflow.com/questions/11752148/',
+            'public_url': 'http://stackoverflow.com/questions/11752148/',
+        })
+        self.assertEqual(
+            form.errors,
+            {'feed_url': [
+                "Stack Overflow questions tagged with 'django' will appear "
+                "here automatically."
+            ]}
+        )

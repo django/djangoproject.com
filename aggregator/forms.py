@@ -29,3 +29,12 @@ class FeedModelForm(forms.ModelForm):
     class Meta:
         model = Feed
         exclude = ('feed_type', 'owner', 'approval_status')
+
+    def clean_feed_url(self):
+        feed_url = self.cleaned_data.get('feed_url')
+        if feed_url and '//stackoverflow.com' in feed_url:
+            raise forms.ValidationError(
+                "Stack Overflow questions tagged with 'django' will appear "
+                "here automatically."
+            )
+        return feed_url
