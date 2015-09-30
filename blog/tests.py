@@ -20,8 +20,8 @@ class EntryTestCase(DateTimeMixin, TestCase):
         """
         Make sure that the Entry manager's `active` method works
         """
-        Entry.objects.create(pub_date=self.now, is_active=False, headline='inactive')
-        Entry.objects.create(pub_date=self.now, is_active=True, headline='active')
+        Entry.objects.create(pub_date=self.now, is_active=False, headline='inactive', slug='a')
+        Entry.objects.create(pub_date=self.now, is_active=True, headline='active', slug='b')
 
         self.assertQuerysetEqual(Entry.objects.published(), ['active'], transform=lambda entry: entry.headline)
 
@@ -29,10 +29,10 @@ class EntryTestCase(DateTimeMixin, TestCase):
         """
         Make sure that the Entry manager's `published` method works
         """
-        Entry.objects.create(pub_date=self.yesterday, is_active=False, headline='past inactive')
-        Entry.objects.create(pub_date=self.yesterday, is_active=True, headline='past active')
-        Entry.objects.create(pub_date=self.tomorrow, is_active=False, headline='future inactive')
-        Entry.objects.create(pub_date=self.tomorrow, is_active=True, headline='future active')
+        Entry.objects.create(pub_date=self.yesterday, is_active=False, headline='past inactive', slug='a')
+        Entry.objects.create(pub_date=self.yesterday, is_active=True, headline='past active', slug='b')
+        Entry.objects.create(pub_date=self.tomorrow, is_active=False, headline='future inactive', slug='c')
+        Entry.objects.create(pub_date=self.tomorrow, is_active=True, headline='future active', slug='d')
 
         self.assertQuerysetEqual(Entry.objects.published(), ['past active'], transform=lambda entry: entry.headline)
 
@@ -43,7 +43,7 @@ class EntryTestCase(DateTimeMixin, TestCase):
         with captured_stderr() as self.docutils_stderr:
             entry = Entry.objects.create(
                 pub_date=self.now, is_active=True, headline='active', content_format='reST',
-                body='.. raw:: html\n    :file: somefile\n'
+                body='.. raw:: html\n    :file: somefile\n', slug='a',
             )
         self.assertIn('<p>&quot;raw&quot; directive disabled.</p>', entry.body_html)
         self.assertIn('.. raw:: html\n    :file: somefile', entry.body_html)
@@ -91,7 +91,7 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         Make sure there are no past event in the "upcoming events" sidebar (#399)
         """
         # We need a published entry on the index page so that it doesn't return a 404
-        Entry.objects.create(pub_date=self.yesterday, is_active=True)
+        Entry.objects.create(pub_date=self.yesterday, is_active=True, slug='a')
         Event.objects.create(date=self.yesterday, pub_date=self.now, is_active=True, headline='Jezdezcon')
         response = self.client.get(reverse('weblog:index'))
         self.assertEqual(response.status_code, 200)
