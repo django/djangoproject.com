@@ -1,8 +1,12 @@
 import datetime
+from urllib.parse import urlparse
 
 from django.conf import settings
+from django.core.cache import caches
 from django.db import models
+from django.test import RequestFactory
 from django.utils import timezone
+from django.utils.cache import _generate_cache_header_key
 from django.utils.encoding import smart_str
 from django.utils.translation import ugettext_lazy as _
 from django_hosts.resolvers import reverse
@@ -96,6 +100,18 @@ class Entry(models.Model):
                                            writer_name="html",
                                            settings_overrides=BLOG_DOCUTILS_SETTINGS)['fragment']
         super(Entry, self).save(*args, **kwargs)
+        self.invalidate_cached_entry()
+
+    def invalidate_cached_entry(self):
+        url = urlparse(self.get_absolute_url())
+        rf = RequestFactory(
+            SERVER_NAME=url.netloc,
+            HTTP_X_FORWARDED_PROTOCOL=url.scheme,
+        )
+        request = rf.get(url.path)
+        cache = caches[settings.CACHE_MIDDLEWARE_ALIAS]
+        cache_key = _generate_cache_header_key(settings.CACHE_MIDDLEWARE_KEY_PREFIX, request)
+        cache.delete(cache_key)
 
 
 class EventQuerySet(EntryQuerySet):
