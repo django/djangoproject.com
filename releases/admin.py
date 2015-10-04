@@ -4,7 +4,8 @@ from .models import Release
 
 
 class ReleaseAdmin(admin.ModelAdmin):
-    list_display = ('version', 'date', 'major', 'minor', 'micro', 'show_status', 'iteration')
+    list_display = ('version', 'date', 'major', 'minor', 'micro', 'show_status', 'iteration', 'is_lts')
+    list_filter = ('status', 'is_lts')
     ordering = ('-major', '-minor', '-micro', '-status', '-iteration')
 
     def show_status(self, obj):
