@@ -80,7 +80,7 @@ class Release(models.Model):
         cache.delete(self.DEFAULT_CACHE_KEY)
         super(Release, self).save(*args, **kwargs)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.version
 
     @cached_property

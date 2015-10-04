@@ -99,7 +99,7 @@ class Ticket(models.Model):
         db_table = 'ticket'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return "#%s: %s" % (self.id, self.summary)
 
     def __init__(self, *args, **kwargs):
@@ -125,7 +125,7 @@ class TicketCustom(models.Model):
         db_table = 'ticket_custom'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s: %s" % (self.name, self.value)
 
 
@@ -144,7 +144,7 @@ class TicketChange(models.Model):
         managed = False
         ordering = ['_time']
 
-    def __unicode__(self):
+    def __str__(self):
         return "#%s: changed %s" % (self.ticket.id, self.field)
 
 
@@ -157,7 +157,7 @@ class Component(models.Model):
         db_table = 'component'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -172,7 +172,7 @@ class Version(models.Model):
         db_table = 'version'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -190,7 +190,7 @@ class Milestone(models.Model):
         db_table = 'milestone'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -227,7 +227,7 @@ class Revision(models.Model):
         db_table = 'revision'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return '[%s] %s' % (self.rev, self.message.split('\n', 1)[0])
 
 
@@ -252,7 +252,7 @@ class Wiki(models.Model):
         db_table = 'wiki_django_view'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s (v%s)' % (self.name, self.version)
 
 
@@ -277,6 +277,6 @@ class Attachment(models.Model):
         db_table = 'attachment_django_view'
         managed = False
 
-    def __unicode__(self):
+    def __str__(self):
         attached_to = ('#%s' % self.id) if self.type == 'ticket' else self.id
         return '%s (on %s)' % (self.filename, attached_to)
