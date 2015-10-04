@@ -1,5 +1,5 @@
 certifi==14.05.14
-Django==1.8.4
+Django==1.8.5
 django-contact-form==1.0
 django-flat-theme==0.9.3
 django-hosts==1.2
