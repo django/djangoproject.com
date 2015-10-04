@@ -59,21 +59,17 @@ class Command(BaseCommand):
             # Update the release from SCM.
             #
 
-            # Make an SCM checkout/update into the destination directory.
-            # Do this dynamically in case we add other SCM later.
-            getattr(self, 'update_%s' % release.scm)(release.scm_url, checkout_dir)
+            # Make a git checkout/update into the destination directory.
+            self.update_git(release.scm_url, checkout_dir)
 
-            if release.docs_subdir:
-                source_dir = checkout_dir.joinpath(release.docs_subdir)
-            else:
-                source_dir = checkout_dir
+            source_dir = checkout_dir.joinpath('docs')
 
             if release.lang != 'en':
                 scm_url = release.scm_url.replace('django.git', 'django-docs-translations.git')
                 trans_dir = checkout_dir.joinpath('django-docs-translation')
                 if not trans_dir.exists():
                     trans_dir.mkdir()
-                getattr(self, 'update_%s' % release.scm)(scm_url, trans_dir)
+                self.update_git(scm_url, trans_dir)
                 if not source_dir.joinpath('locale').exists():
                     source_dir.joinpath('locale').symlink_to(trans_dir.joinpath('translations'))
                 subprocess.call("cd %s && make translations" % trans_dir, shell=True)
@@ -208,9 +204,6 @@ class Command(BaseCommand):
                 except ElasticsearchException:
                     pass
                 doc.delete()
-
-    def update_svn(self, url, destdir):
-        subprocess.call(['svn', 'checkout', '-q', url, str(destdir)])
 
     def update_git(self, url, destdir):
         if '@' in url:

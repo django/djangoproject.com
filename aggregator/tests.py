@@ -22,8 +22,6 @@ class AggregatorTests(TestCase):
         # document release necessary to fetch main page
         DocumentRelease.objects.get_or_create(
             version="1.4",
-            scm="svn",
-            scm_url="/path/to/svn",
             is_default=True,
         )
 
