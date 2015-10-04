@@ -62,7 +62,8 @@ class Release(models.Model):
     STATUS_REVERSE = dict((word, letter) for (letter, word) in STATUS_CHOICES)
 
     version = models.CharField(max_length=16, primary_key=True)
-    date = models.DateField(default=datetime.date.today)
+    date = models.DateField("Release date", default=datetime.date.today)
+    eol_date = models.DateField("End of life date", null=True, blank=True)
 
     major = models.PositiveSmallIntegerField(editable=False)
     minor = models.PositiveSmallIntegerField(editable=False)
