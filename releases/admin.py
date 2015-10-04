@@ -4,7 +4,10 @@ from .models import Release
 
 
 class ReleaseAdmin(admin.ModelAdmin):
-    list_display = ('version', 'date', 'major', 'minor', 'micro', 'show_status', 'iteration', 'is_lts')
+    list_display = (
+        'version', 'is_lts', 'date', 'eol_date',
+        'major', 'minor', 'micro', 'show_status', 'iteration',
+    )
     list_filter = ('status', 'is_lts')
     ordering = ('-major', '-minor', '-micro', '-status', '-iteration')
 
