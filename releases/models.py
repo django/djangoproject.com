@@ -7,9 +7,6 @@ from django.db import models
 from django.utils.functional import cached_property
 from django.utils.version import get_version
 
-# How many days after the release an LTS is the previous LTS supported?
-LTS_SUPPORT_OVERLAP_DAYS = 180
-
 
 class ReleaseManager(models.Manager):
 
@@ -31,9 +28,14 @@ class ReleaseManager(models.Manager):
     def previous_lts(self):
         """Get the previous LTS if it's still supported."""
         current_lts = self.current_lts()
-        # Check if the previous LTS is too old to be supported.
-        if datetime.date.today() - current_lts.date < datetime.timedelta(LTS_SUPPORT_OVERLAP_DAYS):
-            return self.lts().exclude(minor=current_lts.minor).first()
+        previous_lts = list(self.lts().exclude(
+            major=current_lts.major,
+            minor=current_lts.minor,
+        ))
+        # Only the "X.Y" version will have an EOL date.
+        eol_date = previous_lts[-1].eol_date
+        if eol_date is None or eol_date > datetime.date.today():
+            return previous_lts[0]
 
     def current_version(self):
         current_version = cache.get(Release.DEFAULT_CACHE_KEY, None)

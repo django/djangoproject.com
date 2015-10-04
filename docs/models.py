@@ -1,3 +1,4 @@
+import datetime
 import json
 import operator
 from functools import reduce
@@ -38,6 +39,9 @@ class DocumentReleaseManager(models.Manager):
                 settings.CACHE_MIDDLEWARE_SECONDS,
             )
         return current_version
+
+    def get_by_version_and_lang(self, version, lang):
+        return self.get(lang=lang, **{'release__isnull': True} if version == 'dev' else {'release': version})
 
 
 class DocumentRelease(models.Model):
@@ -90,6 +94,13 @@ class DocumentRelease(models.Model):
     @property
     def is_dev(self):
         return self.release is None
+
+    @property
+    def is_supported(self):
+        if self.release is None:
+            return True
+        eol_date = self.release.eol_date
+        return eol_date is None or eol_date > datetime.date.today()
 
     @property
     def scm_url(self):
