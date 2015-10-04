@@ -43,18 +43,9 @@ class DocumentRelease(models.Model):
     A "release" of documentation -- i.e. English for v1.2.
     """
     DEFAULT_CACHE_KEY = "%s_docs_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
-    SVN = 'svn'
-    GIT = 'git'
-    SCM_CHOICES = (
-        (SVN, 'SVN'),
-        (GIT, 'git'),
-    )
 
     lang = models.CharField(max_length=2, choices=settings.LANGUAGES, default='en')
     version = models.CharField(max_length=20)
-    scm = models.CharField(max_length=10, choices=SCM_CHOICES)
-    scm_url = models.CharField(max_length=200)
-    docs_subdir = models.CharField(max_length=200, blank=True)
     is_default = models.BooleanField(default=False)
 
     objects = DocumentReleaseManager()
@@ -93,6 +84,13 @@ class DocumentRelease(models.Model):
     @property
     def is_dev(self):
         return self.version == 'dev'
+
+    @property
+    def scm_url(self):
+        url = 'git://github.com/django/django.git'
+        if not self.is_dev:
+            url += '@stable/' + self.version + '.x'
+        return url
 
 
 def document_url(doc):
