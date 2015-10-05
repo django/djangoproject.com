@@ -18,7 +18,14 @@ from .models import Document, DocumentRelease
 from .search import DocumentDocType, SearchPaginator
 from .utils import get_doc_path_or_404, get_doc_root_or_404
 
+CURRENT_LTS = '1.4'
+UNSUPPORTED_THRESHOLD = '1.7'
 SIMPLE_SEARCH_OPERATORS = ['+', '|', '-', '"', '*', '(', ')', '~']
+
+
+def version_is_unsupported(version):
+    # TODO: would be nice not to hardcode this.
+    return version != CURRENT_LTS and version < UNSUPPORTED_THRESHOLD
 
 
 def index(request):
@@ -40,7 +47,6 @@ def document(request, lang, version, url):
     # exception will be emitted by unipath, proactively check for bad data (mostly
     # from the Googlebot) so we can give a nice 404 error.
     try:
-        lang.encode("ascii")
         version.encode("ascii")
         url.encode("ascii")
     except UnicodeEncodeError:
@@ -51,10 +57,6 @@ def document(request, lang, version, url):
 
     docroot = get_doc_root_or_404(lang, version)
     doc_path = get_doc_path_or_404(docroot, url)
-    try:
-        release = DocumentRelease.objects.get_by_version_and_lang(version, lang)
-    except DocumentRelease.DoesNotExist:
-        raise Http404
 
     if version == 'dev':
         rtd_version = 'latest'
@@ -73,7 +75,8 @@ def document(request, lang, version, url):
         'env': json.load((docroot.joinpath('globalcontext.json')).open('r')),
         'lang': lang,
         'version': version,
-        'release': release,
+        'version_is_dev': version == 'dev',
+        'version_is_unsupported': version_is_unsupported(version),
         'rtd_version': rtd_version,
         'docurl': url,
         'update_date': datetime.datetime.fromtimestamp((docroot.joinpath('last_build')).stat().st_mtime),
@@ -131,10 +134,7 @@ def search_results(request, lang, version, per_page=10, orphans=3):
     Search view to handle language and version specific queries.
     The old search view is being redirected here.
     """
-    try:
-        release = DocumentRelease.objects.get_by_version_and_lang(version, lang)
-    except DocumentRelease.DoesNotExist:
-        raise Http404
+    release = get_object_or_404(DocumentRelease, version=version, lang=lang)
     form = DocSearchForm(request.GET or None, release=release)
 
     context = {
@@ -143,6 +143,8 @@ def search_results(request, lang, version, per_page=10, orphans=3):
         'version': release.version,
         'release': release,
         'searchparams': request.GET.urlencode(),
+        'version_is_dev': version == 'dev',
+        'version_is_unsupported': version_is_unsupported(version),
     }
 
     if form.is_valid():

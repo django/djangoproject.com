@@ -9,7 +9,6 @@ from django.core.urlresolvers import reverse
 from django.test import SimpleTestCase, TestCase
 
 from docs.models import DocumentRelease
-from releases.models import Release
 
 from . import models
 from .forms import FeedModelForm
@@ -21,13 +20,9 @@ class AggregatorTests(TestCase):
     def setUp(self, mocker):
         mocker.register_uri('POST', settings.PUSH_HUB, status_code=202)
         # document release necessary to fetch main page
-        release, _ = Release.objects.get_or_create(
+        DocumentRelease.objects.get_or_create(
             version="1.4",
-        )
-        DocumentRelease.objects.update_or_create(
-            release=release,
-            lang='en',
-            defaults={'is_default': True},
+            is_default=True,
         )
 
         # Set up users who will get emailed

@@ -43,7 +43,7 @@ class Command(BaseCommand):
         # building newer versions first works. I suspect Sphinx is hanging onto
         # some global state. Anyway, we can work around it by making sure that
         # "dev" builds before "1.0". This is ugly, but oh well.
-        for release in DocumentRelease.objects.order_by('-release'):
+        for release in DocumentRelease.objects.order_by('-version'):
             if verbosity >= 1:
                 self.stdout.write("Updating %s..." % release)
 

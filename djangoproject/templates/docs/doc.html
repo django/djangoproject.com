@@ -18,11 +18,11 @@
 {% endblock head_extra %}
 
 {% block body_extra %}
-{% if release.is_dev %}
+{% if version_is_dev %}
 <div id="dev-warning" class="doc-floating-warning">
   {% trans "This document is for Django's development version, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
 </div>
-{% elif not release.is_supported %}
+{% elif version_is_unsupported %}
 <div id="outdated-warning" class="doc-floating-warning">
   {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
 </div>
@@ -43,8 +43,8 @@
   </li>
   {% endif %}
   {% endfor %}
-  <li class="current{% if release.is_dev %} dev{% endif %}"
-  title="{% if release.is_dev %}{% blocktrans trimmed %}
+  <li class="current{% if version_is_dev %} dev{% endif %}"
+  title="{% if version_is_dev %}{% blocktrans trimmed %}
     This document is for Django's development version, which can be significantly different from previous releases.
   {% endblocktrans %}{% else %}{% blocktrans trimmed %}
     This document describes Django {{ version }}.
@@ -52,7 +52,7 @@
     Click on the links on the left to see other versions.
   {% endblocktrans %}">
   <span>{% trans "Documentation version:" %}
-    <strong>{% if release.is_dev %}
+    <strong>{% if version_is_dev %}
       development{% else %}{{ version }}
       {% endif %}</strong>
     </span>
