@@ -39,9 +39,9 @@ class TestDownloadsView(TestCase):
         self.assertEqual(response.context['current_version'], '1.8')
         self.assertEqual(response.context['previous_version'], '1.7')
         # Previous LTS (still supported)
-        self.assertEqual(response.context['lts_version'], '1.4')
+        self.assertEqual(response.context['lts_version'], None)
         # No longer supported versions
-        self.assertEqual(response.context['earlier_versions'], ['1.6'])
+        self.assertEqual(response.context['earlier_versions'], ['1.6', '1.4'])
 
 
 class TestTemplateTags(TestCase):

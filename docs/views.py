@@ -18,14 +18,13 @@ from .models import Document, DocumentRelease
 from .search import DocumentDocType, SearchPaginator
 from .utils import get_doc_path_or_404, get_doc_root_or_404
 
-CURRENT_LTS = '1.4'
 UNSUPPORTED_THRESHOLD = '1.7'
 SIMPLE_SEARCH_OPERATORS = ['+', '|', '-', '"', '*', '(', ')', '~']
 
 
 def version_is_unsupported(version):
     # TODO: would be nice not to hardcode this.
-    return version != CURRENT_LTS and version < UNSUPPORTED_THRESHOLD
+    return version < UNSUPPORTED_THRESHOLD
 
 
 def index(request):
