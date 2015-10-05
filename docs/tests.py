@@ -1,4 +1,3 @@
-import datetime
 import os
 from pathlib import Path
 
@@ -7,28 +6,7 @@ from django.core.urlresolvers import set_urlconf
 from django.template import Context, Template
 from django.test import TestCase
 
-from releases.models import Release
-
-from .models import DocumentRelease
 from .utils import get_doc_path
-
-
-class ModelsTests(TestCase):
-    def test_is_supported(self):
-        d = DocumentRelease.objects.create()
-        # Document without a release ("dev") is supported.
-        self.assertTrue(d.is_supported)
-        self.assertTrue(d.is_dev)
-
-        r = Release(major=1, minor=7, micro=0, version='1.7')
-        d.release = r
-        # Document with a release without an EOL date is supported.
-        self.assertTrue(d.is_supported)
-        self.assertFalse(d.is_dev)
-
-        # Document with an EOL date in the past is unsupported.
-        r.eol_date = datetime.date(2000, 1, 1)
-        self.assertFalse(d.is_supported)
 
 
 class SearchFormTestCase(TestCase):

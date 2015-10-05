@@ -1,4 +1,3 @@
-import datetime
 import json
 import operator
 from functools import reduce
@@ -9,8 +8,6 @@ from django.core.cache import cache
 from django.db import models
 from django.utils.functional import cached_property
 from django_hosts.resolvers import reverse
-
-from releases.models import Release
 
 from . import utils
 
@@ -40,9 +37,6 @@ class DocumentReleaseManager(models.Manager):
             )
         return current_version
 
-    def get_by_version_and_lang(self, version, lang):
-        return self.get(lang=lang, **{'release__isnull': True} if version == 'dev' else {'release': version})
-
 
 class DocumentRelease(models.Model):
     """
@@ -51,13 +45,13 @@ class DocumentRelease(models.Model):
     DEFAULT_CACHE_KEY = "%s_docs_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
 
     lang = models.CharField(max_length=2, choices=settings.LANGUAGES, default='en')
-    release = models.ForeignKey(Release, null=True, limit_choices_to={'status': 'f'})
+    version = models.CharField(max_length=20)
     is_default = models.BooleanField(default=False)
 
     objects = DocumentReleaseManager()
 
     class Meta:
-        unique_together = ('lang', 'release')
+        unique_together = ('lang', 'version')
 
     def __str__(self):
         return "%s/%s" % (self.lang, self.version)
@@ -81,26 +75,15 @@ class DocumentRelease(models.Model):
         super(DocumentRelease, self).save(*args, **kwargs)
 
     @property
-    def version(self):
-        return 'dev' if self.release is None else self.release.version
-
-    @property
     def human_version(self):
         """
         Return a "human readable" version of the version.
         """
-        return "development" if self.release is None else self.release.version
+        return "development" if self.is_dev else self.version
 
     @property
     def is_dev(self):
-        return self.release is None
-
-    @property
-    def is_supported(self):
-        if self.release is None:
-            return True
-        eol_date = self.release.eol_date
-        return eol_date is None or eol_date > datetime.date.today()
+        return self.version == 'dev'
 
     @property
     def scm_url(self):
