@@ -4,7 +4,7 @@ from .models import DocumentRelease
 
 admin.site.register(
     DocumentRelease,
-    list_display=['version', 'lang', 'is_default'],
+    list_display=['release', 'lang', 'is_default'],
     list_editable=['is_default'],
     list_filter=['lang'],
 )

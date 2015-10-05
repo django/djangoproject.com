@@ -1,92 +1,157 @@
 [
-  {
-    "pk": 1,
-    "model": "docs.documentrelease",
-    "fields": {
-      "lang": "en",
-      "is_default": false,
-      "version": "dev"
-    }
-  },
-  {
-    "pk": 2,
-    "model": "docs.documentrelease",
-    "fields": {
-      "lang": "en",
-      "is_default": false,
-      "version": "1.0"
-    }
-  },
-  {
-    "pk": 3,
-    "model": "docs.documentrelease",
-    "fields": {
-      "lang": "en",
-      "is_default": false,
-      "version": "1.1"
-    }
-  },
-  {
-    "pk": 4,
-    "model": "docs.documentrelease",
-    "fields": {
-      "lang": "en",
-      "is_default": false,
-      "version": "1.2"
-    }
-  },
-  {
-    "pk": 5,
-    "model": "docs.documentrelease",
-    "fields": {
-      "lang": "en",
-      "is_default": false,
-      "version": "1.3"
-    }
-  },
-  {
-    "pk": 6,
-    "model": "docs.documentrelease",
-    "fields": {
-      "lang": "en",
-      "is_default": false,
-      "version": "1.4"
-    }
-  },
-  {
-    "pk": 7,
-    "model": "docs.documentrelease",
-    "fields": {
-      "lang": "en",
-      "is_default": false,
-      "version": "1.5"
-    }
-  },
-  {
-    "pk": 8,
-    "model": "docs.documentrelease",
-    "fields": {
-      "lang": "fr",
-      "is_default": false,
-      "version": "1.5"
-    }
-  },
-  {
-    "pk": 9,
-    "model": "docs.documentrelease",
-    "fields": {
-      "lang": "en",
-      "is_default": true,
-      "version": "1.6"
-    }
-  },
-  {
-    "pk": 10,
-    "model": "docs.documentrelease",
-    "fields": {
-      "lang": "fr",
-      "is_default": false,
-      "version": "1.6"
-    }
+{
+  "model": "releases.release",
+  "pk": "1.4",
+  "fields": {
+    "major": 1,
+    "is_lts": true,
+    "date": "2012-03-23",
+    "iteration": 0,
+    "micro": 0,
+    "minor": 4,
+    "status": "f"
   }
+},
+{
+  "model": "releases.release",
+  "pk": "1.5",
+  "fields": {
+    "major": 1,
+    "is_lts": false,
+    "date": "2013-02-26",
+    "iteration": 0,
+    "micro": 0,
+    "minor": 5,
+    "status": "f"
+  }
+},
+{
+  "model": "releases.release",
+  "pk": "1.6",
+  "fields": {
+    "major": 1,
+    "is_lts": false,
+    "date": "2013-11-06",
+    "iteration": 0,
+    "micro": 0,
+    "minor": 6,
+    "status": "f"
+  }
+},
+{
+  "model": "releases.release",
+  "pk": "1.7",
+  "fields": {
+    "major": 1,
+    "is_lts": false,
+    "date": "2014-09-02",
+    "iteration": 0,
+    "micro": 0,
+    "minor": 7,
+    "status": "f"
+  }
+},
+{
+  "model": "releases.release",
+  "pk": "1.8",
+  "fields": {
+    "major": 1,
+    "is_lts": true,
+    "date": "2015-04-01",
+    "iteration": 0,
+    "micro": 0,
+    "minor": 8,
+    "status": "f"
+  }
+},
+{
+  "fields": {
+    "lang": "en",
+    "is_default": false,
+    "release": null
+  },
+  "model": "docs.documentrelease",
+  "pk": 1
+},
+{
+  "fields": {
+    "lang": "en",
+    "is_default": false,
+    "release": "1.4"
+  },
+  "model": "docs.documentrelease",
+  "pk": 6
+},
+{
+  "fields": {
+    "lang": "en",
+    "is_default": false,
+    "release": "1.5"
+  },
+  "model": "docs.documentrelease",
+  "pk": 7
+},
+{
+  "fields": {
+    "lang": "fr",
+    "is_default": false,
+    "release": "1.5"
+  },
+  "model": "docs.documentrelease",
+  "pk": 8
+},
+{
+  "fields": {
+    "lang": "en",
+    "is_default": false,
+    "release": "1.6"
+  },
+  "model": "docs.documentrelease",
+  "pk": 9
+},
+{
+  "fields": {
+    "lang": "fr",
+    "is_default": false,
+    "release": "1.6"
+  },
+  "model": "docs.documentrelease",
+  "pk": 10
+},
+{
+  "fields": {
+    "lang": "en",
+    "is_default": false,
+    "release": "1.7"
+  },
+  "model": "docs.documentrelease",
+  "pk": 11
+},
+{
+  "fields": {
+    "lang": "fr",
+    "is_default": false,
+    "release": "1.7"
+  },
+  "model": "docs.documentrelease",
+  "pk": 12
+},
+{
+  "fields": {
+    "lang": "en",
+    "is_default": true,
+    "release": "1.8"
+  },
+  "model": "docs.documentrelease",
+  "pk": 13
+},
+{
+  "fields": {
+    "lang": "fr",
+    "is_default": false,
+    "release": "1.8"
+  },
+  "model": "docs.documentrelease",
+  "pk": 14
+}
 ]
