@@ -36,6 +36,6 @@ def get_latest_micro_release(version):
     Given an X.Y version number, return the latest X.Y.Z version.
     """
     major, minor = version.split('.')
-    release = Release.objects.final().filter(major=major, minor=minor).order_by('-micro').first()
+    release = Release.objects.filter(major=major, minor=minor, status='f').order_by('-micro').first()
     if release:
         return release.version
