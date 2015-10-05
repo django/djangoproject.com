@@ -10,32 +10,97 @@ from django.utils.version import get_version
 
 class ReleaseManager(models.Manager):
 
-    def preview(self):
-        return self.filter(major=1).exclude(status='f')
+    def active(self, at=None):
+        """
+        List of active releases at a given date (today by default).
 
-    def final(self):
-        return self.filter(major=1, status='f')
+        The resulting queryset is sorted by decreasing version number.
 
-    def current(self):
-        return self.final().order_by('-minor', '-micro')[0]
+        This is expected to return the latest micro-release in each series.
+        """
+        if at is None:
+            at = datetime.date.today()
+        # .filter(date__lte=at) excludes releases where date IS NULL because
+        # a version without a date is considered unreleased.
+        # .exclude(eol_date__lte=at) includes releases where eol_date IS NULL
+        # because a version without an end of life date is still supported.
+        return (self.filter(major__gte=1, date__lte=at)
+                    .exclude(eol_date__lte=at)
+                    .order_by('-major', '-minor', '-micro', '-status'))
 
-    def lts(self):
-        return self.final().order_by('-minor', '-micro').filter(is_lts=True)
+    def supported(self, at=None):
+        """
+        List of supported final releases.
+        """
+        return self.active(at).filter(status='f')
 
-    def current_lts(self):
-        return self.lts().first()
+    def unsupported(self, at=None):
+        """
+        List of unsupported final releases at a given date (today by default).
 
-    def previous_lts(self):
-        """Get the previous LTS if it's still supported."""
-        return
+        This returns a list, not a queryset, because it requires logic that is
+        hard to express in SQL.
+
+        Pre-1.0 releases are ignored.
+        """
+        if at is None:
+            at = datetime.date.today()
+        excluded_major_minor = {
+            (release.major, release.minor)
+            for release in self.supported(at)
+        }
+        unsupported = []
+        for release in (self.filter(major__gte=1, eol_date__lte=at, status='f')
+                            .order_by('-major', '-minor', '-micro')):
+            if (release.major, release.minor) not in excluded_major_minor:
+                excluded_major_minor.add((release.major, release.minor))
+                unsupported.append(release)
+        return unsupported
+
+    def current(self, at=None):
+        """
+        Current release.
+        """
+        return self.supported(at).first()
+
+    def previous(self, at=None):
+        """
+        Previous release.
+        """
+        return self.supported(at)[1:].first()
+
+    def lts(self, at=None):
+        """
+        List of supported LTS releases.
+        """
+        return self.supported(at).filter(is_lts=True)
+
+    def current_lts(self, at=None):
+        """
+        Current LTS release.
+        """
+        return self.lts(at).first()
+
+    def previous_lts(self, at=None):
+        """
+        Previous LTS release or None if there's only one LTS release currently.
+        """
+        return self.lts(at)[1:].first()
+
+    def preview(self, at=None):
+        """
+        Preview release or None if there isn't a preview release currently.
+        """
+        return self.active(at).exclude(status='f').first()
 
     def current_version(self):
         current_version = cache.get(Release.DEFAULT_CACHE_KEY, None)
         if current_version is None:
-            try:
-                current_version = self.current().version
-            except (Release.DoesNotExist, IndexError):
+            current_release = self.current()
+            if current_release is None:
                 current_version = ''
+            else:
+                current_version = current_release.version
             cache.set(
                 Release.DEFAULT_CACHE_KEY,
                 current_version,
@@ -50,14 +115,30 @@ class Release(models.Model):
     STATUS_CHOICES = (
         ('a', 'alpha'),
         ('b', 'beta'),
-        ('c', 'rc'),
+        ('c', 'release candidate'),
         ('f', 'final'),
     )
-    STATUS_REVERSE = dict((word, letter) for (letter, word) in STATUS_CHOICES)
+    STATUS_REVERSE = {
+        'alpha': 'a',
+        'beta': 'b',
+        'rc': 'c',
+        'final': 'f',
+    }
 
     version = models.CharField(max_length=16, primary_key=True)
-    date = models.DateField("Release date", default=datetime.date.today)
-    eol_date = models.DateField("End of life date", null=True, blank=True)
+    date = models.DateField(
+        "Release date",
+        null=True, blank=True,
+        default=datetime.date.today,
+        help_text="Leave blank if the release date isn't know yet, typically "
+                  "if you're creating the final release just after the alpha "
+                  "because you want to build docs for the upcoming version.")
+    eol_date = models.DateField(
+        "End of life date",
+        null=True, blank=True,
+        help_text="Leave blank if the end of life date isn't known yet, "
+                  "typically because it depends on the release date of a "
+                  "later version.")
 
     major = models.PositiveSmallIntegerField(editable=False)
     minor = models.PositiveSmallIntegerField(editable=False)
