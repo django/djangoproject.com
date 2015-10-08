@@ -99,7 +99,15 @@ class DocumentRelease(models.Model):
     def is_supported(self):
         if self.release is None:
             return True
-        eol_date = self.release.eol_date
+        latest_release = (Release.objects
+                                 .filter(major=self.release.major,
+                                         minor=self.release.minor,
+                                         status='f')
+                                 .order_by('-micro')
+                                 .first())
+        if latest_release is None:
+            return True
+        eol_date = latest_release.eol_date
         return eol_date is None or eol_date > datetime.date.today()
 
     @property
