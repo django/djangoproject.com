@@ -14,21 +14,76 @@ from .utils import get_doc_path
 
 
 class ModelsTests(TestCase):
-    def test_is_supported(self):
+
+    def test_dev_is_supported(self):
+        """
+        Document for a release without a date ("dev") is supported.
+        """
         d = DocumentRelease.objects.create()
-        # Document without a release ("dev") is supported.
+
         self.assertTrue(d.is_supported)
         self.assertTrue(d.is_dev)
 
-        r = Release(major=1, minor=7, micro=0, version='1.7')
-        d.release = r
-        # Document with a release without an EOL date is supported.
+    def test_current_is_supported(self):
+        """
+        Document with a release without an EOL date is supported.
+        """
+        today = datetime.date.today()
+        day = datetime.timedelta(1)
+        r = Release.objects.create(version='1.8',
+                                   date=today - 5 * day)
+        d = DocumentRelease.objects.create(release=r)
+
         self.assertTrue(d.is_supported)
         self.assertFalse(d.is_dev)
 
-        # Document with an EOL date in the past is unsupported.
-        r.eol_date = datetime.date(2000, 1, 1)
+    def test_previous_is_supported(self):
+        """
+        Document with a release with an EOL date in the future is supported.
+        """
+        today = datetime.date.today()
+        day = datetime.timedelta(1)
+        r = Release.objects.create(version='1.8',
+                                   date=today - 5 * day,
+                                   eol_date=today + 5 * day)
+        d = DocumentRelease.objects.create(release=r)
+
+        self.assertTrue(d.is_supported)
+        self.assertFalse(d.is_dev)
+
+    def test_old_is_unsupported(self):
+        """
+        Document with a release with an EOL date in the past is insupported.
+        """
+        today = datetime.date.today()
+        day = datetime.timedelta(1)
+        r = Release.objects.create(version='1.8',
+                                   date=today - 15 * day,
+                                   eol_date=today - 5 * day)
+        d = DocumentRelease.objects.create(release=r)
+
         self.assertFalse(d.is_supported)
+        self.assertFalse(d.is_dev)
+
+    def test_most_recent_micro_release_considered(self):
+        """
+        Dates are looked up on the latest micro release in a given series.
+        """
+        today = datetime.date.today()
+        day = datetime.timedelta(1)
+        r = Release.objects.create(version='1.8',
+                                   date=today - 15 * day)
+        d = DocumentRelease.objects.create(release=r)
+        r2 = Release.objects.create(version='1.8.1',
+                                    date=today - 5 * day)
+
+        # The EOL date of the first release is set automatically.
+        r.refresh_from_db()
+        self.assertEqual(r.eol_date, r2.date)
+
+        # Since 1.8.1 is still supported, docs show up as supported.
+        self.assertTrue(d.is_supported)
+        self.assertFalse(d.is_dev)
 
 
 class SearchFormTestCase(TestCase):
