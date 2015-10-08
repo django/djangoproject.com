@@ -14,7 +14,11 @@ register = template.Library()
 @register.inclusion_tag('docs/search_form.html', takes_context=True)
 def search_form(context):
     request = context['request']
-    release = DocumentRelease.objects.get(version=context['version'], lang=context['lang'])
+    version = context['version']
+    if version == 'stable':
+        version = DocumentRelease.objects.current_version()
+
+    release = DocumentRelease.objects.get(version=version, lang=context['lang'])
     return {
         'form': DocSearchForm(request.GET, release=release),
         'version': context['version'],

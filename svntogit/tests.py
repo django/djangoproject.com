@@ -2,6 +2,7 @@ from django.test import TestCase
 
 
 class SvnToGitTests(TestCase):
+    fixtures = ['doc_test_fixtures']
 
     def test_redirect(self):
         response = self.client.get('/svntogit/1/', follow=False)
