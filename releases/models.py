@@ -74,6 +74,12 @@ class Release(models.Model):
         self.status = self.STATUS_REVERSE[status]
         cache.delete(self.DEFAULT_CACHE_KEY)
         super(Release, self).save(*args, **kwargs)
+        # Each micro release EOLs the previous one in the same series.
+        if self.status == 'f' and self.micro > 0:
+            (type(self).objects
+                       .filter(major=self.major, minor=self.minor,
+                               micro=self.micro - 1, status='f')
+                       .update(eol_date=self.date))
 
     def __str__(self):
         return self.version
