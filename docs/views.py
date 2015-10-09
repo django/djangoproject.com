@@ -219,7 +219,10 @@ def search_suggestions(request, lang, version, per_page=20):
     The link list contains redirect URLs so that IE will correctly
     redirect to those documents.
     """
-    release = get_object_or_404(DocumentRelease, version=version, lang=lang)
+    try:
+        release = DocumentRelease.objects.get_by_version_and_lang(version, lang)
+    except DocumentRelease.DoesNotExist:
+        raise Http404
 
     form = DocSearchForm(request.GET or None, release=release)
     suggestions = []
@@ -264,7 +267,10 @@ def search_description(request, lang, version):
     """
     Render an OpenSearch description.
     """
-    release = get_object_or_404(DocumentRelease, version=version, lang=lang)
+    try:
+        release = DocumentRelease.objects.get_by_version_and_lang(version, lang)
+    except DocumentRelease.DoesNotExist:
+        raise Http404
     context = {
         'site': Site.objects.get_current(),
         'release': release,
