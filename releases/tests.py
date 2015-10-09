@@ -1,7 +1,6 @@
 import datetime
 
 from django.contrib.redirects.models import Redirect
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.utils.safestring import SafeString
 
@@ -26,26 +25,6 @@ class LegacyURLsTests(TestCase):
                 location = location[17:]
             self.assertEquals(location, new_path)
             self.assertEquals(response.status_code, 301)
-
-
-class TestDownloadsView(TestCase):
-    url = reverse('download')
-
-    def test_lts_overlap(self):
-        Release.objects.create(major=1, minor=4, micro=0, is_lts=True, version='1.4',
-                               eol_date=datetime.date.today() - datetime.timedelta(2))
-        Release.objects.create(major=1, minor=6, micro=0, version='1.6',
-                               eol_date=datetime.date.today() - datetime.timedelta(1))
-        Release.objects.create(major=1, minor=7, micro=0, version='1.7')
-        Release.objects.create(major=1, minor=8, micro=0, is_lts=True, version='1.8')
-
-        response = self.client.get(self.url)
-        self.assertEqual(response.context['current_version'], '1.8')
-        self.assertEqual(response.context['previous_version'], '1.7')
-        # Previous LTS (still supported)
-        self.assertEqual(response.context['lts_version'], None)
-        # No longer supported versions
-        self.assertEqual(response.context['earlier_versions'], ['1.6', '1.4'])
 
 
 class TestTemplateTags(TestCase):

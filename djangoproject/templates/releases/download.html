@@ -20,25 +20,25 @@
     Here’s how to get it:</p>
 
   <h2>Option {% cycle '1' '2' '3' as options %}: Get the latest official version</h2>
-  <p>The latest official version is {{ current_version }}. Read the
-    {% release_notes current_version show_version=True %}, then install it with
+  <p>The latest official version is {{ current.version }}. Read the
+    {% release_notes current.version show_version=True %}, then install it with
     <a href="http://www.pip-installer.org/en/latest/">pip</a>:</p>
-  <pre class="literal-block"><code>pip install Django=={{ current_version }}</code></pre>
+  <pre class="literal-block"><code>pip install Django=={{ current.version }}</code></pre>
 
-  {% if preview_version %}
-      {% with preview_version|slice:":3" as major_version %}
-      <h2>Option {% cycle options %}: Get the {{ preview_kind }} for {{ major_version }}</h2>
+  {% if preview %}
+      {% with preview.version|slice:":3" as major_version %}
+      <h2>Option {% cycle options %}: Get the {{ preview.get_status_display }} for {{ major_version }}</h2>
       <p>As part of the
         <a href="https://code.djangoproject.com/wiki/Version{{ major_version }}Roadmap">
         Django {{ major_version }} development process</a>, Django
-        {{ preview_version }} is available. This release is only for users who
+        {{ preview.version }} is available. This release is only for users who
         want to try the new version and help identify remaining bugs before the
         {{ major_version }} release. Please read the
-        {% release_notes preview_version show_version=True %} before using this package.
-      <p>Install the {{ preview_kind }} with <a href="https://pip.pypa.io/">pip</a>:</p>
+        {% release_notes preview.version show_version=True %} before using this package.
+      <p>Install the {{ preview.get_status_display }} with <a href="https://pip.pypa.io/">pip</a>:</p>
       <pre class="literal-block"><code>pip install --pre django</pre></code></pre>
-      <p>Or if you have pip < 1.4:</p>
-      <pre class="literal-block"><code>pip install {% url 'download-redirect' preview_version 'tarball' %}</code></pre>
+      <p>Or if you have pip &lt; 1.4:</p>
+      <pre class="literal-block"><code>pip install {% url 'download-redirect' preview.version 'tarball' %}</code></pre>
       {% endwith %}
   {% endif %}
 
@@ -165,20 +165,20 @@
     <h2>For the impatient:</h2>
     <ul>
       <li>Latest release:
-        <a href="{% url 'download-redirect' current_version 'tarball' %}">
-          Django-{{ current_version }}.tar.gz</a><br>
-        Checksums: <a href="{% url 'download-redirect' current_version 'checksum' %}">
-          Django-{{ current_version }}.checksum.txt</a><br>
-        Release notes: {% release_notes current_version %}
+        <a href="{% url 'download-redirect' current.version 'tarball' %}">
+          Django-{{ current.version }}.tar.gz</a><br>
+        Checksums: <a href="{% url 'download-redirect' current.version 'checksum' %}">
+          Django-{{ current.version }}.checksum.txt</a><br>
+        Release notes: {% release_notes current.version %}
       </li>
 
-      {% if preview_version %}
+      {% if preview %}
       <li>Preview release:
-        <a href="{% url 'download-redirect' preview_version 'tarball' %}">
-          Django-{{ preview_version }}.tar.gz</a><br>
-          Checksums: <a href="{% url 'download-redirect' preview_version 'checksum' %}">
-            Django-{{ preview_version }}.checksum.txt</a><br>
-          Release notes: {% release_notes preview_version %}
+        <a href="{% url 'download-redirect' preview.version 'tarball' %}">
+          Django-{{ preview.version }}.tar.gz</a><br>
+          Checksums: <a href="{% url 'download-redirect' preview.version 'checksum' %}">
+            Django-{{ preview.version }}.checksum.txt</a><br>
+          Release notes: {% release_notes preview.version %}
       </li>
       {% endif %}
     </ul>
@@ -189,32 +189,32 @@
     <p>If you’re just looking for a stable deployment target and don’t mind waiting for the next release, you’ll want to stick with the latest official release (which will always include detailed notes on any changes you’ll need to make while upgrading).</p>
     <h2>Previous releases</h2>
     <ul>
-      <li>Django {{ previous_version }}:
-        <a href="{% url 'download-redirect' previous_version 'tarball' %}">
-          Django-{{ previous_version }}.tar.gz</a><br>
-        Checksums: <a href="{% url 'download-redirect' previous_version 'checksum' %}">
-          Django-{{ previous_version }}.checksum.txt</a><br>
-        Release notes: {% release_notes previous_version %}
+      <li>Django {{ previous.version }}:
+        <a href="{% url 'download-redirect' previous.version 'tarball' %}">
+          Django-{{ previous.version }}.tar.gz</a><br>
+        Checksums: <a href="{% url 'download-redirect' previous.version 'checksum' %}">
+          Django-{{ previous.version }}.checksum.txt</a><br>
+        Release notes: {% release_notes previous.version %}
       </li>
-      {% if lts_version %}
-        <li>Django {{ lts_version }} (LTS):
-          <a href="{% url 'download-redirect' lts_version 'tarball' %}">
-            Django-{{ lts_version }}.tar.gz</a><br>
-        Checksums: <a href="{% url 'download-redirect' lts_version 'checksum' %}">
-          Django-{{ lts_version }}.checksum.txt</a><br>
-          Release notes: {% release_notes lts_version %}
+      {% if lts %}
+        <li>Django {{ lts.version }} (LTS):
+          <a href="{% url 'download-redirect' lts.version 'tarball' %}">
+            Django-{{ lts.version }}.tar.gz</a><br>
+        Checksums: <a href="{% url 'download-redirect' lts.version 'checksum' %}">
+          Django-{{ lts.version }}.checksum.txt</a><br>
+          Release notes: {% release_notes lts.version %}
         </li>
       {% endif %}
     </ul>
 
     <h2>Unsupported previous releases (no longer receive security updates or bug fixes)</h2>
     <ul>
-      {% for earlier_version in earlier_versions %}
-      <li>Django {{ earlier_version }}:
-        <a href="{% url 'download-redirect' earlier_version 'tarball' %}">
-          Django-{{ earlier_version }}.tar.gz</a><br>
-        Checksums: <a href="{% url 'download-redirect' earlier_version 'checksum' %}">
-          Django-{{ earlier_version }}.checksum.txt</a></li>
+      {% for release in unsupported %}
+      <li>Django {{ release.version }}:
+        <a href="{% url 'download-redirect' release.version 'tarball' %}">
+          Django-{{ release.version }}.tar.gz</a><br>
+        Checksums: <a href="{% url 'download-redirect' release.version 'checksum' %}">
+          Django-{{ release.version }}.checksum.txt</a></li>
       {% endfor %}
     </ul>
 
