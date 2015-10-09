@@ -21,7 +21,7 @@ class DocumentReleaseManager(models.Manager):
         current = self.get(is_default=True)
         if lang != 'en':
             try:
-                return self.get(lang=lang, version=current.version)
+                return self.get(lang=lang, release=current.release)
             except DocumentRelease.DoesNotExist:
                 pass
         return current
