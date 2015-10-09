@@ -22,12 +22,11 @@ def index(request):
     unsupported = Release.objects.unsupported()
 
     context = {
-        'current_version': current.version,
-        'previous_version': previous.version,
-        'lts_version': lts.version if lts else None,
-        'earlier_versions': [release.version for release in unsupported],
-        'preview_version': preview.version if preview else None,
-        'preview_kind': preview.get_status_display() if preview else None,
+        'current': current,
+        'previous': previous,
+        'lts': lts,
+        'unsupported': unsupported,
+        'preview': preview,
     }
     return render(request, 'releases/download.html', context)
 
