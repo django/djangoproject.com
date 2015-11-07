@@ -6,7 +6,10 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from .exceptions import DonationError
-from .models import INTERVAL_CHOICES, DEFAULT_DONATION_AMOUNT, Campaign, DjangoHero, Donation, Payment
+from .models import (
+    DEFAULT_DONATION_AMOUNT, INTERVAL_CHOICES, Campaign, DjangoHero, Donation,
+    Payment,
+)
 
 
 class DjangoHeroForm(forms.ModelForm):
