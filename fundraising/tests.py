@@ -6,8 +6,9 @@ from unittest.mock import patch
 
 import stripe
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core import mail
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import resolve, reverse
 from django.test import TestCase
 from django_hosts.resolvers import reverse as django_hosts_reverse
 from PIL import Image
@@ -39,17 +40,102 @@ def _fake_random(*results):
 class TestIndex(TestCase):
     @classmethod
     def setUpTestData(cls):
-        Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
+        cls.campaign = Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
 
-    def test_redirect(self):
-        response = self.client.get(reverse('fundraising:index'))
-        self.assertEqual(response.status_code, 302)
+    def second_campaign(self):
+        return Campaign.objects.create(
+            name='test2', goal=200, slug='test2', is_active=True,
+            is_public=True, start_date="2015-11-05 00:00:00+00:00"
+        )
 
-    def test_index(self):
-        Campaign.objects.create(name='test2', goal=200, slug='test2', is_active=True, is_public=True)
+    def test_index_campaigns(self):
+        """
+        Testing that the index view is actually the
+        same as the campaign view with no slug
+        """
+        view1 = resolve(reverse('fundraising:index'))
+        view2 = resolve(reverse('fundraising:campaign'))
+        self.assertEqual(view1.func, view2.func)
+
+    def test_several_campaigns_without_dates(self):
+        """
+        In case of several active campaigns (which shouldn't happen)
+        then we chose the one starting last and if necessary the
+        last one created.
+        """
+        campaign2 = Campaign.objects.create(name='test2', goal=200, slug='test2', is_active=True, is_public=True)
         response = self.client.get(reverse('fundraising:index'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context['campaigns']), 2)
+        self.assertEqual(response.context['campaign'].id, campaign2.id)
+
+    def test_several_campaigns_with_dates(self):
+        """
+        In case of several active campaigns (which shouldn't happen)
+        then we chose the one starting last and if necessary the
+        last one created.
+        """
+        try:
+            Campaign.objects.filter(id=self.campaign.id).update(
+                start_date="2015-11-07 00:00:00+00:00",
+            )
+            self.second_campaign()
+
+            response = self.client.get(reverse('fundraising:index'))
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.context['campaign'].id, self.campaign.id)
+
+        finally:
+            Campaign.objects.filter(id=self.campaign.id).update(
+                start_date=None,
+            )
+
+    def test_no_campaign(self):
+        try:
+            Campaign.objects.filter(id=self.campaign.id).update(
+                is_public=False
+            )
+
+            response = self.client.get(reverse('fundraising:index'))
+            self.assertTemplateUsed(response, 'fundraising/index.html')
+
+        finally:
+            Campaign.objects.filter(id=self.campaign.id).update(
+                is_public=True
+            )
+
+    def test_slug_campaign(self):
+        """
+        Testing that accessing a campaign by its slug works as expected
+        """
+        # Accessing 1 campaign works when there are 2 campaigns
+        campaign2 = self.second_campaign()
+
+        response = self.client.get(reverse(
+            'fundraising:campaign', kwargs={"slug": self.campaign.slug}
+        ))
+        self.assertEqual(response.context['campaign'].id, self.campaign.id)
+
+        campaign2.is_public = False
+        campaign2.save()
+
+        # Accessing a non public campaign leads to a 404 when you're not staff
+        response = self.client.get(reverse(
+            'fundraising:campaign', kwargs={"slug": campaign2.slug}
+        ))
+        self.assertEqual(response.status_code, 404)
+
+        # But works when you're staff
+        credentials = {
+            "username": "a", "password": "a",
+        }
+        get_user_model().objects.create_superuser(email="a@b.cd", **credentials)
+        self.assertTrue(self.client.login(**credentials))
+
+        response = self.client.get(reverse(
+            'fundraising:campaign', kwargs={"slug": campaign2.slug}
+        ))
+
+        self.assertEqual(response.status_code, 200)
 
 
 class TestCampaign(TestCase):
@@ -99,6 +185,18 @@ class TestCampaign(TestCase):
         content = json.loads(response.content.decode())
         self.assertEqual(200, response.status_code)
         self.assertFalse(content['success'])
+
+    def test_prefill_amount(self):
+        response = self.client.get(self.campaign_url)
+        self.assertNotIn("amount", response.context)
+
+        response = self.client.get(self.campaign_url + "?amount=42")
+        self.assertEqual("{}".format(response.context["amount"]), "42")
+
+        initial = donation_form_with_heart(response.context, self.campaign)["form"].initial
+
+        self.assertEqual(initial['amount'], "custom")
+        self.assertEqual("{}".format(initial["custom_amount"]), "42")
 
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
