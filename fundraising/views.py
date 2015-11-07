@@ -17,20 +17,16 @@ from .forms import DjangoHeroForm, DonationForm, PaymentForm, SimpleDonateForm
 from .models import Campaign, DjangoHero, Donation, Payment, Testimonial
 
 
-def index(request):
-    campaign = Campaign.get_active_campaign()
-    if campaign:
-        return redirect('fundraising:campaign', slug=campaign.slug)
-
-    return render(request, 'fundraising/index.html', {})
-
-
 def campaign(request, slug=None):
     filter_params = {} if request.user.is_staff else {'is_public': True}
+
     if slug is not None:
         current_campaign = get_object_or_404(Campaign, slug=slug, **filter_params)
     else:
         current_campaign = Campaign.get_active_campaign()
+
+    if current_campaign is None:
+        return render(request, 'fundraising/index.html', {})
 
     testimonial = Testimonial.objects.filter(campaign=current_campaign, is_active=True).order_by('?').first()
 

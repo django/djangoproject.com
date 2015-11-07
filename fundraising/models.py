@@ -111,7 +111,7 @@ class Campaign(models.Model):
     def get_active_campaign(cls):
         return cls.objects.filter(
             is_public=True, is_active=True
-        ).order_by("-start_date").first()
+        ).order_by("-start_date", "-id").first()
 
 
 class Donation(FundraisingModel):
