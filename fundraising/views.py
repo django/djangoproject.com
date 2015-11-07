@@ -27,11 +27,10 @@ def index(request):
 
 def campaign(request, slug):
     filter_params = {} if request.user.is_staff else {'is_public': True}
-    campaign = get_object_or_404(Campaign, slug=slug, **filter_params)
-    testimonial = Testimonial.objects.filter(campaign=campaign, is_active=True).order_by('?').first()
-
-    return render(request, campaign.template, {
-        'campaign': campaign,
+    current_campaign = get_object_or_404(Campaign, slug=slug, **filter_params)
+    testimonial = Testimonial.objects.filter(campaign=current_campaign, is_active=True).order_by('?').first()
+    return render(request, current_campaign.template, {
+        'campaign': current_campaign,
         'testimonial': testimonial,
     })
 
