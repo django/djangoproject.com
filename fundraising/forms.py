@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from .exceptions import DonationError
-from .models import INTERVAL_CHOICES, Campaign, DjangoHero, Donation, Payment
+from .models import INTERVAL_CHOICES, DEFAULT_DONATION_AMOUNT, Campaign, DjangoHero, Donation, Payment
 
 
 class DjangoHeroForm(forms.ModelForm):
@@ -116,6 +116,7 @@ class DonateForm(forms.Form):
     amount = forms.ChoiceField(choices=AMOUNT_CHOICES)
     interval = forms.ChoiceField(choices=INTERVAL_CHOICES)
     campaign = forms.ModelChoiceField(queryset=Campaign.objects.all(), widget=forms.HiddenInput())
+    custom_amount = forms.DecimalField(max_digits=9, decimal_places=2, required=True, initial=DEFAULT_DONATION_AMOUNT)
 
 
 class DonationForm(forms.ModelForm):

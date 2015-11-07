@@ -47,10 +47,25 @@ define([
 
     $donationForm.on('submit', function (e) {
         e.preventDefault();
-        var interval = $donationForm.find('[name=interval]').val();
-        var amountDollars = $donationForm.find('[name=amount]').val();
-        var amountCents = parseFloat(amountDollars) * 100;
 
+        $(".custom_amount_errors").remove();
+
+        var amountDollars = $donationForm.find('[name=amount]').val();
+        var customAmountDollars = $donationForm.find('[name=custom_amount]').val();
+        var interval = $donationForm.find('[name=interval]').val();
+
+        if (amountDollars === "custom") { //
+            amountDollars = customAmountDollars;
+        }
+        amountDollars = parseFloat(amountDollars);
+        if (amountDollars <= 0 || isNaN(amountDollars)){
+            $donationForm.find('[name=custom_amount]').addClass("error").after(
+                "<p class='validation-errors custom_amount_errors'>Please enter an amount in dollars.</p>"
+            );
+            return
+        }
+
+        var amountCents = amountDollars * 100;
         handler.open({
             name: 'Django Software Foundation',
             description: $donationForm.data('campaignName'),

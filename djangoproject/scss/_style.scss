@@ -2977,6 +2977,12 @@ hr {
 	.cls {
 		clear: both;
 	}
+	input.error {
+		border: 1px solid $red !important;
+	}
+	p.validation-errors {
+		color: $red;
+	}
 }
 
 .fundraising-donation {
