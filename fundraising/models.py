@@ -109,9 +109,8 @@ class Campaign(models.Model):
 
     @classmethod
     def get_active_campaign(cls):
-        now = timezone.now()
         return cls.objects.filter(
-            is_public=True, is_active=True, start_date__lte=now, end_date__gt=now
+            is_public=True, is_active=True
         ).order_by("-start_date").first()
 
 
