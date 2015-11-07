@@ -18,13 +18,11 @@ from .models import Campaign, DjangoHero, Donation, Payment, Testimonial
 
 
 def index(request):
-    campaigns = Campaign.objects.filter(is_public=True, is_active=True)
-    if len(campaigns) == 1:
-        return redirect('fundraising:campaign', slug=campaigns[0].slug)
+    campaign = Campaign.get_active_campaign()
+    if campaign:
+        return redirect('fundraising:campaign', slug=campaign.slug)
 
-    return render(request, 'fundraising/index.html', {
-        'campaigns': campaigns,
-    })
+    return render(request, 'fundraising/index.html', {})
 
 
 def campaign(request, slug):

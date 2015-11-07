@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Support Django{% endblock %}
 {% block layout_class %}full-width{% endblock %}
@@ -10,10 +11,10 @@
 
 {% block content %}
 
-  <ul>
-  {% for campaign in campaigns %}
-      <li><a href="{% url 'fundraising:campaign' campaign.slug %}">{{ campaign.name }}</a>
-  {% endfor %}
-  </ul>
+<div class="fundraising-index no-campaign">
+  <p>There is no fundraising campaign at the moment, they might be a new one soon !</p>
+  <p>Check the <a href="{% url 'weblog:index' %}">Blog</a> regularly to learn about our initiatives !</p>
+  <img src="{% static "img/small-fundraising-heart.png" %}" alt="Support Django!" />
+</div>
 
 {% endblock %}

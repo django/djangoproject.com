@@ -2942,6 +2942,9 @@ hr {
 			@include font-size(28);
 		}
 	}
+	&.no-campaign {
+		text-align: center;
+	}
 }
 
 .fundraising-index {
