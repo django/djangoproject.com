@@ -99,6 +99,10 @@ class StripeTextInput(forms.TextInput):
         return mark_safe(self._strip_name_attr(rendered, name))
 
 
+class SimpleDonateForm(forms.Form):
+    amount = forms.DecimalField(max_digits=9, decimal_places=2, required=True, initial=DEFAULT_DONATION_AMOUNT)
+
+
 class DonateForm(forms.Form):
     AMOUNT_CHOICES = (
         (5, 'US $5'),
