@@ -69,7 +69,6 @@ INSTALLED_APPS = [
     'fundraising',
 
     'flat',
-    'djangosecure',
     'registration',
     'django_hosts',
     'sorl.thumbnail',
@@ -126,7 +125,7 @@ LOGGING = {
 MEDIA_URL = '/m/'
 
 MIDDLEWARE_CLASSES = [
-    'djangosecure.middleware.SecurityMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_hosts.middleware.HostsRequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -144,6 +143,10 @@ ROOT_URLCONF = 'djangoproject.urls.www'
 
 SECRET_KEY = str(SECRETS['secret_key'])
 
+SECURE_BROWSER_XSS_FILTER = True
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTOCOL", "https")
 
 SERVER_EMAIL = "root@djangoproject.com"
@@ -152,6 +155,8 @@ SESSION_COOKIE_HTTPONLY = True
 
 SILENCED_SYSTEM_CHECKS = [
     'fields.W342',  # tracdb has ForeignKey(unique=True) in lieu of multi-col PKs
+    'security.W008',  # SSL redirect is handled by nginx
+    'security.W009',  # SECRET_KEY is setup through Ansible secrets
 ]
 
 SITE_ID = 1
@@ -195,11 +200,7 @@ USE_L10N = False
 
 USE_TZ = False
 
-# django-secure settings
-
-SECURE_BROWSER_XSS_FILTER = True
-
-SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
 
 # django-contact-form / Akismet settings
 
