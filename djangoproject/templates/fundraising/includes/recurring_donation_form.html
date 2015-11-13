@@ -1,0 +1,54 @@
+{% load static fundraising_extras humanize %}
+
+<div class="fundraising-index" id="donate">
+
+  <div class="fundraising-heart" data-percent="100">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 503 431">
+      <switch>
+        <g transform="translate(4, 2)" id="pixels">
+          <path d="M 71 0 L 213 0 L 213 71 L 284 71 L 284 0 L 426 0 L 426 71 L 497 71 L 497 213 L 426 213 L 426 284 L 355 284 L 355 355 L 284 355 L 284 426 L 213 426 L 213 355 L 142 355 L 142 284 L 71 284 L 71 213 L 0 213 L 0 71 L 71 71 L 71 0" fill="#f8f8f8" stroke="#c0c0c0" stroke-width="1" />
+        </g>
+        <foreignObject>
+          <img src="{% static 'img/fundraising-heart.png' %}" />
+        </foreignObject>
+      </switch>
+    </svg>
+  </div>
+
+  <div class="description">
+    <ul>
+      <li><strong>{{ total_donors }} donor{{ total_donors|pluralize:",s" }}</strong></li>
+    <li>Donating <strong>${{ donated_amount|intcomma }} per month</strong></li>
+    </ul>
+
+    <div class="donate">
+      <form
+            method="get"
+            class="stripe-custom-checkout"
+            action="{% url "fundraising:donate" %}"
+            data-stripe-key="{{ stripe_publishable_key }}"
+            data-stripe-icon="{% static 'img/dj-stripe-icon.jpg' %}"
+            data-is-logged-in="{{ user.is_authenticated }}"
+            data-login-url="{% url 'login' %}">
+          {% csrf_token %}
+        <h3>Help us make it happen:</h3>
+        {{ form.interval }}
+        {{ form.amount }}
+        {{ form.campaign }}
+        <div class="custom-donation">
+          <span class="prefix">US $</span>
+        </div>
+        <input type="submit" value="Donate" class="cta" />
+      </form>
+    </div>
+  </div>
+  <div class="cls"></div>
+  <p class="footnote">
+    Your logo will be visible below if you contribute at least
+    US&nbsp;${{ display_logo_amount|intcomma }}/month.<br/>
+    Organizations, please consider <a href="/foundation/corporate-membership/">
+    corporate membership</a> in the DSF.
+  </p>
+</div>
+
+<hr style="margin: 40px 0" />

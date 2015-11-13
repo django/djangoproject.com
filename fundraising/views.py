@@ -14,7 +14,10 @@ from django.views.decorators.http import require_POST
 
 from .exceptions import DonationError
 from .forms import DjangoHeroForm, DonationForm, PaymentForm
-from .models import Campaign, DjangoHero, Donation, Payment, Testimonial
+from .models import (
+    DISPLAY_LOGO_AMOUNT, RECURRING_DISPLAY_LOGO_AMOUNT, Campaign, DjangoHero,
+    Donation, Payment, Testimonial,
+)
 
 
 def index(request):
@@ -35,6 +38,13 @@ def campaign(request, slug):
     return render(request, campaign.template, {
         'campaign': campaign,
         'testimonial': testimonial,
+        'display_logo_amount': DISPLAY_LOGO_AMOUNT,
+    })
+
+
+def recurring(request):
+    return render(request, 'fundraising/recurring.html', {
+        'display_logo_amount': RECURRING_DISPLAY_LOGO_AMOUNT,
     })
 
 

@@ -1,0 +1,70 @@
+{% extends 'fundraising/index.html' %}
+{% load fundraising_extras humanize static %}
+
+{% block content %}
+{% if messages %}
+  {% for message in messages %}
+  <h1>{{ message }}</h1>
+  {% endfor %}
+  <hr>
+{% endif %}
+
+<h1>Support the Django Software Foundation!</h1>
+
+{% recurring_donation_form %}
+
+<h2>About the Django Software Foundation</h2>
+
+<p>Development of Django is supported by an independent foundation
+  established as a 501(c)(3) non-profit. Like most open-source foundations,
+  the goal of the <a href="/foundation/">Django Software Foundation</a>
+  is to promote, support, and advance the Django Web framework. If you're
+  interested in how the Django Software Foundation supports the Django
+  Web framework, we published a
+  <a href="/weblog/2015/jan/08/django-software-foundation-2014/">Summary
+  of 2014.</a>
+</p>
+
+<h2>Django Fellowship Program</h2>
+
+<p>The biggest expense of the DSF is the Django Fellowship program. It's a
+  project where paid contractors are engaged to manage some of the
+  administrative and community management tasks of the Django project to
+  support rapid development of Django itself.</p>
+
+<p><strong>The first three months of the Django Fellowship program were very successful.</strong>
+  In this short time, two Django Fellows, one full-time and one part-time, worked on
+  around 240 pull requests (including reviewing some of the major features that
+  are in <a href="https://docs.djangoproject.com/en/stable/releases/1.8/">Django 1.8</a>),
+  triaged at least 90 different tickets, and made around 200 commits in total!
+  You can read <a href="/weblog/2015/jan/21/django-fellowship-retrospective/">
+  the retrospective on the things that have been accomplished</a> on our blog.</p>
+
+<p>The program was renewed in March 2015 after the initial fundraising efforts
+   to renew the program succeeded.</P>
+
+<h2>We need your help!</h2>
+
+<p>The program has a major positive impact on how Django is developed and
+   maintained. Release blocking and severe bugs are not postponed indefinitely.
+   Django Fellows are a resource to help review patches and contributions from
+   the community, and the community loves that!</p>
+
+<p><strong>If you use Django on a daily basis and care about the development of
+   Django itself, you should donate today</strong> (may be
+   <a href="/foundation/donate/#tax-deductible">tax deductible</a>). Only with
+   your support can we make sure that the Web framework you base your work on
+   can grow to be even better in the coming years.</p>
+
+<hr/>
+
+<div class="heros-section">
+  <h2>Django Heroes</h2>
+  <p>We're incredibly grateful to everyone who donates to make this happen. We
+  couldn't possibly do it without the continuous support from the community.</p>
+
+  {% display_recurring_django_heros %}
+
+</div>
+
+{% endblock %}
