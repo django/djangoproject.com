@@ -6,6 +6,7 @@ from django.test import TestCase
 from django.utils import timezone
 
 from .models import Entry, Event
+from .sitemaps import WeblogSitemap
 
 
 class DateTimeMixin(object):
@@ -96,3 +97,14 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         response = self.client.get(reverse('weblog:index'))
         self.assertEqual(response.status_code, 200)
         self.assertQuerysetEqual(response.context['events'], [])
+
+
+class SitemapTests(DateTimeMixin, TestCase):
+
+    def test_sitemap(self):
+        entry = Entry.objects.create(pub_date=self.yesterday, is_active=True, headline='foo', slug='foo')
+        sitemap = WeblogSitemap()
+        urls = sitemap.get_urls()
+        self.assertEqual(len(urls), 1)
+        url_info = urls[0]
+        self.assertEqual(url_info['location'], entry.get_absolute_url())

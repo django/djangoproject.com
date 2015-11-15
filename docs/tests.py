@@ -10,7 +10,8 @@ from django.test import TestCase
 
 from releases.models import Release
 
-from .models import DocumentRelease
+from .models import Document, DocumentRelease
+from .sitemaps import DocsSitemap
 from .utils import get_doc_path
 
 
@@ -190,3 +191,15 @@ class UpdateDocTests(TestCase):
             {'current_page_name': 'foo/3'},
         ])
         self.assertQuerysetEqual(self.release.documents.all(), [])
+
+
+class SitemapTests(TestCase):
+
+    def test_sitemap(self):
+        doc_release = DocumentRelease.objects.create()
+        document = Document.objects.create(release=doc_release)
+        sitemap = DocsSitemap()
+        urls = sitemap.get_urls()
+        self.assertEqual(len(urls), 1)
+        url_info = urls[0]
+        self.assertEqual(url_info['location'], document.get_absolute_url())
