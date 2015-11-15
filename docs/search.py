@@ -69,17 +69,13 @@ class ImprovedDocType(DocType):
     def index_all(cls, using=None, delete=False, **kwargs):
         def actions_generator():
             for obj in cls.index_queryset().iterator():
-                doc_dict = cls.from_django(obj).to_dict()
-                doc_dict['_id'] = obj.id
-                yield doc_dict
+                yield cls.from_django(obj).to_dict(include_meta=True)
 
         client = connections.get_connection(using or cls._doc_type.using)
         if delete:
             client.indices.delete(index=cls._doc_type.index, ignore=[400, 404])
         cls._doc_type.init()
         for ok, item in streaming_bulk(client, actions_generator(),
-                                       index=cls._doc_type.index,
-                                       doc_type=cls._doc_type.name,
                                        raise_on_error=True,
                                        refresh=True,
                                        **kwargs):
