@@ -5,7 +5,8 @@ django-flat-theme==0.9.3
 django-hosts==1.2
 django-push==0.7
 django-registration-redux==1.2
-elasticsearch-dsl==0.0.4
+elasticsearch-dsl==0.0.9
+elasticsearch>=1.0.0,<2.0.0
 docutils==0.11
 feedparser==5.1.3
 Jinja2==2.7.3

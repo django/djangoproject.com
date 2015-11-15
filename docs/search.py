@@ -76,7 +76,6 @@ class ImprovedDocType(DocType):
             client.indices.delete(index=cls._doc_type.index, ignore=[400, 404])
         cls._doc_type.init()
         for ok, item in streaming_bulk(client, actions_generator(),
-                                       raise_on_error=True,
                                        refresh=True,
                                        **kwargs):
             yield ok, item
