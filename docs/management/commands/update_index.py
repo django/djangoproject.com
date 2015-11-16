@@ -16,7 +16,7 @@ class Command(BaseCommand):
                help='Whether to delete the index or not'),
     )
 
-    def log(self, msg, level='2'):
+    def log(self, msg, level=2):
         """
         Small log helper
         """

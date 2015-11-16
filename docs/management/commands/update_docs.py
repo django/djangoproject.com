@@ -31,10 +31,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, **kwargs):
-        try:
-            verbosity = int(kwargs['verbosity'])
-        except (KeyError, TypeError, ValueError):
-            verbosity = 1
+        verbosity = kwargs['verbosity']
 
         default_builders = ['json', 'html']
 
