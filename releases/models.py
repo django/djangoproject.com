@@ -5,7 +5,28 @@ from django.conf import settings
 from django.core.cache import cache
 from django.db import models
 from django.utils.functional import cached_property
-from django.utils.version import get_version
+from django.utils.version import get_complete_version, get_major_version
+
+
+# A version of django.utils.version.get_version() which maps "rc" to "rc"
+# (packages generated using Python 3) instead of "c" (packages generated using
+# Python 2)  This naming schemes starts with Django 1.9 and we don't care about
+# older release candidates.
+def get_version(version=None):
+    "Return a PEP 386-compliant version number from VERSION."
+    version = get_complete_version(version)
+
+    # Now build the two parts of the version number:
+    # main = X.Y[.Z]
+    # sub = {a|b|rc}N - for alpha, beta and rc releases
+    main = get_major_version(version)
+
+    sub = ''
+    if version[3] != 'final':
+        mapping = {'alpha': 'a', 'beta': 'b', 'rc': 'rc'}
+        sub = mapping[version[3]] + str(version[4])
+
+    return str(main + sub)
 
 
 class ReleaseManager(models.Manager):
