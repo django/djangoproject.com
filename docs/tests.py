@@ -1,4 +1,5 @@
 import datetime
+from operator import attrgetter
 import os
 from pathlib import Path
 
@@ -143,3 +144,49 @@ class TestUtils(TestCase):
         # existing file
         path, filename = __file__.rsplit(os.path.sep, 1)
         self.assertEqual(get_doc_path(Path(path), filename), None)
+
+
+class UpdateDocTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.release = DocumentRelease.objects.create(version='dev')
+
+    def test_sync_to_db(self):
+        self.release.sync_to_db([{
+            'body': 'This is the body',
+            'title': 'This is the title',
+            'current_page_name': 'foo/bar',
+        }])
+        self.assertQuerysetEqual(self.release.documents.all(), ['<Document: en/dev/foo/bar>'])
+
+    def test_clean_path(self):
+        self.release.sync_to_db([{
+            'body': 'This is the body',
+            'title': 'This is the title',
+            'current_page_name': 'foo/bar/index',
+        }])
+        self.assertQuerysetEqual(self.release.documents.all(), ['<Document: en/dev/foo/bar>'])
+
+    def test_title_strip_tags(self):
+        self.release.sync_to_db([{
+            'body': 'This is the body',
+            'title': 'This is the <strong>title</strong>',
+            'current_page_name': 'foo/bar',
+        }])
+        self.assertQuerysetEqual(self.release.documents.all(), ['This is the title'], transform=attrgetter('title'))
+
+    def test_title_entities(self):
+        self.release.sync_to_db([{
+            'body': 'This is the body',
+            'title': 'Title &amp; title',
+            'current_page_name': 'foo/bar',
+        }])
+        self.assertQuerysetEqual(self.release.documents.all(), ['Title & title'], transform=attrgetter('title'))
+
+    def test_empty_documents(self):
+        self.release.sync_to_db([
+            {'title': 'Empty body document', 'current_page_name': 'foo/1'},
+            {'body': 'Empty title document', 'current_page_name': 'foo/2'},
+            {'current_page_name': 'foo/3'},
+        ])
+        self.assertQuerysetEqual(self.release.documents.all(), [])

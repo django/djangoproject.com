@@ -6,9 +6,11 @@ from pathlib import Path
 
 from django.conf import settings
 from django.core.cache import cache
-from django.db import models
+from django.db import models, transaction
 from django.utils.functional import cached_property
+from django.utils.html import strip_tags
 from django_hosts.resolvers import reverse
+from django.utils.text import unescape_entities
 
 from releases.models import Release
 
@@ -116,6 +118,36 @@ class DocumentRelease(models.Model):
         if not self.is_dev:
             url += '@stable/' + self.version + '.x'
         return url
+
+    @transaction.atomic
+    def sync_to_db(self, decoded_documents):
+        """
+        Sync the given list of documents (decoded fjson files from sphinx) to
+        the database. Deletes all the release's documents first then
+        reinserts them as needed.
+        """
+        self.documents.all().delete()
+
+        for document in decoded_documents:
+            if 'body' not in document or 'title' not in document:
+                # We don't care about indexing documents with no body or title
+                continue
+
+            Document.objects.create(
+                release=self,
+                path=_clean_document_path(document['current_page_name']),
+                title=unescape_entities(strip_tags(document['title'])),
+            )
+
+
+def _clean_document_path(path):
+    # We have to be a bit careful to reverse-engineer the correct
+    # relative path component, especially for "index" documents,
+    # otherwise the search results will be incorrect.
+    if path.endswith('/index'):
+        path = path[:-6]
+
+    return path
 
 
 def document_url(doc):

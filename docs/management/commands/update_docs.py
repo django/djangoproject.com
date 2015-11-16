@@ -12,12 +12,8 @@ from pathlib import Path
 
 from django.conf import settings
 from django.core.management import BaseCommand
-from django.utils.html import strip_tags
-from django.utils.text import unescape_entities
-from elasticsearch.exceptions import ElasticsearchException
 
-from ...models import Document, DocumentRelease
-from ...search import DocumentDocType
+from ...models import DocumentRelease
 
 
 class Command(BaseCommand):
@@ -146,61 +142,9 @@ class Command(BaseCommand):
             if verbosity >= 2:
                 self.stdout.write("  reindexing...")
 
-            # Build a dict of {path_fragment: document_object}. We'll pop values
-            # out of this dict as we go which'll make sure we know which
-            # remaining documents need to be deleted (and unindexed) later on.
-            documents = dict((doc.path, doc) for doc in release.documents.all())
-
-            # Walk the tree we've just built looking for ".fjson" documents
-            # (just JSON, but Sphinx names them weirdly). Each one of those
-            # documents gets a corresponding Document object created which
-            # we'll then ask Sphinx to reindex.
-            #
-            # We have to be a bit careful to reverse-engineer the correct
-            # relative path component, especially for "index" documents,
-            # otherwise the search results will be incorrect.
-
             json_built_dir = parent_build_dir.joinpath('_built', 'json')
-            for root, dirs, files in os.walk(str(json_built_dir)):
-                for f in files:
-                    built_doc = Path(root, f)
-                    if built_doc.is_file() and built_doc.suffix == '.fjson':
-
-                        # Convert the built_doc path which is now an absolute
-                        # path (i.e. "/home/docs/en/1.2/_built/ref/models.json")
-                        # into a path component (i.e. "ref/models").
-                        path = built_doc.relative_to(json_built_dir)
-                        if path.stem == 'index':
-                            path = path.parent
-                        path = str(path.parent.joinpath(path.stem))
-
-                        # Read out the content and create a new Document object for
-                        # it. We'll strip the HTML tags here (for want of a better
-                        # place to do it).
-                        with open(str(built_doc)) as fp:
-                            json_doc = json.load(fp)
-                            try:
-                                json_doc['body']  # Just to make sure it exists.
-                                title = unescape_entities(strip_tags(json_doc['title']))
-                            except KeyError as ex:
-                                if verbosity >= 2:
-                                    self.stdout.write("Skipping: %s (no %s)" % (path, ex.args[0]))
-                                continue
-
-                        doc = documents.pop(path, Document(path=path, release=release))
-                        doc.title = title
-                        doc.save()
-                        DocumentDocType.index_object(doc)
-
-            # Clean up any remaining documents.
-            for doc in documents.values():
-                if verbosity >= 2:
-                    self.stdout.write("Deleting:", doc)
-                try:
-                    DocumentDocType.unindex_object(doc)
-                except ElasticsearchException:
-                    pass
-                doc.delete()
+            documents = gen_decoded_documents(json_built_dir)
+            release.sync_to_db(documents)
 
     def update_git(self, url, destdir):
         if '@' in url:
@@ -218,3 +162,17 @@ class Command(BaseCommand):
                 os.chdir(cwd)
         else:
             subprocess.call(['git', 'clone', '-q', '--branch', branch, repo, str(destdir)])
+
+
+def gen_decoded_documents(directory):
+    """
+    Walk the given directory looking for fjson files and yield their data.
+    """
+    for root, dirs, files in os.walk(str(directory)):
+        for f in files:
+            f = Path(root, f)
+            if not f.suffix == '.fjson':
+                continue
+
+            with f.open() as fp:
+                yield json.load(fp)
