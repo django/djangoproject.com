@@ -25,3 +25,17 @@ class DocsSitemap(Sitemap):
             return 1
         else:
             return 0.1
+
+    def get_urls(self, page, site, protocol):
+        urls = []
+        for item in self.paginator.page(page).object_list:
+            loc = item.get_absolute_url()
+            priority = self.priority(item)
+            url_info = {
+                'item': item,
+                'location': loc,
+                'changefreq': self.changefreq(item),
+                'priority': str(priority if priority is not None else ''),
+            }
+            urls.append(url_info)
+        return urls
