@@ -2,10 +2,12 @@ from datetime import timedelta
 from test.support import captured_stderr
 
 from django.core.urlresolvers import reverse
+from django.contrib.sites.models import Site
 from django.test import TestCase
 from django.utils import timezone
 
 from .models import Entry, Event
+from .sitemaps import WeblogSitemap
 
 
 class DateTimeMixin(object):
@@ -96,3 +98,17 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         response = self.client.get(reverse('weblog:index'))
         self.assertEqual(response.status_code, 200)
         self.assertQuerysetEqual(response.context['events'], [])
+
+
+class SitemapTestCase(DateTimeMixin, TestCase):
+
+    def test_sitemap(self):
+        entry = Entry.objects.create(pub_date=self.yesterday, is_active=True, headline='foo', slug='foo')
+        sitemap = WeblogSitemap()
+        page = 1
+        site = Site.objects.get_current()
+        protocol = 'http'
+        urls = sitemap.get_urls(page, site, protocol)
+        self.assertEqual(len(urls), 1)
+        url_info = urls[0]
+        self.assertEqual(url_info['location'], entry.get_absolute_url())

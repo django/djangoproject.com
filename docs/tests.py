@@ -9,7 +9,8 @@ from django.test import TestCase
 
 from releases.models import Release
 
-from .models import DocumentRelease
+from .models import Document, DocumentRelease
+from .sitemaps import DocsSitemap
 from .utils import get_doc_path
 
 
@@ -143,3 +144,18 @@ class TestUtils(TestCase):
         # existing file
         path, filename = __file__.rsplit(os.path.sep, 1)
         self.assertEqual(get_doc_path(Path(path), filename), None)
+
+
+class SitemapTestCase(TestCase):
+
+    def test_sitemap(self):
+        doc_release = DocumentRelease.objects.create()
+        document = Document.objects.create(release=doc_release)
+        sitemap = DocsSitemap()
+        page = 1
+        site = Site.objects.get_current()
+        protocol = 'http'
+        urls = sitemap.get_urls(page, site, protocol)
+        self.assertEqual(len(urls), 1)
+        url_info = urls[0]
+        self.assertEqual(url_info['location'], document.get_absolute_url())
