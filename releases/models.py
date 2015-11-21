@@ -9,9 +9,10 @@ from django.utils.version import get_complete_version, get_major_version
 
 
 # A version of django.utils.version.get_version() which maps "rc" to "rc"
-# (packages generated using Python 3) instead of "c" (packages generated using
-# Python 2)  This naming schemes starts with Django 1.9 and we don't care about
-# older release candidates.
+# (packages generated using setuptools 8+) instead of "c" (older versions of
+# setuptools). This naming schemes starts with Django 1.9 and we don't care
+# about older release candidates. Safe to use Django's copy of get_version()
+# when upgrading this website to use Django 1.10.
 def get_version(version=None):
     "Return a PEP 386-compliant version number from VERSION."
     version = get_complete_version(version)
