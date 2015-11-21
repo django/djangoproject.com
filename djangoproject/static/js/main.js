@@ -1,8 +1,7 @@
 // Require.js Module Loader - http://requirejs.org
 define(function() {
 	var mods = [
-		'mod/mobile-menu', // require mobile menu automatically
-        'mod/alternative-resolutions'
+		'mod/mobile-menu' // require mobile menu automatically
 	];
 
 	//detect Class function
@@ -64,6 +63,11 @@ define(function() {
 	//fundraising donation form
 	if (hasClass('fundraising-donation')) {
 		mods.push('mod/fundraising-donation');
+	}
+
+	//fundraising heros list
+	if (hasClass('heros-section')) {
+		mods.push('mod/fundraising-heros');
 	}
 
 	if (hasClass('dashboard-index')) {
