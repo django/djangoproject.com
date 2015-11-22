@@ -107,6 +107,12 @@ class Campaign(models.Model):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def get_active_campaign(cls):
+        return cls.objects.filter(
+            is_public=True, is_active=True
+        ).order_by("-start_date", "-id").first()
+
 
 class Donation(FundraisingModel):
     interval = models.CharField(max_length=20, choices=INTERVAL_CHOICES, blank=True)

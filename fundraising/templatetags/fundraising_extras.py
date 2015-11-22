@@ -40,10 +40,16 @@ def donation_form_with_heart(context, campaign):
     user = context['user']
     donated_amount = Donation.objects.filter(campaign=campaign).aggregate(models.Sum('payment__amount'))
     total_donors = DjangoHero.objects.filter(donation__campaign=campaign).count()
-    form = DonateForm(initial={
+    initial = {
         'amount': DEFAULT_DONATION_AMOUNT,
         'campaign': campaign,
-    })
+    }
+    if "amount" in context:
+        initial["custom_amount"] = context["amount"]
+        initial["amount"] = "custom"
+        initial["interval"] = "onetime"
+
+    form = DonateForm(initial=initial)
 
     return {
         'campaign': campaign,

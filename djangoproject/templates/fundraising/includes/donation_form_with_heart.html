@@ -26,6 +26,8 @@
     </ul>
 
     <div class="donate">
+
+      {# The method is actually not used, the form in stripe-custome-checkout.js will extract this form's action #}
       <form
             method="get"
             class="stripe-custom-checkout"
@@ -39,10 +41,11 @@
         <h3>Help us make it happen:</h3>
         {{ form.interval }}
         {{ form.amount }}
-        {{ form.campaign }}
         <div class="custom-donation">
           <span class="prefix">US $</span>
+          {{ form.custom_amount }}
         </div>
+        {{ form.campaign }}
         <input type="submit" value="Donate" class="cta" />
       </form>
     </div>

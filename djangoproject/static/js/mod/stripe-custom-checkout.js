@@ -11,14 +11,13 @@ define([
         token: function (token) {
             $submitButton.prop('disabled', true).addClass('disabled');
             var campaign = $donationForm.find('[name=campaign]').val();
-            var amount = $donationForm.find('[name=amount]').val();
             var csrfToken = $donationForm.find('[name=csrfmiddlewaretoken]').val();
             var interval = $donationForm.find('[name=interval]').val();
             var data = {
                 'stripe_token': token.id,
                 'receipt_email': token.email,
                 'campaign': campaign,
-                'amount': amount,
+                'amount': handler.amount,
                 'interval': interval,
                 'csrfmiddlewaretoken': csrfToken
             };
@@ -47,9 +46,26 @@ define([
 
     $donationForm.on('submit', function (e) {
         e.preventDefault();
-        var interval = $donationForm.find('[name=interval]').val();
+
+        $(".custom_amount_errors").remove();
+
         var amountDollars = $donationForm.find('[name=amount]').val();
-        var amountCents = parseFloat(amountDollars) * 100;
+        var customAmountDollars = $donationForm.find('[name=custom_amount]').val();
+        var interval = $donationForm.find('[name=interval]').val();
+
+        if (amountDollars === "custom") {
+            amountDollars = customAmountDollars;
+        }
+        amountDollars = parseFloat(amountDollars);
+        if (amountDollars <= 0 || isNaN(amountDollars)){
+            $donationForm.find('[name=custom_amount]').addClass("error").after(
+                "<p class='validation-errors custom_amount_errors'>Please enter an amount in dollars.</p>"
+            );
+            return
+        }
+
+        handler.amount = amountDollars;
+        var amountCents = amountDollars * 100;
 
         handler.open({
             name: 'Django Software Foundation',

@@ -2942,6 +2942,9 @@ hr {
 			@include font-size(28);
 		}
 	}
+	&.no-campaign {
+		text-align: center;
+	}
 }
 
 .fundraising-index {
@@ -2973,6 +2976,12 @@ hr {
 	}
 	.cls {
 		clear: both;
+	}
+	input.error {
+		border: 1px solid $red !important;
+	}
+	p.validation-errors {
+		color: $red;
 	}
 }
 

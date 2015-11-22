@@ -13,29 +13,35 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from .exceptions import DonationError
-from .forms import DjangoHeroForm, DonationForm, PaymentForm
+from .forms import DjangoHeroForm, DonationForm, PaymentForm, SimpleDonateForm
 from .models import Campaign, DjangoHero, Donation, Payment, Testimonial
 
 
-def index(request):
-    campaigns = Campaign.objects.filter(is_public=True, is_active=True)
-    if len(campaigns) == 1:
-        return redirect('fundraising:campaign', slug=campaigns[0].slug)
-
-    return render(request, 'fundraising/index.html', {
-        'campaigns': campaigns,
-    })
-
-
-def campaign(request, slug):
+def campaign(request, slug=None):
     filter_params = {} if request.user.is_staff else {'is_public': True}
-    campaign = get_object_or_404(Campaign, slug=slug, **filter_params)
-    testimonial = Testimonial.objects.filter(campaign=campaign, is_active=True).order_by('?').first()
 
-    return render(request, campaign.template, {
-        'campaign': campaign,
+    if slug is not None:
+        current_campaign = get_object_or_404(Campaign, slug=slug, **filter_params)
+    else:
+        current_campaign = Campaign.get_active_campaign()
+
+    if current_campaign is None:
+        return render(request, 'fundraising/index.html', {})
+
+    testimonial = Testimonial.objects.filter(campaign=current_campaign, is_active=True).order_by('?').first()
+
+    amount = None
+    form = SimpleDonateForm(request.GET)
+    if form.is_valid():
+        amount = form.cleaned_data["amount"]
+
+    context = {
+        'campaign': current_campaign,
         'testimonial': testimonial,
-    })
+    }
+    if amount is not None:
+        context["amount"] = amount
+    return render(request, current_campaign.template, context)
 
 
 @require_POST

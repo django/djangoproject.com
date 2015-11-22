@@ -6,7 +6,10 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from .exceptions import DonationError
-from .models import INTERVAL_CHOICES, Campaign, DjangoHero, Donation, Payment
+from .models import (
+    DEFAULT_DONATION_AMOUNT, INTERVAL_CHOICES, Campaign, DjangoHero, Donation,
+    Payment,
+)
 
 
 class DjangoHeroForm(forms.ModelForm):
@@ -99,6 +102,10 @@ class StripeTextInput(forms.TextInput):
         return mark_safe(self._strip_name_attr(rendered, name))
 
 
+class SimpleDonateForm(forms.Form):
+    amount = forms.DecimalField(max_digits=9, decimal_places=2, required=True, initial=DEFAULT_DONATION_AMOUNT)
+
+
 class DonateForm(forms.Form):
     AMOUNT_CHOICES = (
         (5, 'US $5'),
@@ -116,6 +123,7 @@ class DonateForm(forms.Form):
     amount = forms.ChoiceField(choices=AMOUNT_CHOICES)
     interval = forms.ChoiceField(choices=INTERVAL_CHOICES)
     campaign = forms.ModelChoiceField(queryset=Campaign.objects.all(), widget=forms.HiddenInput())
+    custom_amount = forms.DecimalField(max_digits=9, decimal_places=2, required=True, initial=DEFAULT_DONATION_AMOUNT)
 
 
 class DonationForm(forms.ModelForm):
