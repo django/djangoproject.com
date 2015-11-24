@@ -37,6 +37,14 @@ class Donation(admin.ModelAdmin):
         return obj.amount
 
 
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'amount', 'stripe_charge_id', 'date', 'donation')
+    list_select_related = ('donation__donor',)
+    raw_id_fields = ('donation',)
+    search_fields = ('stripe_charge_id',)
+
+
 @admin.register(Testimonial)
 class Testimonial(admin.ModelAdmin):
     pass
