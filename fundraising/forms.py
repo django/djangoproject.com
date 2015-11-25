@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from .exceptions import DonationError
-from .models import INTERVAL_CHOICES, Campaign, DjangoHero, Donation, Payment
+from .models import INTERVAL_CHOICES, Campaign, DjangoHero, Donation
 
 
 class DjangoHeroForm(forms.ModelForm):
@@ -265,12 +265,13 @@ class PaymentForm(forms.Form):
             if interval != 'onetime':
                 donation_params['subscription_amount'] = amount
             donation = Donation.objects.create(**donation_params)
-
-            Payment.objects.create(
-                amount=amount,
-                stripe_charge_id=charge_id,
-                donation=donation,
-            )
+            # Only one-time donations are created here. Recurring payments are
+            # created by Stripe webhooks.
+            if charge_id:
+                donation.payment_set.create(
+                    amount=amount,
+                    stripe_charge_id=charge_id,
+                )
 
             # Send an email message about managing your donation
             message = render_to_string(
