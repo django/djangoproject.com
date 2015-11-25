@@ -111,7 +111,7 @@ class Campaign(models.Model):
 class Donation(FundraisingModel):
     interval = models.CharField(max_length=20, choices=INTERVAL_CHOICES, blank=True)
     subscription_amount = models.DecimalField(max_digits=9, decimal_places=2, null=True, blank=True)
-    donor = models.ForeignKey(DjangoHero, null=True)
+    donor = models.ForeignKey(DjangoHero)
     campaign = models.ForeignKey(Campaign, null=True, blank=True)
     stripe_subscription_id = models.CharField(max_length=100, blank=True)
     stripe_customer_id = models.CharField(max_length=100, blank=True)
