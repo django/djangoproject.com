@@ -132,9 +132,8 @@ class TestCampaign(TestCase):
         donations = Donation.objects.all()
         self.assertEqual(donations.count(), 1)
         self.assertEqual(donations[0].subscription_amount, 100)
-        self.assertEqual(donations[0].total_payments(), 100)
         self.assertEqual(donations[0].receipt_email, 'test@example.com')
-        self.assertEqual(donations[0].payment_set.first().stripe_charge_id, '')
+        self.assertEqual(donations[0].payment_set.count(), 0)
 
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
@@ -152,6 +151,7 @@ class TestCampaign(TestCase):
         self.assertEqual(donations.count(), 1)
         self.assertEqual(donations[0].total_payments(), 100)
         self.assertEqual(donations[0].campaign, self.campaign)
+        self.assertEqual(donations[0].payment_set.first().stripe_charge_id, 'XYZ')
 
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
