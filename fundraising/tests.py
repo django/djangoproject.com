@@ -190,7 +190,9 @@ class TestCampaign(TestCase):
     @patch('fundraising.forms.PaymentForm.make_donation')
     def test_submitting_donation_form_valid(self, make_donation):
         amount = 100
+        donor = DjangoHero.objects.create()
         donation = Donation.objects.create(
+            donor=donor,
             stripe_customer_id='xxxx',
         )
         Payment.objects.create(
@@ -350,7 +352,13 @@ class TestPaymentForm(TestCase):
 
 class TestThankYou(TestCase):
     def setUp(self):
+        self.hero = DjangoHero.objects.create(
+            email='django@example.net',
+            stripe_customer_id='1234',
+            name='Under Dog',
+        )
         self.donation = Donation.objects.create(
+            donor=self.hero,
             stripe_customer_id='cu_123',
             receipt_email='django@example.com',
         )
@@ -364,40 +372,21 @@ class TestThankYou(TestCase):
             'name': 'Django Inc',
         }
 
-    def add_donor(self, **kwargs):
-        hero = DjangoHero.objects.create(**kwargs)
-        self.donation.donor = hero
-        self.donation.save()
-        return hero
-
-    def test_template_without_donor(self):
-        response = self.client.get(self.url)
-        self.assertTemplateUsed(response, 'fundraising/thank-you.html')
-        self.assertFalse(response.context['form'].instance.pk)
-        self.assertEqual(response.context['donation'], self.donation)
-
-    def test_template_with_donor(self):
-        self.add_donor()
+    def test_template(self):
         response = self.client.get(self.url)
         self.assertEqual(response.context['form'].instance, self.donation.donor)
 
     @patch('stripe.Customer.retrieve')
     def test_update_hero(self, retrieve_customer):
-        hero = self.add_donor(
-            email='django@example.net',
-            stripe_customer_id='1234',
-            name='Under Dog'
-        )
         response = self.client.post(self.url, self.hero_form_data)
         self.assertRedirects(response, reverse('fundraising:index'))
+        self.hero.refresh_from_db()
+        self.assertEqual(self.hero.name, self.hero_form_data['name'])
 
-        hero = DjangoHero.objects.get(pk=hero.id)
-        self.assertEqual(hero.name, self.hero_form_data['name'])
-
-        retrieve_customer.assert_called_once_with(hero.stripe_customer_id)
+        retrieve_customer.assert_called_once_with(self.hero.stripe_customer_id)
         customer = retrieve_customer.return_value
-        self.assertEqual(customer.description, hero.name)
-        self.assertEqual(customer.email, hero.email)
+        self.assertEqual(customer.description, self.hero.name)
+        self.assertEqual(customer.email, self.hero.email)
         customer.save.assert_called_once_with()
 
     def test_create_hero_for_donation_with_campaign(self):
