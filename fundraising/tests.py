@@ -255,13 +255,13 @@ class TestDjangoHero(TestCase):
         self.campaign = Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
         self.h1 = DjangoHero.objects.create(**kwargs)
         d1 = Donation.objects.create(donor=self.h1, campaign=self.campaign)
-        Payment.objects.create(donation=d1, amount='5')
+        Payment.objects.create(donation=d1, amount='5', stripe_charge_id='a1')
         self.h2 = DjangoHero.objects.create(**kwargs)
         d2 = Donation.objects.create(donor=self.h2, campaign=self.campaign)
-        Payment.objects.create(donation=d2, amount='15')
+        Payment.objects.create(donation=d2, amount='15', stripe_charge_id='a2')
         self.h3 = DjangoHero.objects.create(**kwargs)
         d3 = Donation.objects.create(donor=self.h3, campaign=self.campaign)
-        Payment.objects.create(donation=d3, amount='10')
+        Payment.objects.create(donation=d3, amount='10', stripe_charge_id='a3')
         self.today = date.today()
 
     def test_thumbnail(self):

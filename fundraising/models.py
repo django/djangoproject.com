@@ -130,7 +130,7 @@ class Donation(FundraisingModel):
 class Payment(models.Model):
     donation = models.ForeignKey(Donation)
     amount = models.DecimalField(max_digits=9, decimal_places=2, null=True)
-    stripe_charge_id = models.CharField(max_length=100, blank=True)
+    stripe_charge_id = models.CharField(max_length=100, unique=True)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
