@@ -7,6 +7,7 @@ from .models import Campaign, DjangoHero, Donation, Payment, Testimonial
 
 class DonationInline(admin.TabularInline):
     fields = ['id', 'created', 'interval', 'subscription_amount']
+    extra = 0
     model = Donation
 
 
@@ -20,6 +21,7 @@ class DjangoHeroAdmin(AdminImageMixin, admin.ModelAdmin):
 
 
 class PaymentInline(admin.TabularInline):
+    extra = 0
     model = Payment
 
 
