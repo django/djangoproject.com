@@ -5,8 +5,14 @@ from sorl.thumbnail.admin import AdminImageMixin
 from .models import Campaign, DjangoHero, Donation, Payment, Testimonial
 
 
+class DonationInline(admin.TabularInline):
+    fields = ['id', 'created', 'interval', 'subscription_amount']
+    model = Donation
+
+
 @admin.register(DjangoHero)
 class DjangoHeroAdmin(AdminImageMixin, admin.ModelAdmin):
+    inlines = [DonationInline]
     list_filter = ['approved', 'created', 'modified', 'hero_type', 'is_visible', 'is_subscribed']
     list_display = ['id', 'name', 'email', 'created', 'modified', 'approved', 'hero_type']
     list_editable = ['approved', 'hero_type']
