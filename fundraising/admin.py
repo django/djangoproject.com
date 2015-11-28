@@ -18,6 +18,7 @@ class DjangoHeroAdmin(AdminImageMixin, admin.ModelAdmin):
     list_display = ['id', 'name', 'email', 'created', 'modified', 'approved', 'hero_type']
     list_editable = ['approved', 'hero_type']
     ordering = ['-created']
+    search_fields = ['name', 'email', 'stripe_customer_id']
 
 
 class PaymentInline(admin.TabularInline):
@@ -32,6 +33,7 @@ class Donation(admin.ModelAdmin):
     list_filter = ['created', 'modified']
     ordering = ['-created']
     inlines = [PaymentInline]
+    search_fields = ['donor__name', 'donor__email', 'donor__stripe_customer_id']
 
     def get_queryset(self, request):
         """Annotate the sum of related payments to every donation."""
@@ -50,7 +52,12 @@ class PaymentAdmin(admin.ModelAdmin):
     list_display = ('id', 'amount', 'stripe_charge_id', 'date', 'donation')
     list_select_related = ('donation__donor',)
     raw_id_fields = ('donation',)
-    search_fields = ('stripe_charge_id',)
+    search_fields = [
+        'stripe_charge_id',
+        'donation__donor__name',
+        'donation__donor__email',
+        'donation__donor__stripe_customer_id',
+    ]
 
 
 @admin.register(Testimonial)
