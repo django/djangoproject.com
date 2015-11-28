@@ -51,6 +51,7 @@ class Donation(admin.ModelAdmin):
 class PaymentAdmin(admin.ModelAdmin):
     list_display = ('id', 'amount', 'stripe_charge_id', 'date', 'donation')
     list_select_related = ('donation__donor',)
+    ordering = ['-date']
     raw_id_fields = ('donation',)
     search_fields = [
         'stripe_charge_id',
