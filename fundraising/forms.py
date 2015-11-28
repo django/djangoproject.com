@@ -245,16 +245,14 @@ class PaymentForm(forms.Form):
 
         else:
             # Finally create the donation and return it
-            donation_params = {
-                'interval': interval,
-                'stripe_customer_id': customer.id,
-                'stripe_subscription_id': subscription_id,
-                'receipt_email': receipt_email,
-                'donor': hero,
-            }
-            if interval != 'onetime':
-                donation_params['subscription_amount'] = amount
-            donation = Donation.objects.create(**donation_params)
+            donation = Donation.objects.create(
+                interval=interval,
+                subscription_amount=amount,
+                stripe_customer_id=customer.id,
+                stripe_subscription_id=subscription_id,
+                receipt_email=receipt_email,
+                donor=hero,
+            )
             # Only one-time donations are created here. Recurring payments are
             # created by Stripe webhooks.
             if charge_id:
