@@ -2,7 +2,7 @@
 
 <div class="fundraising-index" id="donate">
 
-  <div class="fundraising-heart" data-percent="{{ donated_amount|as_percentage:campaign.goal }}">
+  <div class="fundraising-heart" data-percent="{{ donated_amount|as_percentage:goal_amount }}">
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 503 431">
       <switch>
         <g transform="translate(4, 2)" id="pixels">
@@ -17,8 +17,8 @@
 
   <div class="description">
     <ul>
-      <li><strong>{{ donated_amount|as_percentage:campaign.goal }}% funded</strong></li>
-      <li><strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ campaign.goal|intcomma }} goal</li>
+      <li><strong>{{ donated_amount|as_percentage:goal_amount }}% funded</strong></li>
+      <li><strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ goal_amount|intcomma }} goal</li>
       <li><strong>{{ total_donors }} donor{{ total_donors|pluralize:",s" }}</strong></li>
     </ul>
 

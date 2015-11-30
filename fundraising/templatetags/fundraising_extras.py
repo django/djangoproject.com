@@ -7,7 +7,8 @@ from django.template.defaultfilters import floatformat
 
 from fundraising.forms import DonateForm
 from fundraising.models import (
-    DEFAULT_DONATION_AMOUNT, DISPLAY_LOGO_AMOUNT, DjangoHero, Donation,
+    DEFAULT_DONATION_AMOUNT, DISPLAY_LOGO_AMOUNT, GOAL_AMOUNT, DjangoHero,
+    Donation,
 )
 
 register = template.Library()
@@ -36,7 +37,7 @@ def donation_snippet():
 
 
 @register.inclusion_tag('fundraising/includes/donation_form_with_heart.html', takes_context=True)
-def donation_form_with_heart(context, campaign):
+def donation_form_with_heart(context):
     user = context['user']
     donated_amount = Donation.objects.aggregate(models.Sum('payment__amount'))
     total_donors = DjangoHero.objects.count()
@@ -45,7 +46,7 @@ def donation_form_with_heart(context, campaign):
     })
 
     return {
-        'campaign': campaign,
+        'goal_amount': GOAL_AMOUNT,
         'donated_amount': donated_amount['payment__amount__sum'] or 0,
         'total_donors': total_donors,
         'form': form,
