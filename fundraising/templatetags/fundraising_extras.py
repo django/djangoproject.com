@@ -38,11 +38,10 @@ def donation_snippet():
 @register.inclusion_tag('fundraising/includes/donation_form_with_heart.html', takes_context=True)
 def donation_form_with_heart(context, campaign):
     user = context['user']
-    donated_amount = Donation.objects.filter(campaign=campaign).aggregate(models.Sum('payment__amount'))
-    total_donors = DjangoHero.objects.filter(donation__campaign=campaign).count()
+    donated_amount = Donation.objects.aggregate(models.Sum('payment__amount'))
+    total_donors = DjangoHero.objects.count()
     form = DonateForm(initial={
         'amount': DEFAULT_DONATION_AMOUNT,
-        'campaign': campaign,
     })
 
     return {
@@ -57,9 +56,9 @@ def donation_form_with_heart(context, campaign):
 
 
 @register.inclusion_tag('fundraising/includes/display_django_heros.html')
-def display_django_heros(campaign):
-    individuals = DjangoHero.objects.for_campaign(campaign, hero_type='individual')
-    organizations = DjangoHero.objects.for_campaign(campaign, hero_type='organization')
+def display_django_heros():
+    individuals = DjangoHero.objects.for_campaign(hero_type='individual')
+    organizations = DjangoHero.objects.for_campaign(hero_type='organization')
     return {
         'individuals': individuals,
         'organizations': organizations,

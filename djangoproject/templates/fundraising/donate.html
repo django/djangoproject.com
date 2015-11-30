@@ -42,7 +42,6 @@
     {% if form.receipt_email.errors %}<p class="errors">{{ form.receipt_email.errors.as_text }}</p>{% endif %}
     {% if form.receipt_email.help_text %}<p class="footnote">{{ form.receipt_email.help_text }}</p>{% endif %}
   </fieldset>
-  {{ form.campaign }}
   <p class="submit"><input type="submit" class="cta" tabindex="5" value="Donate" disabled></p>
   <p class="footnote">
   In case you can't use the form above (e.g. don't have a card that works via Stripe) feel free to

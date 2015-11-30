@@ -10,14 +10,12 @@ define([
         image: $donationForm.data('stripeIcon'),
         token: function (token) {
             $submitButton.prop('disabled', true).addClass('disabled');
-            var campaign = $donationForm.find('[name=campaign]').val();
             var amount = $donationForm.find('[name=amount]').val();
             var csrfToken = $donationForm.find('[name=csrfmiddlewaretoken]').val();
             var interval = $donationForm.find('[name=interval]').val();
             var data = {
                 'stripe_token': token.id,
                 'receipt_email': token.email,
-                'campaign': campaign,
                 'amount': amount,
                 'interval': interval,
                 'csrfmiddlewaretoken': csrfToken
@@ -53,7 +51,6 @@ define([
 
         handler.open({
             name: 'Django Software Foundation',
-            description: $donationForm.data('campaignName'),
             amount: amountCents,
             currency: 'USD',
             bitcoin: true,
