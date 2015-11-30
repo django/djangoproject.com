@@ -19,21 +19,9 @@ from .models import Campaign, DjangoHero, Donation, Payment, Testimonial
 
 
 def index(request):
-    campaigns = Campaign.objects.filter(is_public=True, is_active=True)
-    if len(campaigns) == 1:
-        return redirect('fundraising:campaign', slug=campaigns[0].slug)
-
+    campaign = Campaign.objects.filter(is_public=True, is_active=True)[0]
+    testimonial = Testimonial.objects.filter(is_active=True).order_by('?').first()
     return render(request, 'fundraising/index.html', {
-        'campaigns': campaigns,
-    })
-
-
-def campaign(request, slug):
-    filter_params = {} if request.user.is_staff else {'is_public': True}
-    campaign = get_object_or_404(Campaign, slug=slug, **filter_params)
-    testimonial = Testimonial.objects.filter(campaign=campaign, is_active=True).order_by('?').first()
-
-    return render(request, campaign.template, {
         'campaign': campaign,
         'testimonial': testimonial,
     })
@@ -77,10 +65,7 @@ def thank_you(request, donation):
         if form.is_valid():
             form.save()
             messages.success(request, "Thank you! You're a Hero.")
-            return redirect(
-                **{'to': 'fundraising:campaign', 'slug': donation.campaign.slug}
-                if donation.campaign else {'to': 'fundraising:index'}
-            )
+            return redirect('fundraising:index')
     else:
         form = DjangoHeroForm(instance=donation.donor)
 
