@@ -19,9 +19,6 @@
     <ul>
       <li><strong>{{ donated_amount|as_percentage:campaign.goal }}% funded</strong></li>
       <li><strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ campaign.goal|intcomma }} goal</li>
-      {% if campaign.stretch_goal %}
-      <li><strong>US&nbsp;${{ campaign.stretch_goal|intcomma }} <a href="{{ campaign.stretch_goal_url }}">stretch goal</a></strong></li>
-      {% endif %}
       <li><strong>{{ total_donors }} donor{{ total_donors|pluralize:",s" }}</strong></li>
     </ul>
 
@@ -32,14 +29,12 @@
             action="{% url "fundraising:donate" %}"
             data-stripe-key="{{ stripe_publishable_key }}"
             data-stripe-icon="{% static 'img/dj-stripe-icon.jpg' %}"
-            data-campaign-name="{{ campaign.name }}"
             data-is-logged-in="{{ user.is_authenticated }}"
             data-login-url="{% url 'login' %}">
           {% csrf_token %}
         <h3>Help us make it happen:</h3>
         {{ form.interval }}
         {{ form.amount }}
-        {{ form.campaign }}
         <div class="custom-donation">
           <span class="prefix">US $</span>
         </div>

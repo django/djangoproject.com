@@ -54,14 +54,14 @@ class TestCampaign(TestCase):
 
     def test_donors_count(self):
         donor = DjangoHero.objects.create()
-        Donation.objects.create(campaign=self.campaign, donor=donor)
+        Donation.objects.create(donor=donor)
         response = donation_form_with_heart({'user': None}, self.campaign)
         self.assertEqual(response['total_donors'], 1)
 
     def test_anonymous_donor(self):
         hero = DjangoHero.objects.create(
             is_visible=True, approved=True, hero_type='individual')
-        Donation.objects.create(donor=hero, subscription_amount='5', campaign=self.campaign)
+        Donation.objects.create(donor=hero, subscription_amount='5')
         response = self.client.get(self.campaign_url)
         self.assertContains(response, 'Anonymous Hero')
 
@@ -69,13 +69,9 @@ class TestCampaign(TestCase):
         hero = DjangoHero.objects.create(
             is_visible=True, approved=True,
             hero_type='individual', logo='yes')  # We don't need an actual image
-        Donation.objects.create(donor=hero, campaign=self.campaign)
+        Donation.objects.create(donor=hero)
         response = self.client.get(self.campaign_url)
         self.assertContains(response, 'Anonymous Hero')
-
-    def test_that_campaign_is_always_visible_input(self):
-        response = self.client.get(self.campaign_url)
-        self.assertContains(response, 'name="campaign"')
 
     def test_submitting_donation_form_missing_token(self):
         url = reverse('fundraising:donate')
@@ -132,12 +128,11 @@ class TestCampaign(TestCase):
 
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
-    def test_submitting_donation_form_with_campaign(self, charge_create, customer_create):
+    def test_submitting_donation_form_onetime(self, charge_create, customer_create):
         charge_create.return_value.id = 'XYZ'
         customer_create.return_value.id = '1234'
         self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
-            'campaign': self.campaign.id,
             'stripe_token': 'test',
             'interval': 'onetime',
             'receipt_email': 'django@example.com',
@@ -145,7 +140,6 @@ class TestCampaign(TestCase):
         donations = Donation.objects.all()
         self.assertEqual(donations.count(), 1)
         self.assertEqual(donations[0].total_payments(), 100)
-        self.assertEqual(donations[0].campaign, self.campaign)
         self.assertEqual(donations[0].payment_set.first().stripe_charge_id, 'XYZ')
 
     @patch('stripe.Customer.create')
@@ -211,7 +205,7 @@ class TestCampaign(TestCase):
     def test_cancel_donation(self, retrieve_customer):
         donor = DjangoHero.objects.create()
         donation = Donation.objects.create(
-            campaign=self.campaign, donor=donor,
+            donor=donor,
             stripe_subscription_id='12345', stripe_customer_id='54321',
         )
         url = reverse(
@@ -228,9 +222,7 @@ class TestCampaign(TestCase):
     @patch('stripe.Customer.retrieve')
     def test_cancel_already_cancelled_donation(self, retrieve_customer):
         donor = DjangoHero.objects.create()
-        donation = Donation.objects.create(
-            campaign=self.campaign, donor=donor, stripe_subscription_id=''
-        )
+        donation = Donation.objects.create(donor=donor, stripe_subscription_id='')
         url = reverse(
             'fundraising:cancel-donation',
             kwargs={'hero': donor.id, 'donation': donation.id}
@@ -246,16 +238,14 @@ class TestDjangoHero(TestCase):
             'approved': True,
             'is_visible': True,
         }
-
-        self.campaign = Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
         self.h1 = DjangoHero.objects.create(**kwargs)
-        d1 = Donation.objects.create(donor=self.h1, campaign=self.campaign)
+        d1 = Donation.objects.create(donor=self.h1)
         Payment.objects.create(donation=d1, amount='5', stripe_charge_id='a1')
         self.h2 = DjangoHero.objects.create(**kwargs)
-        d2 = Donation.objects.create(donor=self.h2, campaign=self.campaign)
+        d2 = Donation.objects.create(donor=self.h2)
         Payment.objects.create(donation=d2, amount='15', stripe_charge_id='a2')
         self.h3 = DjangoHero.objects.create(**kwargs)
-        d3 = Donation.objects.create(donor=self.h3, campaign=self.campaign)
+        d3 = Donation.objects.create(donor=self.h3)
         Payment.objects.create(donation=d3, amount='10', stripe_charge_id='a3')
         self.today = date.today()
 
@@ -297,7 +287,6 @@ class TestPaymentForm(TestCase):
         charge_create.return_value.id = 'xxxx'
         form = PaymentForm(data={
             'amount': 100,
-            'campaign': None,
             'stripe_token': 'xxxx',
             'interval': 'onetime',
             'receipt_email': 'django@example.com',
@@ -317,7 +306,6 @@ class TestPaymentForm(TestCase):
         )
         form = PaymentForm(data={
             'amount': 100,
-            'campaign': None,
             'stripe_token': 'xxxx',
             'interval': 'onetime',
             'receipt_email': 'django@example.com',
@@ -334,7 +322,6 @@ class TestPaymentForm(TestCase):
         customer_create.side_effect = ValueError("Something is wrong")
         form = PaymentForm(data={
             'amount': 100,
-            'campaign': None,
             'stripe_token': 'xxxx',
             'interval': 'onetime',
             'receipt_email': 'django@example.com',
@@ -360,7 +347,6 @@ class TestThankYou(TestCase):
             name='Under Dog',
         )
         self.donation = Donation.objects.create(
-            campaign=self.campaign,
             donor=self.hero,
             stripe_customer_id='cu_123',
             receipt_email='django@example.com',
@@ -392,12 +378,10 @@ class TestThankYou(TestCase):
         self.assertEqual(customer.email, self.hero.email)
         customer.save.assert_called_once_with()
 
-    def test_create_hero_for_donation_with_campaign(self):
+    def test_create_hero_for_donation(self):
         with patch('stripe.Customer.retrieve'):
             response = self.client.post(self.url, self.hero_form_data)
-        # Redirects to the campaign's page instead
-        expected_url = reverse('fundraising:index')
-        self.assertRedirects(response, expected_url)
+        self.assertRedirects(response, reverse('fundraising:index'))
 
 
 class TestWebhooks(TestCase):

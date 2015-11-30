@@ -18,9 +18,8 @@ INTERVAL_CHOICES = (
 
 
 class DjangoHeroManager(models.Manager):
-    def for_campaign(self, campaign, hero_type=None):
+    def for_campaign(self, hero_type=None):
         donors = self.get_queryset().filter(
-            donation__campaign=campaign,
             is_visible=True,
             approved=True,
         ).annotate(donated_amount=models.Sum('donation__payment__amount'))
@@ -112,7 +111,6 @@ class Donation(FundraisingModel):
     interval = models.CharField(max_length=20, choices=INTERVAL_CHOICES, blank=True)
     subscription_amount = models.DecimalField(max_digits=9, decimal_places=2, null=True, blank=True)
     donor = models.ForeignKey(DjangoHero)
-    campaign = models.ForeignKey(Campaign, null=True, blank=True)
     stripe_subscription_id = models.CharField(max_length=100, blank=True)
     stripe_customer_id = models.CharField(max_length=100, blank=True)
     receipt_email = models.EmailField(blank=True)
@@ -138,7 +136,6 @@ class Payment(models.Model):
 
 
 class Testimonial(models.Model):
-    campaign = models.ForeignKey(Campaign, null=True)
     author = models.CharField(max_length=255)
     body = models.TextField()
     is_active = models.BooleanField(default=True)

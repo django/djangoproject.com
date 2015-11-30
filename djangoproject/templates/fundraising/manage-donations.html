@@ -23,7 +23,6 @@
     <h2>Modify your recurring donations</h2>
     <p>Update the time interval or amount of your recurring donation here:</p>
     {% for form in modify_donations_formset %}
-      <h3>{{ form.instance.campaign }}</h3>
       {% include 'fundraising/includes/_form.html' %}
       <div class="change-card-container">
         <input type="button" value="Change card details" class="change-card cta outline inline"
@@ -42,7 +41,7 @@
     <ul>
     {% for donation in recurring_donations %}
       <li>
-        Your {{ donation.interval }} recurring donation of ${{ donation.subscription_amount }} to {{ donation.campaign.name }}:
+        Your {{ donation.interval }} recurring donation of ${{ donation.subscription_amount }}:
         <a href="{% url 'fundraising:cancel-donation' hero.pk donation.pk %}">cancel this donation</a>
       </li>
     {% endfor %}

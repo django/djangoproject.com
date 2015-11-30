@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from .exceptions import DonationError
-from .models import INTERVAL_CHOICES, Campaign, DjangoHero, Donation
+from .models import INTERVAL_CHOICES, DjangoHero, Donation
 
 
 class DjangoHeroForm(forms.ModelForm):
@@ -115,7 +115,6 @@ class DonateForm(forms.Form):
 
     amount = forms.ChoiceField(choices=AMOUNT_CHOICES)
     interval = forms.ChoiceField(choices=INTERVAL_CHOICES)
-    campaign = forms.ModelChoiceField(queryset=Campaign.objects.all(), widget=forms.HiddenInput())
 
 
 class DonationForm(forms.ModelForm):
@@ -175,19 +174,12 @@ class PaymentForm(forms.Form):
             'receipt. Leave empty if you do not want one.'
         ),
     )
-    # added to the form if given as a GET parameter
-    campaign = forms.ModelChoiceField(
-        queryset=Campaign.objects.all(),
-        widget=forms.HiddenInput(),
-        required=False,
-    )
     # added by the donation form JavaScript via Stripe.js
     stripe_token = forms.CharField(widget=forms.HiddenInput())
 
     def make_donation(self):
         receipt_email = self.cleaned_data.get('receipt_email')
         amount = self.cleaned_data['amount']
-        campaign = self.cleaned_data['campaign']
         stripe_token = self.cleaned_data['stripe_token']
         interval = self.cleaned_data['interval']
 
@@ -260,8 +252,6 @@ class PaymentForm(forms.Form):
                 'receipt_email': receipt_email,
                 'donor': hero,
             }
-            if campaign:
-                donation_params['campaign'] = campaign
             if interval != 'onetime':
                 donation_params['subscription_amount'] = amount
             donation = Donation.objects.create(**donation_params)
