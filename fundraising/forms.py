@@ -101,8 +101,6 @@ class StripeTextInput(forms.TextInput):
 
 class DonateForm(forms.Form):
     AMOUNT_CHOICES = (
-        (5, 'US $5'),
-        (25, 'US $25'),
         (50, '1 hour: US $50'),
         (100, '2 hours: US $100'),
         (200, '4 hours: US $200'),
