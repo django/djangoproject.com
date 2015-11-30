@@ -1,7 +1,7 @@
 certifi==14.05.14
 Django==1.8.7
 django-contact-form==1.0
-django-flat-theme==1.1.1
+django-flat-theme==1.1.2
 django-hosts==1.2
 django-push==0.8
 django-registration-redux==1.2
