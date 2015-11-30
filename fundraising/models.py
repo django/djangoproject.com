@@ -7,6 +7,7 @@ from django.utils import crypto, timezone
 from django_hosts.resolvers import reverse
 from sorl.thumbnail import ImageField, get_thumbnail
 
+GOAL_AMOUNT = Decimal("80000.00")
 DISPLAY_LOGO_AMOUNT = Decimal("200.00")
 DEFAULT_DONATION_AMOUNT = 50
 INTERVAL_CHOICES = (
@@ -89,22 +90,6 @@ class DjangoHero(FundraisingModel):
 @receiver(post_save, sender=DjangoHero)
 def create_thumbnail_on_save(sender, **kwargs):
     return kwargs['instance'].thumbnail
-
-
-class Campaign(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=100)
-    goal = models.DecimalField(max_digits=9, decimal_places=2)
-    template = models.CharField(max_length=50, default="fundraising/campaign_default.html")
-    stretch_goal = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True)
-    stretch_goal_url = models.URLField(blank=True, null=True)
-    start_date = models.DateTimeField(blank=True, null=True)
-    end_date = models.DateTimeField(blank=True, null=True)
-    is_active = models.BooleanField(default=False, help_text="Should donation form be enabled or not?")
-    is_public = models.BooleanField(default=False, help_text="Should campaign be visible at all?")
-
-    def __str__(self):
-        return self.name
 
 
 class Donation(FundraisingModel):

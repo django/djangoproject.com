@@ -14,7 +14,7 @@ from PIL import Image
 
 from .exceptions import DonationError
 from .forms import PaymentForm
-from .models import Campaign, DjangoHero, Donation, Payment
+from .models import DjangoHero, Donation, Payment
 from .templatetags.fundraising_extras import donation_form_with_heart
 
 
@@ -37,32 +37,26 @@ def _fake_random(*results):
 
 
 class TestIndex(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.campaign = Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
-
     def test_redirect(self):
         response = self.client.get(reverse('fundraising:index'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['campaign'], self.campaign)
 
 
 class TestCampaign(TestCase):
     def setUp(self):
-        self.campaign = Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
-        self.campaign_url = reverse('fundraising:index')
+        self.index_url = reverse('fundraising:index')
 
     def test_donors_count(self):
         donor = DjangoHero.objects.create()
         Donation.objects.create(donor=donor)
-        response = donation_form_with_heart({'user': None}, self.campaign)
+        response = donation_form_with_heart({'user': None})
         self.assertEqual(response['total_donors'], 1)
 
     def test_anonymous_donor(self):
         hero = DjangoHero.objects.create(
             is_visible=True, approved=True, hero_type='individual')
         Donation.objects.create(donor=hero, subscription_amount='5')
-        response = self.client.get(self.campaign_url)
+        response = self.client.get(self.index_url)
         self.assertContains(response, 'Anonymous Hero')
 
     def test_anonymous_donor_with_logo(self):
@@ -70,7 +64,7 @@ class TestCampaign(TestCase):
             is_visible=True, approved=True,
             hero_type='individual', logo='yes')  # We don't need an actual image
         Donation.objects.create(donor=hero)
-        response = self.client.get(self.campaign_url)
+        response = self.client.get(self.index_url)
         self.assertContains(response, 'Anonymous Hero')
 
     def test_submitting_donation_form_missing_token(self):
@@ -334,13 +328,6 @@ class TestPaymentForm(TestCase):
 
 class TestThankYou(TestCase):
     def setUp(self):
-        self.campaign = Campaign.objects.create(
-            name='test',
-            goal=200,
-            slug='test',
-            is_active=True,
-            is_public=True,
-        )
         self.hero = DjangoHero.objects.create(
             email='django@example.net',
             stripe_customer_id='1234',

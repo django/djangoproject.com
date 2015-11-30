@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.db.models import Sum
 from sorl.thumbnail.admin import AdminImageMixin
 
-from .models import Campaign, DjangoHero, Donation, Payment, Testimonial
+from .models import DjangoHero, Donation, Payment, Testimonial
 
 
 class DonationInline(admin.TabularInline):
@@ -64,11 +64,3 @@ class PaymentAdmin(admin.ModelAdmin):
 @admin.register(Testimonial)
 class Testimonial(admin.ModelAdmin):
     pass
-
-
-@admin.register(Campaign)
-class Campaign(admin.ModelAdmin):
-    list_display = ['name', 'goal', 'template', 'stretch_goal',
-                    'start_date', 'end_date', 'is_active', 'is_public']
-    list_filter = ['is_active', 'is_public']
-    prepopulated_fields = {'slug': ('name',)}
