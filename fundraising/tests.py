@@ -39,23 +39,18 @@ def _fake_random(*results):
 class TestIndex(TestCase):
     @classmethod
     def setUpTestData(cls):
-        Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
+        cls.campaign = Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
 
     def test_redirect(self):
         response = self.client.get(reverse('fundraising:index'))
-        self.assertEqual(response.status_code, 302)
-
-    def test_index(self):
-        Campaign.objects.create(name='test2', goal=200, slug='test2', is_active=True, is_public=True)
-        response = self.client.get(reverse('fundraising:index'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.context['campaigns']), 2)
+        self.assertEqual(response.context['campaign'], self.campaign)
 
 
 class TestCampaign(TestCase):
     def setUp(self):
         self.campaign = Campaign.objects.create(name='test', goal=200, slug='test', is_active=True, is_public=True)
-        self.campaign_url = reverse('fundraising:campaign', args=[self.campaign.slug])
+        self.campaign_url = reverse('fundraising:index')
 
     def test_donors_count(self):
         donor = DjangoHero.objects.create()
@@ -352,12 +347,20 @@ class TestPaymentForm(TestCase):
 
 class TestThankYou(TestCase):
     def setUp(self):
+        self.campaign = Campaign.objects.create(
+            name='test',
+            goal=200,
+            slug='test',
+            is_active=True,
+            is_public=True,
+        )
         self.hero = DjangoHero.objects.create(
             email='django@example.net',
             stripe_customer_id='1234',
             name='Under Dog',
         )
         self.donation = Donation.objects.create(
+            campaign=self.campaign,
             donor=self.hero,
             stripe_customer_id='cu_123',
             receipt_email='django@example.com',
@@ -390,20 +393,10 @@ class TestThankYou(TestCase):
         customer.save.assert_called_once_with()
 
     def test_create_hero_for_donation_with_campaign(self):
-        campaign = Campaign.objects.create(
-            name='test',
-            goal=200,
-            slug='test',
-            is_active=True,
-            is_public=True,
-        )
-        self.donation.campaign = campaign
-        self.donation.save()
-
         with patch('stripe.Customer.retrieve'):
             response = self.client.post(self.url, self.hero_form_data)
         # Redirects to the campaign's page instead
-        expected_url = reverse('fundraising:campaign', args=[campaign.slug])
+        expected_url = reverse('fundraising:index')
         self.assertRedirects(response, expected_url)
 
 
