@@ -8,6 +8,7 @@ from django_hosts.resolvers import reverse
 from sorl.thumbnail import ImageField, get_thumbnail
 
 DISPLAY_LOGO_AMOUNT = Decimal("200.00")
+RECURRING_DISPLAY_LOGO_AMOUNT = Decimal("50.00")
 DEFAULT_DONATION_AMOUNT = 50
 INTERVAL_CHOICES = (
     ('monthly', 'Monthly donation'),
@@ -19,10 +20,11 @@ INTERVAL_CHOICES = (
 
 class DjangoHeroManager(models.Manager):
     def for_campaign(self, campaign, hero_type=None):
+        options = {'donation__campaign': campaign} if campaign else {'donation__campaign__isnull': True}
         donors = self.get_queryset().filter(
-            donation__campaign=campaign,
             is_visible=True,
             approved=True,
+            **options
         ).annotate(donated_amount=models.Sum('donation__payment__amount'))
 
         if hero_type:

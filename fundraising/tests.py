@@ -60,7 +60,7 @@ class TestCampaign(TestCase):
     def test_donors_count(self):
         donor = DjangoHero.objects.create()
         Donation.objects.create(campaign=self.campaign, donor=donor)
-        response = donation_form_with_heart({'user': None}, self.campaign)
+        response = donation_form_with_heart({'user': None, 'display_logo_amount': None}, self.campaign)
         self.assertEqual(response['total_donors'], 1)
 
     def test_anonymous_donor(self):

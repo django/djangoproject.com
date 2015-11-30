@@ -118,6 +118,22 @@ class DonateForm(forms.Form):
     campaign = forms.ModelChoiceField(queryset=Campaign.objects.all(), widget=forms.HiddenInput())
 
 
+class RecurringDonateForm(DonateForm):
+    AMOUNT_CHOICES = (
+        (5, 'US $5'),
+        (25, 'US $25'),
+        (50, 'US $50'),
+        (100, 'US $100'),
+        (200, 'US $200'),
+        ('custom', 'Other amount'),
+    )
+    AMOUNT_VALUES = dict(AMOUNT_CHOICES).keys()
+
+    amount = forms.ChoiceField(choices=AMOUNT_CHOICES)
+    # Monthly donations only
+    interval = forms.ChoiceField(choices=INTERVAL_CHOICES[:1])
+
+
 class DonationForm(forms.ModelForm):
     subscription_amount = forms.DecimalField(max_digits=9, decimal_places=2, required=True)
     # here we're removing "onetime" option from interval choices:

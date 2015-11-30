@@ -5,10 +5,8 @@ from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import floatformat
 
-from fundraising.forms import DonateForm
-from fundraising.models import (
-    DEFAULT_DONATION_AMOUNT, DISPLAY_LOGO_AMOUNT, DjangoHero, Donation,
-)
+from fundraising.forms import DonateForm, RecurringDonateForm
+from fundraising.models import DEFAULT_DONATION_AMOUNT, DjangoHero, Donation
 
 register = template.Library()
 
@@ -37,7 +35,6 @@ def donation_snippet():
 
 @register.inclusion_tag('fundraising/includes/donation_form_with_heart.html', takes_context=True)
 def donation_form_with_heart(context, campaign):
-    user = context['user']
     donated_amount = Donation.objects.filter(campaign=campaign).aggregate(models.Sum('payment__amount'))
     total_donors = DjangoHero.objects.filter(donation__campaign=campaign).count()
     form = DonateForm(initial={
@@ -50,17 +47,47 @@ def donation_form_with_heart(context, campaign):
         'donated_amount': donated_amount['payment__amount__sum'] or 0,
         'total_donors': total_donors,
         'form': form,
-        'display_logo_amount': DISPLAY_LOGO_AMOUNT,
+        'display_logo_amount': context['display_logo_amount'],
         'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
-        'user': user,
+        'user': context['user'],
     }
 
 
-@register.inclusion_tag('fundraising/includes/display_django_heros.html')
-def display_django_heros(campaign):
+@register.inclusion_tag('fundraising/includes/recurring_donation_form.html', takes_context=True)
+def recurring_donation_form(context):
+    donated_amount = Donation.objects.filter(campaign__isnull=True).aggregate(models.Sum('payment__amount'))
+    total_donors = Donation.objects.filter(campaign__isnull=True).count()
+    form = RecurringDonateForm(initial={
+        'amount': DEFAULT_DONATION_AMOUNT,
+    })
+
+    return {
+        'donated_amount': donated_amount['payment__amount__sum'] or 0,
+        'total_donors': total_donors,
+        'form': form,
+        'display_logo_amount': context['display_logo_amount'],
+        'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
+        'user': context['user'],
+    }
+
+
+@register.inclusion_tag('fundraising/includes/display_django_heros.html', takes_context=True)
+def display_django_heros(context, campaign):
     individuals = DjangoHero.objects.for_campaign(campaign, hero_type='individual')
     organizations = DjangoHero.objects.for_campaign(campaign, hero_type='organization')
     return {
+        'display_logo_amount': context['display_logo_amount'],
+        'individuals': individuals,
+        'organizations': organizations,
+    }
+
+
+@register.inclusion_tag('fundraising/includes/display_django_heros.html', takes_context=True)
+def display_recurring_django_heros(context):
+    individuals = DjangoHero.objects.for_campaign(None, hero_type='individual')
+    organizations = DjangoHero.objects.for_campaign(None, hero_type='organization')
+    return {
+        'display_logo_amount': context['display_logo_amount'],
         'individuals': individuals,
         'organizations': organizations,
     }
