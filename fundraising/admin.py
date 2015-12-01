@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.db.models import Sum
 from sorl.thumbnail.admin import AdminImageMixin
 
+from .admin_views import download_donor_report
 from .models import DjangoHero, Donation, Payment, Testimonial
 
 
@@ -13,6 +14,7 @@ class DonationInline(admin.TabularInline):
 
 @admin.register(DjangoHero)
 class DjangoHeroAdmin(AdminImageMixin, admin.ModelAdmin):
+    actions = [download_donor_report]
     inlines = [DonationInline]
     list_filter = ['approved', 'created', 'modified', 'hero_type', 'is_visible', 'is_subscribed']
     list_display = ['id', 'name', 'email', 'created', 'modified', 'approved', 'hero_type']
