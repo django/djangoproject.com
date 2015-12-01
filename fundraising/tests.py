@@ -1,6 +1,7 @@
 import json
 import os
-from datetime import date
+from datetime import date, timedelta
+from decimal import Decimal
 from functools import partial
 from unittest.mock import patch
 
@@ -14,7 +15,7 @@ from PIL import Image
 
 from .exceptions import DonationError
 from .forms import PaymentForm
-from .models import DjangoHero, Donation, Payment
+from .models import GOAL_START_DATE, DjangoHero, Donation, Payment
 from .templatetags.fundraising_extras import donation_form_with_heart
 
 
@@ -47,10 +48,19 @@ class TestCampaign(TestCase):
         self.index_url = reverse('fundraising:index')
 
     def test_donors_count(self):
-        donor = DjangoHero.objects.create()
-        Donation.objects.create(donor=donor)
+        # Donor with a Payment after GOAL_START_DATE
+        donor1 = DjangoHero.objects.create()
+        donation1 = donor1.donation_set.create()
+        donation1.payment_set.create(amount=1, stripe_charge_id='a')
+        donation1.payment_set.create(amount=2, stripe_charge_id='b')
+        # Donor with a Payment before GOAL_START_DATE
+        past_donor = DjangoHero.objects.create()
+        past_donation = past_donor.donation_set.create()
+        past_payment = past_donation.payment_set.create(amount=4, stripe_charge_id='c')
+        Payment.objects.filter(pk=past_payment.pk).update(date=GOAL_START_DATE - timedelta(days=1))
         response = donation_form_with_heart({'user': None})
         self.assertEqual(response['total_donors'], 1)
+        self.assertEqual(response['donated_amount'], Decimal('3.00'))
 
     def test_anonymous_donor(self):
         hero = DjangoHero.objects.create(

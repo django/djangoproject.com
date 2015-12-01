@@ -1,3 +1,4 @@
+import datetime
 from decimal import Decimal
 
 from django.db import models
@@ -8,6 +9,7 @@ from django_hosts.resolvers import reverse
 from sorl.thumbnail import ImageField, get_thumbnail
 
 GOAL_AMOUNT = Decimal("80000.00")
+GOAL_START_DATE = datetime.date(2015, 1, 1)
 DISPLAY_LOGO_AMOUNT = Decimal("200.00")
 DEFAULT_DONATION_AMOUNT = 50
 INTERVAL_CHOICES = (
