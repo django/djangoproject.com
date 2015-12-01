@@ -11,9 +11,8 @@
     <div class="small-cta">
       <ul class="list-links-small">
         <li><a href="{% url "fundraising:index" %}">
-          {% firstof donation.name "Someone" %} donated
-          for the Django Fellowship program to support Django development.
-          Donate today!
+          {{ donation.name }} donated to the Django Software Foundation to
+          support Django development. Donate today!
         </a></li>
       </ul>
     </div>
