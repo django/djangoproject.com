@@ -2,6 +2,13 @@
 {% load staticfiles %}
 
 {% block content %}
+{% if messages %}
+  {% for message in messages %}
+  <p>{{ message }}</p>
+  {% endfor %}
+  <hr>
+{% endif %}
+
 <h1>Manage your donations to the Django Software Foundation</h1>
 <p>Your support is <strong>invaluable</strong> to continue the rapid development
   of Django and helps the <strong>Django Fellowship</strong> program in particular.
@@ -34,20 +41,25 @@
     <p class="submit">
       <input type="submit" class="cta" value="Save &rarr;">
     </p>
-
+</form>
     <hr />
     <h2>Cancel your recurring donations</h2>
     <p>You can cancel your recurring donation to the Django Software Foundation anytime.</p>
     <ul>
     {% for donation in recurring_donations %}
       <li>
-        Your {{ donation.interval }} recurring donation of ${{ donation.subscription_amount }}:
-        <a href="{% url 'fundraising:cancel-donation' hero.pk donation.pk %}">cancel this donation</a>
+        Your {{ donation.interval }} recurring donation of ${{ donation.subscription_amount }}.
+        <form method="POST" action="{% url 'fundraising:cancel-donation' hero.pk %}">
+          {% csrf_token %}
+          <input name="donation" type="hidden" value="{{ donation.pk }}">
+          <input type="submit" value="cancel this donation">
+        </form>
       </li>
     {% endfor %}
     </ul>
-  {% endif %}
+  {% else %}
 </form>
+  {% endif %}
 {% endblock %}
 
 {% block content-extra %}{% endblock %}
