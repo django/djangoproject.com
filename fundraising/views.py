@@ -125,10 +125,12 @@ def update_card(request):
     return JsonResponse(data)
 
 
-def cancel_donation(request, hero, donation):
+@require_POST
+def cancel_donation(request, hero):
+    donation_id = request.POST.get('donation')
     hero = get_object_or_404(DjangoHero, pk=hero)
     donations = hero.donation_set.exclude(stripe_subscription_id='')
-    donation = get_object_or_404(donations, pk=donation)
+    donation = get_object_or_404(donations, pk=donation_id)
 
     customer = stripe.Customer.retrieve(donation.stripe_customer_id)
     customer.subscriptions.retrieve(donation.stripe_subscription_id).delete()
@@ -136,6 +138,7 @@ def cancel_donation(request, hero, donation):
     donation.stripe_subscription_id = ''
     donation.save()
 
+    messages.success(request, "Your donation has been canceled.")
     return redirect('fundraising:manage-donations', hero=hero.pk)
 
 

@@ -212,11 +212,8 @@ class TestCampaign(TestCase):
             donor=donor,
             stripe_subscription_id='12345', stripe_customer_id='54321',
         )
-        url = reverse(
-            'fundraising:cancel-donation',
-            kwargs={'hero': donor.id, 'donation': donation.id}
-        )
-        response = self.client.get(url)
+        url = reverse('fundraising:cancel-donation', kwargs={'hero': donor.id})
+        response = self.client.post(url, {'donation': donation.id})
         self.assertRedirects(response, reverse('fundraising:manage-donations',
                                                kwargs={'hero': donor.id}))
         retrieve_customer.assert_called_once_with('54321')
@@ -227,11 +224,8 @@ class TestCampaign(TestCase):
     def test_cancel_already_cancelled_donation(self, retrieve_customer):
         donor = DjangoHero.objects.create()
         donation = Donation.objects.create(donor=donor, stripe_subscription_id='')
-        url = reverse(
-            'fundraising:cancel-donation',
-            kwargs={'hero': donor.id, 'donation': donation.id}
-        )
-        response = self.client.get(url)
+        url = reverse('fundraising:cancel-donation', kwargs={'hero': donor.id})
+        response = self.client.post(url, {'donation': donation.id})
         self.assertEquals(404, response.status_code)
         self.assertFalse(retrieve_customer.called)
 
