@@ -8,8 +8,8 @@ from django.utils import crypto, timezone
 from django_hosts.resolvers import reverse
 from sorl.thumbnail import ImageField, get_thumbnail
 
-GOAL_AMOUNT = Decimal("80000.00")
-GOAL_START_DATE = datetime.date(2015, 1, 1)
+GOAL_AMOUNT = Decimal("200000.00")
+GOAL_START_DATE = datetime.date(2015, 12, 17)
 DISPLAY_DONOR_DAYS = 365
 DEFAULT_DONATION_AMOUNT = 50
 LEADERSHIP_LEVEL_AMOUNT = Decimal("1000.00")
