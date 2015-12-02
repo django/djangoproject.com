@@ -24,7 +24,8 @@
   <p class="submit">
     <input type="submit" class="cta" value="Save &rarr;">
   </p>
-
+  {# Always include to avoid "Management form has been tampered with" if no recurring donations exist #}
+  {{ modify_donations_formset.management_form }}
   {% if recurring_donations %}
     <hr />
     <h2>Modify your recurring donations</h2>
@@ -37,7 +38,6 @@
         <span class="change-card-result"></span>
       </div>
     {% endfor %}
-    {{ modify_donations_formset.management_form }}
     <p class="submit">
       <input type="submit" class="cta" value="Save &rarr;">
     </p>
