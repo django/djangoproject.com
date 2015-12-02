@@ -26,6 +26,14 @@ class DjangoHeroForm(forms.ModelForm):
             },
         )
     )
+    location = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Where are you located? (optional; will not be displayd)',
+            },
+        )
+    )
     url = forms.CharField(
         required=False,
         widget=forms.TextInput(
@@ -59,7 +67,8 @@ class DjangoHeroForm(forms.ModelForm):
     class Meta:
         model = DjangoHero
         fields = (
-            'hero_type', 'name', 'url', 'logo', 'is_visible', 'is_subscribed',
+            'hero_type', 'name', 'location', 'url', 'logo', 'is_visible',
+            'is_subscribed',
         )
 
     def __init__(self, *args, **kwargs):

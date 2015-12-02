@@ -17,6 +17,7 @@ def download_donor_report(modeladmin, request, queryset):
         'gift amount (US$)',
         'interval',
         'recurring active?',
+        'location',
     ])
     for donor in queryset:
         last_payment = Payment.objects.filter(donation__donor=donor).select_related('donation').latest('date')
@@ -38,5 +39,6 @@ def download_donor_report(modeladmin, request, queryset):
             last_gift_amount,
             last_gift.get_interval_display().replace('donation', ''),
             'Yes' if last_gift.stripe_subscription_id else '',
+            donor.location,
         ])
     return response
