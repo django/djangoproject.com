@@ -350,6 +350,7 @@ class TestThankYou(TestCase):
         self.hero_form_data = {
             'hero_type': DjangoHero.HERO_TYPE_CHOICES[1][0],
             'name': 'Django Inc',
+            'location': 'Lawrence, KS',
         }
 
     def test_template(self):
@@ -362,6 +363,7 @@ class TestThankYou(TestCase):
         self.assertRedirects(response, reverse('fundraising:index'))
         self.hero.refresh_from_db()
         self.assertEqual(self.hero.name, self.hero_form_data['name'])
+        self.assertEqual(self.hero.location, self.hero_form_data['location'])
 
         retrieve_customer.assert_called_once_with(self.hero.stripe_customer_id)
         customer = retrieve_customer.return_value

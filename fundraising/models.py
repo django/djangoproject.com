@@ -54,6 +54,7 @@ class DjangoHero(FundraisingModel):
     logo = ImageField(upload_to="fundraising/logos/", blank=True)
     url = models.URLField(blank=True, verbose_name='URL')
     name = models.CharField(max_length=100, blank=True)
+    location = models.CharField(max_length=255, blank=True)
     HERO_TYPE_CHOICES = (
         ('individual', 'Individual'),
         ('organization', 'Organization'),
