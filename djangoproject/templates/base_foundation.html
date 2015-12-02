@@ -22,16 +22,5 @@
     <li><a href="{% url 'contact_foundation' %}">Contact us</a></li>
     <li><a href="/foundation/cla/">Contributor license agreements</a></li>
   </ul>
-  <h2>Support Django</h2>
-  <p>Make a donation to the DSF:</p>
-  <form action="{% url "fundraising:donate" %}" method="get" class="donate form-input">
-    <label for="amount">$</label>
-    <input type="text" name="amount" id="amount" value="25.00">
-    <button type="submit" title="Donate">
-      <i class="icon icon-heart"></i>
-      <span class="visuallyhidden">Donate</span>
-    </button>
-  </form>
-  <p><a href="/foundation/donate/">More information about donations</a></p>
 </div>
 {% endblock %}
