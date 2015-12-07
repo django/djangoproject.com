@@ -10,6 +10,7 @@ from sorl.thumbnail import ImageField, get_thumbnail
 
 GOAL_AMOUNT = Decimal("80000.00")
 GOAL_START_DATE = datetime.date(2015, 1, 1)
+DISPLAY_DONOR_DAYS = 365
 DEFAULT_DONATION_AMOUNT = 50
 LEADERSHIP_LEVEL_AMOUNT = Decimal("1000.00")
 INTERVAL_CHOICES = (
@@ -25,6 +26,7 @@ class DjangoHeroManager(models.Manager):
         donors = self.get_queryset().filter(
             is_visible=True,
             approved=True,
+            donation__payment__date__gt=datetime.date.today() - datetime.timedelta(days=DISPLAY_DONOR_DAYS),
         ).annotate(donated_amount=models.Sum('donation__payment__amount'))
         return donors.order_by('-donated_amount', 'name')
 
