@@ -10,8 +10,8 @@ from sorl.thumbnail import ImageField, get_thumbnail
 
 GOAL_AMOUNT = Decimal("80000.00")
 GOAL_START_DATE = datetime.date(2015, 1, 1)
-DISPLAY_LOGO_AMOUNT = Decimal("200.00")
 DEFAULT_DONATION_AMOUNT = 50
+LEADERSHIP_LEVEL_AMOUNT = Decimal("1000.00")
 INTERVAL_CHOICES = (
     ('monthly', 'Monthly donation'),
     ('quarterly', 'Quarterly donation'),
@@ -21,15 +21,11 @@ INTERVAL_CHOICES = (
 
 
 class DjangoHeroManager(models.Manager):
-    def for_campaign(self, hero_type=None):
+    def for_public_display(self):
         donors = self.get_queryset().filter(
             is_visible=True,
             approved=True,
         ).annotate(donated_amount=models.Sum('donation__payment__amount'))
-
-        if hero_type:
-            donors = donors.filter(hero_type=hero_type)
-
         return donors.order_by('-donated_amount', 'name')
 
 

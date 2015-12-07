@@ -3040,14 +3040,11 @@ form .footnote {
 	.heros {
 		clear: both;
 
-		.individuals, .organizations {
-			width: 50%;
-		}
-		.organizations {
-			float: left;
+		h3 {
+			text-align: center;
 		}
 		.hero {
-			width: 50%;
+			width: 25%;
 			position: relative;
 			height: auto;
 			div {
@@ -3072,7 +3069,6 @@ form .footnote {
 		div {
 			float: left;
 			text-align: center;
-			margin: 15px 0;
 			img {
 				max-width: 90%;
 				max-height: 170px;
