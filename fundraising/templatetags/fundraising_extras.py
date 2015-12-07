@@ -7,8 +7,8 @@ from django.template.defaultfilters import floatformat
 
 from fundraising.forms import DonateForm
 from fundraising.models import (
-    DEFAULT_DONATION_AMOUNT, DISPLAY_LOGO_AMOUNT, GOAL_AMOUNT, GOAL_START_DATE,
-    DjangoHero, Payment,
+    DEFAULT_DONATION_AMOUNT, GOAL_AMOUNT, GOAL_START_DATE,
+    LEADERSHIP_LEVEL_AMOUNT, DjangoHero, Payment,
 )
 
 register = template.Library()
@@ -52,7 +52,7 @@ def donation_form_with_heart(context):
         'donated_amount': donated_amount['amount__sum'] or 0,
         'total_donors': total_donors,
         'form': form,
-        'display_logo_amount': DISPLAY_LOGO_AMOUNT,
+        'display_logo_amount': LEADERSHIP_LEVEL_AMOUNT,
         'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
         'user': user,
     }
@@ -60,9 +60,13 @@ def donation_form_with_heart(context):
 
 @register.inclusion_tag('fundraising/includes/display_django_heros.html')
 def display_django_heros():
-    individuals = DjangoHero.objects.for_campaign(hero_type='individual')
-    organizations = DjangoHero.objects.for_campaign(hero_type='organization')
+    donors = DjangoHero.objects.for_public_display()
+    i = 0
+    for i, donor in enumerate(donors):
+        if donor.donated_amount is not None and donor.donated_amount < LEADERSHIP_LEVEL_AMOUNT:
+            break
     return {
-        'individuals': individuals,
-        'organizations': organizations,
+        'leaders': donors[:i],
+        'heros': donors[i:],
+        'display_logo_amount': LEADERSHIP_LEVEL_AMOUNT,
     }

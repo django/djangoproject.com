@@ -1,12 +1,34 @@
+{% load static humanize thumbnail %}
 <div class="heros">
-  <div class="organizations">
-    {% for donor in organizations %}
-      {% include 'fundraising/includes/django_hero.html' %}
-    {% endfor %}
+  <h3>Leaders ($1,000+)</h3>
+  <div>
+  {% for donor in leaders %}
+    <div class="hero">
+      <div class="hero-logo">
+        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
+        <img src="{% static 'img/fundraising-heart.png' %}"
+          data-src="{% if donor.logo %}{{ donor.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+          data-src-retina="{% if donor.logo %}{{ donor.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+          alt="{{ donor.name }}" />
+        {% if donor.url %}</a>{% endif %}
+      </div>
+      <div class="hero-name">
+        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
+        {{ donor.name_with_fallback }}
+        {% endspaceless %}{% if donor.url %}</a>{% endif %}
+      </div>
+    </div>
+  {% endfor %}
   </div>
-  <div class="individuals">
-    {% for donor in individuals %}
-      {% include 'fundraising/includes/django_hero.html' %}
-    {% endfor %}
+
+  <h3>Heros</h3>
+  <div>
+  {% for donor in heros %}
+    <div class="no-logo-hero">
+      {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
+        <span>{{ donor.name_with_fallback }}</span>
+      {% endspaceless %}{% if donor.url %}</a>{% endif %}
+    </div>
+  {% endfor %}
   </div>
 </div>
