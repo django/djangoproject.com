@@ -114,6 +114,7 @@ define([
 			this.setAttr('width', this.size);
 			this.setAttr('height', this.size);
 			this.setAttr('fill', opts.color);
+			this.element.style.animationDelay = 2 * Math.random() + "s";
 		},
 		setAttr: function(name, value) {
 			this.element.setAttributeNS(null, name, value);
