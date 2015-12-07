@@ -26,7 +26,8 @@ class TestCampaign(TestCase):
     def test_anonymous_donor(self):
         hero = DjangoHero.objects.create(
             is_visible=True, approved=True, hero_type='individual')
-        Donation.objects.create(donor=hero, subscription_amount='5')
+        donation = hero.donation_set.create(subscription_amount='5')
+        donation.payment_set.create(amount='5')
         response = self.client.get(self.index_url)
         self.assertContains(response, 'Anonymous Hero')
 
@@ -34,7 +35,8 @@ class TestCampaign(TestCase):
         hero = DjangoHero.objects.create(
             is_visible=True, approved=True,
             hero_type='individual', logo='yes')  # We don't need an actual image
-        Donation.objects.create(donor=hero)
+        donation = hero.donation_set.create(subscription_amount='5')
+        donation.payment_set.create(amount='5')
         response = self.client.get(self.index_url)
         self.assertContains(response, 'Anonymous Hero')
 
