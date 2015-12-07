@@ -1,8 +1,4 @@
 import json
-import os
-from datetime import date, timedelta
-from decimal import Decimal
-from functools import partial
 from unittest.mock import patch
 
 import stripe
@@ -11,30 +7,10 @@ from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django_hosts.resolvers import reverse as django_hosts_reverse
-from PIL import Image
 
-from .exceptions import DonationError
-from .forms import PaymentForm
-from .models import GOAL_START_DATE, DjangoHero, Donation, Payment
-from .templatetags.fundraising_extras import donation_form_with_heart
-
-
-def _fake_random(*results):
-    """
-    Return a callable that generates the given results when called.
-    Useful for mocking random.random().
-
-    Example:
-
-    >>> r = _fake_random(1, 2, 3)
-    >>> r()
-    1
-    >>> r()
-    2
-    >>> r()
-    3
-    """
-    return partial(next, iter(results))
+from ..exceptions import DonationError
+from ..forms import PaymentForm
+from ..models import DjangoHero, Donation, Payment
 
 
 class TestIndex(TestCase):
@@ -46,21 +22,6 @@ class TestIndex(TestCase):
 class TestCampaign(TestCase):
     def setUp(self):
         self.index_url = reverse('fundraising:index')
-
-    def test_donors_count(self):
-        # Donor with a Payment after GOAL_START_DATE
-        donor1 = DjangoHero.objects.create()
-        donation1 = donor1.donation_set.create()
-        donation1.payment_set.create(amount=1, stripe_charge_id='a')
-        donation1.payment_set.create(amount=2, stripe_charge_id='b')
-        # Donor with a Payment before GOAL_START_DATE
-        past_donor = DjangoHero.objects.create()
-        past_donation = past_donor.donation_set.create()
-        past_payment = past_donation.payment_set.create(amount=4, stripe_charge_id='c')
-        Payment.objects.filter(pk=past_payment.pk).update(date=GOAL_START_DATE - timedelta(days=1))
-        response = donation_form_with_heart({'user': None})
-        self.assertEqual(response['total_donors'], 1)
-        self.assertEqual(response['donated_amount'], Decimal('3.00'))
 
     def test_anonymous_donor(self):
         hero = DjangoHero.objects.create(
@@ -228,106 +189,6 @@ class TestCampaign(TestCase):
         response = self.client.post(url, {'donation': donation.id})
         self.assertEquals(404, response.status_code)
         self.assertFalse(retrieve_customer.called)
-
-
-class TestDjangoHero(TestCase):
-    def setUp(self):
-        kwargs = {
-            'approved': True,
-            'is_visible': True,
-        }
-        self.h1 = DjangoHero.objects.create(**kwargs)
-        d1 = Donation.objects.create(donor=self.h1)
-        Payment.objects.create(donation=d1, amount='5', stripe_charge_id='a1')
-        self.h2 = DjangoHero.objects.create(**kwargs)
-        d2 = Donation.objects.create(donor=self.h2)
-        Payment.objects.create(donation=d2, amount='15', stripe_charge_id='a2')
-        self.h3 = DjangoHero.objects.create(**kwargs)
-        d3 = Donation.objects.create(donor=self.h3)
-        Payment.objects.create(donation=d3, amount='10', stripe_charge_id='a3')
-        self.today = date.today()
-
-    def test_thumbnail(self):
-        try:
-            os.makedirs(os.path.join(settings.MEDIA_ROOT, 'fundraising/logos/'))
-        except OSError:  # directory may already exist
-            pass
-        image_path = os.path.join(settings.MEDIA_ROOT, 'fundraising/logos/test_logo.jpg')
-        image = Image.new('L', (500, 500))
-        image.save(image_path)
-        self.h1.logo = image_path
-        self.h1.save()
-        thumbnail = self.h1.thumbnail
-        self.assertEqual(thumbnail.x, 170)
-        self.assertEqual(thumbnail.y, 170)
-        os.remove(image_path)
-        self.assertTrue(
-            os.path.exists(
-                thumbnail.url.replace(settings.MEDIA_URL, '{}/'.format(settings.MEDIA_ROOT))
-            )
-        )
-
-    def test_thumbnail_no_logo(self):
-        self.assertIsNone(self.h2.thumbnail)
-
-    def test_name_with_fallback(self):
-        hero = DjangoHero()
-        self.assertEqual(hero.name_with_fallback, 'Anonymous Hero')
-        hero.name = 'Batistek'
-        self.assertEqual(hero.name_with_fallback, 'Batistek')
-
-
-class TestPaymentForm(TestCase):
-    @patch('stripe.Customer.create')
-    @patch('stripe.Charge.create')
-    def test_make_donation(self, charge_create, customer_create):
-        customer_create.return_value.id = 'xxxx'
-        charge_create.return_value.id = 'xxxx'
-        form = PaymentForm(data={
-            'amount': 100,
-            'stripe_token': 'xxxx',
-            'interval': 'onetime',
-            'receipt_email': 'django@example.com',
-        })
-        self.assertTrue(form.is_valid())
-        donation = form.make_donation()
-        self.assertEqual(100, donation.payment_set.first().amount)
-
-    @patch('stripe.Customer.retrieve')
-    @patch('stripe.Charge.create')
-    def test_make_donation_with_existing_hero(self, charge_create, customer_retrieve):
-        charge_create.return_value.id = 'XYZ'
-        customer_retrieve.return_value.id = '12345'
-        hero = DjangoHero.objects.create(
-            email='django@example.com',
-            stripe_customer_id=customer_retrieve.return_value.id,
-        )
-        form = PaymentForm(data={
-            'amount': 100,
-            'stripe_token': 'xxxx',
-            'interval': 'onetime',
-            'receipt_email': 'django@example.com',
-        })
-        self.assertTrue(form.is_valid())
-        donation = form.make_donation()
-        self.assertEqual(100, donation.payment_set.first().amount)
-        self.assertEqual(hero, donation.donor)
-        self.assertEqual(hero.stripe_customer_id, donation.stripe_customer_id)
-
-    @patch('stripe.Customer.create')
-    @patch('stripe.Charge.create')
-    def test_make_donation_exception(self, charge_create, customer_create):
-        customer_create.side_effect = ValueError("Something is wrong")
-        form = PaymentForm(data={
-            'amount': 100,
-            'stripe_token': 'xxxx',
-            'interval': 'onetime',
-            'receipt_email': 'django@example.com',
-        })
-        self.assertTrue(form.is_valid())
-        with self.assertRaises(ValueError):
-            donation = form.make_donation()
-            self.assertIsNone(donation)
 
 
 class TestThankYou(TestCase):
