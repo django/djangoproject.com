@@ -5,7 +5,7 @@ from django.conf import settings
 from django.test import TestCase
 from PIL import Image
 
-from ..models import DjangoHero
+from ..models import DjangoHero, Donation
 
 
 class TestDjangoHero(TestCase):
@@ -53,3 +53,9 @@ class TestDjangoHero(TestCase):
         self.assertEqual(hero.name_with_fallback, 'Anonymous Hero')
         hero.name = 'Batistek'
         self.assertEqual(hero.name_with_fallback, 'Batistek')
+
+
+class TestDonation(TestCase):
+    def test_is_active(self):
+        self.assertFalse(Donation().is_active())
+        self.assertTrue(Donation(stripe_subscription_id='abc').is_active())
