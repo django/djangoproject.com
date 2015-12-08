@@ -109,6 +109,10 @@ class Donation(FundraisingModel):
     def get_absolute_url(self):
         return reverse('fundraising:thank-you', kwargs={'donation': self.id})
 
+    def is_active(self):
+        return bool(self.stripe_subscription_id)
+    is_active.boolean = True
+
     def total_payments(self):
         return self.payment_set.aggregate(models.Sum('amount'))['amount__sum']
 

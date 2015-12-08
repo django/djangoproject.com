@@ -24,6 +24,7 @@ class DjangoHeroAdmin(AdminImageMixin, admin.ModelAdmin):
 
 
 class PaymentInline(admin.TabularInline):
+    readonly_fields = ['date']
     extra = 0
     model = Payment
 
@@ -31,8 +32,8 @@ class PaymentInline(admin.TabularInline):
 @admin.register(Donation)
 class Donation(admin.ModelAdmin):
     raw_id_fields = ['donor']
-    list_display = ['id', 'amount', 'donor', 'created', 'modified']
-    list_filter = ['created', 'modified']
+    list_display = ['id', 'amount', 'donor', 'created', 'modified', 'is_active']
+    list_filter = ['created', 'modified', 'interval']
     ordering = ['-created']
     inlines = [PaymentInline]
     search_fields = ['donor__name', 'donor__email', 'donor__stripe_customer_id']
