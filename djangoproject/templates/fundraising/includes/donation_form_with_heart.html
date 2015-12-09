@@ -1,6 +1,6 @@
 {% load static fundraising_extras humanize %}
 
-{% with goal_percent=80 %}
+{% with goal_percent=donated_amount|as_percentage:goal_amount %}
 <div class="fundraising-index" id="donate">
 
   <div class="fundraising-heart" data-percent="{{ goal_percent }}">
