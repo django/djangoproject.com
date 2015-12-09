@@ -2930,10 +2930,9 @@ hr {
 		}
 		text {
 			@include font-size(120);
-			fill: #333333;
+			fill: rgba(50, 50, 50, 0.3);
 			stroke: #aaaaaa;
-			stroke-width: 3px;
-			opacity: 0.5;
+			stroke-width: 2px;
 		}
 		@include respond-min(768px) {
 			width: 55%;
