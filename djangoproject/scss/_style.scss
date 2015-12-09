@@ -2928,6 +2928,13 @@ hr {
 				}
 			}
 		}
+		text {
+			@include font-size(120);
+			fill: #333333;
+			stroke: #aaaaaa;
+			stroke-width: 3px;
+			opacity: 0.5;
+		}
 		@include respond-min(768px) {
 			width: 55%;
 			float: left;
