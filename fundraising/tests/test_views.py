@@ -90,6 +90,7 @@ class TestCampaign(TestCase):
         self.assertEqual(donations[0].subscription_amount, 100)
         self.assertEqual(donations[0].receipt_email, 'test@example.com')
         self.assertEqual(donations[0].payment_set.count(), 0)
+        customer_create.assert_called_with(email='test@example.com', card='test')
 
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
