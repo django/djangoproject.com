@@ -149,43 +149,20 @@ class DonationForm(forms.ModelForm):
 
 
 class PaymentForm(forms.Form):
-    AMOUNT_PLACEHOLDER = 'Amount in US Dollar'
     amount = forms.IntegerField(
         required=True,
         min_value=1,  # Minimum payment from Stripe API
-        widget=forms.TextInput(
-            attrs={
-                'class': 'required',
-                'placeholder': AMOUNT_PLACEHOLDER,
-                'tabindex': 1,
-            },
-        ),
-        help_text='Please enter the amount of your donation in US Dollar',
     )
     interval = forms.ChoiceField(
         required=True,
         choices=INTERVAL_CHOICES,
     )
-    receipt_email = forms.CharField(
-        required=True,
-        widget=forms.TextInput(
-            attrs={
-                'class': 'required',
-                'placeholder': 'Receipt email address (optional)',
-                'type': 'email',
-                'tabindex': 5,
-            },
-        ),
-        help_text=(
-            'We ask for your email address here to be able to send you a '
-            'receipt. Leave empty if you do not want one.'
-        ),
-    )
+    receipt_email = forms.CharField(required=True)
     # added by the donation form JavaScript via Stripe.js
     stripe_token = forms.CharField(widget=forms.HiddenInput())
 
     def make_donation(self):
-        receipt_email = self.cleaned_data.get('receipt_email')
+        receipt_email = self.cleaned_data['receipt_email']
         amount = self.cleaned_data['amount']
         stripe_token = self.cleaned_data['stripe_token']
         interval = self.cleaned_data['interval']
@@ -211,7 +188,7 @@ class PaymentForm(forms.Form):
                     amount=int(amount * 100),
                     currency='usd',
                     customer=customer.id,
-                    receipt_email=receipt_email or None,  # set to None if given an empty string
+                    receipt_email=receipt_email,
                 )
                 charge_id = charge.id
             else:
