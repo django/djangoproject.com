@@ -201,7 +201,7 @@ class PaymentForm(forms.Form):
                 customer.source = stripe_token
                 customer.save()
             else:
-                customer = stripe.Customer.create(card=stripe_token)
+                customer = stripe.Customer.create(card=stripe_token, email=receipt_email)
                 hero.stripe_customer_id = customer.id
                 hero.save()
 
