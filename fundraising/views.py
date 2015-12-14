@@ -184,8 +184,8 @@ class WebhookHandler(object):
         donation = get_object_or_404(
             Donation, stripe_subscription_id=invoice.subscription)
         amount = decimal.Decimal(invoice.total) / 100
-        Payment.objects.create(
-            donation=donation, amount=amount, stripe_charge_id=invoice.charge)
+        if invoice.charge:
+            donation.payment_set.create(amount=amount, stripe_charge_id=invoice.charge)
         return HttpResponse(status=201)
 
     def subscription_cancelled(self):
