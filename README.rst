@@ -14,6 +14,7 @@ To run locally, do the usual:
 #. Install dependencies::
 
     pip install -r requirements/dev.txt
+    npm install
 
    Alternatively use the make task::
 
@@ -207,12 +208,23 @@ Check out the ``Procfile`` file for all the process names.
 JavaScript libraries
 --------------------
 
-This project uses `Bower <http://bower.io/>`_ for managing JS library
-dependencies. See its documentation for how to use it. Here's the gist:
+This project uses `Bower <http://bower.io/>`_ to manage JavaScript libraries.
 
-To update any of the dependencies, edit the ``bower.json`` file accordingly
-and then run ``bower install`` to download the appropriate files to the
-static directory. Commit the downloaded files to git (vendoring).
+At any time, you can run it to install a new library (e.g., ``jquery-ui``)::
+
+    npm run bower install jquery-ui --save
+
+or check if there are newer versions of the libraries that we use::
+
+    npm run bower ls
+
+If you need to update an existing library, the easiest way is to change the
+version requirement in ``bower.json`` and then to run
+``npm run bower install`` again.
+
+We commit the libraries to the repository, so if you add, update, or remove a
+library from ``bower.json``, you will need to commit the changes in
+``djangoproject/static`` too.
 
 Documentation search
 --------------------
