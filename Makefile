@@ -24,6 +24,7 @@ run:
 
 install:
 	pip install -r requirements/dev.txt
+	npm install
 
 test:
 	@coverage run --source=. manage.py test -v2 $(APP_LIST)
@@ -42,4 +43,4 @@ $(JQUERY_FLOT)/jquery.flot.min.js: $(JQUERY_FLOT)
 	yuicompressor $(JQUERY_FLOT)/jquery.flot.concat.js -o $(JQUERY_FLOT)/jquery.flot.min.js
 
 $(JQUERY_FLOT)/:
-	bower install
+	npm run bower install
