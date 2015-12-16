@@ -6,7 +6,9 @@ from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
 
 from .exceptions import DonationError
-from .models import INTERVAL_CHOICES, DjangoHero, Donation
+from .models import (
+    INTERVAL_CHOICES, LEADERSHIP_LEVEL_AMOUNT, DjangoHero, Donation,
+)
 
 
 class DjangoHeroForm(forms.ModelForm):
@@ -45,8 +47,8 @@ class DjangoHeroForm(forms.ModelForm):
     logo = forms.FileField(
         required=False,
         help_text=(
-            "If you've donated at least US $200, you can submit your logo and "
-            "we will display it, too."
+            "If you've donated at least US $%d, you can submit your logo and "
+            "we will display it, too." % LEADERSHIP_LEVEL_AMOUNT
         ),
     )
     is_visible = forms.BooleanField(
