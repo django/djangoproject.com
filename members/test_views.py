@@ -64,3 +64,28 @@ class CorporateMemberListViewTests(TestCase):
         )
         response = self.client.get(self.url)
         self.assertNotContains(response, 'Corporation unapproved')
+
+
+class CorporateMemberJoinViewTests(TestCase):
+
+    def test_get(self):
+        response = self.client.get(reverse('members:corporate-members-join'))
+        self.assertContains(response, "Become a DSF corporate member")
+
+    def test_submit_success(self):
+        data = {
+            'display_name': 'Foo Widgets',
+            'billing_name': 'Foo Widgets, Inc.',
+            'logo': '',
+            'url': 'http://example.com',
+            'contact_name': 'Joe Developer',
+            'contact_email': 'joe@example.com',
+            'billing_email': '',
+            'membership_level': 2,
+            'address': 'USA',
+            'description': 'We make widgets!',
+        }
+        response = self.client.post(reverse('members:corporate-members-join'), data)
+        self.assertRedirects(response, reverse('members:corporate-members-join-thanks'))
+        member = CorporateMember.objects.latest('id')
+        self.assertEqual(member.display_name, data['display_name'])

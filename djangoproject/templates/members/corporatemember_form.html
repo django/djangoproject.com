@@ -1,0 +1,27 @@
+{% extends "base_foundation.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>{% trans "Become a DSF corporate member" %}</h1>
+  <p>
+    {% blocktrans %}
+      Provide us with a few details and we'll start onboarding your
+      organization!
+    {% endblocktrans %}
+  </p>
+  <form class="form-input" method="post" action=".">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-control">
+    {% if field.name in form.label_fields  %}
+      {{ field.label }}: {{ field }}
+    {% else %}
+      {{ field }}
+    {% endif %}
+    {% if field.errors %}<p class="errors">{{ field.errors.as_text }}</p>{% endif %}
+    {% if field.help_text %}<p class="footnote">{{ field.help_text|safe }}</p>{% endif %}
+    </div>
+    {% endfor %}
+  <input class="cta" type="submit" value="Send →">
+  </form>
+{% endblock %}
