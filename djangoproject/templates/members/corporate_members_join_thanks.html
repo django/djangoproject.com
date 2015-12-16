@@ -1,0 +1,11 @@
+{% extends "base_foundation.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>{% trans "Corporate membership application submitted." %}</h1>
+  <p>
+    {% blocktrans %}
+      Thanks! We'll follow up with an invoice soon.
+    {% endblocktrans %}
+  </p>
+{% endblock %}

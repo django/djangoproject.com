@@ -33,9 +33,9 @@ class CorporateMemberManager(models.Manager):
 
 class CorporateMember(models.Model):
     MEMBERSHIP_LEVELS = (
-        (1, 'Independent consultancy'),
-        (2, 'Small-to-medium business'),
-        (3, 'Large corporation'),
+        (1, 'Silver'),
+        (2, 'Gold'),
+        (3, 'Platinum'),
     )
 
     display_name = models.CharField(max_length=250)

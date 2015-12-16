@@ -1,7 +1,9 @@
-from django.views.generic import ListView
+from django.core.urlresolvers import reverse
+from django.views.generic import CreateView, ListView
 from django.views.generic.dates import timezone_today
 
-from members.models import CorporateMember, DeveloperMember
+from .forms import CorporateMemberSignUpForm
+from .models import CorporateMember, DeveloperMember
 
 
 class DeveloperMemberListView(ListView):
@@ -25,3 +27,11 @@ class CorporateMemberListView(ListView):
 
     def get_queryset(self):
         return self.model.objects.for_public_display()
+
+
+class CorporateMemberSignUpView(CreateView):
+    form_class = CorporateMemberSignUpForm
+    model = CorporateMember
+
+    def get_success_url(self):
+        return reverse('members:corporate-members-join-thanks')
