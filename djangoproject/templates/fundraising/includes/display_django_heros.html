@@ -1,6 +1,9 @@
 {% load static humanize thumbnail %}
 <div class="heros">
   <h3>Silver Corporate Members ($2,000+)</h3>
+  <p>Our silver <a href="/foundation/corporate-membership/">corporate
+    members</a> include independent consultancies, sole proprietorships, and
+    other small businesses.</p>
   <div>
   {% for donor in silver_members %}
   <div class="hero">
@@ -21,6 +24,7 @@
   {% endfor %}
   </div>
   <h3>Leaders ($1,000+)</h3>
+  <p>Leadership-level donors contribute $1,000 or more in a calendar year.</p>
   <div>
   {% for donor in leaders %}
     <div class="hero">
@@ -42,6 +46,7 @@
   </div>
 
   <h3>Heros</h3>
+  <p>Our donor roll for all donations made in the last {{ display_donor_days }} days.</p>
   <div>
   {% for donor in heros %}
     <div class="no-logo-hero">
