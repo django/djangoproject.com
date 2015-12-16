@@ -15,15 +15,12 @@ from django.views.decorators.http import require_POST
 
 from .exceptions import DonationError
 from .forms import DjangoHeroForm, DonationForm, PaymentForm
-from .models import (
-    DISPLAY_DONOR_DAYS, DjangoHero, Donation, Payment, Testimonial,
-)
+from .models import DjangoHero, Donation, Payment, Testimonial
 
 
 def index(request):
     testimonial = Testimonial.objects.filter(is_active=True).order_by('?').first()
     return render(request, 'fundraising/index.html', {
-        'display_donor_days': DISPLAY_DONOR_DAYS,
         'testimonial': testimonial,
     })
 
