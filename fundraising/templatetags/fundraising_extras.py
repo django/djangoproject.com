@@ -10,6 +10,7 @@ from fundraising.models import (
     DEFAULT_DONATION_AMOUNT, GOAL_AMOUNT, GOAL_START_DATE,
     LEADERSHIP_LEVEL_AMOUNT, DjangoHero, Payment,
 )
+from members.models import CorporateMember
 
 register = template.Library()
 
@@ -66,6 +67,7 @@ def display_django_heros():
         if donor.donated_amount is not None and donor.donated_amount < LEADERSHIP_LEVEL_AMOUNT:
             break
     return {
+        'silver_members': CorporateMember.objects.for_public_display(),
         'leaders': donors[:i],
         'heros': donors[i:],
         'display_logo_amount': LEADERSHIP_LEVEL_AMOUNT,

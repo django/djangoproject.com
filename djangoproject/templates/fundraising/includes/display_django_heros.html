@@ -1,5 +1,25 @@
 {% load static humanize thumbnail %}
 <div class="heros">
+  <h3>Silver Corporate Members ($2,000+)</h3>
+  <div>
+  {% for donor in silver_members %}
+  <div class="hero">
+      <div class="hero-logo">
+        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
+        <img src="{% static 'img/fundraising-heart.png' %}"
+          data-src="{% if donor.logo %}{{ donor.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+          data-src-retina="{% if donor.logo %}{{ donor.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+          alt="{{ donor.display_name }}" />
+        {% if donor.url %}</a>{% endif %}
+      </div>
+      <div class="hero-name">
+        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
+        {{ donor.display_name }}
+        {% endspaceless %}{% if donor.url %}</a>{% endif %}
+      </div>
+    </div>
+  {% endfor %}
+  </div>
   <h3>Leaders ($1,000+)</h3>
   <div>
   {% for donor in leaders %}

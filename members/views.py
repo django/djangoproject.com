@@ -24,6 +24,4 @@ class CorporateMemberListView(ListView):
     context_object_name = 'members'
 
     def get_queryset(self):
-        return super().get_queryset().filter(
-            invoice__expiration_date__gte=timezone_today(),
-        )
+        return self.model.objects.for_public_display()
