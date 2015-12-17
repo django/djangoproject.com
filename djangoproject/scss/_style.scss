@@ -2922,10 +2922,6 @@ hr {
 			&.faded {
 				opacity: 0.05;
 				animation: pixel-pulse 2s infinite;
-				&:hover {
-					opacity: 0.7;
-					animation: none;
-				}
 			}
 		}
 		text {
