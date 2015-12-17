@@ -2902,8 +2902,8 @@ hr {
 
 /// Fundraising page
 @keyframes pixel-pulse {
-	0%, 100% { opacity: 0.05; }
-	50% { opacity: 0.10; }
+	0%, 100% { opacity: 0.10; }
+	50% { opacity: 0.25; }
 }
 .fundraising-index {
 	margin-top: 50px;
@@ -2918,10 +2918,9 @@ hr {
 		rect {
 			-webkit-transition: opacity 250ms ease-out;
 			transition: opacity 250ms ease-out;
-
 			&.faded {
 				opacity: 0.05;
-				animation: pixel-pulse 2s infinite;
+				animation: pixel-pulse 3s infinite;
 			}
 		}
 		text {
