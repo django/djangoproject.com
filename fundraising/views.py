@@ -15,7 +15,9 @@ from django.views.decorators.http import require_POST
 
 from .exceptions import DonationError
 from .forms import DjangoHeroForm, DonationForm, PaymentForm
-from .models import DjangoHero, Donation, Payment, Testimonial
+from .models import (
+    LEADERSHIP_LEVEL_AMOUNT, DjangoHero, Donation, Payment, Testimonial,
+)
 
 
 def index(request):
@@ -70,6 +72,7 @@ def thank_you(request, donation):
     return render(request, 'fundraising/thank-you.html', {
         'donation': donation,
         'form': form,
+        'leadership_level_amount': LEADERSHIP_LEVEL_AMOUNT,
     })
 
 
