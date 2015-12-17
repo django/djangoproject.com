@@ -9,7 +9,7 @@
       organization!
     {% endblocktrans %}
   </p>
-  <form class="form-input" method="post" action=".">
+  <form class="form-input" method="post" action="." enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form %}
     <div class="form-control">
