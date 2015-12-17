@@ -2929,6 +2929,11 @@ hr {
 			fill: rgba(50, 50, 50, 0.3);
 			stroke: #aaaaaa;
 			stroke-width: 2px;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			-webkit-user-select: none;
+			user-select: none;
+			cursor: default;
 		}
 		@include respond-min(768px) {
 			width: 55%;
