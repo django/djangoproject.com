@@ -67,9 +67,6 @@ define([
 			this.fadePixels();
 			this.draw();
 			var heart = this;
-			window.setInterval(function () {
-				heart.moveFadedPixel();
-			}, 5000);
 		},
 		fadePixels: function () {
 			var percent = this.heart.data('percent');
@@ -83,14 +80,6 @@ define([
 		},
 		visiblePixels: function () {
 			return this.pixels.filter(function (p) { return !p.isHidden; });
-		},
-		moveFadedPixel: function () {
-			var hiddenPixels = this.hiddenPixels();
-			var visiblePixels = this.visiblePixels();
-			if (hiddenPixels.length && visiblePixels.length) {
-				var oldPixel = getRandomElement(hiddenPixels).show();
-				var newPixel = getRandomElement(visiblePixels).hide();
-			}
 		},
 		draw: function() {
 			this.pixels.forEach(function (p) {
