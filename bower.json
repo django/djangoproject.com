@@ -1,6 +1,6 @@
 {
-  "name": "Django Project",
-  "private": "true",
+  "name": "djangoproject",
+  "private": true,
   "dependencies": {
     "jquery": "<2.0",
     "jquery.inview": "1.0.0",
