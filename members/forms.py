@@ -1,4 +1,6 @@
 from django import forms
+from django.conf import settings
+from django.core.mail import send_mail
 
 from .models import CorporateMember
 
@@ -68,3 +70,14 @@ class CorporateMemberSignUpForm(forms.ModelForm):
             'description',
         ]
         model = CorporateMember
+
+    def save(self, *args, **kwargs):
+        instance = super().save(*args, **kwargs)
+        send_mail(
+            'Django Corporate Membership Application: %s' % self.instance.display_name,
+            "Thanks for applying to be a corporate member of the Django Software Foundation! "
+            "Your application is received and we'll follow up with an invoice soon.",
+            settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
+            [settings.FUNDRAISING_DEFAULT_FROM_EMAIL, self.instance.contact_email],
+        )
+        return instance
