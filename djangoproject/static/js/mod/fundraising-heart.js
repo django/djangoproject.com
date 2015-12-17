@@ -48,10 +48,6 @@ define([
 			{x:3, y: 5, color: razzmatazz},
 		];
 
-	function getRandomElement(array) {
-		return array[Math.floor(Math.random() * array.length)];
-	}
-
 	var Heart = function(heart) {
 		this.heart = $(heart);
 		if (Modernizr.svg) {
@@ -69,10 +65,12 @@ define([
 			var heart = this;
 		},
 		fadePixels: function () {
+			var pixels;
 			var percent = this.heart.data('percent');
 			var fadedCount = Math.ceil(this.pixels.length * (100 - percent) / 100);
 			for (var i = 0; i < fadedCount; i++) {
-				getRandomElement(this.visiblePixels()).hide();
+				pixels = this.visiblePixels();
+				pixels[0].hide();
 			}
 		},
 		hiddenPixels: function () {
