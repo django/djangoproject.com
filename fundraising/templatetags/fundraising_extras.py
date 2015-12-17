@@ -10,7 +10,7 @@ from fundraising.models import (
     DEFAULT_DONATION_AMOUNT, DISPLAY_DONOR_DAYS, GOAL_AMOUNT, GOAL_START_DATE,
     LEADERSHIP_LEVEL_AMOUNT, DjangoHero, Payment,
 )
-from members.models import CorporateMember
+from members.models import CorporateMember, Invoice
 
 register = template.Library()
 
@@ -42,7 +42,9 @@ def donation_snippet():
 @register.inclusion_tag('fundraising/includes/donation_form_with_heart.html', takes_context=True)
 def donation_form_with_heart(context):
     user = context['user']
-    donated_amount = Payment.objects.filter(date__gte=GOAL_START_DATE).aggregate(models.Sum('amount'))
+    donated_amount = Payment.objects.filter(date__gte=GOAL_START_DATE).aggregate(models.Sum('amount'))['amount__sum'] or 0
+    donated_amount += Invoice.objects.filter(paid_date__gte=GOAL_START_DATE).aggregate(models.Sum('amount'))['amount__sum'] or 0
+
     total_donors = DjangoHero.objects.filter(donation__payment__date__gte=GOAL_START_DATE).distinct().count()
     form = DonateForm(initial={
         'amount': DEFAULT_DONATION_AMOUNT,
@@ -50,7 +52,7 @@ def donation_form_with_heart(context):
 
     return {
         'goal_amount': GOAL_AMOUNT,
-        'donated_amount': donated_amount['amount__sum'] or 0,
+        'donated_amount': donated_amount,
         'total_donors': total_donors,
         'form': form,
         'display_logo_amount': LEADERSHIP_LEVEL_AMOUNT,

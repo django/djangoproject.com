@@ -4,6 +4,8 @@ from decimal import Decimal
 from django.test import TestCase
 from django.utils.crypto import get_random_string
 
+from members.models import CorporateMember
+
 from ..models import (
     DISPLAY_DONOR_DAYS, GOAL_START_DATE, LEADERSHIP_LEVEL_AMOUNT, DjangoHero,
     Payment,
@@ -13,7 +15,7 @@ from ..templatetags.fundraising_extras import (
 )
 
 
-class TestDonationFormWithHear(TestCase):
+class TestDonationFormWithHeart(TestCase):
     def test_donors_count(self):
         # Donor with a Payment after GOAL_START_DATE
         donor1 = DjangoHero.objects.create()
@@ -24,10 +26,15 @@ class TestDonationFormWithHear(TestCase):
         past_donor = DjangoHero.objects.create()
         past_donation = past_donor.donation_set.create()
         past_payment = past_donation.payment_set.create(amount=4, stripe_charge_id='c')
-        Payment.objects.filter(pk=past_payment.pk).update(date=GOAL_START_DATE - timedelta(days=1))
+        past_date = GOAL_START_DATE - timedelta(days=1)
+        Payment.objects.filter(pk=past_payment.pk).update(date=past_date)
+        member = CorporateMember.objects.create(membership_level=1)
+        member.invoice_set.create(amount=5, paid_date=GOAL_START_DATE)
+        # Invoice with paid_date before GOAL_START_DATE shouldn't appear.
+        member.invoice_set.create(amount=25, paid_date=past_date)
         response = donation_form_with_heart({'user': None})
         self.assertEqual(response['total_donors'], 1)
-        self.assertEqual(response['donated_amount'], Decimal('3.00'))
+        self.assertEqual(response['donated_amount'], Decimal('8.00'))
 
 
 class TestDisplayDjangoHeros(TestCase):
