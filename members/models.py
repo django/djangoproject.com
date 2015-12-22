@@ -72,7 +72,7 @@ def create_thumbnail_on_save(sender, **kwargs):
 
 
 class Invoice(models.Model):
-    sent_date = models.DateField()
+    sent_date = models.DateField(blank=True, null=True)
     amount = models.IntegerField(help_text='In integer dollars')
     paid_date = models.DateField(blank=True, null=True)
     expiration_date = models.DateField(blank=True, null=True)
