@@ -88,11 +88,6 @@ class DjangoHero(FundraisingModel):
         return self.name if self.name else 'Anonymous Hero'
 
 
-@receiver(post_save, sender=DjangoHero)
-def create_thumbnail_on_save(sender, **kwargs):
-    return kwargs['instance'].thumbnail
-
-
 class Donation(FundraisingModel):
     interval = models.CharField(max_length=20, choices=INTERVAL_CHOICES, blank=True)
     subscription_amount = models.DecimalField(max_digits=9, decimal_places=2, null=True, blank=True)
@@ -132,3 +127,27 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return self.author
+
+
+class InKindDonor(models.Model):
+    name = models.CharField(max_length=100)
+    url = models.URLField(blank=True, verbose_name='URL')
+    description = models.TextField()
+    logo = ImageField(upload_to='fundraising/logos/', blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'in-kind hero'
+        verbose_name_plural = 'in-kind heroes'
+
+    @property
+    def thumbnail(self):
+        return get_thumbnail(self.logo, '170x170', quality=100)
+
+
+@receiver(post_save, sender=DjangoHero)
+@receiver(post_save, sender=InKindDonor)
+def create_thumbnail_on_save(sender, **kwargs):
+    return kwargs['instance'].thumbnail

@@ -23,6 +23,30 @@
     </div>
   {% endfor %}
   </div>
+
+  <h3>In-kind donors</h3>
+  <p>These donors help with significant non-cash contributions.</p>
+  <div>
+  {% for donor in inkind_donors %}
+    <div class="hero">
+      <div class="hero-logo">
+        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
+        <img src="{% static 'img/fundraising-heart.png' %}"
+          data-src="{% if donor.logo %}{{ donor.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+          data-src-retina="{% if donor.logo %}{{ donor.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+          alt="{{ donor.name }}" />
+        {% if donor.url %}</a>{% endif %}
+      </div>
+      <div class="hero-name">
+        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
+        {{ donor.name }}
+        {% endspaceless %}{% if donor.url %}</a>{% endif %}
+        {{ donor.description }}
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+
   <h3>Leaders ($1,000+)</h3>
   <p>Leadership-level donors contribute $1,000 or more in a calendar year.</p>
   <div>
