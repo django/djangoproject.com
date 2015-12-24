@@ -3,7 +3,7 @@ from django.db.models import Sum
 from sorl.thumbnail.admin import AdminImageMixin
 
 from .admin_views import download_donor_report
-from .models import DjangoHero, Donation, Payment, Testimonial
+from .models import DjangoHero, Donation, InKindDonor, Payment, Testimonial
 
 
 class DonationInline(admin.TabularInline):
@@ -67,3 +67,6 @@ class PaymentAdmin(admin.ModelAdmin):
 @admin.register(Testimonial)
 class Testimonial(admin.ModelAdmin):
     pass
+
+
+admin.site.register(InKindDonor)

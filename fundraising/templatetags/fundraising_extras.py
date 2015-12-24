@@ -8,7 +8,7 @@ from django.template.defaultfilters import floatformat
 from fundraising.forms import DonateForm
 from fundraising.models import (
     DEFAULT_DONATION_AMOUNT, DISPLAY_DONOR_DAYS, GOAL_AMOUNT, GOAL_START_DATE,
-    LEADERSHIP_LEVEL_AMOUNT, DjangoHero, Payment,
+    LEADERSHIP_LEVEL_AMOUNT, DjangoHero, InKindDonor, Payment,
 )
 from members.models import CorporateMember, Invoice
 
@@ -72,6 +72,7 @@ def display_django_heros():
         'silver_members': CorporateMember.objects.for_public_display(),
         'leaders': donors[:i],
         'heros': donors[i:],
+        'inkind_donors': InKindDonor.objects.all(),
         'display_donor_days': DISPLAY_DONOR_DAYS,
         'display_logo_amount': LEADERSHIP_LEVEL_AMOUNT,
     }

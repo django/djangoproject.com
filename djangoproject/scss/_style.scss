@@ -3073,8 +3073,9 @@ form .footnote {
 			}
 		}
 		.hero-name {
-			height: 92px;
+			min-height: 87px;
 			vertical-align: top;
+			margin-bottom: 5px;
 		}
 		.no-logo-hero {
 			min-height: 60px;

@@ -8,7 +8,7 @@ from members.models import CorporateMember
 
 from ..models import (
     DISPLAY_DONOR_DAYS, GOAL_START_DATE, LEADERSHIP_LEVEL_AMOUNT, DjangoHero,
-    Payment,
+    InKindDonor, Payment,
 )
 from ..templatetags.fundraising_extras import (
     display_django_heros, donation_form_with_heart,
@@ -52,10 +52,12 @@ class TestDisplayDjangoHeros(TestCase):
         hero1 = create_hero_with_payment_amount(LEADERSHIP_LEVEL_AMOUNT + 1)
         hero2 = create_hero_with_payment_amount(LEADERSHIP_LEVEL_AMOUNT)
         hero3 = create_hero_with_payment_amount(LEADERSHIP_LEVEL_AMOUNT - 1)
+        inkind_donor = InKindDonor.objects.create(name='Inkind')
 
         response = display_django_heros()
         self.assertEqual(response['leaders'], [hero1, hero2])
         self.assertEqual(response['heros'], [hero3])
+        self.assertEqual(list(response['inkind_donors']), [inkind_donor])
 
     def test_display_django_heros_payments(self):
         """
