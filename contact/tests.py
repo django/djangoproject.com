@@ -23,6 +23,17 @@ class ContactFormTests(TestCase):
         self.url = '/contact/foundation/'
 
     @override_settings(AKISMET_API_KEY='')  # Disable Akismet in tests
+    def test_invalid_email(self):
+        response = self.client.post(self.url, {
+            'name': 'A. Random Hacker',
+            'email': 'xxx',
+            'message_subject': 'Hello',
+            'body': 'Hello, World!',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', 'email', ['Enter a valid email address.'])
+
+    @override_settings(AKISMET_API_KEY='')  # Disable Akismet in tests
     def test_without_akismet(self):
         response = self.client.post(self.url, {
             'name': 'A. Random Hacker',
