@@ -17,7 +17,7 @@ class BaseContactForm(ContactForm):
         widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'Message subject'}),
         label='Message subject',
     )
-    email = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'E-mail'}))
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'E-mail'}))
     name = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'Name'}))
     body = forms.CharField(widget=forms.Textarea(attrs={'class': 'required', 'placeholder': 'Your message'}))
 
