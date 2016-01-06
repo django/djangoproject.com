@@ -256,7 +256,7 @@ class TestWebhooks(TestCase):
             'fundraising/test_data/{}.json'.format(filename))
         with file_path.open() as f:
             data = json.load(f)
-            return stripe.resource.convert_to_stripe_object(data, stripe.api_key)
+            return stripe.resource.convert_to_stripe_object(data, stripe.api_key, None)
 
     def post_event(self):
         return self.client.post(
