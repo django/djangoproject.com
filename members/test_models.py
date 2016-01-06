@@ -49,14 +49,14 @@ class CorporateMemberTests(TestCase):
 
     def test_is_invoiced(self):
         # No invoices == not invoiced.
-        self.assertFalse(self.member.is_invoiced)
+        self.assertEqual(self.member.is_invoiced, False)
         # Invoice but no sent_date == not invoiced.
         invoice = self.member.invoice_set.create(amount=500)
-        self.assertFalse(self.member.is_invoiced)
+        self.assertEqual(self.member.is_invoiced, False)
         # Invoice with an sent_date == invoiced.
         invoice.sent_date = date.today()
         invoice.save()
-        self.assertTrue(self.member.is_invoiced)
+        self.assertEqual(self.member.is_invoiced, True)
 
     def test_get_expiry_date(self):
         today = date.today()
