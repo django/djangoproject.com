@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 
 from django.test import TestCase
 
@@ -46,3 +46,25 @@ class CorporateMemberTests(TestCase):
 
     def test_str(self):
         self.assertEqual(str(self.member), 'Corporation')
+
+    def test_is_invoiced(self):
+        # No invoices == not invoiced.
+        self.assertFalse(self.member.is_invoiced)
+        # Invoice but no sent_date == not invoiced.
+        invoice = self.member.invoice_set.create(amount=500)
+        self.assertFalse(self.member.is_invoiced)
+        # Invoice with an sent_date == invoiced.
+        invoice.sent_date = date.today()
+        invoice.save()
+        self.assertTrue(self.member.is_invoiced)
+
+    def test_get_expiry_date(self):
+        today = date.today()
+        tomorrow = today + timedelta(days=1)
+        self.assertIsNone(self.member.get_expiry_date())
+        self.member.invoice_set.create(amount=500)
+        self.assertIsNone(self.member.get_expiry_date())
+        self.member.invoice_set.create(amount=500, expiration_date=today)
+        self.assertEqual(self.member.get_expiry_date(), today)
+        self.member.invoice_set.create(amount=500, expiration_date=tomorrow)
+        self.assertEqual(self.member.get_expiry_date(), tomorrow)

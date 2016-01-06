@@ -61,6 +61,21 @@ class CorporateMember(models.Model):
     def __str__(self):
         return self.display_name
 
+    def _is_invoiced(self):
+        invoices = self.invoice_set.all()
+        return invoices and all(invoice.sent_date is not None for invoice in invoices)
+    _is_invoiced.boolean = True
+    is_invoiced = property(_is_invoiced)
+
+    def get_expiry_date(self):
+        expiry_date = None
+        for invoice in self.invoice_set.all():
+            if expiry_date is None:
+                expiry_date = invoice.expiration_date
+            elif invoice.expiration_date and invoice.expiration_date > expiry_date:
+                expiry_date = invoice.expiration_date
+        return expiry_date
+
     @property
     def thumbnail(self):
         return get_thumbnail(self.logo, '170x170', quality=100)
