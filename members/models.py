@@ -63,7 +63,7 @@ class CorporateMember(models.Model):
 
     def _is_invoiced(self):
         invoices = self.invoice_set.all()
-        return invoices and all(invoice.sent_date is not None for invoice in invoices)
+        return bool(invoices) and all(invoice.sent_date is not None for invoice in invoices)
     _is_invoiced.boolean = True
     is_invoiced = property(_is_invoiced)
 
