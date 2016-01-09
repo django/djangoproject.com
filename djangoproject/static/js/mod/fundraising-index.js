@@ -12,6 +12,7 @@ define([
 				var self = this;
 				$(document).ready(function() {
 					self.form.find('select').on("change", self.setDonation);
+					self.form.find('select').on("change", self.setDonateButtonText).change();
 				});
 			},
 			setDonation: function(event){
@@ -25,6 +26,14 @@ define([
 					input.val('');
 					input.val(tmpStr);
 				}
+			},
+			setDonateButtonText: function(event) {
+				var text = 'Donate';
+				var interval = $('#id_interval').val();
+				if (interval != 'onetime') {
+					text += ' ' + interval;
+				}
+				$('#donate-button').val(text);
 			}
 		};
 
