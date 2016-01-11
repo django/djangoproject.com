@@ -26,7 +26,7 @@ class CorporateMemberListView(ListView):
     context_object_name = 'members'
 
     def get_queryset(self):
-        return self.model.objects.for_public_display()
+        return self.model.objects.for_public_display().order_by('display_name')
 
 
 class CorporateMemberSignUpView(CreateView):
