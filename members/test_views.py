@@ -39,12 +39,12 @@ class CorporateMemberListViewTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.today = today = date.today()
-        member = CorporateMember.objects.create(
+        cls.member = CorporateMember.objects.create(
             display_name='Corporation',
             contact_email='c@example.com',
             membership_level=2,
         )
-        member.invoice_set.create(
+        cls.member.invoice_set.create(
             sent_date=today,
             amount=500,
             paid_date=today,
@@ -64,6 +64,25 @@ class CorporateMemberListViewTests(TestCase):
         )
         response = self.client.get(self.url)
         self.assertNotContains(response, 'Corporation unapproved')
+
+    def test_view_renders_orgs_alphabetically(self):
+        member = CorporateMember.objects.create(
+            display_name='AAA',
+            contact_email='c@example.com',
+            membership_level=2,
+        )
+        member.invoice_set.create(
+            sent_date=self.today,
+            # shouldn't sort by amount
+            amount=self.member.invoice_set.first().amount - 1,
+            paid_date=self.today,
+            expiration_date=self.today + timedelta(days=1),
+        )
+        response = self.client.get(self.url)
+        self.assertQuerysetEqual(
+            response.context['members'],
+            ['<CorporateMember: AAA>', '<CorporateMember: Corporation>']
+        )
 
 
 class CorporateMemberJoinViewTests(TestCase):
