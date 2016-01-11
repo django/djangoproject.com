@@ -18,12 +18,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
                 ('logo', sorl.thumbnail.fields.ImageField(blank=True, upload_to='fundraising/logos/')),
                 ('url', models.URLField(blank=True, verbose_name='URL')),
-                ('name', models.CharField(blank=True, max_length=100)),
+                ('name', models.CharField(max_length=100)),
                 ('description', models.TextField()),
             ],
             options={
-                'verbose_name': 'Django hero',
-                'verbose_name_plural': 'Django heroes',
+                'verbose_name': 'in-kind hero',
+                'verbose_name_plural': 'in-kind heroes',
             },
         ),
     ]
