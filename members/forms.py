@@ -6,6 +6,10 @@ from .models import CorporateMember
 
 
 class CorporateMemberSignUpForm(forms.ModelForm):
+    amount = forms.IntegerField(
+        label='Donation amount',
+        help_text='Enter an integer in US$ without the dollar sign.',
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -35,10 +39,6 @@ class CorporateMemberSignUpForm(forms.ModelForm):
         self.fields['display_name'].widget.attrs['placeholder'] = (
             "Your organization's name as you'd like it to appear on our website."
         )
-        self.fields['membership_level'].help_text = (
-            'See <a href="/foundation/corporate-membership/#dues">dues</a> for '
-            'details on the levels.'
-        )
         self.fields['address'].widget.attrs['placeholder'] = (
             'Mailing address'
         )
@@ -55,6 +55,13 @@ class CorporateMemberSignUpForm(forms.ModelForm):
             corporate membership page</a>; you can use the existing descriptions
             as a guide for flavor we're looking for."""
         )
+        self.fields['amount'].help_text = (
+            """Enter an amount above and the appropriate membership level will
+            be automatically selected. Or select a membership level below and
+            the minimum donation will be entered for you. See
+            <a href="/foundation/corporate-membership/#dues">dues</a> for
+            details on the levels."""
+        )
 
     class Meta:
         fields = [
@@ -65,9 +72,10 @@ class CorporateMemberSignUpForm(forms.ModelForm):
             'contact_name',
             'contact_email',
             'billing_email',
-            'membership_level',
             'address',
             'description',
+            'amount',
+            'membership_level',
         ]
         model = CorporateMember
 
@@ -80,4 +88,5 @@ class CorporateMemberSignUpForm(forms.ModelForm):
             settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
             [settings.FUNDRAISING_DEFAULT_FROM_EMAIL, self.instance.contact_email],
         )
+        instance.invoice_set.create(amount=self.cleaned_data['amount'])
         return instance

@@ -19,11 +19,13 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
             'membership_level': 2,
             'address': 'USA',
             'description': 'We make widgets!',
+            'amount': 2000,
         }
         form = CorporateMemberSignUpForm(data)
         self.assertTrue(form.is_valid())
         instance = form.save()
         self.assertEqual(instance.display_name, data['display_name'])
+        self.assertEqual(instance.invoice_set.get().amount, data['amount'])
 
         self.assertEqual(len(mail.outbox), 1)
         msg = mail.outbox[0]

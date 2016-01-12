@@ -103,8 +103,10 @@ class CorporateMemberJoinViewTests(TestCase):
             'membership_level': 2,
             'address': 'USA',
             'description': 'We make widgets!',
+            'amount': 2000,
         }
         response = self.client.post(reverse('members:corporate-members-join'), data)
         self.assertRedirects(response, reverse('members:corporate-members-join-thanks'))
         member = CorporateMember.objects.latest('id')
         self.assertEqual(member.display_name, data['display_name'])
+        self.assertEqual(member.invoice_set.get().amount, data['amount'])
