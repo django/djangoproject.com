@@ -86,7 +86,11 @@ class CorporateMemberSignUpForm(forms.ModelForm):
             "Thanks for applying to be a corporate member of the Django Software Foundation! "
             "Your application is received and we'll follow up with an invoice soon.",
             settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
-            [settings.FUNDRAISING_DEFAULT_FROM_EMAIL, self.instance.contact_email],
+            [
+                settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
+                self.instance.contact_email,
+                'treasurer@djangoproject.com',
+            ],
         )
         instance.invoice_set.create(amount=self.cleaned_data['amount'])
         return instance

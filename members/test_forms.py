@@ -35,4 +35,7 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
             "Your application is received and we'll follow up with an invoice soon."
         ))
         self.assertEqual(msg.from_email, settings.FUNDRAISING_DEFAULT_FROM_EMAIL)
-        self.assertEqual(msg.to, [settings.FUNDRAISING_DEFAULT_FROM_EMAIL, data['contact_email']])
+        self.assertEqual(
+            msg.to,
+            [settings.FUNDRAISING_DEFAULT_FROM_EMAIL, data['contact_email'], 'treasurer@djangoproject.com']
+        )
