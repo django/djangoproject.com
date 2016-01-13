@@ -53,7 +53,9 @@ class Command(BaseCommand):
             #
 
             # Make a git checkout/update into the destination directory.
-            self.update_git(release.scm_url, checkout_dir)
+            if not self.update_git(release.scm_url, checkout_dir):
+                # No docs changes so don't rebuild.
+                continue
 
             source_dir = checkout_dir.joinpath('docs')
 
@@ -147,21 +149,39 @@ class Command(BaseCommand):
             release.sync_to_db(documents)
 
     def update_git(self, url, destdir):
+        """
+        Update a source checkout and return True if any docs were changed,
+        False otherwise.
+        """
         if '@' in url:
             repo, branch = url.rsplit('@', 1)
         else:
             repo, branch = url, 'master'
         if destdir.joinpath('.git').exists():
+            remote = 'origin'
+            branch_with_remote = '%s/%s' % (remote, branch)
             try:
                 cwd = os.getcwd()
                 os.chdir(str(destdir))
                 subprocess.call(['git', 'reset', '--hard', 'HEAD'])
                 subprocess.call(['git', 'clean', '-fdx'])
-                subprocess.call(['git', 'pull'])
+                subprocess.call([
+                    'git', 'fetch', remote,
+                    '%s:refs/remotes/%s' % (branch, branch_with_remote)
+                ])
+                docs_changed = subprocess.call([
+                    'git', 'diff', branch_with_remote,
+                    '--quiet', '--exit-code',
+                    'docs/',
+                ]) == 1
+                if not docs_changed:
+                    return False
+                subprocess.call(['git', 'merge', branch_with_remote])
             finally:
                 os.chdir(cwd)
         else:
             subprocess.call(['git', 'clone', '-q', '--branch', branch, repo, str(destdir)])
+        return True
 
 
 def gen_decoded_documents(directory):
