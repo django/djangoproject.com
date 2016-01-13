@@ -4,7 +4,7 @@ django-contact-form==1.0
 django-flat-theme==1.1.2
 django-hosts==1.3
 django-push==0.8
-django-registration-redux==1.2
+django-registration-redux==1.3
 elasticsearch-dsl==0.0.9
 elasticsearch>=1.0.0,<2.0.0
 docutils==0.12
