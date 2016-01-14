@@ -89,7 +89,6 @@ class Command(BaseCommand):
                     self.stdout.write("  building %s (%s -> %s)" % (builder, source_dir, build_dir))
                 subprocess.check_call([
                     'sphinx-build',
-                    '-j', '4',
                     '-b', builder,
                     '-D', 'language=%s' % release.lang,
                     '-q',              # Be vewy qwiet
