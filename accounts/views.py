@@ -4,7 +4,7 @@ import json
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core import cache
+from django.core.cache import caches
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -60,7 +60,7 @@ def json_user_info(request):
 
 
 def get_user_info(username):
-    c = cache.get_cache('default')
+    c = caches['default']
     username = username.encode('ascii', 'ignore')
     key = 'trac_user_info:%s' % hashlib.md5(username).hexdigest()
     info = c.get(key)
@@ -79,7 +79,7 @@ def get_user_info(username):
 
 
 def get_user_stats(user):
-    c = cache.get_cache('default')
+    c = caches['default']
     username = user.username.encode('ascii', 'ignore')
     key = 'user_vital_status:%s' % hashlib.md5(username).hexdigest()
     info = c.get(key)
