@@ -10,8 +10,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [('members', '0001_initial'), ('members', '0002_corporatemember_logo_to_sorlimagefield'), ('members', '0003_allow_null_invoice_sent_date'), ('members', '0004_corporatemember_notes')]
-
     initial = True
 
     dependencies = [
@@ -24,14 +22,15 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('display_name', models.CharField(max_length=250)),
                 ('billing_name', models.CharField(blank=True, help_text='If different from display name.', max_length=250)),
-                ('logo', models.ImageField(blank=True, null=True, upload_to='corporate-members')),
+                ('logo', sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to='corporate-members')),
                 ('description', models.TextField(blank=True)),
                 ('url', models.URLField(verbose_name='URL')),
                 ('contact_name', models.CharField(max_length=250)),
                 ('contact_email', models.EmailField(max_length=254)),
                 ('billing_email', models.EmailField(blank=True, help_text='If different from contact email.', max_length=254)),
-                ('membership_level', models.IntegerField(choices=[(1, 'Independent consultancy'), (2, 'Small-to-medium business'), (3, 'Large corporation')])),
+                ('membership_level', models.IntegerField(choices=[(1, 'Silver'), (2, 'Gold'), (3, 'Platinum')])),
                 ('address', models.TextField(blank=True)),
+                ('notes', models.TextField(blank=True, help_text='Not displayed publicly.')),
             ],
             options={
                 'ordering': ['display_name'],
@@ -61,20 +60,5 @@ class Migration(migrations.Migration):
                 ('expiration_date', models.DateField(blank=True, null=True)),
                 ('member', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='members.CorporateMember')),
             ],
-        ),
-        migrations.AlterField(
-            model_name='corporatemember',
-            name='logo',
-            field=sorl.thumbnail.fields.ImageField(blank=True, null=True, upload_to='corporate-members'),
-        ),
-        migrations.AlterField(
-            model_name='corporatemember',
-            name='membership_level',
-            field=models.IntegerField(choices=[(1, 'Silver'), (2, 'Gold'), (3, 'Platinum')]),
-        ),
-        migrations.AddField(
-            model_name='corporatemember',
-            name='notes',
-            field=models.TextField(blank=True, help_text='Not displayed publicly.'),
         ),
     ]
