@@ -25,7 +25,7 @@ def search_form(context):
     }
 
 
-@register.assignment_tag(takes_context=True)
+@register.simple_tag(takes_context=True)
 def get_all_doc_versions(context, url=None):
     """
     Get a list of all versions of this document to link to.
