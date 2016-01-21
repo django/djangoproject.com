@@ -231,7 +231,7 @@ class JenkinsFailuresMetric(Metric):
 
 class Datum(models.Model):
     metric = GenericForeignKey()
-    content_type = models.ForeignKey(ContentType, related_name='+')
+    content_type = models.ForeignKey(ContentType, related_name='+', on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     timestamp = models.DateTimeField(default=datetime.datetime.now)
     measurement = models.BigIntegerField()

@@ -91,7 +91,7 @@ class DjangoHero(FundraisingModel):
 class Donation(FundraisingModel):
     interval = models.CharField(max_length=20, choices=INTERVAL_CHOICES, blank=True)
     subscription_amount = models.DecimalField(max_digits=9, decimal_places=2, null=True, blank=True)
-    donor = models.ForeignKey(DjangoHero)
+    donor = models.ForeignKey(DjangoHero, on_delete=models.CASCADE)
     stripe_subscription_id = models.CharField(max_length=100, blank=True)
     stripe_customer_id = models.CharField(max_length=100, blank=True)
     receipt_email = models.EmailField(blank=True)
@@ -111,7 +111,7 @@ class Donation(FundraisingModel):
 
 
 class Payment(models.Model):
-    donation = models.ForeignKey(Donation)
+    donation = models.ForeignKey(Donation, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=9, decimal_places=2, null=True)
     stripe_charge_id = models.CharField(max_length=100, unique=True)
     date = models.DateTimeField(auto_now_add=True)

@@ -53,7 +53,12 @@ class DocumentRelease(models.Model):
     DEFAULT_CACHE_KEY = "%s_docs_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
 
     lang = models.CharField(max_length=2, choices=settings.LANGUAGES, default='en')
-    release = models.ForeignKey(Release, null=True, limit_choices_to={'status': 'f'})
+    release = models.ForeignKey(
+        Release,
+        null=True,
+        limit_choices_to={'status': 'f'},
+        on_delete=models.CASCADE,
+    )
     is_default = models.BooleanField(default=False)
 
     objects = DocumentReleaseManager()
@@ -185,7 +190,11 @@ class Document(models.Model):
     """
     An individual document. Used mainly as a hook point for the search.
     """
-    release = models.ForeignKey(DocumentRelease, related_name='documents')
+    release = models.ForeignKey(
+        DocumentRelease,
+        related_name='documents',
+        on_delete=models.CASCADE,
+     )
     path = models.CharField(max_length=500)
     title = models.CharField(max_length=500)
 

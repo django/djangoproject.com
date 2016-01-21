@@ -92,4 +92,4 @@ class Invoice(models.Model):
     amount = models.IntegerField(help_text='In integer dollars')
     paid_date = models.DateField(blank=True, null=True)
     expiration_date = models.DateField(blank=True, null=True)
-    member = models.ForeignKey(CorporateMember)
+    member = models.ForeignKey(CorporateMember, on_delete=models.CASCADE)

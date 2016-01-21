@@ -81,13 +81,28 @@ class Ticket(models.Model):
     _changetime = models.BigIntegerField(db_column='changetime')
     changetime = time_property('_changetime')
 
-    component = models.ForeignKey('Component', related_name='tickets', db_column='component')
+    component = models.ForeignKey(
+        'Component',
+        related_name='tickets',
+        db_column='component',
+        on_delete=models.DO_NOTHING,
+    )
     severity = models.TextField()
     owner = models.TextField()
     reporter = models.TextField()
     cc = models.TextField()
-    version = models.ForeignKey('Version', related_name='tickets', db_column='version')
-    milestone = models.ForeignKey('Milestone', related_name='tickets', db_column='milestone')
+    version = models.ForeignKey(
+        'Version',
+        related_name='tickets',
+        db_column='version',
+        on_delete=models.DO_NOTHING,
+    )
+    milestone = models.ForeignKey(
+        'Milestone',
+        related_name='tickets',
+        db_column='milestone',
+        on_delete=models.DO_NOTHING,
+    )
     priority = models.TextField()
     status = models.TextField()
     resolution = models.TextField()
@@ -117,7 +132,13 @@ class Ticket(models.Model):
 
 
 class TicketCustom(models.Model):
-    ticket = models.ForeignKey(Ticket, related_name='custom_fields', db_column='ticket', primary_key=True)
+    ticket = models.ForeignKey(
+        Ticket,
+        related_name='custom_fields',
+        db_column='ticket',
+        primary_key=True,
+        on_delete=models.DO_NOTHING,
+    )
     name = models.TextField()
     value = models.TextField()
 
@@ -130,7 +151,13 @@ class TicketCustom(models.Model):
 
 
 class TicketChange(models.Model):
-    ticket = models.ForeignKey(Ticket, related_name='changes', db_column='ticket', primary_key=True)
+    ticket = models.ForeignKey(
+        Ticket,
+        related_name='changes',
+        db_column='ticket',
+        primary_key=True,
+        on_delete=models.DO_NOTHING,
+    )
     author = models.TextField()
     field = models.TextField()
     oldvalue = models.TextField()
