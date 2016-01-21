@@ -1,10 +1,8 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 
+@override_settings(ROOT_URLCONF='legacy.urls')
 class LegacyTests(TestCase):
-    urls = 'legacy.urls'
-
-    # Just a smoke test to ensure the URLconf works
 
     def test_gone(self):
         response = self.client.get('/comments/')
