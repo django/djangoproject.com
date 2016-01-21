@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('summary', models.TextField(blank=True)),
                 ('date_modified', models.DateTimeField()),
                 ('guid', models.CharField(unique=True, max_length=500, db_index=True)),
-                ('feed', models.ForeignKey(to='aggregator.Feed')),
+                ('feed', models.ForeignKey(to='aggregator.Feed', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ('-date_modified',),
@@ -56,13 +56,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='feed',
             name='feed_type',
-            field=models.ForeignKey(to='aggregator.FeedType'),
+            field=models.ForeignKey(to='aggregator.FeedType', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='feed',
             name='owner',
-            field=models.ForeignKey(related_name='owned_feeds', blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(related_name='owned_feeds', blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL),
             preserve_default=True,
         ),
     ]

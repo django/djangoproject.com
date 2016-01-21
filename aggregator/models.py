@@ -38,8 +38,8 @@ class Feed(models.Model):
     feed_url = models.URLField(unique=True, max_length=500)
     public_url = models.URLField(max_length=500)
     approval_status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=PENDING_FEED)
-    feed_type = models.ForeignKey(FeedType)
-    owner = models.ForeignKey(User, blank=True, null=True, related_name='owned_feeds')
+    feed_type = models.ForeignKey(FeedType, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, blank=True, null=True, related_name='owned_feeds', on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.title
@@ -102,7 +102,7 @@ class FeedItemManager(models.Manager):
 
 
 class FeedItem(models.Model):
-    feed = models.ForeignKey(Feed)
+    feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
     title = models.CharField(max_length=500)
     link = models.URLField(max_length=500)
     summary = models.TextField(blank=True)

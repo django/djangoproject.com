@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('object_id', models.PositiveIntegerField()),
                 ('timestamp', models.DateTimeField(default=datetime.datetime.now)),
                 ('measurement', models.BigIntegerField()),
-                ('content_type', models.ForeignKey(related_name='+', to='contenttypes.ContentType')),
+                ('content_type', models.ForeignKey(related_name='+', to='contenttypes.ContentType', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['-timestamp'],
