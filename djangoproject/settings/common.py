@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     'accounts',
     'aggregator',
     'blog',
-    'cla',
     'contact',
     'dashboard',
     'docs.apps.DocsConfig',

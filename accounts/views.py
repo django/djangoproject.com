@@ -8,7 +8,6 @@ from django.core.cache import caches
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
-from cla.models import find_agreements
 from tracdb import stats as trac_stats
 
 from .forms import ProfileForm
@@ -21,7 +20,6 @@ def user_profile(request, username):
         'user_obj': user,
         'email_hash': hashlib.md5(user.email.encode('ascii', 'ignore')).hexdigest(),
         'user_can_commit': user.has_perm('auth.commit'),
-        'clas': find_agreements(user),
         'stats': get_user_stats(user),
     })
 
@@ -72,7 +70,6 @@ def get_user_info(username):
         else:
             info = {
                 "core": u.has_perm('auth.commit'),
-                "cla": bool(find_agreements(u))
             }
         c.set(key, info, 60 * 60)
     return info
