@@ -38,7 +38,7 @@ urlpatterns = [
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$', auth_views.password_reset_confirm, name='password_reset_confirm'),
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
 
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
     url(r'^community/', include('aggregator.urls')),
 
     url(r'^conduct/$', TemplateView.as_view(template_name='conduct/index.html'), name='code_of_conduct'),
@@ -51,8 +51,8 @@ urlpatterns = [
     url(r'^diversity/changes/$', TemplateView.as_view(template_name='diversity/changes.html'), name='diversity_changes'),
 
     url(r'^contact/', include('contact.urls')),
-    url(r'^foundation/', include('members.urls', namespace='members')),
-    url(r'^fundraising/', include('fundraising.urls', namespace='fundraising')),
+    url(r'^foundation/', include('members.urls')),
+    url(r'^fundraising/', include('fundraising.urls')),
 
     # Used by docs search suggestions
     url(r'^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', contenttypes_views.shortcut, name='contenttypes-shortcut'),
@@ -76,7 +76,7 @@ urlpatterns = [
     url(r'^styleguide/$', TemplateView.as_view(template_name='styleguide.html'), name="styleguide"),
 
     url(r'^sitemap\.xml$', cache_page(60 * 60 * 6)(sitemap_views.sitemap), {'sitemaps': sitemaps}),
-    url(r'^weblog/', include('blog.urls', namespace='weblog')),
+    url(r'^weblog/', include('blog.urls')),
     url(r'^download/', include('releases.urls')),
     url(r'^svntogit/', include('svntogit.urls')),
     url(r'', include('legacy.urls')),
