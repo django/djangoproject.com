@@ -9,8 +9,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [('releases', '0001_initial'), ('releases', '0002_release_eol_date'), ('releases', '0003_populate_release_eol_date'), ('releases', '0004_make_release_date_nullable')]
-
     initial = True
 
     dependencies = [
