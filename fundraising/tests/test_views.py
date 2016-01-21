@@ -165,7 +165,7 @@ class TestCampaign(TestCase):
             'receipt_email': 'django@example.com',
         })
         content = json.loads(response.content.decode())
-        self.assertEquals(200, response.status_code)
+        self.assertEqual(response.status_code, 200)
         self.assertTrue(content['success'])
         self.assertEqual(content['redirect'], donation.get_absolute_url())
 
@@ -190,7 +190,7 @@ class TestCampaign(TestCase):
         donation = Donation.objects.create(donor=donor, stripe_subscription_id='')
         url = reverse('fundraising:cancel-donation', kwargs={'hero': donor.id})
         response = self.client.post(url, {'donation': donation.id})
-        self.assertEquals(404, response.status_code)
+        self.assertEqual(response.status_code, 404)
         self.assertFalse(retrieve_customer.called)
 
 

@@ -23,8 +23,8 @@ class LegacyURLsTests(TestCase):
             location = response.get('Location', '')
             if location.startswith('http://testserver'):
                 location = location[17:]
-            self.assertEquals(location, new_path)
-            self.assertEquals(response.status_code, 301)
+            self.assertEqual(location, new_path)
+            self.assertEqual(response.status_code, 301)
 
 
 class TestTemplateTags(TestCase):
