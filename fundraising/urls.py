@@ -2,6 +2,7 @@ from django.conf.urls import url
 
 from . import views
 
+app_name = 'fundraising'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^donate/$', views.donate, name='donate'),

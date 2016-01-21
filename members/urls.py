@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 
 from members.views import CorporateMemberListView, CorporateMemberSignUpView
 
+app_name = 'members'
 urlpatterns = [
     # Pending population of data.
     # url(r'^developer-members/$', DeveloperMemberListView.as_view(), name='develope-members'),
