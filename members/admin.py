@@ -36,7 +36,7 @@ class CorporateMemberAdmin(admin.ModelAdmin):
         'membership_level',
     ]
     inlines = [InvoiceInline]
-    search_fields = ['name']
+    search_fields = ['display_name', 'billing_name']
 
     def get_queryset(self, request):
         return super().get_queryset(request).prefetch_related('invoice_set')
