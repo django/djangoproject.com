@@ -120,20 +120,28 @@ def band_listing(request):
 
 {% endpygment %}
 ''')
-        self.assertEqual(
+        self.assertHTMLEqual(
             template.render(Context()),
-            "\n\n<div class=\"highlight\"><pre><span class=\"k\">def</span> <span class=\"nf\">"
-            "band_listing</span><span class=\"p\">(</span><span class=\"n\">request</span><span "
-            "class=\"p\">):</span>\n    <span class=\"sd\">&quot;&quot;&quot;A view of all bands"
-            ".&quot;&quot;&quot;</span>\n    <span class=\"n\">bands</span> <span class=\"o\">="
-            "</span> <span class=\"n\">models</span><span class=\"o\">.</span><span class=\"n\">"
-            "Band</span><span class=\"o\">.</span><span class=\"n\">objects</span><span "
-            "class=\"o\">.</span><span class=\"n\">all</span><span class=\"p\">()</span>\n    "
-            "<span class=\"k\">return</span> <span class=\"n\">render</span><span class=\"p\">"
-            "(</span><span class=\"n\">request</span><span class=\"p\">,</span> <span class=\"s\">"
-            "&#39;bands/band_listing.html&#39;</span><span class=\"p\">,</span> <span class=\"p\">"
-            "{</span><span class=\"s\">&#39;bands&#39;</span><span class=\"p\">:</span> "
-            "<span class=\"n\">bands</span><span class=\"p\">})</span>\n</pre></div>\n\n"
+            """
+            <div class="highlight">
+                <pre><span class="k">def</span><span class="nf">band_listing</span>
+                    <span class="p">(</span><span class="n">request</span>
+                    <span class="p">):</span>
+                    <span class="sd">&quot;&quot;&quot;A view of all bands.&quot;&quot;&quot;</span>
+                    <span class="n">bands</span> <span class="o">=</span>
+                    <span class="n">models</span><span class="o">.</span>
+                    <span class="n">Band</span><span class="o">.</span>
+                    <span class="n">objects</span><span class="o">.</span>
+                    <span class="n">all</span><span class="p">()</span>
+                    <span class="k">return</span> <span class="n">render</span>
+                    <span class="p">(</span><span class="n">request</span>
+                    <span class="p">,</span>
+                    <span class="s1">&#39;bands/band_listing.html&#39;</span>
+                    <span class="p">,</span> <span class="p">{</span>
+                    <span class="s1">&#39;bands&#39;</span><span class="p">:</span>
+                    <span class="n">bands</span><span class="p">})</span>\n</pre>
+            </div>
+            """
         )
 
 
