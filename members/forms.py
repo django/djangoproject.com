@@ -16,6 +16,7 @@ class CorporateMemberSignUpForm(forms.ModelForm):
         self.checkbox_fields = []
         self.radio_select_fields = []
         self.label_fields = []
+        self.fields['logo'].required = True
         for name, field in self.fields.items():
             help_text = field.help_text
             if help_text:

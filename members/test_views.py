@@ -3,7 +3,8 @@ from datetime import date, timedelta
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from members.models import CorporateMember, DeveloperMember
+from .models import CorporateMember, DeveloperMember
+from .utils import get_temporary_image
 
 
 # Inherit from TestCase to enable these tests.
@@ -95,7 +96,7 @@ class CorporateMemberJoinViewTests(TestCase):
         data = {
             'display_name': 'Foo Widgets',
             'billing_name': 'Foo Widgets, Inc.',
-            'logo': '',
+            'logo': get_temporary_image(),
             'url': 'http://example.com',
             'contact_name': 'Joe Developer',
             'contact_email': 'joe@example.com',
