@@ -3,15 +3,16 @@ from django.core import mail
 from django.test import TestCase
 
 from .forms import CorporateMemberSignUpForm
+from .utils import get_temporary_image
 
 
 class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
 
-    def test_submit_success(self):
-        data = {
+    def setUp(self):
+        test_image = get_temporary_image()
+        self.valid_data = {
             'display_name': 'Foo Widgets',
             'billing_name': 'Foo Widgets, Inc.',
-            'logo': '',
             'url': 'http://example.com',
             'contact_name': 'Joe Developer',
             'contact_email': 'joe@example.com',
@@ -21,7 +22,11 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
             'description': 'We make widgets!',
             'amount': 2000,
         }
-        form = CorporateMemberSignUpForm(data)
+        self.file_data = {'logo': test_image}
+
+    def test_submit_success(self):
+        data = self.valid_data
+        form = CorporateMemberSignUpForm(data, self.file_data)
         self.assertTrue(form.is_valid())
         instance = form.save()
         self.assertEqual(instance.display_name, data['display_name'])
@@ -39,3 +44,8 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
             msg.to,
             [settings.FUNDRAISING_DEFAULT_FROM_EMAIL, data['contact_email'], 'treasurer@djangoproject.com']
         )
+
+    def test_logo_required(self):
+        form = CorporateMemberSignUpForm(self.valid_data)  # missing request.FILES
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors, {'logo': ['This field is required.']})
