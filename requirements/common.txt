@@ -8,11 +8,11 @@ elasticsearch-dsl==0.0.9
 elasticsearch>=1.0.0,<2.0.0
 docutils==0.12
 feedparser==5.2.1
-Jinja2==2.7.3
+Jinja2==2.8
 libsass==0.10.0
 Pillow==3.1.0
 psycopg2==2.6.1
-pygments==2.0.2
+pygments==2.1
 pykismet3==0.1.1
 requests==2.9.1
 sorl-thumbnail==12.3
