@@ -124,7 +124,8 @@ def band_listing(request):
             template.render(Context()),
             """
             <div class="highlight">
-                <pre><span class="k">def</span><span class="nf">band_listing</span>
+                <pre>
+                    <span class="k">def</span><span class="nf">band_listing</span>
                     <span class="p">(</span><span class="n">request</span>
                     <span class="p">):</span>
                     <span class="sd">&quot;&quot;&quot;A view of all bands.&quot;&quot;&quot;</span>
@@ -139,7 +140,8 @@ def band_listing(request):
                     <span class="s1">&#39;bands/band_listing.html&#39;</span>
                     <span class="p">,</span> <span class="p">{</span>
                     <span class="s1">&#39;bands&#39;</span><span class="p">:</span>
-                    <span class="n">bands</span><span class="p">})</span>\n</pre>
+                    <span class="n">bands</span><span class="p">})</span>
+                </pre>
             </div>
             """
         )
