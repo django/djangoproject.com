@@ -53,7 +53,7 @@ class Command(BaseCommand):
             #
 
             # Make a git checkout/update into the destination directory.
-            if not self.update_git(release.scm_url, checkout_dir):
+            if not self.update_git(release.scm_url, checkout_dir, changed_dir='docs/'):
                 # No docs changes so don't rebuild.
                 continue
 
@@ -147,7 +147,7 @@ class Command(BaseCommand):
             documents = gen_decoded_documents(json_built_dir)
             release.sync_to_db(documents)
 
-    def update_git(self, url, destdir):
+    def update_git(self, url, destdir, changed_dir='.'):
         """
         Update a source checkout and return True if any docs were changed,
         False otherwise.
@@ -171,7 +171,7 @@ class Command(BaseCommand):
                 docs_changed = subprocess.call([
                     'git', 'diff', branch_with_remote,
                     '--quiet', '--exit-code',
-                    'docs/',
+                    changed_dir,
                 ]) == 1
                 if not docs_changed:
                     return False
