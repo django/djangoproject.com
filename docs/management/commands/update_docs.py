@@ -41,7 +41,7 @@ class Command(BaseCommand):
                 self.stdout.write("Updating %s..." % release)
 
             # checkout_dir is shared for all languages.
-            checkout_dir = settings.DOCS_BUILD_ROOT.joinpath(release.version)
+            checkout_dir = settings.DOCS_BUILD_ROOT.joinpath('sources', release.version)
             parent_build_dir = settings.DOCS_BUILD_ROOT.joinpath(release.lang, release.version)
             if not checkout_dir.exists():
                 checkout_dir.mkdir(parents=True)
