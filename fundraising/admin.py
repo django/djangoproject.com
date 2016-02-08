@@ -6,6 +6,12 @@ from .admin_views import download_donor_report
 from .models import DjangoHero, Donation, InKindDonor, Payment, Testimonial
 
 
+class DonatedFilter(admin.DateFieldListFilter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.title = 'donation date'
+
+
 class DonationInline(admin.TabularInline):
     fields = ['id', 'created', 'interval', 'subscription_amount']
     extra = 0
@@ -16,7 +22,10 @@ class DonationInline(admin.TabularInline):
 class DjangoHeroAdmin(AdminImageMixin, admin.ModelAdmin):
     actions = [download_donor_report]
     inlines = [DonationInline]
-    list_filter = ['approved', 'created', 'modified', 'hero_type', 'is_visible', 'is_subscribed']
+    list_filter = [
+        'approved', 'created', 'modified', 'hero_type', 'is_visible',
+        'is_subscribed', ('donation__created', DonatedFilter),
+    ]
     list_display = ['id', 'name', 'email', 'created', 'modified', 'approved', 'hero_type']
     list_editable = ['approved', 'hero_type']
     ordering = ['-created']
