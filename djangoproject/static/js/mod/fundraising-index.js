@@ -18,7 +18,7 @@ define([
             setDonation: function(event){
                 if ($(this).val() == 'custom'){
                     $(this).remove();
-                    $('.custom-donation').append('<input type="text" name="amount" value="25">').show();
+                    $('.custom-donation').append('<input type="number" name="amount" value="25">').show();
                     var input = $('.custom-donation input');
                     input.focus();
                     // here we're moving the "focus" at the end of the input text
