@@ -2993,22 +2993,6 @@ hr {
     }
 }
 
-.fundraising-donation {
-    select {
-        width: 100%;
-    }
-    input.error {
-        border: 1px solid $red !important;
-    }
-    p.validation-errors {
-        color: $red;
-    }
-    .custom-donation {
-        display: none;
-        margin-top: 10px;
-    }
-}
-
 .fundraising-sidebar {
     .small-heart {
         margin-top: 20px;

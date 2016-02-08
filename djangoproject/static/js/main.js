@@ -60,11 +60,6 @@ define(function() {
         mods.push('mod/fundraising-index');
     }
 
-    //fundraising donation form
-    if (hasClass('fundraising-donation')) {
-        mods.push('mod/fundraising-donation');
-    }
-
     //fundraising heros list
     if (hasClass('heros-section')) {
         mods.push('mod/fundraising-heros');
