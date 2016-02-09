@@ -139,6 +139,11 @@ MIDDLEWARE_CLASSES = [
     'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'accounts.hashers.PBKDF2WrappedSHA1PasswordHasher',
+]
+
 ROOT_URLCONF = 'djangoproject.urls.www'
 
 SECRET_KEY = str(SECRETS['secret_key'])
