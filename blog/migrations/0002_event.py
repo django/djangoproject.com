@@ -19,8 +19,19 @@ class Migration(migrations.Migration):
                 ('external_url', models.URLField()),
                 ('date', models.DateField()),
                 ('location', models.CharField(max_length=100)),
-                ('is_active', models.BooleanField(default=False, help_text="Tick to make this event live (see also the publication date). Note that administrators (like yourself) are allowed to preview inactive events whereas the general public aren't.")),
-                ('pub_date', models.DateTimeField(help_text='For an event to be published, it must be active and its publication date must be in the past.', verbose_name='Publication date')),
+                ('is_active', models.BooleanField(
+                    default=False,
+                    help_text=(
+                        "Tick to make this event live (see also the publication "
+                        "date). Note that administrators (like yourself) are "
+                        "allowed to preview inactive events whereas the "
+                        "general public aren't."
+                    ),
+                )),
+                ('pub_date', models.DateTimeField(
+                    help_text='For an event to be published, it must be active and its publication date must be in the past.',
+                    verbose_name='Publication date',
+                )),
             ],
             options={
                 'ordering': ('-pub_date',),

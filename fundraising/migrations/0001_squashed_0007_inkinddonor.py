@@ -44,7 +44,16 @@ class Migration(migrations.Migration):
                 ('id', models.CharField(max_length=12, primary_key=True, serialize=False)),
                 ('created', models.DateTimeField(default=django.utils.timezone.now)),
                 ('modified', models.DateTimeField(default=django.utils.timezone.now)),
-                ('interval', models.CharField(blank=True, choices=[('monthly', 'Monthly donation'), ('quarterly', 'Quarterly donation'), ('yearly', 'Yearly donation'), ('onetime', 'One-time donation')], max_length=20)),
+                ('interval', models.CharField(
+                    blank=True,
+                    choices=[
+                        ('monthly', 'Monthly donation'),
+                        ('quarterly', 'Quarterly donation'),
+                        ('yearly', 'Yearly donation'),
+                        ('onetime', 'One-time donation'),
+                    ],
+                    max_length=20,
+                )),
                 ('subscription_amount', models.DecimalField(blank=True, decimal_places=2, max_digits=9, null=True)),
                 ('stripe_subscription_id', models.CharField(blank=True, max_length=100)),
                 ('stripe_customer_id', models.CharField(blank=True, max_length=100)),

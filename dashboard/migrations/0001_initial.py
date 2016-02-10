@@ -77,8 +77,16 @@ class Migration(migrations.Migration):
                 ('unit_plural', models.CharField(max_length=100)),
                 ('jenkins_root_url', models.URLField(help_text='E.g. http://ci.djangoproject.com/', max_length=1000, verbose_name='Jenkins instance root URL')),
                 ('build_name', models.CharField(help_text='E.g. Django Python3', max_length=100)),
-                ('is_success_cnt', models.BooleanField(default=False, help_text='E.g. if there are 50 tests of which 30 are failing the value of this metric will be 20 (or 40%.)', verbose_name='Should the metric be a value representing success ratio?')),
-                ('is_percentage', models.BooleanField(default=False, help_text='E.g. if there are 50 tests of which 30 are failing the value of this metric will be 60%.', verbose_name='Should the metric be a percentage value?')),
+                ('is_success_cnt', models.BooleanField(
+                    default=False,
+                    help_text='E.g. if there are 50 tests of which 30 are failing the value of this metric will be 20 (or 40%.)',
+                    verbose_name='Should the metric be a value representing success ratio?',
+                )),
+                ('is_percentage', models.BooleanField(
+                    default=False,
+                    help_text='E.g. if there are 50 tests of which 30 are failing the value of this metric will be 60%.',
+                    verbose_name='Should the metric be a percentage value?',
+                )),
                 ('category', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, blank=True, to='dashboard.Category', null=True)),
             ],
             options={
