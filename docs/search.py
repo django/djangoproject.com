@@ -1,3 +1,4 @@
+import elasticsearch
 from django.core.paginator import EmptyPage, Page, PageNotAnInteger, Paginator
 from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
@@ -66,18 +67,16 @@ class SearchPaginator(Paginator):
 class ImprovedDocType(DocType):
 
     @classmethod
-    def index_all(cls, using=None, delete=False, **kwargs):
+    def index_all(cls, index_name, using=None, **kwargs):
         def actions_generator():
             for obj in cls.index_queryset().iterator():
-                yield cls.from_django(obj).to_dict(include_meta=True)
+                elastic_data = cls.from_django(obj).to_dict(include_meta=True)
+                elastic_data['_index'] = index_name
+                yield elastic_data
 
         client = connections.get_connection(using or cls._doc_type.using)
-        if delete:
-            client.indices.delete(index=cls._doc_type.index, ignore=[400, 404])
-        cls._doc_type.init()
-        for ok, item in streaming_bulk(client, actions_generator(),
-                                       refresh=True,
-                                       **kwargs):
+        cls.init(index_name)
+        for ok, item in streaming_bulk(client, actions_generator(), **kwargs):
             yield ok, item
 
     @classmethod
@@ -154,6 +153,27 @@ class DocumentDocType(ImprovedDocType):
     class Meta:
         index = 'docs'
         doc_type = 'document'
+
+    @classmethod
+    def alias_to_main_index(cls, index_name, using=None):
+        """
+        Alias `index_name` to 'docs' (`cls._doc_type.index`).
+        """
+        body = {'actions': [{'add': {'index': index_name, 'alias': cls._doc_type.index}}]}
+
+        client = connections.get_connection(using or cls._doc_type.using)
+        client.indices.refresh(index=index_name)
+        try:
+            old_index_name = list(client.indices.get_alias('docs').keys())[0]
+        except elasticsearch.exceptions.NotFoundError:
+            old_index_name = None
+        else:
+            body['actions'].append({'remove': {'index': old_index_name, 'alias': cls._doc_type.index}})
+
+        client.indices.update_aliases(body=body)
+        # Delete the old index that was aliased to 'docs'.
+        if old_index_name:
+            client.indices.delete(old_index_name)
 
     @classmethod
     def index_queryset(cls):
