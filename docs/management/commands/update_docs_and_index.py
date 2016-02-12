@@ -8,4 +8,4 @@ class Command(BaseCommand):
     """
     def handle(self, **options):
         call_command('update_docs', **options)
-        call_command('update_index', delete=True, **options)
+        call_command('update_index', **options)
