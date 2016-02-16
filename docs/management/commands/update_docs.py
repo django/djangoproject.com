@@ -31,6 +31,9 @@ class Command(BaseCommand):
 
         default_builders = ['json', 'html']
 
+        # Keep track of which Git sources have been updated.
+        release_docs_changed = {}  # e.g. {'1.8': True} if the 1.8 docs updated.
+
         # Somehow, bizarely, there's a bug in Sphinx such that if I try to
         # build 1.0 before other versions, things fail in weird ways. However,
         # building newer versions first works. I suspect Sphinx is hanging onto
@@ -51,11 +54,13 @@ class Command(BaseCommand):
             #
             # Update the release from SCM.
             #
-
             # Make a git checkout/update into the destination directory.
-            if not self.update_git(release.scm_url, checkout_dir, changed_dir='docs/'):
+            if (not self.update_git(release.scm_url, checkout_dir, changed_dir='docs/') and
+                    not release_docs_changed.get(release.version)):
                 # No docs changes so don't rebuild.
                 continue
+
+            release_docs_changed[release.version] = True
 
             source_dir = checkout_dir.joinpath('docs')
 
