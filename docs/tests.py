@@ -88,6 +88,40 @@ class ModelsTests(TestCase):
         self.assertFalse(d.is_dev)
 
 
+class ManagerTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        r1 = Release.objects.create(version='1.0')
+        r2 = Release.objects.create(version='2.0')
+        DocumentRelease.objects.bulk_create(
+            DocumentRelease(lang=lang, release=release)
+            for lang, release in [('en', r1), ('en', r2), ('sv', r1)]
+        )
+
+    def test_by_version(self):
+        doc_releases = DocumentRelease.objects.by_version('1.0')
+        self.assertEqual(
+            {(r.lang, r.release.version) for r in doc_releases},
+            {('en', '1.0'), ('sv', '1.0')}
+        )
+
+    def test_get_by_version_and_lang_exists(self):
+        doc = DocumentRelease.objects.get_by_version_and_lang('1.0', 'en')
+        self.assertEqual(doc.release.version, '1.0')
+        self.assertEqual(doc.lang, 'en')
+
+    def test_get_by_version_and_lang_missing(self):
+        with self.assertRaises(DocumentRelease.DoesNotExist):
+            DocumentRelease.objects.get_by_version_and_lang('2.0', 'sv')
+
+    def test_get_available_languages_by_version(self):
+        get = DocumentRelease.objects.get_available_languages_by_version
+        self.assertEqual(set(get('1.0')), {'en', 'sv'})
+        self.assertEqual(set(get('2.0')), {'en'})
+        self.assertEqual(set(get('3.0')), set())
+
+
 class SearchFormTestCase(TestCase):
     fixtures = ['doc_test_fixtures']
 
