@@ -73,7 +73,7 @@ def document(request, lang, version, url):
         'env': json.load((docroot.joinpath('globalcontext.json')).open('r')),
         'lang': lang,
         'version': version,
-        'available_languages': DocumentRelease.objects.available_languages(version),
+        'available_languages': DocumentRelease.objects.get_available_languages_by_version(version),
         'release': release,
         'rtd_version': rtd_version,
         'docurl': url,

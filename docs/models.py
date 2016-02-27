@@ -48,7 +48,7 @@ class DocumentReleaseManager(models.Manager):
     def get_by_version_and_lang(self, version, lang):
         return self.by_version(version).get(lang=lang)
 
-    def available_languages(self, version):
+    def get_available_languages_by_version(self, version):
         return self.by_version(version).values_list('lang', flat=True)
 
 
