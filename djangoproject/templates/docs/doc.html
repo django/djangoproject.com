@@ -14,9 +14,9 @@
 
   {% for available_lang in available_languages %}
       {% if docurl %}
-      <link rel="alternate" hreflang="{{ available_lang }}" href="{% url 'document-detail' lang=available_lang version='stable' url=docurl host 'docs' %}">
+      <link rel="alternate" hreflang="{{ available_lang }}" href="{% url 'document-detail' lang=available_lang version=version url=docurl host 'docs' %}">
       {% else %}
-      <link rel="alternate" hreflang="{{ available_lang }}" href="{% url 'document-index' lang=available_lang version='stable' host 'docs' %}">
+      <link rel="alternate" hreflang="{{ available_lang }}" href="{% url 'document-index' lang=available_lang version=version host 'docs' %}">
       {% endif %}
   {% endfor %}
 
