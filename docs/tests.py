@@ -113,9 +113,9 @@ class ManagerTests(TestCase):
         })
 
     def test_get_by_version_and_lang_exists(self):
-        self.assertTrue(
-            DocumentRelease.objects.get_by_version_and_lang('1.0', 'en')
-        )
+        doc = DocumentRelease.objects.get_by_version_and_lang('1.0', 'en')
+        self.assertEqual(doc.release.version, '1.0')
+        self.assertEqual(doc.lang, 'en')
 
     def test_get_by_version_and_lang_missing(self):
         with self.assertRaises(DocumentRelease.DoesNotExist):
