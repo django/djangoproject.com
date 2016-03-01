@@ -12,11 +12,11 @@
   <link rel="canonical" href="{% url 'document-index' lang=lang version='stable' host 'docs' %}">
   {% endif %}
 
-  {% for av_lang in available_languages %}
+  {% for available_lang in available_languages %}
       {% if docurl %}
-      <link rel="alternate" hreflang="{{ av_lang }}" href="{% url 'document-detail' lang=av_lang version='stable' url=docurl host 'docs' %}">
+      <link rel="alternate" hreflang="{{ available_lang }}" href="{% url 'document-detail' lang=available_lang version='stable' url=docurl host 'docs' %}">
       {% else %}
-      <link rel="alternate" hreflang="{{ av_lang }}" href="{% url 'document-index' lang=av_lang version='stable' host 'docs' %}">
+      <link rel="alternate" hreflang="{{ available_lang }}" href="{% url 'document-index' lang=available_lang version='stable' host 'docs' %}">
       {% endif %}
   {% endfor %}
 
