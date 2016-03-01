@@ -42,8 +42,14 @@ class DocumentReleaseManager(models.Manager):
             )
         return current_version
 
+    def by_version(self, version):
+        return self.filter(**{'release__isnull': True} if version == 'dev' else {'release': version})
+
     def get_by_version_and_lang(self, version, lang):
-        return self.get(lang=lang, **{'release__isnull': True} if version == 'dev' else {'release': version})
+        return self.by_version(version).get(lang=lang)
+
+    def get_available_languages_by_version(self, version):
+        return self.by_version(version).values_list('lang', flat=True)
 
 
 class DocumentRelease(models.Model):

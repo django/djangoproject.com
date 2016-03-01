@@ -11,6 +11,15 @@
   {% else %}
   <link rel="canonical" href="{% url 'document-index' lang=lang version='stable' host 'docs' %}">
   {% endif %}
+
+  {% for available_lang in available_languages %}
+      {% if docurl %}
+      <link rel="alternate" hreflang="{{ available_lang }}" href="{% url 'document-detail' lang=available_lang version=version url=docurl host 'docs' %}">
+      {% else %}
+      <link rel="alternate" hreflang="{{ available_lang }}" href="{% url 'document-index' lang=available_lang version=version host 'docs' %}">
+      {% endif %}
+  {% endfor %}
+
   <link rel="search"
         type="application/opensearchdescription+xml"
         href="{% url 'document-search-description' lang=lang version=version host 'docs' %}"
