@@ -90,7 +90,8 @@ class ModelsTests(TestCase):
 
 class ManagerTests(TestCase):
 
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         r1 = Release.objects.create(version='1.0')
         r2 = Release.objects.create(version='2.0')
         DocumentRelease.objects.bulk_create(
