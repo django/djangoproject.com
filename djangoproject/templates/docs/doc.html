@@ -7,10 +7,11 @@
 
 {% block head_extra %}
   {% if docurl %}
-  <link rel="canonical"  href="{% url 'document-detail' lang=lang version='stable' url=docurl host 'docs' %}">
+    {% url 'document-detail' lang=lang version='stable' url=docurl host 'docs' as canonical_url %}
   {% else %}
-  <link rel="canonical" href="{% url 'document-index' lang=lang version='stable' host 'docs' %}">
+    {% url 'document-index' lang=lang version='stable' host 'docs' as canonical_url %}
   {% endif %}
+  <link rel="canonical" href="{{ canonical_url }}">
   <link rel="search"
         type="application/opensearchdescription+xml"
         href="{% url 'document-search-description' lang=lang version=version host 'docs' %}"
@@ -36,10 +37,11 @@
   {% if version != other_version %}
   <li class="other">
     {% if docurl %}
-    <a href="{% url 'document-detail' lang=lang version=other_version url=docurl host 'docs' %}">{{ other_version }}</a>
+      {% url 'document-detail' lang=lang version=other_version url=docurl host 'docs' as other_url %}
     {% else %}
-    <a href="{% url 'document-index' lang=lang version=other_version host 'docs' %}{% if searchparams %}search/?{{ searchparams }}{% endif %}">{{ other_version }}</a>
+      {% url 'document-index' lang=lang version=other_version host 'docs' as other_url %}
     {% endif %}
+    <a href="{{ other_url }}{% if searchparams %}search/?{{ searchparams }}{% endif %}">{{ other_version }}</a>
   </li>
   {% endif %}
   {% endfor %}
