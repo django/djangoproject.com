@@ -60,9 +60,9 @@ define(function() {
         mods.push('mod/fundraising-index');
     }
 
-    //fundraising heros list
-    if (hasClass('heros-section')) {
-        mods.push('mod/fundraising-heros');
+    //fundraising heroes list
+    if (hasClass('heroes-section')) {
+        mods.push('mod/fundraising-heroes');
     }
 
     if (hasClass('dashboard-index')) {
