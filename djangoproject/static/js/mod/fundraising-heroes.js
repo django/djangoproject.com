@@ -9,12 +9,12 @@ define([
         // assumes an image size of 170 px plus some margin
         var threshold = 200;
 
-        var FundraisingHeros = function(images) {
-            this.images = $(images); // the heros images
+        var FundraisingHeroes = function(images) {
+            this.images = $(images); // the heroes images
             this.init();
         };
 
-        FundraisingHeros.prototype = {
+        FundraisingHeroes.prototype = {
             init: function() {
                 var self = this;
                 $(document).ready(function() {
@@ -23,5 +23,5 @@ define([
             },
         };
         // Export a single instance of our module:
-        return new FundraisingHeros('.hero-logo img');
+        return new FundraisingHeroes('.hero-logo img');
 });

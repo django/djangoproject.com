@@ -61,8 +61,8 @@ def donation_form_with_heart(context):
     }
 
 
-@register.inclusion_tag('fundraising/includes/display_django_heros.html')
-def display_django_heros():
+@register.inclusion_tag('fundraising/includes/display_django_heroes.html')
+def display_django_heroes():
     donors = DjangoHero.objects.for_public_display()
     i = 0
     for i, donor in enumerate(donors):
@@ -71,7 +71,7 @@ def display_django_heros():
     return {
         'silver_members': CorporateMember.objects.for_public_display(),
         'leaders': donors[:i],
-        'heros': donors[i:],
+        'heroes': donors[i:],
         'inkind_donors': InKindDonor.objects.all(),
         'display_donor_days': DISPLAY_DONOR_DAYS,
         'display_logo_amount': LEADERSHIP_LEVEL_AMOUNT,

@@ -1,5 +1,5 @@
 {% load static humanize thumbnail %}
-<div class="heros">
+<div class="heroes">
   <h3>Silver Corporate Members ($2,000+)</h3>
   <p>Our silver <a href="/foundation/corporate-membership/">corporate
     members</a> include independent consultancies, sole proprietorships, and
@@ -69,10 +69,10 @@
   {% endfor %}
   </div>
 
-  <h3>Heros</h3>
+  <h3>Heroes</h3>
   <p>Our donor roll for all donations made in the last {{ display_donor_days }} days.</p>
   <div>
-  {% for donor in heros %}
+  {% for donor in heroes %}
     <div class="no-logo-hero">
       {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
         <span>{{ donor.name_with_fallback }}</span>
