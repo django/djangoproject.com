@@ -11,7 +11,7 @@ from ..models import (
     InKindDonor, Payment,
 )
 from ..templatetags.fundraising_extras import (
-    display_django_heros, donation_form_with_heart,
+    display_django_heroes, donation_form_with_heart,
 )
 
 
@@ -37,8 +37,8 @@ class TestDonationFormWithHeart(TestCase):
         self.assertEqual(response['donated_amount'], Decimal('8.00'))
 
 
-class TestDisplayDjangoHeros(TestCase):
-    def test_display_django_heros(self):
+class TestDisplayDjangoHeroes(TestCase):
+    def test_display_django_heroes(self):
         def create_hero_with_payment_amount(amount):
             hero = DjangoHero.objects.create(
                 email='%s@djangoproject.com' % get_random_string(),
@@ -54,12 +54,12 @@ class TestDisplayDjangoHeros(TestCase):
         hero3 = create_hero_with_payment_amount(LEADERSHIP_LEVEL_AMOUNT - 1)
         inkind_donor = InKindDonor.objects.create(name='Inkind')
 
-        response = display_django_heros()
+        response = display_django_heroes()
         self.assertEqual(response['leaders'], [hero1, hero2])
-        self.assertEqual(response['heros'], [hero3])
+        self.assertEqual(response['heroes'], [hero3])
         self.assertEqual(list(response['inkind_donors']), [inkind_donor])
 
-    def test_display_django_heros_payments(self):
+    def test_display_django_heroes_payments(self):
         """
         Donors created more than DISPLAY_DONOR_DAYS ago shouldn't be displayed.
         """
@@ -79,5 +79,5 @@ class TestDisplayDjangoHeros(TestCase):
         hero2 = create_hero_with_payment_date(0)
         hero3 = create_hero_with_payment_date(-1)
 
-        response = display_django_heros()
-        self.assertEqual(response['heros'], [hero2, hero3])
+        response = display_django_heroes()
+        self.assertEqual(response['heroes'], [hero2, hero3])
