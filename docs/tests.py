@@ -194,7 +194,7 @@ class TestUtils(TestCase):
 class UpdateDocTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.release = DocumentRelease.objects.create(version='dev')
+        cls.release = DocumentRelease.objects.create()
 
     def test_sync_to_db(self):
         self.release.sync_to_db([{
