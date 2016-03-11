@@ -4,8 +4,8 @@ django-contact-form==1.2
 django-hosts==1.4
 django-push==0.8
 django-registration-redux==1.4
-elasticsearch-dsl==0.0.11
-elasticsearch==2.2.0
+elasticsearch-dsl==2.0.0
+elasticsearch==2.3.0
 docutils==0.12
 feedparser==5.2.1
 Jinja2==2.8
