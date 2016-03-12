@@ -29,6 +29,7 @@ class CorporateMemberAdmin(admin.ModelAdmin):
         'display_name',
         'membership_expires',
         '_is_invoiced',
+        '_is_paid',
         'contact_email',
         'membership_level',
     ]

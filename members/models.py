@@ -68,6 +68,12 @@ class CorporateMember(models.Model):
     _is_invoiced.boolean = True
     is_invoiced = property(_is_invoiced)
 
+    def _is_paid(self):
+        invoices = self.invoice_set.all()
+        return bool(invoices) and all(invoice.paid_date is not None for invoice in invoices)
+    _is_paid.boolean = True
+    is_paid = property(_is_paid)
+
     def get_expiry_date(self):
         expiry_date = None
         for invoice in self.invoice_set.all():

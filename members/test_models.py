@@ -58,6 +58,17 @@ class CorporateMemberTests(TestCase):
         invoice.save()
         self.assertEqual(self.member.is_invoiced, True)
 
+    def test_is_paid(self):
+        # No invoices == not paid.
+        self.assertEqual(self.member.is_paid, False)
+        # Invoice but no paid_date == not paid.
+        invoice = self.member.invoice_set.create(amount=500)
+        self.assertEqual(self.member.is_paid, False)
+        # Invoice with a paid_date == paid.
+        invoice.paid_date = date.today()
+        invoice.save()
+        self.assertEqual(self.member.is_paid, True)
+
     def test_get_expiry_date(self):
         today = date.today()
         tomorrow = today + timedelta(days=1)
