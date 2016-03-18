@@ -1,0 +1,17 @@
+{% load static thumbnail %}
+<div class="hero">
+  <div class="hero-logo">
+    {% if obj.url %}<a href="{{ obj.url }}" rel="nofollow">{% endif %}
+    <img src="{% static 'img/fundraising-heart.png' %}"
+      data-src="{% if obj.logo %}{{ obj.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+      data-src-retina="{% if obj.logo %}{{ obj.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+      alt="{{ obj.display_name }}" />
+    {% if obj.url %}</a>{% endif %}
+  </div>
+  <div class="hero-name">
+    {% if obj.url %}<a href="{{ obj.url }}" rel="nofollow">{% endif %}{% spaceless %}
+    {{ obj.display_name }}
+    {% endspaceless %}{% if obj.url %}</a>{% endif %}
+    {% if show_description %}{{ obj.description }}{% endif %}
+  </div>
+</div>

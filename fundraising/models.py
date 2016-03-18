@@ -80,6 +80,10 @@ class DjangoHero(FundraisingModel):
         verbose_name_plural = "Django heroes"
 
     @property
+    def display_name(self):
+        return self.name
+
+    @property
     def thumbnail(self):
         return get_thumbnail(self.logo, '170x170', quality=100)
 
@@ -141,6 +145,10 @@ class InKindDonor(models.Model):
     class Meta:
         verbose_name = 'in-kind hero'
         verbose_name_plural = 'in-kind heroes'
+
+    @property
+    def display_name(self):
+        return self.name
 
     @property
     def thumbnail(self):

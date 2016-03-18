@@ -1,71 +1,30 @@
-{% load static humanize thumbnail %}
+{% load humanize %}
 <div class="heroes">
   <h3>Silver Corporate Members ($2,000+)</h3>
   <p>Our silver <a href="/foundation/corporate-membership/">corporate
     members</a> include independent consultancies, sole proprietorships, and
     other small businesses.</p>
   <div>
-  {% for donor in silver_members %}
-  <div class="hero">
-      <div class="hero-logo">
-        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
-        <img src="{% static 'img/fundraising-heart.png' %}"
-          data-src="{% if donor.logo %}{{ donor.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
-          data-src-retina="{% if donor.logo %}{{ donor.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
-          alt="{{ donor.display_name }}" />
-        {% if donor.url %}</a>{% endif %}
-      </div>
-      <div class="hero-name">
-        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
-        {{ donor.display_name }}
-        {% endspaceless %}{% if donor.url %}</a>{% endif %}
-      </div>
-    </div>
+  {% for obj in silver_members %}
+    {% include "fundraising/includes/_hero_with_logo.html" %}
   {% endfor %}
   </div>
 
   <h3>In-kind donors</h3>
   <p>These donors help with significant non-cash contributions.</p>
   <div>
-  {% for donor in inkind_donors %}
-    <div class="hero">
-      <div class="hero-logo">
-        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
-        <img src="{% static 'img/fundraising-heart.png' %}"
-          data-src="{% if donor.logo %}{{ donor.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
-          data-src-retina="{% if donor.logo %}{{ donor.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
-          alt="{{ donor.name }}" />
-        {% if donor.url %}</a>{% endif %}
-      </div>
-      <div class="hero-name">
-        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
-        {{ donor.name }}
-        {% endspaceless %}{% if donor.url %}</a>{% endif %}
-        {{ donor.description }}
-      </div>
-    </div>
+  {% with show_description=True %}
+  {% for obj in inkind_donors %}
+    {% include "fundraising/includes/_hero_with_logo.html" %}
   {% endfor %}
+  {% endwith %}
   </div>
 
   <h3>Leaders ($1,000+)</h3>
   <p>Leadership-level donors contribute $1,000 or more in a calendar year.</p>
   <div>
-  {% for donor in leaders %}
-    <div class="hero">
-      <div class="hero-logo">
-        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}
-        <img src="{% static 'img/fundraising-heart.png' %}"
-          data-src="{% if donor.logo %}{{ donor.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
-          data-src-retina="{% if donor.logo %}{{ donor.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
-          alt="{{ donor.name }}" />
-        {% if donor.url %}</a>{% endif %}
-      </div>
-      <div class="hero-name">
-        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
-        {{ donor.name_with_fallback }}
-        {% endspaceless %}{% if donor.url %}</a>{% endif %}
-      </div>
-    </div>
+  {% for obj in leaders %}
+    {% include "fundraising/includes/_hero_with_logo.html" %}
   {% endfor %}
   </div>
 
