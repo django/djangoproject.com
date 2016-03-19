@@ -1,8 +1,20 @@
+from collections import defaultdict
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.views.generic.dates import timezone_today
 from sorl.thumbnail import ImageField, get_thumbnail
+
+SILVER_MEMBERSHIP = 1
+GOLD_MEMBERSHIP = 2
+PLATINUM_MEMBERSHIP = 3
+
+CORPORATE_MEMBERSHIP_AMOUNTS = {
+    'platinum': 100000,
+    'gold': 25000,
+    'silver': 2000,
+}
 
 
 class DeveloperMember(models.Model):
@@ -30,12 +42,25 @@ class CorporateMemberManager(models.Manager):
         ).annotate(donated_amount=models.Sum('invoice__amount'))
         return objs.order_by('-donated_amount', 'display_name')
 
+    def by_membership_level(self):
+        members_by_type = defaultdict(list)
+        members = self.for_public_display()
+        for member in members:
+            if member.membership_level == SILVER_MEMBERSHIP:
+                key = 'silver'
+            elif member.membership_level == GOLD_MEMBERSHIP:
+                key = 'gold'
+            else:
+                key = 'platinum'
+            members_by_type[key].append(member)
+        return members_by_type
+
 
 class CorporateMember(models.Model):
     MEMBERSHIP_LEVELS = (
-        (1, 'Silver'),
-        (2, 'Gold'),
-        (3, 'Platinum'),
+        (SILVER_MEMBERSHIP, 'Silver'),
+        (GOLD_MEMBERSHIP, 'Gold'),
+        (PLATINUM_MEMBERSHIP, 'Platinum'),
     )
 
     display_name = models.CharField(max_length=250)

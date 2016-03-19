@@ -2,7 +2,10 @@ from datetime import date, timedelta
 
 from django.test import TestCase
 
-from members.models import CorporateMember, DeveloperMember
+from members.models import (
+    GOLD_MEMBERSHIP, PLATINUM_MEMBERSHIP, SILVER_MEMBERSHIP, CorporateMember,
+    DeveloperMember,
+)
 
 
 class DeveloperMemberTests(TestCase):
@@ -30,6 +33,8 @@ class DeveloperMemberTests(TestCase):
 
 
 class CorporateMemberTests(TestCase):
+    today = date.today()
+    tomorrow = today + timedelta(days=1)
 
     @classmethod
     def setUpTestData(cls):
@@ -38,7 +43,7 @@ class CorporateMemberTests(TestCase):
             billing_name='foo',
             billing_email='c@example.com',
             contact_email='c@example.com',
-            membership_level=2,
+            membership_level=SILVER_MEMBERSHIP,
         )
 
     def setUp(self):
@@ -54,7 +59,7 @@ class CorporateMemberTests(TestCase):
         invoice = self.member.invoice_set.create(amount=500)
         self.assertEqual(self.member.is_invoiced, False)
         # Invoice with an sent_date == invoiced.
-        invoice.sent_date = date.today()
+        invoice.sent_date = self.today
         invoice.save()
         self.assertEqual(self.member.is_invoiced, True)
 
@@ -65,17 +70,26 @@ class CorporateMemberTests(TestCase):
         invoice = self.member.invoice_set.create(amount=500)
         self.assertEqual(self.member.is_paid, False)
         # Invoice with a paid_date == paid.
-        invoice.paid_date = date.today()
+        invoice.paid_date = self.today
         invoice.save()
         self.assertEqual(self.member.is_paid, True)
 
     def test_get_expiry_date(self):
-        today = date.today()
-        tomorrow = today + timedelta(days=1)
         self.assertIsNone(self.member.get_expiry_date())
         self.member.invoice_set.create(amount=500)
         self.assertIsNone(self.member.get_expiry_date())
-        self.member.invoice_set.create(amount=500, expiration_date=today)
-        self.assertEqual(self.member.get_expiry_date(), today)
-        self.member.invoice_set.create(amount=500, expiration_date=tomorrow)
-        self.assertEqual(self.member.get_expiry_date(), tomorrow)
+        self.member.invoice_set.create(amount=500, expiration_date=self.today)
+        self.assertEqual(self.member.get_expiry_date(), self.today)
+        self.member.invoice_set.create(amount=500, expiration_date=self.tomorrow)
+        self.assertEqual(self.member.get_expiry_date(), self.tomorrow)
+
+    def test_manager_by_membership_level(self):
+        self.assertEqual(CorporateMember.objects.by_membership_level(), {})
+        self.member.invoice_set.create(amount=500, expiration_date=self.tomorrow)
+        self.assertEqual(CorporateMember.objects.by_membership_level(), {'silver': [self.member]})
+        self.member.membership_level = GOLD_MEMBERSHIP
+        self.member.save()
+        self.assertEqual(CorporateMember.objects.by_membership_level(), {'gold': [self.member]})
+        self.member.membership_level = PLATINUM_MEMBERSHIP
+        self.member.save()
+        self.assertEqual(CorporateMember.objects.by_membership_level(), {'platinum': [self.member]})
