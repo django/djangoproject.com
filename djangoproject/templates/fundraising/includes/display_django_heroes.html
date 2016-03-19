@@ -1,11 +1,34 @@
 {% load humanize %}
 <div class="heroes">
-  <h3>Silver Corporate Members ($2,000+)</h3>
+  {% if corporate_members.platinum %}
+  <h3>Platinum Corporate Members (${{ corporate_membership_amounts.platinum|intcomma }}+)</h3>
+  <p>Our platinum <a href="/foundation/corporate-membership/">corporate
+    members</a> include large corporations and foundations.</p>
+  <div>
+  {% for obj in corporate_members.platinum %}
+    {% include "fundraising/includes/_hero_with_logo.html" %}
+  {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if corporate_members.gold %}
+  <h3>Gold Corporate Members (${{ corporate_membership_amounts.gold|intcomma }}+)</h3>
+  <p>Our gold <a href="/foundation/corporate-membership/">corporate
+    members</a> include medium-sized businesses, established ISVs, and other
+    mid-range companies.</p>
+  <div>
+  {% for obj in corporate_members.gold %}
+    {% include "fundraising/includes/_hero_with_logo.html" %}
+  {% endfor %}
+  </div>
+  {% endif %}
+
+  <h3>Silver Corporate Members (${{ corporate_membership_amounts.silver|intcomma }}+)</h3>
   <p>Our silver <a href="/foundation/corporate-membership/">corporate
     members</a> include independent consultancies, sole proprietorships, and
     other small businesses.</p>
   <div>
-  {% for obj in silver_members %}
+  {% for obj in corporate_members.silver %}
     {% include "fundraising/includes/_hero_with_logo.html" %}
   {% endfor %}
   </div>
@@ -20,8 +43,9 @@
   {% endwith %}
   </div>
 
-  <h3>Leaders ($1,000+)</h3>
-  <p>Leadership-level donors contribute $1,000 or more in a calendar year.</p>
+  <h3>Leaders (${{ display_logo_amount|intcomma }}+)</h3>
+  <p>Leadership-level donors contribute ${{ display_logo_amount|intcomma }} or
+    more in a calendar year.</p>
   <div>
   {% for obj in leaders %}
     {% include "fundraising/includes/_hero_with_logo.html" %}
