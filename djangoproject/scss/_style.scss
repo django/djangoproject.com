@@ -2174,9 +2174,9 @@ h2 + .list-link-soup {
 
 }
 
-// Docs version switcher
+// Switcher for docs version and language
 
-#doc-versions {
+#fixed-switcher {
 
     position: fixed;
     right: 15px;
@@ -2190,6 +2190,15 @@ h2 + .list-link-soup {
     .icon {
         margin-right: 4px;
     }
+
+    ul {
+        text-align: right;
+    }
+}
+
+#doc-versions, #doc-languages {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 
     li {
         display: none;

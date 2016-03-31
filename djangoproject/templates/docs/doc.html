@@ -45,35 +45,57 @@
 {% endblock body_extra %}
 
 {% block content %}
-{% get_all_doc_versions docurl as other_versions %}
-<ul id="doc-versions" class="version-switcher">
-  {% for other_version in other_versions %}
-  {% if version != other_version %}
+<div id="fixed-switcher">
+  <ul id="doc-languages" class="language-switcher">
+  {% for available_lang in available_languages %}
+  {% if lang != available_lang %}
   <li class="other">
-    {% if docurl %}
-      {% url 'document-detail' lang=lang version=other_version url=docurl host 'docs' as other_url %}
-    {% else %}
-      {% url 'document-index' lang=lang version=other_version host 'docs' as other_url %}
-    {% endif %}
-    <a href="{{ other_url }}{% if searchparams %}search/?{{ searchparams }}{% endif %}">{{ other_version }}</a>
+      {% if docurl %}
+        {% url 'document-detail' lang=available_lang version=version url=docurl host 'docs' as other_url %}
+      {% else %}
+        {% url 'document-index' lang=available_lang version=version host 'docs' as other_url %}
+      {% endif %}
+      <a href="{{ other_url }}{% if searchparams %}search/?{{ searchparams }}{% endif %}">{{ available_lang }}</a>
   </li>
   {% endif %}
   {% endfor %}
-  <li class="current{% if release.is_dev %} dev{% endif %}"
-  title="{% if release.is_dev %}{% blocktrans trimmed %}
-    This document is for Django's development version, which can be significantly different from previous releases.
-  {% endblocktrans %}{% else %}{% blocktrans trimmed %}
-    This document describes Django {{ version }}.
-  {% endblocktrans %}{% endif %} {% blocktrans trimmed %}
-    Click on the links on the left to see other versions.
-  {% endblocktrans %}">
-  <span>{% trans "Documentation version:" %}
-    <strong>{% if release.is_dev %}
-      development{% else %}{{ version }}
-      {% endif %}</strong>
-    </span>
-  </li>
-</ul>
+    <li class="current" title="{% blocktrans trimmed %}Click on the links on the left to switch to another language.{% endblocktrans %}">
+      <span>{% trans "Language:" %}
+        <strong>{{ lang }}</strong>
+      </span>
+    </li>
+  </ul>
+
+  {% get_all_doc_versions docurl as other_versions %}
+  <ul id="doc-versions" class="version-switcher">
+    {% for other_version in other_versions %}
+    {% if version != other_version %}
+    <li class="other">
+      {% if docurl %}
+        {% url 'document-detail' lang=lang version=other_version url=docurl host 'docs' as other_url %}
+      {% else %}
+        {% url 'document-index' lang=lang version=other_version host 'docs' as other_url %}
+      {% endif %}
+      <a href="{{ other_url }}{% if searchparams %}search/?{{ searchparams }}{% endif %}">{{ other_version }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+    <li class="current{% if release.is_dev %} dev{% endif %}"
+    title="{% if release.is_dev %}{% blocktrans trimmed %}
+      This document is for Django's development version, which can be significantly different from previous releases.
+    {% endblocktrans %}{% else %}{% blocktrans trimmed %}
+      This document describes Django {{ version }}.
+    {% endblocktrans %}{% endif %} {% blocktrans trimmed %}
+      Click on the links on the left to see other versions.
+    {% endblocktrans %}">
+    <span>{% trans "Documentation version:" %}
+      <strong>{% if release.is_dev %}
+        development{% else %}{{ version }}
+        {% endif %}</strong>
+      </span>
+    </li>
+  </ul>
+</div>
 
 {% block body %}
 <div id="docs-content">
