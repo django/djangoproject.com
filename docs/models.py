@@ -9,8 +9,8 @@ from django.core.cache import cache
 from django.db import models, transaction
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
-from django_hosts.resolvers import reverse
 from django.utils.text import unescape_entities
+from django_hosts.resolvers import reverse
 
 from releases.models import Release
 
