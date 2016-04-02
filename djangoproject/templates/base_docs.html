@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block html_language_code %}{{ LANGUAGE_CODE|default:"en" }}{% endblock %}
+
 {% block title %}Django Documentation{% endblock %}
 
 {% block header %}
