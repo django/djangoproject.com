@@ -23,7 +23,7 @@
       {% else %}
         {% url 'document-index' lang=available_lang version=version host 'docs' as alternate_url %}
       {% endif %}
-      <link rel="alternate" hreflang="{{ available_lang }}" href="{{ alternate_url }}">
+      <link rel="alternate" hreflang="{% if available_lang == "en" %}x-default{% else %}{{ available_lang }}{% endif %}" href="{{ alternate_url }}">
   {% endfor %}
 
   <link rel="search"
