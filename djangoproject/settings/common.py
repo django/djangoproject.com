@@ -228,6 +228,8 @@ ROOT_HOSTCONF = 'djangoproject.hosts'
 
 ACCOUNT_ACTIVATION_DAYS = 3
 
+REGISTRATION_EMAIL_HTML = False
+
 # aggregator / PubSubHubbub settings
 
 FEED_APPROVERS_GROUP_NAME = "feed-approver"
