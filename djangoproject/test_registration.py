@@ -20,7 +20,7 @@ class TestRegistration(TestCase):
             "djangoproject.com using this email address. If it was you, and "
             "you'd like to activate and use your account, click the link below "
             "or copy and paste it into your web browser's address bar:\n\n"
-            "http://www.djangoproject.com/accounts/activate/activation-key/\n\n"
+            "https://www.djangoproject.com/accounts/activate/activation-key/\n\n"
             "If you didn't request this, you don't need to do anything; you "
             "won't receive any more email from us, and the account will expire "
             "automatically in three days.\n"
