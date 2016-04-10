@@ -2184,6 +2184,7 @@ h2 + .list-link-soup {
     margin: 0;
     padding: 0;
     z-index: 1;
+    pointer-events: none;
 
     list-style: none;
 
@@ -2206,6 +2207,7 @@ h2 + .list-link-soup {
         @include sans-serif;
         color: $text;
         @include font-size(12);
+        pointer-events: auto;
 
         &.current {
             display: inline-block;
@@ -2232,6 +2234,7 @@ h2 + .list-link-soup {
     }
 
     &:hover, .hover-on {
+        pointer-events: auto;
         li {
             display: inline-block;
         }
