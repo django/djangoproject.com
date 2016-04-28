@@ -190,11 +190,11 @@
     {% if version == "dev" %}{% trans "Offline (development version):" %}
     {% else %}{% blocktrans %}Offline (Django {{ version }}):{% endblocktrans %}{% endif %}
     <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> |
-    <a href="http://media.readthedocs.org/pdf/django/{{ rtd_version }}/django.pdf">PDF</a> |
-    <a href="http://media.readthedocs.org/epub/django/{{ rtd_version }}/django.epub">ePub</a>
+    <a href="https://media.readthedocs.org/pdf/django/{{ rtd_version }}/django.pdf">PDF</a> |
+    <a href="https://media.readthedocs.org/epub/django/{{ rtd_version }}/django.epub">ePub</a>
     <br>
     <span class="quiet">
-      {% blocktrans %}Provided by <a href="http://readthedocs.org/">Read the Docs</a>.{% endblocktrans %}
+      {% blocktrans %}Provided by <a href="https://readthedocs.org/">Read the Docs</a>.{% endblocktrans %}
     </span>
   </p>
   {% endblock links-wrapper %}

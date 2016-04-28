@@ -103,7 +103,7 @@ Our test results can be found here:
     https://travis-ci.org/django/djangoproject.com
 
 For local development don't hesitate to install
-`tox <http://tox.readthedocs.org/>`_ to run the website's test suite.
+`tox <https://tox.readthedocs.io/>`_ to run the website's test suite.
 
 Then in the root directory (next to the ``manage.py`` file) run::
 
@@ -111,7 +111,7 @@ Then in the root directory (next to the ``manage.py`` file) run::
 
 Behind the scenes this will run the usual ``./manage.py test`` management
 command with a preset list of apps that we want to test as well as
-`flake8 <http://flake8.readthedocs.org/>`_ for code quality checks. We
+`flake8 <https://flake8.readthedocs.io/>`_ for code quality checks. We
 collect test coverage data as part of that tox run, to show the result
 simply run::
 
