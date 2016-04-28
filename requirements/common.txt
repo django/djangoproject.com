@@ -9,7 +9,7 @@ elasticsearch==2.3.0
 docutils==0.12
 feedparser==5.2.1
 Jinja2==2.8
-libsass==0.11
+libsass==0.11.1
 Pillow==3.2.0
 psycopg2==2.6.1
 pygments==2.1
