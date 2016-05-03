@@ -10,28 +10,29 @@
     {% if "internals" in docurl %} {# The canonical version of "internals" is the dev docs. #}
       {% url 'document-detail' lang=lang version='dev' url=docurl host 'docs' as canonical_url %}
     {% else %}
-      {% url 'document-detail' lang=lang version='stable' url=docurl host 'docs' as canonical_url %}
+      {% url 'document-detail' lang=lang version=canonical_version url=docurl host 'docs' as canonical_url %}
     {% endif %}
   {% else %}
-    {% url 'document-index' lang=lang version='stable' host 'docs' as canonical_url %}
+    {% url 'document-index' lang=lang version=canonical_version host 'docs' as canonical_url %}
   {% endif %}
   <link rel="canonical" href="{{ canonical_url }}">
-
-  {% for available_lang in available_languages %}
-      {% if docurl %}
-        {% url 'document-detail' lang=available_lang version=version url=docurl host 'docs' as alternate_url %}
-      {% else %}
-        {% url 'document-index' lang=available_lang version=version host 'docs' as alternate_url %}
-      {% endif %}
-      {% if available_lang == "en" %}
-      <link rel="alternate"
-         hreflang="x-default"
-         href="{{ alternate_url }}">
-      {% endif %}
-      <link rel="alternate"
-         hreflang="{{ available_lang }}"
-         href="{{ alternate_url }}">
-  {% endfor %}
+  {% if canonical %}
+    {% for available_lang in available_languages %}
+        {% if docurl %}
+          {% url 'document-detail' lang=available_lang version=version url=docurl host 'docs' as alternate_url %}
+        {% else %}
+          {% url 'document-index' lang=available_lang version=version host 'docs' as alternate_url %}
+        {% endif %}
+        {% if available_lang == "en" %}
+        <link rel="alternate"
+           hreflang="x-default"
+           href="{{ alternate_url }}">
+        {% endif %}
+        <link rel="alternate"
+           hreflang="{{ available_lang }}"
+           href="{{ alternate_url }}">
+    {% endfor %}
+  {% endif %}
 
   <link rel="search"
         type="application/opensearchdescription+xml"

@@ -49,6 +49,11 @@ def document(request, lang, version, url):
     if lang != 'en':
         activate(lang)
 
+    canonical_version = DocumentRelease.objects.current_version()
+    canonical = version == canonical_version
+    if version == 'stable':
+        version = canonical_version
+
     docroot = get_doc_root_or_404(lang, version)
     doc_path = get_doc_path_or_404(docroot, url)
     try:
@@ -73,6 +78,8 @@ def document(request, lang, version, url):
         'env': json.load((docroot.joinpath('globalcontext.json')).open('r')),
         'lang': lang,
         'version': version,
+        'canonical_version': canonical_version,
+        'canonical': canonical,
         'available_languages': DocumentRelease.objects.get_available_languages_by_version(version),
         'release': release,
         'rtd_version': rtd_version,
