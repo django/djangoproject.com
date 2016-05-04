@@ -11,12 +11,13 @@ class DocsSitemap(Sitemap):
                 .select_related('release'))
 
     def changefreq(self, obj):
-        if obj.release.is_dev:
-            return 'daily'
-        elif obj.release.is_default:
-            return 'monthly'
-        else:
-            return 'yearly'
+        return 'daily'
+#        if obj.release.is_dev:
+#            return 'daily'
+#        elif obj.release.is_default:
+#            return 'monthly'
+#        else:
+#            return 'yearly'
 
     def priority(self, obj):
         if obj.release.is_dev:
