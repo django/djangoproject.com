@@ -36,8 +36,6 @@ class TestTemplateTags(TestCase):
         self.assertEqual(get_latest_micro_release('1.4'), None)
 
     def test_release_notes(self):
-        Release.objects.create(major=1, minor=8, micro=0, is_lts=True, version='1.8')
-
         output = release_notes('1.8')
         self.assertIsInstance(output, SafeString)
         self.assertEqual(
@@ -49,6 +47,20 @@ class TestTemplateTags(TestCase):
             release_notes('1.8', show_version=True),
             '<a href="http://docs.djangoproject.dev:8000/en/1.8/releases/1.8/">'
             '1.8 release notes</a>'
+        )
+
+    def test_release_notes_1_10(self):
+        output = release_notes('1.10')
+        self.assertIsInstance(output, SafeString)
+        self.assertEqual(
+            output,
+            '<a href="http://docs.djangoproject.dev:8000/en/1.10/releases/1.10/">'
+            'Online documentation</a>'
+        )
+        self.assertEqual(
+            release_notes('1.10', show_version=True),
+            '<a href="http://docs.djangoproject.dev:8000/en/1.10/releases/1.10/">'
+            '1.10 release notes</a>'
         )
 
 
