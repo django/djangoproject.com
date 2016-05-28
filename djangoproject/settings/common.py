@@ -94,6 +94,10 @@ LOGGING = {
     "formatters": {
         "simple": {"format": "[%(name)s] %(levelname)s: %(message)s"},
         "full": {"format": "%(asctime)s [%(name)s] %(levelname)s: %(message)s"},
+        'django.server': {
+            '()': 'django.utils.log.ServerFormatter',
+            'format': '[%(server_time)s] %(message)s',
+        },
     },
     "filters": {
         "require_debug_false": {
@@ -106,12 +110,22 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "simple",
         },
+        'django.server': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'django.server',
+        },
     },
     "loggers": {
         "django.request": {
             "handlers": [],
             "level": "ERROR",
             "propagate": False,
+        },
+        'django.server': {
+            'handlers': ['django.server'],
+            'level': 'INFO',
+            'propagate': False,
         },
     }
 }
