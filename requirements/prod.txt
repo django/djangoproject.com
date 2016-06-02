@@ -1,5 +1,5 @@
 -r common.txt
 
 django-pylibmc==0.6.1
-pylibmc==1.5.0
+pylibmc==1.5.1
 raven==5.9.2
