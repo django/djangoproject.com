@@ -159,6 +159,7 @@ def band_listing(request):
             """
             <div class="highlight">
                 <pre>
+                    <span></span>
                     <span class="k">def</span><span class="nf">band_listing</span>
                     <span class="p">(</span><span class="n">request</span>
                     <span class="p">):</span>
