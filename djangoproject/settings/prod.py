@@ -45,12 +45,6 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesSto
 
 STATIC_ROOT = str(DATA_DIR.joinpath('static'))
 
-# django-secure settings
-
-SECURE_HSTS_SECONDS = 31536000  # 1 year
-
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-
 # Docs settings
 DOCS_BUILD_ROOT = DATA_DIR.joinpath('data', 'docbuilds')
 
