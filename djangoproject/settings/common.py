@@ -208,8 +208,6 @@ USE_L10N = False
 
 USE_TZ = False
 
-X_FRAME_OPTIONS = 'DENY'
-
 # django-contact-form / Akismet settings
 
 AKISMET_API_KEY = "c892e4962244"
