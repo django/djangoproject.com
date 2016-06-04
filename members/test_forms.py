@@ -42,7 +42,12 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
         self.assertEqual(msg.from_email, settings.FUNDRAISING_DEFAULT_FROM_EMAIL)
         self.assertEqual(
             msg.to,
-            [settings.FUNDRAISING_DEFAULT_FROM_EMAIL, data['contact_email'], 'treasurer@djangoproject.com']
+            [
+                settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
+                data['contact_email'],
+                'treasurer@djangoproject.com',
+                'dsf-board@googlegroups.com',
+            ]
         )
 
     def test_logo_required(self):

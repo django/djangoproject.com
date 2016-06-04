@@ -91,6 +91,7 @@ class CorporateMemberSignUpForm(forms.ModelForm):
                 settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
                 self.instance.contact_email,
                 'treasurer@djangoproject.com',
+                'dsf-board@googlegroups.com',
             ],
         )
         instance.invoice_set.create(amount=self.cleaned_data['amount'])
