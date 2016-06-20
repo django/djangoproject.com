@@ -200,7 +200,7 @@ class Document(models.Model):
         DocumentRelease,
         related_name='documents',
         on_delete=models.CASCADE,
-     )
+    )
     path = models.CharField(max_length=500)
     title = models.CharField(max_length=500)
 
