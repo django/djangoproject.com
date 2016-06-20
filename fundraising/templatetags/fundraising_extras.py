@@ -72,7 +72,7 @@ def display_django_heroes():
             break
 
     return {
-        'corporate_members':  CorporateMember.objects.by_membership_level(),
+        'corporate_members': CorporateMember.objects.by_membership_level(),
         'leaders': donors[:i],
         'heroes': donors[i:],
         'inkind_donors': InKindDonor.objects.all(),
