@@ -4,9 +4,9 @@ from operator import attrgetter
 from pathlib import Path
 
 from django.contrib.sites.models import Site
-from django.core.urlresolvers import set_urlconf
 from django.template import Context, Template
 from django.test import TestCase
+from django.urls import set_urlconf
 
 from releases.models import Release
 

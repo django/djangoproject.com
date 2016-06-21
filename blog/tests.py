@@ -1,8 +1,8 @@
 from datetime import timedelta
 from test.support import captured_stderr
 
-from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.urls import reverse
 from django.utils import timezone
 
 from .models import Entry, Event

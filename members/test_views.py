@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
-from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.urls import reverse
 
 from .models import CorporateMember, DeveloperMember
 from .utils import get_temporary_image
