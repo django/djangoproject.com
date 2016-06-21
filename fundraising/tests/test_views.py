@@ -4,8 +4,8 @@ from unittest.mock import patch
 import stripe
 from django.conf import settings
 from django.core import mail
-from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.urls import reverse
 from django_hosts.resolvers import reverse as django_hosts_reverse
 
 from ..exceptions import DonationError
