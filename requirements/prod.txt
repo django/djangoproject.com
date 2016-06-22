@@ -2,4 +2,4 @@
 
 django-pylibmc==0.6.1
 pylibmc==1.5.1
-raven==5.19.0
+raven==5.21.0
