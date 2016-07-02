@@ -27,10 +27,15 @@ To run locally, do the usual:
    containing something like::
 
     { "secret_key": "xyz",
-      "superfeedr_creds": ["any@email.com", "some_string"] }
+      "superfeedr_creds": ["any@email.com", "some_string"],
+      "db_host": "localhost",
+      "db_password": "secret",
+      "trac_db_host": "localhost",
+      "trac_db_password": "secret" }
 
    Add `export DJANGOPROJECT_DATA_DIR=~/.djangoproject` (without the backticks)
-   to your ~/.bashrc file and then run `source ~/.bashrc` to load the changes.
+   to your ~/.bashrc (or ~/.zshrc if you're using zsh) file and then run
+   `source ~/.bashrc` (or `source ~/.zshrc`) to load the changes.
 
 #. Create databases::
 
@@ -38,6 +43,19 @@ To run locally, do the usual:
     createdb -O djangoproject djangoproject
     createuser -d code.djangoproject
     createdb -O code.djangoproject code.djangoproject
+
+#. Setting up database access
+
+   If you are using the default postgres configuration, chances are you will
+   have to give a password for the newly created users in order to be able to
+   use them for Django::
+
+     psql
+     ALTER USER djangoproject WITH PASSWORD 'secret';
+     ALTER USER "code.djangoproject" WITH PASSWORD 'secret';
+     \d
+
+   (Use the same passwords as the ones you've used in your `secrets.json` file)
 
 #. Create tables::
 
@@ -74,6 +92,11 @@ To run locally, do the usual:
    Ubuntu there is a `built-in network admin`_ GUI to do the same. Remember
    both require admin privileges, just like you'd need when editing
    ``/etc/hosts`` with your favorite editor.
+
+   If you don't have admin rights but have an internet connection, you can use a
+   service like `xip.io <http://xip.io>`_. In that case you'll also have to
+   update `ALLOWED_HOSTS` in `djangoproject/settings/dev.py` as well as the
+   content of the `django_site` table in your database.
 
 .. _`Hosts.prefpane`: https://github.com/specialunderwear/Hosts.prefpane
 .. _`built-in network admin`: https://help.ubuntu.com/community/NetworkAdmin
