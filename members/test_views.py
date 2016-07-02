@@ -104,6 +104,7 @@ class CorporateMemberJoinViewTests(TestCase):
             'membership_level': 2,
             'address': 'USA',
             'description': 'We make widgets!',
+            'django_usage': 'fun',
             'amount': 2000,
         }
         response = self.client.post(reverse('members:corporate-members-join'), data)

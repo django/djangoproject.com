@@ -20,6 +20,7 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
             'membership_level': 2,
             'address': 'USA',
             'description': 'We make widgets!',
+            'django_usage': 'fun',
             'amount': 2000,
         }
         self.file_data = {'logo': test_image}

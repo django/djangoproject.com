@@ -17,6 +17,7 @@ class CorporateMemberSignUpForm(forms.ModelForm):
         self.radio_select_fields = []
         self.label_fields = []
         self.fields['logo'].required = True
+        self.fields['django_usage'].required = True
         for name, field in self.fields.items():
             help_text = field.help_text
             if help_text:
@@ -75,6 +76,7 @@ class CorporateMemberSignUpForm(forms.ModelForm):
             'billing_email',
             'address',
             'description',
+            'django_usage',
             'amount',
             'membership_level',
         ]

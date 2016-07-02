@@ -78,6 +78,8 @@ class CorporateMember(models.Model):
     membership_level = models.IntegerField(choices=MEMBERSHIP_LEVELS)
     address = models.TextField(blank=True)
     notes = models.TextField(blank=True, help_text='Not displayed publicly.')
+    django_usage = models.TextField('How does your organization use Django?', blank=True,
+                                    help_text='Not displayed publicly.')
 
     objects = CorporateMemberManager()
 
