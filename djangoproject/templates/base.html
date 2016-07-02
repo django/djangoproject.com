@@ -61,6 +61,20 @@
 
     <div class="container {% block layout_class %}{% endblock %}">
       <div role="main">
+
+        {% block messages %}
+          {% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                  {{ message }}
+                  <i class="close icon icon-remove" title="close"></i>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endblock %}
+
         {% block content %}{% endblock %}
         <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
       </div>
