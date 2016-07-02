@@ -9,7 +9,7 @@ STATS_CACHE_KEY = 'community_stats'
 
 def fetch(url):
     try:
-        return requests.get(url).json()
+        return requests.get(url, timeout=0.5).json()
     except (RequestException, ValueError):
         return {}
 
