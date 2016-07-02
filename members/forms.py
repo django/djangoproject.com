@@ -17,6 +17,7 @@ class CorporateMemberSignUpForm(forms.ModelForm):
         self.radio_select_fields = []
         self.label_fields = []
         self.fields['logo'].required = True
+        self.fields['django_usage'].required = True
         for name, field in self.fields.items():
             help_text = field.help_text
             if help_text:
@@ -56,6 +57,13 @@ class CorporateMemberSignUpForm(forms.ModelForm):
             corporate membership page</a>; you can use the existing descriptions
             as a guide for flavor we're looking for."""
         )
+        self.fields['django_usage'].widget.attrs['placeholder'] = (
+            'How does your organization use Django?'
+        )
+        self.fields['django_usage'].help_text = (
+            "This won't be displayed publicly but helps the DSF Board "
+            "to evaluate your application."
+        )
         self.fields['amount'].help_text = (
             """Enter an amount above and the appropriate membership level will
             be automatically selected. Or select a membership level below and
@@ -75,6 +83,7 @@ class CorporateMemberSignUpForm(forms.ModelForm):
             'billing_email',
             'address',
             'description',
+            'django_usage',
             'amount',
             'membership_level',
         ]
