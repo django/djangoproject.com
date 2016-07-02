@@ -3149,3 +3149,69 @@ table.django-supported-versions {
         background-color: $red-light;
     }
 }
+
+/* Messages */
+
+.messages {
+    list-style-type: none;
+    width: 100%;
+    padding-left: 0;
+
+    li {
+        padding: 15px;
+        background-color: lighten($green-very-light, 10);
+        color: $green-dark;
+        border: 1px solid $green-dark;
+        border-radius: 4px;
+
+        &::before {
+            @include fa-icon();
+            font-size: 30px;
+            width: 34px;
+            text-align: center;
+            float: left;
+            margin-left: -5px;
+            margin-right: 10px;
+        }
+
+        &.info {
+            &::before {
+                content: $fa-var-info-circle;
+            }
+        }
+
+        &.success {
+            background-color: lighten($green-very-light, 5);
+            content: $fa-var-check-circle;
+            &::before {
+                content: $fa-var-check-circle;
+            }
+        }
+
+        &.warning {
+            background-color: $warning-yellow;
+            border-color: darken($warning-dark-yellow, 50);
+            &::before {
+                color: darken($warning-dark-yellow, 50);
+                content: $fa-var-exclamation-triangle;
+            }
+        }
+
+        &.error {
+            background-color: lighten($red-light, 10);
+            color: $red-dark;
+            border-color: $red-dark;
+            &::before {
+                content: $fa-var-times-circle;
+            }
+        }
+
+        i.close {
+            float: right;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: -10px;
+            margin-right: -10px;
+        }
+    }
+}
