@@ -183,7 +183,8 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                                       .filter('term', release__lang=release.lang)
                                       .filter('term', release__version=release.version)
                                       .highlight_options(order='score')
-                                      .highlight('content_raw'))
+                                      .highlight('content_raw')
+                                      .extra(min_score=.01))
 
             page_number = request.GET.get('page') or 1
             paginator = SearchPaginator(results, per_page=per_page, orphans=orphans)
