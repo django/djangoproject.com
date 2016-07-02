@@ -20,6 +20,7 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
             'membership_level': 2,
             'address': 'USA',
             'description': 'We make widgets!',
+            'django_usage': 'fun',
             'amount': 2000,
         }
         self.file_data = {'logo': test_image}
@@ -30,6 +31,7 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
         self.assertTrue(form.is_valid())
         instance = form.save()
         self.assertEqual(instance.display_name, data['display_name'])
+        self.assertEqual(instance.django_usage, 'fun')
         self.assertEqual(instance.invoice_set.get().amount, data['amount'])
 
         self.assertEqual(len(mail.outbox), 1)
@@ -54,3 +56,10 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
         form = CorporateMemberSignUpForm(self.valid_data)  # missing request.FILES
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors, {'logo': ['This field is required.']})
+
+    def test_django_usage_required(self):
+        data = self.valid_data.copy()
+        del data['django_usage']
+        form = CorporateMemberSignUpForm(data, self.file_data)
+        self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors, {'django_usage': ['This field is required.']})

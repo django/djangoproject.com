@@ -77,6 +77,7 @@ class CorporateMember(models.Model):
     billing_email = models.EmailField(blank=True, help_text='If different from contact email.',)
     membership_level = models.IntegerField(choices=MEMBERSHIP_LEVELS)
     address = models.TextField(blank=True)
+    django_usage = models.TextField(blank=True, help_text='Not displayed publicly.')
     notes = models.TextField(blank=True, help_text='Not displayed publicly.')
 
     objects = CorporateMemberManager()
