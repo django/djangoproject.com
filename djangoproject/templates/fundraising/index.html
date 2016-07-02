@@ -21,13 +21,18 @@
     </div>
 {% endblock %}
 
+{% block messages %}
+
+  {% if messages %}
+    {% for message in messages %}
+    <h1>{{ message }}</h1>
+    {% endfor %}
+    <hr>
+  {% endif %}
+
+{% endblock %}
+
 {% block content %}
-{% if messages %}
-  {% for message in messages %}
-  <h1>{{ message }}</h1>
-  {% endfor %}
-  <hr>
-{% endif %}
 
 <h1>Support the Django Software Foundation!</h1>
 
