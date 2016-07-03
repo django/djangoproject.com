@@ -90,5 +90,9 @@ define(function() {
         mods.push('mod/corporate-member-join');
     }
 
+    if (hasClass('messages')) {
+        mods.push('mod/messages');
+    }
+
     require(mods);
 });

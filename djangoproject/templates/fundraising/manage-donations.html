@@ -1,13 +1,18 @@
 {% extends 'fundraising/index.html' %}
 {% load staticfiles %}
 
+{% block messages %}
+
+  {% if messages %}
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+    <hr>
+  {% endif %}
+
+{% endblock %}
+
 {% block content %}
-{% if messages %}
-  {% for message in messages %}
-  <p>{{ message }}</p>
-  {% endfor %}
-  <hr>
-{% endif %}
 
 <h1>Manage your donations to the Django Software Foundation</h1>
 <p>Your support is <strong>invaluable</strong> to continue the rapid development
