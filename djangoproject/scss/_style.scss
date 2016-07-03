@@ -3215,3 +3215,20 @@ table.django-supported-versions {
         }
     }
 }
+
+.clippify {
+    .btn-clipboard {
+        float: right;
+        cursor: pointer;
+        margin-top: 2px;
+        margin-right: -10px;
+
+        i:hover {
+            color: lighten($green-dark, 20);
+        }
+        .clipboard-success {
+            font-size: 80%;
+            margin-right: 10px;
+        }
+    }
+}

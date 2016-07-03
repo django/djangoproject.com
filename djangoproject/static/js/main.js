@@ -94,5 +94,9 @@ define(function() {
         mods.push('mod/messages');
     }
 
+    if (hasClass('snippet')) {
+        mods.push('mod/clippify');
+    }
+
     require(mods);
 });
