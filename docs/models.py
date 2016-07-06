@@ -58,7 +58,7 @@ class DocumentRelease(models.Model):
     """
     DEFAULT_CACHE_KEY = "%s_docs_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
 
-    lang = models.CharField(max_length=2, choices=settings.LANGUAGES, default='en')
+    lang = models.CharField(max_length=7, choices=settings.LANGUAGES, default='en')
     release = models.ForeignKey(
         Release,
         null=True,
