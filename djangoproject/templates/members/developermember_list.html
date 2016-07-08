@@ -23,7 +23,7 @@
 
     <ul>
       {% for member in former_members %}
-        <li>{{ member.name }}</li>
+        <li>{{ member.name }} ({{ member.reason_for_leaving }})</li>
       {% endfor %}
     </ul>
   {% endif %}
