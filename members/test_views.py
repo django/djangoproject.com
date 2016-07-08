@@ -7,9 +7,8 @@ from .models import CorporateMember, DeveloperMember
 from .utils import get_temporary_image
 
 
-# Inherit from TestCase to enable these tests.
-class DeveloperMemberListViewTests(object):
-    # url = reverse('members:developer-members')
+class DeveloperMemberListViewTests(TestCase):
+    url = reverse('members:developer-members')
 
     @classmethod
     def setUpTestData(cls):
@@ -26,7 +25,7 @@ class DeveloperMemberListViewTests(object):
     def test_view_should_only_render_former_members_once(self):
         DeveloperMember.objects.create(
             name='FormerDjangoDeveloper',
-            email='developer@example.com',
+            email='developer2@example.com',
             member_since=date(2015, 7, 26),
             member_until=date(2015, 7, 27),
         )
