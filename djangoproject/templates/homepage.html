@@ -1,5 +1,5 @@
 {% extends "base_3col.html" %}
-{% load weblog fundraising_extras %}
+{% load weblog fundraising_extras static %}
 
 {% block sectionid %}homepage{% endblock %}
 {% block body_class %}homepage{% endblock %}
@@ -29,6 +29,9 @@
 
 {% block content %}
     <div class="section">
+        <h2 class="visuallyhidden">Until July 20th, <a href="http://jb.gg/i-donate-to-django">get PyCharm at 30% off</a> All money goes to the Django Software Foundation</h1>
+        <p><a href="http://jb.gg/i-donate-to-django"><img src="{% static 'img/pycharm-promotion-home-banner.png' %}"></a></p>
+
         <h1>Meet Django</h1>
         <p>
           Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design.
