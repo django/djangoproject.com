@@ -5,33 +5,40 @@
 {% block body_class %}homepage{% endblock %}
 {% block layout_class %}sidebar-right{% endblock %}
 
-{% block header %}
-    <h1 class="visuallyhidden">Django</h1>
-    <p>
-        <em>Django makes it easier to build better Web apps more quickly and with less code.</em>
-    </p>
-    <p>
-        <a href="{% url 'start' %}" class="cta">Get started with Django</a>
-    </p>
-    {% comment %}
-        <p class="small">
-            Used by these great companies, and many more
-            <ul class="django-companies">
-              <li><a href="{% url 'case_study' %}" class="company-mozilla">Mozilla</a></li>
-              <li><a href="{% url 'case_study' %}" class="company-pinterest">Pinterest</a></li>
-              <li><a href="{% url 'case_study' %}" class="company-theguardian">The Guardian</a></li>
-              <li><a href="{% url 'case_study' %}" class="company-instagram">Instagram</a></li>
-              <li><a href="{% url 'case_study' %}" class="company-rdio">Rdio</a></li>
-            </ul>
-        </p>
-    {% endcomment %}
+{% block header_container %}
+  <div class="copy-banner" style="background: #44B78B;">
+      <div class="container">
+        <h1><a href="http://jb.gg/i-donate-to-django">Until July 20th, get PyCharm at 30% off. All money goes to the DSF!</a></h1>
+      </div>
+  </div>
+
+  <div class="copy-banner">
+      <div class="container">
+          <h1 class="visuallyhidden">Django</h1>
+          <p>
+              <em>Django makes it easier to build better Web apps more quickly and with less code.</em>
+          </p>
+          <p>
+              <a href="{% url 'start' %}" class="cta">Get started with Django</a>
+          </p>
+          {% comment %}
+              <p class="small">
+                  Used by these great companies, and many more
+                  <ul class="django-companies">
+                    <li><a href="{% url 'case_study' %}" class="company-mozilla">Mozilla</a></li>
+                    <li><a href="{% url 'case_study' %}" class="company-pinterest">Pinterest</a></li>
+                    <li><a href="{% url 'case_study' %}" class="company-theguardian">The Guardian</a></li>
+                    <li><a href="{% url 'case_study' %}" class="company-instagram">Instagram</a></li>
+                    <li><a href="{% url 'case_study' %}" class="company-rdio">Rdio</a></li>
+                  </ul>
+              </p>
+          {% endcomment %}
+      </div>
+  </div>
 {% endblock %}
 
 {% block content %}
     <div class="section">
-        <h2 class="visuallyhidden">Until July 20th, <a href="http://jb.gg/i-donate-to-django">get PyCharm at 30% off</a> All money goes to the Django Software Foundation</h1>
-        <p><a href="http://jb.gg/i-donate-to-django"><img src="{% static 'img/pycharm-promotion-home-banner.png' %}"></a></p>
-
         <h1>Meet Django</h1>
         <p>
           Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design.
