@@ -12,6 +12,7 @@ from pathlib import Path
 
 from django.conf import settings
 from django.core.management import BaseCommand
+from django.utils.translation import to_locale
 
 from ...models import DocumentRelease
 
@@ -95,7 +96,7 @@ class Command(BaseCommand):
                 subprocess.check_call([
                     'sphinx-build',
                     '-b', builder,
-                    '-D', 'language=%s' % release.lang,
+                    '-D', 'language=%s' % to_locale(release.lang),
                     '-q',              # Be vewy qwiet
                     str(source_dir),        # Source file directory
                     str(build_dir),         # Destination directory
