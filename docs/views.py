@@ -63,10 +63,8 @@ def document(request, lang, version, url):
 
     if version == 'dev':
         rtd_version = 'latest'
-    elif version >= '1.5':
-        rtd_version = version + '.x'
     else:
-        rtd_version = version + '.X'
+        rtd_version = version + '.x'
 
     template_names = [
         'docs/%s.html' % str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), ''),
