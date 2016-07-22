@@ -23,7 +23,7 @@ To run locally, do the usual:
 #. Make a directory to store the project's data (MEDIA_ROOT, DOC_BUILDS_ROOT,
    etc.). We'll use ~/.djangoproject for example purposes.
 
-   Create a 'secrets.json' file in a folder named 'conf' in that directory,
+   Create a 'secrets.json' file in a directory named 'conf' in that directory,
    containing something like::
 
     { "secret_key": "xyz",
