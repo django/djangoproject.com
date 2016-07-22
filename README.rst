@@ -78,7 +78,18 @@ To run locally, do the usual:
 
 #. For dashboard::
 
+   To load the latest dashboard categories and metrics::
+
+    ./manage.py loaddata dashboard_production_metrics
+
+   Alternatively, to load a full set of sample data (takes a few minutes)::
+
     ./manage.py loaddata dashboard_example_data
+
+   Finally, make sure the loaded metrics have at least one data point (this
+   makes API calls to the URLs from the metrics objects loaded above and may
+   take some time depending on the metrics chosen)::
+
     ./manage.py update_metrics
 
 #. Point the ``www.djangoproject.dev``, ``docs.djangoproject.dev`` and ``dashboard.djangoproject.dev``
@@ -268,3 +279,16 @@ itself. You can pass the ``-d`` option to try to drop the search index
 first before indexing all the documents.
 
 .. _`official Elasticsearch docs`: http://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html
+
+Updating metrics from production
+--------------------------------
+
+The business logic for dashboard metrics is edited via the admin interface and
+contained in the models in the ``dashboard`` app (other than ``Dataum``, which
+contains the data itself). From time to time, those metrics should be extracted
+from a copy of the production database and saved to the
+``dashboard/fixtures/dashboard_production_metrics.json`` file.
+
+To update this file, run::
+
+    ./manage.py dumpdata dashboard --exclude dashboard.Datum --indent=4 > dashboard_production_metrics.json
