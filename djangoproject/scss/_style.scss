@@ -2197,7 +2197,7 @@ h2 + .list-link-soup {
     }
 }
 
-#doc-versions, #doc-languages {
+#doc-versions, #doc-languages, #backtotop-switchers {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
 
@@ -2229,6 +2229,15 @@ h2 + .list-link-soup {
             &:hover {
                 color: $green;
                 border: 1px solid $green-light;
+            }
+            &.backtotop-switchers {
+                padding: 0;
+                border: 0;
+                border-radius: 0;
+                &::before {
+                    @include fa-icon();
+                    content: $fa-var-chevron-up;
+                }
             }
         }
     }

@@ -54,6 +54,13 @@
 
 {% block content %}
 <div id="version-switcher">
+
+  <ul id="backtotop-switchers">
+    <li class="current">
+      <a class="backtotop-switchers" href="#top" title="Back to top"></a>
+    </li>
+  </ul>
+
   <ul id="doc-languages" class="language-switcher">
   {% for available_lang in available_languages %}
   {% if lang != available_lang %}
