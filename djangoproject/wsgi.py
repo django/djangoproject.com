@@ -15,7 +15,3 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE",
                       "djangoproject.settings.dev")
 
 application = get_wsgi_application()
-
-from django.contrib.auth.handlers.modwsgi import (  # noqa isort:skip
-    check_password, groups_for_user
-)
