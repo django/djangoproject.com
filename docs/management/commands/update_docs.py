@@ -31,6 +31,7 @@ class Command(BaseCommand):
         verbosity = kwargs['verbosity']
 
         default_builders = ['json', 'html']
+        default_docs_version = DocumentRelease.objects.get(is_default=True).release.version
 
         # Keep track of which Git sources have been updated.
         release_docs_changed = {}  # e.g. {'1.8': True} if the 1.8 docs updated.
@@ -66,6 +67,10 @@ class Command(BaseCommand):
             source_dir = checkout_dir.joinpath('docs')
 
             if release.lang != 'en':
+                # Skip translated non-stable versions to avoid a crash:
+                # https://github.com/django/djangoproject.com/issues/627
+                if not release.release.version == default_docs_version:
+                    continue
                 scm_url = release.scm_url.replace('django.git', 'django-docs-translations.git')
                 trans_dir = checkout_dir.joinpath('django-docs-translation')
                 if not trans_dir.exists():
