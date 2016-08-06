@@ -1,4 +1,4 @@
-certifi==2016.2.28
+certifi==2016.8.2
 Django==1.9.9
 django-contact-form==1.2
 django-hosts==2.0
