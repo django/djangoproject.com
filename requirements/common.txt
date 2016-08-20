@@ -5,7 +5,7 @@ django-hosts==2.0
 django-push==0.9
 django-registration-redux==1.4
 elasticsearch-dsl==2.1.0
-elasticsearch==2.3.0
+elasticsearch==2.4.0
 docutils==0.12
 feedparser==5.2.1
 Jinja2==2.8
