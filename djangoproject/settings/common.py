@@ -121,6 +121,8 @@ LOGGING = {
     }
 }
 
+LOGIN_REDIRECT_URL = 'edit_profile'
+
 MEDIA_URL = '/m/'
 
 MIDDLEWARE_CLASSES = [
