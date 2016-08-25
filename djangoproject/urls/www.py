@@ -58,7 +58,7 @@ urlpatterns = [
     url(r'^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', contenttypes_views.shortcut, name='contenttypes-shortcut'),
 
     # User stats
-    url(r'^~(?P<username>[\w-]+)/$', account_views.user_profile, name='user_profile'),
+    url(r'^~(?P<username>[\w.@+-]+)/$', account_views.user_profile, name='user_profile'),
 
     # Feeds
     url(r'^rss/weblog/$', WeblogEntryFeed(), name='weblog-feed'),
