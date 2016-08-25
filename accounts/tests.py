@@ -20,3 +20,11 @@ class ViewTests(TestCase):
     def test_login_redirect(self):
         response = self.client.post(reverse('login'), self.credentials)
         self.assertRedirects(response, '/accounts/edit/')
+
+    def test_profile_view_reversal(self):
+        """
+        The profile view can be reversed for usernames containing "weird" but
+        valid username characters.
+        """
+        for username in ['asdf', '@asdf', 'asd-f', 'as.df', 'as+df']:
+            reverse('user_profile', host='www', args=[username])
