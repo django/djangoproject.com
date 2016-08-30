@@ -63,5 +63,31 @@
     "minor": 8,
     "status": "f"
   }
+},
+{
+  "model": "releases.release",
+  "pk": "1.9",
+  "fields": {
+    "major": 1,
+    "is_lts": false,
+    "date": "2015-12-01",
+    "iteration": 0,
+    "micro": 0,
+    "minor": 9,
+    "status": "f"
+  }
+},
+{
+  "model": "releases.release",
+  "pk": "1.10",
+  "fields": {
+    "major": 1,
+    "is_lts": false,
+    "date": "2016-08-01",
+    "iteration": 0,
+    "micro": 0,
+    "minor": 10,
+    "status": "f"
+  }
 }
 ]
