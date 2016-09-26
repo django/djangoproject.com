@@ -1,5 +1,5 @@
 certifi==2016.8.31
-Django==1.9.9
+Django==1.9.10
 django-contact-form==1.2
 django-hosts==2.0
 django-push==0.9
