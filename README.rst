@@ -98,8 +98,8 @@ To run locally, do the usual:
    update `ALLOWED_HOSTS` in `djangoproject/settings/dev.py` as well as the
    content of the `django_site` table in your database.
 
-.. _`Hosts.prefpane`: https://github.com/specialunderwear/Hosts.prefpane
-.. _`built-in network admin`: https://help.ubuntu.com/community/NetworkAdmin
+   .. _`Hosts.prefpane`: https://github.com/specialunderwear/Hosts.prefpane
+   .. _`built-in network admin`: https://help.ubuntu.com/community/NetworkAdmin
 
 #. Compile the CSS (only the source SCSS files are stored in the repostiory)::
 
