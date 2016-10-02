@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 from django.test import TestCase
+from stripe import StripeError
 
 from ..forms import PaymentForm
 from ..models import DjangoHero
@@ -57,3 +58,22 @@ class TestPaymentForm(TestCase):
         with self.assertRaises(ValueError):
             donation = form.make_donation()
             self.assertIsNone(donation)
+
+    @patch('stripe.Customer.create')
+    @patch('stripe.Charge.create')
+    def test_make_donation_stripe_exception(self, charge_create, customer_create):
+        customer_create.return_value.id = 'xxxx'
+        charge_create.side_effect = StripeError("Payment failed")
+        form = PaymentForm(data={
+            'amount': 100,
+            'stripe_token': 'xxxx',
+            'interval': 'onetime',
+            'receipt_email': 'django@example.com',
+        })
+        self.assertTrue(form.is_valid())
+        with self.assertRaises(StripeError):
+            donation = form.make_donation()
+            self.assertIsNone(donation)
+
+        # hero should not be created (#551)
+        self.assertFalse(DjangoHero.objects.exists())
