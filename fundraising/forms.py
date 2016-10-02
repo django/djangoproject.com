@@ -172,19 +172,15 @@ class PaymentForm(forms.Form):
         interval = self.cleaned_data['interval']
 
         hero = DjangoHero.objects.filter(email=receipt_email).first()
-        if not hero:
-            hero = DjangoHero(email=receipt_email)
 
         try:
-            if hero.stripe_customer_id:
+            if hero and hero.stripe_customer_id:
                 # Update old customer with new payment source
                 customer = stripe.Customer.retrieve(hero.stripe_customer_id)
                 customer.source = stripe_token
                 customer.save()
             else:
                 customer = stripe.Customer.create(card=stripe_token, email=receipt_email)
-                hero.stripe_customer_id = customer.id
-                hero.save()
 
             if interval == 'onetime':
                 subscription_id = ''
@@ -232,6 +228,11 @@ class PaymentForm(forms.Form):
             raise
 
         else:
+            if not hero:
+                hero = DjangoHero.objects.create(
+                    email=receipt_email,
+                    stripe_customer_id=customer.id,
+                )
             # Finally create the donation and return it
             donation = Donation.objects.create(
                 interval=interval,
