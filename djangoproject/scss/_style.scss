@@ -3058,7 +3058,7 @@ form .footnote {
             text-align: center;
         }
         .hero {
-            width: 25%;
+            width: calc(100% / 3);
             position: relative;
             height: auto;
             div {
