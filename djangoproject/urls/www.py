@@ -86,3 +86,11 @@ if settings.DEBUG:
     urlpatterns += [
         url(r'^m/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     ]
+    try:
+        import debug_toolbar
+    except ImportError:
+        pass
+    else:
+        urlpatterns += [
+            url(r'^__debug__/', include(debug_toolbar.urls)),
+        ]
