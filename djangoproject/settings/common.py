@@ -134,7 +134,7 @@ LOGIN_REDIRECT_URL = 'edit_profile'
 
 MEDIA_URL = '/m/'
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_hosts.middleware.HostsRequestMiddleware',
