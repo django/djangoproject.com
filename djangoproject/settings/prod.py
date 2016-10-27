@@ -35,9 +35,11 @@ LOGGING["loggers"]["django.request"]["handlers"].append("syslog")
 
 MEDIA_ROOT = str(DATA_DIR.joinpath('media'))
 
-MIDDLEWARE_CLASSES = (['django.middleware.cache.UpdateCacheMiddleware'] +
-                      MIDDLEWARE_CLASSES +
-                      ['django.middleware.cache.FetchFromCacheMiddleware'])
+MIDDLEWARE = (
+    ['django.middleware.cache.UpdateCacheMiddleware'] +
+    MIDDLEWARE +
+    ['django.middleware.cache.FetchFromCacheMiddleware']
+)
 
 SESSION_COOKIE_SECURE = True
 
