@@ -71,9 +71,13 @@ def document(request, lang, version, url):
         'docs/doc.html',
     ]
 
+    def load_json_file(path):
+        with path.open('r') as f:
+            return json.load(f)
+
     context = {
-        'doc': json.load(doc_path.open('r')),
-        'env': json.load((docroot.joinpath('globalcontext.json')).open('r')),
+        'doc': load_json_file(doc_path),
+        'env': load_json_file(docroot.joinpath('globalcontext.json')),
         'lang': lang,
         'version': version,
         'canonical_version': canonical_version,
