@@ -10,11 +10,9 @@ collectstatics: compile-scss
 
 compile-scss:
 	sassc $(SCSS)/output.scss $(STATIC)/css/output.css -s compressed
-	sassc $(SCSS)/output-ie.scss $(STATIC)/css/output-ie.css -s compressed
 
 compile-scss-debug:
 	sassc $(SCSS)/output.scss $(STATIC)/css/output.css --sourcemap
-	sassc $(SCSS)/output-ie.scss $(STATIC)/css/output-ie.css --sourcemap
 
 watch-scss:
 	watchmedo shell-command --patterns=*.scss --recursive --command="make compile-scss-debug" $(SCSS)
