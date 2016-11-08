@@ -4,15 +4,15 @@ from django.test import TestCase
 
 from members.models import (
     GOLD_MEMBERSHIP, PLATINUM_MEMBERSHIP, SILVER_MEMBERSHIP, CorporateMember,
-    DeveloperMember,
+    IndividualMember,
 )
 
 
-class DeveloperMemberTests(TestCase):
+class IndividualMemberTests(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.member = DeveloperMember.objects.create(
+        cls.member = IndividualMember.objects.create(
             name='DjangoDeveloper',
             email='developer@example.com'
         )
@@ -24,7 +24,7 @@ class DeveloperMemberTests(TestCase):
         self.assertEqual(str(self.member), 'DjangoDeveloper')
 
     def test_member_since_should_have_default(self):
-        self.assertEqual(DeveloperMember().member_since, date.today())
+        self.assertEqual(IndividualMember().member_since, date.today())
 
     def test_is_active(self):
         self.assertTrue(self.member.is_active)

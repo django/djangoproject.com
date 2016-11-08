@@ -3,11 +3,11 @@ from django.views.generic import CreateView, ListView
 from django.views.generic.dates import timezone_today
 
 from .forms import CorporateMemberSignUpForm
-from .models import CorporateMember, DeveloperMember
+from .models import CorporateMember, IndividualMember
 
 
-class DeveloperMemberListView(ListView):
-    model = DeveloperMember
+class IndividualMemberListView(ListView):
+    model = IndividualMember
     context_object_name = 'members'
 
     def get_queryset(self):
@@ -15,7 +15,7 @@ class DeveloperMemberListView(ListView):
 
     def get_context_data(self):
         context = super().get_context_data()
-        context['former_members'] = DeveloperMember.objects.filter(
+        context['former_members'] = IndividualMember.objects.filter(
             member_until__lte=timezone_today(),
         )
         return context

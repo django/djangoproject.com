@@ -1,14 +1,19 @@
 from django.conf.urls import url
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView, TemplateView
 
 from members.views import (
     CorporateMemberListView, CorporateMemberSignUpView,
-    DeveloperMemberListView,
+    IndividualMemberListView,
 )
 
 app_name = 'members'
 urlpatterns = [
-    url(r'^developer-members/$', DeveloperMemberListView.as_view(), name='developer-members'),
+    url(
+        r'^developer-members/$',
+        RedirectView.as_view(pattern_name='members:individual-members'),
+        name='developer-members',
+    ),
+    url(r'^individual-members/$', IndividualMemberListView.as_view(), name='individual-members'),
     url(r'^corporate-members/$', CorporateMemberListView.as_view(), name='corporate-members'),
     url(r'^corporate-membership/join/$', CorporateMemberSignUpView.as_view(), name='corporate-members-join'),
     url(

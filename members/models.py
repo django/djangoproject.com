@@ -17,7 +17,7 @@ CORPORATE_MEMBERSHIP_AMOUNTS = {
 }
 
 
-class DeveloperMember(models.Model):
+class IndividualMember(models.Model):
     name = models.CharField(max_length=250)
     email = models.EmailField(unique=True)
     member_since = models.DateField(default=timezone_today)

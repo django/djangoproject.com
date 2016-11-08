@@ -3,27 +3,32 @@ from datetime import date, timedelta
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import CorporateMember, DeveloperMember
+from .models import CorporateMember, IndividualMember
 from .utils import get_temporary_image
 
 
-class DeveloperMemberListViewTests(TestCase):
-    url = reverse('members:developer-members')
+class IndividualMemberListViewTests(TestCase):
+    url = reverse('members:individual-members')
 
     @classmethod
     def setUpTestData(cls):
-        DeveloperMember.objects.create(
+        IndividualMember.objects.create(
             name='DjangoDeveloper',
             email='developer@example.com'
         )
 
+    def test_developer_member_redirect(self):
+        old_url = reverse('members:developer-members')
+        response = self.client.get(old_url)
+        self.assertRedirects(response, self.url)
+
     def test_view_render(self):
         response = self.client.get(self.url)
-        self.assertContains(response, 'Developer members')
+        self.assertContains(response, 'Individual members')
         self.assertContains(response, 'DjangoDeveloper')
 
     def test_view_should_only_render_former_members_once(self):
-        DeveloperMember.objects.create(
+        IndividualMember.objects.create(
             name='FormerDjangoDeveloper',
             email='developer2@example.com',
             member_since=date(2015, 7, 26),
