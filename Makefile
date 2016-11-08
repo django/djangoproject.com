@@ -26,7 +26,10 @@ install:
 	pip install -r requirements/dev.txt
 	npm install
 
-test:
+migrations-check:
+	python manage.py makemigrations --check --dry-run
+
+test: migrations-check
 	@coverage run --source=. manage.py test -v2 $(APP_LIST)
 
 ci: test
