@@ -42,37 +42,14 @@ $font-path: "../fonts/fira-mono";
 }
 
 // Media Queries Mixin (http://jakearchibald.github.com/sass-ie/)
-$fix-mqs: false !default;
 @mixin respond-min($width) {
-    @if $fix-mqs {
-        @if $fix-mqs >= $width {
-            @content;
-        }
-    }
-    @else {
-        @media screen and (min-width: $width) {
-            @content;
-        }
+    @media screen and (min-width: $width) {
+        @content;
     }
 }
 
 @mixin device-min($width) {
-    @if $fix-mqs {
-        @if $fix-mqs >= $width {
-            @content;
-        }
-    }
-    @else {
-        @media screen and (min-device-width: $width) {
-            @content;
-        }
-    }
-}
-
-// OLD IE Mixin (http://jakearchibald.github.com/sass-ie/)
-$old-ie: false !default;
-@mixin old-ie {
-    @if $old-ie {
+    @media screen and (min-device-width: $width) {
         @content;
     }
 }
@@ -127,9 +104,6 @@ html {
     }
     &:after {
         clear: both;
-    }
-    @include old-ie {
-        zoom: 1;
     }
 }
 

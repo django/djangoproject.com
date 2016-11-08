@@ -402,9 +402,6 @@ blockquote {
         max-width: 1400px;
         padding: 0 (32/768) * 100%;
     }
-    @include old-ie {
-        min-width: 768px;
-    }
 
     &.sidebar-right {
         .mdzr-boxshadow & {
@@ -1190,10 +1187,6 @@ blockquote {
             font-size: 1.2em;
         }
     }
-    @include old-ie {
-        display: inline;
-        zoom: 1;
-    }
     font-weight: 700;
     text-transform: uppercase;
 
@@ -1378,19 +1371,12 @@ blockquote {
 
     li {
         margin-top: 10px;
-        @include old-ie {
-            display: block;
-            line-height: 28px;
-        }
     }
 
     a {
         background: $green-light;
         color: $white;
         display: inline-block;
-        @include old-ie {
-            display: block;
-        }
         line-height: 1.2;
         margin: 0;
         padding: 8px 10px 5px;
@@ -2801,10 +2787,6 @@ div[role=main] {
 
     li{
         display: inline-block;
-        @include old-ie {
-            display: inline;
-            zoom: 1;
-        }
     }
     a {
         border: none;
