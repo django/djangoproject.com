@@ -179,13 +179,10 @@ SVG, webfonts.
 We're following `Mozilla's example <https://wiki.mozilla.org/Support/Browser_Support>`_
 when it comes to categorize browser support.
 
-- Any browser other than IE8 and lower as **A grade**. Which means everything
-  needs to work on those.
+- Desktop browsers, except as noted below, are **A grade**, meaning that
+  everything needs to work.
 
-- IE8 is **B grade**, meaning that some functionality may be disabled, visual
-  variations are acceptable but the content must work nevertheless.
-
-- IE below 8 is **not supported**.
+- IE < 11 is **not supported** (based on Microsoft's support).
 
 - Mobile browsers should be considered **B grade** as well.
   Mobile Safari, Firefox on Android and the Android Browser should support
