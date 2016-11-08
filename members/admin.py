@@ -4,11 +4,11 @@ from django.contrib import admin
 from django.utils.formats import localize
 from django.utils.html import format_html
 
-from members.models import CorporateMember, DeveloperMember, Invoice
+from members.models import CorporateMember, IndividualMember, Invoice
 
 
-@admin.register(DeveloperMember)
-class DeveloperMemberAdmin(admin.ModelAdmin):
+@admin.register(IndividualMember)
+class IndividualMemberAdmin(admin.ModelAdmin):
     list_display = [
         'name',
         'email',
