@@ -20,5 +20,6 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('headline', 'external_url', 'date', 'location', 'pub_date', 'is_active', 'is_published')
     list_filter = ('is_active',)
 
+
 admin.site.register(Entry, EntryAdmin)
 admin.site.register(Event, EventAdmin)
