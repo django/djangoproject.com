@@ -22,6 +22,7 @@ class FeedType(models.Model):
     def items(self):
         return FeedItem.objects.filter(feed__feed_type=self)
 
+
 APPROVED_FEED = 'A'
 DENIED_FEED = 'D'
 PENDING_FEED = 'P'
@@ -170,5 +171,6 @@ def feed_updated(sender, notification, **kwargs):
             summary=content,
             date_modified=date_modified,
         )
+
 
 push_signals.updated.connect(feed_updated)

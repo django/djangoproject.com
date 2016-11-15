@@ -269,6 +269,7 @@ def search_suggestions(request, lang, version, per_page=20):
 
     return JsonResponse(suggestions, safe=False)
 
+
 if not settings.DEBUG:
     # 1 hour to handle the many requests
     search_suggestions = cache_page(60 * 60)(search_suggestions)
@@ -288,6 +289,7 @@ def search_description(request, lang, version):
     }
     return render(request, 'docs/search_description.xml', context,
                   content_type='application/opensearchdescription+xml')
+
 
 if not settings.DEBUG:
     # 1 week because there is no need to render it more often
