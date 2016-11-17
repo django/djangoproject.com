@@ -3,6 +3,7 @@ import os
 from operator import attrgetter
 from pathlib import Path
 
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.template import Context, Template
 from django.test import TestCase
@@ -236,6 +237,31 @@ class UpdateDocTests(TestCase):
             {'current_page_name': 'foo/3'},
         ])
         self.assertQuerysetEqual(self.release.documents.all(), [])
+
+    def test_excluded_documents(self):
+        """
+        Documents aren't created for partially translated documents excluded
+        from robots indexing.
+        """
+        # Read the first Disallow line of robots.txt.
+        robots_path = settings.BASE_DIR.joinpath('djangoproject', 'static', 'robots.docs.txt')
+        with open(str(robots_path), 'r') as fh:
+            for line in fh:
+                if line.startswith("Disallow:"):
+                    break
+        _, lang, version, path = line.strip().split('/')
+
+        release = DocumentRelease.objects.create(
+            lang=lang, release=Release.objects.create(version=version),
+        )
+        release.sync_to_db([
+            {'body': '', 'title': '', 'current_page_name': 'nonexcluded/bar'},
+            {'body': '', 'title': '', 'current_page_name': '%s/bar' % path},
+        ])
+        self.assertQuerysetEqual(
+            release.documents.all(),
+            ['<Document: %s/%s/nonexcluded/bar>' % (lang, version)]
+        )
 
 
 class SitemapTests(TestCase):

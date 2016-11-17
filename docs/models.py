@@ -139,9 +139,18 @@ class DocumentRelease(models.Model):
         """
         self.documents.all().delete()
 
+        # Read excluded paths from robots.docs.txt.
+        robots_path = settings.BASE_DIR.joinpath('djangoproject', 'static', 'robots.docs.txt')
+        with open(str(robots_path), 'r') as fh:
+            excluded_paths = [
+                line.strip().split('/')[-1] for line in fh
+                if line.startswith("Disallow: /%s/%s/" % (self.lang, self.release_id))
+            ]
+
         for document in decoded_documents:
-            if 'body' not in document or 'title' not in document:
-                # We don't care about indexing documents with no body or title
+            if ('body' not in document or 'title' not in document or
+                    document['current_page_name'].split('/')[0] in excluded_paths):
+                # We don't care about indexing documents with no body or title, or partially translated
                 continue
 
             Document.objects.create(
