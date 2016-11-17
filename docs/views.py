@@ -3,10 +3,12 @@ import json
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sitemaps.views import x_robots_tag
 from django.contrib.sites.models import Site
 from django.core.paginator import InvalidPage
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
+from django.template.response import TemplateResponse
 from django.utils.translation import activate, ugettext_lazy as _
 from django.views import static
 from django.views.decorators.cache import cache_page
@@ -294,3 +296,21 @@ def search_description(request, lang, version):
 if not settings.DEBUG:
     # 1 week because there is no need to render it more often
     search_description = cache_page(60 * 60 * 24 * 7)(search_description)
+
+
+@x_robots_tag
+def sitemap_index(request, sitemaps):
+    """
+    Simplified version of django.contrib.sitemaps.views.index that uses
+    django_hosts for URL reversing.
+    """
+    sites = []
+    for section in sitemaps.keys():
+        sitemap_url = reverse('document-sitemap', host='docs', kwargs={'section': section})
+        sites.append(sitemap_url)
+    return TemplateResponse(
+        request,
+        'sitemap_index.xml',
+        {'sitemaps': sites},
+        content_type='application/xml',
+    )

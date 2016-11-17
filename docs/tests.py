@@ -265,12 +265,32 @@ class UpdateDocTests(TestCase):
 
 
 class SitemapTests(TestCase):
+    fixtures = ['doc_test_fixtures']
+
+    @classmethod
+    def tearDownClass(cls):
+        # cleanup URLconfs changed by django-hosts
+        set_urlconf(None)
+        super().tearDownClass()
+
+    def test_sitemap_index(self):
+        response = self.client.get('/sitemap.xml', HTTP_HOST='docs.djangoproject.dev:8000')
+        self.assertContains(response, '<sitemap>', count=2)
+        self.assertContains(response, '<loc>http://docs.djangoproject.dev:8000/sitemap-en.xml</loc>')
 
     def test_sitemap(self):
         doc_release = DocumentRelease.objects.create()
         document = Document.objects.create(release=doc_release)
-        sitemap = DocsSitemap()
+        sitemap = DocsSitemap('en')
         urls = sitemap.get_urls()
         self.assertEqual(len(urls), 1)
         url_info = urls[0]
         self.assertEqual(url_info['location'], document.get_absolute_url())
+
+    def test_sitemap_404(self):
+        response = self.client.get('/sitemap-xx.xml', HTTP_HOST='docs.djangoproject.dev:8000')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(
+            response.context['exception'],
+            "No sitemap available for section: 'xx'"
+        )

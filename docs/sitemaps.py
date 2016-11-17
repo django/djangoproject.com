@@ -4,10 +4,12 @@ from .models import Document
 
 
 class DocsSitemap(Sitemap):
+    def __init__(self, lang):
+        self.lang = lang
 
     def items(self):
-        return (Document.objects
-                .order_by('release__lang', '-release__release', 'path')
+        return (Document.objects.filter(release__lang=self.lang)
+                .order_by('-release__release', 'path')
                 .select_related('release__release'))
 
     def changefreq(self, obj):
