@@ -21,9 +21,9 @@ Disallow: /ja/1.10/misc
 Disallow: /ja/1.10/ref
 Disallow: /ja/1.10/releases
 Disallow: /ja/1.10/topics
-Disallow: /pt_BR/1.10/ref
-Disallow: /pt_BR/1.10/releases
-Disallow: /pt_BR/1.10/topics
+Disallow: /pt-br/1.10/ref
+Disallow: /pt-br/1.10/releases
+Disallow: /pt-br/1.10/topics
 Disallow: /es/1.9/faq
 Disallow: /es/1.9/howto
 Disallow: /es/1.9/internals
@@ -45,8 +45,8 @@ Disallow: /ja/1.9/misc
 Disallow: /ja/1.9/ref
 Disallow: /ja/1.9/releases
 Disallow: /ja/1.9/topics
-Disallow: /pt_BR/1.9/ref
-Disallow: /pt_BR/1.9/releases
-Disallow: /pt_BR/1.9/topics
+Disallow: /pt-br/1.9/ref
+Disallow: /pt-br/1.9/releases
+Disallow: /pt-br/1.9/topics
 Disallow: /fr/1.8/internals
 Disallow: /fr/1.8/releases
