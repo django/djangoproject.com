@@ -8,7 +8,7 @@ class DocsSitemap(Sitemap):
     def items(self):
         return (Document.objects
                 .order_by('release__lang', '-release__release', 'path')
-                .select_related('release'))
+                .select_related('release__release'))
 
     def changefreq(self, obj):
         return 'daily'
