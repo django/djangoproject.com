@@ -21,6 +21,12 @@ Disallow: /ja/1.10/misc
 Disallow: /ja/1.10/ref
 Disallow: /ja/1.10/releases
 Disallow: /ja/1.10/topics
+Disallow: /pl/1.10/howto
+Disallow: /pl/1.10/internals
+Disallow: /pl/1.10/misc
+Disallow: /pl/1.10/ref
+Disallow: /pl/1.10/releases
+Disallow: /pl/1.10/topics
 Disallow: /pt-br/1.10/ref
 Disallow: /pt-br/1.10/releases
 Disallow: /pt-br/1.10/topics
