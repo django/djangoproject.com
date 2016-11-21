@@ -97,14 +97,14 @@ class ManagerTests(TestCase):
         r2 = Release.objects.create(version='2.0')
         DocumentRelease.objects.bulk_create(
             DocumentRelease(lang=lang, release=release)
-            for lang, release in [('en', r1), ('en', r2), ('sv', r1)]
+            for lang, release in [('en', r1), ('en', r2), ('sv', r1), ('ar', r1)]
         )
 
     def test_by_version(self):
         doc_releases = DocumentRelease.objects.by_version('1.0')
         self.assertEqual(
             {(r.lang, r.release.version) for r in doc_releases},
-            {('en', '1.0'), ('sv', '1.0')}
+            {('en', '1.0'), ('sv', '1.0'), ('ar', '1.0')}
         )
 
     def test_get_by_version_and_lang_exists(self):
@@ -118,9 +118,9 @@ class ManagerTests(TestCase):
 
     def test_get_available_languages_by_version(self):
         get = DocumentRelease.objects.get_available_languages_by_version
-        self.assertEqual(set(get('1.0')), {'en', 'sv'})
-        self.assertEqual(set(get('2.0')), {'en'})
-        self.assertEqual(set(get('3.0')), set())
+        self.assertEqual(list(get('1.0')), ['ar', 'en', 'sv'])
+        self.assertEqual(list(get('2.0')), ['en'])
+        self.assertEqual(list(get('3.0')), [])
 
 
 class SearchFormTestCase(TestCase):
