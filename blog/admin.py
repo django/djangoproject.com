@@ -12,7 +12,10 @@ class EntryAdmin(admin.ModelAdmin):
     def formfield_for_dbfield(self, db_field, **kwargs):
         formfield = super(EntryAdmin, self).formfield_for_dbfield(db_field, **kwargs)
         if db_field.name == 'body':
-            formfield.widget.attrs['rows'] = 25
+            formfield.widget.attrs.update({
+                'rows': 60,
+                'style': 'font-family: monospace; width: 810px;',
+            })
         return formfield
 
 
