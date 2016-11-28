@@ -3,7 +3,9 @@ from django.core.paginator import EmptyPage, Page, PageNotAnInteger, Paginator
 from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
 from elasticsearch.helpers import streaming_bulk
-from elasticsearch_dsl import DocType, Long, Nested, Object, String, analysis
+from elasticsearch_dsl import (
+    DocType, Keyword, Long, Nested, Object, Text, analysis,
+)
 from elasticsearch_dsl.connections import connections
 
 from .models import Document, document_url
@@ -136,18 +138,18 @@ class DocumentDocType(ImprovedDocType):
     model = Document
 
     id = Long()
-    title = String(analyzer=lower_whitespace_analyzer, boost=1.2)
-    path = String(index='no', analyzer=path_analyzer)
-    content = String(analyzer=lower_whitespace_analyzer)
-    content_raw = String(index_options='offsets')
+    title = Text(analyzer=lower_whitespace_analyzer, boost=1.2)
+    path = Text(index='no', analyzer=path_analyzer)
+    content = Text(analyzer=lower_whitespace_analyzer)
+    content_raw = Text(index_options='offsets')
     release = Object(properties={
         'id': Long(),
-        'version': String(index='not_analyzed'),
-        'lang': String(index='not_analyzed'),
+        'version': Keyword(),
+        'lang': Keyword(),
     })
     breadcrumbs = Nested(properties={
-        'title': String(index='not_analyzed'),
-        'path': String(index='not_analyzed'),
+        'title': Keyword(),
+        'path': Keyword(),
     })
 
     class Meta:
