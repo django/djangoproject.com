@@ -248,8 +248,7 @@ def search_suggestions(request, lang, version, per_page=20):
                                                            analyzer='stop',
                                                            default_operator='and'))
                             .filter('term', release__lang=release.lang)
-                            .filter('term', release__version=release.version)
-                            .fields(['title', '_source']))
+                            .filter('term', release__version=release.version))
 
             suggestions.append(q)
             titles = []
@@ -257,7 +256,7 @@ def search_suggestions(request, lang, version, per_page=20):
             content_type = ContentType.objects.get_for_model(Document)
             results = search[0:per_page].execute()
             for result in results:
-                titles.append(result.title[0])
+                titles.append(result.title)
                 kwargs = {
                     'content_type_id': content_type.pk,
                     'object_id': result.meta.id,
