@@ -248,7 +248,8 @@ def search_suggestions(request, lang, version, per_page=20):
                                                            analyzer='stop',
                                                            default_operator='and'))
                             .filter('term', release__lang=release.lang)
-                            .filter('term', release__version=release.version))
+                            .filter('term', release__version=release.version)
+                            .source(includes=['title']))
 
             suggestions.append(q)
             titles = []
