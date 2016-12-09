@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 
 from django.contrib import admin
+from django.templatetags.static import static
 from django.utils.formats import localize
 from django.utils.html import format_html
 
@@ -32,6 +33,7 @@ class CorporateMemberAdmin(admin.ModelAdmin):
         '_is_paid',
         'contact_email',
         'membership_level',
+        'renewal_link',
     ]
     list_filter = [
         'membership_level',
@@ -41,6 +43,13 @@ class CorporateMemberAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).prefetch_related('invoice_set')
+
+    def renewal_link(self, obj):
+        return format_html(
+            '<a href="{}"><img src="{}" alt="renewal link" />',
+            obj.get_renewal_link(),
+            static('admin/img/icon-changelink.svg'),
+        )
 
     def membership_expires(self, obj):
         expiry_date = obj.get_expiry_date()

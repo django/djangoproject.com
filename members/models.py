@@ -1,9 +1,11 @@
 from collections import defaultdict
 
+from django.core import signing
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.views.generic.dates import timezone_today
+from django_hosts import reverse
 from sorl.thumbnail import ImageField, get_thumbnail
 
 SILVER_MEMBERSHIP = 1
@@ -112,6 +114,9 @@ class CorporateMember(models.Model):
     @property
     def thumbnail(self):
         return get_thumbnail(self.logo, '170x170', quality=100)
+
+    def get_renewal_link(self):
+        return reverse('members:corporate-members-renew', kwargs={'token': signing.dumps(self.pk)})
 
 
 @receiver(post_save, sender=CorporateMember)
