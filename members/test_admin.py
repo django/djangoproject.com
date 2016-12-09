@@ -33,3 +33,8 @@ class CorporateMemberAdminTests(TestCase):
         self.assertIn('orange', modeladmin.membership_expires(self.member))
         self.member.invoice_set.create(amount=500, expiration_date=plus_thirty_one_days)
         self.assertIn('green', modeladmin.membership_expires(self.member))
+
+    def test_renewal_link(self):
+        expected_str = '<a href="http://www.djangoproject.dev:8000/foundation/corporate-membership/renew/'
+        modeladmin = CorporateMemberAdmin(CorporateMember, admin.site)
+        self.assertTrue(modeladmin.renewal_link(self.member).startswith(expected_str))

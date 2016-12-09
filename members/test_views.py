@@ -116,3 +116,24 @@ class CorporateMemberJoinViewTests(TestCase):
         member = CorporateMember.objects.latest('id')
         self.assertEqual(member.display_name, data['display_name'])
         self.assertEqual(member.invoice_set.get().amount, data['amount'])
+
+
+class CorporateMemberRenewalViewTests(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.member = CorporateMember.objects.create(
+            display_name='Corporation',
+            contact_email='c@example.com',
+            membership_level=2,
+        )
+
+    def test_get(self):
+        response = self.client.get(self.member.get_renewal_link())
+        self.assertContains(response, 'Become a DSF corporate member')
+        self.assertEqual(response.context['form'].instance, self.member)
+
+    def test_invalid_token(self):
+        url = reverse('members:corporate-members-renew', kwargs={'token': 'aaaaa'})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)

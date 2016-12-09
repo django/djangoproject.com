@@ -3,6 +3,7 @@ from django.core import mail
 from django.test import TestCase
 
 from .forms import CorporateMemberSignUpForm
+from .models import CorporateMember
 from .utils import get_temporary_image
 
 
@@ -63,3 +64,33 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
         form = CorporateMemberSignUpForm(data, self.file_data)
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors, {'django_usage': ['This field is required.']})
+
+    def test_renewal_success(self):
+        model_data = self.valid_data.copy()
+        del model_data['amount']
+        member = CorporateMember.objects.create(**model_data)
+        data = self.valid_data
+        form = CorporateMemberSignUpForm(data, self.file_data, instance=member)
+        self.assertTrue(form.is_valid())
+        instance = form.save()
+        self.assertEqual(instance.display_name, data['display_name'])
+        self.assertEqual(instance.django_usage, 'fun')
+        self.assertEqual(instance.invoice_set.get().amount, data['amount'])
+
+        self.assertEqual(len(mail.outbox), 1)
+        msg = mail.outbox[0]
+        self.assertEqual(msg.subject, 'Django Corporate Membership Renewal: Foo Widgets')
+        self.assertEqual(msg.body, (
+            "Thanks for renewing as a corporate member of the Django Software Foundation! "
+            "Your application is received and we'll follow up with an invoice soon."
+        ))
+        self.assertEqual(msg.from_email, settings.FUNDRAISING_DEFAULT_FROM_EMAIL)
+        self.assertEqual(
+            msg.to,
+            [
+                settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
+                data['contact_email'],
+                'treasurer@djangoproject.com',
+                'dsf-board@googlegroups.com',
+            ]
+        )

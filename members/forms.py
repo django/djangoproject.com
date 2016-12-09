@@ -89,12 +89,22 @@ class CorporateMemberSignUpForm(forms.ModelForm):
         ]
         model = CorporateMember
 
+    @property
+    def is_renewing(self):
+        return not self.instance._state.adding
+
     def save(self, *args, **kwargs):
+        is_renewing = self.is_renewing  # self.is_renewing changes after super()
         instance = super().save(*args, **kwargs)
         send_mail(
-            'Django Corporate Membership Application: %s' % self.instance.display_name,
-            "Thanks for applying to be a corporate member of the Django Software Foundation! "
-            "Your application is received and we'll follow up with an invoice soon.",
+            'Django Corporate Membership %s: %s' % (
+                'Renewal' if is_renewing else 'Application',
+                self.instance.display_name,
+            ),
+            "Thanks for %s a corporate member of the Django Software Foundation! "
+            "Your application is received and we'll follow up with an invoice soon." % (
+                'renewing as' if is_renewing else 'applying to be'
+            ),
             settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
             [
                 settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
