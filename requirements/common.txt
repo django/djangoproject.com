@@ -6,7 +6,7 @@ django-push==0.9
 django-registration-redux==1.4
 elasticsearch-dsl==5.0.0
 elasticsearch==5.0.1
-docutils==0.12
+docutils==0.13.1
 feedparser==5.2.1
 Jinja2==2.8
 libsass==0.12.0
@@ -17,4 +17,4 @@ pykismet3==0.1.1
 requests==2.12.4
 sorl-thumbnail==12.3
 stripe==1.43.0
-Sphinx==1.4.9
+Sphinx==1.5.1
