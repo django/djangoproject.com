@@ -70,7 +70,7 @@ class CorporateMemberListViewTests(TestCase):
         response = self.client.get(self.url)
         self.assertNotContains(response, 'Corporation unapproved')
 
-    def test_view_renders_orgs_alphabetically(self):
+    def test_view_renders_orgs_by_tier(self):
         member = CorporateMember.objects.create(
             display_name='AAA',
             contact_email='c@example.com',
@@ -84,9 +84,14 @@ class CorporateMemberListViewTests(TestCase):
             expiration_date=self.today + timedelta(days=1),
         )
         response = self.client.get(self.url)
+        members = response.context['members']
+        self.assertEqual(
+            sorted(members.keys()),
+            ['bronze', 'diamond', 'gold', 'platinum', 'silver']
+        )
         self.assertQuerysetEqual(
-            response.context['members'],
-            ['<CorporateMember: AAA>', '<CorporateMember: Corporation>']
+            members['silver'],
+            ['<CorporateMember: Corporation>', '<CorporateMember: AAA>']
         )
 
 

@@ -1,0 +1,11 @@
+{% load static thumbnail %}
+<li>
+{% if obj.logo %}
+<img src="{% static 'img/fundraising-heart.png' %}"
+      data-src="{{ obj.thumbnail.url }}"
+      data-src-retina="{{ obj.thumbnail.url|resolution:'2x' }}"
+      alt="{{ obj.display_name }}" class="corporate-member-logo" />
+{% endif %}
+<h3><a href="{{ obj.url }}">{{ obj.display_name }}</a></h3>
+<p>{{ obj.description|linebreaksbr }}</p>
+</li>
