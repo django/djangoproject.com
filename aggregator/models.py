@@ -46,7 +46,7 @@ class Feed(models.Model):
         return self.title
 
     def save(self, **kwargs):
-        super(Feed, self).save(**kwargs)
+        super().save(**kwargs)
         if settings.SUPERFEEDR_CREDS is not None:
             if self.approval_status == APPROVED_FEED:
                 Subscription.objects.subscribe(self.feed_url, settings.PUSH_HUB)
@@ -54,7 +54,7 @@ class Feed(models.Model):
                 self.unsubscribe()
 
     def delete(self, **kwargs):
-        super(Feed, self).delete(**kwargs)
+        super().delete(**kwargs)
         if settings.SUPERFEEDR_CREDS is not None:
             self.unsubscribe()
 

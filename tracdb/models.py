@@ -118,7 +118,7 @@ class Ticket(models.Model):
         return "#%s: %s" % (self.id, self.summary)
 
     def __init__(self, *args, **kwargs):
-        super(Ticket, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         # Munge custom fields onto this object. This sucks since it implies
         # querying will work (it won't!) and that writing will work (ditto).
@@ -228,10 +228,10 @@ class SingleRepoRevisionManager(models.Manager):
     """
     def __init__(self, repo_id):
         self.repo_id = repo_id
-        super(SingleRepoRevisionManager, self).__init__()
+        super().__init__()
 
     def get_queryset(self):
-        qs = super(SingleRepoRevisionManager, self).get_queryset()
+        qs = super().get_queryset()
         return qs.filter(repos=self.repo_id)
 
 

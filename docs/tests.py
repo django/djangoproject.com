@@ -134,7 +134,7 @@ class SearchFormTestCase(TestCase):
     def tearDownClass(cls):
         # cleanup URLconfs changed by django-hosts
         set_urlconf(None)
-        super(SearchFormTestCase, cls).tearDownClass()
+        super().tearDownClass()
 
     def test_empty_get(self):
         response = self.client.get('/en/dev/search/',

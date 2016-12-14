@@ -93,7 +93,7 @@ def get_user_stats(user):
 
 class JSONResponse(HttpResponse):
     def __init__(self, obj):
-        super(JSONResponse, self).__init__(
+        super().__init__(
             json.dumps(obj, indent=(2 if settings.DEBUG else None)),
             content_type='application/json',
         )

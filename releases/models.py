@@ -176,7 +176,7 @@ class Release(models.Model):
         self.major, self.minor, self.micro, status, self.iteration = self.version_tuple
         self.status = self.STATUS_REVERSE[status]
         cache.delete(self.DEFAULT_CACHE_KEY)
-        super(Release, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
         # Each micro release EOLs the previous one in the same series.
         if self.status == 'f' and self.micro > 0:
             (type(self).objects

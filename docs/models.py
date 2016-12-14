@@ -91,7 +91,7 @@ class DocumentRelease(models.Model):
                 self.version,
                 settings.CACHE_MIDDLEWARE_SECONDS,
             )
-        super(DocumentRelease, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     @property
     def version(self):

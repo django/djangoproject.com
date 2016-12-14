@@ -10,7 +10,7 @@ class EntryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("headline",)}
 
     def formfield_for_dbfield(self, db_field, **kwargs):
-        formfield = super(EntryAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        formfield = super().formfield_for_dbfield(db_field, **kwargs)
         if db_field.name == 'body':
             formfield.widget.attrs.update({
                 'rows': 60,

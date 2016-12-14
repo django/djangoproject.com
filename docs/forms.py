@@ -9,7 +9,7 @@ class DocSearchForm(forms.Form):
 
     def __init__(self, data=None, **kwargs):
         self.release = kwargs.pop('release')
-        super(DocSearchForm, self).__init__(data=data, **kwargs)
+        super().__init__(data=data, **kwargs)
         self.fields['q'].widget = forms.TextInput(attrs={
             'type': 'search',
             'placeholder': search_placeholder % self.release.human_version

@@ -27,10 +27,10 @@ class ProfileForm(forms.ModelForm):
         instance = kwargs.get('instance', None)
         if instance:
             kwargs.setdefault('initial', {}).update({'email': instance.user.email})
-        super(ProfileForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def save(self, commit=True):
-        instance = super(ProfileForm, self).save(commit=commit)
+        instance = super().save(commit=commit)
         if 'email' in self.cleaned_data:
             instance.user.email = self.cleaned_data['email']
             if commit:
