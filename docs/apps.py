@@ -10,7 +10,7 @@ class DocsConfig(AppConfig):
     verbose_name = _('Documentation')
 
     def ready(self):
-        super(DocsConfig, self).ready()
+        super().ready()
         # Configure Elasticsearch connections for connection pooling.
         connections.configure(
             default={

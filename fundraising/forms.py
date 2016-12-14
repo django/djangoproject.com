@@ -74,7 +74,7 @@ class DjangoHeroForm(forms.ModelForm):
         )
 
     def __init__(self, *args, **kwargs):
-        super(DjangoHeroForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.checkbox_fields = []
         self.radio_select_fields = []
 
@@ -106,7 +106,7 @@ class StripeTextInput(forms.TextInput):
 
     def render(self, name, *args, **kwargs):
         kwargs = self._add_data_stripe_attr(name, kwargs)
-        rendered = super(StripeTextInput, self).render(name, *args, **kwargs)
+        rendered = super().render(name, *args, **kwargs)
         return mark_safe(self._strip_name_attr(rendered, name))
 
 

@@ -179,7 +179,7 @@ class DocumentDocType(ImprovedDocType):
 
     @classmethod
     def index_queryset(cls):
-        qs = super(DocumentDocType, cls).index_queryset()
+        qs = super().index_queryset()
         return (
             # don't index the module pages since source code is hard to
             # combine with full text search

@@ -43,7 +43,7 @@ class FundraisingModel(models.Model):
         self.modified = timezone.now()
         if not self.id:
             self.id = crypto.get_random_string(length=12)
-        return super(FundraisingModel, self).save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
 
 class DjangoHero(FundraisingModel):

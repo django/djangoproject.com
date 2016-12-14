@@ -9,5 +9,5 @@ class FundraisingConfig(AppConfig):
     verbose_name = _("Fundraising")
 
     def ready(self):
-        super(FundraisingConfig, self).ready()
+        super().ready()
         stripe.api_key = settings.STRIPE_SECRET_KEY

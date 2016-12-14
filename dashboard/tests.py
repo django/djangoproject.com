@@ -68,7 +68,7 @@ class TracTicketMetricTestCase(TestCase, MetricMixin):
     fixtures = ['dashboard_test_data']
 
     def setUp(self):
-        super(TracTicketMetricTestCase, self).setUp()
+        super().setUp()
         self.instance = TracTicketMetric.objects.last()
 
     @mock.patch('xmlrpc.client.ServerProxy')
@@ -83,7 +83,7 @@ class RSSFeedMetricTestCase(TestCase, MetricMixin):
     fixtures_path = os.path.join(os.path.dirname(__file__), 'fixtures', 'rss_feed_metric.xml')
 
     def setUp(self):
-        super(RSSFeedMetricTestCase, self).setUp()
+        super().setUp()
         self.instance = RSSFeedMetric.objects.last()
 
     @requests_mock.mock()
@@ -100,7 +100,7 @@ class GithubItemCountMetricTestCase(TestCase, MetricMixin):
     api_url2 = 'https://api.github.com/repos/django/django/pulls?state=closed&per_page=100&page=2'
 
     def setUp(self):
-        super(GithubItemCountMetricTestCase, self).setUp()
+        super().setUp()
         self.instance = GithubItemCountMetric.objects.last()
 
     @requests_mock.mock()

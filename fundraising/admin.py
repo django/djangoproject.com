@@ -49,7 +49,7 @@ class Donation(admin.ModelAdmin):
 
     def get_queryset(self, request):
         """Annotate the sum of related payments to every donation."""
-        qs = super(Donation, self).get_queryset(request)
+        qs = super().get_queryset(request)
         return qs.annotate(amount=Sum('payment__amount'))
 
     def amount(self, obj):

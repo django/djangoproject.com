@@ -30,7 +30,7 @@ class FeedListView(ListView):
         return FeedItem.objects.filter(feed__feed_type=self.feed_type, feed__approval_status=APPROVED_FEED)
 
     def get_context_data(self, **kwargs):
-        context = super(FeedListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['feed_type'] = self.feed_type
         return context
 

@@ -98,7 +98,7 @@ class Entry(models.Model):
             self.body_html = publish_parts(source=smart_str(self.body),
                                            writer_name="html",
                                            settings_overrides=BLOG_DOCUTILS_SETTINGS)['fragment']
-        super(Entry, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
         self.invalidate_cached_entry()
 
     def invalidate_cached_entry(self):

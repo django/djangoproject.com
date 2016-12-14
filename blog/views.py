@@ -21,7 +21,7 @@ class BlogViewMixin(object):
             return Entry.objects.published()
 
     def get_context_data(self, **kwargs):
-        context = super(BlogViewMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         events_queryset = Event.objects.future()
         if not self.request.user.is_staff:
