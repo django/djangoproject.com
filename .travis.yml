@@ -1,6 +1,7 @@
 sudo: no
+dist: trusty
 addons:
-  postgresql: "9.3"
+  postgresql: "9.5"
 language: python
 python:
   - "3.5"
