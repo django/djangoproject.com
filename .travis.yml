@@ -2,10 +2,12 @@ sudo: no
 addons:
   postgresql: "9.3"
 language: python
+python:
+  - "3.5"
 env:
-  - TOXENV=py34-tests
-  - TOXENV=py34-flake8
-  - TOXENV=py34-isort
+  - TOXENV=py35-tests
+  - TOXENV=py35-flake8
+  - TOXENV=py35-isort
 install:
   - pip install coveralls tox
 before_script:
