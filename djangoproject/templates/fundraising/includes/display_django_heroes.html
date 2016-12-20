@@ -1,9 +1,20 @@
 {% load humanize %}
 <div class="heroes">
+  {% if corporate_members.diamond %}
+  <h3>Diamond Corporate Members (${{ corporate_membership_amounts.diamond|intcomma }}+)</h3>
+  <p>Our diamond <a href="/foundation/corporate-membership/">corporate
+    members</a> include mega corporations and foundations.</p>
+  <div>
+  {% for obj in corporate_members.diamond %}
+    {% include "fundraising/includes/_hero_with_logo.html" %}
+  {% endfor %}
+  </div>
+  {% endif %}
+
   {% if corporate_members.platinum %}
   <h3>Platinum Corporate Members (${{ corporate_membership_amounts.platinum|intcomma }}+)</h3>
   <p>Our platinum <a href="/foundation/corporate-membership/">corporate
-    members</a> include large corporations and foundations.</p>
+    members</a> include organizations of ~500 people.</p>
   <div>
   {% for obj in corporate_members.platinum %}
     {% include "fundraising/includes/_hero_with_logo.html" %}
@@ -14,8 +25,7 @@
   {% if corporate_members.gold %}
   <h3>Gold Corporate Members (${{ corporate_membership_amounts.gold|intcomma }}+)</h3>
   <p>Our gold <a href="/foundation/corporate-membership/">corporate
-    members</a> include medium-sized businesses, established ISVs, and other
-    mid-range companies.</p>
+    members</a> include organizations of ~200 people.</p>
   <div>
   {% for obj in corporate_members.gold %}
     {% include "fundraising/includes/_hero_with_logo.html" %}
@@ -23,15 +33,27 @@
   </div>
   {% endif %}
 
+  {% if corporate_members.silver %}
   <h3>Silver Corporate Members (${{ corporate_membership_amounts.silver|intcomma }}+)</h3>
   <p>Our silver <a href="/foundation/corporate-membership/">corporate
-    members</a> include independent consultancies, sole proprietorships, and
-    other small businesses.</p>
+    members</a> include organizations of ~50 people.</p>
   <div>
   {% for obj in corporate_members.silver %}
     {% include "fundraising/includes/_hero_with_logo.html" %}
   {% endfor %}
   </div>
+  {% endif %}
+
+  {% if corporate_members.bronze %}
+  <h3>Bronze Corporate Members (${{ corporate_membership_amounts.bronze|intcomma }}+)</h3>
+  <p>Our bronze <a href="/foundation/corporate-membership/">corporate
+    members</a> include organizations of ~10 people.</p>
+  <div>
+  {% for obj in corporate_members.bronze %}
+    {% include "fundraising/includes/_hero_with_logo.html" %}
+  {% endfor %}
+  </div>
+  {% endif %}
 
   <h3>In-kind donors</h3>
   <p>These donors help with significant non-cash contributions.</p>
