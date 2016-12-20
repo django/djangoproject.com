@@ -8,15 +8,29 @@ from django.views.generic.dates import timezone_today
 from django_hosts import reverse
 from sorl.thumbnail import ImageField, get_thumbnail
 
-SILVER_MEMBERSHIP = 1
-GOLD_MEMBERSHIP = 2
-PLATINUM_MEMBERSHIP = 3
+BRONZE_MEMBERSHIP = 1
+SILVER_MEMBERSHIP = 2
+GOLD_MEMBERSHIP = 3
+PLATINUM_MEMBERSHIP = 4
+DIAMOND_MEMBERSHIP = 5
 
 CORPORATE_MEMBERSHIP_AMOUNTS = {
-    'platinum': 100000,
-    'gold': 25000,
-    'silver': 2000,
+    'diamond': 100000,
+    'platinum': 30000,
+    'gold': 12500,
+    'silver': 5000,
+    'bronze': 2000,
 }
+
+MEMBERSHIP_LEVELS = (
+    (BRONZE_MEMBERSHIP, 'Bronze'),
+    (SILVER_MEMBERSHIP, 'Silver'),
+    (GOLD_MEMBERSHIP, 'Gold'),
+    (PLATINUM_MEMBERSHIP, 'Platinum'),
+    (DIAMOND_MEMBERSHIP, 'Diamond'),
+)
+
+MEMBERSHIP_TO_KEY = dict((k, v.lower()) for k, v in MEMBERSHIP_LEVELS)
 
 
 class IndividualMember(models.Model):
@@ -48,23 +62,12 @@ class CorporateMemberManager(models.Manager):
         members_by_type = defaultdict(list)
         members = self.for_public_display()
         for member in members:
-            if member.membership_level == SILVER_MEMBERSHIP:
-                key = 'silver'
-            elif member.membership_level == GOLD_MEMBERSHIP:
-                key = 'gold'
-            else:
-                key = 'platinum'
+            key = MEMBERSHIP_TO_KEY[member.membership_level]
             members_by_type[key].append(member)
         return members_by_type
 
 
 class CorporateMember(models.Model):
-    MEMBERSHIP_LEVELS = (
-        (SILVER_MEMBERSHIP, 'Silver'),
-        (GOLD_MEMBERSHIP, 'Gold'),
-        (PLATINUM_MEMBERSHIP, 'Platinum'),
-    )
-
     display_name = models.CharField(max_length=250)
     billing_name = models.CharField(
         max_length=250,

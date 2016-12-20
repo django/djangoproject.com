@@ -28,7 +28,9 @@ class Migration(migrations.Migration):
                 ('contact_name', models.CharField(max_length=250)),
                 ('contact_email', models.EmailField(max_length=254)),
                 ('billing_email', models.EmailField(blank=True, help_text='If different from contact email.', max_length=254)),
-                ('membership_level', models.IntegerField(choices=[(1, 'Silver'), (2, 'Gold'), (3, 'Platinum')])),
+                ('membership_level', models.IntegerField(
+                    choices=[(1, 'Bronze'), (2, 'Silver'), (3, 'Gold'), (4, 'Platinum'), (5, 'Diamond')]
+                )),
                 ('address', models.TextField(blank=True)),
                 ('notes', models.TextField(blank=True, help_text='Not displayed publicly.')),
             ],

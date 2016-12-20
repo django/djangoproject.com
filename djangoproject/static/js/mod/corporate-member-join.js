@@ -17,10 +17,14 @@ define(['jquery'], function($) {
         },
         setDonationAmount: function($membershipLevel, $amount) {
             var selectedMembership = $membershipLevel.val();
-            if (selectedMembership == '3') {
+            if (selectedMembership == '5') {
                 $amount.val(100000);
+            } else if (selectedMembership == '4') {
+                $amount.val(30000);
+            } else if (selectedMembership == '3') {
+                $amount.val(12500);
             } else if (selectedMembership == '2') {
-                $amount.val(25000);
+                $amount.val(5000);
             } else if (selectedMembership == '1') {
                 $amount.val(2000);
             } else {
@@ -30,8 +34,12 @@ define(['jquery'], function($) {
         setMembershipLevel: function($amount, $membershipLevel) {
             var amount = parseInt($amount.val());
             if (amount >= 100000) {
+                $membershipLevel.val(5);
+            } else if (amount >= 30000) {
+                $membershipLevel.val(4);
+            } else if (amount >= 12500) {
                 $membershipLevel.val(3);
-            } else if (amount >= 25000) {
+            } else if (amount >= 5000) {
                 $membershipLevel.val(2);
             } else if (amount >= 2000) {
                 $membershipLevel.val(1);
