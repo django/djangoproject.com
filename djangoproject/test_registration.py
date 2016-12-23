@@ -8,7 +8,7 @@ from registration.models import RegistrationProfile
 class TestRegistration(TestCase):
     def test_activation_email(self):
         site = Site.objects.get()
-        user = User()
+        user = User(email='test@example.com')
         profile = RegistrationProfile(user=user, activation_key='activation-key')
         profile.send_activation_email(site)
         self.assertEqual(len(mail.outbox), 1)
