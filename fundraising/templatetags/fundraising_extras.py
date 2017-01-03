@@ -54,6 +54,7 @@ def donation_form_with_heart(context):
 
     return {
         'goal_amount': GOAL_AMOUNT,
+        'goal_start_date': GOAL_START_DATE,
         'donated_amount': donated_amount,
         'total_donors': total_donors,
         'form': form,
