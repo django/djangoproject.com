@@ -81,6 +81,8 @@ class CorporateMember(models.Model):
     address = models.TextField(blank=True)
     django_usage = models.TextField(blank=True, help_text='Not displayed publicly.')
     notes = models.TextField(blank=True, help_text='Not displayed publicly.')
+    django_usage = models.TextField('How does your organization use Django?', blank=True,
+                                    help_text='Not displayed publicly.')
 
     objects = CorporateMemberManager()
 
