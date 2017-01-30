@@ -84,6 +84,7 @@ class CorporateMember(models.Model):
     address = models.TextField(blank=True)
     django_usage = models.TextField(blank=True, help_text='Not displayed publicly.')
     notes = models.TextField(blank=True, help_text='Not displayed publicly.')
+    inactive = models.BooleanField(default=False, help_text='No longer renewing.')
 
     objects = CorporateMemberManager()
 
