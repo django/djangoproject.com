@@ -24,6 +24,37 @@ class InvoiceInline(admin.TabularInline):
     model = Invoice
 
 
+class StatusFilter(admin.SimpleListFilter):
+    """
+    Display only active members in the changelist page, by default.
+    """
+    title = 'Status'
+    parameter_name = 'status'
+
+    def lookups(self, request, model_admin):
+        return (
+            (None, 'Active'),
+            ('inactive', 'Inactive'),
+            ('all', 'All'),
+        )
+
+    def choices(self, cl):
+        for lookup, title in self.lookup_choices:
+            yield {
+                'selected': self.value() == lookup,
+                'query_string': cl.get_query_string({self.parameter_name: lookup}, []),
+                'display': title,
+            }
+
+    def queryset(self, request, queryset):
+        if self.value() is None:
+            return queryset.filter(inactive=False)
+        elif self.value() == 'inactive':
+            return queryset.filter(inactive=True)
+        else:
+            return queryset
+
+
 @admin.register(CorporateMember)
 class CorporateMemberAdmin(admin.ModelAdmin):
     list_display = [
@@ -35,9 +66,7 @@ class CorporateMemberAdmin(admin.ModelAdmin):
         'membership_level',
         'renewal_link',
     ]
-    list_filter = [
-        'membership_level',
-    ]
+    list_filter = [StatusFilter, 'membership_level']
     inlines = [InvoiceInline]
     search_fields = ['display_name', 'billing_name']
 
