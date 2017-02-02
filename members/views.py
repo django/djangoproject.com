@@ -1,11 +1,14 @@
 from django.core import signing
 from django.http import Http404
+from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView
 from django.views.generic.dates import timezone_today
 
 from .forms import CorporateMemberSignUpForm
-from .models import CorporateMember, IndividualMember
+from .models import (
+    CORPORATE_MEMBERSHIP_AMOUNTS, CorporateMember, IndividualMember,
+)
 
 
 class IndividualMemberListView(ListView):
@@ -23,12 +26,11 @@ class IndividualMemberListView(ListView):
         return context
 
 
-class CorporateMemberListView(ListView):
-    model = CorporateMember
-    context_object_name = 'members'
-
-    def get_queryset(self):
-        return self.model.objects.for_public_display().order_by('display_name')
+def corporate_member_list_view(request):
+    return render(request, 'members/corporatemember_list.html', {
+        'members': CorporateMember.objects.by_membership_level(),
+        'corporate_membership_amounts': CORPORATE_MEMBERSHIP_AMOUNTS,
+    })
 
 
 class CorporateMemberSignupMixin(object):

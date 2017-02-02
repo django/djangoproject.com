@@ -3117,6 +3117,18 @@ table.django-supported-versions {
     }
 }
 
+/* Corporate membership list page */
+
+ul.corporate-members li {
+    min-height: 160px;
+}
+
+.corporate-member-logo {
+    float: right;
+    height: 150px;
+    padding: 0 0 10px 10px;
+}
+
 /* Messages */
 
 .messages {
