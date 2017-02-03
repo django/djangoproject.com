@@ -3125,7 +3125,8 @@ ul.corporate-members li {
 
 .corporate-member-logo {
     float: right;
-    height: 150px;
+    max-height: 150px;
+    width: 150px;
     padding: 0 0 10px 10px;
 }
 
