@@ -28,7 +28,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, **kwargs):
-        verbosity = kwargs['verbosity']
+        self.verbosity = verbosity = kwargs['verbosity']
 
         default_builders = ['json', 'html']
         default_docs_version = DocumentRelease.objects.get(is_default=True).release.version
@@ -163,6 +163,7 @@ class Command(BaseCommand):
         Update a source checkout and return True if any docs were changed,
         False otherwise.
         """
+        quiet = '--quiet' if self.verbosity == 0 else '--'
         if '@' in url:
             repo, branch = url.rsplit('@', 1)
         else:
@@ -173,11 +174,12 @@ class Command(BaseCommand):
             try:
                 cwd = os.getcwd()
                 os.chdir(str(destdir))
-                subprocess.call(['git', 'reset', '--hard', 'HEAD'])
-                subprocess.call(['git', 'clean', '-fdx'])
+                subprocess.call(['git', 'reset', '--hard', 'HEAD', quiet])
+                subprocess.call(['git', 'clean', '-fdx', quiet])
                 subprocess.call([
                     'git', 'fetch', remote,
-                    '%s:refs/remotes/%s' % (branch, branch_with_remote)
+                    '%s:refs/remotes/%s' % (branch, branch_with_remote),
+                    quiet
                 ])
                 docs_changed = subprocess.call([
                     'git', 'diff', branch_with_remote,
@@ -186,11 +188,11 @@ class Command(BaseCommand):
                 ]) == 1
                 if not docs_changed:
                     return False
-                subprocess.call(['git', 'merge', branch_with_remote])
+                subprocess.call(['git', 'merge', branch_with_remote, quiet])
             finally:
                 os.chdir(cwd)
         else:
-            subprocess.call(['git', 'clone', '-q', '--branch', branch, repo, str(destdir)])
+            subprocess.call(['git', 'clone', '-q', '--branch', branch, repo, str(destdir), quiet])
         return True
 
 
