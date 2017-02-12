@@ -78,7 +78,8 @@ class Command(BaseCommand):
                 self.update_git(scm_url, trans_dir)
                 if not source_dir.joinpath('locale').exists():
                     source_dir.joinpath('locale').symlink_to(trans_dir.joinpath('translations'))
-                subprocess.call("cd %s && make translations" % trans_dir, shell=True)
+                extra_kwargs = {'stdout': subprocess.DEVNULL} if verbosity == 0 else {}
+                subprocess.call('cd %s && make translations' % trans_dir, shell=True, **extra_kwargs)
 
             if release.is_default:
                 # Build the pot files (later retrieved by Transifex)
@@ -102,7 +103,7 @@ class Command(BaseCommand):
                     'sphinx-build',
                     '-b', builder,
                     '-D', 'language=%s' % to_locale(release.lang),
-                    '-q',              # Be vewy qwiet
+                    '-Q' if verbosity == 0 else '-q',
                     str(source_dir),        # Source file directory
                     str(build_dir),         # Destination directory
                 ])
