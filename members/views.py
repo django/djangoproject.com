@@ -7,7 +7,7 @@ from django.views.generic.dates import timezone_today
 
 from .forms import CorporateMemberSignUpForm
 from .models import (
-    CORPORATE_MEMBERSHIP_AMOUNTS, CorporateMember, IndividualMember,
+    CORPORATE_MEMBERSHIP_AMOUNTS, CorporateMember, IndividualMember, Team,
 )
 
 
@@ -60,3 +60,11 @@ class CorporateMemberRenewView(CorporateMemberSignupMixin, UpdateView):
                 {'verbose_name': self.model._meta.verbose_name}
             )
         return self.get_queryset().get(pk=pk)
+
+
+class TeamsListView(ListView):
+    model = Team
+    context_object_name = 'teams'
+
+    def get_queryset(self):
+        return self.model.objects.prefetch_related('members').order_by('name')

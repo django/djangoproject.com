@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from members.models import (
     GOLD_MEMBERSHIP, PLATINUM_MEMBERSHIP, SILVER_MEMBERSHIP, CorporateMember,
-    IndividualMember,
+    IndividualMember, Team,
 )
 
 
@@ -93,3 +93,9 @@ class CorporateMemberTests(TestCase):
         self.member.membership_level = PLATINUM_MEMBERSHIP
         self.member.save()
         self.assertEqual(CorporateMember.objects.by_membership_level(), {'platinum': [self.member]})
+
+
+class TeamTests(TestCase):
+
+    def test_str(self):
+        self.assertEqual(str(Team(name='Ops')), 'Ops')

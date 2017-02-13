@@ -51,6 +51,16 @@ class IndividualMember(models.Model):
         return self.member_until is None
 
 
+class Team(models.Model):
+    name = models.CharField(max_length=250)
+    slug = models.SlugField()
+    description = models.TextField(help_text='HTML, without surrounding <p> tags.')
+    members = models.ManyToManyField(IndividualMember)
+
+    def __str__(self):
+        return self.name
+
+
 class CorporateMemberManager(models.Manager):
     def for_public_display(self):
         objs = self.get_queryset().filter(
