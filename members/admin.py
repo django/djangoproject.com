@@ -5,7 +5,7 @@ from django.templatetags.static import static
 from django.utils.formats import localize
 from django.utils.html import format_html
 
-from members.models import CorporateMember, IndividualMember, Invoice
+from members.models import CorporateMember, IndividualMember, Invoice, Team
 
 
 @admin.register(IndividualMember)
@@ -99,3 +99,9 @@ class CorporateMemberAdmin(admin.ModelAdmin):
                 localize(expiry_date),
             )
         return expiry_date
+
+
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    filter_horizontal = ['members']
+    prepopulated_fields = {'slug': ('name',)}

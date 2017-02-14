@@ -1,0 +1,20 @@
+{% extends "base_foundation.html" %}
+
+{% block content %}
+
+<h2>Teams</h2>
+<p>Teams indicate who is actively contributing in certain areas.</p>
+
+{% for team in teams %}
+<div class="section">
+<h3 id="{{ team.slug }}-team">{{ team.name }}</h3>
+<p>{{ team.description|safe }}</p>
+<ul>
+{% for member in team.members.all %}
+  <li>{{ member.name }}</li>
+{% endfor %}
+</ul>
+</div>
+{% endfor %}
+
+{% endblock %}

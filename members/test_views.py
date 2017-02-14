@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import CorporateMember, IndividualMember
+from .models import CorporateMember, IndividualMember, Team
 from .utils import get_temporary_image
 
 
@@ -142,3 +142,25 @@ class CorporateMemberRenewalViewTests(TestCase):
         url = reverse('members:corporate-members-renew', kwargs={'token': 'aaaaa'})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
+
+
+class TeamListViewTests(TestCase):
+    url = reverse('members:teams')
+
+    @classmethod
+    def setUpTestData(cls):
+        dev = IndividualMember.objects.create(
+            name='DjangoDeveloper',
+            email='developer@example.com',
+        )
+        cls.security_team = Team.objects.create(name='Security team')
+        cls.ops_team = Team.objects.create(name='Ops team', slug='ops', description='Ops stuff.')
+        cls.ops_team.members.add(dev)
+
+    def test_get(self):
+        response = self.client.get(self.url)
+        # Sorted by name
+        self.assertSequenceEqual(response.context['teams'], [self.ops_team, self.security_team])
+        self.assertContains(response, '<h3 id="ops-team">Ops team</h3>')
+        self.assertContains(response, '<p>Ops stuff.</p>')
+        self.assertContains(response, '<ul><li>DjangoDeveloper</li></ul>', html=True)

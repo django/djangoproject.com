@@ -3,7 +3,7 @@ from django.views.generic import RedirectView, TemplateView
 
 from members.views import (
     CorporateMemberRenewView, CorporateMemberSignUpView,
-    IndividualMemberListView, corporate_member_list_view,
+    IndividualMemberListView, TeamsListView, corporate_member_list_view,
 )
 
 app_name = 'members'
@@ -26,4 +26,5 @@ urlpatterns = [
         TemplateView.as_view(template_name='members/corporate_members_join_thanks.html'),
         name='corporate-members-join-thanks',
     ),
+    url('^teams/$', TeamsListView.as_view(), name='teams'),
 ]
