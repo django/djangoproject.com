@@ -1,0 +1,13 @@
+Hi {{ contact_name }},
+
+The Django Software Foundation membership for {{ member_name }} expires
+{{ expiry_date }}. Would you like to renew your support?
+
+Use this link to do so:
+{{ renewal_link }}
+It expires 30 days from today, but just email us if you need one later.
+
+Thank you for your support!
+
+p.s. If you decide not to renew, please reply to let us know and we'll mark
+your membership as inactive.

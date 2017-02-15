@@ -50,10 +50,10 @@ class CorporateMemberRenewView(CorporateMemberSignupMixin, UpdateView):
     def get_object(self):
         """
         Convert the token back to a pk and check that it's not older than
-        14 days.
+        30 days.
         """
         try:
-            pk = signing.loads(self.kwargs['token'], max_age=1.21e+6)
+            pk = signing.loads(self.kwargs['token'], max_age=2.592e+6)
         except signing.BadSignature:
             raise Http404(
                 "No %(verbose_name)s found matching the query" %
