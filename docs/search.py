@@ -78,7 +78,7 @@ class ImprovedDocType(DocType):
 
         client = connections.get_connection(using or cls._doc_type.using)
         cls.init(index_name)
-        for ok, item in streaming_bulk(client, actions_generator(), chunk_size=100, **kwargs):
+        for ok, item in streaming_bulk(client, actions_generator(), chunk_size=90, **kwargs):
             yield ok, item
 
     @classmethod
