@@ -7,5 +7,4 @@ class Command(BaseCommand):
     Update the docs then reindex them in elasticsearch.
     """
     def handle(self, **options):
-        call_command('update_docs', **options)
-        call_command('update_index', **options)
+        call_command('update_docs', update_index=True, **options)
