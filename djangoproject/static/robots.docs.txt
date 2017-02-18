@@ -56,3 +56,4 @@ Disallow: /pt-br/1.9/releases
 Disallow: /pt-br/1.9/topics
 Disallow: /fr/1.8/internals
 Disallow: /fr/1.8/releases
+Disallow: /*search/?*
