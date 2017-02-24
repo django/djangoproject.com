@@ -28,8 +28,6 @@ CACHE_MIDDLEWARE_SECONDS = 60 * 5  # 5 minutes
 
 CACHE_MIDDLEWARE_KEY_PREFIX = 'django'
 
-CSRF_COOKIE_HTTPONLY = True
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
