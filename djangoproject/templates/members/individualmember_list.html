@@ -1,5 +1,5 @@
 {% extends "base_foundation.html" %}
-{% load i18n %}
+{% load i18n markdown %}
 
 {% block content %}
   <h1>{% trans "Individual members" %}</h1>
@@ -13,7 +13,8 @@
   </p>
   <ul>
     {% for member in members %}
-      <li>{{ member.name }}</li>
+      <li>{{ member.linked_name }}
+        {{ member.bio|markdownify }}</li>
     {% endfor %}
   </ul>
 
