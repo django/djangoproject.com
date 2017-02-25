@@ -4,12 +4,13 @@ from django.contrib import admin
 from django.templatetags.static import static
 from django.utils.formats import localize
 from django.utils.html import format_html
+from markdownx.admin import MarkdownxModelAdmin
 
 from members.models import CorporateMember, IndividualMember, Invoice, Team
 
 
 @admin.register(IndividualMember)
-class IndividualMemberAdmin(admin.ModelAdmin):
+class IndividualMemberAdmin(MarkdownxModelAdmin):
     list_display = [
         'name',
         'email',
