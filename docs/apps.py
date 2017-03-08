@@ -16,9 +16,7 @@ class DocsConfig(AppConfig):
             default={
                 'hosts': settings.ES_HOST,
                 'verify_certs': True,
-                # We need to use old_where as long as our openssl version is below 1.0.2
-                # and ES found uses a CA which is cross signed by a 1024-bit root.
-                'ca_certs': certifi.old_where(),
+                'ca_certs': certifi.where(),
                 'timeout': 60.0,
             },
         )
