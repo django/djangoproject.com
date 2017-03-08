@@ -146,6 +146,7 @@ class RedirectsTests(TestCase):
             response,
             'https://www.djangoproject.com/foundation/teams/',
             status_code=HTTPStatus.MOVED_PERMANENTLY,
+            fetch_redirect_response=False,
         )
 
 
