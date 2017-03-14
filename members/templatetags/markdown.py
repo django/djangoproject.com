@@ -11,6 +11,9 @@ def markdownify(text):
     return mark_safe(
         bleach.clean(
             markdown.markdown(text, output_format='html5'),
-            tags=('a', 'abbr', 'acronym', 'b', 'blockquote', 'em', 'i', 'li', 'ol', 'p', 'strong', 'ul'),
+            tags=(
+                'a', 'abbr', 'acronym', 'b', 'blockquote', 'em', 'i', 'li',
+                'ol', 'p', 'sup', 'strong', 'ul',
+            ),
         )
     )
