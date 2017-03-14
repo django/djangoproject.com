@@ -1,4 +1,4 @@
-bleach==1.5.0
+bleach==2.0.0
 certifi==2017.1.23
 Django==1.10.6
 django-contact-form==1.3
