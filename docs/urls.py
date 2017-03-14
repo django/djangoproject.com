@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.views.generic import RedirectView
 
 from . import views
 
@@ -6,6 +7,13 @@ urlpatterns = [
     url(r'^$', views.index, name='homepage'),
     url(r'^search/$', views.redirect_search),
     url(r'^(?P<lang>[a-z-]+)/$', views.language),
+    url(
+        r'^[a-z-]+/[\w.-]+/internals/team/$',
+        RedirectView.as_view(
+            url='https://www.djangoproject.com/foundation/teams/',
+            permanent=True,
+        )
+    ),
     url(r'^(?P<lang>[a-z-]+)/(?P<version>stable)/(?P<url>.*)$', views.stable),
     url(r'^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/$', views.document,
         {'url': ''}, name='document-index'),
