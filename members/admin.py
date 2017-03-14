@@ -20,6 +20,11 @@ class IndividualMemberAdmin(MarkdownxModelAdmin):
     ]
     search_fields = ['name']
 
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_staff
+
+    has_module_permission = has_change_permission
+
 
 class InvoiceInline(admin.TabularInline):
     model = Invoice
@@ -106,3 +111,8 @@ class CorporateMemberAdmin(admin.ModelAdmin):
 class TeamAdmin(admin.ModelAdmin):
     filter_horizontal = ['members']
     prepopulated_fields = {'slug': ('name',)}
+
+    def has_change_permission(self, request, obj=None):
+        return request.user.is_staff
+
+    has_module_permission = has_change_permission
