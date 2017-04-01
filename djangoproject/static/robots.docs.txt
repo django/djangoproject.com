@@ -12,7 +12,6 @@ Disallow: /es/1.10/topics
 Disallow: /fr/1.10/internals
 Disallow: /fr/1.10/releases
 Disallow: /id/1.10/ref
-Disallow: /id/1.10/releases
 Disallow: /id/1.10/topics
 Disallow: /ja/1.10/faq
 Disallow: /ja/1.10/howto
