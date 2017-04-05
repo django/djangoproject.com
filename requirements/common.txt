@@ -13,7 +13,7 @@ feedparser==5.2.1
 Jinja2==2.9.5
 libsass==0.12.3
 Markdown==2.6.8
-Pillow==4.0.0
+Pillow==4.1.0
 psycopg2==2.7.1
 pygments==2.2.0
 pykismet3==0.1.1
