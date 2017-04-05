@@ -20,4 +20,4 @@ pykismet3==0.1.1
 requests==2.13.0
 sorl-thumbnail==12.3
 stripe==1.48.1
-Sphinx==1.5.3
+Sphinx==1.5.5
