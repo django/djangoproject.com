@@ -31,7 +31,7 @@ class Command(BaseCommand):
         self.verbosity = verbosity = kwargs['verbosity']
         update_index = kwargs['update_index']
 
-        default_builders = ['json', 'html']
+        default_builders = ['json', 'djangohtml']
         default_docs_version = DocumentRelease.objects.get(is_default=True).release.version
 
         # Keep track of which Git sources have been updated.
@@ -116,7 +116,7 @@ class Command(BaseCommand):
             # Create a zip file of the HTML build for offline reading.
             # This gets moved into MEDIA_ROOT for downloading.
             #
-            html_build_dir = parent_build_dir.joinpath('_build', 'html')
+            html_build_dir = parent_build_dir.joinpath('_build', 'djangohtml')
             zipfile_name = 'django-docs-%s-%s.zip' % (release.version, release.lang)
             zipfile_path = Path(settings.MEDIA_ROOT).joinpath('docs', zipfile_name)
             if not zipfile_path.parent.exists():
