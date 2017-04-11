@@ -66,6 +66,7 @@ class TestCampaign(TestCase):
         self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
             'stripe_token': 'test',
+            'token_type': 'card',
             'receipt_email': 'test@example.com',
             'interval': 'onetime',
         })
@@ -84,6 +85,7 @@ class TestCampaign(TestCase):
         self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
             'stripe_token': 'test',
+            'token_type': 'card',
             'receipt_email': 'test@example.com',
             'interval': 'monthly',
         })
@@ -92,7 +94,7 @@ class TestCampaign(TestCase):
         self.assertEqual(donations[0].subscription_amount, 100)
         self.assertEqual(donations[0].receipt_email, 'test@example.com')
         self.assertEqual(donations[0].payment_set.count(), 0)
-        customer_create.assert_called_with(email='test@example.com', card='test')
+        customer_create.assert_called_with(email='test@example.com', source='test')
 
     @patch('stripe.Customer.create')
     @patch('stripe.Charge.create')
@@ -102,6 +104,7 @@ class TestCampaign(TestCase):
         self.client.post(reverse('fundraising:donate'), {
             'amount': 100,
             'stripe_token': 'test',
+            'token_type': 'card',
             'interval': 'onetime',
             'receipt_email': 'django@example.com',
         })
@@ -116,6 +119,7 @@ class TestCampaign(TestCase):
         data = {
             'amount': 100,
             'stripe_token': 'xxxx',
+            'token_type': 'card',
             'interval': 'onetime',
             'receipt_email': 'django@example.com',
         }
@@ -161,6 +165,7 @@ class TestCampaign(TestCase):
         response = self.client.post(reverse('fundraising:donate'), {
             'amount': amount,
             'stripe_token': 'xxxx',
+            'token_type': 'card',
             'interval': 'onetime',
             'receipt_email': 'django@example.com',
         })

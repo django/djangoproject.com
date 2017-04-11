@@ -164,32 +164,44 @@ class PaymentForm(forms.Form):
     receipt_email = forms.CharField(required=True)
     # added by the donation form JavaScript via Stripe.js
     stripe_token = forms.CharField(widget=forms.HiddenInput())
+    token_type = forms.CharField(widget=forms.HiddenInput())
 
     def make_donation(self):
         receipt_email = self.cleaned_data['receipt_email']
         amount = self.cleaned_data['amount']
         stripe_token = self.cleaned_data['stripe_token']
+        token_type = self.cleaned_data['token_type']
         interval = self.cleaned_data['interval']
+        is_bitcoin = token_type == 'source_bitcoin'
 
         hero = DjangoHero.objects.filter(email=receipt_email).first()
 
         try:
             if hero and hero.stripe_customer_id:
-                # Update old customer with new payment source
+                # Update old customer with new payment source, unless the
+                # source is bitcoin.
                 customer = stripe.Customer.retrieve(hero.stripe_customer_id)
-                customer.source = stripe_token
+                if is_bitcoin:
+                    customer.sources.create(source=stripe_token)
+                else:
+                    customer.source = stripe_token
                 customer.save()
             else:
-                customer = stripe.Customer.create(card=stripe_token, email=receipt_email)
+                customer = stripe.Customer.create(source=stripe_token, email=receipt_email)
 
-            if interval == 'onetime':
+            # Only perform one-time charges with bitcoin as bitcoins can't be
+            # used for subscriptions.
+            if interval == 'onetime' or is_bitcoin:
                 subscription_id = ''
-                charge = stripe.Charge.create(
-                    amount=int(amount * 100),
-                    currency='usd',
-                    customer=customer.id,
-                    receipt_email=receipt_email,
-                )
+                charge_info = {
+                    'amount': int(amount * 100),
+                    'currency': 'usd',
+                    'customer': customer.id,
+                    'receipt_email': receipt_email
+                }
+                if is_bitcoin:
+                    charge_info['source'] = stripe_token
+                charge = stripe.Charge.create(**charge_info)
                 charge_id = charge.id
             else:
                 charge_id = ''

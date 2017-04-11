@@ -15,6 +15,7 @@ define([
             var interval = $donationForm.find('[name=interval]').val();
             var data = {
                 'stripe_token': token.id,
+                'token_type': token.type,
                 'receipt_email': token.email,
                 'amount': amount,
                 'interval': interval,
