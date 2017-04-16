@@ -7,6 +7,7 @@ djangoproject.com source code
 .. image:: https://coveralls.io/repos/django/djangoproject.com/badge.svg?branch=master
     :target: https://coveralls.io/r/django/djangoproject.com?branch=master
 
+
 To run locally, do the usual:
 
 #. Create a Python 3.5 virtualenv
