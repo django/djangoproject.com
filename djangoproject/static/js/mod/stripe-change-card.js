@@ -36,7 +36,6 @@ define([
         handler.open({
             name: 'Django Software Foundation',
             currency: 'USD',
-            bitcoin: true,
             email: $this.data('donor-email')
         });
     });
