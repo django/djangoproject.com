@@ -1,10 +1,12 @@
 from datetime import date, timedelta
 
 from django.contrib import admin
+from django.contrib.auth.models import User
+from django.http import HttpRequest
 from django.test import TestCase
 
 from .admin import CorporateMemberAdmin, StatusFilter
-from .models import CorporateMember
+from .models import CorporateMember, IndividualMember, Team
 
 
 class CorporateMemberAdminTests(TestCase):
@@ -84,4 +86,38 @@ class CorporateMemberAdminTests(TestCase):
                 {'display': 'Inactive', 'query_string': '', 'selected': False},
                 {'display': 'All', 'query_string': '', 'selected': False},
             ]
+        )
+
+
+class IndividualMemberTests(TestCase):
+
+    def test_has_change_permission(self):
+        user = User.objects.create()
+        request = HttpRequest()
+        request.user = user
+        self.assertIs(admin.site._registry[IndividualMember].has_change_permission(request), False)
+        user.is_staff = True
+        self.assertIs(admin.site._registry[IndividualMember].has_change_permission(request), True)
+
+    def test_has_module_permission(self):
+        self.assertEqual(
+            admin.site._registry[IndividualMember].has_change_permission,
+            admin.site._registry[IndividualMember].has_module_permission
+        )
+
+
+class TeamTests(TestCase):
+
+    def test_has_change_permission(self):
+        user = User.objects.create()
+        request = HttpRequest()
+        request.user = user
+        self.assertIs(admin.site._registry[Team].has_change_permission(request), False)
+        user.is_staff = True
+        self.assertIs(admin.site._registry[Team].has_change_permission(request), True)
+
+    def test_has_module_permission(self):
+        self.assertEqual(
+            admin.site._registry[Team].has_change_permission,
+            admin.site._registry[Team].has_module_permission
         )
