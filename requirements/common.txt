@@ -1,6 +1,6 @@
 bleach==2.0.0
 certifi==2017.4.17
-Django==1.11.1
+Django==1.11.2
 django-contact-form==1.4.1
 django-hosts==2.0
 django-markdownx==2.0.21
