@@ -11,7 +11,7 @@ elasticsearch==5.4.0
 docutils==0.13.1
 feedparser==5.2.1
 Jinja2==2.9.6
-libsass==0.12.3
+libsass==0.13.2
 Markdown==2.6.8
 Pillow==4.1.1
 psycopg2==2.7.1
