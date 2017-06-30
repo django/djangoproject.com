@@ -40,7 +40,8 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
         self.assertEqual(msg.subject, 'Django Corporate Membership Application: Foo Widgets')
         self.assertEqual(msg.body, (
             "Thanks for applying to be a corporate member of the Django Software Foundation! "
-            "Your application is received and we'll follow up with an invoice soon."
+            "Your application is being reviewed, and we'll follow up a "
+            "response from the board after our next monthly meeting."
         ))
         self.assertEqual(msg.from_email, settings.FUNDRAISING_DEFAULT_FROM_EMAIL)
         self.assertEqual(
@@ -82,7 +83,7 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
         self.assertEqual(msg.subject, 'Django Corporate Membership Renewal: Foo Widgets')
         self.assertEqual(msg.body, (
             "Thanks for renewing as a corporate member of the Django Software Foundation! "
-            "Your application is received and we'll follow up with an invoice soon."
+            "Your renewal is received, and we'll follow up with an invoice soon."
         ))
         self.assertEqual(msg.from_email, settings.FUNDRAISING_DEFAULT_FROM_EMAIL)
         self.assertEqual(
