@@ -101,9 +101,11 @@ class CorporateMemberSignUpForm(forms.ModelForm):
                 'Renewal' if is_renewing else 'Application',
                 self.instance.display_name,
             ),
-            "Thanks for %s a corporate member of the Django Software Foundation! "
-            "Your application is received and we'll follow up with an invoice soon." % (
-                'renewing as' if is_renewing else 'applying to be'
+            "Thanks for %s a corporate member of the Django Software Foundation! %s" % (
+                'renewing as' if is_renewing else 'applying to be',
+                "Your renewal is received, and we'll follow up with an invoice soon." if is_renewing else
+                "Your application is being reviewed, and we'll follow up a "
+                "response from the board after our next monthly meeting.",
             ),
             settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
             [
