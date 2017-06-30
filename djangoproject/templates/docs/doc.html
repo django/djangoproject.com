@@ -1,5 +1,5 @@
 {% extends "base_docs.html" %}
-{% load i18n fundraising_extras docs %}
+{% load i18n fundraising_extras docs staticfiles %}
 
 {% block title %}{{ doc.title|striptags|safe }} | {% trans "Django documentation" %}{% endblock %}
 
@@ -38,6 +38,23 @@
         type="application/opensearchdescription+xml"
         href="{% url 'document-search-description' lang=lang version=version host 'docs' %}"
         title="{% trans "Django documentation" %}">
+<script>
+(function($) {
+    $(document).ready(function() {
+        $(".c-tab-unix").on("click", function() {
+            $("section.c-content-unix").show();
+            $("section.c-content-win").hide();
+            $(".c-tab-unix").prop("checked", true);
+        });
+        $(".c-tab-win").on("click", function() {
+            $("section.c-content-win").show();
+            $("section.c-content-unix").hide();
+            $(".c-tab-win").prop("checked", true);
+        });
+    });
+})(jQuery);
+</script>
+<link rel="stylesheet" href="{% static "css/console_tabs.css" %}" type="text/css" />
 {% endblock head_extra %}
 
 {% block body_extra %}
