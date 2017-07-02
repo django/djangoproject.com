@@ -200,7 +200,7 @@ class Command(BaseCommand):
             finally:
                 os.chdir(cwd)
         else:
-            subprocess.call(['git', 'clone', '-q', '--branch', branch, repo, str(destdir), quiet])
+            subprocess.call(['git', 'clone', '--branch', branch, repo, str(destdir), quiet])
         return True
 
 
