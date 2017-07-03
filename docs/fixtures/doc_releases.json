@@ -10,24 +10,6 @@
 },
 {
   "model": "docs.documentrelease",
-  "pk": 11,
-  "fields": {
-    "lang": "en",
-    "release": "1.7",
-    "is_default": false
-  }
-},
-{
-  "model": "docs.documentrelease",
-  "pk": 12,
-  "fields": {
-    "lang": "fr",
-    "release": "1.7",
-    "is_default": false
-  }
-},
-{
-  "model": "docs.documentrelease",
   "pk": 13,
   "fields": {
     "lang": "en",
@@ -50,7 +32,7 @@
   "fields": {
     "lang": "en",
     "release": "1.9",
-    "is_default": true
+    "is_default": false
   }
 },
 {
@@ -105,6 +87,15 @@
     "lang": "pt-br",
     "release": "1.9",
     "is_default": false
+  }
+},
+{
+  "model": "docs.documentrelease",
+  "pk": 22,
+  "fields": {
+    "lang": "en",
+    "release": "1.11",
+    "is_default": true
   }
 }
 ]
