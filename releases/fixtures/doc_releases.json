@@ -1,58 +1,6 @@
 [
 {
   "model": "releases.release",
-  "pk": "1.4",
-  "fields": {
-    "major": 1,
-    "is_lts": true,
-    "date": "2012-03-23",
-    "iteration": 0,
-    "micro": 0,
-    "minor": 4,
-    "status": "f"
-  }
-},
-{
-  "model": "releases.release",
-  "pk": "1.5",
-  "fields": {
-    "major": 1,
-    "is_lts": false,
-    "date": "2013-02-26",
-    "iteration": 0,
-    "micro": 0,
-    "minor": 5,
-    "status": "f"
-  }
-},
-{
-  "model": "releases.release",
-  "pk": "1.6",
-  "fields": {
-    "major": 1,
-    "is_lts": false,
-    "date": "2013-11-06",
-    "iteration": 0,
-    "micro": 0,
-    "minor": 6,
-    "status": "f"
-  }
-},
-{
-  "model": "releases.release",
-  "pk": "1.7",
-  "fields": {
-    "major": 1,
-    "is_lts": false,
-    "date": "2014-09-02",
-    "iteration": 0,
-    "micro": 0,
-    "minor": 7,
-    "status": "f"
-  }
-},
-{
-  "model": "releases.release",
   "pk": "1.8",
   "fields": {
     "major": 1,
@@ -88,6 +36,20 @@
     "micro": 0,
     "minor": 10,
     "status": "f"
+  }
+},
+{
+  "model": "releases.release",
+  "pk": "1.11",
+  "fields": {
+    "date": "2017-04-04",
+    "eol_date": null,
+    "major": 1,
+    "minor": 11,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": true
   }
 }
 ]
