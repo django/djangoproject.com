@@ -1,0 +1,45 @@
+.console-block {
+    text-align: right;
+
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+
+    > input {
+        &.c-tab-unix,
+        &.c-tab-win {
+            display: none;
+        }
+        &:checked + label {
+            color: #555;
+            border: 1px solid #ddd;
+            border-top: 2px solid #ab5603;
+            border-bottom: 1px solid #fff;
+        }
+    }
+
+    > label {
+        display: inline-block;
+        padding: 4px 8px;
+        font-weight: normal;
+        text-align: center;
+        color: #bbb;
+        border: 1px solid transparent;
+        font-family: fontawesome;
+    }
+
+    > section {
+        display: none;
+        text-align: left;
+
+        .highlight {
+            margin-top: 0px;
+        }
+    }
+
+    > .c-tab-unix:checked ~ .c-content-unix,
+    > .c-tab-win:checked  ~ .c-content-win {
+        display: block;
+    }
+}

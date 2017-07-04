@@ -1,5 +1,5 @@
 {% extends "base_docs.html" %}
-{% load i18n fundraising_extras docs staticfiles %}
+{% load i18n fundraising_extras docs %}
 
 {% block title %}{{ doc.title|striptags|safe }} | {% trans "Django documentation" %}{% endblock %}
 
@@ -38,7 +38,6 @@
         type="application/opensearchdescription+xml"
         href="{% url 'document-search-description' lang=lang version=version host 'docs' %}"
         title="{% trans "Django documentation" %}">
-<link rel="stylesheet" href="{% static "css/console-tabs.css" %}" type="text/css" />
 {% endblock head_extra %}
 
 {% block body_extra %}
