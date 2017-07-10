@@ -284,8 +284,8 @@
         "period": "daily",
         "unit": "commit",
         "unit_plural": "commits",
-        "feed_url": "http://code.djangoproject.com/timeline?changeset=on&max=0&daysback=0&format=rss",
-        "link_url": "http://code.djangoproject.com/timeline?changeset=on&max=0&daysback=0"
+        "feed_url": "https://code.djangoproject.com/timeline?changeset=on&max=0&daysback=0&format=rss",
+        "link_url": "https://code.djangoproject.com/timeline?changeset=on&max=0&daysback=0"
     }
 },
 {
@@ -301,8 +301,8 @@
         "period": "weekly",
         "unit": "commit",
         "unit_plural": "commits",
-        "feed_url": "http://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7&format=rss",
-        "link_url": "http://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7"
+        "feed_url": "https://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7&format=rss",
+        "link_url": "https://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7"
     }
 },
 {
