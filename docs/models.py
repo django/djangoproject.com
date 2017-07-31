@@ -144,7 +144,7 @@ class DocumentRelease(models.Model):
         with open(str(robots_path), 'r') as fh:
             excluded_paths = [
                 line.strip().split('/')[-1] for line in fh
-                if line.startswith("Disallow: /%s/%s/" % (self.lang, self.release_id))
+                if line.startswith("Disallow: /%s/%s/" % (self.lang, self.release.version))
             ]
 
         for document in decoded_documents:
