@@ -1,5 +1,5 @@
 bleach==2.0.0
-certifi==2017.4.17
+certifi==2017.7.27.1
 Django==1.11.4
 django-contact-form==1.4.2
 django-hosts==2.0
