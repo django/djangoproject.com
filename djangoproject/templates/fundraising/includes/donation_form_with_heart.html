@@ -29,7 +29,7 @@
 
     <div class="donate">
       <form
-            method="get"
+            method="post"
             class="stripe-custom-checkout"
             action="{% url "fundraising:donate" %}"
             data-stripe-key="{{ stripe_publishable_key }}"
