@@ -5,8 +5,16 @@
 {% block layout_class %}full-width{% endblock %}
 
 {% block header %}
+  <div class="copy-banner copy-banner-black">
+    <div class="container">
+      <h1 class="visuallyhidden">Until August 28th, <a href="http://jb.gg/i-donate-to-django">get PyCharm at 30% off</a> All money goes to the Django Software Foundation</h1>
+      <a href="http://jb.gg/i-donate-to-django"><img src="{% static 'img/pycharm-banner.png' %}"></a>
+    </div>
+  </div>
+{% comment %}
 <h1 class="visuallyhidden">Support Django</h1>
 <p><em>Support Django development</em> by donating to the <em>Django Software Foundation</em>.</p>
+{% endcomment %}
 {% endblock %}
 
 {% block messages %}
