@@ -21,7 +21,7 @@
   <tbody>
   {% for t in tickets %}
     <tr>
-      <td><a href="http://code.djangoproject.com/ticket/{{ t.id }}">#{{ t.id }}: {{ t.summary|truncatewords:10 }}</a></td>
+      <td><a href="https://code.djangoproject.com/ticket/{{ t.id }}">#{{ t.id }}: {{ t.summary|truncatewords:10 }}</a></td>
       <td>{{ t.times_reopened }}</td>
       <td>{{ t.last_reopen_time|date:"F j, Y" }}</td>
     </tr>

@@ -79,7 +79,7 @@ class TracTicketMetricTestCase(TestCase, MetricMixin):
 
 class RSSFeedMetricTestCase(TestCase, MetricMixin):
     fixtures = ['dashboard_test_data']
-    feed_url = 'http://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7&format=rss'
+    feed_url = 'https://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7&format=rss'
     fixtures_path = os.path.join(os.path.dirname(__file__), 'fixtures', 'rss_feed_metric.xml')
 
     def setUp(self):
