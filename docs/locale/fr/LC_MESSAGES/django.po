@@ -62,14 +62,14 @@ msgstr ""
 #: templates/docs/doc.html:59
 msgid ""
 "Search for information in the <a\n"
-"      href=\"http://groups.google.com/group/django-users/\">archives of the\n"
+"      href=\"https://groups.google.com/group/django-users/\">archives of the\n"
 "      django-users mailing list</a>, or <a\n"
-"      href=\"http://groups.google.com/group/django-users/\">post a question</"
+"      href=\"https://groups.google.com/group/django-users/\">post a question</"
 "a>."
 msgstr ""
-"Recherchez des informations (en anglais) dans les <a href=\"http://"
+"Recherchez des informations (en anglais) dans les <a href=\"https://"
 "groups.google.com/group/django-users/\">archives de la liste de diffusion "
-"django-users</a> ou <a href=\"http://groups.google.com/group/django-users/\""
+"django-users</a> ou <a href=\"https://groups.google.com/group/django-users/\""
 ">écrivez votre question</a>."
 
 #: templates/docs/doc.html:65
@@ -148,8 +148,8 @@ msgid "Offline (Django %(version)s):"
 msgstr "Hors ligne (Django %(version)s) :"
 
 #: templates/docs/doc.html:136
-msgid "Provided by <a href=\"http://readthedocs.org/\">Read the Docs</a>."
-msgstr "Offert par <a href=\"http://readthedocs.org/\">Read the Docs</a>."
+msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+msgstr "Offert par <a href=\"https://readthedocs.org/\">Read the Docs</a>."
 
 #: templates/docs/genindex.html:4
 msgid "General Index | Django Documentation"

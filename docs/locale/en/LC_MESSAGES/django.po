@@ -58,9 +58,9 @@ msgstr ""
 #: templates/docs/doc.html:59
 msgid ""
 "Search for information in the <a\n"
-"      href=\"http://groups.google.com/group/django-users/\">archives of the\n"
+"      href=\"https://groups.google.com/group/django-users/\">archives of the\n"
 "      django-users mailing list</a>, or <a\n"
-"      href=\"http://groups.google.com/group/django-users/\">post a question</"
+"      href=\"https://groups.google.com/group/django-users/\">post a question</"
 "a>."
 msgstr ""
 
@@ -131,7 +131,7 @@ msgid "Offline (Django %(version)s):"
 msgstr ""
 
 #: templates/docs/doc.html:136
-msgid "Provided by <a href=\"http://readthedocs.org/\">Read the Docs</a>."
+msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
 msgstr ""
 
 #: templates/docs/genindex.html:4

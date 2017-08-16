@@ -239,7 +239,7 @@ Check out the ``Procfile`` file for all the process names.
 JavaScript libraries
 --------------------
 
-This project uses `Bower <http://bower.io/>`_ to manage JavaScript libraries.
+This project uses `Bower <https://bower.io/>`_ to manage JavaScript libraries.
 
 At any time, you can run it to install a new library (e.g., ``jquery-ui``)::
 
@@ -275,7 +275,7 @@ This is also the right command to run when you work on the search feature
 itself. You can pass the ``-d`` option to try to drop the search index
 first before indexing all the documents.
 
-.. _`official Elasticsearch docs`: http://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html
+.. _`official Elasticsearch docs`: https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html
 
 Updating metrics from production
 --------------------------------

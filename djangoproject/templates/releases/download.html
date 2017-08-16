@@ -22,7 +22,7 @@
   <h2>Option {% cycle '1' '2' '3' as options %}: Get the latest official version</h2>
   <p>The latest official version is {{ current.version }}. Read the
     {% release_notes current.version show_version=True %}, then install it with
-    <a href="http://www.pip-installer.org/en/latest/">pip</a>:</p>
+    <a href="https://pip.pypa.io/en/latest/">pip</a>:</p>
   <pre class="literal-block"><code>pip install Django=={{ current.version }}</code></pre>
 
   {% if preview %}
@@ -43,7 +43,7 @@
   {% endif %}
 
   <h2>Option {% cycle options %}: Get the latest development version</h2>
-  <p>The latest and greatest Django version is the one that’s in our Git repository (our revision-control system). This is only for experienced users who want to try incoming changes and help identify bugs before an official release. Get it using this shell command, which requires <a href="http://git-scm.com/">Git</a>:</p>
+  <p>The latest and greatest Django version is the one that’s in our Git repository (our revision-control system). This is only for experienced users who want to try incoming changes and help identify bugs before an official release. Get it using this shell command, which requires <a href="https://git-scm.com/">Git</a>:</p>
   <p class="literal-block"><code>git clone https://github.com/django/django.git</code></p>
   <p>You can also download <a href="https://github.com/django/django/archive/master.tar.gz">
     a gzipped tarball</a> of the development version. This archive is updated
@@ -51,7 +51,7 @@
 
   <h2>After you get it</h2>
   <p>See the <a href="{% url 'document-detail' lang='en' version='stable' url='intro/install' host 'docs' %}">installation guide</a> for further instructions. Make sure you read the documentation that corresponds to the version of Django you’ve just installed.</p>
-  <p>And be sure to sign up for the <a href="http://groups.google.com/group/django-users">django-users mailing list</a>, where other Django users and the Django developers themselves all hang out to help each other.</p>
+  <p>And be sure to sign up for the <a href="https://groups.google.com/group/django-users">django-users mailing list</a>, where other Django users and the Django developers themselves all hang out to help each other.</p>
 
   <h2 id="supported-versions">Supported Versions</h2>
   <p><strong>Feature releases</strong> (A.B, A.B+1, etc.) will happen roughly every eight months.
@@ -218,7 +218,7 @@
     </ul>
 
     <h2>Which version is better?</h2>
-    <p>We improve Django almost every day and are pretty good about keeping the code stable. Thus, using the latest development code is a safe and easy way to get access to new features as they’re added. If you choose to follow the development version, keep in mind that there will occasionally be backwards-incompatible changes. You’ll want to pay close attention to the commits by watching <a href="https://github.com/django/django">Django on GitHub</a> or subscribing to <a href="http://groups.google.com/group/django-updates">django-updates</a>.</p>
+    <p>We improve Django almost every day and are pretty good about keeping the code stable. Thus, using the latest development code is a safe and easy way to get access to new features as they’re added. If you choose to follow the development version, keep in mind that there will occasionally be backwards-incompatible changes. You’ll want to pay close attention to the commits by watching <a href="https://github.com/django/django">Django on GitHub</a> or subscribing to <a href="https://groups.google.com/group/django-updates">django-updates</a>.</p>
 
     <p>If you’re just looking for a stable deployment target and don’t mind waiting for the next release, you’ll want to stick with the latest official release (which will always include detailed notes on any changes you’ll need to make while upgrading).</p>
     <h2>Previous releases</h2>
