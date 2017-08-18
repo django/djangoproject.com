@@ -8,7 +8,7 @@ class ProfileForm(forms.ModelForm):
     A form for editing user profiles.
 
     Assumes that the Profile instance passed in has an associated User
-    object. The view (see views.py) takes care of tha
+    object. The view (see views.py) takes care of that.
     """
     name = forms.CharField(
         required=False,
