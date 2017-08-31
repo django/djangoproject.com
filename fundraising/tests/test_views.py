@@ -4,6 +4,7 @@ from unittest.mock import patch
 import stripe
 from django.conf import settings
 from django.core import mail
+from django.template.defaultfilters import date as date_filter
 from django.test import TestCase
 from django.urls import reverse
 from django_hosts.resolvers import reverse as django_hosts_reverse
@@ -244,6 +245,50 @@ class TestThankYou(TestCase):
         with patch('stripe.Customer.retrieve'):
             response = self.client.post(self.url, self.hero_form_data)
         self.assertRedirects(response, reverse('fundraising:index'))
+
+
+class TestManageDonations(TestCase):
+    past_donations_header = '<h2>Your past donations</h2>'
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.hero = DjangoHero.objects.create()
+        cls.donation1 = cls.hero.donation_set.create(
+            interval='onetime',
+            subscription_amount=5,
+        )
+        cls.payment1 = cls.donation1.payment_set.create(amount='5', stripe_charge_id='c1')
+        cls.donation2 = cls.hero.donation_set.create(
+            interval='yearly',
+            subscription_amount=10,
+        )
+        cls.payment2 = cls.donation2.payment_set.create(amount='10', stripe_charge_id='c2')
+        cls.url = reverse('fundraising:manage-donations', kwargs={'hero': cls.hero.id})
+
+    @staticmethod
+    def _format_donation_date(value):
+        return date_filter(value, 'N jS, Y \\a\\t P')
+
+    def test_past_donations(self):
+        response = self.client.get(self.url)
+        self.assertCountEqual(response.context['past_payments'], [self.payment1, self.payment2])
+        self.assertContains(response, self.past_donations_header)
+        self.assertContains(
+            response,
+            '<li>$10.00 on %s (Yearly donation)</li>' % self._format_donation_date(self.payment1.date),
+            html=True,
+        )
+        self.assertContains(
+            response,
+            '$5.00 on %s (One-time donation)' % self._format_donation_date(self.payment2.date),
+            html=True,
+        )
+
+    def test_no_past_donations(self):
+        hero = DjangoHero.objects.create()
+        url = reverse('fundraising:manage-donations', kwargs={'hero': hero.id})
+        response = self.client.get(url)
+        self.assertNotContains(response, self.past_donations_header)
 
 
 class TestWebhooks(TestCase):
