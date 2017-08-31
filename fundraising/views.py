@@ -80,6 +80,7 @@ def thank_you(request, donation):
 def manage_donations(request, hero):
     hero = get_object_or_404(DjangoHero, pk=hero)
     recurring_donations = hero.donation_set.exclude(stripe_subscription_id='')
+    past_payments = Payment.objects.filter(donation__donor=hero).select_related('donation')
 
     ModifyDonationsFormset = modelformset_factory(Donation, form=DonationForm, extra=0)
 
@@ -109,6 +110,7 @@ def manage_donations(request, hero):
         'hero_form': hero_form,
         'modify_donations_formset': modify_donations_formset,
         'recurring_donations': recurring_donations,
+        'past_payments': past_payments,
         'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
     })
 
