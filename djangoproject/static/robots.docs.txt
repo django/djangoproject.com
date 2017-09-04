@@ -20,6 +20,13 @@ Disallow: /ja/1.11/misc
 Disallow: /ja/1.11/ref
 Disallow: /ja/1.11/releases
 Disallow: /ja/1.11/topics
+Disallow: /ko/1.11/faq
+Disallow: /ko/1.11/howto
+Disallow: /ko/1.11/internals
+Disallow: /ko/1.11/misc
+Disallow: /ko/1.11/ref
+Disallow: /ko/1.11/releases
+Disallow: /ko/1.11/topics
 Disallow: /pl/1.11/howto
 Disallow: /pl/1.11/internals
 Disallow: /pl/1.11/misc
