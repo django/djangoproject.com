@@ -776,22 +776,6 @@ blockquote {
     }
 }
 
-
-.copy-banner-black {
-    background: black;
-    color: white;
-    text-align: center;
-
-    p, h1 {
-        color: white;
-        @include font-size(22);
-        a {
-            color: white;
-        }
-    }
-
-}
-
 [role="alert"] {
     //Announcement banner above the footer.
     clear: both;
