@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load fundraising_extras %}
+{% load fundraising_extras docs %}
 
 {% block layout_class %}sidebar-right{% endblock %}
 {% block title %}Django Community{% endblock %}
@@ -16,6 +16,9 @@
 {% block content-related %}
 <h1 class="visuallyhidden">Additional Information</h1>
 <div role="complementary">
+
+  {% search_form %}
+
   {% donation_snippet %}
 
   <h2>Get Involved</h2>
