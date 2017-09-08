@@ -21,7 +21,7 @@ def search_form(context):
         version = context['version']
     else:
         version = DocumentRelease.objects.current_version()
-        
+
     release = DocumentRelease.objects.get_by_version_and_lang(
         version,
         lang,
