@@ -8,9 +8,11 @@ class DocSearchForm(forms.Form):
     q = forms.CharField(required=False, label=_('Search'))
 
     def __init__(self, data=None, **kwargs):
-        self.release = kwargs.pop('release')
+        self.release = kwargs.pop('release', None)
         super().__init__(data=data, **kwargs)
         self.fields['q'].widget = forms.TextInput(attrs={
             'type': 'search',
-            'placeholder': search_placeholder % self.release.human_version
+            'placeholder': search_placeholder % (
+                '' if self.release is None else self.release.human_version
+            )
         })

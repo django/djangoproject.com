@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<form action="{% url 'document-search' version=version lang=lang host 'docs' %}" class="search form-input" role="search">
+<form action="{% if version %}{% url 'document-search' version=version lang=lang host 'docs' %}{% else %}{% url 'document-search-redirect' host 'docs' %}{% endif %}" class="search form-input" role="search">
   <label class="visuallyhidden" for="news-search">Search:</label>
     {{ form.q }}
 

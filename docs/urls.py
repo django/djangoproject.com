@@ -5,7 +5,8 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='homepage'),
-    url(r'^search/$', views.redirect_search),
+    url(r'^search/$', views.redirect_search,
+        name='document-search-redirect'),
     url(r'^(?P<lang>[a-z-]+)/$', views.language),
     url(
         r'^[a-z-]+/[\w.-]+/internals/team/$',
