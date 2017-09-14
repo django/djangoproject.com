@@ -95,14 +95,14 @@ class Member(models.Model):
       <p>To design URLs for an application, you create a Python module called a URLconf. Like a table of contents for your app, it contains a simple mapping between URL patterns and your views.</p>
       <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/http/urls' host 'docs' %}">Read more</a>
       {% pygment 'python' %}
-from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 urlpatterns = [
-    url(r'^bands/$', views.band_listing, name='band-list'),
-    url(r'^bands/(\d+)/$', views.band_detail, name='band-detail'),
-    url(r'^bands/search/$', views.band_search, name='band-search'),
+    path('bands/', views.band_listing, name='band-list'),
+    path('bands/<int:band_id>/', views.band_detail, name='band-detail'),
+    path('bands/search/', views.band_search, name='band-search'),
 ]
       {% endpygment %}
       {% pygment 'python' %}
