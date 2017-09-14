@@ -6,7 +6,7 @@ from django.views.generic.dates import (
 from .models import Entry, Event
 
 
-class BlogViewMixin(object):
+class BlogViewMixin:
 
     date_field = 'pub_date'
     paginate_by = 10

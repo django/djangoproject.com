@@ -51,7 +51,7 @@ from django.utils.timezone import FixedOffset
 _epoc = datetime.datetime(1970, 1, 1, tzinfo=FixedOffset(0))
 
 
-class time_property(object):
+class time_property:
     """
     Convert Trac timestamps into UTC datetimes.
 
@@ -110,7 +110,7 @@ class Ticket(models.Model):
     description = models.TextField()
     keywords = models.TextField()
 
-    class Meta(object):
+    class Meta:
         db_table = 'ticket'
         managed = False
 
@@ -142,7 +142,7 @@ class TicketCustom(models.Model):
     name = models.TextField()
     value = models.TextField()
 
-    class Meta(object):
+    class Meta:
         db_table = 'ticket_custom'
         managed = False
 
@@ -166,7 +166,7 @@ class TicketChange(models.Model):
     _time = models.BigIntegerField(db_column='time')
     time = time_property('_time')
 
-    class Meta(object):
+    class Meta:
         db_table = 'ticket_change'
         managed = False
         ordering = ['_time']
@@ -180,7 +180,7 @@ class Component(models.Model):
     owner = models.TextField()
     description = models.TextField()
 
-    class Meta(object):
+    class Meta:
         db_table = 'component'
         managed = False
 
@@ -195,7 +195,7 @@ class Version(models.Model):
     _time = models.BigIntegerField(db_column='time')
     time = time_property('_time')
 
-    class Meta(object):
+    class Meta:
         db_table = 'version'
         managed = False
 
@@ -213,7 +213,7 @@ class Milestone(models.Model):
     _completed = models.BigIntegerField(db_column='_completed')
     completed = time_property('completed')
 
-    class Meta(object):
+    class Meta:
         db_table = 'milestone'
         managed = False
 
@@ -250,7 +250,7 @@ class Revision(models.Model):
 
     objects = SingleRepoRevisionManager(repo_id=SINGLE_REPO_ID)
 
-    class Meta(object):
+    class Meta:
         db_table = 'revision'
         managed = False
 

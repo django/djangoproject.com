@@ -33,7 +33,7 @@ def corporate_member_list_view(request):
     })
 
 
-class CorporateMemberSignupMixin(object):
+class CorporateMemberSignupMixin:
     form_class = CorporateMemberSignUpForm
     model = CorporateMember
 

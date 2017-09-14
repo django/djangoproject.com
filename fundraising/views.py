@@ -162,7 +162,7 @@ def receive_webhook(request):
     return WebhookHandler(event).handle()
 
 
-class WebhookHandler(object):
+class WebhookHandler:
     def __init__(self, event):
         self.event = event
 

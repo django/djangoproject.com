@@ -9,7 +9,7 @@ from .models import Entry, Event
 from .sitemaps import WeblogSitemap
 
 
-class DateTimeMixin(object):
+class DateTimeMixin:
     def setUp(self):
         self.now = timezone.now()
         self.yesterday = self.now - timedelta(days=1)
