@@ -1,8 +1,8 @@
 from collections import MutableMapping
 
-from django.conf.urls import include, url
 from django.contrib.sitemaps.views import sitemap
 from django.http import HttpResponse
+from django.urls import include, path
 
 from docs.models import DocumentRelease
 from docs.sitemaps import DocsSitemap
@@ -39,10 +39,9 @@ class Sitemaps(MutableMapping):
 sitemaps = Sitemaps()
 
 urlpatterns = docs_urlpatterns + [
-    url(r'^sitemap\.xml$', sitemap_index, {'sitemaps': sitemaps}),
-    url(r'^sitemap-(?P<section>[a-z-]+)\.xml$', sitemap, {'sitemaps': sitemaps},
-        name='document-sitemap'),
-    url(r'^google79eabba6bf6fd6d3\.html$', lambda req: HttpResponse('google-site-verification: google79eabba6bf6fd6d3.html')),
+    path('sitemap.xml', sitemap_index, {'sitemaps': sitemaps}),
+    path('sitemap-<section>.xml', sitemap, {'sitemaps': sitemaps}, name='document-sitemap'),
+    path('google79eabba6bf6fd6d3.html', lambda req: HttpResponse('google-site-verification: google79eabba6bf6fd6d3.html')),
     # This just exists to make sure we can proof that the error pages work under both hostnames.
-    url(r'', include('legacy.urls')),
+    path('', include('legacy.urls')),
 ]

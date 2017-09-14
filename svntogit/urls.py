@@ -1,10 +1,10 @@
 """
 Legacy URLs for changesets.
 """
-from django.conf.urls import url
+from django.urls import path
 
 from .views import redirect_to_github
 
 urlpatterns = [
-    url(r'^(\d+)/$', redirect_to_github),
+    path('<int:svn_revision>/', redirect_to_github),
 ]

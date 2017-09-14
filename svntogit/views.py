@@ -5,7 +5,7 @@ from .mapping import svn_to_git
 
 def redirect_to_github(request, svn_revision):
     try:
-        git_changeset = svn_to_git[int(svn_revision)]
+        git_changeset = svn_to_git[svn_revision]
     except IndexError:
         git_changeset = None
     if git_changeset is None:
