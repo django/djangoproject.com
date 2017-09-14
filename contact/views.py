@@ -1,5 +1,5 @@
 from contact_form.views import ContactFormView
-from django.core import urlresolvers
+from django.urls import reverse
 
 from .forms import FoundationContactForm
 
@@ -9,4 +9,4 @@ class ContactFoundation(ContactFormView):
     template_name = 'contact/foundation.html'
 
     def get_success_url(self):
-        return urlresolvers.reverse('contact_form_sent')
+        return reverse('contact_form_sent')
