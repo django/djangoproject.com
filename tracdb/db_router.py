@@ -8,7 +8,7 @@ the Trac apps are unmanaged.
 THIS_APP = 'tracdb'
 
 
-class TracRouter(object):
+class TracRouter:
     def db_for_read(self, model, **hints):
         return 'trac' if app_label(model) == THIS_APP else None
 

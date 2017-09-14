@@ -54,7 +54,7 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class MetricMixin(object):
+class MetricMixin:
 
     def test_str(self):
         self.assertEqual(str(self.instance), self.instance.name)

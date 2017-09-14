@@ -19,7 +19,7 @@ class ProfileForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'placeholder': 'Email'})
     )
 
-    class Meta(object):
+    class Meta:
         model = Profile
         fields = ['name']
 
