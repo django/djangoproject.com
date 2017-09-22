@@ -26,7 +26,7 @@
   <pre class="literal-block"><code>pip install Django=={{ current.version }}</code></pre>
 
   {% if preview %}
-      {% with preview.version|slice:":4" as major_version %}
+      {% with preview.version|slice:":3" as major_version %}
       <h2>Option {% cycle options %}: Get the {{ preview.get_status_display }} for {{ major_version }}</h2>
       <p>As part of the
         <a href="https://code.djangoproject.com/wiki/Version{{ major_version }}Roadmap">
