@@ -37,8 +37,6 @@
         {% release_notes preview.version show_version=True %} before using this package.
       <p>Install the {{ preview.get_status_display }} with <a href="https://pip.pypa.io/">pip</a>:</p>
       <pre class="literal-block"><code>pip install --pre django</pre></code></pre>
-      <p>Or if you have pip &lt; 1.4:</p>
-      <pre class="literal-block"><code>pip install {% url 'download-redirect' preview.version 'tarball' %}</code></pre>
       {% endwith %}
   {% endif %}
 
