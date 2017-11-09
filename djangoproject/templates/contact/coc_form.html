@@ -5,12 +5,12 @@
   <p>
     <label for="id_name">Your name (optional):</label>
     {% if form.name.errors %}<p class="errors">{{ form.name.errors.as_text }}</p>{% endif %}
-    <input id="id_name" class="required" type="text" name="name"></input>
+    <input id="id_name" class="required" type="text" name="name">
   </p>
   <p>
     <label for="id_email">Your email address (optional):</label>
     {% if form.email.errors %}<p class="errors">{{ form.email.errors.as_text }}</p>{% endif %}
-    <input id="id_email" class="required" type="text" name="email"></input>
+    <input id="id_email" class="required" type="text" name="email">
   </p>
   <p>
     <label for="id_body">Your message:</label>
