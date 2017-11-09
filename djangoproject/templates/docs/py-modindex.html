@@ -15,7 +15,7 @@
 </ul>
 
 {% for letter, objects in doc.content %}
-<h3><a name="{{ letter }}">{{ letter|upper }}</a></h5>
+<h3><a name="{{ letter }}">{{ letter|upper }}</a></h3>
 <ul>
     {% for module_name, subtype, docname, path, platforms, qualifier, synopsis in objects %}
     {% if docname %}
