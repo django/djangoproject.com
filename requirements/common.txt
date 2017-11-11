@@ -10,7 +10,7 @@ elasticsearch-dsl==5.3.0
 elasticsearch==5.5.1
 docutils==0.14
 feedparser==5.2.1
-Jinja2==2.9.6
+Jinja2==2.10
 libsass==0.13.3
 Markdown==2.6.9
 Pillow==4.3.0
