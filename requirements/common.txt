@@ -5,7 +5,7 @@ django-contact-form==1.4.2
 django-hosts==2.0
 django-markdownx==2.0.21
 django-push==1.0
-django-registration-redux==1.8
+django-registration-redux==1.9
 elasticsearch-dsl==5.3.0
 elasticsearch==5.5.1
 docutils==0.14
