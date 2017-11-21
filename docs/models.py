@@ -5,6 +5,11 @@ from functools import reduce
 from pathlib import Path
 
 from django.conf import settings
+from django.contrib.postgres.fields.jsonb import JSONField
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import (
+    SearchQuery, SearchRank, SearchVectorField, TrigramSimilarity,
+)
 from django.core.cache import cache
 from django.db import models, transaction
 from django.utils.functional import cached_property
@@ -157,6 +162,7 @@ class DocumentRelease(models.Model):
                 release=self,
                 path=_clean_document_path(document['current_page_name']),
                 title=unescape_entities(strip_tags(document['title'])),
+                metadata=document,
             )
 
 
@@ -194,11 +200,31 @@ class DocumentManager(models.Manager):
         if parent_paths:
             or_queries = [models.Q(path=str(path)) for path in parent_paths]
             return (self.filter(reduce(operator.or_, or_queries))
-                        .filter(release=document.release)
+                        .filter(release_id=document.release_id)
                         .exclude(pk=document.pk)
                         .order_by('path'))
         else:
             return self.none()
+
+    def search(self, text, release):
+        """
+        Full-text search method for searching given text into search vector field.
+        """
+        query_text = text.strip()
+        if query_text:
+            search_query = SearchQuery(query_text)
+            search_rank = SearchRank(models.F('search'), search_query)
+            similarity = TrigramSimilarity('title', query_text)
+            return self.get_queryset().select_related(
+                'release__release'
+            ).filter(
+                release_id=release.id,
+                search=search_query,
+            ).annotate(
+                rank=search_rank + similarity
+            ).order_by('-rank')
+        else:
+            return self.get_queryset().none()
 
 
 class Document(models.Model):
@@ -212,10 +238,13 @@ class Document(models.Model):
     )
     path = models.CharField(max_length=500)
     title = models.CharField(max_length=500)
+    metadata = JSONField(default=dict)
+    search = SearchVectorField(null=True, editable=False)
 
     objects = DocumentManager()
 
     class Meta:
+        indexes = [GinIndex(fields=['search'])]
         unique_together = ('release', 'path')
 
     def __str__(self):
@@ -223,6 +252,10 @@ class Document(models.Model):
 
     def get_absolute_url(self):
         return document_url(self)
+
+    @cached_property
+    def content_raw(self):
+        return strip_tags(unescape_entities(self.metadata['content']).replace(u'¶', ''))
 
     @cached_property
     def root(self):

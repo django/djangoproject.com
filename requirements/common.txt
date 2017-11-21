@@ -1,13 +1,10 @@
 bleach==2.1.1
-certifi==2017.11.5
 Django==1.11.7
 django-contact-form==1.4.2
 django-hosts==3.0
 django-markdownx==2.0.21
 django-push==1.0
 django-registration-redux==1.9
-elasticsearch-dsl==5.3.0
-elasticsearch==5.5.1
 docutils==0.14
 feedparser==5.2.1
 Jinja2==2.10

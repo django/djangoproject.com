@@ -1,5 +1,6 @@
 import datetime
 import os
+from collections import OrderedDict
 from http import HTTPStatus
 from operator import attrgetter
 from pathlib import Path
@@ -14,6 +15,7 @@ from djangoproject.urls import www as www_urls
 from releases.models import Release
 
 from .models import Document, DocumentRelease
+from .search import DOCUMENT_SEARCH_VECTOR
 from .sitemaps import DocsSitemap
 from .utils import get_doc_path
 
@@ -321,3 +323,77 @@ class SitemapTests(TestCase):
             response.context['exception'],
             "No sitemap available for section: 'xx'"
         )
+
+
+class DocumentManagerTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.release = DocumentRelease.objects.create()
+        documents = [
+            {
+                'metadata': {
+                    'body': (
+                        '<div class="section" id="s-generic-views">\n<span id="generic-views"></span>'
+                        '<h1>Generic views<a class="headerlink" href="#generic-views" title="Permalink to this headline">¶</a></h1>\n'
+                        '<p>See <a class="reference internal" href="../../../ref/class-based-views/">'
+                        '<span class="doc">Built-in class-based views API</span></a>.</p>\n</div>\n'
+                    ),
+                    'breadcrumbs': [],
+                    'parents': 'topics http',
+                    'slug': 'generic-views',
+                    'title': 'Generic views',
+                    'toc': '<ul>\n<li><a class="reference internal" href="#">Generic views</a></li>\n</ul>\n'
+                },
+                'path': 'topics/http/generic-views',
+                'release': cls.release,
+                'title': 'Generic views',
+            },
+            {
+                'metadata': {
+                    'body': (
+                        '<div class="section" id="s-django-1-2-1-release-notes">\n<span id="django-1-2-1-release-notes"></span>'
+                        '<h1>Django 1.2.1 release notes<a class="headerlink" href="#django-1-2-1-release-notes" title="Permalink to this headline">¶</a></h1>\n'
+                        '<p>Django 1.2.1 was released almost immediately after 1.2.0 to correct two small\n'
+                        'bugs: one was in the documentation packaging script, the other was a '
+                        '<a class="reference external" href="https://code.djangoproject.com/ticket/13560">bug</a> that\n'
+                        'affected datetime form field widgets when localization was enabled.</p>\n</div>\n'
+                    ),
+                    'breadcrumbs': [],
+                    'parents': 'releases',
+                    'slug': '1.2.1',
+                    'title': 'Django 1.2.1 release notes',
+                    'toc': '<ul>\n<li><a class="reference internal" href="#">Django 1.2.1 release notes</a></li>\n</ul>\n'
+                },
+                'path': 'releases/1.2.1',
+                'release': cls.release,
+                'title': 'Django 1.2.1 release notes'
+            },
+            {
+                'metadata': {
+                    'body': (
+                        '<div class="section" id="s-django-1-9-4-release-notes">\n<span id="django-1-9-4-release-notes"></span>'
+                        '<h1>Django 1.9.4 release notes<a class="headerlink" href="#django-1-9-4-release-notes" title="Permalink to this headline">¶</a></h1>\n'
+                        '<p><em>March 5, 2016</em></p>\n<p>Django 1.9.4 fixes a regression on Python 2 in the 1.9.3 security release\n'
+                        'where <code class="docutils literal"><span class="pre">utils.http.is_safe_url()</span></code> crashes on bytestring URLs '
+                        '(<a class="reference external" href="https://code.djangoproject.com/ticket/26308">#26308</a>).</p>\n</div>\n'
+                    ),
+                    'breadcrumbs': [],
+                    'parents': 'releases',
+                    'slug': '1.9.4',
+                    'title': 'Django 1.9.4 release notes',
+                    'toc': '<ul>\n<li><a class="reference internal" href="#">Django 1.9.4 release notes</a></li>\n</ul>\n'
+                },
+                'path': 'releases/1.9.4',
+                'release': cls.release,
+                'title': 'Django 1.9.4 release notes'
+            }
+        ]
+        Document.objects.bulk_create(((Document(**doc) for doc in documents)))
+        Document.objects.update(search=DOCUMENT_SEARCH_VECTOR)
+
+    def test_documents_search(self):
+        query_text = 'django'
+        document_queryset = Document.objects.search(query_text, self.release).values_list('title', 'rank')
+        document_list = [('Django 1.2.1 release notes', 0.969828), ('Django 1.9.4 release notes', 0.949088)]
+        self.assertSequenceEqual(list(OrderedDict(document_queryset).items()), document_list)

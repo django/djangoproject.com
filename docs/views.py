@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sitemaps.views import x_robots_tag
 from django.contrib.sites.models import Site
-from django.core.paginator import InvalidPage
+from django.core.paginator import InvalidPage, Paginator
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
 from django.template.response import TemplateResponse
@@ -13,11 +13,9 @@ from django.utils.translation import activate, ugettext_lazy as _
 from django.views import static
 from django.views.decorators.cache import cache_page
 from django_hosts.resolvers import reverse
-from elasticsearch_dsl import query
 
 from .forms import DocSearchForm
 from .models import Document, DocumentRelease
-from .search import DocumentDocType, SearchPaginator
 from .utils import get_doc_path_or_404, get_doc_root_or_404
 
 SIMPLE_SEARCH_OPERATORS = ['+', '|', '-', '"', '*', '(', ')', '~']
@@ -162,36 +160,14 @@ def search_results(request, lang, version, per_page=10, orphans=3):
 
         if q:
             # catch queries that are coming from browser search bars
-            exact = (DocumentDocType.index_queryset()
-                                    .filter(release=release, title=q)
-                                    .first())
+            exact = Document.objects.filter(release=release, title=q).first()
             if exact is not None:
                 return redirect(exact)
 
-            # let's just use simple queries since they allow some
-            # neat syntaxes for exclusion etc. For more info see
-            # http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html
-            should = [
-                query.Common(_all={'query': q, 'cutoff_frequency': 0.001}),
-                query.SimpleQueryString(fields=['title', '_all'],
-                                        query=q,
-                                        default_operator='and'),
-            ]
-
-            # then apply the queries and filter out anything not matching
-            # the wanted version and language, also highlight the content
-            # and order the highlighted snippets by score so that the most
-            # fitting result is used
-            results = (DocumentDocType.search()
-                                      .query(query.Bool(should=should))
-                                      .filter('term', release__lang=release.lang)
-                                      .filter('term', release__version=release.version)
-                                      .highlight_options(order='score')
-                                      .highlight('content_raw')
-                                      .extra(min_score=.01))
+            results = Document.objects.search(q, release)
 
             page_number = request.GET.get('page') or 1
-            paginator = SearchPaginator(results, per_page=per_page, orphans=orphans)
+            paginator = Paginator(results, per_page=per_page, orphans=orphans)
 
             try:
                 page_number = int(page_number)
@@ -243,21 +219,17 @@ def search_suggestions(request, lang, version, per_page=20):
     if form.is_valid():
         q = form.cleaned_data.get('q')
         if q:
-            search = DocumentDocType.search()
-            search = (search.query(query.SimpleQueryString(fields=['title^10',
-                                                                   'content'],
-                                                           query=q,
-                                                           analyzer='stop',
-                                                           default_operator='and'))
-                            .filter('term', release__lang=release.lang)
-                            .filter('term', release__version=release.version)
-                            .source(includes=['title']))
-
+            results = Document.objects.filter(
+                release__lang=release.lang,
+            ) .filter(
+                release__version=release.version,
+            ).filter(
+                title__contains=q,
+            )
             suggestions.append(q)
             titles = []
             links = []
             content_type = ContentType.objects.get_for_model(Document)
-            results = search[0:per_page].execute()
             for result in results:
                 titles.append(result.title)
                 kwargs = {
