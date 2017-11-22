@@ -24,7 +24,7 @@ class Command(BaseCommand):
             action='store_true',
             dest='update_index',
             default=False,
-            help='Also update the elasticsearch index.',
+            help='Also update the search vector field.',
         )
 
     def handle(self, **kwargs):

@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'django.contrib.humanize',
     'django.contrib.messages',
+    'django.contrib.postgres',
     'django.contrib.redirects',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
@@ -265,6 +266,3 @@ THUMBNAIL_ALTERNATIVE_RESOLUTIONS = [2]
 # dashboard settings
 TRAC_RPC_URL = "https://code.djangoproject.com/rpc"
 TRAC_URL = "https://code.djangoproject.com/"
-
-# search settings
-ES_HOST = SECRETS.get('es_host', 'localhost:9200')
