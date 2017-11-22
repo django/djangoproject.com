@@ -39,7 +39,7 @@
         <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}">{{ result.title }}</a>
       </h2>
       <span class="meta breadcrumbs">
-        {% for breadcrumb in result.breadcrumbs %}
+        {% for breadcrumb in result.metadata.breadcrumbs %}
         <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=breadcrumb.path host 'docs' %}">{{ breadcrumb.title }}</a>{% if not forloop.last %} <span class="arrow">»</span>{% endif %}
         {% endfor %}
       </span>

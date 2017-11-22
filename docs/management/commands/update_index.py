@@ -1,8 +1,8 @@
-import datetime
-
 from django.core.management.base import BaseCommand
+from django.db import transaction
 
-from ...search import DocumentDocType
+from ...models import Document
+from ...search import DOCUMENT_SEARCH_VECTOR
 
 
 class Command(BaseCommand):
@@ -14,15 +14,15 @@ class Command(BaseCommand):
         if self.verbosity >= level:
             self.stdout.write(msg)
 
+    @transaction.atomic
     def handle(self, *args, **options):
         self.verbosity = options['verbosity']
-        new_index_name = 'docs-%s' % datetime.datetime.now().isoformat().lower()
-        index_results = DocumentDocType.index_all(index_name=new_index_name)
-        for ok, item in index_results:
-            id_ = item.get('index', {}).get('_id', item)
-            if ok:
-                self.log('Successfully indexed item %s' % id_)
-            else:
-                self.log('Failed indexing item %s' % id_)
-        # Alias the main 'docs' index to the new one.
-        DocumentDocType.alias_to_main_index(new_index_name)
+        Document.objects.update(search=None)
+        updated = (
+            # Don't index the module pages since source code is hard to
+            # combine with full text search.
+            Document.objects.exclude(path__startswith='_modules')
+            # Not the crazy big flattened index of the CBVs.
+            .exclude(path__startswith='ref/class-based-views/flattened-index')
+        ).update(search=DOCUMENT_SEARCH_VECTOR)
+        self.log('Successfully indexed %s item' % updated)

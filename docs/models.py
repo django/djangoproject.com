@@ -5,6 +5,11 @@ from functools import reduce
 from pathlib import Path
 
 from django.conf import settings
+from django.contrib.postgres.fields.jsonb import JSONField
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import (
+    SearchQuery, SearchRank, SearchVectorField, TrigramSimilarity,
+)
 from django.core.cache import cache
 from django.db import models, transaction
 from django.utils.functional import cached_property
@@ -153,11 +158,20 @@ class DocumentRelease(models.Model):
                 # We don't care about indexing documents with no body or title, or partially translated
                 continue
 
+            document_path = _clean_document_path(document['current_page_name'])
+            document['slug'] = Path(document_path).parts[-1]
+            document['parents'] = ' '.join(Path(document_path).parts[:-1])
             Document.objects.create(
                 release=self,
-                path=_clean_document_path(document['current_page_name']),
+                path=document_path,
                 title=unescape_entities(strip_tags(document['title'])),
+                metadata=document,
             )
+        for document in self.documents.all():
+            document.metadata['breadcrumbs'] = list(
+                Document.objects.breadcrumbs(document).values('title', 'path')
+            )
+            document.save(update_fields=('metadata',))
 
 
 def _clean_document_path(path):
@@ -194,11 +208,27 @@ class DocumentManager(models.Manager):
         if parent_paths:
             or_queries = [models.Q(path=str(path)) for path in parent_paths]
             return (self.filter(reduce(operator.or_, or_queries))
-                        .filter(release=document.release)
+                        .filter(release_id=document.release_id)
                         .exclude(pk=document.pk)
                         .order_by('path'))
         else:
             return self.none()
+
+    def search(self, query_text, release):
+        """Use full-text search to return documents matching query_text."""
+        query_text = query_text.strip()
+        if query_text:
+            search_query = SearchQuery(query_text)
+            search_rank = SearchRank(models.F('search'), search_query)
+            similarity = TrigramSimilarity('title', query_text)
+            return self.get_queryset().select_related(
+                'release__release'
+            ).filter(
+                release_id=release.id,
+                search=search_query,
+            ).annotate(rank=search_rank + similarity).order_by('-rank')
+        else:
+            return self.get_queryset().none()
 
 
 class Document(models.Model):
@@ -212,10 +242,13 @@ class Document(models.Model):
     )
     path = models.CharField(max_length=500)
     title = models.CharField(max_length=500)
+    metadata = JSONField(default=dict)
+    search = SearchVectorField(null=True, editable=False)
 
     objects = DocumentManager()
 
     class Meta:
+        indexes = [GinIndex(fields=['search'])]
         unique_together = ('release', 'path')
 
     def __str__(self):
@@ -223,6 +256,10 @@ class Document(models.Model):
 
     def get_absolute_url(self):
         return document_url(self)
+
+    @cached_property
+    def content_raw(self):
+        return strip_tags(unescape_entities(self.metadata['content']).replace(u'¶', ''))
 
     @cached_property
     def root(self):

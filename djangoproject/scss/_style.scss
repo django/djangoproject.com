@@ -1026,14 +1026,6 @@ blockquote {
                 }
             }
 
-            &.elastic {
-                background: url(../img/logo-elastic.png) no-repeat left center;
-                .mdzr-svg & {
-                    background: url(../img/logo-elastic.svg) no-repeat left center;
-                    background-size: contain;
-                }
-            }
-
             &.threespot {
                 background: url(../img/logo-threespot.png) no-repeat left center;
                 .mdzr-svg & {
