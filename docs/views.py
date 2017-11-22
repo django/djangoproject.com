@@ -221,8 +221,8 @@ def search_suggestions(request, lang, version, per_page=20):
         if q:
             results = Document.objects.filter(
                 release__lang=release.lang,
-            ) .filter(
-                release__version=release.version,
+            ).filter(
+                release__release__version=release.version,
             ).filter(
                 title__contains=q,
             )
@@ -234,7 +234,7 @@ def search_suggestions(request, lang, version, per_page=20):
                 titles.append(result.title)
                 kwargs = {
                     'content_type_id': content_type.pk,
-                    'object_id': result.meta.id,
+                    'object_id': result.id,
                 }
                 links.append(reverse('contenttypes-shortcut', kwargs=kwargs))
             suggestions.append(titles)
