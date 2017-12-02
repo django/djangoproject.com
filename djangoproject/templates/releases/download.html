@@ -221,7 +221,7 @@
     <p>If you’re just looking for a stable deployment target and don’t mind waiting for the next release, you’ll want to stick with the latest official release (which will always include detailed notes on any changes you’ll need to make while upgrading).</p>
     <h2>Previous releases</h2>
     <ul>
-      <li>Django {{ previous.version }}:
+      <li>Django {{ previous.version }}{% if previous.is_lts %} (LTS){% endif %}:
         <a href="{% url 'download-redirect' previous.version 'tarball' %}">
           Django-{{ previous.version }}.tar.gz</a><br>
         Checksums: <a href="{% url 'download-redirect' previous.version 'checksum' %}">
