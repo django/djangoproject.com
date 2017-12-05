@@ -52,3 +52,7 @@ if DEBUG:
             MIDDLEWARE.index('django.middleware.common.CommonMiddleware') + 1,
             'debug_toolbar.middleware.DebugToolbarMiddleware'
         )
+        MIDDLEWARE.insert(
+            MIDDLEWARE.index('debug_toolbar.middleware.DebugToolbarMiddleware') + 1,
+            'djangoproject.middleware.CORSMiddleware'
+        )
