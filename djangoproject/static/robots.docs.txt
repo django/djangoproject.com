@@ -20,7 +20,6 @@ Disallow: /ja/2.0/misc
 Disallow: /ja/2.0/ref
 Disallow: /ja/2.0/releases
 Disallow: /ja/2.0/topics
-Disallow: /ko/2.0/faq
 Disallow: /ko/2.0/howto
 Disallow: /ko/2.0/internals
 Disallow: /ko/2.0/misc
