@@ -1,4 +1,4 @@
-bleach==2.1.1
+bleach==2.1.2
 Django==1.11.8
 django-contact-form==1.4.2
 django-hosts==3.0
