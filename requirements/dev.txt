@@ -1,3 +1,4 @@
 -r common.txt
 
 watchdog==0.8.3
+django-sslserver==0.20
