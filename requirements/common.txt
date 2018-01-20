@@ -4,7 +4,7 @@ django-contact-form==1.4.2
 django-hosts==3.0
 django-markdownx==2.0.21
 django-push==1.0
-django-registration-redux==2.0
+django-registration-redux==2.1
 docutils==0.14
 feedparser==5.2.1
 Jinja2==2.10
