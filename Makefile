@@ -18,7 +18,7 @@ watch-scss:
 	watchmedo shell-command --patterns=*.scss --recursive --command="make compile-scss-debug" $(SCSS)
 
 run:
-	python manage.py runserver 0.0.0.0:8000
+	python manage.py runsslserver 0.0.0.0:8000
 
 install:
 	pip install -r requirements/dev.txt

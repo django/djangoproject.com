@@ -34,6 +34,8 @@ DOCS_BUILD_ROOT = DATA_DIR.joinpath('djangodocs')
 
 PARENT_HOST = 'djangoproject.dev:8000'
 
+HOST_SCHEME = 'https'
+
 # django-push settings
 
 PUSH_SSL_CALLBACK = False
@@ -56,3 +58,5 @@ if DEBUG:
             MIDDLEWARE.index('debug_toolbar.middleware.DebugToolbarMiddleware') + 1,
             'djangoproject.middleware.CORSMiddleware'
         )
+
+    INSTALLED_APPS.append('sslserver')

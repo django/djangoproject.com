@@ -122,8 +122,8 @@ To run locally, do the usual:
 
    This runs both the main site ("www") as well as the
    docs and dashboard site in the same process.
-   Open http://www.djangoproject.dev:8000/, http://docs.djangoproject.dev:8000/
-   or http://dashboard.djangoproject.dev:8000/.
+   Open https://www.djangoproject.dev:8000/, https://docs.djangoproject.dev:8000/
+   or https://dashboard.djangoproject.dev:8000/.
 
 Running the tests
 -----------------
