@@ -112,7 +112,7 @@ To run locally, do the usual:
    .. _`Hosts.prefpane`: https://github.com/specialunderwear/Hosts.prefpane
    .. _`built-in network admin`: https://help.ubuntu.com/community/NetworkAdmin
 
-#. Compile the CSS (only the source SCSS files are stored in the repostiory)::
+#. Compile the CSS (only the source SCSS files are stored in the repository)::
 
     make compile-scss
 
