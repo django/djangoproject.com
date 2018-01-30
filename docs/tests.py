@@ -328,6 +328,7 @@ class DocumentManagerTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.release = DocumentRelease.objects.create()
+        cls.release_fr = DocumentRelease.objects.create(lang='fr')
         documents = [
             {
                 'metadata': {
@@ -385,6 +386,65 @@ class DocumentManagerTest(TestCase):
                 'path': 'releases/1.9.4',
                 'release': cls.release,
                 'title': 'Django 1.9.4 release notes'
+            },
+            {
+                'metadata': {
+                    'body': (
+                        '<div class="section" id="s-generic-views">\n<span id="generic-views"></span>'
+                        '<h1>Vues génériques<a class="headerlink" href="#generic-views" title="Lien permanent vers ce titre">¶</a></h1>\n'
+                        '<p>Voir <a class="reference internal" href="../../../ref/class-based-views/">'
+                        '<span class="doc">API des vues intégrées fondées sur les classes.</span></a>.</p>\n</div>\n'
+                    ),
+                    'breadcrumbs': [],
+                    'parents': 'topics http',
+                    'slug': 'generic-views',
+                    'title': 'Vues génériques',
+                    'toc': '<ul>\n<li><a class="reference internal" href="#">Vues génériques</a></li>\n</ul>\n'
+                },
+                'path': 'topics/http/generic-views',
+                'release': cls.release_fr,
+                'title': 'Vues génériques',
+            },
+            {
+                'metadata': {
+                    'body': (
+                        '<div class="section" id="s-django-1-2-1-release-notes">\n<span id="django-1-2-1-release-notes"></span>'
+                        '<h1>Notes de publication de Django 1.2.1'
+                        '<a class="headerlink" href="#django-1-2-1-release-notes" title="Lien permanent vers ce titre">¶</a></h1>\n'
+                        '<p>Django 1.2.1 was released almost immediately after 1.2.0 to correct two small\n'
+                        'bugs: one was in the documentation packaging script, the other was a '
+                        '<a class="reference external" href="https://code.djangoproject.com/ticket/13560">bug</a> that\n'
+                        'affected datetime form field widgets when localization was enabled.</p>\n</div>\n'
+                    ),
+                    'breadcrumbs': [],
+                    'parents': 'releases',
+                    'slug': '1.2.1',
+                    'title': 'Notes de publication de Django 1.2.1',
+                    'toc': '<ul>\n<li><a class="reference internal" href="#">Notes de publication de Django 1.2.1</a></li>\n</ul>\n',
+                },
+                'path': 'releases/1.2.1',
+                'release': cls.release_fr,
+                'title': 'Notes de publication de Django 1.2.1',
+            },
+            {
+                'metadata': {
+                    'body': (
+                        '<div class="section" id="s-django-1-9-4-release-notes">\n<span id="django-1-9-4-release-notes"></span>'
+                        '<h1>Notes de publication de Django 1.9.4'
+                        '<a class="headerlink" href="#django-1-9-4-release-notes" title="Lien permanent vers ce titre">¶</a></h1>\n'
+                        '<p><em>March 5, 2016</em></p>\n<p>Django 1.9.4 fixes a regression on Python 2 in the 1.9.3 security release\n'
+                        'where <code class="docutils literal"><span class="pre">utils.http.is_safe_url()</span></code> crashes on bytestring URLs '
+                        '(<a class="reference external" href="https://code.djangoproject.com/ticket/26308">#26308</a>).</p>\n</div>\n'
+                    ),
+                    'breadcrumbs': [],
+                    'parents': 'releases',
+                    'slug': '1.9.4',
+                    'title': 'Notes de publication de Django 1.9.4',
+                    'toc': '<ul>\n<li><a class="reference internal" href="#">Notes de publication de Django 1.9.4</a></li>\n</ul>\n',
+                },
+                'path': 'releases/1.9.4',
+                'release': cls.release_fr,
+                'title': 'Notes de publication de Django 1.9.4',
             }
         ]
         Document.objects.bulk_create(((Document(**doc) for doc in documents)))
@@ -395,6 +455,14 @@ class DocumentManagerTest(TestCase):
         document_queryset = Document.objects.search(query_text, self.release).values_list('title', 'rank')
         document_list = [('Django 1.2.1 release notes', 0.969828), ('Django 1.9.4 release notes', 0.949088)]
         self.assertSequenceEqual(list(document_queryset), document_list)
+
+    def test_multilingual_search(self):
+        query_text = 'publication'
+        queryset = Document.objects.search(query_text, self.release_fr).values_list('title', 'rank')
+        self.assertSequenceEqual(queryset, [
+            ('Notes de publication de Django 1.2.1', 1.06933),
+            ('Notes de publication de Django 1.9.4', 1.04587),
+        ])
 
     def test_empty_search(self):
         self.assertSequenceEqual(Document.objects.search('', self.release), [])
