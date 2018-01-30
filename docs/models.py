@@ -12,6 +12,7 @@ from django.contrib.postgres.search import (
 )
 from django.core.cache import cache
 from django.db import models, transaction
+from django.db.models import Prefetch
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django.utils.text import unescape_entities
@@ -20,6 +21,7 @@ from django_hosts.resolvers import reverse
 from releases.models import Release
 
 from . import utils
+from .search import DEFAULT_TEXT_SEARCH_CONFIG, TSEARCH_CONFIG_LANGUAGES
 
 
 class DocumentReleaseManager(models.Manager):
@@ -166,6 +168,7 @@ class DocumentRelease(models.Model):
                 path=document_path,
                 title=unescape_entities(strip_tags(document['title'])),
                 metadata=document,
+                config=TSEARCH_CONFIG_LANGUAGES.get(self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG),
             )
         for document in self.documents.all():
             document.metadata['breadcrumbs'] = list(
@@ -218,15 +221,18 @@ class DocumentManager(models.Manager):
         """Use full-text search to return documents matching query_text."""
         query_text = query_text.strip()
         if query_text:
-            search_query = SearchQuery(query_text)
+            search_query = SearchQuery(query_text, config=models.F('config'))
             search_rank = SearchRank(models.F('search'), search_query)
             similarity = TrigramSimilarity('title', query_text)
-            return self.get_queryset().select_related(
-                'release__release'
+            return self.get_queryset().prefetch_related(
+                Prefetch('release', queryset=DocumentRelease.objects.only('lang', 'release')),
+                Prefetch('release__release', queryset=Release.objects.only('version')),
             ).filter(
                 release_id=release.id,
                 search=search_query,
-            ).annotate(rank=search_rank + similarity).order_by('-rank')
+            ).annotate(rank=search_rank + similarity).order_by('-rank').only(
+                'title', 'path', 'metadata', 'release',
+            )
         else:
             return self.get_queryset().none()
 
@@ -244,6 +250,7 @@ class Document(models.Model):
     title = models.CharField(max_length=500)
     metadata = JSONField(default=dict)
     search = SearchVectorField(null=True, editable=False)
+    config = models.SlugField(default=DEFAULT_TEXT_SEARCH_CONFIG)
 
     objects = DocumentManager()
 
