@@ -248,7 +248,10 @@ class Document(models.Model):
     objects = DocumentManager()
 
     class Meta:
-        indexes = [GinIndex(fields=['search'])]
+        indexes = [
+            models.Index(fields=['release', 'title'], name='document_release_title_idx'),
+            GinIndex(fields=['search']),
+        ]
         unique_together = ('release', 'path')
 
     def __str__(self):
