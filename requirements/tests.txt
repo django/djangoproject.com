@@ -1,4 +1,4 @@
 -r dev.txt
 
-coverage==4.4.2
+coverage==4.5
 requests-mock==1.4.0
