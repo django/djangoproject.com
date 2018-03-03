@@ -13,7 +13,6 @@ Disallow: /fr/2.0/internals
 Disallow: /fr/2.0/releases
 Disallow: /id/2.0/ref
 Disallow: /id/2.0/topics
-Disallow: /ja/2.0/faq
 Disallow: /ja/2.0/howto
 Disallow: /ja/2.0/internals
 Disallow: /ja/2.0/misc
