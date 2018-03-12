@@ -1,6 +1,6 @@
 bleach==2.1.2
 Django==1.11.11
-django-contact-form==1.4.2
+django-contact-form==1.5
 django-hosts==3.0
 django-markdownx==2.0.22
 django-push==1.0
