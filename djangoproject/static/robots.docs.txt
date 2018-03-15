@@ -34,6 +34,13 @@ Disallow: /pl/2.0/topics
 Disallow: /pt-br/2.0/ref
 Disallow: /pt-br/2.0/releases
 Disallow: /pt-br/2.0/topics
+Disallow: /zh-hans/2.0/faq
+Disallow: /zh-hans/2.0/howto
+Disallow: /zh-hans/2.0/internals
+Disallow: /zh-hans/2.0/misc
+Disallow: /zh-hans/2.0/ref
+Disallow: /zh-hans/2.0/releases
+Disallow: /zh-hans/2.0/topics
 Disallow: /el/1.11/internals
 Disallow: /el/1.11/ref
 Disallow: /el/1.11/releases
