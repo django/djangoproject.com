@@ -40,12 +40,12 @@ class TestTemplateTags(TestCase):
         self.assertIsInstance(output, SafeString)
         self.assertEqual(
             output,
-            '<a href="http://docs.djangoproject.dev:8000/en/1.8/releases/1.8/">'
+            '<a href="http://docs.djangoproject.localhost:8000/en/1.8/releases/1.8/">'
             'Online documentation</a>'
         )
         self.assertEqual(
             release_notes('1.8', show_version=True),
-            '<a href="http://docs.djangoproject.dev:8000/en/1.8/releases/1.8/">'
+            '<a href="http://docs.djangoproject.localhost:8000/en/1.8/releases/1.8/">'
             '1.8 release notes</a>'
         )
 
@@ -54,12 +54,12 @@ class TestTemplateTags(TestCase):
         self.assertIsInstance(output, SafeString)
         self.assertEqual(
             output,
-            '<a href="http://docs.djangoproject.dev:8000/en/1.10/releases/1.10/">'
+            '<a href="http://docs.djangoproject.localhost:8000/en/1.10/releases/1.10/">'
             'Online documentation</a>'
         )
         self.assertEqual(
             release_notes('1.10', show_version=True),
-            '<a href="http://docs.djangoproject.dev:8000/en/1.10/releases/1.10/">'
+            '<a href="http://docs.djangoproject.localhost:8000/en/1.10/releases/1.10/">'
             '1.10 release notes</a>'
         )
 

@@ -1,16 +1,16 @@
 [
     {
         "fields": {
-            "domain": "www.djangoproject.dev:8000",
-            "name": "www.djangoproject.dev:8000"
+            "domain": "www.djangoproject.localhost:8000",
+            "name": "www.djangoproject.localhost:8000"
         },
         "model": "sites.site",
         "pk": 1
     },
     {
         "fields": {
-            "domain": "docs.djangoproject.dev:8000",
-            "name": "docs.djangoproject.dev:8000"
+            "domain": "docs.djangoproject.localhost:8000",
+            "name": "docs.djangoproject.localhost:8000"
         },
         "model": "sites.site",
         "pk": 2

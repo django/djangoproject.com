@@ -141,7 +141,7 @@ class RedirectsTests(TestCase):
     def test_internals_team(self):
         response = self.client.get(
             '/en/dev/internals/team/',
-            HTTP_HOST='docs.djangoproject.dev:8000',
+            HTTP_HOST='docs.djangoproject.localhost:8000',
         )
         self.assertRedirects(
             response,
@@ -165,8 +165,7 @@ class SearchFormTestCase(TestCase):
         super().tearDownClass()
 
     def test_empty_get(self):
-        response = self.client.get('/en/dev/search/',
-                                   HTTP_HOST='docs.djangoproject.dev:8000')
+        response = self.client.get('/en/dev/search/', HTTP_HOST='docs.djangoproject.localhost:8000')
         self.assertEqual(response.status_code, 200)
 
 
@@ -302,9 +301,9 @@ class SitemapTests(TestCase):
         super().tearDownClass()
 
     def test_sitemap_index(self):
-        response = self.client.get('/sitemap.xml', HTTP_HOST='docs.djangoproject.dev:8000')
+        response = self.client.get('/sitemap.xml', HTTP_HOST='docs.djangoproject.localhost:8000')
         self.assertContains(response, '<sitemap>', count=2)
-        self.assertContains(response, '<loc>http://docs.djangoproject.dev:8000/sitemap-en.xml</loc>')
+        self.assertContains(response, '<loc>http://docs.djangoproject.localhost:8000/sitemap-en.xml</loc>')
 
     def test_sitemap(self):
         doc_release = DocumentRelease.objects.create()
@@ -316,7 +315,7 @@ class SitemapTests(TestCase):
         self.assertEqual(url_info['location'], document.get_absolute_url())
 
     def test_sitemap_404(self):
-        response = self.client.get('/sitemap-xx.xml', HTTP_HOST='docs.djangoproject.dev:8000')
+        response = self.client.get('/sitemap-xx.xml', HTTP_HOST='docs.djangoproject.localhost:8000')
         self.assertEqual(response.status_code, 404)
         self.assertEqual(
             response.context['exception'],
