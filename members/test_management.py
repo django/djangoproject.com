@@ -42,7 +42,7 @@ class CorporateMemberTests(TestCase):
             '%s. Would you like to renew your support?' % localize(self.thirty_days_from_now),
             msg.body
         )
-        self.assertIn('http://www.djangoproject.dev:8000/foundation/corporate-membership/renew/', msg.body)
+        self.assertIn('http://www.djangoproject.localhost:8000/foundation/corporate-membership/renew/', msg.body)
         self.assertEqual(msg.from_email, settings.FUNDRAISING_DEFAULT_FROM_EMAIL)
         self.assertEqual(
             msg.to,
