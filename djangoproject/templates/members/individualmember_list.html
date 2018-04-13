@@ -9,12 +9,11 @@
       are appointed by the DSF in recognition of their service to the Django community. If you
       know someone who you think should be considered for Individual Membership, please
     {% endblocktrans %}
-    <a href="{% url "contact_foundation" %}">{% trans "get in touch" %}</a>.
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5lbWxAO-sylEEjHVKBNIpmHlhdJRf0_LCo8glnLUWd-Q2Sw/viewform?usp=sf_link">{% trans "fill out this form" %}</a>.
   </p>
   <ul>
     {% for member in members %}
-      <li>{{ member.linked_name }}
-        {{ member.bio|markdownify }}</li>
+      <li>{{ member.linked_name }}</li>
     {% endfor %}
   </ul>
 
