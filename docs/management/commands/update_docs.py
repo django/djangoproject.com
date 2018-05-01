@@ -109,14 +109,22 @@ class Command(BaseCommand):
 
             if self.verbosity >= 2:
                 self.stdout.write("  building %s (%s -> %s)" % (builder, source_dir, build_dir))
-            subprocess.check_call([
-                'sphinx-build',
-                '-b', builder,
-                '-D', 'language=%s' % to_locale(release.lang),
-                '-Q' if self.verbosity == 0 else '-q',
-                str(source_dir),        # Source file directory
-                str(build_dir),         # Destination directory
-            ])
+            try:
+                subprocess.check_call([
+                    'sphinx-build',
+                    '-b', builder,
+                    '-D', 'language=%s' % to_locale(release.lang),
+                    '-Q' if self.verbosity == 0 else '-q',
+                    str(source_dir),        # Source file directory
+                    str(build_dir),         # Destination directory
+                ])
+            except subprocess.CalledProcessError:
+                self.stderr.write(
+                    'sphinx-build returned an error (release %s, builder %s)' % (
+                        release, builder
+                    )
+                )
+                return
 
         #
         # Create a zip file of the HTML build for offline reading.
