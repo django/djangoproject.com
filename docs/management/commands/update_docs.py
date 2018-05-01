@@ -20,6 +20,16 @@ from ...models import DocumentRelease
 class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
+            '--language',
+            help='Only build docs for this specific language',
+        )
+        parser.add_argument(
+            '--force',
+            action='store_true',
+            default=False,
+            help="Force docs update even if docs in git didn't change",
+        )
+        parser.add_argument(
             '--update-index',
             action='store_true',
             dest='update_index',
@@ -44,17 +54,20 @@ class Command(BaseCommand):
         # building newer versions first works. I suspect Sphinx is hanging onto
         # some global state. Anyway, we can work around it by making sure that
         # "dev" builds before "1.0". This is ugly, but oh well.
-        for release in DocumentRelease.objects.order_by('-release'):
+        doc_releases = DocumentRelease.objects.order_by('-release')
+        if kwargs['language']:
+            doc_releases = doc_releases.filter(lang=kwargs['language'])
+        for release in doc_releases:
             # Skip translated non-stable versions to avoid a crash:
             # https://github.com/django/djangoproject.com/issues/627
             if release.lang != 'en' and not release.release.version == default_docs_version:
                 continue
-            self.build_doc_release(release)
+            self.build_doc_release(release, force=kwargs['force'])
 
         if self.update_index_required:
             call_command('update_index', **{'verbosity': self.verbosity})
 
-    def build_doc_release(self, release):
+    def build_doc_release(self, release, force=False):
         if self.verbosity >= 1:
             self.stdout.write("Updating %s..." % release)
 
@@ -70,13 +83,16 @@ class Command(BaseCommand):
         # Update the release from SCM.
         #
         # Make a git checkout/update into the destination directory.
-        if (not self.update_git(release.scm_url, checkout_dir, changed_dir='docs/') and
-                not self.release_docs_changed.get(release.version)):
-            # No docs changes so don't rebuild.
+        git_changed = self.update_git(release.scm_url, checkout_dir, changed_dir='docs/')
+        if git_changed:
+            self.release_docs_changed[release.version] = True
+        version_changed = git_changed or self.release_docs_changed.get(release.version)
+        if not force and not version_changed:
+            if self.verbosity >= 1:
+                self.stdout.write("No docs changes for %s, skipping docs building." % release)
             return
 
         self.update_index_required = self.update_index
-        self.release_docs_changed[release.version] = True
 
         source_dir = checkout_dir.joinpath('docs')
 
