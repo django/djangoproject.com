@@ -58,7 +58,7 @@ urlpatterns = [
     path('markdownx/markdownify/', staff_member_required(MarkdownifyView.as_view())),
 
     # Used by docs search suggestions
-    re_path('r/(?P<content_type_id>\d+)/(?P<object_id>.*)/', contenttypes_views.shortcut, name='contenttypes-shortcut'),
+    re_path('^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', contenttypes_views.shortcut, name='contenttypes-shortcut'),
 
     # User stats
     path('~<username>/', account_views.user_profile, name='user_profile'),
