@@ -14,7 +14,7 @@ Pillow==5.2.0
 psycopg2-binary==2.7.5
 pygments==2.2.0
 pykismet3==0.1.1
-requests==2.18.4
+requests==2.19.1
 sorl-thumbnail==12.4.1
 stripe==1.82.1
 Sphinx==1.7.5
