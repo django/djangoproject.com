@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
 from django.test import TestCase
-from stripe import StripeError
+from stripe.error import StripeError
 
 from ..forms import PaymentForm
 from ..models import DjangoHero

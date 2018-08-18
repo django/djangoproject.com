@@ -234,7 +234,7 @@ class PaymentForm(forms.Form):
             # Authentication with Stripe's API failed
             raise
 
-        except (stripe.StripeError, Exception):
+        except (stripe.error.StripeError, Exception):
             # The card has been declined, we want to see what happened
             # in Sentry
             raise
