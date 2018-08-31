@@ -123,7 +123,7 @@ def update_card(request):
         subscription = customer.subscriptions.retrieve(donation.stripe_subscription_id)
         subscription.source = request.POST['stripe_token']
         subscription.save()
-    except stripe.StripeError as e:
+    except stripe.error.StripeError as e:
         data = {'success': False, 'error': str(e)}
     else:
         data = {'success': True}
