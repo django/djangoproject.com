@@ -12,6 +12,22 @@ pre.literal-block,
     color: $green-dark;
 }
 
+.code-block-caption {
+    background: $green-very-light;
+    color: $green-dark;
+    @include monospace;
+    font-size: 1em;
+    padding: 5px 20px;
+    border-radius: 4px 4px 0 0;
+
+    + div > .highlight {
+        margin-top: 0;
+        border-radius: 0 0 4px 4px;
+        border-top: 0;
+    }
+}
+
+// For Django 2.0 docs and older.
 .snippet-filename {
     background: $green-very-light;
     color: $green-dark;
