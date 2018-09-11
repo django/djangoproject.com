@@ -5,7 +5,7 @@
 {% block content %}
   <h1>Create an account</h1>
 
-  <p>Or, <a href="https://code.djangoproject.com/github/login">login with GitHub</a>.</p>
+  <p>Or, <a href="{% url 'social:begin' 'github' %}">login with GitHub</a>.</p>
 
   {% if form.errors %}
     <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>

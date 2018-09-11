@@ -1,6 +1,7 @@
 from .common import *  # noqa
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     'www.djangoproject.localhost',
     'djangoproject.localhost',
     'docs.djangoproject.localhost',

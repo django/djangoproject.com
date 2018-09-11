@@ -28,6 +28,7 @@ sitemaps = {
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name='homepage.html'), name="homepage"),
+    path('social/', include('social_django.urls', namespace='social')),
     path('start/overview/', TemplateView.as_view(template_name='overview.html'), name="overview"),
     path('start/', TemplateView.as_view(template_name='start.html'), name="start"),
     # to work around a permanent redirect stored in the db that existed before the redesign:

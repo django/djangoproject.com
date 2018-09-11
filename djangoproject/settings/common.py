@@ -39,8 +39,8 @@ DATABASES = {
     },
     'trac': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'code.djangoproject',
-        'USER': 'code.djangoproject',
+        'NAME': 'codedjangoproject',
+        'USER': 'codedjangoproject',
         'HOST': SECRETS.get('trac_db_host', ''),
         'PASSWORD': SECRETS.get('trac_db_password', ''),
         'PORT': SECRETS.get('trac_db_port', ''),
@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'django_hosts',
     'markdownx',
     'sorl.thumbnail',
+    'social_django',
 
     'django.contrib.sites',
     'django.contrib.auth',
@@ -207,10 +208,22 @@ TEMPLATES = [
                 'releases.context_processors.django_version',
                 'aggregator.context_processors.community_stats',
                 'django.template.context_processors.request',
+                'social_django.context_processors.backends',  # <- Here
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 TIME_ZONE = 'America/Chicago'
 
@@ -258,6 +271,10 @@ SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
 # only testing keys as fallback values here please!
 STRIPE_SECRET_KEY = SECRETS.get('stripe_secret_key', 'sk_test_x6zP4wd7Z5jcvDOJbbHZlHHt')
 STRIPE_PUBLISHABLE_KEY = SECRETS.get('stripe_publishable_key', 'pk_test_TyB5jcROwK8mlCNrn3dCwW7l')
+
+# Github Key and Secret
+SOCIAL_AUTH_GITHUB_KEY = '74c710d0caedb4523169'
+SOCIAL_AUTH_GITHUB_SECRET = '9feed192a9cfaef35072acf303f2e8fca027f701'
 
 # sorl-thumbnail settings
 THUMBNAIL_PRESERVE_FORMAT = True
