@@ -137,7 +137,7 @@ class CorporateMember(models.Model):
 
     @property
     def thumbnail(self):
-        return get_thumbnail(self.logo, '170x170', quality=100)
+        return get_thumbnail(self.logo, '170x170', quality=100) if self.logo else None
 
     def get_renewal_link(self):
         return reverse('members:corporate-members-renew', kwargs={'token': signing.dumps(self.pk)})
