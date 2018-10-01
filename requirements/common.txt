@@ -2,14 +2,12 @@ bleach==2.1.4
 Django==2.1.2
 django-contact-form==1.6
 django-hosts==3.0
-django-markdownx==2.0.23
 django-push==1.1
 django-registration-redux==2.4
 docutils==0.14
 feedparser==5.2.1
 Jinja2==2.10
 libsass==0.15.0
-Markdown==2.6.11
 Pillow==5.3.0
 psycopg2-binary==2.7.5
 pygments==2.2.0
