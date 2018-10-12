@@ -5,8 +5,16 @@
 {% block layout_class %}full-width{% endblock %}
 
 {% block header %}
+ <div class="copy-banner copy-banner-black">
+    <div class="container">
+      <h1 class="visuallyhidden">Until November 1, <a href="https://www.jetbrains.com/pycharm/promo/support-django/?utm_source=djangoproject.com&utm_medium=link&utm_campaign=support-django-2018">get PyCharm for 30% off</a> All money goes to the Django Software Foundation!</h1>
+      <a href="https://www.jetbrains.com/pycharm/promo/support-django/?utm_source=djangoproject.com&utm_medium=link&utm_campaign=support-django-2018"><img src="{% static 'img/pycharm-banner.png' %}"></a>
+    </div>
+  </div>
+{% comment %}
 <h1 class="visuallyhidden">Support Django</h1>
 <p><em>Support Django development</em> by donating to the <em>Django Software Foundation</em>.</p>
+{% endcomment %}
 {% endblock %}
 
 {% block messages %}
