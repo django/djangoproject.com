@@ -42,7 +42,7 @@ class ViewTests(TestCase):
     def test_metric_404(self):
         request = self.factory.get(reverse('metric-detail', args=['new-tickets-week'],
                                            host='dashboard'))
-        with self.assertRaisesRegex(Http404, 'Could not find metric with slug [\w-]+'):
+        with self.assertRaisesRegex(Http404, r'Could not find metric with slug [\w-]+'):
             metric_detail(request, '404')
 
     def test_metric_json(self):
