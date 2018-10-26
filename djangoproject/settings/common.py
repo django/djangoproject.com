@@ -13,13 +13,13 @@ data_dir_key = 'DJANGOPROJECT_DATA_DIR'
 DATA_DIR = Path(os.environ[data_dir_key]) if data_dir_key in os.environ else BASE_DIR.parent
 
 try:
-    with DATA_DIR.joinpath('conf', 'secrets.json').open() as handle:
-        SECRETS = json.load(handle)
+	with DATA_DIR.joinpath('conf', 'secrets.json').open() as handle:
+		SECRETS = json.load(handle)
 except IOError:
-    SECRETS = {
-        'secret_key': 'a',
-        'superfeedr_creds': ['any@email.com', 'some_string'],
-    }
+	SECRETS = {
+		'secret_key': 'a',
+		'superfeedr_creds': ['any@email.com', 'some_string'],
+	}
 
 
 # Django settings
@@ -29,22 +29,22 @@ CACHE_MIDDLEWARE_SECONDS = 60 * 5  # 5 minutes
 CACHE_MIDDLEWARE_KEY_PREFIX = 'django'
 
 DATABASES = {
-     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'djangoproject',
-        'USER': 'djangoproject',
-        'HOST': SECRETS.get('db_host', ''),
-        'PASSWORD': SECRETS.get('db_password', ''),
-        'PORT': SECRETS.get('db_port', ''),
-    },
-    'trac': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'code.djangoproject',
-        'USER': 'code.djangoproject',
-        'HOST': SECRETS.get('trac_db_host', ''),
-        'PASSWORD': SECRETS.get('trac_db_password', ''),
-        'PORT': SECRETS.get('trac_db_port', ''),
-    }
+	 'default': {
+		'ENGINE': 'django.db.backends.postgresql_psycopg2',
+		'NAME': 'djangoproject',
+		'USER': 'djangoproject',
+		'HOST': SECRETS.get('db_host', ''),
+		'PASSWORD': SECRETS.get('db_password', ''),
+		'PORT': SECRETS.get('db_port', ''),
+	},
+	'trac': {
+		'ENGINE': 'django.db.backends.postgresql_psycopg2',
+		'NAME': 'code.djangoproject',
+		'USER': 'code.djangoproject',
+		'HOST': SECRETS.get('trac_db_host', ''),
+		'PASSWORD': SECRETS.get('trac_db_password', ''),
+		'PORT': SECRETS.get('trac_db_port', ''),
+	}
 }
 
 DATABASE_ROUTERS = ['tracdb.db_router.TracRouter']
@@ -55,81 +55,81 @@ FUNDRAISING_DEFAULT_FROM_EMAIL = "fundraising@djangoproject.com"
 FIXTURE_DIRS = [str(PROJECT_PACKAGE.joinpath('fixtures'))]
 
 INSTALLED_APPS = [
-    'accounts',
-    'aggregator',
-    'blog',
-    'contact',
-    'dashboard',
-    'docs.apps.DocsConfig',
-    'legacy',
-    'members',
-    'releases',
-    'svntogit',
-    'tracdb',
-    'fundraising',
+	'accounts',
+	'aggregator',
+	'blog',
+	'contact',
+	'dashboard',
+	'docs.apps.DocsConfig',
+	'legacy',
+	'members',
+	'releases',
+	'svntogit',
+	'tracdb',
+	'fundraising',
 
-    'registration',
-    'django_hosts',
-    'sorl.thumbnail',
-    'social_django',
+	'registration',
+	'django_hosts',
+	'sorl.thumbnail',
+	'social_django',
 
-    'django.contrib.sites',
-    'django.contrib.auth',
-    'django.contrib.admin',
-    'django.contrib.contenttypes',
-    'django.contrib.flatpages',
-    'django.contrib.humanize',
-    'django.contrib.messages',
-    'django.contrib.postgres',
-    'django.contrib.redirects',
-    'django.contrib.sessions',
-    'django.contrib.staticfiles',
-    'django.contrib.sitemaps',
-    'django_push.subscriber',
+	'django.contrib.sites',
+	'django.contrib.auth',
+	'django.contrib.admin',
+	'django.contrib.contenttypes',
+	'django.contrib.flatpages',
+	'django.contrib.humanize',
+	'django.contrib.messages',
+	'django.contrib.postgres',
+	'django.contrib.redirects',
+	'django.contrib.sessions',
+	'django.contrib.staticfiles',
+	'django.contrib.sitemaps',
+	'django_push.subscriber',
 ]
 
 LANGUAGE_CODE = 'en-us'
 
 LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": True,
-    "formatters": {
-        "simple": {"format": "[%(name)s] %(levelname)s: %(message)s"},
-        "full": {"format": "%(asctime)s [%(name)s] %(levelname)s: %(message)s"},
-        'django.server': {
-            '()': 'django.utils.log.ServerFormatter',
-            'format': '[%(server_time)s] %(message)s',
-        },
-    },
-    "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse",
-        },
-    },
-    "handlers": {
-        "console": {
-            "level": "DEBUG",
-            "class": "logging.StreamHandler",
-            "formatter": "simple",
-        },
-        'django.server': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'django.server',
-        },
-    },
-    "loggers": {
-        "django.request": {
-            "handlers": [],
-            "level": "ERROR",
-            "propagate": False,
-        },
-        'django.server': {
-            'handlers': ['django.server'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-    }
+	"version": 1,
+	"disable_existing_loggers": True,
+	"formatters": {
+		"simple": {"format": "[%(name)s] %(levelname)s: %(message)s"},
+		"full": {"format": "%(asctime)s [%(name)s] %(levelname)s: %(message)s"},
+		'django.server': {
+			'()': 'django.utils.log.ServerFormatter',
+			'format': '[%(server_time)s] %(message)s',
+		},
+	},
+	"filters": {
+		"require_debug_false": {
+			"()": "django.utils.log.RequireDebugFalse",
+		},
+	},
+	"handlers": {
+		"console": {
+			"level": "DEBUG",
+			"class": "logging.StreamHandler",
+			"formatter": "simple",
+		},
+		'django.server': {
+			'level': 'INFO',
+			'class': 'logging.StreamHandler',
+			'formatter': 'django.server',
+		},
+	},
+	"loggers": {
+		"django.request": {
+			"handlers": [],
+			"level": "ERROR",
+			"propagate": False,
+		},
+		'django.server': {
+			'handlers': ['django.server'],
+			'level': 'INFO',
+			'propagate': False,
+		},
+	}
 }
 
 LOGIN_REDIRECT_URL = 'edit_profile'
@@ -137,23 +137,23 @@ LOGIN_REDIRECT_URL = 'edit_profile'
 MEDIA_URL = '/m/'
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_hosts.middleware.HostsRequestMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
-    'django_hosts.middleware.HostsResponseMiddleware',
+	'django.middleware.security.SecurityMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django_hosts.middleware.HostsRequestMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.locale.LocaleMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+	'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
+	'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
 PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-    'accounts.hashers.PBKDF2WrappedSHA1PasswordHasher',
+	'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+	'accounts.hashers.PBKDF2WrappedSHA1PasswordHasher',
 ]
 
 ROOT_URLCONF = 'djangoproject.urls.www'
@@ -171,9 +171,9 @@ SERVER_EMAIL = "root@djangoproject.com"
 SESSION_COOKIE_HTTPONLY = True
 
 SILENCED_SYSTEM_CHECKS = [
-    'fields.W342',  # tracdb has ForeignKey(unique=True) in lieu of multi-col PKs
-    'security.W008',  # SSL redirect is handled by nginx
-    'security.W009',  # SECRET_KEY is setup through Ansible secrets
+	'fields.W342',  # tracdb has ForeignKey(unique=True) in lieu of multi-col PKs
+	'security.W008',  # SSL redirect is handled by nginx
+	'security.W009',  # SECRET_KEY is setup through Ansible secrets
 ]
 
 SITE_ID = 1
@@ -183,45 +183,45 @@ STATICFILES_DIRS = [str(PROJECT_PACKAGE.joinpath('static'))]
 STATIC_URL = '/s/'
 
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+	'django.contrib.staticfiles.finders.FileSystemFinder',
+	'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [str(PROJECT_PACKAGE.joinpath('templates'))],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'builtins': [
-                'django_hosts.templatetags.hosts_override',
-            ],
-            'context_processors': [
-                'django.contrib.auth.context_processors.auth',
-                'django.template.context_processors.debug',
-                'django.template.context_processors.i18n',
-                'django.template.context_processors.static',
-                'django.template.context_processors.media',
-                'django.contrib.messages.context_processors.messages',
-                'docs.context_processors.docs_version',
-                'releases.context_processors.django_version',
-                'aggregator.context_processors.community_stats',
-                'django.template.context_processors.request',
-                'social_django.context_processors.backends',  # <- Here
-                'social_django.context_processors.login_redirect',
-            ],
-        },
-    },
+	{
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		'DIRS': [str(PROJECT_PACKAGE.joinpath('templates'))],
+		'APP_DIRS': True,
+		'OPTIONS': {
+			'builtins': [
+				'django_hosts.templatetags.hosts_override',
+			],
+			'context_processors': [
+				'django.contrib.auth.context_processors.auth',
+				'django.template.context_processors.debug',
+				'django.template.context_processors.i18n',
+				'django.template.context_processors.static',
+				'django.template.context_processors.media',
+				'django.contrib.messages.context_processors.messages',
+				'docs.context_processors.docs_version',
+				'releases.context_processors.django_version',
+				'aggregator.context_processors.community_stats',
+				'django.template.context_processors.request',
+				'social_django.context_processors.backends',  # <- Here
+				'social_django.context_processors.login_redirect',
+			],
+		},
+	},
 ]
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.open_id.OpenIdAuth',
-    'social_core.backends.google.GoogleOpenId',
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.github.GithubOAuth2',
-    'social_core.backends.facebook.FacebookOAuth2',
+	'social_core.backends.open_id.OpenIdAuth',
+	'social_core.backends.google.GoogleOpenId',
+	'social_core.backends.google.GoogleOAuth2',
+	'social_core.backends.github.GithubOAuth2',
+	'social_core.backends.facebook.FacebookOAuth2',
 
-    'django.contrib.auth.backends.ModelBackend',
+	'django.contrib.auth.backends.ModelBackend',
 )
 
 TIME_ZONE = 'America/Chicago'
