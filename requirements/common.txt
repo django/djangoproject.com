@@ -17,13 +17,11 @@ html5lib==1.0.1
 idna==2.7
 imagesize==1.1.0
 Jinja2==2.10
-libsass==0.14.5
 Markdown==2.6.11
 MarkupSafe==1.0
 oauthlib==2.1.0
 packaging==17.1
 pathtools==0.1.2
-Pillow==5.2.0
 pluggy==0.7.1
 libsass==0.15.0
 Pillow==5.3.0
