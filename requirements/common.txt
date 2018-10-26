@@ -6,8 +6,6 @@ certifi==2018.8.24
 chardet==3.0.4
 colorama==0.3.9
 defusedxml==0.5.0
-Django==2.1
-django-contact-form==1.5
 Django==2.1.2
 django-contact-form==1.6
 django-hosts==3.0
@@ -44,10 +42,7 @@ six==1.11.0
 snowballstemmer==1.2.1
 social-auth-app-django==2.1.0
 social-auth-core==1.7.0
-sorl-thumbnail==12.4.1
-Sphinx==1.7.6
 sphinxcontrib-websupport==1.1.0
-stripe==2.5.0
 toml==0.9.6
 tox==3.3.0
 urllib3==1.23
