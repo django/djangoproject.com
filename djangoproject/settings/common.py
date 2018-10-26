@@ -29,7 +29,7 @@ CACHE_MIDDLEWARE_SECONDS = 60 * 5  # 5 minutes
 CACHE_MIDDLEWARE_KEY_PREFIX = 'django'
 
 DATABASES = {
-    'default': {
+     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'djangoproject',
         'USER': 'djangoproject',
@@ -39,8 +39,8 @@ DATABASES = {
     },
     'trac': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'codedjangoproject',
-        'USER': 'codedjangoproject',
+        'NAME': 'code.djangoproject',
+        'USER': 'code.djangoproject',
         'HOST': SECRETS.get('trac_db_host', ''),
         'PASSWORD': SECRETS.get('trac_db_password', ''),
         'PORT': SECRETS.get('trac_db_port', ''),
