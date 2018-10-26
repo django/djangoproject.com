@@ -70,7 +70,6 @@ INSTALLED_APPS = [
 
     'registration',
     'django_hosts',
-    'markdownx',
     'sorl.thumbnail',
     'social_django',
 

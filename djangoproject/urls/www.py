@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import views as auth_views
 from django.contrib.contenttypes import views as contenttypes_views
 from django.contrib.flatpages.sitemaps import FlatPageSitemap
@@ -9,7 +8,6 @@ from django.urls import include, path, re_path
 from django.views.decorators.cache import cache_page
 from django.views.generic import RedirectView, TemplateView
 from django.views.static import serve
-from markdownx.views import MarkdownifyView
 
 from accounts import views as account_views
 from aggregator.feeds import (
@@ -56,10 +54,9 @@ urlpatterns = [
     path('contact/', include('contact.urls')),
     path('foundation/', include('members.urls')),
     path('fundraising/', include('fundraising.urls')),
-    path('markdownx/markdownify/', staff_member_required(MarkdownifyView.as_view())),
 
     # Used by docs search suggestions
-    re_path('^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', contenttypes_views.shortcut, name='contenttypes-shortcut'),
+    re_path(r'^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', contenttypes_views.shortcut, name='contenttypes-shortcut'),
 
     # User stats
     path('~<username>/', account_views.user_profile, name='user_profile'),

@@ -4,10 +4,8 @@ from django.core import signing
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.utils.html import format_html
 from django.views.generic.dates import timezone_today
 from django_hosts import reverse
-from markdownx.models import MarkdownxField
 from sorl.thumbnail import ImageField, get_thumbnail
 
 BRONZE_MEMBERSHIP = 1
@@ -41,8 +39,6 @@ class IndividualMember(models.Model):
     member_since = models.DateField(default=timezone_today)
     member_until = models.DateField(null=True, blank=True)
     reason_for_leaving = models.TextField(blank=True)
-    bio = MarkdownxField(blank=True)
-    website = models.URLField(blank=True)
 
     class Meta:
         ordering = ['name']
@@ -53,12 +49,6 @@ class IndividualMember(models.Model):
     @property
     def is_active(self):
         return self.member_until is None
-
-    @property
-    def linked_name(self):
-        if self.website:
-            return format_html('<a href="{}">{}</a>', self.website, self.name)
-        return self.name
 
 
 class Team(models.Model):
@@ -137,7 +127,7 @@ class CorporateMember(models.Model):
 
     @property
     def thumbnail(self):
-        return get_thumbnail(self.logo, '170x170', quality=100)
+        return get_thumbnail(self.logo, '170x170', quality=100) if self.logo else None
 
     def get_renewal_link(self):
         return reverse('members:corporate-members-renew', kwargs={'token': signing.dumps(self.pk)})

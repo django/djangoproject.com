@@ -9,10 +9,10 @@ collectstatics: compile-scss
 	./manage.py collectstatic --noinput
 
 compile-scss:
-	sassc $(SCSS)/output.scss $(STATIC)/css/output.css -s compressed
+	pysassc $(SCSS)/output.scss $(STATIC)/css/output.css -s compressed
 
 compile-scss-debug:
-	sassc $(SCSS)/output.scss $(STATIC)/css/output.css --sourcemap
+	pysassc $(SCSS)/output.scss $(STATIC)/css/output.css --sourcemap
 
 watch-scss:
 	watchmedo shell-command --patterns=*.scss --recursive --command="make compile-scss-debug" $(SCSS)

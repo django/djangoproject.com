@@ -1,7 +1,6 @@
 from datetime import date, timedelta
 
 from django.test import TestCase
-from django.utils.safestring import SafeData
 
 from members.models import (
     GOLD_MEMBERSHIP, PLATINUM_MEMBERSHIP, SILVER_MEMBERSHIP, CorporateMember,
@@ -23,12 +22,6 @@ class IndividualMemberTests(TestCase):
 
     def test_str(self):
         self.assertEqual(str(self.member), 'DjangoDeveloper')
-
-    def test_linked_name(self):
-        self.assertEqual(self.member.linked_name, 'DjangoDeveloper')
-        self.member.website = 'djangoproject.com'
-        self.assertEqual(self.member.linked_name, '<a href="djangoproject.com">DjangoDeveloper</a>')
-        self.assertIsInstance(self.member.linked_name, SafeData)
 
     def test_member_since_should_have_default(self):
         self.assertEqual(IndividualMember().member_since, date.today())
