@@ -50,5 +50,4 @@ toml==0.9.6
 tox==3.3.0
 urllib3==1.23
 virtualenv==16.0.0
-watchdog==0.8.3
 webencodings==0.5.1
