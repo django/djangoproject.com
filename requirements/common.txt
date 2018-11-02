@@ -13,5 +13,5 @@ pygments==2.2.0
 pykismet3==0.1.1
 requests==2.19.1
 sorl-thumbnail==12.5.0
-stripe==2.10.0
+stripe==2.11.0
 Sphinx==1.8.1
