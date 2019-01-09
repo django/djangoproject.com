@@ -6,14 +6,14 @@ django-registration-redux==2.5
 docutils==0.14
 feedparser==5.2.1
 Jinja2==2.10
-libsass==0.16.1
+libsass==0.17.0
 Pillow==5.4.1
 psycopg2-binary==2.7.6
-pygments==2.2.0
+pygments==2.3.1
 pykismet3==0.1.1
 social-auth-app-django==2.1.0
 social-auth-core==1.7.0
-requests==2.20.1
+requests==2.21.0
 sorl-thumbnail==12.5.0
 stripe==2.17.0
 Sphinx==1.8.3
