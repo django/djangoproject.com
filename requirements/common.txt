@@ -9,7 +9,7 @@ Jinja2==2.10
 libsass==0.17.0
 Pillow==5.4.1
 psycopg2-binary==2.7.6
-pygments==2.2.0
+pygments==2.3.1
 pykismet3==0.1.1
 requests==2.21.0
 sorl-thumbnail==12.5.0
