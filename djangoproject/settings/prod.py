@@ -35,6 +35,8 @@ LOGGING["loggers"]["django.request"]["handlers"].append("syslog")
 
 MEDIA_ROOT = str(DATA_DIR.joinpath('media'))
 
+MEDIA_URL = 'https://media.djangoproject.com/'
+
 MIDDLEWARE = (
     ['django.middleware.cache.UpdateCacheMiddleware'] +
     MIDDLEWARE +
@@ -46,6 +48,8 @@ SESSION_COOKIE_SECURE = True
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 STATIC_ROOT = str(DATA_DIR.joinpath('static'))
+
+STATIC_URL = 'https://static.djangoproject.com/'
 
 # Docs settings
 DOCS_BUILD_ROOT = DATA_DIR.joinpath('data', 'docbuilds')
