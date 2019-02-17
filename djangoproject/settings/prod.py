@@ -7,6 +7,8 @@ ALLOWED_HOSTS = [
     'dashboard.djangoproject.com',
 ] + SECRETS.get('allowed_hosts', [])
 
+LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = ['docs.djangoproject.com']
+
 DEBUG = False
 THUMBNAIL_DEBUG = DEBUG
 

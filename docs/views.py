@@ -46,8 +46,7 @@ def document(request, lang, version, url):
     except UnicodeEncodeError:
         raise Http404
 
-    if lang != 'en':
-        activate(lang)
+    activate(lang)
 
     canonical_version = DocumentRelease.objects.current_version()
     canonical = version == canonical_version
@@ -145,6 +144,9 @@ def search_results(request, lang, version, per_page=10, orphans=3):
         release = DocumentRelease.objects.get_by_version_and_lang(version, lang)
     except DocumentRelease.DoesNotExist:
         raise Http404
+
+    activate(lang)
+
     form = DocSearchForm(request.GET or None, release=release)
 
     context = {
@@ -192,9 +194,6 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                 'paginator': paginator,
             })
 
-    if release.lang != 'en':
-        activate(release.lang)
-
     return render(request, 'docs/search_results.html', context)
 
 
@@ -212,6 +211,8 @@ def search_suggestions(request, lang, version, per_page=20):
         release = DocumentRelease.objects.get_by_version_and_lang(version, lang)
     except DocumentRelease.DoesNotExist:
         raise Http404
+
+    activate(lang)
 
     form = DocSearchForm(request.GET or None, release=release)
     suggestions = []
@@ -257,6 +258,9 @@ def search_description(request, lang, version):
         release = DocumentRelease.objects.get_by_version_and_lang(version, lang)
     except DocumentRelease.DoesNotExist:
         raise Http404
+
+    activate(lang)
+
     context = {
         'site': Site.objects.get_current(),
         'release': release,
