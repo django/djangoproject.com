@@ -287,3 +287,62 @@ from a copy of the production database and saved to the
 To update this file, run::
 
     ./manage.py dumpdata dashboard --exclude dashboard.Datum --indent=4 > dashboard_production_metrics.json
+
+Translation
+-----------
+
+We're using Transifex to help manage the translation process. The
+``requirements/dev.txt`` will install the Transifex client.
+
+Before using the command-line Transifex client, create ``~/.transifexrc``
+according to the instructions at https://docs.transifex.com/client/client-configuration.
+You'll need access to the DSF Transifex account (ask a member of the Ops team).
+
+Updating messages on Transifex
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When there are changes to the messages in the code or templates someone will
+need to update Transifex as follows:
+
+1. Regenerate the English (only) .po file::
+
+    python manage.py makemessages -l en --no-location
+
+   (Never update alternate language .po files using makemessages. We'll update
+   the English file, upload it to Transifex, then later pull the .po files with
+   translations down from Transifex.)
+
+2. Push the updated source file to Transifex::
+
+     tx push -s
+
+3. Commit and push the changes to github::
+
+     git commit -m "Updated messages" locale/en/LC_MESSAGES/*
+     git push
+
+Updating translations from Transifex
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Anytime translations on Transifex have been updated, someone should update
+our translation files on the develop branch as follows:
+
+1. Pull the updated translation files::
+
+    tx pull -af
+
+2. Use ``git diff`` to see if any translations have actually changed. If not,
+   you can just revert the .po file changes and stop here.
+
+3. Compile the messages::
+
+    python manage.py compilemessages
+
+4. Run the test suite one more time::
+
+    python manage.py test
+
+5. Commit and push the changes to github::
+
+    git commit -m "Updated translations" locale/*/LC_MESSAGES/*
+    git push
