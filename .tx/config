@@ -14,7 +14,7 @@ source_file = docs/locale/en/LC_MESSAGES/django.po
 source_lang = en
 
 # send everything else to the main 'www.djangoproject.com' project
-[djangoproject-dot-com.main]
+[www-djangoproject-com.main]
 file_filter = locale/<lang>/LC_MESSAGES/django.po
 source_file = locale/en/LC_MESSAGES/django.po
 source_lang = en
