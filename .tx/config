@@ -2,7 +2,19 @@
 host = https://www.transifex.com
 type = PO
 
-[djangoproject-dot-com.djangopo]
+# the 'dashboard' and 'docs' apps have their own domains and projects in Transifex
+[dashboard-djangoproject-com.main]
+file_filter = dashboard/locale/<lang>/LC_MESSAGES/django.po
+source_file = dashboard/locale/en/LC_MESSAGES/django.po
+source_lang = en
+
+[django-docs.website-strings]
+file_filter = docs/locale/<lang>/LC_MESSAGES/django.po
+source_file = docs/locale/en/LC_MESSAGES/django.po
+source_lang = en
+
+# send everything else to the main 'www.djangoproject.com' project
+[djangoproject-dot-com.main]
 file_filter = locale/<lang>/LC_MESSAGES/django.po
 source_file = locale/en/LC_MESSAGES/django.po
 source_lang = en
