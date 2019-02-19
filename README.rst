@@ -296,8 +296,8 @@ We're using Transifex to help manage the translation process. The
 
 Before using the command-line Transifex client, create ``~/.transifexrc``
 according to the instructions at https://docs.transifex.com/client/client-configuration.
-You'll need to be a member of the Django team in the Django organization at
-Transifex. For information on how to join, please see the `Translations
+You'll need to be a member of the Django team in the `Django <https://www.transifex.com/django/>`_
+organization at Transifex. For information on how to join, please see the `Translations
 <https://docs.djangoproject.com/en/dev/internals/contributing/localizing/#translations>`_
 section of the documentation on contributing to and localizing Django.
 
