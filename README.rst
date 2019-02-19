@@ -309,9 +309,9 @@ website domain. At the moment, we have:
 * ``locale/`` contains the translation files for https://www.djangoproject.com (including
   strings from all apps other than ``dashboard`` and ``docs``)
 
-To keep this working properly, note that any templates for the ``dashboard`` and
-``docs`` apps must be placed in the ``templates/docs/`` directory inside the
-appropriate app, **not** in the ``djangoproject/templates/`` directory.
+To keep this working properly, note that **any templates for the ``dashboard`` and
+``docs`` apps must be placed in the ``<app name>/templates/docs/`` directory for their
+respective app,** not in the ``djangoproject/templates/`` directory.
 
 Updating messages on Transifex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
