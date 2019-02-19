@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -125,7 +124,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TicketChange',
             fields=[
-                ('ticket', models.ForeignKey(db_column='ticket', on_delete=django.db.models.deletion.DO_NOTHING, primary_key=True, related_name='changes', serialize=False, to='tracdb.Ticket')),
+                ('ticket',
+                 models.ForeignKey(db_column='ticket', on_delete=django.db.models.deletion.DO_NOTHING, primary_key=True,
+                                   related_name='changes', serialize=False, to='tracdb.Ticket')),
                 ('author', models.TextField()),
                 ('field', models.TextField()),
                 ('oldvalue', models.TextField()),
@@ -141,7 +142,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TicketCustom',
             fields=[
-                ('ticket', models.ForeignKey(db_column='ticket', on_delete=django.db.models.deletion.DO_NOTHING, primary_key=True, related_name='custom_fields', serialize=False, to='tracdb.Ticket')),
+                ('ticket',
+                 models.ForeignKey(db_column='ticket', on_delete=django.db.models.deletion.DO_NOTHING, primary_key=True,
+                                   related_name='custom_fields', serialize=False, to='tracdb.Ticket')),
                 ('name', models.TextField()),
                 ('value', models.TextField()),
             ],
