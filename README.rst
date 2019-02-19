@@ -292,11 +292,14 @@ Translation
 -----------
 
 We're using Transifex to help manage the translation process. The
-``requirements/dev.txt`` will install the Transifex client.
+``requirements/dev.txt`` file will install the Transifex client.
 
 Before using the command-line Transifex client, create ``~/.transifexrc``
 according to the instructions at https://docs.transifex.com/client/client-configuration.
-You'll need access to the DSF Transifex account (ask a member of the Ops team).
+You'll need to be a member of the Django team in the Django organization at
+Transifex. For information on how to join, please see the `Translations
+<https://docs.djangoproject.com/en/dev/internals/contributing/localizing/#translations>`_
+section of the documentation on contributing to and localizing Django.
 
 Since this repo hosts three separate sites, our ``.po`` files are organized by
 website domain. At the moment, we have:
