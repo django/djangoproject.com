@@ -340,11 +340,11 @@ Updating translations from Transifex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Anytime translations on Transifex have been updated, someone should update
-our translation files on the develop branch as follows:
+our translation files as follows:
 
-1. Pull the updated translation files::
+1. Pull the updated translation files (can add new languages to this file as needed)::
 
-    tx pull -af
+    ./update-translations.sh
 
 2. Use ``git diff`` to see if any translations have actually changed. If not,
    you can just revert the .po file changes and stop here.
