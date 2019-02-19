@@ -1,0 +1,17 @@
+{% extends 'base_foundation.html' %}
+{% load humanize static %}
+{% block content %}
+<div class="container">
+    <h3>Add Board Minutes</h3><hr>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <label for="{{ field.id }}">{{ field.label }}</label>
+          {{ field }}<br><br>
+        {% endfor %}
+        <div class="submit">
+            <input class="cta" type="submit" value="Save" />
+        </div>
+    </form>
+</div>
+{% endblock content %}

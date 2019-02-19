@@ -1,0 +1,11 @@
+{% extends 'base_foundation.html' %}
+
+{% load humanize static %}
+{% block header %} <h1>Minutes of {{ board_minutes.date }} Board of Directors Meeting</h1> {% endblock header %}
+{% block content %}
+  <div class="container">
+
+    {{ board_minutes.body|safe }}
+
+  </div>
+{% endblock content %}

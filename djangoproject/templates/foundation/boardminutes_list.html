@@ -1,0 +1,41 @@
+{% extends 'base_foundation.html' %}
+{% load humanize static %}
+{% block content %}
+  <div class="container">
+    <h1>Django Software Foundation Public Records</h1>
+    <h2>Incorporation</h2>
+
+    <ul>
+      <li>
+        <a href="https://www.djangoproject.com/m/foundation/articles.pdf">Articles of incorporation</a>
+        (<a href="https://www.djangoproject.com/m/foundation/articles-signed.pdf">as approved by the KS Secretary of
+        State</a>)
+      </li>
+      <li>
+        <a href="https://www.djangoproject.com/m/foundation/bylaws.pdf">Bylaws</a>
+      </li>
+      <li>If you would like access to the 1023 Form or 990 Form that the Foundation has filed with the IRS, then please
+        contact the secretary or <a href="https://www.djangoproject.com/contact/foundation/">the board</a>.
+      </li>
+    </ul>
+
+    <h2>Copyright / trademarks</h2>
+    <ul>
+      <li>
+        <a href="https://www.djangoproject.com/m/foundation/ljworld-copyright.pdf">Lawrence Journal-World copyright
+          assignment</a>
+      </li>
+      <li>
+        <a href="https://www.djangoproject.com/m/foundation/ljworld-trademark.pdf">Lawrence Journal-World trademark
+          assignment</a>
+      </li>
+    </ul>
+
+    <h2>Board meeting minutes</h2>
+    <ul>
+      {% for minutes in board_minutes_list %}
+        <li><a href="{% url 'board-minutes-detail' minutes.slug %}">{{ minutes.date|date:"F j, Y" }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock content %}
