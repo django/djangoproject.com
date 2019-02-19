@@ -4,16 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019
+# Claude Paroz <claude@2xlibre.net>, 2019
+# Adrien Brunet <abrunet@centrale-marseille.fr>, 2019
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-18 08:35-0600\n"
-"PO-Revision-Date: 2019-02-18 00:19+0000\n"
-"Last-Translator: Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019\n"
+"POT-Creation-Date: 2019-02-18 20:21-0500\n"
+"PO-Revision-Date: 2019-02-18 14:53+0000\n"
+"Last-Translator: Adrien Brunet <abrunet@centrale-marseille.fr>, 2019\n"
 "Language-Team: French (https://www.transifex.com/django/teams/17080/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,225 +22,83 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+#: blog/models.py:42
 msgid ""
 "Tick to make this entry live (see also the publication date). Note that "
 "administrators (like yourself) are allowed to preview inactive entries "
 "whereas the general public aren't."
 msgstr ""
+"Cochez pour mettre cette entrée active (voir aussi la date de publication). "
+"Notez que les administrateurs (comme vous) sont autorisés à prévisualiser "
+"les entrées inactives, contrairement au grand public."
 
+#: blog/models.py:49 blog/models.py:139
 msgid "Publication date"
-msgstr ""
+msgstr "Date de publication"
 
+#: blog/models.py:51
 msgid ""
 "For an entry to be published, it must be active and its publication date "
 "must be in the past."
 msgstr ""
+"Pour qu'une entrée soit publiée, elle doit être active et sa date de "
+"publication doit être dans le passé."
 
+#: blog/models.py:132
 msgid ""
 "Tick to make this event live (see also the publication date). Note that "
 "administrators (like yourself) are allowed to preview inactive events "
 "whereas the general public aren't."
 msgstr ""
+"Cochez pour rendre cet événement actif (voir aussi la date de publication). "
+"Notez que les administrateurs (comme vous) sont autorisés à prévisualiser "
+"les événements inactifs, contrairement au grand public."
 
+#: blog/models.py:141
 msgid ""
 "For an event to be published, it must be active and its publication date "
 "must be in the past."
 msgstr ""
+"Pour qu'un évènement soit publié, il doit être actif et sa date de "
+"publication doit être dans le passé."
 
+#: djangoproject/templates/base_dashboard.html:6
 msgid "Development dashboard"
-msgstr ""
+msgstr "Tableau de bord de développement"
 
-#, python-format
-msgid "Updated %(timestamp)s ago."
-msgstr ""
-
-msgid "Django documentation"
-msgstr "Documentation de Django"
-
-msgid ""
-"This document is for Django's development version, which can be "
-"significantly different from previous releases. For older releases, use the "
-"version selector floating in the bottom right corner of this page."
-msgstr ""
-
-msgid ""
-"This document is for an insecure version of Django that is no longer "
-"supported. Please upgrade to a newer release!"
-msgstr ""
-
-msgid "Click on the links on the left to switch to another language."
-msgstr ""
-
-msgid "Language:"
-msgstr ""
-
-msgid ""
-"This document is for Django's development version, which can be "
-"significantly different from previous releases."
-msgstr ""
-"Ce document concerne la version de développement de Django, qui peut "
-"différer significativement des versions précédentes."
-
-#, python-format
-msgid "This document describes Django %(version)s."
-msgstr "Ce document présente la version %(version)s de Django."
-
-msgid "Click on the links on the left to see other versions."
-msgstr "Cliquez sur les liens à gauche pour voir d'autres versions."
-
-msgid "Documentation version:"
-msgstr "Version de la documentation :"
-
-msgid "Additional Information"
-msgstr ""
-
-msgid "Contents"
-msgstr "Sommaire"
-
-msgid "Browse"
-msgstr "Parcourir"
-
-msgid "Prev:"
-msgstr "Précédent :"
-
-msgid "Next:"
-msgstr "Suivant :"
-
-msgid "Table of contents"
-msgstr "Table des matières"
-
-msgid "You are here:"
-msgstr "Vous êtes ici :"
-
-#, python-format
-msgid "Django %(version)s documentation"
-msgstr "Documentation de Django %(version)s"
-
-msgid "Getting help"
-msgstr ""
-
-msgid "Try the FAQ — it's got answers to many common questions."
-msgstr ""
-
-msgid "Index"
-msgstr ""
-
-msgid "Module Index"
-msgstr "Index des modules"
-
-msgid "Table of Contents"
-msgstr ""
-
-msgid "Handy when looking for specific information."
-msgstr ""
-
-msgid ""
-"Search for information in the archives of the django-users mailing list, or "
-"post a question."
-msgstr ""
-
-msgid ""
-"Ask a question in the #django IRC channel, or search the IRC logs to see if "
-"it’s been asked before."
-msgstr ""
-
-msgid "Report bugs with Django or Django documentation in our ticket tracker."
-msgstr ""
-
-msgid "Download:"
-msgstr "Télécharger :"
-
-msgid "Offline (development version):"
-msgstr "Hors ligne (version de développement) :"
-
-#, python-format
-msgid "Offline (Django %(version)s):"
-msgstr "Hors ligne (Django %(version)s) :"
-
-msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
-msgstr "Offert par <a href=\"https://readthedocs.org/\">Read the Docs</a>."
-
-msgid "General Index | Django Documentation"
-msgstr "Index général | Documentation de Django"
-
-msgid "General Index"
-msgstr "Index général"
-
-msgid "[Link]"
-msgstr "[Lien]"
-
-msgid "Module Index | Django Documentation"
-msgstr "Index des modules | Documentation de Django"
-
-msgid "Search"
-msgstr "Rechercher"
-
-msgid "Search | Django documentation"
-msgstr "Recherche | Documentation de Django"
-
-#, python-format
-msgid ""
-"\n"
-"    Only 1 result for <em>%(query)s</em> in the development version\n"
-"  "
-msgid_plural ""
-"\n"
-"    %(num_results)s results for <em>%(query)s</em> in the development version\n"
-"  "
-msgstr[0] ""
-msgstr[1] ""
-
-#, python-format
-msgid ""
-"\n"
-"    Only 1 result for <em>%(query)s</em> in version %(version)s\n"
-"  "
-msgid_plural ""
-"\n"
-"    %(num_results)s results for <em>%(query)s</em> in version %(version)s\n"
-"  "
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "No search query given"
-msgstr ""
-
-msgid "Previous"
-msgstr "Précédent"
-
-#, python-format
-msgid ""
-"\n"
-"        Page %(page_number)s of %(num_pages)s\n"
-"      "
-msgstr ""
-
-msgid "Next"
-msgstr "Suivant"
-
+#: djangoproject/templates/members/corporate_members_join_thanks.html:5
 msgid "Corporate membership application submitted."
-msgstr ""
+msgstr "Formulaire d'affiliation comme membre institutionnel envoyé."
 
+#: djangoproject/templates/members/corporate_members_join_thanks.html:7
 msgid ""
 "\n"
 "      Thanks! Your application is being reviewed, and we'll follow up a\n"
 "      response from the board after our next monthly meeting.\n"
 "    "
 msgstr ""
+"\n"
+"Merci, votre demande va être examinée et nous vous répondrons de la part du comité directeur après la prochaine séance mensuelle."
 
+#: djangoproject/templates/members/corporatemember_form.html:5
 msgid "Become a DSF corporate member"
-msgstr ""
+msgstr "Devenir un membre institutionnel de la DSF"
 
+#: djangoproject/templates/members/corporatemember_form.html:7
 msgid ""
 "\n"
 "      Provide us with a few details and we'll start onboarding your\n"
 "      organization!\n"
 "    "
 msgstr ""
+"\n"
+"Donnez-nous quelques détails et nous démarrerons l'enregistrement de votre organisation."
 
+#: djangoproject/templates/members/corporatemember_list.html:5
 msgid "Corporate members"
-msgstr ""
+msgstr "Membres institutionnels"
 
+#: djangoproject/templates/members/corporatemember_list.html:7
 msgid ""
 "\n"
 "      The following organizations are corporate members of the Django Software\n"
@@ -249,9 +108,11 @@ msgid ""
 "    "
 msgstr ""
 
+#: djangoproject/templates/members/individualmember_list.html:5
 msgid "Individual members"
-msgstr ""
+msgstr "Membres individuels"
 
+#: djangoproject/templates/members/individualmember_list.html:7
 msgid ""
 "\n"
 "      The following are Individual Members of the Django Software Foundation. Individual Members\n"
@@ -259,55 +120,59 @@ msgid ""
 "      know someone who you think should be considered for Individual Membership, please\n"
 "    "
 msgstr ""
+"\n"
+"Les personnes ci-dessous sont des membres individuels de la Fondation Django Software. Les membres individuels sont élus par la Fondation en reconnaissance de services rendus à la communauté Django. Si vous connaissez quelqu'un qui d'après vous mériterait la qualité de membre individuel, "
 
+#: djangoproject/templates/members/individualmember_list.html:12
 msgid "fill out this form"
-msgstr ""
+msgstr "complétez ce formulaire"
 
+#: djangoproject/templates/members/individualmember_list.html:21
 msgid "Former members"
-msgstr ""
+msgstr "Anciens membres"
 
+#: djangoproject/templates/members/individualmember_list.html:22
 msgid "The following are former Individual Members of the DSF."
 msgstr ""
+"Les personnes ci-dessous sont des anciens membres individuels de la "
+"Fondation."
 
+#: djangoproject/templates/registration/password_reset_email.html:2
 #, python-format
 msgid ""
 "You're receiving this e-mail because you requested a password reset\n"
 "for your user account at %(site_name)s"
 msgstr ""
+"Vous recevez cet e-mail parce que vous avez demandé une réinitialisation du "
+"mot de passe pour votre compte d'utilisateur à%(site_name)s"
 
+#: djangoproject/templates/registration/password_reset_email.html:5
 msgid "Please go to the following page and choose a new password:"
 msgstr ""
+"Veuillez aller à la page suivante et choisir un nouveau mot de passe :"
 
+#: djangoproject/templates/registration/password_reset_email.html:9
 msgid "Your username, in case you've forgotten:"
-msgstr ""
+msgstr "Votre nom d'utilisateur, au cas où vous auriez oublié :"
 
+#: djangoproject/templates/registration/password_reset_email.html:11
 msgid "Thanks for using our site!"
-msgstr ""
+msgstr "Merci d'utiliser notre site !"
 
+#: djangoproject/templates/registration/password_reset_email.html:13
 #, python-format
 msgid "The %(site_name)s team"
-msgstr ""
+msgstr "L'équipe %(site_name)s"
 
-msgid "Documentation"
-msgstr ""
-
-#, python-format
-msgid "Search %s documentation"
-msgstr ""
-
-msgid "Page is not 'last', nor can it be converted to an int."
-msgstr ""
-
-#, python-format
-msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr ""
-
+#: fundraising/apps.py:9
 msgid "Fundraising"
-msgstr ""
+msgstr "Levée de fonds"
 
+#: releases/templatetags/release_notes.py:20
 #, python-format
 msgid "%(version)s release notes"
-msgstr ""
+msgstr "Notes de publication de la version %(version)s"
 
+#: releases/templatetags/release_notes.py:22
 msgid "Online documentation"
-msgstr ""
+msgstr "Documentation en ligne"
