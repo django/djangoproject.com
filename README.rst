@@ -298,6 +298,18 @@ Before using the command-line Transifex client, create ``~/.transifexrc``
 according to the instructions at https://docs.transifex.com/client/client-configuration.
 You'll need access to the DSF Transifex account (ask a member of the Ops team).
 
+Since this repo hosts three separate sites, our ``.po`` files are organized by
+website domain. At the moment, we have:
+
+* ``dashboard/locale/`` contains the translation files for https://dashboard.djangoproject.com
+* ``docs/locale/`` contains the translation files for https://docs.djangoproject.com
+* ``locale/`` contains the translation files for https://www.djangoproject.com (including
+   strings from all apps other than ``dashboard`` and ``docs``)
+
+To keep this working properly, note that any templates for the ``dashboard`` and
+``docs`` apps must be placed in the ``templates/docs/`` directory inside the
+appropriate app, **not** in the ``djangoproject/templates/`` directory.
+
 Updating messages on Transifex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
