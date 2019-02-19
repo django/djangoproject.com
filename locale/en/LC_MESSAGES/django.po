@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-18 08:35-0600\n"
+"POT-Creation-Date: 2019-02-18 20:21-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,204 +17,45 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: blog/models.py:42
 msgid ""
 "Tick to make this entry live (see also the publication date). Note that "
 "administrators (like yourself) are allowed to preview inactive entries "
 "whereas the general public aren't."
 msgstr ""
 
+#: blog/models.py:49 blog/models.py:139
 msgid "Publication date"
 msgstr ""
 
+#: blog/models.py:51
 msgid ""
 "For an entry to be published, it must be active and its publication date "
 "must be in the past."
 msgstr ""
 
+#: blog/models.py:132
 msgid ""
 "Tick to make this event live (see also the publication date). Note that "
 "administrators (like yourself) are allowed to preview inactive events "
 "whereas the general public aren't."
 msgstr ""
 
+#: blog/models.py:141
 msgid ""
 "For an event to be published, it must be active and its publication date "
 "must be in the past."
 msgstr ""
 
+#: djangoproject/templates/base_dashboard.html:6
 msgid "Development dashboard"
 msgstr ""
 
-#, python-format
-msgid "Updated %(timestamp)s ago."
-msgstr ""
-
-msgid "Django documentation"
-msgstr ""
-
-msgid ""
-"This document is for Django's development version, which can be "
-"significantly different from previous releases. For older releases, use the "
-"version selector floating in the bottom right corner of this page."
-msgstr ""
-
-msgid ""
-"This document is for an insecure version of Django that is no longer "
-"supported. Please upgrade to a newer release!"
-msgstr ""
-
-msgid "Click on the links on the left to switch to another language."
-msgstr ""
-
-msgid "Language:"
-msgstr ""
-
-msgid ""
-"This document is for Django's development version, which can be "
-"significantly different from previous releases."
-msgstr ""
-
-#, python-format
-msgid "This document describes Django %(version)s."
-msgstr ""
-
-msgid "Click on the links on the left to see other versions."
-msgstr ""
-
-msgid "Documentation version:"
-msgstr ""
-
-msgid "Additional Information"
-msgstr ""
-
-msgid "Contents"
-msgstr ""
-
-msgid "Browse"
-msgstr ""
-
-msgid "Prev:"
-msgstr ""
-
-msgid "Next:"
-msgstr ""
-
-msgid "Table of contents"
-msgstr ""
-
-msgid "You are here:"
-msgstr ""
-
-#, python-format
-msgid "Django %(version)s documentation"
-msgstr ""
-
-msgid "Getting help"
-msgstr ""
-
-msgid "Try the FAQ — it's got answers to many common questions."
-msgstr ""
-
-msgid "Index"
-msgstr ""
-
-msgid "Module Index"
-msgstr ""
-
-msgid "Table of Contents"
-msgstr ""
-
-msgid "Handy when looking for specific information."
-msgstr ""
-
-msgid ""
-"Search for information in the archives of the django-users mailing list, or "
-"post a question."
-msgstr ""
-
-msgid ""
-"Ask a question in the #django IRC channel, or search the IRC logs to see if "
-"it’s been asked before."
-msgstr ""
-
-msgid "Report bugs with Django or Django documentation in our ticket tracker."
-msgstr ""
-
-msgid "Download:"
-msgstr ""
-
-msgid "Offline (development version):"
-msgstr ""
-
-#, python-format
-msgid "Offline (Django %(version)s):"
-msgstr ""
-
-msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
-msgstr ""
-
-msgid "General Index | Django Documentation"
-msgstr ""
-
-msgid "General Index"
-msgstr ""
-
-msgid "[Link]"
-msgstr ""
-
-msgid "Module Index | Django Documentation"
-msgstr ""
-
-msgid "Search"
-msgstr ""
-
-msgid "Search | Django documentation"
-msgstr ""
-
-#, python-format
-msgid ""
-"\n"
-"    Only 1 result for <em>%(query)s</em> in the development version\n"
-"  "
-msgid_plural ""
-"\n"
-"    %(num_results)s results for <em>%(query)s</em> in the development "
-"version\n"
-"  "
-msgstr[0] ""
-msgstr[1] ""
-
-#, python-format
-msgid ""
-"\n"
-"    Only 1 result for <em>%(query)s</em> in version %(version)s\n"
-"  "
-msgid_plural ""
-"\n"
-"    %(num_results)s results for <em>%(query)s</em> in version %(version)s\n"
-"  "
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "No search query given"
-msgstr ""
-
-msgid "Previous"
-msgstr ""
-
-#, python-format
-msgid ""
-"\n"
-"        Page %(page_number)s of %(num_pages)s\n"
-"      "
-msgstr ""
-
-msgid "Next"
-msgstr ""
-
+#: djangoproject/templates/members/corporate_members_join_thanks.html:5
 msgid "Corporate membership application submitted."
 msgstr ""
 
+#: djangoproject/templates/members/corporate_members_join_thanks.html:7
 msgid ""
 "\n"
 "      Thanks! Your application is being reviewed, and we'll follow up a\n"
@@ -222,9 +63,11 @@ msgid ""
 "    "
 msgstr ""
 
+#: djangoproject/templates/members/corporatemember_form.html:5
 msgid "Become a DSF corporate member"
 msgstr ""
 
+#: djangoproject/templates/members/corporatemember_form.html:7
 msgid ""
 "\n"
 "      Provide us with a few details and we'll start onboarding your\n"
@@ -232,9 +75,11 @@ msgid ""
 "    "
 msgstr ""
 
+#: djangoproject/templates/members/corporatemember_list.html:5
 msgid "Corporate members"
 msgstr ""
 
+#: djangoproject/templates/members/corporatemember_list.html:7
 msgid ""
 "\n"
 "      The following organizations are corporate members of the Django "
@@ -247,9 +92,11 @@ msgid ""
 "    "
 msgstr ""
 
+#: djangoproject/templates/members/individualmember_list.html:5
 msgid "Individual members"
 msgstr ""
 
+#: djangoproject/templates/members/individualmember_list.html:7
 msgid ""
 "\n"
 "      The following are Individual Members of the Django Software "
@@ -261,54 +108,51 @@ msgid ""
 "    "
 msgstr ""
 
+#: djangoproject/templates/members/individualmember_list.html:12
 msgid "fill out this form"
 msgstr ""
 
+#: djangoproject/templates/members/individualmember_list.html:21
 msgid "Former members"
 msgstr ""
 
+#: djangoproject/templates/members/individualmember_list.html:22
 msgid "The following are former Individual Members of the DSF."
 msgstr ""
 
+#: djangoproject/templates/registration/password_reset_email.html:2
 #, python-format
 msgid ""
 "You're receiving this e-mail because you requested a password reset\n"
 "for your user account at %(site_name)s"
 msgstr ""
 
+#: djangoproject/templates/registration/password_reset_email.html:5
 msgid "Please go to the following page and choose a new password:"
 msgstr ""
 
+#: djangoproject/templates/registration/password_reset_email.html:9
 msgid "Your username, in case you've forgotten:"
 msgstr ""
 
+#: djangoproject/templates/registration/password_reset_email.html:11
 msgid "Thanks for using our site!"
 msgstr ""
 
+#: djangoproject/templates/registration/password_reset_email.html:13
 #, python-format
 msgid "The %(site_name)s team"
 msgstr ""
 
-msgid "Documentation"
-msgstr ""
-
-#, python-format
-msgid "Search %s documentation"
-msgstr ""
-
-msgid "Page is not 'last', nor can it be converted to an int."
-msgstr ""
-
-#, python-format
-msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr ""
-
+#: fundraising/apps.py:9
 msgid "Fundraising"
 msgstr ""
 
+#: releases/templatetags/release_notes.py:20
 #, python-format
 msgid "%(version)s release notes"
 msgstr ""
 
+#: releases/templatetags/release_notes.py:22
 msgid "Online documentation"
 msgstr ""
