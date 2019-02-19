@@ -5,7 +5,7 @@ ALLOWED_HOSTS = [
     'djangoproject.localhost',
     'docs.djangoproject.localhost',
     'dashboard.djangoproject.localhost',
-] + SECRETS.get('allowed_hosts', ['0.0.0.0', '127.0.0.1', '192.168.0.106'])
+] + SECRETS.get('allowed_hosts', [])
 
 DEBUG = True
 THUMBNAIL_DEBUG = DEBUG
