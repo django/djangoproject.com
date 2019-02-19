@@ -2,6 +2,7 @@ __pycache__
 *.pyc
 *.db
 locale/*/LC_MESSAGES/django.mo
+*/locale/*/LC_MESSAGES/django.mo
 .sass-cache/
 .coverage
 .tox
