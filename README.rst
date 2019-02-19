@@ -306,7 +306,7 @@ need to update Transifex as follows:
 
 1. Regenerate the English (only) .po file::
 
-    python manage.py makemessages -l en --no-location
+    python manage.py makemessages -l en
 
    (Never update alternate language .po files using makemessages. We'll update
    the English file, upload it to Transifex, then later pull the .po files with
