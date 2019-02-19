@@ -2,11 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 # Translators:
 # Claude Paroz <claude@2xlibre.net>, 2019
 # Adrien Brunet <abrunet@centrale-marseille.fr>, 2019
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
@@ -22,7 +22,6 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: blog/models.py:42
 msgid ""
 "Tick to make this entry live (see also the publication date). Note that "
 "administrators (like yourself) are allowed to preview inactive entries "
@@ -32,11 +31,9 @@ msgstr ""
 "Notez que les administrateurs (comme vous) sont autorisés à prévisualiser "
 "les entrées inactives, contrairement au grand public."
 
-#: blog/models.py:49 blog/models.py:139
 msgid "Publication date"
 msgstr "Date de publication"
 
-#: blog/models.py:51
 msgid ""
 "For an entry to be published, it must be active and its publication date "
 "must be in the past."
@@ -44,7 +41,6 @@ msgstr ""
 "Pour qu'une entrée soit publiée, elle doit être active et sa date de "
 "publication doit être dans le passé."
 
-#: blog/models.py:132
 msgid ""
 "Tick to make this event live (see also the publication date). Note that "
 "administrators (like yourself) are allowed to preview inactive events "
@@ -54,7 +50,6 @@ msgstr ""
 "Notez que les administrateurs (comme vous) sont autorisés à prévisualiser "
 "les événements inactifs, contrairement au grand public."
 
-#: blog/models.py:141
 msgid ""
 "For an event to be published, it must be active and its publication date "
 "must be in the past."
@@ -62,15 +57,12 @@ msgstr ""
 "Pour qu'un évènement soit publié, il doit être actif et sa date de "
 "publication doit être dans le passé."
 
-#: djangoproject/templates/base_dashboard.html:6
 msgid "Development dashboard"
 msgstr "Tableau de bord de développement"
 
-#: djangoproject/templates/members/corporate_members_join_thanks.html:5
 msgid "Corporate membership application submitted."
 msgstr "Formulaire d'affiliation comme membre institutionnel envoyé."
 
-#: djangoproject/templates/members/corporate_members_join_thanks.html:7
 msgid ""
 "\n"
 "      Thanks! Your application is being reviewed, and we'll follow up a\n"
@@ -78,13 +70,12 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Merci, votre demande va être examinée et nous vous répondrons de la part du comité directeur après la prochaine séance mensuelle."
+"Merci, votre demande va être examinée et nous vous répondrons de la part du "
+"comité directeur après la prochaine séance mensuelle."
 
-#: djangoproject/templates/members/corporatemember_form.html:5
 msgid "Become a DSF corporate member"
 msgstr "Devenir un membre institutionnel de la DSF"
 
-#: djangoproject/templates/members/corporatemember_form.html:7
 msgid ""
 "\n"
 "      Provide us with a few details and we'll start onboarding your\n"
@@ -92,52 +83,54 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Donnez-nous quelques détails et nous démarrerons l'enregistrement de votre organisation."
+"Donnez-nous quelques détails et nous démarrerons l'enregistrement de votre "
+"organisation."
 
-#: djangoproject/templates/members/corporatemember_list.html:5
 msgid "Corporate members"
 msgstr "Membres institutionnels"
 
-#: djangoproject/templates/members/corporatemember_list.html:7
 msgid ""
 "\n"
-"      The following organizations are corporate members of the Django Software\n"
-"      Foundation. If you are interested in becoming a corporate member of the\n"
-"      DSF, you can find out more on our <a href=\"/foundation/corporate-membership/\">\n"
+"      The following organizations are corporate members of the Django "
+"Software\n"
+"      Foundation. If you are interested in becoming a corporate member of "
+"the\n"
+"      DSF, you can find out more on our <a href=\"/foundation/corporate-"
+"membership/\">\n"
 "      corporate membership page</a>.\n"
 "    "
 msgstr ""
 
-#: djangoproject/templates/members/individualmember_list.html:5
 msgid "Individual members"
 msgstr "Membres individuels"
 
-#: djangoproject/templates/members/individualmember_list.html:7
 msgid ""
 "\n"
-"      The following are Individual Members of the Django Software Foundation. Individual Members\n"
-"      are appointed by the DSF in recognition of their service to the Django community. If you\n"
-"      know someone who you think should be considered for Individual Membership, please\n"
+"      The following are Individual Members of the Django Software "
+"Foundation. Individual Members\n"
+"      are appointed by the DSF in recognition of their service to the Django "
+"community. If you\n"
+"      know someone who you think should be considered for Individual "
+"Membership, please\n"
 "    "
 msgstr ""
 "\n"
-"Les personnes ci-dessous sont des membres individuels de la Fondation Django Software. Les membres individuels sont élus par la Fondation en reconnaissance de services rendus à la communauté Django. Si vous connaissez quelqu'un qui d'après vous mériterait la qualité de membre individuel, "
+"Les personnes ci-dessous sont des membres individuels de la Fondation Django "
+"Software. Les membres individuels sont élus par la Fondation en "
+"reconnaissance de services rendus à la communauté Django. Si vous connaissez "
+"quelqu'un qui d'après vous mériterait la qualité de membre individuel, "
 
-#: djangoproject/templates/members/individualmember_list.html:12
 msgid "fill out this form"
 msgstr "complétez ce formulaire"
 
-#: djangoproject/templates/members/individualmember_list.html:21
 msgid "Former members"
 msgstr "Anciens membres"
 
-#: djangoproject/templates/members/individualmember_list.html:22
 msgid "The following are former Individual Members of the DSF."
 msgstr ""
 "Les personnes ci-dessous sont des anciens membres individuels de la "
 "Fondation."
 
-#: djangoproject/templates/registration/password_reset_email.html:2
 #, python-format
 msgid ""
 "You're receiving this e-mail because you requested a password reset\n"
@@ -146,33 +139,25 @@ msgstr ""
 "Vous recevez cet e-mail parce que vous avez demandé une réinitialisation du "
 "mot de passe pour votre compte d'utilisateur à%(site_name)s"
 
-#: djangoproject/templates/registration/password_reset_email.html:5
 msgid "Please go to the following page and choose a new password:"
-msgstr ""
-"Veuillez aller à la page suivante et choisir un nouveau mot de passe :"
+msgstr "Veuillez aller à la page suivante et choisir un nouveau mot de passe :"
 
-#: djangoproject/templates/registration/password_reset_email.html:9
 msgid "Your username, in case you've forgotten:"
 msgstr "Votre nom d'utilisateur, au cas où vous auriez oublié :"
 
-#: djangoproject/templates/registration/password_reset_email.html:11
 msgid "Thanks for using our site!"
 msgstr "Merci d'utiliser notre site !"
 
-#: djangoproject/templates/registration/password_reset_email.html:13
 #, python-format
 msgid "The %(site_name)s team"
 msgstr "L'équipe %(site_name)s"
 
-#: fundraising/apps.py:9
 msgid "Fundraising"
 msgstr "Levée de fonds"
 
-#: releases/templatetags/release_notes.py:20
 #, python-format
 msgid "%(version)s release notes"
 msgstr "Notes de publication de la version %(version)s"
 
-#: releases/templatetags/release_notes.py:22
 msgid "Online documentation"
 msgstr "Documentation en ligne"

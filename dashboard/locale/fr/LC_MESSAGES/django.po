@@ -2,10 +2,10 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 # Translators:
 # Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
@@ -21,7 +21,6 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: dashboard/templates/dashboard/index.html:22
 #, python-format
 msgid "Updated %(timestamp)s ago."
 msgstr "Mis à jour il y a %(timestamp)s."
