@@ -307,7 +307,7 @@ website domain. At the moment, we have:
 * ``dashboard/locale/`` contains the translation files for https://dashboard.djangoproject.com
 * ``docs/locale/`` contains the translation files for https://docs.djangoproject.com
 * ``locale/`` contains the translation files for https://www.djangoproject.com (including
-   strings from all apps other than ``dashboard`` and ``docs``)
+  strings from all apps other than ``dashboard`` and ``docs``)
 
 To keep this working properly, note that any templates for the ``dashboard`` and
 ``docs`` apps must be placed in the ``templates/docs/`` directory inside the
