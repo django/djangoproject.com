@@ -1,5 +1,5 @@
 sudo: no
-dist: trusty
+dist: xenial
 addons:
   postgresql: "9.5"
 language: python
