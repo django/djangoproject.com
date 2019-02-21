@@ -5,10 +5,6 @@ addons:
 language: python
 python:
   - "3.5"
-env:
-  - TOXENV=py35-tests
-  - TOXENV=py35-flake8
-  - TOXENV=py35-isort
 install:
   - pip install coveralls tox
 before_script:
