@@ -14,6 +14,8 @@ for LANG in $LANGUAGES; do
     tx pull -f -l $LANG --minimum-perc=5
     for DIR in $LOCALE_DIRS; do
         PO_FILE="$DIR$LANG/LC_MESSAGES/django.po"
-        msgcat --no-location -o $PO_FILE $PO_FILE
+        if [ -f "$PO_FILE" ]; then
+            msgcat --no-location -o $PO_FILE $PO_FILE
+        fi
     done
 done
