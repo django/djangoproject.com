@@ -4,8 +4,8 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # Translators:
-# Claude Paroz <claude@2xlibre.net>, 2019
 # Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019
+# Claude Paroz <claude@2xlibre.net>, 2019
 #
 #, fuzzy
 msgid ""
@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-18 20:21-0500\n"
 "PO-Revision-Date: 2019-02-19 01:18+0000\n"
-"Last-Translator: Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019\n"
+"Last-Translator: Claude Paroz <claude@2xlibre.net>, 2019\n"
 "Language-Team: French (https://www.transifex.com/django/teams/17080/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -196,7 +196,14 @@ msgid_plural ""
 "    %(num_results)s results for <em>%(query)s</em> in version %(version)s\n"
 "  "
 msgstr[0] ""
+"\n"
+"    Un seul résultat pour <em>%(query)s</em> dans la version %(version)s\n"
+"  "
 msgstr[1] ""
+"\n"
+"    %(num_results)s résultats pour <em>%(query)s</em> dans la version "
+"%(version)s\n"
+"  "
 
 msgid "No search query given"
 msgstr "Aucun terme de recherche indiqué"
