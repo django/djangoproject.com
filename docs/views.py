@@ -91,6 +91,12 @@ def document(request, lang, version, url):
     return render(request, template_names, context)
 
 
+if not settings.DEBUG:
+    # 1 hour to make better use of CDN
+    # docs are also rebuilt hourly, so the worst case from commit -> update will be ~2 hours
+    document = cache_page(60 * 60)(document)
+
+
 def pot_file(request, pot_name):
     version = DocumentRelease.objects.current().version
     doc_root = str(get_doc_root_or_404('en', version, subroot='gettext'))
