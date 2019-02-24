@@ -10,9 +10,13 @@ import zipfile
 from contextlib import closing
 from pathlib import Path
 
+import requests
 from django.conf import settings
+from django.core.cache import cache
 from django.core.management import BaseCommand, call_command
 from django.utils.translation import to_locale
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 from ...models import DocumentRelease
 
@@ -36,10 +40,18 @@ class Command(BaseCommand):
             default=False,
             help='Also update the search vector field.',
         )
+        parser.add_argument(
+            '--purge-cache',
+            action='store_true',
+            dest='purge_cache',
+            default=False,
+            help='Also invalidate downstream caches for any changed doc versions.',
+        )
 
     def handle(self, **kwargs):
         self.verbosity = kwargs['verbosity']
         self.update_index = kwargs['update_index']
+        self.purge_cache = kwargs['purge_cache']
 
         self.default_builders = ['json', 'djangohtml']
         default_docs_version = DocumentRelease.objects.get(is_default=True).release.version
@@ -66,6 +78,16 @@ class Command(BaseCommand):
 
         if self.update_index_required:
             call_command('update_index', **{'verbosity': self.verbosity})
+
+        if self.purge_cache:
+            changed_versions = set(version for version, changed in self.release_docs_changed.items() if changed)
+            if changed_versions or kwargs['force']:
+                # purge Django first so Fastly doesn't immediately re-cache obsolete pages
+                self.purge_django_cache()
+                self.purge_fastly(changed_versions)
+            else:
+                if self.verbosity >= 1:
+                    self.stdout.write("No docs changes; skipping cache purge.")
 
     def build_doc_release(self, release, force=False):
         if self.verbosity >= 1:
@@ -229,6 +251,62 @@ class Command(BaseCommand):
         else:
             subprocess.call(['git', 'clone', '--branch', branch, repo, str(destdir), quiet])
         return True
+
+    def purge_django_cache(self):
+        """
+        If any doc versions have changed, we need to purge Django's per-site cache
+        (in Memcached) so any downstream caches don't immediately re-cache obsolete
+        versions of the page.
+
+        This is pretty destructive, so as an alternative we could decorate
+        docs.views.document with @never_cache once Fastly is set up and working.
+        """
+        cache.clear()
+
+    def purge_fastly(self, changed_versions):
+        """
+        Purges the Fastly surrogate key for the dev docs if that's the only version that's changed,
+        or the entire cache (purge_all) if other versions have changed. Requires these settings:
+
+        * settings.FASTLY_SERVICE_URL: the full URL to the "Django Docs" Fastly service API endpoint
+          without a trailing slash, e.g., https://api.fastly.com/service/SU1Z0isxPaozGVKXdv0eY
+        * settings.FASTLY_API_KEY: your Fastly API key with "purge_all" and "purge_select" scope
+          for the above Django Docs service
+
+        Any errors are echoed to self.stderr even if --verbosity=0 to make sure we get an email from
+        cron about them if this task fails for any reason.
+        """
+        fastly_service_url = getattr(settings, 'FASTLY_SERVICE_URL', None)
+        fastly_api_key = getattr(settings, 'FASTLY_API_KEY', None)
+        if not (fastly_service_url and fastly_api_key):
+            self.stderr.write("Fastly API key and/or service URL not found; can't purge cache")
+            return
+        s = requests.Session()
+        # make some allowance for temporary network failures for our .post() request below
+        retry = Retry(
+            total=5,
+            method_whitelist=frozenset(['POST']),
+            backoff_factor=0.1,
+        )
+        s.mount(fastly_service_url, HTTPAdapter(max_retries=retry))
+        s.headers.update({
+            'Fastly-Key': fastly_api_key,
+            'Accept': 'application/json',
+        })
+        if changed_versions == {'dev'}:
+            # If only the dev docs have changed, we can purge only the surrogate key we've set
+            # up for the dev docs release in Fastly. This will usually happen with every new commit
+            # to django master (on the next hour, when the cron job runs).
+            url = '%s/purge/dev-docs-key' % fastly_service_url
+        else:
+            # Otherwise, just purge everything, to keep things simple. This will usually only happen
+            # around a release when we want these pages to update as soon as possible anyways.
+            url = '%s/purge_all' % fastly_service_url
+        if self.verbosity >= 1:
+            self.stdout.write("Purging Fastly cache: %s" % url)
+        result = s.post(url).json()
+        if result.get('status') != 'ok':
+            self.stderr.write("WARNING: Fastly purge failed for URL: %s; result=%s" % (url, result))
 
 
 def gen_decoded_documents(directory):

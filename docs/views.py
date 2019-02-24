@@ -88,13 +88,10 @@ def document(request, lang, version, url):
         'update_date': datetime.datetime.fromtimestamp((docroot.joinpath('last_build')).stat().st_mtime),
         'redirect_from': request.GET.get('from', None),
     }
-    return render(request, template_names, context)
-
-
-if not settings.DEBUG:
-    # 1 hour to make better use of CDN
-    # docs are also rebuilt hourly, so the worst case from commit -> update will be ~2 hours
-    document = cache_page(60 * 60)(document)
+    response = render(request, template_names, context)
+    # Tell Fastly not to re-fetch from the origin for a week (we'll invalidate the cache sooner if needed)
+    response['Surrogate-Control'] = 'maxage=%d' % (7 * 24 * 60 * 60)
+    return response
 
 
 def pot_file(request, pot_name):
