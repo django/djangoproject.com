@@ -9,6 +9,7 @@ import subprocess
 import zipfile
 from contextlib import closing
 from pathlib import Path
+from urllib.parse import urljoin
 
 import requests
 from django.conf import settings
@@ -269,7 +270,8 @@ class Command(BaseCommand):
         or the entire cache (purge_all) if other versions have changed. Requires these settings:
 
         * settings.FASTLY_SERVICE_URL: the full URL to the "Django Docs" Fastly service API endpoint
-          without a trailing slash, e.g., https://api.fastly.com/service/SU1Z0isxPaozGVKXdv0eY
+          e.g., https://api.fastly.com/service/SU1Z0isxPaozGVKXdv0eY/ (a trailing slash will be
+          added for you if you don't supply one)
         * settings.FASTLY_API_KEY: your Fastly API key with "purge_all" and "purge_select" scope
           for the above Django Docs service
 
@@ -281,13 +283,12 @@ class Command(BaseCommand):
         if not (fastly_service_url and fastly_api_key):
             self.stderr.write("Fastly API key and/or service URL not found; can't purge cache")
             return
+        # Make sure fastly_service_url ends with a trailing slash; otherwise, urljoin() will lop off
+        # the last part of the path. If needed, urljoin() will remove any duplicate slashes for us.
+        fastly_service_url += '/'
         s = requests.Session()
         # make some allowance for temporary network failures for our .post() request below
-        retry = Retry(
-            total=5,
-            method_whitelist=frozenset(['POST']),
-            backoff_factor=0.1,
-        )
+        retry = Retry(total=5, method_whitelist={'POST'}, backoff_factor=0.1)
         s.mount(fastly_service_url, HTTPAdapter(max_retries=retry))
         s.headers.update({
             'Fastly-Key': fastly_api_key,
@@ -297,11 +298,11 @@ class Command(BaseCommand):
             # If only the dev docs have changed, we can purge only the surrogate key we've set
             # up for the dev docs release in Fastly. This will usually happen with every new commit
             # to django master (on the next hour, when the cron job runs).
-            url = '%s/purge/dev-docs-key' % fastly_service_url
+            url = urljoin(fastly_service_url, 'purge/dev-docs-key')
         else:
             # Otherwise, just purge everything, to keep things simple. This will usually only happen
             # around a release when we want these pages to update as soon as possible anyways.
-            url = '%s/purge_all' % fastly_service_url
+            url = urljoin(fastly_service_url, 'purge_all')
         if self.verbosity >= 1:
             self.stdout.write("Purging Fastly cache: %s" % url)
         result = s.post(url).json()
