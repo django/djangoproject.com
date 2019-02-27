@@ -5,7 +5,7 @@
 
 {% block doc_url %}{% url 'document-index' lang=lang version=version host 'docs' %}{% endblock %}
 
-{% block head_extra %}
+{% block link_rel_tags %}
   {% if docurl %}
     {% if "internals" in docurl %} {# The canonical version of "internals" is the dev docs. #}
       {% url 'document-detail' lang=lang version='dev' url=docurl host 'docs' as canonical_url %}
@@ -31,7 +31,7 @@
         type="application/opensearchdescription+xml"
         href="{% url 'document-search-description' lang=lang version=version host 'docs' %}"
         title="{% trans "Django documentation" %}">
-{% endblock head_extra %}
+{% endblock link_rel_tags %}
 
 {% block body_extra %}
 {% if release.is_dev %}
