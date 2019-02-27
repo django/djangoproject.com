@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <form action="{% url 'document-search' version=version lang=lang host 'docs' %}" class="search form-input" role="search">
-  <label class="visuallyhidden" for="news-search">Search:</label>
+  <label class="visuallyhidden" for="id_q">Search:</label>
     {{ form.q }}
 
     <button type="submit">
