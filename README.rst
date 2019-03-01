@@ -305,7 +305,8 @@ Since this repo hosts three separate sites, our ``.po`` files are organized by
 website domain. At the moment, we have:
 
 * ``dashboard/locale/`` contains the translation files for https://dashboard.djangoproject.com
-* ``docs/locale/`` contains the translation files for https://docs.djangoproject.com
+* ``docs/locale/`` contains the translation files for https://docs.djangoproject.com (only for the
+  strings in this repository; translation of the documentation itself is handled elsewhere)
 * ``locale/`` contains the translation files for https://www.djangoproject.com (including
   strings from all apps other than ``dashboard`` and ``docs``)
 
