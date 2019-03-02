@@ -7,7 +7,7 @@
 
 {% block link_rel_tags %}
   {% if docurl %}
-    {% if "internals" in docurl %} {# The canonical version of "internals" is the dev docs. #}
+    {% if "internals" in docurl and lang == "en" %} {# The canonical version of "internals" is the dev docs (but only for English, since the dev docs are never translated). #}
       {% url 'document-detail' lang=lang version='dev' url=docurl host 'docs' as canonical_url %}
     {% else %}
       {% url 'document-detail' lang=lang version=canonical_version url=docurl host 'docs' as canonical_url %}
