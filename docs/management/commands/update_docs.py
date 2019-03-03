@@ -13,7 +13,7 @@ from urllib.parse import urljoin
 
 import requests
 from django.conf import settings
-from django.core.cache import cache
+from django.core.cache import caches
 from django.core.management import BaseCommand, call_command
 from django.utils.translation import to_locale
 from requests.adapters import HTTPAdapter
@@ -262,7 +262,7 @@ class Command(BaseCommand):
         This is pretty destructive, so as an alternative we could decorate
         docs.views.document with @never_cache once Fastly is set up and working.
         """
-        cache.clear()
+        caches['docs-pages'].clear()
 
     def purge_fastly(self, changed_versions):
         """

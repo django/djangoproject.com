@@ -94,6 +94,12 @@ def document(request, lang, version, url):
     return response
 
 
+if not settings.DEBUG:
+    # Specify a dedicated cache for docs pages that need to be purged after docs rebuilds
+    # (see docs/management/commands/update_docs.py):
+    document = cache_page(settings.CACHE_MIDDLEWARE_SECONDS, cache='docs-pages')(document)
+
+
 def pot_file(request, pot_name):
     version = DocumentRelease.objects.current().version
     doc_root = str(get_doc_root_or_404('en', version, subroot='gettext'))
