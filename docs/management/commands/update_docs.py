@@ -255,12 +255,11 @@ class Command(BaseCommand):
 
     def purge_django_cache(self):
         """
-        If any doc versions have changed, we need to purge Django's per-site cache
-        (in Memcached) so any downstream caches don't immediately re-cache obsolete
-        versions of the page.
+        If any doc versions have changed, we need to purge Django's per-site cache (in Redis) so
+        any downstream caches don't immediately re-cache obsolete versions of the page.
 
-        This is pretty destructive, so as an alternative we could decorate
-        docs.views.document with @never_cache once Fastly is set up and working.
+        We have a separate 'docs-pages' cache dedicated to this purpose so other pages cached
+        by the cache middleware aren't lost every time the docs get rebuilt.
         """
         caches['docs-pages'].clear()
 
