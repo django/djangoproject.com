@@ -89,7 +89,7 @@ def document(request, lang, version, url):
         'redirect_from': request.GET.get('from', None),
     }
     response = render(request, template_names, context)
-    # Tell Fastly not to re-fetch from the origin for a week (we'll invalidate the cache sooner if needed)
+    # Tell Fastly to re-fetch from the origin once a week (we'll invalidate the cache sooner if needed)
     response['Surrogate-Control'] = 'max-age=%d' % (7 * 24 * 60 * 60)
     return response
 
