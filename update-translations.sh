@@ -6,12 +6,12 @@
 
 set -ex
 
-LANGUAGES="el es fr id ja ko pl pt_BR zh_CN zh_TW"
+LANGUAGES="fr"
 
 LOCALE_DIRS="dashboard/locale/ docs/locale/ locale/"
 
 for LANG in $LANGUAGES; do
-    tx pull -f -l $LANG --minimum-perc=5
+    tx pull -f -l $LANG --minimum-perc=70
     for DIR in $LOCALE_DIRS; do
         PO_FILE="$DIR$LANG/LC_MESSAGES/django.po"
         if [ -f "$PO_FILE" ]; then
