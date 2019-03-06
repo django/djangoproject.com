@@ -5,9 +5,9 @@
 
 {% block doc_url %}{% url 'document-index' lang=lang version=version host 'docs' %}{% endblock %}
 
-{% block head_extra %}
+{% block link_rel_tags %}
   {% if docurl %}
-    {% if "internals" in docurl %} {# The canonical version of "internals" is the dev docs. #}
+    {% if "internals" in docurl and lang == "en" %} {# The canonical version of "internals" is the dev docs (but only for English, since the dev docs are never translated). #}
       {% url 'document-detail' lang=lang version='dev' url=docurl host 'docs' as canonical_url %}
     {% else %}
       {% url 'document-detail' lang=lang version=canonical_version url=docurl host 'docs' as canonical_url %}
@@ -16,35 +16,30 @@
     {% url 'document-index' lang=lang version=canonical_version host 'docs' as canonical_url %}
   {% endif %}
   <link rel="canonical" href="{{ canonical_url }}">
-  {% if canonical %}
-    {% for available_lang in available_languages %}
-        {% if docurl %}
-          {% url 'document-detail' lang=available_lang version=version url=docurl host 'docs' as alternate_url %}
-        {% else %}
-          {% url 'document-index' lang=available_lang version=version host 'docs' as alternate_url %}
-        {% endif %}
-        {% if available_lang == "en" %}
-        <link rel="alternate"
-           hreflang="x-default"
-           href="{{ alternate_url }}">
-        {% endif %}
-        <link rel="alternate"
-           hreflang="{{ available_lang }}"
-           href="{{ alternate_url }}">
-    {% endfor %}
-  {% endif %}
+  {% for available_lang in available_languages %}
+    {% if docurl %}
+      {% url 'document-detail' lang=available_lang version=version url=docurl host 'docs' as alternate_url %}
+    {% else %}
+      {% url 'document-index' lang=available_lang version=version host 'docs' as alternate_url %}
+    {% endif %}
+    <link rel="alternate"
+       hreflang="{{ available_lang }}"
+       href="{{ alternate_url }}">
+  {% endfor %}
 
   <link rel="search"
         type="application/opensearchdescription+xml"
         href="{% url 'document-search-description' lang=lang version=version host 'docs' %}"
         title="{% trans "Django documentation" %}">
-{% endblock head_extra %}
+{% endblock link_rel_tags %}
 
 {% block body_extra %}
 {% if release.is_dev %}
+{% if "internals" not in docurl %}{# The dev version is canonical for internals/. #}
 <div id="dev-warning" class="doc-floating-warning">
   {% trans "This document is for Django's development version, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
 </div>
+{% endif %}
 {% elif not release.is_supported %}
 <div id="outdated-warning" class="doc-floating-warning">
   {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
