@@ -295,30 +295,35 @@ We're using Transifex to help manage the translation process. The
 ``requirements/dev.txt`` file will install the Transifex client.
 
 Before using the command-line Transifex client, create ``~/.transifexrc``
-according to the instructions at https://docs.transifex.com/client/client-configuration.
-You'll need to be a member of the Django team in the `Django <https://www.transifex.com/django/>`_
-organization at Transifex. For information on how to join, please see the `Translations
+according to the instructions at
+https://docs.transifex.com/client/client-configuration. You'll need to be a
+member of the Django team in the `Django
+<https://www.transifex.com/django/>`_ organization at Transifex. For
+information on how to join, please see the `Translations
 <https://docs.djangoproject.com/en/dev/internals/contributing/localizing/#translations>`_
 section of the documentation on contributing to and localizing Django.
 
 Since this repo hosts three separate sites, our ``.po`` files are organized by
 website domain. At the moment, we have:
 
-* ``dashboard/locale/`` contains the translation files for https://dashboard.djangoproject.com
-* ``docs/locale/`` contains the translation files for https://docs.djangoproject.com (only for the
-  strings in this repository; translation of the documentation itself is handled elsewhere)
-* ``locale/`` contains the translation files for https://www.djangoproject.com (including
-  strings from all apps other than ``dashboard`` and ``docs``)
+* ``dashboard/locale/`` contains the translation files for
+  https://dashboard.djangoproject.com
+* ``docs/locale/`` contains the translation files for
+  https://docs.djangoproject.com (only for the strings in this repository;
+  translation of the documentation itself is handled elsewhere)
+* ``locale/`` contains the translation files for https://www.djangoproject.com
+  (including strings from all apps other than ``dashboard`` and ``docs``)
 
-**Important:** To keep this working properly, note that any templates for the ``dashboard`` and
-``docs`` apps **must** be placed in the ``<app name>/templates/docs/`` directory for their
-respective app, **not** in the ``djangoproject/templates/`` directory.
+**Important:** To keep this working properly, note that any templates for the
+``dashboard`` and ``docs`` apps **must** be placed in the
+``<app name>/templates/docs/`` directory for their respective app, **not** in
+the ``djangoproject/templates/`` directory.
 
 Updating messages on Transifex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When there are changes to the messages in the code or templates someone will
-need to update Transifex as follows:
+When there are changes to the messages in the code or templates, a member of
+the translations team will need to update Transifex as follows:
 
 1. Regenerate the English (only) .po file::
 
@@ -343,7 +348,8 @@ Updating translations from Transifex
 Anytime translations on Transifex have been updated, someone should update
 our translation files as follows:
 
-1. Pull the updated translation files (can add new languages to this file as needed)::
+1. Pull the updated translation files (can add new languages to this file as
+   needed)::
 
     ./update-translations.sh
 
