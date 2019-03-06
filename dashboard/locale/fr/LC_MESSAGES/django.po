@@ -1,7 +1,6 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
 #
 # Translators:
 # Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019
@@ -12,7 +11,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-18 20:21-0500\n"
-"PO-Revision-Date: 2019-02-18 23:47+0000\n"
+"PO-Revision-Date: 2019-02-21 14:15+0000\n"
 "Last-Translator: Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019\n"
 "Language-Team: French (https://www.transifex.com/django/teams/17080/fr/)\n"
 "MIME-Version: 1.0\n"
