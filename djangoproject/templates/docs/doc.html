@@ -35,9 +35,11 @@
 
 {% block body_extra %}
 {% if release.is_dev %}
+{% if "internals" not in docurl %}{# The dev version is canonical for internals/. #}
 <div id="dev-warning" class="doc-floating-warning">
   {% trans "This document is for Django's development version, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
 </div>
+{% endif %}
 {% elif not release.is_supported %}
 <div id="outdated-warning" class="doc-floating-warning">
   {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
