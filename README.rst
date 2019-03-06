@@ -348,23 +348,26 @@ Updating translations from Transifex
 Anytime translations on Transifex have been updated, someone should update
 our translation files as follows:
 
-1. Pull the updated translation files (can add new languages to this file as
-   needed)::
+1. Review the translations in Transifex and add to the space-delimited
+   ``LANGUAGES`` list in ``update-translations.sh`` any new languages that have
+   reached 100% translation.
+
+2. Pull the updated translation files::
 
     ./update-translations.sh
 
-2. Use ``git diff`` to see if any translations have actually changed. If not,
+3. Use ``git diff`` to see if any translations have actually changed. If not,
    you can just revert the .po file changes and stop here.
 
-3. Compile the messages::
+4. Compile the messages::
 
     python manage.py compilemessages
 
-4. Run the test suite one more time::
+5. Run the test suite one more time::
 
     python manage.py test
 
-5. Commit and push the changes to github::
+6. Commit and push the changes to GitHub::
 
     git commit -m "Updated translations" locale/*/LC_MESSAGES/*
     git push
