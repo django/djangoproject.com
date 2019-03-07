@@ -1,3 +1,4 @@
+import sys
 from urllib.parse import urljoin
 
 import requests
@@ -53,7 +54,8 @@ class Command(BaseCommand):
         fastly_api_key = getattr(settings, 'FASTLY_API_KEY', None)
         if not (fastly_service_url and fastly_api_key):
             self.stderr.write("Fastly API key and/or service URL not found; can't purge cache")
-            return
+            # make sure Ansible sees this as a failure
+            sys.exit(1)
         # Make sure fastly_service_url ends with a trailing slash; otherwise, urljoin() will lop off
         # the last part of the path. If needed, urljoin() will remove any duplicate slashes for us.
         fastly_service_url += '/'
@@ -79,3 +81,4 @@ class Command(BaseCommand):
         result = s.post(url).json()
         if result.get('status') != 'ok':
             self.stderr.write("WARNING: Fastly purge failed for URL: %s; result=%s" % (url, result))
+            sys.exit(1)
