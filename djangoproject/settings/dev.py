@@ -17,6 +17,10 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'trololololol',
     },
+    'docs-pages': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'docs-pages',
+    },
 }
 
 CSRF_COOKIE_SECURE = False

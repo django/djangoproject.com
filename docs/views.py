@@ -88,7 +88,16 @@ def document(request, lang, version, url):
         'update_date': datetime.datetime.fromtimestamp((docroot.joinpath('last_build')).stat().st_mtime),
         'redirect_from': request.GET.get('from', None),
     }
-    return render(request, template_names, context)
+    response = render(request, template_names, context)
+    # Tell Fastly to re-fetch from the origin once a week (we'll invalidate the cache sooner if needed)
+    response['Surrogate-Control'] = 'max-age=%d' % (7 * 24 * 60 * 60)
+    return response
+
+
+if not settings.DEBUG:
+    # Specify a dedicated cache for docs pages that need to be purged after docs rebuilds
+    # (see docs/management/commands/update_docs.py):
+    document = cache_page(settings.CACHE_MIDDLEWARE_SECONDS, cache='docs-pages')(document)
 
 
 def pot_file(request, pot_name):

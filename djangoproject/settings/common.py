@@ -252,6 +252,10 @@ PUSH_CREDENTIALS = 'aggregator.utils.push_credentials'
 # SUPERFEEDR_CREDS is a 2 element list in the form of [email,secretkey]
 SUPERFEEDR_CREDS = SECRETS.get('superfeedr_creds')
 
+# Fastly credentials
+FASTLY_API_KEY = SECRETS.get('fastly_api_key')
+FASTLY_SERVICE_URL = SECRETS.get('fastly_service_url')
+
 # Stripe settings
 
 # only testing keys as fallback values here please!

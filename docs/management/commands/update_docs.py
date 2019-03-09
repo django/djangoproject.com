@@ -36,10 +36,18 @@ class Command(BaseCommand):
             default=False,
             help='Also update the search vector field.',
         )
+        parser.add_argument(
+            '--purge-cache',
+            action='store_true',
+            dest='purge_cache',
+            default=False,
+            help='Also invalidate downstream caches for any changed doc versions.',
+        )
 
     def handle(self, **kwargs):
         self.verbosity = kwargs['verbosity']
         self.update_index = kwargs['update_index']
+        self.purge_cache = kwargs['purge_cache']
 
         self.default_builders = ['json', 'djangohtml']
         default_docs_version = DocumentRelease.objects.get(is_default=True).release.version
@@ -66,6 +74,14 @@ class Command(BaseCommand):
 
         if self.update_index_required:
             call_command('update_index', **{'verbosity': self.verbosity})
+
+        if self.purge_cache:
+            changed_versions = set(version for version, changed in self.release_docs_changed.items() if changed)
+            if changed_versions or kwargs['force']:
+                call_command('purge_docs_cache', **{'doc_versions': changed_versions, 'verbosity': self.verbosity})
+            else:
+                if self.verbosity >= 1:
+                    self.stdout.write("No docs changes; skipping cache purge.")
 
     def build_doc_release(self, release, force=False):
         if self.verbosity >= 1:
