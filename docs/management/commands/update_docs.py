@@ -6,8 +6,10 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import zipfile
 from contextlib import closing
+from datetime import datetime
 from pathlib import Path
 
 from django.conf import settings
@@ -85,7 +87,7 @@ class Command(BaseCommand):
 
     def build_doc_release(self, release, force=False):
         if self.verbosity >= 1:
-            self.stdout.write("Updating %s..." % release)
+            self.stdout.write("Starting update for %s at %s..." % (release, datetime.now()))
 
         # checkout_dir is shared for all languages.
         checkout_dir = settings.DOCS_BUILD_ROOT.joinpath('sources', release.version)
@@ -121,7 +123,7 @@ class Command(BaseCommand):
             if not source_dir.joinpath('locale').exists():
                 source_dir.joinpath('locale').symlink_to(trans_dir.joinpath('translations'))
             extra_kwargs = {'stdout': subprocess.DEVNULL} if self.verbosity == 0 else {}
-            subprocess.call('cd %s && make translations' % trans_dir, shell=True, **extra_kwargs)
+            subprocess.check_call('cd %s && make translations' % trans_dir, shell=True, **extra_kwargs)
 
         if release.is_default:
             # Build the pot files (later retrieved by Transifex)
@@ -225,25 +227,27 @@ class Command(BaseCommand):
             try:
                 cwd = os.getcwd()
                 os.chdir(str(destdir))
-                subprocess.call(['git', 'reset', '--hard', 'HEAD', quiet])
-                subprocess.call(['git', 'clean', '-fdx', quiet])
-                subprocess.call([
+                # Git writes all output to stderr, so redirect it to stdout for logging (so we don't
+                # get emailed with all Git output).
+                subprocess.check_call(['git', 'reset', '--hard', 'HEAD', quiet], stderr=sys.stdout)
+                subprocess.check_call(['git', 'clean', '-fdx', quiet], stderr=sys.stdout)
+                subprocess.check_call([
                     'git', 'fetch', remote,
                     '%s:refs/remotes/%s' % (branch, branch_with_remote),
                     quiet
-                ])
+                ], stderr=sys.stdout)
                 docs_changed = subprocess.call([
                     'git', 'diff', branch_with_remote,
                     '--quiet', '--exit-code',
                     changed_dir,
-                ]) == 1
+                ], stderr=sys.stdout) == 1
                 if not docs_changed:
                     return False
-                subprocess.call(['git', 'merge', branch_with_remote, quiet])
+                subprocess.check_call(['git', 'merge', branch_with_remote, quiet], stderr=sys.stdout)
             finally:
                 os.chdir(cwd)
         else:
-            subprocess.call(['git', 'clone', '--branch', branch, repo, str(destdir), quiet])
+            subprocess.check_call(['git', 'clone', '--branch', branch, repo, str(destdir), quiet], stderr=sys.stdout)
         return True
 
 
