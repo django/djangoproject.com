@@ -22,6 +22,13 @@ CACHES = {
             'ketama': True
         }
     },
+    'docs-pages': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': SECRETS.get('redis_host', 'localhost:6379'),
+        'OPTIONS': {
+            'DB': 2,
+        },
+    },
 }
 
 CSRF_COOKIE_SECURE = True
