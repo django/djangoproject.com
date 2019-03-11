@@ -53,7 +53,7 @@ urlpatterns = [
     path('contact/', include('contact.urls')),
     path('foundation/', include('members.urls')),
     path('fundraising/', include('fundraising.urls')),
-
+    path('foundation/', include('foundation.urls')),
     # Used by docs search suggestions
     re_path(r'^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$', contenttypes_views.shortcut, name='contenttypes-shortcut'),
 

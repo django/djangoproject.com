@@ -1,0 +1,18 @@
+{% extends 'base_foundation.html' %}
+
+{% load humanize static %}
+
+{% block layout_class %}full-width{% endblock %}
+
+{% block title %}Minutes of {{ board_minutes.date|date:"Y-m-d" }} Board of Directors Meeting{% endblock %}
+
+{% block header %} 
+  <h1>Minutes of {{ board_minutes.date|date:"Y-m-d" }} Board of Directors
+  Meeting</h1> 
+{% endblock header %}
+
+{% block content %}
+{{ board_minutes.body|safe }}
+{% endblock %}
+
+{% block content-related %}{% endblock %}
