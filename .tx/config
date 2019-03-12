@@ -1,0 +1,23 @@
+[main]
+host = https://www.transifex.com
+type = PO
+
+# Get translations for the 'docs' app from the 'django-docs' project (resource: 'website-strings')
+[django-docs.website-strings]
+file_filter = docs/locale/<lang>/LC_MESSAGES/django.po
+source_file = docs/locale/en/LC_MESSAGES/django.po
+source_lang = en
+
+# Get translations for the 'dashboard' app from the 'djangoproject.com' project (resource: 'dashboard-app')
+# 'dashboard' is a reserved word in Transifex, so we use 'dashboard-app' instead.
+[djangoproject-com.dashboard-app]
+file_filter = dashboard/locale/<lang>/LC_MESSAGES/django.po
+source_file = dashboard/locale/en/LC_MESSAGES/django.po
+source_lang = en
+
+# Send everything else to the 'main' resource in the 'djangoproject.com' project.
+# If/when needed, other apps may be split out into separate resources (a la 'dashboard' above).
+[djangoproject-com.main]
+file_filter = locale/<lang>/LC_MESSAGES/django.po
+source_file = locale/en/LC_MESSAGES/django.po
+source_lang = en
