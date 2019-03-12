@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block html_language_code %}{{ lang|default:"en" }}{% endblock %}
+
+{% block title %}{% trans 'Django Documentation' %}{% endblock %}
+
+{% block header %}
+  <h1><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a></h1>
+{% endblock %}
+
+{% block layout_class %}sidebar-right{% endblock %}
