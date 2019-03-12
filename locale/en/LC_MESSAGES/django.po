@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-18 20:21-0500\n"
+"POT-Creation-Date: 2019-03-11 20:38-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,10 +44,6 @@ msgstr ""
 msgid ""
 "For an event to be published, it must be active and its publication date "
 "must be in the past."
-msgstr ""
-
-#: djangoproject/templates/base_dashboard.html:6
-msgid "Development dashboard"
 msgstr ""
 
 #: djangoproject/templates/members/corporate_members_join_thanks.html:5
