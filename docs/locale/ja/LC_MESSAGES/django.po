@@ -1,0 +1,233 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# Claude Paroz <claude@2xlibre.net>, 2019
+# Shinya Okano <tokibito@gmail.com>, 2019
+# Hiroki KIYOHARA <hirokiky@gmail.com>, 2019
+# Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019
+# Masashi SHIBATA <contact@c-bata.link>, 2019
+# Shuuji TAKAHASHI (shuuji3) <shuuji3@gmail.com>, 2019
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-11 20:38-0500\n"
+"PO-Revision-Date: 2019-02-19 01:18+0000\n"
+"Last-Translator: Shuuji TAKAHASHI (shuuji3) <shuuji3@gmail.com>, 2019\n"
+"Language-Team: Japanese (https://www.transifex.com/django/teams/17080/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Documentation"
+msgstr "ドキュメント"
+
+#, python-format
+msgid "Search %s documentation"
+msgstr "%s ドキュメントを検索"
+
+msgid "Search"
+msgstr "検索"
+
+msgid "Django Documentation"
+msgstr "Django ドキュメント"
+
+msgid "Django documentation"
+msgstr "Django ドキュメント"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases. For older releases, use the "
+"version selector floating in the bottom right corner of this page."
+msgstr ""
+"このドキュメントは Django 開発版のものです。以前のバージョンとは内容が大きく"
+"異なる可能性があります。他のバージョンのドキュメントを表示するには、ページ右"
+"下のバージョンセレクターを使用してください。"
+
+msgid ""
+"This document is for an insecure version of Django that is no longer "
+"supported. Please upgrade to a newer release!"
+msgstr ""
+"このドキュメントの Django のバージョンにはセキュリティ上の脆弱性があるため、"
+"すでにサポートが終了されています。新しいバージョンにアップグレードしてくださ"
+"い！"
+
+msgid "Click on the links on the left to switch to another language."
+msgstr "他の言語に変更するためには、左側のリンクをクリックしてください。"
+
+msgid "Language:"
+msgstr "言語:"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases."
+msgstr ""
+"この文書は開発版Djangoに関するものです。以前のリリースから、特に異なるところ"
+"を示しています。"
+
+#, python-format
+msgid "This document describes Django %(version)s."
+msgstr "このドキュメントでは Django %(version)s について説明しています。"
+
+msgid "Click on the links on the left to see other versions."
+msgstr ""
+"他のバージョンのドキュメントを表示するには、左のリンクをクリックしてくださ"
+"い。"
+
+msgid "Documentation version:"
+msgstr "ドキュメントのバージョン:"
+
+msgid "Additional Information"
+msgstr "追加的な情報"
+
+msgid "Contents"
+msgstr "コンテンツ"
+
+msgid "Browse"
+msgstr "移動"
+
+msgid "Prev:"
+msgstr "前へ:"
+
+msgid "Next:"
+msgstr "次へ:"
+
+msgid "Table of contents"
+msgstr "目次"
+
+msgid "You are here:"
+msgstr "現在の場所:"
+
+#, python-format
+msgid "Django %(version)s documentation"
+msgstr "Django %(version)s ドキュメント"
+
+msgid "Getting help"
+msgstr "助けを求める"
+
+msgid "Try the FAQ — it's got answers to many common questions."
+msgstr "FAQ では、よくある質問とそれに対する答えが読めます。"
+
+msgid "Index"
+msgstr "目次"
+
+msgid "Module Index"
+msgstr "モジュールの目次"
+
+msgid "Table of Contents"
+msgstr "目次"
+
+msgid "Handy when looking for specific information."
+msgstr "特定の情報を見つけたい場合に便利です。"
+
+msgid ""
+"Search for information in the archives of the django-users mailing list, or "
+"post a question."
+msgstr ""
+"django-users メーリングリストのアーカイブから情報を検索したり、新しい質問を投"
+"稿できます。"
+
+msgid ""
+"Ask a question in the #django IRC channel, or search the IRC logs to see if "
+"it’s been asked before."
+msgstr ""
+"#django IRC チャンネルで質問したり、過去になされた回答を読むために IRC ログを"
+"検索できます。"
+
+msgid "Report bugs with Django or Django documentation in our ticket tracker."
+msgstr ""
+"Django または Django ドキュメントにバグを見つけた場合は、チケットトラッカーか"
+"ら報告してください。"
+
+msgid "Download:"
+msgstr "ダウンロード:"
+
+msgid "Offline (development version):"
+msgstr "オフライン (開発版):"
+
+#, python-format
+msgid "Offline (Django %(version)s):"
+msgstr "オフライン (Django %(version)s):"
+
+msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+msgstr ""
+"<a href=\"https://readthedocs.org/\">Read the Docs</a> により提供されていま"
+"す。"
+
+msgid "General Index | Django Documentation"
+msgstr "総合索引 | Django ドキュメント"
+
+msgid "General Index"
+msgstr "総合索引"
+
+msgid "[Link]"
+msgstr "[リンク]"
+
+msgid "Module Index | Django Documentation"
+msgstr "モジュールの目次 | Django ドキュメント"
+
+msgid "Search | Django documentation"
+msgstr "検索 | Django ドキュメント"
+
+#, python-format
+msgid ""
+"\n"
+"    Only 1 result for <em>%(query)s</em> in the development version\n"
+"  "
+msgid_plural ""
+"\n"
+"    %(num_results)s results for <em>%(query)s</em> in the development "
+"version\n"
+"  "
+msgstr[0] ""
+"\n"
+"    <em>%(query)s</em> に対して、開発版ドキュメント中に %(num_results)s 件の"
+"結果が見つかりました\n"
+"  "
+
+#, python-format
+msgid ""
+"\n"
+"    Only 1 result for <em>%(query)s</em> in version %(version)s\n"
+"  "
+msgid_plural ""
+"\n"
+"    %(num_results)s results for <em>%(query)s</em> in version %(version)s\n"
+"  "
+msgstr[0] ""
+"\n"
+"    <em>%(query)s</em> に対して、バージョン %(version)s のドキュメント中に "
+"%(num_results)s 件の結果が見つかりました\n"
+"  "
+
+msgid "No search query given"
+msgstr "検索クエリが指定されていません"
+
+msgid "Previous"
+msgstr "前へ"
+
+#, python-format
+msgid ""
+"\n"
+"        Page %(page_number)s of %(num_pages)s\n"
+"      "
+msgstr ""
+"\n"
+"        %(page_number)s / %(num_pages)s ページ\n"
+"      "
+
+msgid "Next"
+msgstr "次へ"
+
+msgid "Page is not 'last', nor can it be converted to an int."
+msgstr "ページは数値に変換できる値、または 'last' ではありません。"
+
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "無効なページです (%(page_number)s): %(message)s"
