@@ -1,0 +1,165 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# Otávio Reis <otaviocha@gmail.com>, 2019
+# dudanogueira <dudanogueira@gmail.com>, 2019
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-11 20:38-0500\n"
+"PO-Revision-Date: 2019-02-18 14:53+0000\n"
+"Last-Translator: dudanogueira <dudanogueira@gmail.com>, 2019\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/django/"
+"teams/17080/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid ""
+"Tick to make this entry live (see also the publication date). Note that "
+"administrators (like yourself) are allowed to preview inactive entries "
+"whereas the general public aren't."
+msgstr ""
+"Marque para fazer esta entrada pública (veja também a data de publicação). "
+"Note que administradores (como você) possuem permissão para visualizar "
+"entradas inativas onde o público geral não pode."
+
+msgid "Publication date"
+msgstr "Data de publicação"
+
+msgid ""
+"For an entry to be published, it must be active and its publication date "
+"must be in the past."
+msgstr ""
+"Para que uma entrada seja publicada, é preciso que esteja ativa e sua data "
+"de publicação esteja no passado."
+
+msgid ""
+"Tick to make this event live (see also the publication date). Note that "
+"administrators (like yourself) are allowed to preview inactive events "
+"whereas the general public aren't."
+msgstr ""
+"Marque para fazer esta entrada pública (veja também a data de publicação). "
+"Note que administradores (como você) possuem permissão para visualizar "
+"entradas inativas onde o público geral não pode."
+
+msgid ""
+"For an event to be published, it must be active and its publication date "
+"must be in the past."
+msgstr ""
+"Para que um evento seja publicado, é preciso estar ativo e sua data de "
+"publicação precisa estar no passado."
+
+msgid "Corporate membership application submitted."
+msgstr "Pedido de adesão corporativa enviado."
+
+msgid ""
+"\n"
+"      Thanks! Your application is being reviewed, and we'll follow up a\n"
+"      response from the board after our next monthly meeting.\n"
+"    "
+msgstr ""
+"\n"
+"Obrigado! Seu requerimento está sendo revisado, e encaminharemos uma \n"
+"resposta do comitê após nossa próxima reunião mensal. "
+
+msgid "Become a DSF corporate member"
+msgstr "Torne-se um membro corporativo da DSF"
+
+msgid ""
+"\n"
+"      Provide us with a few details and we'll start onboarding your\n"
+"      organization!\n"
+"    "
+msgstr ""
+"\n"
+"Nos deem alguns detalhes e iniciaremos o processo de integração de sua\n"
+"organização!"
+
+msgid "Corporate members"
+msgstr "Membros Corporativos"
+
+msgid ""
+"\n"
+"      The following organizations are corporate members of the Django "
+"Software\n"
+"      Foundation. If you are interested in becoming a corporate member of "
+"the\n"
+"      DSF, you can find out more on our <a href=\"/foundation/corporate-"
+"membership/\">\n"
+"      corporate membership page</a>.\n"
+"    "
+msgstr ""
+"\n"
+"As seguintes organizações são membros corporativos da Django Software "
+"Foundation. Se você esta interessado em tornar-se um membro corporativo da \n"
+"DSF, você pode encontrar mais informações em nossa <a href=\"/foundation/"
+"corporate-membership/\">\n"
+"página de adesão corporativa</a>."
+
+msgid "Individual members"
+msgstr "Membros individuais"
+
+msgid ""
+"\n"
+"      The following are Individual Members of the Django Software "
+"Foundation. Individual Members\n"
+"      are appointed by the DSF in recognition of their service to the Django "
+"community. If you\n"
+"      know someone who you think should be considered for Individual "
+"Membership, please\n"
+"    "
+msgstr ""
+"\n"
+"Os seguintes são membros individuais da Django Software Foundation. Membros "
+"individuais\n"
+"sãos destacados pela DSF em reconhecimento por seus serviços para a "
+"comunidade Django. Se você conhece alguém que deveria ser considerado como "
+"Membro individual, por favor"
+
+msgid "fill out this form"
+msgstr "preencha este formulário"
+
+msgid "Former members"
+msgstr "Membros antigos"
+
+msgid "The following are former Individual Members of the DSF."
+msgstr "Os seguintes são membros individuais antigos da DSF."
+
+#, python-format
+msgid ""
+"You're receiving this e-mail because you requested a password reset\n"
+"for your user account at %(site_name)s"
+msgstr ""
+"Você está recebendo este email pois requisitou a redefinição de senha para "
+"sua conta em %(site_name)s"
+
+msgid "Please go to the following page and choose a new password:"
+msgstr "Por favor vá até a seguinte página e escolha uma nova senha:"
+
+msgid "Your username, in case you've forgotten:"
+msgstr "Seu usuário, caso o tenha esquecido:"
+
+msgid "Thanks for using our site!"
+msgstr "Obrigado por usar nosso site!"
+
+#, python-format
+msgid "The %(site_name)s team"
+msgstr "O %(site_name)s time"
+
+msgid "Fundraising"
+msgstr "Captação de recursos"
+
+#, python-format
+msgid "%(version)s release notes"
+msgstr "notas da release %(version)s"
+
+msgid "Online documentation"
+msgstr "Documentação Online"

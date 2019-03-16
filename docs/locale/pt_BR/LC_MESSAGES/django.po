@@ -1,0 +1,220 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# Claude Paroz <claude@2xlibre.net>, 2019
+# Elyézer Rezende <elyezermr@gmail.com>, 2019
+# andrewsmedina <andrewsmedina@gmail.com>, 2019
+# Carlos Leite <caduado@gmail.com>, 2019
+# Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019
+# Tânia Andrea <taniaa.moreira@gmail.com>, 2019
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-11 20:38-0500\n"
+"PO-Revision-Date: 2019-02-19 01:18+0000\n"
+"Last-Translator: Tânia Andrea <taniaa.moreira@gmail.com>, 2019\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/django/"
+"teams/17080/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Documentation"
+msgstr "Documentação"
+
+#, python-format
+msgid "Search %s documentation"
+msgstr ""
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Django Documentation"
+msgstr "Documentação do Django"
+
+msgid "Django documentation"
+msgstr "Documentação do Django"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases. For older releases, use the "
+"version selector floating in the bottom right corner of this page."
+msgstr ""
+"Esse documento é para a versão de desenvolvimento do Django que pode ser "
+"significativamente diferente de versões anteriores. Para versões antigas, "
+"use o seletor de versão localizado no canto inferior direito dessa página. "
+
+msgid ""
+"This document is for an insecure version of Django that is no longer "
+"supported. Please upgrade to a newer release!"
+msgstr ""
+"Esse documento é para uma versão insegura do Django que nao é mais "
+"suportada. Por favor atualize para uma versão mais recente!"
+
+msgid "Click on the links on the left to switch to another language."
+msgstr "Clique nos links da esquerda para alterar para outros idiomas."
+
+msgid "Language:"
+msgstr "Idioma:"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases."
+msgstr ""
+"Essa documentação se refere a versão de desenvolvimento do Django, a qual "
+"pode ser diferente de releases anteriores."
+
+#, python-format
+msgid "This document describes Django %(version)s."
+msgstr "Este documento descreve a versão %(version)s do Django."
+
+msgid "Click on the links on the left to see other versions."
+msgstr "Clique nos links da esquerda para ver outras versões."
+
+msgid "Documentation version:"
+msgstr "Versão da Documentação"
+
+msgid "Additional Information"
+msgstr "Informações Adicionais"
+
+msgid "Contents"
+msgstr "Conteúdos"
+
+msgid "Browse"
+msgstr "Navegar"
+
+msgid "Prev:"
+msgstr "Próx:"
+
+msgid "Next:"
+msgstr "Ant:"
+
+msgid "Table of contents"
+msgstr "Tabela de conteúdos"
+
+msgid "You are here:"
+msgstr "Você está aqui:"
+
+#, python-format
+msgid "Django %(version)s documentation"
+msgstr "Documentação do Django %(version)s"
+
+msgid "Getting help"
+msgstr "Conseguindo ajuda"
+
+msgid "Try the FAQ — it's got answers to many common questions."
+msgstr "Tente o FAQ — lá tem a resposta para várias perguntas comuns."
+
+msgid "Index"
+msgstr "Íindice"
+
+msgid "Module Index"
+msgstr "Índice do módulo"
+
+msgid "Table of Contents"
+msgstr "Tabela de conteúdos"
+
+msgid "Handy when looking for specific information."
+msgstr "Útil ao procurar por uma informação especifica."
+
+msgid ""
+"Search for information in the archives of the django-users mailing list, or "
+"post a question."
+msgstr ""
+"Procure por informação nos arquivos da lista de emails django-users, ou "
+"poste uma pergunta."
+
+msgid ""
+"Ask a question in the #django IRC channel, or search the IRC logs to see if "
+"it’s been asked before."
+msgstr ""
+"Faça uma pergunta no canal IRC #django, ou procure pelos logs IRC para ver "
+"se a pergunta ja foi feita."
+
+msgid "Report bugs with Django or Django documentation in our ticket tracker."
+msgstr ""
+"Reporte bugs no Django ou na Documentação do Django em nosso ticket tracker."
+
+msgid "Download:"
+msgstr "Download:"
+
+msgid "Offline (development version):"
+msgstr "Offline (versão de desenvolvimento):"
+
+#, python-format
+msgid "Offline (Django %(version)s):"
+msgstr "Offline (Django %(version)s):"
+
+msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+msgstr "Oferecido por <a href=\"https://readthedocs.org/\">Leia o Doc</a>."
+
+msgid "General Index | Django Documentation"
+msgstr "Índice Geral | Documentação do Django"
+
+msgid "General Index"
+msgstr "Índice Geral"
+
+msgid "[Link]"
+msgstr "[Link]"
+
+msgid "Module Index | Django Documentation"
+msgstr "Module Index | Documentação Django"
+
+msgid "Search | Django documentation"
+msgstr "Buscar | Documentação do Django"
+
+#, python-format
+msgid ""
+"\n"
+"    Only 1 result for <em>%(query)s</em> in the development version\n"
+"  "
+msgid_plural ""
+"\n"
+"    %(num_results)s results for <em>%(query)s</em> in the development "
+"version\n"
+"  "
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid ""
+"\n"
+"    Only 1 result for <em>%(query)s</em> in version %(version)s\n"
+"  "
+msgid_plural ""
+"\n"
+"    %(num_results)s results for <em>%(query)s</em> in version %(version)s\n"
+"  "
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "No search query given"
+msgstr "Nenhum parâmetro de busca"
+
+msgid "Previous"
+msgstr "Anterior"
+
+#, python-format
+msgid ""
+"\n"
+"        Page %(page_number)s of %(num_pages)s\n"
+"      "
+msgstr ""
+
+msgid "Next"
+msgstr "Próximo"
+
+msgid "Page is not 'last', nor can it be converted to an int."
+msgstr ""
+"A página não é 'final', nem tampouco pode ser convertido para um inteiro."
+
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "Página inválida (%(page_number)s): %(message)s"

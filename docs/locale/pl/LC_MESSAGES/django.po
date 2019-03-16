@@ -1,0 +1,244 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# Claude Paroz <claude@2xlibre.net>, 2019
+# Łukasz Hryniuk, 2019
+# Adam Stachowicz <saibamenppl@gmail.com>, 2019
+# Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019
+# m_aciek <maciej.olko@gmail.com>, 2019
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-11 20:38-0500\n"
+"PO-Revision-Date: 2019-02-19 01:18+0000\n"
+"Last-Translator: m_aciek <maciej.olko@gmail.com>, 2019\n"
+"Language-Team: Polish (https://www.transifex.com/django/teams/17080/pl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+
+msgid "Documentation"
+msgstr "Dokumentacja"
+
+#, python-format
+msgid "Search %s documentation"
+msgstr "Przeszukaj dokumentację %s"
+
+msgid "Search"
+msgstr "Szukaj"
+
+msgid "Django Documentation"
+msgstr "Dokumentacja Django"
+
+msgid "Django documentation"
+msgstr "Dokumentacja Django"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases. For older releases, use the "
+"version selector floating in the bottom right corner of this page."
+msgstr ""
+"Ten dokument dotyczy wersji deweloperskiej Django, która może znacząco się "
+"różnić od poprzednich wydań. Starsze wydania znajdziesz używając wybieraka w "
+"prawym dolnym rogu tej strony."
+
+msgid ""
+"This document is for an insecure version of Django that is no longer "
+"supported. Please upgrade to a newer release!"
+msgstr ""
+"Ten dokument dotyczy niezabezpieczonej wersji Django, która nie jest już "
+"wspierana. Prosimy zaktualizować się do nowszego wydania!"
+
+msgid "Click on the links on the left to switch to another language."
+msgstr "Kliknij w linki po lewej, aby przełączyć na inny język."
+
+msgid "Language:"
+msgstr "Język:"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases."
+msgstr ""
+"Ten dokument dotyczy wersji deweloperskiej Django, która może znacząco się "
+"różnić od poprzednich wydań."
+
+#, python-format
+msgid "This document describes Django %(version)s."
+msgstr "Ten dokument dotyczy Django %(version)s."
+
+msgid "Click on the links on the left to see other versions."
+msgstr "Kliknij w linki po lewej, aby zobaczyć inne wersje."
+
+msgid "Documentation version:"
+msgstr "Wersja dokumentacji:"
+
+msgid "Additional Information"
+msgstr "Dodatkowe informacje"
+
+msgid "Contents"
+msgstr "Zawartość"
+
+msgid "Browse"
+msgstr "Przeglądaj"
+
+msgid "Prev:"
+msgstr "Poprz.:"
+
+msgid "Next:"
+msgstr "Nast.:"
+
+msgid "Table of contents"
+msgstr "Spis treści"
+
+msgid "You are here:"
+msgstr "Jesteś tutaj:"
+
+#, python-format
+msgid "Django %(version)s documentation"
+msgstr "Dokumentacja Django %(version)s"
+
+msgid "Getting help"
+msgstr "Uzyskiwanie pomocy"
+
+msgid "Try the FAQ — it's got answers to many common questions."
+msgstr "Wypróbuj FAQ – ma odpowiedzi na wiele powszechnych pytań."
+
+msgid "Index"
+msgstr "Indeks"
+
+msgid "Module Index"
+msgstr "Indeks modułów"
+
+msgid "Table of Contents"
+msgstr "Spis treści"
+
+msgid "Handy when looking for specific information."
+msgstr "Przydatne, gdy szukasz konkretnej informacji"
+
+msgid ""
+"Search for information in the archives of the django-users mailing list, or "
+"post a question."
+msgstr ""
+"Wyszukaj informacje w archiwum listy mailingowej django-users lub wyślij "
+"pytanie."
+
+msgid ""
+"Ask a question in the #django IRC channel, or search the IRC logs to see if "
+"it’s been asked before."
+msgstr ""
+"Zadaj pytanie na kanale IRC #django lub przeszukaj logi IRC, żeby zobaczyć, "
+"czy zadano je wcześniej."
+
+msgid "Report bugs with Django or Django documentation in our ticket tracker."
+msgstr "Zgłoś błędy w Django lub w dokumentacji w naszym systemie zgłoszeń."
+
+msgid "Download:"
+msgstr "Pobierz:"
+
+msgid "Offline (development version):"
+msgstr "Offline (wersja deweloperska):"
+
+#, python-format
+msgid "Offline (Django %(version)s):"
+msgstr "Offline (Django %(version)s):"
+
+msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+msgstr ""
+"Dostarczone przez <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+
+msgid "General Index | Django Documentation"
+msgstr "Ogólny spis alfabetyczny | Dokumentacja Django"
+
+msgid "General Index"
+msgstr "Ogólny spis alfabetyczny"
+
+msgid "[Link]"
+msgstr "[link]"
+
+msgid "Module Index | Django Documentation"
+msgstr "Alfabetyczny spis modułów | Dokumentacja Django"
+
+msgid "Search | Django documentation"
+msgstr "Wyszukiwanie | Dokumentacja Django"
+
+#, python-format
+msgid ""
+"\n"
+"    Only 1 result for <em>%(query)s</em> in the development version\n"
+"  "
+msgid_plural ""
+"\n"
+"    %(num_results)s results for <em>%(query)s</em> in the development "
+"version\n"
+"  "
+msgstr[0] ""
+"\n"
+"Tylko 1 wynik dla <em>%(query)s</em> w wersji deweloperskiej"
+msgstr[1] ""
+"\n"
+"%(num_results)s wyniki dla <em>%(query)s</em> w wersji deweloperskiej"
+msgstr[2] ""
+"\n"
+"%(num_results)s wyników dla <em>%(query)s</em> w wersji deweloperskiej"
+msgstr[3] ""
+"\n"
+"%(num_results)s wyników dla <em>%(query)s</em> w wersji deweloperskiej"
+
+#, python-format
+msgid ""
+"\n"
+"    Only 1 result for <em>%(query)s</em> in version %(version)s\n"
+"  "
+msgid_plural ""
+"\n"
+"    %(num_results)s results for <em>%(query)s</em> in version %(version)s\n"
+"  "
+msgstr[0] ""
+"\n"
+"Tylko 1 wynik dla <em>%(query)s</em> w wersji %(version)s"
+msgstr[1] ""
+"\n"
+"%(num_results)s wyniki dla <em>%(query)s</em> w wersji %(version)s"
+msgstr[2] ""
+"\n"
+"%(num_results)s wyników dla <em>%(query)s</em> w wersji %(version)s"
+msgstr[3] ""
+"\n"
+"%(num_results)s wyników dla <em>%(query)s</em> w wersji %(version)s"
+
+msgid "No search query given"
+msgstr "Nie podano zapytania"
+
+msgid "Previous"
+msgstr "poprzednie"
+
+#, python-format
+msgid ""
+"\n"
+"        Page %(page_number)s of %(num_pages)s\n"
+"      "
+msgstr ""
+"\n"
+"Strona %(page_number)s z %(num_pages)s"
+
+msgid "Next"
+msgstr "następne"
+
+msgid "Page is not 'last', nor can it be converted to an int."
+msgstr ""
+"Podanego numeru strony nie można przekształcić na liczbę całkowitą, nie "
+"przyjął on również wartości 'last' oznaczającej ostatnią stronę z dostępnego "
+"zakresu."
+
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "Nieprawidłowy numer strony (%(page_number)s): %(message)s "
