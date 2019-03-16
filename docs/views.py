@@ -9,7 +9,9 @@ from django.core.paginator import InvalidPage, Paginator
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
 from django.template.response import TemplateResponse
-from django.utils.translation import activate, ugettext_lazy as _
+from django.utils.translation import (
+    activate as django_activate, ugettext_lazy as _,
+)
 from django.views import static
 from django.views.decorators.cache import cache_page
 from django_hosts.resolvers import reverse
@@ -19,6 +21,25 @@ from .models import Document, DocumentRelease
 from .utils import get_doc_path_or_404, get_doc_root_or_404
 
 SIMPLE_SEARCH_OPERATORS = ['+', '|', '-', '"', '*', '(', ')', '~']
+
+# Map of language codes in Django's settings.LANGUAGES to language codes used by Transifex (and
+# web browsers). May need to be updated periodically to stay in sync with the current version of:
+# https://github.com/django/django-docs-translations/blob/stable/2.1.x/manage_translations.py
+# Keys must be lowercase and include dashes (like
+# https://docs.djangoproject.com/en/2.1/ref/settings/#languages). I.e., they should NOT mimic the
+# formatting of manage_translations.py.
+TX_LANG_MAP = {
+    'zh-hans': 'zh_CN',
+    'zh-hant': 'zh_TW',
+}
+
+
+def activate(lang):
+    """
+    Wrapper for activate() that maps language codes used by the docs site to the language codes
+    used by Transifex and web browsers.
+    """
+    return django_activate(TX_LANG_MAP.get(lang, lang))
 
 
 def index(request):
