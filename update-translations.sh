@@ -6,7 +6,7 @@
 
 set -ex
 
-LANGUAGES="el es fr id ja ko pl pt_BR zh_CN"
+LANGUAGES="el es fr id ja ko pl pt_BR zh_Hans"
 
 LOCALE_DIRS="dashboard/locale/ docs/locale/ locale/"
 
