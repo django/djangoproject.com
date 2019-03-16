@@ -139,8 +139,10 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_hosts.middleware.HostsRequestMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    # Put LocaleMiddleware before SessionMiddleware to prevent the former from accessing the
+    # session and adding 'Vary: Cookie' to all responses.
     'djangoproject.middleware.ExcludeHostsLocaleMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
