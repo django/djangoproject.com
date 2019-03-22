@@ -54,8 +54,9 @@ class Command(BaseCommand):
         self.default_builders = ['json', 'djangohtml']
         default_docs_version = DocumentRelease.objects.get(is_default=True).release.version
 
-        # Keep track of which Git sources have been updated.
-        self.release_docs_changed = {}  # e.g. {'1.8': True} if the 1.8 docs updated.
+        # Keep track of which Git sources have been updated, e.g.,
+        # {'1.8': True} if the 1.8 docs updated.
+        self.release_docs_changed = {}
         # Only update the index if some docs rebuild.
         self.update_index_required = False
 
@@ -144,6 +145,9 @@ class Command(BaseCommand):
             if self.verbosity >= 2:
                 self.stdout.write("  building %s (%s -> %s)" % (builder, source_dir, build_dir))
             try:
+                # Translated docs builds generate a lot of warnings, so send
+                # stderr to stdout to be logged (rather than generating an
+                # email)
                 subprocess.check_call([
                     'sphinx-build',
                     '-b', builder,
@@ -151,7 +155,7 @@ class Command(BaseCommand):
                     '-Q' if self.verbosity == 0 else '-q',
                     str(source_dir),        # Source file directory
                     str(build_dir),         # Destination directory
-                ])
+                ], stderr=sys.stdout)
             except subprocess.CalledProcessError:
                 self.stderr.write(
                     'sphinx-build returned an error (release %s, builder %s)' % (
@@ -227,8 +231,8 @@ class Command(BaseCommand):
             try:
                 cwd = os.getcwd()
                 os.chdir(str(destdir))
-                # Git writes all output to stderr, so redirect it to stdout for logging (so we don't
-                # get emailed with all Git output).
+                # Git writes all output to stderr, so redirect it to stdout for
+                # logging (so we don't get emailed with all Git output).
                 subprocess.check_call(['git', 'reset', '--hard', 'HEAD', quiet], stderr=sys.stdout)
                 subprocess.check_call(['git', 'clean', '-fdx', quiet], stderr=sys.stdout)
                 subprocess.check_call([
