@@ -11,6 +11,8 @@ To run locally, do the usual:
 
 #. Create a Python 3.5 virtualenv
 
+```python3 -m venv YOUR_VENV_DIRECTORY_NAME_HERE```
+
 #. Install dependencies::
 
     pip install -r requirements/dev.txt
@@ -33,9 +35,17 @@ To run locally, do the usual:
       "trac_db_host": "localhost",
       "trac_db_password": "secret" }
 
-   Add `export DJANGOPROJECT_DATA_DIR=~/.djangoproject` (without the backticks)
+#. Add `export DJANGOPROJECT_DATA_DIR=~/.djangoproject` (without the backticks)
    to your ~/.bashrc (or ~/.zshrc if you're using zsh) file and then run
    `source ~/.bashrc` (or `source ~/.zshrc`) to load the changes.
+
+   If you're on a Mac, you can add `export DJANGOPROJECT_DATA_DIR=~/.djangoproject`
+   (without the backticks) to ~/.bash_profile and then run `source ~/.bash_profile`
+   to load the changes.
+
+   If you're having trouble locating this file and you use a Mac, open your preferred 
+   text editor and go to `File > Open`. Then enter `Cmd + Shift + .` to show hidden
+   files. Locate `.bash_profile` and open it.
 
 #. Create databases::
 
@@ -74,7 +84,16 @@ To run locally, do the usual:
 #. For docs::
 
     ./manage.py loaddata doc_releases
+
+    Before running the next command, make sure you have ``gettext`` installed.
+    If you don't, run the following:
+
+    ``brew install gettext``
+
+    Then run:
+
     ./manage.py update_docs
+
 
 #. For dashboard::
 
@@ -96,10 +115,20 @@ To run locally, do the usual:
    and ``dashboard.djangoproject.localhost`` hostnames with your ``/etc/hosts``
    file to ``localhost``/``127.0.0.1``::
 
-     127.0.0.1  docs.djangoproject.localhost www.djangoproject.localhost dashboard.djangoproject.localhost
+     127.0.0.1  localhost docs.djangoproject.localhost www.djangoproject.localhost dashboard.djangoproject.localhost
 
    This is unnecessary with some browsers (e.g. Opera and Chromium/Chrome) as
    they handle localhost subdomains automatically.
+
+   To manually edit ``/etc/hosts`` on a Mac:
+   - enter ``sudo nano /etc/hosts``.
+   - use the arrow keys to update 127.0.0.1 to look like:
+
+     127.0.0.1  localhost docs.djangoproject.localhost www.djangoproject.localhost dashboard.djangoproject.localhost
+
+   - Enter ``Cntrl + X`` and you will be prompted to save the file.
+   - Enter ``Y`` to save it.
+   - Hit Enter again to confirm the name of the file you want to save.
 
    If you're on Mac OS and don't feel like editing the ``/etc/hosts`` file
    manually, there is a great preference pane called `Hosts.prefpane`_. On

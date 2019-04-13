@@ -1,0 +1,4 @@
+urllib3<1.24
+six==1.11.0
+requests<3.0.0,>=2.19.1
+python-slugify==1.2.6

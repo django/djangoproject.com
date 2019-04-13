@@ -1,0 +1,43 @@
+Metadata-Version: 2.1
+Name: django-contact-form
+Version: 1.6
+Summary: A generic contact-form application for Django
+Home-page: https://github.com/ubernostrum/django-contact-form/
+Author: James Bennett
+Author-email: james@b-list.org
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 1.11
+Classifier: Framework :: Django :: 2.0
+Classifier: Framework :: Django :: 2.1
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Topic :: Utilities
+Provides-Extra: akismet
+Requires-Dist: Django (>=1.11)
+Provides-Extra: akismet
+Requires-Dist: akismet; extra == 'akismet'
+
+.. -*-restructuredtext-*-
+
+.. image:: https://travis-ci.org/ubernostrum/django-contact-form.svg?branch=master
+    :target: https://travis-ci.org/ubernostrum/django-contact-form
+
+This application provides extensible contact-form functionality for
+`Django <https://www.djangoproject.com/>`_ sites.
+
+Full documentation for all functionality is included and is also
+`available online <http://django-contact-form.readthedocs.io/>`_.
+

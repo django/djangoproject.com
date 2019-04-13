@@ -1,0 +1,403 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-17 11:22-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:26
+msgid "Activate users"
+msgstr ""
+
+#: admin.py:44
+msgid "Re-send activation emails"
+msgstr ""
+
+#: forms.py:36 forms.py:114
+msgid "E-mail"
+msgstr ""
+
+#: forms.py:52
+msgid "A user with that username already exists."
+msgstr ""
+
+#: forms.py:64
+msgid "I have read and agree to the Terms of Service"
+msgstr ""
+
+#: forms.py:65
+msgid "You must agree to the terms to register"
+msgstr ""
+
+#: forms.py:81
+msgid ""
+"This email address is already in use. Please supply a different email "
+"address."
+msgstr ""
+
+#: forms.py:108
+msgid ""
+"Registration using free email addresses is prohibited. Please supply a "
+"different email address."
+msgstr ""
+
+#: models.py:274
+msgid "user"
+msgstr ""
+
+#: models.py:276
+msgid "activation key"
+msgstr ""
+
+#: models.py:282
+msgid "registration profile"
+msgstr ""
+
+#: models.py:283
+msgid "registration profiles"
+msgstr ""
+
+#: templates/registration/activate.html:4
+msgid "Activation Failure"
+msgstr ""
+
+#: templates/registration/activate.html:7
+msgid "Account activation failed."
+msgstr ""
+
+#: templates/registration/activation_complete.html:4
+#: templates/registration/activation_complete_admin_pending.html:4
+msgid "Account Activated"
+msgstr ""
+
+#: templates/registration/activation_complete.html:8
+#: templates/registration/activation_complete_admin_pending.html:8
+msgid "Your account is now activated."
+msgstr ""
+
+#: templates/registration/activation_complete.html:10
+msgid "You can log in."
+msgstr ""
+
+#: templates/registration/activation_complete_admin_pending.html:10
+msgid "Once a site administrator activates your account you can login."
+msgstr ""
+
+#: templates/registration/activation_email.html:6
+#: templates/registration/admin_approve_email.html:6
+msgid "registration"
+msgstr ""
+
+#: templates/registration/activation_email.html:11
+#, python-format
+msgid ""
+"\n"
+"    You (or someone pretending to be you) have asked to register an account "
+"at\n"
+"    %(site_name)s.  If this wasn't you, please ignore this email\n"
+"    and your address will be removed from our records.\n"
+"    "
+msgstr ""
+
+#: templates/registration/activation_email.html:18
+#, python-format
+msgid ""
+"\n"
+"    To activate this account, please click the following link within the "
+"next\n"
+"    %(expiration_days)s days:\n"
+"    "
+msgstr ""
+
+#: templates/registration/activation_email.html:30
+#: templates/registration/admin_approve_email.html:23
+#, python-format
+msgid ""
+"\n"
+"    Sincerely,\n"
+"    %(site_name)s Management\n"
+"    "
+msgstr ""
+
+#: templates/registration/activation_email.txt:2
+#, python-format
+msgid ""
+"\n"
+"You (or someone pretending to be you) have asked to register an account at\n"
+"%(site_name)s.  If this wasn't you, please ignore this email\n"
+"and your address will be removed from our records.\n"
+msgstr ""
+
+#: templates/registration/activation_email.txt:7
+#, python-format
+msgid ""
+"\n"
+"To activate this account, please click the following link within the next\n"
+"%(expiration_days)s days:\n"
+msgstr ""
+
+#: templates/registration/activation_email.txt:14
+#, python-format
+msgid ""
+"\n"
+"Sincerely,\n"
+"%(site_name)s Management\n"
+msgstr ""
+
+#: templates/registration/activation_email_subject.txt:1
+#: templates/registration/admin_approve_complete_email_subject.txt:1
+msgid "Account activation on"
+msgstr ""
+
+#: templates/registration/admin_approve.html:4
+msgid "Approval Failure"
+msgstr ""
+
+#: templates/registration/admin_approve.html:7
+msgid "Account Approval failed."
+msgstr ""
+
+#: templates/registration/admin_approve_complete.html:4
+msgid "Account Approved"
+msgstr ""
+
+#: templates/registration/admin_approve_complete.html:8
+msgid "The user's account is now approved."
+msgstr ""
+
+#: templates/registration/admin_approve_complete_email.html:6
+msgid "admin approval"
+msgstr ""
+
+#: templates/registration/admin_approve_complete_email.html:11
+msgid ""
+"\n"
+"    Your account is now approved. You can \n"
+"    "
+msgstr ""
+
+#: templates/registration/admin_approve_complete_email.html:14
+msgid "log in."
+msgstr ""
+
+#: templates/registration/admin_approve_complete_email.txt:2
+msgid ""
+"\n"
+"Your account is now approved. You can log in using the following link\n"
+msgstr ""
+
+#: templates/registration/admin_approve_email.html:11
+#, python-format
+msgid ""
+"\n"
+"    The following user (%(user)s) has asked to register an account at\n"
+"    %(site_name)s.\n"
+"    "
+msgstr ""
+
+#: templates/registration/admin_approve_email.html:17
+msgid ""
+"\n"
+"    To approve this, please\n"
+"    "
+msgstr ""
+
+#: templates/registration/admin_approve_email.html:20
+msgid "click here"
+msgstr ""
+
+#: templates/registration/admin_approve_email.txt:2
+#, python-format
+msgid ""
+"\n"
+"The following user (%(user)s) has asked to register an account at\n"
+"%(site_name)s.\n"
+msgstr ""
+
+#: templates/registration/admin_approve_email.txt:6
+msgid ""
+"\n"
+"To approve this, please click the following link.\n"
+msgstr ""
+
+#: templates/registration/admin_approve_email_subject.txt:1
+msgid "Account approval on"
+msgstr ""
+
+#: templates/registration/login.html:4 templates/registration/login.html:10
+msgid "Log in"
+msgstr ""
+
+#: templates/registration/login.html:14
+msgid "Forgot your password?"
+msgstr ""
+
+#: templates/registration/login.html:14
+msgid "Reset it"
+msgstr ""
+
+#: templates/registration/login.html:15
+msgid "Not a member?"
+msgstr ""
+
+#: templates/registration/login.html:15
+msgid "Register"
+msgstr ""
+
+#: templates/registration/logout.html:4
+msgid "Logged out"
+msgstr ""
+
+#: templates/registration/logout.html:7
+msgid "Successfully logged out"
+msgstr ""
+
+#: templates/registration/password_change_done.html:4
+msgid "Password changed"
+msgstr ""
+
+#: templates/registration/password_change_done.html:7
+msgid "Password successfully changed!"
+msgstr ""
+
+#: templates/registration/password_change_form.html:4
+#: templates/registration/password_change_form.html:10
+msgid "Change password"
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:4
+msgid "Password reset complete"
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:8
+msgid "Your password has been reset!"
+msgstr ""
+
+#: templates/registration/password_reset_complete.html:9
+#, python-format
+msgid "You may now <a href=\"%(login_url)s\">log in</a>"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:10
+msgid "Confirm password reset"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:14
+msgid "Enter your new password below to reset your password:"
+msgstr ""
+
+#: templates/registration/password_reset_confirm.html:18
+msgid "Set password"
+msgstr ""
+
+#: templates/registration/password_reset_done.html:4
+msgid "Password reset"
+msgstr ""
+
+#: templates/registration/password_reset_done.html:8
+msgid ""
+"\n"
+"    We have sent you an email with a link to reset your password. Please "
+"check\n"
+"    your email and click the link to continue.\n"
+"    "
+msgstr ""
+
+#: templates/registration/password_reset_email.html:3
+msgid "Greetings"
+msgstr ""
+
+#: templates/registration/password_reset_email.html:5
+#, python-format
+msgid ""
+"\n"
+"You are receiving this email because you (or someone pretending to be you)\n"
+"requested that your password be reset on the %(domain)s site. If you do not\n"
+"wish to reset your password, please ignore this message.\n"
+msgstr ""
+
+#: templates/registration/password_reset_email.html:11
+msgid ""
+"\n"
+"To reset your password, please click the following link, or copy and paste "
+"it\n"
+"into your web browser:\n"
+msgstr ""
+
+#: templates/registration/password_reset_email.html:20
+msgid "Your username, in case you've forgotten:"
+msgstr ""
+
+#: templates/registration/password_reset_email.html:23
+msgid "Best regards"
+msgstr ""
+
+#: templates/registration/password_reset_email.html:24
+msgid "Management"
+msgstr ""
+
+#: templates/registration/password_reset_form.html:4
+#: templates/registration/password_reset_form.html:15
+msgid "Reset password"
+msgstr ""
+
+#: templates/registration/password_reset_form.html:8
+msgid ""
+"\n"
+"    Forgot your password? Enter your email in the form below and we'll send "
+"you instructions for creating a new one.\n"
+"    "
+msgstr ""
+
+#: templates/registration/registration_closed.html:4
+msgid "Registration is closed"
+msgstr ""
+
+#: templates/registration/registration_closed.html:7
+msgid "Sorry, but registration is closed at this moment. Come back later."
+msgstr ""
+
+#: templates/registration/registration_complete.html:4
+msgid "Activation email sent"
+msgstr ""
+
+#: templates/registration/registration_complete.html:7
+msgid "Please check your email to complete the registration process."
+msgstr ""
+
+#: templates/registration/registration_form.html:4
+msgid "Register for an account"
+msgstr ""
+
+#: templates/registration/registration_form.html:10
+#: templates/registration/resend_activation_form.html:10
+msgid "Submit"
+msgstr ""
+
+#: templates/registration/resend_activation_complete.html:4
+msgid "Account Activation Resent"
+msgstr ""
+
+#: templates/registration/resend_activation_complete.html:8
+#, python-format
+msgid ""
+"\n"
+"  We have sent an email to %(email)s with further instructions.\n"
+"  "
+msgstr ""
+
+#: templates/registration/resend_activation_form.html:4
+msgid "Resend Activation Email"
+msgstr ""

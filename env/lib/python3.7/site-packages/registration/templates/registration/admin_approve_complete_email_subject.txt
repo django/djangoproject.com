@@ -1,0 +1,21 @@
+{% load i18n %}{% trans "Account activation on" %} {{ site.name }}
+
+
+{% comment %}
+**registration/admin_approve_complete_email_subject.txt**
+
+Used to generate the subject line of the admin approval complete email. Because 
+the subject line of an email must be a single line of text, any output
+from this template will be forcibly condensed to a single line before
+being used. This template has the following context:
+
+``site``
+    An object representing the site on which the user registered;
+    depending on whether ``django.contrib.sites`` is installed, this
+    may be an instance of either ``django.contrib.sites.models.Site``
+    (if the sites application is installed) or
+    ``django.contrib.sites.requests.RequestSite`` (if not). Consult `the
+    documentation for the Django sites framework
+    <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
+    details regarding these objects' interfaces.
+{% endcomment %}

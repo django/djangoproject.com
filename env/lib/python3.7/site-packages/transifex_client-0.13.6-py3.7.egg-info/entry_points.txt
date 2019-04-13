@@ -1,0 +1,3 @@
+[console_scripts]
+tx = txclib.cmdline:main
+

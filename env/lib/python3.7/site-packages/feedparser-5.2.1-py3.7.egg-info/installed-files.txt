@@ -1,0 +1,6 @@
+../__pycache__/feedparser.cpython-37.pyc
+../feedparser.py
+PKG-INFO
+SOURCES.txt
+dependency_links.txt
+top_level.txt
