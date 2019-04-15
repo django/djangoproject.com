@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'contact',
     'dashboard',
     'docs.apps.DocsConfig',
+    'foundation',
     'legacy',
     'members',
     'releases',
@@ -71,6 +72,7 @@ INSTALLED_APPS = [
     'registration',
     'django_hosts',
     'sorl.thumbnail',
+    'djmoney',
 
     'django.contrib.sites',
     'django.contrib.auth',

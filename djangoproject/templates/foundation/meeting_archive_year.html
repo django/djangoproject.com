@@ -1,0 +1,11 @@
+{% extends "base_foundation.html" %}
+
+{% block content %}
+<h1>Meeting minutes archive: {{ year|date:"Y" }}</h1>
+
+<ul>
+  {% for meeting in object_list %}
+  <li><a href="{{ meeting.get_absolute_url }}">{{ meeting }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

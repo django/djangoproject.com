@@ -1,0 +1,99 @@
+{% extends "base_foundation.html" %}
+
+{% block content %}
+{% load foundation %}
+
+<h1>{{ meeting }}</h1>
+
+<p>The meeting was led by {{ meeting.leader.account.get_full_name }}.</p>
+
+<p>Board members in attendance were:</p>
+
+<ul>
+  {% for attendee in meeting.board_attendees.all %}
+  <li>{{ attendee.account.get_full_name }}</li>
+  {% endfor %}
+</ul>
+
+{% if meeting.non_board_attendees.all %}
+<p>Also in attendance were:</p>
+
+<ul>
+  {% for attendee in meeting.non_board_attendees.all %}
+  <li>{{ attendee.name }} ({{ attendee.role }})</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<h2>Finances</h2>
+
+<h3>Balance</h3>
+
+<p>{{ meeting.treasurer_balance|currency }}</p>
+
+{% if meeting.treasurer_report %}
+<h3>Treasurer&#8217;s report</h3>
+{{ meeting.treasurer_report_html|safe }}
+{% endif %}
+
+{% if meeting.grants_approved %}
+<h2>Grants approved </h2>
+
+<ul>
+  {% for grant in meeting.grants_approved.all %}
+  <li>{{ grant.entity }}: {{ grant.amount|currency }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if meeting.individual_members_approved.all %}
+<h2>Individual members approved</h2>
+
+<ul>
+  {% for member in meeting.individual_members_approved.all %}
+  <li>{{ member.name }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if meeting.corporate_members_approved %}
+<h2>Corporate members approved</h2>
+
+<ul>
+  {% for member in meeting.corporate_members_approved.all %}
+  <li>{{ member.name }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if ongoing_business %}
+<h2>Ongoing business</h2>
+
+{% for business in ongoing_business %}
+<h3>{{ business.title }}</h2>
+
+{{ business.body|safe }}
+{% endfor %}
+{% endif %}
+
+{% if new_business %}
+<h2>New business</h2>
+
+{% for business in new_business %}
+<h3>{{ business.title }}</h2>
+
+{{ business.body_html|safe }}
+{% endfor %}
+{% endif %}
+
+{% if meeting.action_items.all %}
+<h2>Action items</h2>
+
+<ul>
+  {% for action_item in meeting.action_items.all %}
+  <li>{{ action_item.responsible }}: {{ action_item.task }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
+
