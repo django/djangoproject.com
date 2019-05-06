@@ -1,5 +1,4 @@
 # Settings for www.djangoproject.com
-import json
 import os
 from pathlib import Path
 
