@@ -1,0 +1,13 @@
+{% extends "base_foundation.html" %}
+
+{% block content %}
+<h1>Meeting minutes archive</h1>
+
+<p>Select a year to view meeting minutes:</p>
+
+<ul>
+  {% for year in date_list %}
+  <li><a href="{% url 'foundation_meeting_archive_year' year=year.year %}">{{ year.year }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}
