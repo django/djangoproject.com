@@ -51,6 +51,7 @@ urlpatterns = [
     path('diversity/changes/', TemplateView.as_view(template_name='diversity/changes.html'), name='diversity_changes'),
 
     path('contact/', include('contact.urls')),
+    path('foundation/minutes/', include('foundation.urls.meetings')),
     path('foundation/', include('members.urls')),
     path('fundraising/', include('fundraising.urls')),
 
