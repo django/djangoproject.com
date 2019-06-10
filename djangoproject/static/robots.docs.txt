@@ -35,7 +35,6 @@ Disallow: /pt-br/2.2/intro
 Disallow: /pt-br/2.2/ref
 Disallow: /pt-br/2.2/releases
 Disallow: /pt-br/2.2/topics
-Disallow: /zh-hans/2.2/howto
 Disallow: /zh-hans/2.2/internals
 Disallow: /zh-hans/2.2/ref
 Disallow: /zh-hans/2.2/releases
