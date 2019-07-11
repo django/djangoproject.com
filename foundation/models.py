@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
@@ -77,7 +79,12 @@ class Meeting(models.Model):
     non_board_attendees = models.ManyToManyField(
         NonBoardAttendee, related_name='meetings_attended', blank=True
     )
-    treasurer_balance = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
+    treasurer_balance = MoneyField(
+        max_digits=10,
+        decimal_places=2,
+        default_currency='USD',
+        default=Decimal('0.0'),
+    )
     treasurer_report = models.TextField(blank=True)
     treasurer_report_html = models.TextField(editable=False)
 
@@ -113,7 +120,12 @@ class ApprovedGrant(models.Model):
 
     """
     entity = models.CharField(max_length=255)
-    amount = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
+    amount = MoneyField(
+        max_digits=10,
+        decimal_places=2,
+        default_currency='USD',
+        default=Decimal('0.0'),
+    )
     approved_at = models.ForeignKey(
         Meeting, related_name='grants_approved', on_delete=models.CASCADE
     )
