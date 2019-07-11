@@ -9,7 +9,7 @@ feedparser==5.2.1
 Jinja2==2.10
 libsass==0.17.0
 Pillow==5.4.1
-psycopg2-binary==2.7.7
+psycopg2==2.8.3
 pygments==2.3.1
 pykismet3==0.1.1
 requests==2.22.0
