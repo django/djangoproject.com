@@ -1,4 +1,4 @@
-Django==2.1.10
+Django==2.2.3
 django-contact-form==1.7
 django-hosts==3.0
 django-push==1.1
