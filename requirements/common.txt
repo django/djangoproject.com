@@ -1,5 +1,5 @@
 Django==2.1.10
-django-contact-form==1.6
+django-contact-form==1.7
 django-hosts==3.0
 django-push==1.1
 django-registration-redux==2.5
