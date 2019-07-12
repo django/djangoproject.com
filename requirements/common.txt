@@ -7,7 +7,7 @@ django-money==0.15.0
 docutils==0.14
 feedparser==5.2.1
 Jinja2==2.10.1
-libsass==0.17.0
+libsass==0.19.2
 Pillow==5.4.1
 psycopg2==2.8.3
 pygments==2.3.1
