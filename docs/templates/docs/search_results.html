@@ -13,13 +13,13 @@
 {% if query %}
 <h2>
 {% if release.is_dev %}
-  {% blocktrans count num_results=paginator.count %}
+  {% blocktrans count num_results=paginator.count trimmed %}
     Only 1 result for <em>{{ query }}</em> in the development version
   {% plural %}
     {{ num_results }} results for <em>{{ query }}</em> in the development version
   {% endblocktrans %}
 {% else %}
-  {% blocktrans count num_results=paginator.count %}
+  {% blocktrans count num_results=paginator.count trimmed %}
     Only 1 result for <em>{{ query }}</em> in version {{ version }}
   {% plural %}
     {{ num_results }} results for <em>{{ query }}</em> in version {{ version }}
@@ -63,7 +63,7 @@
       </a></li>
       {% endif %}
       <span class="page-current">
-      {% blocktrans with page_number=page.number num_pages=page.paginator.num_pages %}
+      {% blocktrans with page_number=page.number num_pages=page.paginator.num_pages trimmed %}
         Page {{ page_number }} of {{ num_pages }}
       {% endblocktrans %}
       </span>
