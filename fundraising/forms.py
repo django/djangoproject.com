@@ -32,7 +32,7 @@ class DjangoHeroForm(forms.ModelForm):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Where are you located? (optional; will not be displayd)',
+                'placeholder': 'Where are you located? (optional; will not be displayed)',
             },
         )
     )
