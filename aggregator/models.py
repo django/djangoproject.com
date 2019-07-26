@@ -123,7 +123,7 @@ class FeedItem(models.Model):
 
 
 def feed_updated(sender, notification, **kwargs):
-    log.debug('Recieved notification on subscription ID %s (%s)',
+    log.debug('Received notification on subscription ID %s (%s)',
               sender.id, sender.topic)
     try:
         feed = Feed.objects.get(feed_url=sender.topic)

@@ -67,7 +67,7 @@ class Metric(models.Model):
         Gather all the data from this metric since a given date.
 
         Returns a list of (timestamp, value) tuples. The timestamp is a Unix
-        timestamp, coverted from localtime to UTC.
+        timestamp, converted from localtime to UTC.
         """
         if self.period == METRIC_PERIOD_INSTANT:
             return self._gather_data_instant(since)
