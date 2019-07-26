@@ -1,0 +1,34 @@
+<svg viewBox="0, 0, 350, 300" xmlns="http://www.w3.org/2000/svg" width="350" height="300">
+    <rect x="50" width="50" height="50" fill="#ad1d45" stroke="none"/>
+    <rect x="100" width="50" height="50" fill="#d9195c" stroke="none"/>
+    <rect x="200" width="50" height="50" fill="#d9195c" stroke="none"/>
+    <rect x="250" width="50" height="50" fill="#d62d75" stroke="none"/>
+
+    <rect y="50" width="50" height="50" fill="#d9195c" stroke="none"/>
+    <rect x="50" y="50" width="50" height="50" fill="#ee2178" stroke="none"/>
+    <rect x="100" y="50" width="50" height="50" fill="#ee2178" stroke="none"/>
+    <rect x="150" y="50" width="50" height="50" fill="#d9195c" stroke="none"/>
+    <rect x="200" y="50" width="50" height="50" fill="#ee2178" stroke="none"/>
+    <rect x="250" y="50" width="50" height="50" fill="#f7b0cf" stroke="none"/>
+    <rect x="300" y="50" width="50" height="50" fill="#ad1d45" stroke="none"/>
+
+    <rect y="100" width="50" height="50" fill="#d62d75" stroke="none"/>
+    <rect x="50" y="100" width="50" height="50" fill="#d9195c" stroke="none"/>
+    <rect x="100" y="100" width="50" height="50" fill="#d9195c" stroke="none"/>
+    <rect x="150" y="100" width="50" height="50" fill="#ad1d45" stroke="none"/>
+    <rect x="200" y="100" width="50" height="50" fill="#d9195c" stroke="none"/>
+    <rect x="250" y="100" width="50" height="50" fill="#d62d75" stroke="none"/>
+    <rect x="300" y="100" width="50" height="50" fill="#ad1d45" stroke="none"/>
+
+    <rect x="50" y="150" width="50" height="50" fill="#ad1d45" stroke="none"/>
+    <rect x="100" y="150" width="50" height="50" fill="#ee2178" stroke="none"/>
+    <rect x="150" y="150" width="50" height="50" fill="#d9195c" stroke="none"/>
+    <rect x="200" y="150" width="50" height="50" fill="#ee2178" stroke="none"/>
+    <rect x="250" y="150" width="50" height="50" fill="#d9195c" stroke="none"/>
+
+    <rect x="100" y="200" width="50" height="50" fill="#d9195c" stroke="none"/>
+    <rect x="150" y="200" width="50" height="50" fill="#d62d75" stroke="none"/>
+    <rect x="200" y="200" width="50" height="50" fill="#d9195c" stroke="none"/>
+
+    <rect x="150" y="250" width="50" height="50" fill="#ee2178" stroke="none"/>
+</svg>

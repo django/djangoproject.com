@@ -2,9 +2,9 @@
 <div class="hero">
   <div class="hero-logo">
     {% if obj.url %}<a href="{{ obj.url }}" rel="nofollow">{% endif %}
-    <img src="{% static 'img/fundraising-heart.png' %}"
-      data-src="{% if obj.logo %}{{ obj.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
-      data-src-retina="{% if obj.logo %}{{ obj.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.png' %}{% endif %}"
+    <img src="{% static 'img/fundraising-heart.svg' %}"
+      data-src="{% if obj.logo %}{{ obj.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.svg' %}{% endif %}"
+      data-src-retina="{% if obj.logo %}{{ obj.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.svg' %}{% endif %}"
       alt="{{ obj.display_name }}" />
     {% if obj.url %}</a>{% endif %}
   </div>
