@@ -77,3 +77,9 @@ PUSH_SSL_CALLBACK = True
 if 'sentry_dsn' in SECRETS and not DEBUG:
     INSTALLED_APPS.append('raven.contrib.django.raven_compat')
     RAVEN_CONFIG = {'dsn': SECRETS['sentry_dsn']}
+
+# RECAPTCHA KEYS
+# Defaults will trigger 'captcha.recaptcha_test_key_error' system check
+if 'recaptcha_public_key' in SECRETS:
+    RECAPTCHA_PUBLIC_KEY = SECRETS.get('recaptcha_public_key')
+    RECAPTCHA_PRIVATE_KEY = SECRETS.get('recaptcha_private_key')
