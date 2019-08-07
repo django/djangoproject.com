@@ -20,7 +20,7 @@
     Here’s how to get it:</p>
 
   <h2>Option {% cycle '1' '2' '3' as options %}: Get the latest official version</h2>
-  <p>The latest official version is {{ current.version }}. Read the
+  <p>The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}. Read the
     {% release_notes current.version show_version=True %}, then install it with
     <a href="https://pip.pypa.io/en/latest/">pip</a>:</p>
   <pre class="literal-block"><code>pip install Django=={{ current.version }}</code></pre>
