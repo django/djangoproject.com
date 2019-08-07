@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app/
+    ports:
+      - 8000:8000
+    environment:
+      - SECRET_KEY=foo
+      - DJANGOPROJECT_DATA_DIR=./data
+      - DJANGO_SETTINGS_MODULE=djangoproject.settings.docker
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=djangoproject
+      - SQL_USER=djangoproject
+      - SQL_PASSWORD=djangoproject
+      - SQL_HOST=db
+      - SQL_PORT=5432
+    depends_on:
+      - db
+  db:
+    image: postgres:11.2-alpine
+    environment:
+      - POSTGRES_USER=djangoproject
+      - POSTGRES_PASSWORD=djangoproject
+      - POSTGRES_DB=djangoproject

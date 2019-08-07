@@ -371,3 +371,21 @@ our translation files as follows:
 
     git commit -m "Updated translations" locale/*/LC_MESSAGES/*
     git push
+
+Running Locally with Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Build the images::
+
+    docker-compose build
+
+2. Spin up the containers::
+
+    docker-compose up
+
+3. View the site at http://localhost:8000/
+
+4. Run the tests::
+
+    docker-compose exec web tox
+    docker-compose exec web python manage.py test
