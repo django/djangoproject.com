@@ -49,31 +49,14 @@ define([
         var interval = $donationForm.find('[name=interval]').val();
         var amountDollars = $donationForm.find('[name=amount]').val();
         var amountCents = parseFloat(amountDollars) * 100;
-        var csrfToken = $donationForm.find('[name=csrfmiddlewaretoken]').val();
-        var recaptchaToken = document.getElementById('id_captcha').dataset.callback
-        var data = {
-            'captcha': recaptchaToken,
-            'csrfmiddlewaretoken': csrfToken
-        }
-        $.ajax({
-            type: "POST",
-            url: $donationForm.attr('action-for-verify'),
-            data: data,
-            dataType: 'json',
-            success: function (data) {
-                if (data.success) {
-		    handler.open({
-			name: 'Django Software Foundation',
-			amount: amountCents,
-			currency: 'USD',
-			bitcoin: true,
-			zipCode: true,
-			billingAddress: true
-		    });
-                } else {
-                    alert(data.error);
-                }
-            }
-        })
+
+        handler.open({
+            name: 'Django Software Foundation',
+            amount: amountCents,
+            currency: 'USD',
+            bitcoin: true,
+            zipCode: true,
+            billingAddress: true
+        });
     });
 });
