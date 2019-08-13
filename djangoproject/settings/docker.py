@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'svntogit',
     'tracdb',
     'fundraising',
+    'captcha',
 
     'registration',
     'django_hosts',
@@ -255,7 +256,7 @@ THUMBNAIL_ALTERNATIVE_RESOLUTIONS = [2]
 TRAC_RPC_URL = "https://code.djangoproject.com/rpc"
 TRAC_URL = "https://code.djangoproject.com/"
 
-ALLOWED_HOSTS = ['.localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', 'www.127.0.0.1']
 
 LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = ['docs.djangoproject.localhost']
 
@@ -293,6 +294,8 @@ PARENT_HOST = 'localhost:8000'
 # django-push settings
 
 PUSH_SSL_CALLBACK = False
+
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
 # Enable optional components
 
