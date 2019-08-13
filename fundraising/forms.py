@@ -1,6 +1,4 @@
 import stripe
-from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV3
 from django import forms
 from django.conf import settings
 from django.core.mail import send_mail
@@ -277,7 +275,3 @@ class PaymentForm(forms.Form):
             )
 
             return donation
-
-
-class ReCaptchaForm(forms.Form):
-    captcha = ReCaptchaField(widget=ReCaptchaV3)
