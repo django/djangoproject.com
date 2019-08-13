@@ -6,6 +6,7 @@ app_name = 'fundraising'
 urlpatterns = [
     path('', views.index, name='index'),
     path('donate/', views.donate, name='donate'),
+    path('verify/', views.verify_captcha, name='verify-captcha'),
     path('thank-you/<donation>/', views.thank_you, name='thank-you'),
     path('manage-donations/<hero>/', views.manage_donations, name='manage-donations'),
     path('manage-donations/<hero>/cancel/', views.cancel_donation, name='cancel-donation'),
