@@ -5,7 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import floatformat
 
-from fundraising.forms import DonateForm
+from fundraising.forms import DonateForm, ReCaptchaForm
 from fundraising.models import (
     DEFAULT_DONATION_AMOUNT, DISPLAY_DONOR_DAYS, GOAL_AMOUNT, GOAL_START_DATE,
     LEADERSHIP_LEVEL_AMOUNT, DjangoHero, InKindDonor, Payment,
@@ -51,6 +51,7 @@ def donation_form_with_heart(context):
     form = DonateForm(initial={
         'amount': DEFAULT_DONATION_AMOUNT,
     })
+    form_captcha = ReCaptchaForm()
 
     return {
         'goal_amount': GOAL_AMOUNT,
@@ -58,6 +59,7 @@ def donation_form_with_heart(context):
         'donated_amount': donated_amount,
         'total_donors': total_donors,
         'form': form,
+        'form_captcha': form_captcha,
         'display_logo_amount': LEADERSHIP_LEVEL_AMOUNT,
         'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
         'user': user,

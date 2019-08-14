@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from .exceptions import DonationError
-from .forms import DjangoHeroForm, DonationForm, PaymentForm
+from .forms import DjangoHeroForm, DonationForm, PaymentForm, ReCaptchaForm
 from .models import (
     LEADERSHIP_LEVEL_AMOUNT, DjangoHero, Donation, Payment, Testimonial,
 )
@@ -25,6 +25,20 @@ def index(request):
     return render(request, 'fundraising/index.html', {
         'testimonial': testimonial,
     })
+
+
+@require_POST
+def verify_captcha(request):
+    form = ReCaptchaForm(request.POST)
+
+    if form.is_valid():
+        data = {'success': True}
+    else:
+        data = {
+            'success': False,
+            'error': form.errors
+        }
+    return JsonResponse(data)
 
 
 @require_POST
