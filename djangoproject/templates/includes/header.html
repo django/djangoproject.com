@@ -20,7 +20,10 @@
           <a href="{% url 'community-index' %}">Community</a>
         </li>
         <li>
-          <a href="https://code.djangoproject.com/">Code</a>
+          <a href="https://github.com/django/django" target="_blank" rel="noopener">Code</a>
+        </li>
+        <li>
+          <a href="https://code.djangoproject.com/">Issues</a>
         </li>
         <li{% if 'foundation' in request.path %} class="active"{% endif %}>
           <a href="{% url 'homepage' %}foundation/">About</a>
