@@ -16,4 +16,4 @@ requests==2.22.0
 sorl-thumbnail==12.5.0
 stripe==2.20.3
 Sphinx==1.8.4
-django-recaptcha==2.0.4
+django-recaptcha==2.0.5
