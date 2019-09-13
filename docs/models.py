@@ -116,6 +116,13 @@ class DocumentRelease(models.Model):
         return self.release is None
 
     @property
+    def is_preview(self):
+        if self.release is not None:
+            if self.release.date is None:
+                return True
+        return False
+
+    @property
     def is_supported(self):
         if self.release is None:
             return True
