@@ -65,5 +65,33 @@
     "iteration": 0,
     "is_lts": false
   }
+},
+{
+  "model": "releases.release",
+  "pk": "2.1",
+  "fields": {
+    "date": "2018-08-01",
+    "eol_date": null,
+    "major": 2,
+    "minor": 1,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": false
+  }
+},
+{
+  "model": "releases.release",
+  "pk": "2.2",
+  "fields": {
+    "date": "2019-04-01",
+    "eol_date": null,
+    "major": 2,
+    "minor": 2,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": true
+  }
 }
 ]
