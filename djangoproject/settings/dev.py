@@ -65,4 +65,4 @@ if DEBUG:
 
 
 # Disable for development only.
-SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+SILENCED_SYSTEM_CHECKS = SILENCED_SYSTEM_CHECKS + ['captcha.recaptcha_test_key_error']
