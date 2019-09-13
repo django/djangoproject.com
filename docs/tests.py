@@ -23,12 +23,25 @@ class ModelsTests(TestCase):
 
     def test_dev_is_supported(self):
         """
-        Document for a release without a date ("dev") is supported.
+        Document without a release ("dev") is supported.
         """
         d = DocumentRelease.objects.create()
 
         self.assertTrue(d.is_supported)
         self.assertTrue(d.is_dev)
+        self.assertFalse(d.is_preview)
+
+    def test_preview_is_supported(self):
+        """
+        Document with a release without a date (alpha/beta/rc) is supported as
+        "preview".
+        """
+        r = Release.objects.create(version='3.0', date=None)
+        d = DocumentRelease.objects.create(release=r)
+
+        self.assertTrue(d.is_supported)
+        self.assertFalse(d.is_dev)
+        self.assertTrue(d.is_preview)
 
     def test_current_is_supported(self):
         """
@@ -42,6 +55,7 @@ class ModelsTests(TestCase):
 
         self.assertTrue(d.is_supported)
         self.assertFalse(d.is_dev)
+        self.assertFalse(d.is_preview)
 
     def test_previous_is_supported(self):
         """
@@ -56,6 +70,7 @@ class ModelsTests(TestCase):
 
         self.assertTrue(d.is_supported)
         self.assertFalse(d.is_dev)
+        self.assertFalse(d.is_preview)
 
     def test_old_is_unsupported(self):
         """
@@ -70,6 +85,7 @@ class ModelsTests(TestCase):
 
         self.assertFalse(d.is_supported)
         self.assertFalse(d.is_dev)
+        self.assertFalse(d.is_preview)
 
     def test_most_recent_micro_release_considered(self):
         """
@@ -90,6 +106,7 @@ class ModelsTests(TestCase):
         # Since 1.8.1 is still supported, docs show up as supported.
         self.assertTrue(d.is_supported)
         self.assertFalse(d.is_dev)
+        self.assertFalse(d.is_preview)
 
 
 class ManagerTests(TestCase):
