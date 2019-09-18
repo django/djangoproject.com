@@ -395,8 +395,6 @@ blockquote {
     }
 }
 .container {
-    @include clearfix;
-    //reusable container class to center content
     @include respond-min(768px) {
         margin: 0 auto;
         max-width: 1400px;
@@ -407,6 +405,17 @@ blockquote {
         .mdzr-boxshadow & {
             box-shadow: -1200px 0 0 0px #fff;
         }
+    }
+}
+.container--flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.container--flex--wrap--mobile {
+    flex-wrap: wrap;
+    @include respond-min(768px) {
+        flex-wrap: no-wrap;
     }
 }
 
@@ -2580,7 +2589,7 @@ form {
         padding: 6px 14% 8px 10px;
         text-indent: 0;
         vertical-align: middle;
-        width: 82%;
+        width: 83%;
 
         @include respond-min(768px) {
             padding: 6px 18% 8px 10px;
@@ -2718,7 +2727,19 @@ form {
             }
         }
     }
-}
+    &.search {
+        @include respond-min(768px) {
+            flex: 0 0 40%;
+            margin: 10px 0;
+        }
+        flex: 0 0 100%;
+        margin: 0 0 10px 0;
+        button {
+            top: 19%;
+        }
+    }
+} 
+
 
 
 form.donate {

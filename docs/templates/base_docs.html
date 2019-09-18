@@ -1,12 +1,17 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n docs %}
 
 {% block html_language_code %}{{ lang|default:"en" }}{% endblock %}
 
 {% block title %}{% trans 'Django Documentation' %}{% endblock %}
 
+{% block header-classes %}
+container--flex container--flex--wrap--mobile
+{% endblock %}
+
 {% block header %}
-  <h1><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a></h1>
+<h1><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a></h1>
+{% search_form %}
 {% endblock %}
 
 {% block layout_class %}sidebar-right{% endblock %}
