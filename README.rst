@@ -79,7 +79,7 @@ To run locally, do the usual:
 #. For docs (next step requires ``gettext``)::
 
     python -m manage loaddata doc_releases
-    python -m manage update_docs
+    python -m manage update_docs_and_index
 
 #. For dashboard:
 
@@ -269,7 +269,7 @@ library from ``bower.json``, you will need to commit the changes in
 Documentation search
 --------------------
 
-When running ``python -m manage update_docs`` to build all documents it will also
+When running ``python -m manage update_docs_and_index`` to build all documents it will also
 automatically index every document it builds in the search engine as well.
 In case you've already built the documents and would like to reindex the
 search index run the command::
