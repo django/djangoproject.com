@@ -74,7 +74,7 @@ To run locally, do the usual:
 #. For docs::
 
     ./manage.py loaddata doc_releases
-    ./manage.py update_docs
+    ./manage.py update_docs_and_index
 
 #. For dashboard::
 
@@ -264,7 +264,7 @@ library from ``bower.json``, you will need to commit the changes in
 Documentation search
 --------------------
 
-When running ``./manage.py update_docs`` to build all documents it will also
+When running ``./manage.py update_docs_and_index`` to build all documents it will also
 automatically index every document it builds in the search engine as well.
 In case you've already built the documents and would like to reindex the
 search index run the command::
