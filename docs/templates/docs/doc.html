@@ -53,6 +53,13 @@
 
 {% block content %}
 <div id="version-switcher">
+  <ul id="faq-link">
+    <li class="current-link">
+      <a href="{% url 'document-detail' lang=lang version=version url='faq/help' host 'docs' %}">
+        <span>{% trans "Getting Help" %}</span>
+      </a>
+    </li>
+  </ul>
   <ul id="doc-languages" class="language-switcher">
   {% for available_lang in available_languages %}
   {% if lang != available_lang %}
