@@ -2259,12 +2259,6 @@ h2 + .list-link-soup {
     color: $red-dark;
 }
 
-#s-getting-help {
-    // hiding getting help section because we moved it to sidebar, but because of docs being served
-    // on readthedocs, we still want to keep the content in.
-    display: none;
-}
-
 #docs-content {
 
     // Decrease vertical spacing in docs for less scrolling
