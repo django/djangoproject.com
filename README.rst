@@ -55,7 +55,7 @@ To run locally, do the usual:
      ALTER USER "code.djangoproject" WITH PASSWORD 'secret';
      \d
 
-   (Use the same passwords like the ones you've used in your `secrets.json` file)
+   (Use the same passwords as the ones you've used in your `secrets.json` file)
 
 #. Create tables::
 
