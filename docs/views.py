@@ -9,7 +9,7 @@ from django.core.paginator import InvalidPage, Paginator
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
 from django.template.response import TemplateResponse
-from django.utils.translation import activate, ugettext_lazy as _
+from django.utils.translation import activate, gettext_lazy as _
 from django.views import static
 from django.views.decorators.cache import cache_page
 from django_hosts.resolvers import reverse

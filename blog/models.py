@@ -6,7 +6,7 @@ from django.db import models
 from django.test import RequestFactory
 from django.utils import timezone
 from django.utils.cache import _generate_cache_header_key
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django_hosts.resolvers import reverse
 from docutils.core import publish_parts
 
