@@ -202,14 +202,14 @@ admin.site.register(Member, MemberAdmin)  # Use the customized options
 
       {% pygment 'python' %}
 from django.shortcuts import render
-from django.utils.translation import ugettext
+from django.utils.translation import gettext
 
 def homepage(request):
     """
     Shows the homepage with a welcome message that is translated in the
     user's language.
     """
-    message = ugettext('Welcome to our site!')
+    message = gettext('Welcome to our site!')
     return render(request, 'homepage.html', {'message': message})
       {% endpygment %}
 
