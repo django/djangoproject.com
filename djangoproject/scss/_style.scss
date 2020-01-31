@@ -2346,7 +2346,7 @@ h2 + .list-link-soup {
 
 }
 
-dl.function, dl.class, dl.method, dl.attribute, dl.exception {
+dl.function, dl.class, dl.method, dl.classmethod, dl.staticmethod, dl.attribute, dl.exception {
     dt {
         font-weight: 700;
     }
