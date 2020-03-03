@@ -6,6 +6,11 @@
 {% block layout_class %}sidebar-right{% endblock %}
 
 {% block header %}
+    <div class="copy-banner" style="background: #44B78B;">
+      <div class="container">
+        <h1><a href="https://www.jetbrains.com/pycharm/specials/support-django/" style="font-weight: bold;">Until March 14th, get PyCharm at 30% off. All money goes to the DSF!</a></h1>
+      </div>
+    </div>
     <h1 class="visuallyhidden">Django</h1>
     <p>
         <em>Django makes it easier to build better Web apps more quickly and with less code.</em>
@@ -13,18 +18,6 @@
     <p>
         <a href="{% url 'start' %}" class="cta">Get started with Django</a>
     </p>
-    {% comment %}
-        <p class="small">
-            Used by these great companies, and many more
-            <ul class="django-companies">
-              <li><a href="{% url 'case_study' %}" class="company-mozilla">Mozilla</a></li>
-              <li><a href="{% url 'case_study' %}" class="company-pinterest">Pinterest</a></li>
-              <li><a href="{% url 'case_study' %}" class="company-theguardian">The Guardian</a></li>
-              <li><a href="{% url 'case_study' %}" class="company-instagram">Instagram</a></li>
-              <li><a href="{% url 'case_study' %}" class="company-rdio">Rdio</a></li>
-            </ul>
-        </p>
-    {% endcomment %}
 {% endblock %}
 
 {% block content %}
