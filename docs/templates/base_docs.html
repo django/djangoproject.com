@@ -10,9 +10,7 @@ container--flex container--flex--wrap--mobile
 {% endblock %}
 
 {% block header %}
-{% comment %}<h1><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a></h1>
-{% endcomment %}
-<h1><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a> &ndash; <a href="https://www.jetbrains.com/pycharm/specials/support-django/">Until March 30th, get PyCharm at 30% off. All money goes to the DSF!</a></h1>
+<h1><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a></h1>
 {% search_form %}
 {% endblock %}
 
