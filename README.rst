@@ -16,7 +16,7 @@ To run locally, do the usual:
     pip install -r requirements/dev.txt
     npm install
 
-   Alternatively use the make task::
+   Alternatively, use the make task::
 
     make install
 
@@ -47,7 +47,7 @@ To run locally, do the usual:
 #. Setting up database access
 
    If you are using the default postgres configuration, chances are you will
-   have to give a password for the newly created users in order to be able to
+   have to give a password for the newly created users to be able to
    use them for Django::
 
      psql
@@ -103,12 +103,12 @@ To run locally, do the usual:
 
    If you're on Mac OS and don't feel like editing the ``/etc/hosts`` file
    manually, there is a great preference pane called `Hosts.prefpane`_. On
-   Ubuntu there is a `built-in network admin`_ GUI to do the same. Remember
+   Ubuntu, there is a `built-in network admin`_ GUI to do the same. Remember
    both require admin privileges, just like you'd need when editing
    ``/etc/hosts`` with your favorite editor.
 
    If you don't have admin rights but have an internet connection, you can use a
-   service like `xip.io <http://xip.io>`_. In that case you'll also have to
+   service like `xip.io <http://xip.io>`_. In that case, you'll also have to
    update `ALLOWED_HOSTS` in `djangoproject/settings/dev.py` as well as the
    content of the `django_site` table in your database.
 
@@ -119,7 +119,7 @@ To run locally, do the usual:
 
     make compile-scss
 
-#. Finally run the server::
+#. Finally, run the server::
 
     make run
 
@@ -147,7 +147,7 @@ Then in the root directory (next to the ``manage.py`` file) run::
 
     tox
 
-Behind the scenes this will run the usual ``./manage.py test`` management
+Behind the scenes, this will run the usual ``./manage.py test`` management
 command with a preset list of apps that we want to test as well as
 `flake8 <https://flake8.readthedocs.io/>`_ for code quality checks. We
 collect test coverage data as part of that tox run, to show the result
@@ -181,7 +181,7 @@ their ability to use the technologies in use on the site, such as HTML5, CSS3,
 SVG, webfonts.
 
 We're following `Mozilla's example <https://wiki.mozilla.org/Support/Browser_Support>`_
-when it comes to categorize browser support.
+when it comes to categorizing browser support.
 
 - Desktop browsers, except as noted below, are **A grade**, meaning that
   everything needs to work.
@@ -211,7 +211,7 @@ Run the following to compile the Scss files to CSS::
 
     make compile-scss-debug
 
-Alternatively you can also run the following command in a separate shell
+Alternatively, you can also run the following command in a separate shell
 to continuously watch for changes to the Scss files and automatically compile
 to CSS::
 
@@ -337,7 +337,7 @@ the translations team will need to update Transifex as follows:
 
      tx push -s
 
-3. Commit and push the changes to github::
+3. Commit and push the changes to GitHub::
 
      git commit -m "Updated messages" locale/en/LC_MESSAGES/*
      git push
