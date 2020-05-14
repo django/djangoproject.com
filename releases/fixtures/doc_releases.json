@@ -93,5 +93,19 @@
     "iteration": 0,
     "is_lts": true
   }
+},
+{
+  "model": "releases.release",
+  "pk": "3.0",
+  "fields": {
+    "date": "2019-12-02",
+    "eol_date": null,
+    "major": 3,
+    "minor": 0,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": false
+  }
 }
 ]

@@ -10,19 +10,19 @@
 },
 {
   "model": "docs.documentrelease",
-  "pk": 25,
+  "pk": 27,
   "fields": {
     "lang": "fr",
-    "release": "2.2",
+    "release": "3.0",
     "is_default": false
   }
 },
 {
   "model": "docs.documentrelease",
-  "pk": 26,
+  "pk": 28,
   "fields": {
     "lang": "en",
-    "release": "2.2",
+    "release": "3.0",
     "is_default": true
   }
 }
