@@ -965,7 +965,6 @@ blockquote {
 
     .thanks {
         @include font-size(12);
-        color: $green-medium-dark;
         margin: 0;
         padding: 0;
         @include respond-min(768px) {
@@ -1062,7 +1061,7 @@ blockquote {
         }
 
         a {
-            color: $green-medium-dark;
+            color: inherit;
         }
     }
 }
