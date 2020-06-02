@@ -49,7 +49,22 @@
         {% block header %}{% endblock %}
       </div>
     </div>
-    <div id="billboard">{% block billboard %}{% endblock %}</div>
+    <div id="billboard">{% block billboard %}
+      <div style="background: #0C4B33; color: #FFF; text-align:center;padding: 1em 3em;">
+        <p>
+          The Django Software Foundation deeply values the diversity of our developers, users, and community. We are distraught by the suffering, oppression, and systemic racism the Black community faces every day. We can no longer remain silent. 
+        </p>
+        <p>
+          In silence, we are complicit. To eradicate racism, xenophobia, and all other forms of inequality, we must take action. It is our responsibility and our honour to use our platform to amplify the voices of the oppressed and marginalised. 
+        </p>
+        <p>
+          We ask today—and always—that the Django community comes together in support of the Black community. They will be heard. 
+        </p>
+        <p>
+          #BlackLivesMatter 
+        </p>
+      </div>
+    {% endblock %}</div>
 
     <div class="container {% block layout_class %}{% endblock %}">
       <div role="main">
