@@ -1,21 +1,38 @@
 os: linux
 dist: bionic
-addons:
-  postgresql: "11"
 language: python
+
 python:
   - "3.8"
+
+services: postgresql
+
+addons:
+  postgresql: "12"
+  apt:
+    packages:
+    - postgresql-12
+    - postgresql-client-12
+
+env:
+  global:
+  - PGPORT=5433
+
 install:
   - pip install coveralls tox
+
 before_script:
-  - createuser -U postgres -d djangoproject --superuser
-  - createdb -U postgres -O djangoproject djangoproject
-  - createuser -U postgres -d code.djangoproject --superuser
-  - createdb -U postgres -O code.djangoproject code.djangoproject
-  - psql -U postgres -d code.djangoproject < tracdb/trac.sql
+  - psql -c 'CREATE USER "djangoproject" WITH CREATEDB SUPERUSER;' -U travis
+  - psql -c 'CREATE DATABASE "djangoproject" OWNER "djangoproject";' -U travis
+  - psql -c 'CREATE USER "code.djangoproject" WITH CREATEDB SUPERUSER;' -U travis
+  - psql -c 'CREATE DATABASE "code.djangoproject" OWNER "code.djangoproject";' -U travis
+  - psql -U travis -d code.djangoproject < tracdb/trac.sql
+
 script:
   - tox
+
 after_success: coveralls
+
 notifications:
   irc:
     channels:
