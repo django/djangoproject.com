@@ -34,10 +34,10 @@ ci: test
 	@coverage report
 
 isort:
-	isort -rc $(APP_LIST)
+	isort $(APP_LIST)
 
 isort-check:
-	isort -c -rc $(APP_LIST)
+	isort -c $(APP_LIST)
 
 $(JQUERY_FLOT)/jquery.flot.min.js: $(JQUERY_FLOT)
 	cat $(JQUERY_FLOT)/jquery.flot.js $(JQUERY_FLOT)/jquery.flot.time.js > $(JQUERY_FLOT)/jquery.flot.concat.js
