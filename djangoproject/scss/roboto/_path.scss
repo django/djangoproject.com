@@ -22,7 +22,7 @@
 		 url('#{$roboto-font-path}/roboto-v20-latin-italic.woff2?v=#{$roboto-version}') format('woff2'), /* Super Modern Browsers */
 		 url('#{$roboto-font-path}/roboto-v20-latin-italic.woff?v=#{$roboto-version}') format('woff'), /* Modern Browsers */
 		 url('#{$roboto-font-path}/roboto-v20-latin-italic.ttf?v=#{$roboto-version}') format('truetype'), /* Safari, Android, iOS */
-		 url('#{$roboto-font-path}/roboto-v20-latin-italic.svg?v=#{$roboto-version}#Roboto') format('svg'); /* Legacy iOS */
+		 url('#{$roboto-font-path}/roboto-v20-latin-italic.svg?v=#{$roboto-version}#RobotoItalic') format('svg'); /* Legacy iOS */
   }
   /* roboto-regular - latin */
   @font-face {
@@ -35,7 +35,7 @@
 		 url('#{$roboto-font-path}/roboto-v20-latin-regular.woff2?v=#{$roboto-version}') format('woff2'), /* Super Modern Browsers */
 		 url('#{$roboto-font-path}/roboto-v20-latin-regular.woff?v=#{$roboto-version}') format('woff'), /* Modern Browsers */
 		 url('#{$roboto-font-path}/roboto-v20-latin-regular.ttf?v=#{$roboto-version}') format('truetype'), /* Safari, Android, iOS */
-		 url('#{$roboto-font-path}/roboto-v20-latin-regular.svg?v=#{$roboto-version}#Roboto') format('svg'); /* Legacy iOS */
+		 url('#{$roboto-font-path}/roboto-v20-latin-regular.svg?v=#{$roboto-version}#RobotoRegularLatin') format('svg'); /* Legacy iOS */
   }
   /* roboto-700 - latin */
   @font-face {
@@ -48,7 +48,7 @@
 		 url('#{$roboto-font-path}/roboto-v20-latin-700.woff2?v=#{$roboto-version}') format('woff2'), /* Super Modern Browsers */
 		 url('#{$roboto-font-path}/roboto-v20-latin-700.woff?v=#{$roboto-version}') format('woff'), /* Modern Browsers */
 		 url('#{$roboto-font-path}/roboto-v20-latin-700.ttf?v=#{$roboto-version}') format('truetype'), /* Safari, Android, iOS */
-		 url('#{$roboto-font-path}/roboto-v20-latin-700.svg?v=#{$roboto-version}#Roboto') format('svg'); /* Legacy iOS */
+		 url('#{$roboto-font-path}/roboto-v20-latin-700.svg?v=#{$roboto-version}#Roboto700Latin') format('svg'); /* Legacy iOS */
   }
   /* roboto-700italic - latin */
   @font-face {
@@ -61,5 +61,5 @@
 		 url('#{$roboto-font-path}/roboto-v20-latin-700italic.woff2?v=#{$roboto-version}') format('woff2'), /* Super Modern Browsers */
 		 url('#{$roboto-font-path}/roboto-v20-latin-700italic.woff?v=#{$roboto-version}') format('woff'), /* Modern Browsers */
 		 url('#{$roboto-font-path}/roboto-v20-latin-700italic.tt?v=#{$roboto-version}') format('truetype'), /* Safari, Android, iOS */
-		 url('#{$roboto-font-path}/roboto-v20-latin-700italic.svg?v=#{$roboto-version}#Roboto') format('svg'); /* Legacy iOS */
+		 url('#{$roboto-font-path}/roboto-v20-latin-700italic.svg?v=#{$roboto-version}#Roboto700ItalicLatin') format('svg'); /* Legacy iOS */
   }
