@@ -1,0 +1,65 @@
+/* roboto-300 - latin */
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 300;
+	src: url('#{$roboto-font-path}/roboto-v20-latin-300.eot?v=#{$roboto-version}'); /* IE9 Compat Modes */
+	src: local('Roboto Light'), local('Roboto-Light'),
+		 url('#{$roboto-font-path}/roboto-v20-latin-300.eot?#iefix&v=#{$roboto-version}') format('embedded-opentype'), /* IE6-IE8 */
+		 url('#{$roboto-font-path}/roboto-v20-latin-300.woff?v=#{$roboto-version}') format('woff2'), /* Super Modern Browsers */
+		 url('#{$roboto-font-path}/roboto-v20-latin-300.woff?v=#{$roboto-version}') format('woff'), /* Modern Browsers */
+		 url('#{$roboto-font-path}/roboto-v20-latin-300.ttf?v=#{$roboto-version}') format('truetype'), /* Safari, Android, iOS */
+		 url('#{$roboto-font-path}/roboto-v20-latin-300.svg?v=#{$roboto-version}#RobotoRegular') format('svg'); /* Legacy iOS */
+  }
+  /* roboto-italic - latin */
+  @font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: 400;
+	src: url('#{$roboto-font-path}/roboto-v20-latin-italic.eot?v=#{$roboto-version}'); /* IE9 Compat Modes */
+	src: local('Roboto Italic'), local('Roboto-Italic'),
+		 url('#{$roboto-font-path}/roboto-v20-latin-italic.eot?#iefix&v=#{$roboto-version}') format('embedded-opentype'), /* IE6-IE8 */
+		 url('#{$roboto-font-path}/roboto-v20-latin-italic.woff2?v=#{$roboto-version}') format('woff2'), /* Super Modern Browsers */
+		 url('#{$roboto-font-path}/roboto-v20-latin-italic.woff?v=#{$roboto-version}') format('woff'), /* Modern Browsers */
+		 url('#{$roboto-font-path}/roboto-v20-latin-italic.ttf?v=#{$roboto-version}') format('truetype'), /* Safari, Android, iOS */
+		 url('#{$roboto-font-path}/roboto-v20-latin-italic.svg?v=#{$roboto-version}#Roboto') format('svg'); /* Legacy iOS */
+  }
+  /* roboto-regular - latin */
+  @font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 400;
+	src: url('#{$roboto-font-path}/roboto-v20-latin-regular.eot?v=#{$roboto-version}'); /* IE9 Compat Modes */
+	src: local('Roboto'), local('Roboto-Regular'),
+		 url('#{$roboto-font-path}/roboto-v20-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		 url('#{$roboto-font-path}/roboto-v20-latin-regular.woff2?v=#{$roboto-version}') format('woff2'), /* Super Modern Browsers */
+		 url('#{$roboto-font-path}/roboto-v20-latin-regular.woff?v=#{$roboto-version}') format('woff'), /* Modern Browsers */
+		 url('#{$roboto-font-path}/roboto-v20-latin-regular.ttf?v=#{$roboto-version}') format('truetype'), /* Safari, Android, iOS */
+		 url('#{$roboto-font-path}/roboto-v20-latin-regular.svg?v=#{$roboto-version}#Roboto') format('svg'); /* Legacy iOS */
+  }
+  /* roboto-700 - latin */
+  @font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 700;
+	src: url('#{$roboto-font-path}/roboto-v20-latin-700.eot?v=#{$roboto-version}'); /* IE9 Compat Modes */
+	src: local('Roboto Bold'), local('Roboto-Bold'),
+		 url('#{$roboto-font-path}/roboto-v20-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		 url('#{$roboto-font-path}/roboto-v20-latin-700.woff2?v=#{$roboto-version}') format('woff2'), /* Super Modern Browsers */
+		 url('#{$roboto-font-path}/roboto-v20-latin-700.woff?v=#{$roboto-version}') format('woff'), /* Modern Browsers */
+		 url('#{$roboto-font-path}/roboto-v20-latin-700.ttf?v=#{$roboto-version}') format('truetype'), /* Safari, Android, iOS */
+		 url('#{$roboto-font-path}/roboto-v20-latin-700.svg?v=#{$roboto-version}#Roboto') format('svg'); /* Legacy iOS */
+  }
+  /* roboto-700italic - latin */
+  @font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: 700;
+	src: url('#{$roboto-font-path}/roboto-v20-latin-700italic.eot?v=#{$roboto-version}'); /* IE9 Compat Modes */
+	src: local('Roboto Bold Italic'), local('Roboto-BoldItalic'),
+		 url('#{$roboto-font-path}/roboto-v20-latin-700italic.eot?#iefix&v=#{$roboto-version}') format('embedded-opentype'), /* IE6-IE8 */
+		 url('#{$roboto-font-path}/roboto-v20-latin-700italic.woff2?v=#{$roboto-version}') format('woff2'), /* Super Modern Browsers */
+		 url('#{$roboto-font-path}/roboto-v20-latin-700italic.woff?v=#{$roboto-version}') format('woff'), /* Modern Browsers */
+		 url('#{$roboto-font-path}/roboto-v20-latin-700italic.tt?v=#{$roboto-version}') format('truetype'), /* Safari, Android, iOS */
+		 url('#{$roboto-font-path}/roboto-v20-latin-700italic.svg?v=#{$roboto-version}#Roboto') format('svg'); /* Legacy iOS */
+  }
