@@ -6,11 +6,8 @@
 
 {% block header %}
   <h1 class="visuallyhidden">Community</h1>
-  <p><em>Django</em> Community{% if community_stats %}
-  {% if community_stats.people %} <em>{{ community_stats.people }}</em> people,{% endif %}
-  {% if community_stats.countries %} <em>{{ community_stats.countries }}</em> countries,{% endif %}
-  {% if community_stats.packages %} <em>{{ community_stats.packages }}</em> packages and projects.{% endif %}
-  {% endif %}</p>
+  <p>Building the <em>Django</em> Community{% if community_stats %}
+  {% if community_stats.age %} for <em>{{ community_stats.age }}</em>{% endif %}{% endif %}. Come join us!</p>
 {% endblock %}
 
 {% block content-related %}
