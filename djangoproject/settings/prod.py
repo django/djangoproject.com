@@ -77,10 +77,14 @@ PUSH_SSL_CALLBACK = True
 if 'sentry_dsn' in SECRETS and not DEBUG:
     import sentry_sdk
     from sentry_sdk.integrations.django import DjangoIntegration
+    from sentry_sdk.integrations.redis import RedisIntegration
 
     sentry_sdk.init(
         dsn=SECRETS['sentry_dsn'],
-        integrations=[DjangoIntegration(transaction_style='function_name')],
+        integrations=[
+            DjangoIntegration(transaction_style='function_name'),
+            RedisIntegration(),
+        ],
     )
 
 # RECAPTCHA KEYS
