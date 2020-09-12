@@ -75,8 +75,13 @@ PUSH_SSL_CALLBACK = True
 
 # Log errors to Sentry instead of email, if available.
 if 'sentry_dsn' in SECRETS and not DEBUG:
-    INSTALLED_APPS.append('raven.contrib.django.raven_compat')
-    RAVEN_CONFIG = {'dsn': SECRETS['sentry_dsn']}
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn=SECRETS['sentry_dsn'],
+        integrations=[DjangoIntegration(transaction_style='function_name')],
+    )
 
 # RECAPTCHA KEYS
 # Defaults will trigger 'captcha.recaptcha_test_key_error' system check
