@@ -2230,6 +2230,7 @@ h2 + .list-link-soup {
             padding: 8px 15px;
             border: 1px solid var(--hairline-color);
             border-radius: 4px;
+            cursor: pointer;
         }
         &.hover-on {
             display: inline-block;
