@@ -2,7 +2,7 @@ from django.core import signing
 from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, TemplateView, UpdateView
 from django.views.generic.dates import timezone_today
 
 from .forms import CorporateMemberSignUpForm
@@ -60,6 +60,30 @@ class CorporateMemberRenewView(CorporateMemberSignupMixin, UpdateView):
                 {'verbose_name': self.model._meta.verbose_name}
             )
         return self.get_queryset().get(pk=pk)
+
+
+class CorporateMemberBadgesView(TemplateView):
+    template_name = 'members/corporate_member_badges.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        levels = ['bronze', 'silver', 'gold', 'platinum']
+        img_variants = ['c', '', 'g', 'b', 'w']
+
+        badges = {}
+        for level in levels:
+            badges[level] = []
+            for variant in img_variants:
+                basename = f'{level}_{variant}' if variant else level
+                filename = f'img/badges/corporate_members/{basename}'
+                badges[level].append({
+                    'svg': f'{filename}.svg',
+                    'png': f'{filename}.png',
+                })
+
+        context['badges'] = badges
+        return context
 
 
 class TeamsListView(ListView):
