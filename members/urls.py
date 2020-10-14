@@ -2,8 +2,9 @@ from django.urls import path
 from django.views.generic import RedirectView, TemplateView
 
 from members.views import (
-    CorporateMemberRenewView, CorporateMemberSignUpView,
-    IndividualMemberListView, TeamsListView, corporate_member_list_view,
+    CorporateMemberBadgesView, CorporateMemberRenewView,
+    CorporateMemberSignUpView, IndividualMemberListView, TeamsListView,
+    corporate_member_list_view,
 )
 
 app_name = 'members'
@@ -26,5 +27,6 @@ urlpatterns = [
         TemplateView.as_view(template_name='members/corporate_members_join_thanks.html'),
         name='corporate-members-join-thanks',
     ),
+    path('corporate-members/badges/', CorporateMemberBadgesView.as_view(), name='corporate-members-badges'),
     path('teams/', TeamsListView.as_view(), name='teams'),
 ]
