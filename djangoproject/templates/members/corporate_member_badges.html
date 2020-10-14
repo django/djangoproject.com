@@ -1,0 +1,48 @@
+{% extends "base_foundation.html" %}
+{% load static %}
+
+{% block head_extra %}
+  <style type="text/css">
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .variant {
+      border-radius: 5px;
+      margin: 5px;
+      padding: 1em;
+      background-color: #ccc;
+    }
+
+    .variant img {
+      display: block;
+      height: 50px;
+    }
+
+    .variant p {
+      text-align: center;
+      margin-bottom: 0;
+    }
+  </style>
+{% endblock head_extra %}
+
+{% block content %}
+  <h1>Corporate member badges</h1>
+  <p>
+    <a href="/foundation/corporate-membership/">Corporate members</a> of the Django Software Foundation may display these badges on their site to show their support.
+  </p>
+  {% for level, variants in badges.items %}
+    <h3>{{ level|title }}</h3>
+    <div class="badges">
+      {% for images in variants %}
+        <div class="variant">
+          <img src="{% static images.svg %}" />
+          <p class="links">
+            <a href="{% static images.svg %}">SVG</a> | <a href="{% static images.png %}">PNG</a>
+          </p>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+{% endblock %}
