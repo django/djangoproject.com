@@ -5,7 +5,6 @@ from functools import reduce
 from pathlib import Path
 
 from django.conf import settings
-from django.contrib.postgres.fields.jsonb import JSONField
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import (
     SearchQuery, SearchRank, SearchVectorField, TrigramSimilarity,
@@ -252,7 +251,7 @@ class Document(models.Model):
     )
     path = models.CharField(max_length=500)
     title = models.CharField(max_length=500)
-    metadata = JSONField(default=dict)
+    metadata = models.JSONField(default=dict)
     search = SearchVectorField(null=True, editable=False)
     config = models.SlugField(default=DEFAULT_TEXT_SEARCH_CONFIG)
 
