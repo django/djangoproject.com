@@ -30,7 +30,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = 'django'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'djangoproject',
         'USER': 'djangoproject',
         'HOST': SECRETS.get('db_host', ''),
@@ -38,7 +38,7 @@ DATABASES = {
         'PORT': SECRETS.get('db_port', ''),
     },
     'trac': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'code.djangoproject',
         'USER': 'code.djangoproject',
         'HOST': SECRETS.get('trac_db_host', ''),
