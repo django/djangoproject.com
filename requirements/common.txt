@@ -1,9 +1,10 @@
 Django==2.2.16
 django-contact-form==1.7
 django-hosts==3.0
-django-push==1.1
-django-registration-redux==2.6
 django-money==0.15.0
+django-push==1.1
+django-recaptcha==2.0.5
+django-registration-redux==2.6
 docutils==0.14
 feedparser==5.2.1
 Jinja2==2.10.1
@@ -14,6 +15,5 @@ Pygments==2.4.2
 pykismet3==0.1.1
 requests==2.24.0
 sorl-thumbnail==12.5.0
-stripe==2.20.3
 Sphinx==1.8.4
-django-recaptcha==2.0.5
+stripe==2.20.3
