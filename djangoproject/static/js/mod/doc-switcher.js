@@ -14,7 +14,7 @@ define([
                 // Make version switcher clickable for touch devices
 
                 self.switchers.find('li.current').on('click', function () {
-                    $(this).closest("ul").find('li.other').toggleClass('hover-on');
+                    $(this).closest("ul").toggleClass('open');
                 });
             });
         }
