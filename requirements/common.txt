@@ -5,7 +5,7 @@ django-money==0.15.0
 django-push==1.1
 django-recaptcha==2.0.5
 django-registration-redux==2.6
-docutils==0.14
+docutils==0.16
 feedparser==5.2.1
 Jinja2==2.10.1
 libsass==0.19.2
