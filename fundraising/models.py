@@ -66,7 +66,8 @@ class DjangoHero(FundraisingModel):
         default=False,
         verbose_name="Agreed to being contacted by DSF?",
     )
-    approved = models.NullBooleanField(
+    approved = models.BooleanField(
+        null=True,
         verbose_name="Name, URL, and Logo approved?",
     )
 
