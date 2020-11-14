@@ -6,7 +6,7 @@ django-push==1.1
 django-recaptcha==2.0.5
 django-registration-redux==2.6
 docutils==0.16
-feedparser==5.2.1
+feedparser==6.0.2
 Jinja2==2.10.1
 libsass==0.19.2
 Pillow==6.2.0
