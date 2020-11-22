@@ -44,7 +44,6 @@ Disallow: /pt-br/3.1/topics
 Disallow: /zh-hans/3.1/internals
 Disallow: /zh-hans/3.1/ref
 Disallow: /zh-hans/3.1/releases
-Disallow: /zh-hans/3.1/topics
 Disallow: /el/3.0/internals
 Disallow: /el/3.0/intro
 Disallow: /el/3.0/ref
