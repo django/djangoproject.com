@@ -86,9 +86,3 @@ if 'sentry_dsn' in SECRETS and not DEBUG:
             RedisIntegration(),
         ],
     )
-
-# RECAPTCHA KEYS
-# Defaults will trigger 'captcha.recaptcha_test_key_error' system check
-if 'recaptcha_public_key' in SECRETS:
-    RECAPTCHA_PUBLIC_KEY = SECRETS.get('recaptcha_public_key')
-    RECAPTCHA_PRIVATE_KEY = SECRETS.get('recaptcha_private_key')

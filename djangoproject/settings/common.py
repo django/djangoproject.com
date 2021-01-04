@@ -68,7 +68,6 @@ INSTALLED_APPS = [
     'svntogit',
     'tracdb',
     'fundraising',
-    'captcha',
 
     'registration',
     'django_hosts',
@@ -266,6 +265,29 @@ FASTLY_SERVICE_URL = SECRETS.get('fastly_service_url')
 # only testing keys as fallback values here please!
 STRIPE_SECRET_KEY = SECRETS.get('stripe_secret_key', 'sk_test_x6zP4wd7Z5jcvDOJbbHZlHHt')
 STRIPE_PUBLISHABLE_KEY = SECRETS.get('stripe_publishable_key', 'pk_test_TyB5jcROwK8mlCNrn3dCwW7l')
+
+# product IDs
+PRODUCTS = {
+    'monthly': {
+        'product_id': SECRETS.get('stripe_product_id_monthly', 'dummy_monthly_id'),
+        'interval': 'month',
+        'interval_count': 1,
+    },
+    'quarterly': {
+        'product_id': SECRETS.get('stripe_product_id_quarterly', 'dummy_quarterly_id'),
+        'interval': 'month',
+        'interval_count': 3,
+    },
+    'yearly': {
+        'product_id': SECRETS.get('stripe_product_id_yearly', 'dummy_yearly_id'),
+        'interval': 'year',
+        'interval_count': 1,
+    },
+    'onetime': {
+        'product_id': '',
+        'recurring': False,
+    }
+}
 
 # sorl-thumbnail settings
 THUMBNAIL_PRESERVE_FORMAT = True

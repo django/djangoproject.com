@@ -13,35 +13,18 @@
   class="twitter-hashtag-button" data-related="djangoproject">Tweet #SupportDjango</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
-<p>We'd love if you proudly displayed a badge on your website or online profile
-to help spread the word about our campaign. You may use the "Leader" badge if
-you donated more than ${{ leadership_level_amount|intcomma }} per year.</p>
-
 <p>
-  <a href="https://www.djangoproject.com/fundraising/">
-    <img width="80" height="65" border="0" title="Django Hero" alt="Django Hero"
-      src="{% static "img/badges/django-hero.png" %}"></a>
-&nbsp; &nbsp;
-  <a href="https://www.djangoproject.com/fundraising/">
-    <img src="{% static "img/badges/dsf-leader.png" %}"
-      width="126" height="70" border="0" title="Django Leader" alt="Django Leader"></a>
+You should receive an email shortly, with confirmation of your donation,
+details of badges you can display to show you support of Django, managing your
+donation,  and how you can have your name or company displayed on the
+Fundraising page and in the sidebar on the Django Project website.
 </p>
 
-<p>If you'd like to have your name or company displayed on the
-  <a href="{% url 'fundraising:index' %}">Fundraising page</a> and in the sidebar
-  on the Django Project website, please fill out the form below. This is, of
-  course, <em>optional</em>.
-</p>
+<p>Welcome aboard! ⛵️</p>
 
-<form enctype="multipart/form-data" action="" method="post" class="form-input django-hero-form">
-  <h2>You're now a Django Hero</h2>
-  Enter your details below to show up on our <a href="{% url "fundraising:index" %}">fundraising page</a>.
-  {% csrf_token %}
-  {% include 'fundraising/includes/_form.html' %}
-  <p class="submit">
-    <input type="submit" class="cta" value="Save &rarr;">
-  </p>
-</form>
+<hr>
+
+<p>If you have any <strong>problems</strong> with your donation please email <a href="mailto:donations@djangoproject.com">donations@djangoproject.com</a> for help.</p>
 
 {% endblock %}
 

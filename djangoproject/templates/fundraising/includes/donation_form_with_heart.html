@@ -30,9 +30,8 @@
     <div class="donate">
       <form
             method="post"
-            class="stripe-custom-checkout"
-            action="{% url "fundraising:donate" %}"
-            action-for-verify="{% url 'fundraising:verify-captcha' %}"
+            class="stripe-donation"
+            action-for-donation-session="{% url "fundraising:donation-session" %}"
             data-stripe-key="{{ stripe_publishable_key }}"
             data-stripe-icon="{% static 'img/dj-stripe-icon.jpg' %}"
             data-is-logged-in="{{ user.is_authenticated }}"
@@ -44,7 +43,6 @@
         <div class="custom-donation">
           <span class="prefix">US $ (integer only)</span>
         </div>
-	      {{ form_captcha.captcha }}
         <input id="donate-button" type="submit" value="Donate monthly" class="cta" />
       </form>
     </div>
