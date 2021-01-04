@@ -284,7 +284,7 @@ PRODUCTS = {
         'interval_count': 1,
     },
     'onetime': {
-        'product_id': '',
+        'product_id': SECRETS.get('stripe_product_id_onetime', 'dummy_onetime_id'),
         'recurring': False,
     }
 }
