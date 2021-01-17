@@ -14,3 +14,4 @@ djangoproject/static/js/lib/unveil/index.html
 djangoproject/static/js/lib/unveil/img
 node_modules/
 data/static_root/
+data/media_root/
