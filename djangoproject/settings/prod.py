@@ -85,4 +85,5 @@ if 'sentry_dsn' in SECRETS and not DEBUG:
             DjangoIntegration(transaction_style='function_name'),
             RedisIntegration(),
         ],
+        traces_sample_rate=0.1,
     )
