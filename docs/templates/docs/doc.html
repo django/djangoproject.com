@@ -176,19 +176,19 @@
   {% block help-wrapper %}
   <h2 id="getting-help-sidebar">{% trans "Getting help" %}</h2>
   <dl class="list-links">
-    <dt><a href="{% url 'document-detail' lang=lang version=version url="faq" host 'docs' %}">FAQ</a></dt>
+    <dt><a href="{% url 'document-detail' lang=lang version=version url="faq" host 'docs' %}">{% trans "FAQ" %}</a></dt>
     <dd>{% blocktrans %}Try the FAQ — it's got answers to many common questions.{% endblocktrans %}</dd>
 
     <dt><a href="/en/stable/genindex/">{% trans "Index" %}</a>, <a href="/en/stable/py-modindex/">{% trans "Module Index" %}</a>, or <a href="/en/stable/contents/">{% trans "Table of Contents" %}</a></dt>
     <dd>{% blocktrans %}Handy when looking for specific information.{% endblocktrans %}</dd>
 
-    <dt><a href="https://groups.google.com/group/django-users/">django-users mailing list</a></dt>
+    <dt><a href="https://groups.google.com/group/django-users/">{% trans "django-users mailing list" %}</a></dt>
     <dd>{% blocktrans %}Search for information in the archives of the django-users mailing list, or post a question.{% endblocktrans %}</dd>
 
-    <dt><a href="irc://irc.freenode.net/django">#django IRC channel</a></dt>
+    <dt><a href="irc://irc.freenode.net/django">{% trans "#django IRC channel" %}</a></dt>
     <dd>{% blocktrans %}Ask a question in the #django IRC channel, or search the IRC logs to see if it’s been asked before.{% endblocktrans %}</dd>
 
-    <dt><a href="https://code.djangoproject.com/">Ticket tracker</a></dt>
+    <dt><a href="https://code.djangoproject.com/">{% trans "Ticket tracker" %}</a></dt>
     <dd>{% blocktrans %}Report bugs with Django or Django documentation in our ticket tracker.{% endblocktrans %}</dd>
   </dl>
   {% endblock help-wrapper %}
