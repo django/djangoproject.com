@@ -224,7 +224,7 @@ class Command(BaseCommand):
         if '@' in url:
             repo, branch = url.rsplit('@', 1)
         else:
-            repo, branch = url, 'master'
+            repo, branch = url, 'main'
         if destdir.joinpath('.git').exists():
             remote = 'origin'
             branch_with_remote = '%s/%s' % (remote, branch)
