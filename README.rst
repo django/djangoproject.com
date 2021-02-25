@@ -1,11 +1,11 @@
 djangoproject.com source code
 =============================
 
-.. image:: https://travis-ci.org/django/djangoproject.com.svg?branch=master
+.. image:: https://travis-ci.org/django/djangoproject.com.svg?branch=main
     :target: https://travis-ci.org/django/djangoproject.com
 
-.. image:: https://coveralls.io/repos/django/djangoproject.com/badge.svg?branch=master
-    :target: https://coveralls.io/r/django/djangoproject.com?branch=master
+.. image:: https://coveralls.io/repos/django/djangoproject.com/badge.svg?branch=main
+    :target: https://coveralls.io/r/django/djangoproject.com?branch=main
 
 To run locally, do the usual:
 
