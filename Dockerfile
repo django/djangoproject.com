@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.5.7-alpine
+FROM python:3.6-alpine
 
 # set work directory
 WORKDIR /usr/src/app
@@ -19,7 +19,7 @@ RUN apk update \
 RUN apk add --update nodejs nodejs-npm
 
 # install pillow dependencies
-RUN apk add build-base python-dev py-pip jpeg-dev zlib-dev
+RUN apk add build-base python3-dev py-pip jpeg-dev zlib-dev
 ENV LIBRARY_PATH=/lib:/usr/lib
 
 # install psql client
