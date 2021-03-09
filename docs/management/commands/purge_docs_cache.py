@@ -70,7 +70,7 @@ class Command(BaseCommand):
         if doc_versions == {'dev'}:
             # If only the dev docs have changed, we can purge only the surrogate key we've set
             # up for the dev docs release in Fastly. This will usually happen with every new commit
-            # to django master (on the next hour, when the cron job runs).
+            # to django main (on the next hour, when the cron job runs).
             url = urljoin(fastly_service_url, 'purge/dev-docs-key')
         else:
             # Otherwise, just purge everything, to keep things simple. This will usually only happen
