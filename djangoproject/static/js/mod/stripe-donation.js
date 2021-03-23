@@ -9,10 +9,12 @@ define([
         e.preventDefault();
         var interval = $donationForm.find('[name=interval]').val();
         var amount = $donationForm.find('[name=amount]').val();
+        var recaptchaToken = document.getElementById('id_captcha').value;
         var csrfToken = $donationForm.find('[name=csrfmiddlewaretoken]').val();
         var data = {
             'interval': interval,
             'amount': amount,
+            'captcha': recaptchaToken,
             'csrfmiddlewaretoken': csrfToken
         }
         $.ajax({
