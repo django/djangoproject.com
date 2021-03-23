@@ -62,3 +62,5 @@ if DEBUG:
             MIDDLEWARE.index('debug_toolbar.middleware.DebugToolbarMiddleware') + 1,
             'djangoproject.middleware.CORSMiddleware'
         )
+
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']

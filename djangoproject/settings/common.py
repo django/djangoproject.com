@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'tracdb',
     'fundraising',
 
+    'captcha',
     'registration',
     'django_hosts',
     'sorl.thumbnail',

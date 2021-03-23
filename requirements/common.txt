@@ -3,6 +3,7 @@ django-contact-form==1.8.2
 django-hosts==3.0
 django-money==1.3.1
 django-push==1.1
+django-recaptcha==2.0.6
 django-registration-redux==2.9
 docutils==0.16
 feedparser==6.0.2

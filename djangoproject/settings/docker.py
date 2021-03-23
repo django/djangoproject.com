@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'tracdb',
     'fundraising',
 
+    'captcha',
     'registration',
     'django_hosts',
     'sorl.thumbnail',
@@ -158,6 +159,7 @@ SILENCED_SYSTEM_CHECKS = [
     'fields.W342',  # tracdb has ForeignKey(unique=True) in lieu of multi-col PKs
     'security.W008',  # SSL redirect is handled by nginx
     'security.W009',  # SECRET_KEY is setup through Ansible secrets
+    'captcha.recaptcha_test_key_error'  # Default test keys for development.
 ]
 
 SITE_ID = 1
