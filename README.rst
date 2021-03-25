@@ -33,9 +33,10 @@ To run locally, do the usual:
       "trac_db_host": "localhost",
       "trac_db_password": "secret" }
 
-   Add `export DJANGOPROJECT_DATA_DIR=~/.djangoproject` (without the backticks)
-   to your ~/.bashrc (or ~/.zshrc if you're using zsh) file and then run
-   `source ~/.bashrc` (or `source ~/.zshrc`) to load the changes.
+#. Add `export DJANGOPROJECT_DATA_DIR=~/.djangoproject` (without the backticks)
+   to your ~/.bashrc (or ~/.zshrc if you're using zsh, ~/.bash_profile if
+   you're on macOS and using bash) file and then run `source ~/.bashrc` (or
+   `source ~/.zshrc`, or `source ~/.bash_profile`) to load the changes.
 
 #. Create databases::
 
@@ -71,7 +72,7 @@ To run locally, do the usual:
 
     ./manage.py loaddata dev_sites
 
-#. For docs::
+#. For docs (next step requires ``gettext``)::
 
     ./manage.py loaddata doc_releases
     ./manage.py update_docs
@@ -94,14 +95,14 @@ To run locally, do the usual:
 
 #. Point the ``www.djangoproject.localhost``, ``docs.djangoproject.localhost``,
    and ``dashboard.djangoproject.localhost`` hostnames with your ``/etc/hosts``
-   file to ``localhost``/``127.0.0.1``::
+   file to ``localhost``/``127.0.0.1`` by adding::
 
-     127.0.0.1  docs.djangoproject.localhost www.djangoproject.localhost dashboard.djangoproject.localhost
+     127.0.0.1 docs.djangoproject.localhost www.djangoproject.localhost dashboard.djangoproject.localhost
 
    This is unnecessary with some browsers (e.g. Opera and Chromium/Chrome) as
    they handle localhost subdomains automatically.
 
-   If you're on Mac OS and don't feel like editing the ``/etc/hosts`` file
+   If you're on macOS and don't feel like editing the ``/etc/hosts`` file
    manually, there is a great preference pane called `Hosts.prefpane`_. On
    Ubuntu, there is a `built-in network admin`_ GUI to do the same. Remember
    both require admin privileges, just like you'd need when editing
