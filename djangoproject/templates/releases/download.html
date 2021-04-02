@@ -65,7 +65,7 @@
   <p>See the <a href="https://docs.djangoproject.com/en/dev/internals/release-process/#supported-versions">
     supported versions policy</a> for detailed guidelines about what fixes will be backported.</p>
 
-  <img src="{% static "img/release-roadmap.png" %}" style="max-width:100%;" alt="">
+  <img src="{% static "img/release-roadmap.png" %}" style="max-width:100%;" alt="Django release roadmap">
   <hr style="margin-bottom: 20px;">
 
   <table class='django-supported-versions'>
@@ -93,75 +93,9 @@
         <td>December 2, 2019</td>
         <td>April 2022</td>
       </tr>
-      <tr class="unsupported">
-        <td>2.1</td>
-        <td>{% get_latest_micro_release '2.1' %}</td>
-        <td>April 1, 2019</td>
-        <td>December 2, 2019</td>
-      </tr>
-      <tr class="unsupported">
-        <td>2.0</td>
-        <td>{% get_latest_micro_release '2.0' %}</td>
-        <td>August 1, 2018</td>
-        <td>April 1, 2019</td>
-      </tr>
-      <tr class="unsupported">
-        <td>1.11 LTS <sup><a href="#ft3">3</a></sup></td>
-        <td>{% get_latest_micro_release '1.11' %}</td>
-        <td>December 2, 2017</td>
-        <td>April 1, 2020</td>
-      </tr>
-      <tr class="unsupported">
-        <td>1.10</td>
-        <td>{% get_latest_micro_release '1.10' %}</td>
-        <td>April 4, 2017</td>
-        <td>December 2, 2017</td>
-      </tr>
-      <tr class="unsupported">
-        <td>1.9</td>
-        <td>{% get_latest_micro_release '1.9' %}</td>
-        <td>August 1, 2016</td>
-        <td>April 4, 2017</td>
-      </tr>
-      <tr class="unsupported">
-        <td>1.8 LTS</td>
-        <td>{% get_latest_micro_release '1.8' %}</td>
-        <td>December 1, 2015</td>
-        <td>April 1, 2018</td>
-      </tr>
-      <tr class="unsupported">
-        <td>1.7</td>
-        <td>{% get_latest_micro_release '1.7' %}</td>
-        <td>April 1, 2015</td>
-        <td>December 1, 2015</td>
-      </tr>
-      <tr class="unsupported">
-        <td>1.6</td>
-        <td>{% get_latest_micro_release '1.6' %}</td>
-        <td>September 2, 2014</td>
-        <td>April 1, 2015</td>
-      </tr>
-      <tr class="unsupported">
-        <td>1.5</td>
-        <td>{% get_latest_micro_release '1.5' %}</td>
-        <td>November 6, 2013</td>
-        <td>September 2, 2014</td>
-      </tr>
-      <tr class="unsupported">
-        <td>1.4 LTS</td>
-        <td>{% get_latest_micro_release '1.4' %}</td>
-        <td>February 26, 2013</td>
-        <td>October 1, 2015</td>
-      </tr>
-      <tr class="unsupported">
-        <td>1.3</td>
-        <td>{% get_latest_micro_release '1.3' %}</td>
-        <td>March 23, 2012</td>
-        <td>February 26, 2013</td>
-      </tr>
   </table>
 
-  <p>Here's what the future roadmap looks like:</p>
+  <h2 id="future-versions">Future Roadmap</h2>
 
   <table class='django-supported-versions'>
     <tr>
@@ -194,6 +128,84 @@
       <td>December 2023</td>
       <td>April 2026</td>
     </tr>
+  </table>
+
+  <h2 id="unsupported-versions">Unsupported previous releases</h2>
+  <p>These release series no longer receive security updates or bug fixes.</p>
+
+  <table class='django-unsupported-versions'>
+      <tr>
+        <th>Release Series</th>
+        <th>Latest Release</th>
+        <th>End of mainstream support<sup><a href="#ft1">1</a></sup></th>
+        <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
+      </tr>
+      <tr>
+        <td>2.1</td>
+        <td>{% get_latest_micro_release '2.1' %}</td>
+        <td>April 1, 2019</td>
+        <td>December 2, 2019</td>
+      </tr>
+      <tr>
+        <td>2.0</td>
+        <td>{% get_latest_micro_release '2.0' %}</td>
+        <td>August 1, 2018</td>
+        <td>April 1, 2019</td>
+      </tr>
+      <tr>
+        <td>1.11 LTS <sup><a href="#ft3">3</a></sup></td>
+        <td>{% get_latest_micro_release '1.11' %}</td>
+        <td>December 2, 2017</td>
+        <td>April 1, 2020</td>
+      </tr>
+      <tr>
+        <td>1.10</td>
+        <td>{% get_latest_micro_release '1.10' %}</td>
+        <td>April 4, 2017</td>
+        <td>December 2, 2017</td>
+      </tr>
+      <tr>
+        <td>1.9</td>
+        <td>{% get_latest_micro_release '1.9' %}</td>
+        <td>August 1, 2016</td>
+        <td>April 4, 2017</td>
+      </tr>
+      <tr>
+        <td>1.8 LTS</td>
+        <td>{% get_latest_micro_release '1.8' %}</td>
+        <td>December 1, 2015</td>
+        <td>April 1, 2018</td>
+      </tr>
+      <tr>
+        <td>1.7</td>
+        <td>{% get_latest_micro_release '1.7' %}</td>
+        <td>April 1, 2015</td>
+        <td>December 1, 2015</td>
+      </tr>
+      <tr>
+        <td>1.6</td>
+        <td>{% get_latest_micro_release '1.6' %}</td>
+        <td>September 2, 2014</td>
+        <td>April 1, 2015</td>
+      </tr>
+      <tr>
+        <td>1.5</td>
+        <td>{% get_latest_micro_release '1.5' %}</td>
+        <td>November 6, 2013</td>
+        <td>September 2, 2014</td>
+      </tr>
+      <tr>
+        <td>1.4 LTS</td>
+        <td>{% get_latest_micro_release '1.4' %}</td>
+        <td>February 26, 2013</td>
+        <td>October 1, 2015</td>
+      </tr>
+      <tr>
+        <td>1.3</td>
+        <td>{% get_latest_micro_release '1.3' %}</td>
+        <td>March 23, 2012</td>
+        <td>February 26, 2013</td>
+      </tr>
   </table>
 
   <p style="max-width: 720px;">

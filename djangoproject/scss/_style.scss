@@ -3113,18 +3113,20 @@ form .footnote {
     }
 }
 
-table.django-supported-versions {
+table.django-supported-versions, table.django-unsupported-versions {
     border: 1px solid black;
     text-align: center;
-    tr {
-        background-color: $green-very-light;
-        th, td {
-            padding: 5px;
-        }
+    th, td {
+        padding: 5px;
     }
-    tr.unsupported {
-        background-color: $red-light;
-    }
+}
+
+table.django-supported-versions tr {
+    background-color: $green-very-light;
+}
+
+table.django-unsupported-versions tr {
+    background-color: $red-light;
 }
 
 /* Corporate membership list page */
