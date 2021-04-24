@@ -24,7 +24,7 @@ class EntryTestCase(DateTimeMixin, TestCase):
         Entry.objects.create(pub_date=self.now, is_active=False, headline='inactive', slug='a')
         Entry.objects.create(pub_date=self.now, is_active=True, headline='active', slug='b')
 
-        self.assertQuerysetEqual(Entry.objects.published(), ['active'], transform=lambda entry: entry.headline)
+        self.assertQuerysetEqual(Entry.objects.active(), ['active'], transform=lambda entry: entry.headline)
 
     def test_manager_published(self):
         """
