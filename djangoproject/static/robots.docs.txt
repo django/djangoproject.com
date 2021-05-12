@@ -20,6 +20,11 @@ Disallow: /id/3.2/howto
 Disallow: /id/3.2/ref
 Disallow: /id/3.2/releases
 Disallow: /id/3.2/topics
+Disallow: /it/3.2/howto
+Disallow: /it/3.2/internals
+Disallow: /it/3.2/ref
+Disallow: /it/3.2/releases
+Disallow: /it/3.2/topics
 Disallow: /ja/3.2/howto
 Disallow: /ja/3.2/internals
 Disallow: /ja/3.2/misc
@@ -38,12 +43,10 @@ Disallow: /pl/3.2/releases
 Disallow: /pl/3.2/topics
 Disallow: /pt-br/3.2/howto
 Disallow: /pt-br/3.2/internals
-Disallow: /pt-br/3.2/intro
 Disallow: /pt-br/3.2/ref
 Disallow: /pt-br/3.2/releases
 Disallow: /pt-br/3.2/topics
 Disallow: /zh-hans/3.2/internals
-Disallow: /zh-hans/3.2/ref
 Disallow: /zh-hans/3.2/releases
 Disallow: /el/3.1/faq
 Disallow: /el/3.1/howto
