@@ -121,6 +121,7 @@ MEDIA_URL = '/m/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'django_permissions_policy.PermissionsPolicyMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_hosts.middleware.HostsRequestMiddleware',
     # Put LocaleMiddleware before SessionMiddleware to prevent the former from accessing the
@@ -219,6 +220,12 @@ HOST_SCHEME = 'http'
 HOST_SITE_TIMEOUT = 3600
 
 ROOT_HOSTCONF = 'djangoproject.hosts'
+
+# django-permissions-policy settings
+
+PERMISSIONS_POLICY = {
+    "interest-cohort": [],
+}
 
 # django-registration settings
 
