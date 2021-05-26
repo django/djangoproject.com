@@ -1,4 +1,5 @@
 __pycache__
+data
 *.pyc
 *.db
 locale/*/LC_MESSAGES/django.mo
