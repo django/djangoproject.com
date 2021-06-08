@@ -9,7 +9,7 @@ docutils==0.16
 feedparser==6.0.2
 Jinja2==2.11.3
 libsass==0.20.1
-Pillow==8.1.1
+Pillow==8.2.0
 psycopg2==2.8.6
 Pygments==2.8.1
 pykismet3==0.1.1
