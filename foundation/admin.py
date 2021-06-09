@@ -71,3 +71,11 @@ class MeetingAdmin(admin.ModelAdmin):
     list_display = ('title', 'date')
     list_filter = ('date',)
     prepopulated_fields = {'slug': ('title',)}
+
+
+class CoreAwardAdmin(admin.ModelAdmin):
+    list_display = ['recipient', 'cohort']
+
+
+admin.site.register(models.CoreAward, CoreAwardAdmin)
+admin.site.register(models.CoreAwardCohort)
