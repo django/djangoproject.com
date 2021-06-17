@@ -2042,7 +2042,7 @@ h2 + .list-link-soup {
 .headerlink {
     // Permalink styles for sections in docs
     opacity: 0;
-    padding-left: 10px;
+    margin-left: 10px;
     font-size: 0.8em;
     position: relative;
     top: -0.17em;
@@ -2050,6 +2050,9 @@ h2 + .list-link-soup {
     text-decoration: none;
     -webkit-transition: opacity 200ms ease-in-out;
     transition: opacity 200ms ease-in-out;
+    &:focus {
+        opacity: 1;
+    }
 }
 
     h1,
