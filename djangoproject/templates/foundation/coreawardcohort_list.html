@@ -1,0 +1,25 @@
+{% extends "base_foundation.html" %}
+
+{% block content %}
+<h1>Django Core Developers</h1>
+
+<p>
+    The title &ldquo;Django Core Developer&rdquo; is awarded to individuals
+    who have made significant contributions, over an extended period of time,
+    to Django or to major parts of its ecosystem. The title is awarded by the
+    Board of Directors of the Django Software Foundation.
+    A list of recipients is below.
+</p>
+{% for cohort in object_list %}
+  <h2>{{ cohort }}</h2>
+  {% if cohort.description %}<p>{{ cohort.description }}</p>{% endif %}
+  <ul>
+  {% for recipient in cohort.recipients.all %}
+    <li>
+      {% if recipient.link %}<a href="{{ recipient.link }}">{% endif %}{{ recipient}}{% if recipient.link %}</a>{% endif %}
+      {% if recipient.description %} &mdash; {{ recipient.description }}{% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+{% endfor %}
+{% endblock %}
