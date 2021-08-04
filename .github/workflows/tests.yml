@@ -1,0 +1,82 @@
+---
+name: Tests
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+
+    services:
+      postgres:
+        image: postgres:10-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools coveralls tox
+      - name: Set up databases
+        run: |
+          PGPASSWORD="postgres" createuser -U postgres -d djangoproject --superuser -h localhost
+          PGPASSWORD="postgres" createdb -U postgres -O djangoproject djangoproject -h localhost
+          PGPASSWORD="postgres" createuser -U postgres -d code.djangoproject --superuser -h localhost
+          PGPASSWORD="postgres" createdb -U postgres -O code.djangoproject code.djangoproject -h localhost
+          PGPASSWORD="postgres" psql -U postgres -h localhost -c "ALTER USER djangoproject WITH PASSWORD 'secret';"
+          PGPASSWORD="postgres" psql -U postgres -h localhost -c "ALTER USER \"code.djangoproject\" WITH PASSWORD 'secret';"
+      - name: Load Trac data
+        run: |
+          PGPASSWORD="postgres" psql -U postgres -d code.djangoproject -h localhost < tracdb/trac.sql
+      - name: Create secrets.json
+        working-directory: ..
+        run: |
+          mkdir conf
+          echo '{"db_host": "localhost", ' > conf/secrets.json
+          echo '"db_password": "secret", ' >> conf/secrets.json
+          echo '"trac_db_host": "localhost", ' >> conf/secrets.json
+          echo '"trac_db_password": "secret", ' >> conf/secrets.json
+          echo '"secret_key": "a"}' >> conf/secrets.json
+          pwd
+          cat conf/secrets.json
+      - name: Run tox
+        run: |
+          python -m tox -e py36-tests
+
+  lint:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
+      - name: Ensure latest setuptools
+        run: |
+          python -m pip install --upgrade pip setuptools
+      - name: Install dependencies
+        run: |
+          python -m pip install tox
+      - name: Run tox
+        run: |
+          python -m pip --version
+          python -m tox --version
+          python -m tox -e isort,flake8
