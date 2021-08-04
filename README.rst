@@ -1,8 +1,8 @@
 djangoproject.com source code
 =============================
 
-.. image:: https://travis-ci.org/django/djangoproject.com.svg?branch=main
-    :target: https://travis-ci.org/django/djangoproject.com
+.. image:: https://github.com/django/djangoproject.com/workflows/Tests/badge.svg?branch=main
+    :target: https://github.com/django/djangoproject.com/actions
 
 .. image:: https://coveralls.io/repos/django/djangoproject.com/badge.svg?branch=main
     :target: https://coveralls.io/r/django/djangoproject.com?branch=main
@@ -133,13 +133,13 @@ To run locally, do the usual:
 Running the tests
 -----------------
 
-We use `Travis-CI <https://travis-ci.org/>`_ for continuous testing and
+We use GitHub actions for continuous testing and
 `GitHub <https://github.com/>`_ pull request integration. If you're familiar
 with those systems you should not have any problems writing tests.
 
 Our test results can be found here:
 
-    https://travis-ci.org/django/djangoproject.com
+    https://github.com/django/djangoproject.com/actions
 
 For local development don't hesitate to install
 `tox <https://tox.readthedocs.io/>`_ to run the website's test suite.
