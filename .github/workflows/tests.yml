@@ -58,6 +58,10 @@ jobs:
       - name: Run tox
         run: |
           python -m tox -e py36-tests
+      - name: Coveralls
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: coveralls --service=github
 
   lint:
     runs-on: ubuntu-18.04
