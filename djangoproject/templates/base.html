@@ -49,7 +49,14 @@
         {% block header %}{% endblock %}
       </div>
     </div>
-    <div id="billboard">{% block billboard %}{% endblock %}</div>
+    <div id="billboard">{% block billboard %}
+        <div class="copy-banner" style="background: #44B78B;text-align:center;padding: 1em 3em;">
+        <div class="container">
+          <h1>Please take a few minutes to complete the <a href="https://surveys.jetbrains.com/s3/w-django-developers-survey-2021" style="font-weight: bold;">2021 Django Community Survey</a>.<br>Your feedback will help guide future efforts.
+          </h1>
+        </div>
+      </div>   
+    {% endblock %}</div>
 
     <div class="container {% block layout_class %}{% endblock %}">
       <div role="main">
