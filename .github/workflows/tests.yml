@@ -55,8 +55,6 @@ jobs:
           echo '"trac_db_host": "localhost", ' >> conf/secrets.json
           echo '"trac_db_password": "secret", ' >> conf/secrets.json
           echo '"secret_key": "a"}' >> conf/secrets.json
-          pwd
-          cat conf/secrets.json
       - name: Run tox
         run: |
           python -m tox -e py36-tests
