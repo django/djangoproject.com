@@ -357,7 +357,7 @@ our translation files as follows:
 
     ./update-translations.sh
 
-3. Use ``git diff`` to see if any translations have  changed. If not,
+3. Use ``git diff`` to see if any translations have actually changed. If not,
    you can just revert the .po file changes and stop here.
 
 4. Compile the messages::
