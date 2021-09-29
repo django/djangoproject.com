@@ -45,7 +45,7 @@ To run locally, do the usual:
     createuser -d code.djangoproject --superuser
     createdb -O code.djangoproject code.djangoproject
 
-#. Setting up database access
+#. Setting up database access ::
 
    If you are using the default postgres configuration, chances are you will
    have to give a password for the newly created users to be able to
