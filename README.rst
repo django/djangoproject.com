@@ -191,7 +191,7 @@ when it comes to categorizing browser support.
 
 - Mobile browsers should be considered **B grade** as well.
   Mobile Safari, Firefox on Android and the Android Browser should support
-  the responsive styles as much as possible but some degredation can't be
+  the responsive styles as much as possible but some degradation  can't be
   prevented due to the limited screen size and other platform restrictions.
 
 File locations
@@ -232,7 +232,7 @@ This is great during development. Assuming you're using Foreman simply run::
 
     foreman start
 
-If you just want to run one of the processes defined above use the
+If you just want to run one of the processes defined above, use the
 ``run`` subcommand like so::
 
     foreman run web
@@ -305,7 +305,7 @@ information on how to join, please see the `Translations
 section of the documentation on contributing to and localizing Django.
 
 Since this repo hosts three separate sites, our ``.po`` files are organized by
-website domain. At the moment, we have:
+website domain. Now, we have:
 
 * ``dashboard/locale/`` contains the translation files for
   https://dashboard.djangoproject.com
@@ -357,7 +357,7 @@ our translation files as follows:
 
     ./update-translations.sh
 
-3. Use ``git diff`` to see if any translations have actually changed. If not,
+3. Use ``git diff`` to see if any translations have  changed. If not,
    you can just revert the .po file changes and stop here.
 
 4. Compile the messages::
