@@ -191,7 +191,7 @@ when it comes to categorizing browser support.
 
 - Mobile browsers should be considered **B grade** as well.
   Mobile Safari, Firefox on Android and the Android Browser should support
-  the responsive styles as much as possible but some degradation  can't be
+  the responsive styles as much as possible but some degradation can't be
   prevented due to the limited screen size and other platform restrictions.
 
 File locations
