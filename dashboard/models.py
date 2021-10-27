@@ -3,7 +3,6 @@ import calendar
 import datetime
 import xmlrpc.client
 
-import feedparser
 import requests
 from django.conf import settings
 from django.contrib.contenttypes.fields import (
@@ -127,17 +126,6 @@ class TracTicketMetric(Metric):
         return "%squery?%s&desc=1&order=changetime" % (settings.TRAC_URL, self.query)
 
 
-class RSSFeedMetric(Metric):
-    feed_url = models.URLField(max_length=1000)
-    link_url = models.URLField(max_length=1000)
-
-    def fetch(self):
-        return len(feedparser.parse(requests.get(self.feed_url).text).entries)
-
-    def link(self):
-        return self.link_url
-
-
 class GithubItemCountMetric(Metric):
     """Example: https://api.github.com/repos/django/django/pulls?state=open"""
     api_url = models.URLField(max_length=1000)
@@ -163,6 +151,24 @@ class GithubItemCountMetric(Metric):
 
     def link(self):
         return self.link_url
+
+
+class GitHubSearchCountMetric(Metric):
+    api_url = models.URLField(max_length=1000)
+    link_url = models.URLField(max_length=1000)
+
+    def fetch(self):
+        """Request the specified GitHub API and return a total count."""
+        today = datetime.date.today()
+        if self.period == METRIC_PERIOD_WEEKLY:
+            committer_date = '>%s' % (today - datetime.timedelta(weeks=1)).isoformat()
+        else:
+            committer_date = today.isoformat()
+        r = requests.get(
+            self.api_url + '?per_page=1&q=repo:django/django+committer-date:%s' % committer_date
+        )
+        data = r.json()
+        return data['total_count']
 
 
 class JenkinsFailuresMetric(Metric):
