@@ -9,7 +9,7 @@ djangoproject.com source code
 
 To run locally, do the usual:
 
-#. Create a Python 3.6 virtualenv
+#. Create a Python 3.8 virtualenv
 
 #. Install dependencies::
 
