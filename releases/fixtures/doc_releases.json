@@ -135,5 +135,19 @@
     "iteration": 0,
     "is_lts": true
   }
+},
+{
+  "model": "releases.release",
+  "pk": "4.0",
+  "fields": {
+    "date": "2021-12-07",
+    "eol_date": null,
+    "major": 4,
+    "minor": 0,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": true
+  }
 }
 ]
