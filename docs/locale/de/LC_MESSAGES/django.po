@@ -19,24 +19,24 @@ msgstr ""
 
 #: docs/apps.py:7 docs/templates/base_docs.html:9
 msgid "Documentation"
-msgstr ""
+msgstr "Dokumentation"
 
 #: docs/forms.py:4
 #, python-format
 msgid "Search %s documentation"
-msgstr ""
+msgstr "Suche %s in der Dokumentation"
 
 #: docs/forms.py:8 docs/templates/docs/search_form.html:9
 msgid "Search"
-msgstr ""
+msgstr "Suche"
 
 #: docs/templates/base_docs.html:6
 msgid "Django Documentation"
-msgstr ""
+msgstr "Django Dokumentation"
 
 #: docs/templates/docs/doc.html:4 docs/templates/docs/doc.html:33
 msgid "Django documentation"
-msgstr ""
+msgstr "Django Dokumentation"
 
 #: docs/templates/docs/doc.html:40
 msgid ""
@@ -44,76 +44,79 @@ msgid ""
 "significantly different from previous releases. For older releases, use the "
 "version selector floating in the bottom right corner of this page."
 msgstr ""
+"Dieses Dokument ist für die Entwicklungsversion von Django, die "
+"deutlich von früheren Versionen unterscheiden. Für ältere Versionen verwenden Sie die "
+"in der rechten unteren Ecke dieser Seite."
 
 #: docs/templates/docs/doc.html:45
 msgid ""
 "This document is for an insecure version of Django that is no longer "
 "supported. Please upgrade to a newer release!"
-msgstr ""
+msgstr "Dieses Dokument ist für eine unsichere Version von Django, die nicht mehr unterstützt wird. Bitte aktualisieren Sie auf eine neuere Version!""
 
 #: docs/templates/docs/doc.html:66
 msgid "Click on the links on the left to switch to another language."
-msgstr ""
+msgstr "Klicken Sie auf die Links auf der linken Seite, um zu einer anderen Sprache zu wechseln."
 
 #: docs/templates/docs/doc.html:67
 msgid "Language:"
-msgstr ""
+msgstr "Sprache:"
 
 #: docs/templates/docs/doc.html:86
 msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases."
-msgstr ""
+msgstr "Dieses Dokument bezieht sich auf die Entwicklungsversion von Django, die sich erheblich von früheren Versionen unterscheiden kann."
 
 #: docs/templates/docs/doc.html:88
 #, python-format
 msgid "This document describes Django %(version)s."
-msgstr ""
+msgstr "Dieses Dokument beschreibt Django %(Version)."
 
 #: docs/templates/docs/doc.html:90
 msgid "Click on the links on the left to see other versions."
-msgstr ""
+msgstr "Klicken Sie auf die Links auf der linken Seite, um andere Versionen zu sehen."
 
 #: docs/templates/docs/doc.html:93
 msgid "Documentation version:"
-msgstr ""
+msgstr "Version der Dokumentation:"
 
 #: docs/templates/docs/doc.html:121
 msgid "Additional Information"
-msgstr ""
+msgstr "Zusätzliche Information"
 
 #: docs/templates/docs/doc.html:130
 msgid "Contents"
-msgstr ""
+msgstr "Inhalt"
 
 #: docs/templates/docs/doc.html:137
 msgid "Browse"
-msgstr ""
+msgstr "Durchsuchen"
 
 #: docs/templates/docs/doc.html:141
 msgid "Prev:"
-msgstr ""
+msgstr "Zurück:"
 
 #: docs/templates/docs/doc.html:144
 msgid "Next:"
-msgstr ""
+msgstr "Weiter:"
 
 #: docs/templates/docs/doc.html:146
 msgid "Table of contents"
-msgstr ""
+msgstr "Inhaltsübersicht"
 
 #: docs/templates/docs/doc.html:155
 msgid "You are here:"
-msgstr ""
+msgstr "Sie befinden sich hier:"
 
 #: docs/templates/docs/doc.html:158
 #, python-format
 msgid "Django %(version)s documentation"
-msgstr ""
+msgstr "Django %(version) Dokumentation"
 
 #: docs/templates/docs/doc.html:169
 msgid "Getting help"
-msgstr ""
+msgstr "Hilfe bekommen"
 
 #: docs/templates/docs/doc.html:172
 msgid "Try the FAQ — it's got answers to many common questions."
