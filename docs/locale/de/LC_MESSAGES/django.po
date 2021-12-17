@@ -44,15 +44,15 @@ msgid ""
 "significantly different from previous releases. For older releases, use the "
 "version selector floating in the bottom right corner of this page."
 msgstr ""
-"Dieses Dokument ist für die Entwicklungsversion von Django, die "
-"deutlich von früheren Versionen unterscheiden. Für ältere Versionen verwenden Sie die "
+"Dieses Dokument ist f&uuml;r die Entwicklungsversion von Django, die "
+"deutlich von fr&uuml;heren Versionen unterscheiden. F&uuml;r ältere Versionen verwenden Sie die "
 "in der rechten unteren Ecke dieser Seite."
 
 #: docs/templates/docs/doc.html:45
 msgid ""
 "This document is for an insecure version of Django that is no longer "
 "supported. Please upgrade to a newer release!"
-msgstr "Dieses Dokument ist für eine unsichere Version von Django, die nicht mehr unterstützt wird. Bitte aktualisieren Sie auf eine neuere Version!""
+msgstr "Dieses Dokument ist f&uuml;r eine unsichere Version von Django, die nicht mehr unterst&uuml;tzt wird. Bitte aktualisieren Sie auf eine neuere Version!""
 
 #: docs/templates/docs/doc.html:66
 msgid "Click on the links on the left to switch to another language."
@@ -66,7 +66,7 @@ msgstr "Sprache:"
 msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases."
-msgstr "Dieses Dokument bezieht sich auf die Entwicklungsversion von Django, die sich erheblich von früheren Versionen unterscheiden kann."
+msgstr "Dieses Dokument bezieht sich auf die Entwicklungsversion von Django, die sich erheblich von fr&uuml;heren Versionen unterscheiden kann."
 
 #: docs/templates/docs/doc.html:88
 #, python-format
@@ -95,7 +95,7 @@ msgstr "Durchsuchen"
 
 #: docs/templates/docs/doc.html:141
 msgid "Prev:"
-msgstr "Zurück:"
+msgstr "Zur&uuml;ck:"
 
 #: docs/templates/docs/doc.html:144
 msgid "Next:"
@@ -103,7 +103,7 @@ msgstr "Weiter:"
 
 #: docs/templates/docs/doc.html:146
 msgid "Table of contents"
-msgstr "Inhaltsübersicht"
+msgstr "Inhalts&uuml;bersicht"
 
 #: docs/templates/docs/doc.html:155
 msgid "You are here:"
@@ -133,7 +133,7 @@ msgstr "Modul Verzeichnis"
 
 #: docs/templates/docs/doc.html:174
 msgid "Table of Contents"
-msgstr "Inhaltsübersicht"
+msgstr "Inhalts&uuml;bersicht"
 
 #: docs/templates/docs/doc.html:175
 msgid "Handy when looking for specific information."
@@ -170,7 +170,7 @@ msgstr "Offline (Django %(version)s):"
 
 #: docs/templates/docs/doc.html:198
 msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
-msgstr "Zur Verfügung gestellt von <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+msgstr "Zur Verf&uuml;gung gestellt von <a href=\"https://readthedocs.org/\">Read the Docs</a>."
 
 #: docs/templates/docs/genindex.html:4
 msgid "General Index | Django Documentation"
@@ -197,7 +197,7 @@ msgstr "Suche | Django-Dokumentation"
 msgid "Only 1 result for <em>%(query)s</em> in the development version"
 msgid_plural ""
 "%(num_results)s results for <em>%(query)s</em> in the development version"
-msgstr[0] "Nur 1 Ergebnis für <em>%(query)s</em> in der Entwicklungsversion"
+msgstr[0] "Nur 1 Ergebnis f&uuml;r <em>%(query)s</em> in der Entwicklungsversion"
 msgstr[1] ""
 
 #: docs/templates/docs/search_results.html:22
@@ -205,7 +205,7 @@ msgstr[1] ""
 msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
 msgid_plural ""
 "%(num_results)s results for <em>%(query)s</em> in version %(version)s"
-msgstr[0] "Nur 1 Ergebnis für <em>%(query)s</em> in Version %(version)"
+msgstr[0] "Nur 1 Ergebnis f&uuml;r <em>%(query)s</em> in Version %(version)"
 msgstr[1] ""
 
 #: docs/templates/docs/search_results.html:30
@@ -214,7 +214,7 @@ msgstr "Keine Suchanfrage angegeben"
 
 #: docs/templates/docs/search_results.html:62
 msgid "Previous"
-msgstr "Zurück"
+msgstr "Zur&uuml;ck"
 
 #: docs/templates/docs/search_results.html:66
 #, python-format
@@ -232,4 +232,4 @@ msgstr "Seite ist nicht 'last' und kann auch nicht in einen 'int' umgewandelt we
 #: docs/views.py:195
 #, python-format
 msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr "Ungültige Seite (%(page_number)s): %(message)s"
+msgstr "Ung&uuml;ltige Seite (%(page_number)s): %(message)s"
