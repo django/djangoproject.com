@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-17 01:14-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2021-12-17 17:19-0000\n"
+"PO-Revision-Date: 2021-12-17 17:19-0000\n"
+"Last-Translator: Sebastian Christ sech89@gmail.com\n"
+"Language-Team: None\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -117,84 +117,84 @@ msgstr ""
 
 #: docs/templates/docs/doc.html:172
 msgid "Try the FAQ — it's got answers to many common questions."
-msgstr ""
+msgstr "Probieren Sie die FAQ aus - dort finden Sie Antworten auf viele häufig gestellte Fragen."
 
 #: docs/templates/docs/doc.html:174
 msgid "Index"
-msgstr ""
+msgstr "Inhaltsverzeichnis"
 
 #: docs/templates/docs/doc.html:174 docs/templates/docs/py-modindex.html:6
 #: docs/templates/docs/py-modindex.html:9
 msgid "Module Index"
-msgstr ""
+msgstr "Modul Verzeichnis"
 
 #: docs/templates/docs/doc.html:174
 msgid "Table of Contents"
-msgstr ""
+msgstr "Inhaltsübersicht"
 
 #: docs/templates/docs/doc.html:175
 msgid "Handy when looking for specific information."
-msgstr ""
+msgstr "Praktisch bei der Suche nach bestimmten Informationen."
 
 #: docs/templates/docs/doc.html:178
 msgid ""
 "Search for information in the archives of the django-users mailing list, or "
 "post a question."
-msgstr ""
+msgstr "Suchen Sie nach Informationen in den Archiven der django-users Mailingliste, oder stellen Sie eine Frage."
 
 #: docs/templates/docs/doc.html:181
 msgid ""
 "Ask a question in the #django IRC channel, or search the IRC logs to see if "
 "it’s been asked before."
-msgstr ""
+msgstr "Stellen Sie eine Frage im IRC-Kanal #django, oder durchsuchen Sie die IRC-Logs, um zu sehen, ob diese schon einmal gestellt wurde."
 
 #: docs/templates/docs/doc.html:184
 msgid "Report bugs with Django or Django documentation in our ticket tracker."
-msgstr ""
+msgstr "Melden Sie Fehler mit Django oder der Django-Dokumentation in unserem Ticket-Tracker."
 
 #: docs/templates/docs/doc.html:189
 msgid "Download:"
-msgstr ""
+msgstr "Download:"
 
 #: docs/templates/docs/doc.html:191
 msgid "Offline (development version):"
-msgstr ""
+msgstr "Offline (Entwicklungsversion):"
 
 #: docs/templates/docs/doc.html:192
 #, python-format
 msgid "Offline (Django %(version)s):"
-msgstr ""
+msgstr "Offline (Django %(version)s):"
 
 #: docs/templates/docs/doc.html:198
 msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
-msgstr ""
+msgstr "Zur Verfügung gestellt von <a href=\"https://readthedocs.org/\">Read the Docs</a>."
 
 #: docs/templates/docs/genindex.html:4
 msgid "General Index | Django Documentation"
-msgstr ""
+msgstr "Allgemeiner Verzeichnis | Django Dokumentation"
 
 #: docs/templates/docs/genindex.html:6 docs/templates/docs/genindex.html:9
 msgid "General Index"
-msgstr ""
+msgstr "Allgemeines Verzeichnis"
 
 #: docs/templates/docs/genindex.html:39
 msgid "[Link]"
-msgstr ""
+msgstr "[Link]"
 
 #: docs/templates/docs/py-modindex.html:4
 msgid "Module Index | Django Documentation"
-msgstr ""
+msgstr "Modul-Index | Django-Dokumentation"
 
 #: docs/templates/docs/search_results.html:4
 msgid "Search | Django documentation"
-msgstr ""
+msgstr "Suche | Django-Dokumentation"
 
 #: docs/templates/docs/search_results.html:16
 #, python-format
 msgid "Only 1 result for <em>%(query)s</em> in the development version"
 msgid_plural ""
 "%(num_results)s results for <em>%(query)s</em> in the development version"
-msgstr[0] ""
+msgstr[0] "Nur 1 Ergebnis für <em>%(query)s</em> in der Entwicklungsversion"
 msgstr[1] ""
 
 #: docs/templates/docs/search_results.html:22
@@ -202,31 +202,31 @@ msgstr[1] ""
 msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
 msgid_plural ""
 "%(num_results)s results for <em>%(query)s</em> in version %(version)s"
-msgstr[0] ""
+msgstr[0] "Nur 1 Ergebnis für <em>%(query)s</em> in Version %(version)"
 msgstr[1] ""
 
 #: docs/templates/docs/search_results.html:30
 msgid "No search query given"
-msgstr ""
+msgstr "Keine Suchanfrage angegeben"
 
 #: docs/templates/docs/search_results.html:62
 msgid "Previous"
-msgstr ""
+msgstr "Zurück"
 
 #: docs/templates/docs/search_results.html:66
 #, python-format
 msgid "Page %(page_number)s of %(num_pages)s"
-msgstr ""
+msgstr "Seite %(page_number)s von %(num_pages)"
 
 #: docs/templates/docs/search_results.html:73
 msgid "Next"
-msgstr ""
+msgstr "Weiter"
 
 #: docs/views.py:189
 msgid "Page is not 'last', nor can it be converted to an int."
-msgstr ""
+msgstr "Seite ist nicht 'last' und kann auch nicht in einen 'int' umgewandelt werden!"
 
 #: docs/views.py:195
 #, python-format
 msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr ""
+msgstr "Ungültige Seite (%(page_number)s): %(message)s"
