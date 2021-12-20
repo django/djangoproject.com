@@ -3,7 +3,10 @@ from django.db.models import Sum
 from sorl.thumbnail.admin import AdminImageMixin
 
 from .admin_views import download_donor_report
-from .models import DjangoHero, Donation, InKindDonor, Payment, Testimonial
+from .models import (
+    DjangoHero, Donation, InKindDonor, Payment, Testimonial,
+    get_fundraising_id,
+)
 
 
 class DonatedFilter(admin.DateFieldListFilter):
@@ -31,6 +34,9 @@ class DjangoHeroAdmin(AdminImageMixin, admin.ModelAdmin):
     ordering = ['-created']
     search_fields = ['name', 'email', 'stripe_customer_id']
 
+    def get_changeform_initial_data(self, request):
+        return {'id': get_fundraising_id()}
+
 
 class PaymentInline(admin.TabularInline):
     readonly_fields = ['date']
@@ -57,6 +63,9 @@ class Donation(admin.ModelAdmin):
         # of the model for list_display so we need an actual method that
         # references it.
         return obj.amount
+
+    def get_changeform_initial_data(self, request):
+        return {'id': get_fundraising_id()}
 
 
 @admin.register(Payment)

@@ -31,6 +31,10 @@ class DjangoHeroManager(models.Manager):
         return donors.order_by('-donated_amount', 'name')
 
 
+def get_fundraising_id():
+    return crypto.get_random_string(length=12)
+
+
 class FundraisingModel(models.Model):
     id = models.CharField(max_length=12, primary_key=True)
     created = models.DateTimeField(default=timezone.now)
@@ -42,7 +46,7 @@ class FundraisingModel(models.Model):
     def save(self, *args, **kwargs):
         self.modified = timezone.now()
         if not self.id:
-            self.id = crypto.get_random_string(length=12)
+            self.id = get_fundraising_id()
         return super().save(*args, **kwargs)
 
 
