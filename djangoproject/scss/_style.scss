@@ -181,6 +181,14 @@ h4 {
     font-weight: 700;
 }
 
+h5 {
+    @include font-size(14);
+    color: $text;
+    line-height: 1.2;
+    margin: 35px 0 20px;
+    font-weight: 700;
+}
+
 tt,
 code,
 kbd,
