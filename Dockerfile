@@ -33,6 +33,7 @@ RUN apk add git
 # install dependencies
 RUN pip install --upgrade pip
 COPY ./requirements ./requirements
+COPY ./package.json ./package.json
 RUN pip install -r ./requirements/dev.txt
 RUN pip install -r ./requirements/tests.txt
 RUN pip install tox
