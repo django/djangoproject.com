@@ -18,7 +18,7 @@ RUN apk update \
     && apk del build-deps
 
 # install node and npm
-RUN apk add --update nodejs nodejs-npm
+RUN apk add --update nodejs npm
 
 # install pillow dependencies
 RUN apk add build-base python3-dev py-pip jpeg-dev zlib-dev
