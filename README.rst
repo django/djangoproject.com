@@ -23,7 +23,7 @@ To run locally, do the usual:
 #. Make a directory to store the project's data (MEDIA_ROOT, DOC_BUILDS_ROOT,
    etc.). We'll use ~/.djangoproject for example purposes.
 
-   Create a 'secrets.json' file in a directory named 'conf' in that directory,
+   Create a ``secrets.json`` file in a directory named ``conf`` in that directory,
    containing something like::
 
     { "secret_key": "xyz",
@@ -33,10 +33,10 @@ To run locally, do the usual:
       "trac_db_host": "localhost",
       "trac_db_password": "secret" }
 
-#. Add `export DJANGOPROJECT_DATA_DIR=~/.djangoproject` (without the backticks)
-   to your ~/.bashrc (or ~/.zshrc if you're using zsh, ~/.bash_profile if
-   you're on macOS and using bash) file and then run `source ~/.bashrc` (or
-   `source ~/.zshrc`, or `source ~/.bash_profile`) to load the changes.
+#. Add ``export DJANGOPROJECT_DATA_DIR=~/.djangoproject`` (without the backticks)
+   to your ``~/.bashrc`` (or ~/.zshrc if you're using zsh, ~/.bash_profile if
+   you're on macOS and using bash) file and then run ``source ~/.bashrc`` (or
+   ``source ~/.zshrc``, or ``source ~/.bash_profile``) to load the changes.
 
 #. Create databases::
 
@@ -56,7 +56,7 @@ To run locally, do the usual:
      ALTER USER "code.djangoproject" WITH PASSWORD 'secret';
      \d
 
-   (Use the same passwords as the ones you've used in your `secrets.json` file)
+   (Use the same passwords as the ones you've used in your ``secrets.json`` file)
 
 #. Create tables::
 
