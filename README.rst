@@ -21,7 +21,7 @@ To run locally, do the usual:
     make install
 
 #. Make a directory to store the project's data (MEDIA_ROOT, DOC_BUILDS_ROOT,
-   etc.). We'll use ~/.djangoproject for example purposes.
+   etc.). We'll use ``~/.djangoproject`` for example purposes.
 
    Create a ``secrets.json`` file in a directory named ``conf`` in that directory,
    containing something like::
@@ -34,7 +34,7 @@ To run locally, do the usual:
       "trac_db_password": "secret" }
 
 #. Add ``export DJANGOPROJECT_DATA_DIR=~/.djangoproject`` (without the backticks)
-   to your ``~/.bashrc`` (or ~/.zshrc if you're using zsh, ~/.bash_profile if
+   to your ``~/.bashrc`` (or ``~/.zshrc`` if you're using zsh, ``~/.bash_profile`` if
    you're on macOS and using bash) file and then run ``source ~/.bashrc`` (or
    ``source ~/.zshrc``, or ``source ~/.bash_profile``) to load the changes.
 
