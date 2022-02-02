@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.5.7-alpine
+FROM python:3.8-alpine
 
 # set work directory
 WORKDIR /usr/src/app
@@ -12,6 +12,8 @@ ENV PYTHONUNBUFFERED 1
 RUN apk update \
     && apk add --virtual build-deps gcc python3-dev musl-dev \
     && apk add postgresql-dev \
+    && apk add gettext-dev \
+    && apk add rsync \
     && pip install psycopg2 \
     && apk del build-deps
 
@@ -19,7 +21,7 @@ RUN apk update \
 RUN apk add --update nodejs nodejs-npm
 
 # install pillow dependencies
-RUN apk add build-base python-dev py-pip jpeg-dev zlib-dev
+RUN apk add build-base python3-dev py-pip jpeg-dev zlib-dev
 ENV LIBRARY_PATH=/lib:/usr/lib
 
 # install psql client

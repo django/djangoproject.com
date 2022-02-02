@@ -9,10 +9,12 @@ define([
         e.preventDefault();
         var interval = $donationForm.find('[name=interval]').val();
         var amount = $donationForm.find('[name=amount]').val();
+        var recaptchaToken = document.getElementById('id_captcha').value;
         var csrfToken = $donationForm.find('[name=csrfmiddlewaretoken]').val();
         var data = {
             'interval': interval,
             'amount': amount,
+            'captcha': recaptchaToken,
             'csrfmiddlewaretoken': csrfToken
         }
         $.ajax({
@@ -26,8 +28,13 @@ define([
                     var stripe = Stripe($donationForm.data('stripeKey'))
                     return stripe.redirectToCheckout({sessionId: data.sessionId})
                 } else {
-                    alert('There was an error setting up your donation. ' +
-                          'Sorry. Please refresh the page and try again.');
+                    msg = 'There was an error setting up your donation. '
+                    if (data.error.amount) {
+                        msg += data.error.amount
+                    } else {
+                        msg += 'Sorry. Please refresh the page and try again.'
+                    }
+                    alert(msg);
                 }
             }
         })

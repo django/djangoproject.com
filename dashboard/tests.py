@@ -1,6 +1,5 @@
-import codecs
+import datetime
 import json
-import os
 from unittest import mock
 
 import requests_mock
@@ -10,7 +9,8 @@ from django.test import RequestFactory, TestCase
 from django_hosts.resolvers import reverse
 
 from .models import (
-    GithubItemCountMetric, Metric, RSSFeedMetric, TracTicketMetric,
+    METRIC_PERIOD_DAILY, METRIC_PERIOD_WEEKLY, GithubItemCountMetric,
+    GitHubSearchCountMetric, Metric, TracTicketMetric,
 )
 from .views import index, metric_detail, metric_json
 
@@ -77,23 +77,6 @@ class TracTicketMetricTestCase(TestCase, MetricMixin):
         self.assertTrue(mock_server_proxy.client.query.assert_called_with)
 
 
-class RSSFeedMetricTestCase(TestCase, MetricMixin):
-    fixtures = ['dashboard_test_data']
-    feed_url = 'https://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7&format=rss'
-    fixtures_path = os.path.join(os.path.dirname(__file__), 'fixtures', 'rss_feed_metric.xml')
-
-    def setUp(self):
-        super().setUp()
-        self.instance = RSSFeedMetric.objects.last()
-
-    @requests_mock.mock()
-    def test_fetch(self, mocker):
-        with codecs.open(self.fixtures_path, 'r', 'utf-8') as fixtures:
-            feed_items = fixtures.read()
-        mocker.get(self.feed_url, text=feed_items)
-        self.assertEqual(self.instance.fetch(), 177)
-
-
 class GithubItemCountMetricTestCase(TestCase, MetricMixin):
     fixtures = ['dashboard_test_data']
     api_url1 = 'https://api.github.com/repos/django/django/pulls?state=closed&per_page=100&page=1'
@@ -110,6 +93,37 @@ class GithubItemCountMetricTestCase(TestCase, MetricMixin):
         # and then with 42 items on the second page
         mocker.get(self.api_url2, text=json.dumps([{'id': i} for i in range(42)]))
         self.assertEqual(self.instance.fetch(), 142)
+
+
+class GitHubSearchCountMetricTestCase(TestCase, MetricMixin):
+    fixtures = ['dashboard_test_data']
+    api_url = (
+        'https://api.github.com/search/commits?'
+        'per_page=1&q=repo:django/django+committer-date:%s'
+    )
+
+    def setUp(self):
+        super().setUp()
+        self.instance = GitHubSearchCountMetric.objects.last()
+
+    @requests_mock.mock()
+    def test_fetch(self, mocker):
+        today = datetime.date.today()
+        week_start = today - datetime.timedelta(weeks=1)
+        # Faking a daily JSON output with 4 items.
+        mocker.get(
+            self.api_url % today.isoformat(),
+            text=json.dumps({'total_count': 4, 'items': []}),
+        )
+        metric = GitHubSearchCountMetric.objects.filter(period=METRIC_PERIOD_DAILY).last()
+        self.assertEqual(metric.fetch(), 4)
+        # Faking a weekly JSON output with 23 items.
+        mocker.get(
+            self.api_url % '>' + week_start.isoformat(),
+            text=json.dumps({'total_count': 23, 'items': []}),
+        )
+        metric = GitHubSearchCountMetric.objects.filter(period=METRIC_PERIOD_WEEKLY).last()
+        self.assertEqual(metric.fetch(), 23)
 
 
 class UpdateMetricCommandTestCase(TestCase):

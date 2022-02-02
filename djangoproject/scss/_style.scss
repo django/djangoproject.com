@@ -181,6 +181,14 @@ h4 {
     font-weight: 700;
 }
 
+h5 {
+    @include font-size(14);
+    color: $text;
+    line-height: 1.2;
+    margin: 35px 0 20px;
+    font-weight: 700;
+}
+
 tt,
 code,
 kbd,
@@ -2042,7 +2050,7 @@ h2 + .list-link-soup {
 .headerlink {
     // Permalink styles for sections in docs
     opacity: 0;
-    padding-left: 10px;
+    margin-left: 10px;
     font-size: 0.8em;
     position: relative;
     top: -0.17em;
@@ -2050,6 +2058,9 @@ h2 + .list-link-soup {
     text-decoration: none;
     -webkit-transition: opacity 200ms ease-in-out;
     transition: opacity 200ms ease-in-out;
+    &:focus {
+        opacity: 1;
+    }
 }
 
     h1,
@@ -2346,7 +2357,7 @@ h2 + .list-link-soup {
 
 }
 
-dl.function, dl.class, dl.method, dl.classmethod, dl.staticmethod, dl.attribute, dl.exception {
+dl.function, dl.class, dl.method, dl.classmethod, dl.staticmethod, dl.attribute, dl.exception, dl.data {
     dt {
         font-weight: 700;
     }
@@ -3113,18 +3124,20 @@ form .footnote {
     }
 }
 
-table.django-supported-versions {
+table.django-supported-versions, table.django-unsupported-versions {
     border: 1px solid black;
     text-align: center;
-    tr {
-        background-color: $green-very-light;
-        th, td {
-            padding: 5px;
-        }
+    th, td {
+        padding: 5px;
     }
-    tr.unsupported {
-        background-color: $red-light;
-    }
+}
+
+table.django-supported-versions tr {
+    background-color: $green-very-light;
+}
+
+table.django-unsupported-versions tr {
+    background-color: $red-light;
 }
 
 /* Corporate membership list page */

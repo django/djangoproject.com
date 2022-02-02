@@ -55,6 +55,7 @@ class TestCampaign(TestCase):
         response = self.client.post(reverse('fundraising:donation-session'), {
             'amount': 100,
             'interval': 'onetime',
+            'captcha': 'TESTING',
         })
         content = json.loads(response.content.decode())
         self.assertEqual(response.status_code, 200)

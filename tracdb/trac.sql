@@ -697,3 +697,6 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 -- PostgreSQL database dump complete
 --
 
+-- Insert the database and SpamFilter versions.
+INSERT INTO system (name, value) VALUES ('database_version', '23');
+INSERT INTO system (name, value) VALUES ('spamfilter_version', '3');

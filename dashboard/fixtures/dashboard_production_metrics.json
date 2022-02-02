@@ -272,7 +272,7 @@
     }
 },
 {
-    "model": "dashboard.rssfeedmetric",
+    "model": "dashboard.githubsearchcountmetric",
     "pk": 1,
     "fields": {
         "name": "Commits today",
@@ -284,12 +284,12 @@
         "period": "daily",
         "unit": "commit",
         "unit_plural": "commits",
-        "feed_url": "https://code.djangoproject.com/timeline?changeset=on&max=0&daysback=0&format=rss",
-        "link_url": "https://code.djangoproject.com/timeline?changeset=on&max=0&daysback=0"
+        "api_url": "https://api.github.com/search/commits",
+        "link_url": "https://github.com/django/django/commits"
     }
 },
 {
-    "model": "dashboard.rssfeedmetric",
+    "model": "dashboard.githubsearchcountmetric",
     "pk": 2,
     "fields": {
         "name": "Commits in the last week",
@@ -301,8 +301,8 @@
         "period": "weekly",
         "unit": "commit",
         "unit_plural": "commits",
-        "feed_url": "https://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7&format=rss",
-        "link_url": "https://code.djangoproject.com/timeline?changeset=on&max=0&daysback=7"
+        "api_url": "https://api.github.com/search/commits",
+        "link_url": "https://github.com/django/django/commits"
     }
 },
 {
