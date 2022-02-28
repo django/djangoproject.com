@@ -1025,7 +1025,12 @@ blockquote {
             white-space: nowrap;
         }
 
-        a {
+        a.in-kind-donors {
+            @include font-size(20);
+            color: $green-medium-dark;
+        }
+
+        a.threespot, a.andrevv {
             display: block;
             height: 33px;
             overflow: hidden;
@@ -1034,13 +1039,6 @@ blockquote {
             @include respond-min(768px) {
                 clear: both;
                 margin-top: 5px;
-            }
-
-            &.rackspace {
-                background: url(../img/logo-rackspace.png) no-repeat left center;
-                .mdzr-svg & {
-                    background: url(../img/logo-rackspace.svg) no-repeat left center;
-                }
             }
 
             &.threespot {
