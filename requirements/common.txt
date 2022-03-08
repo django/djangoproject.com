@@ -8,7 +8,7 @@ django-registration-redux==2.9
 docutils==0.18.1
 feedparser==6.0.8
 Jinja2==2.11.3
-libsass==0.20.1
+libsass==0.21.0
 Pillow==9.0.0
 psycopg2==2.8.6
 Pygments==2.8.1
