@@ -11,7 +11,7 @@ Jinja2==2.11.3
 libsass==0.21.0
 Pillow==9.0.0
 psycopg2==2.8.6
-Pygments==2.8.1
+Pygments==2.11.2
 pykismet3==0.1.1
 requests==2.26.0
 sorl-thumbnail==12.5.0
