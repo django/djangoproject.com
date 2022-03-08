@@ -6,6 +6,7 @@ from django.conf import settings
 from django.core import mail
 from django.template.defaultfilters import date as date_filter
 from django.test import TestCase
+from django.test.utils import override_settings
 from django.urls import reverse
 from django_hosts.resolvers import reverse as django_hosts_reverse
 
@@ -30,10 +31,12 @@ class TestCampaign(TestCase):
         response = self.client.get(self.index_url)
         self.assertContains(response, 'Anonymous Hero')
 
+    @override_settings(MEDIA_ROOT='djangoproject/')
     def test_anonymous_donor_with_logo(self):
         hero = DjangoHero.objects.create(
             is_visible=True, approved=True,
-            hero_type='individual', logo='yes')  # We don't need an actual image
+            hero_type='individual', logo='static/img/logo-django.png',
+        )
         donation = hero.donation_set.create(subscription_amount='5')
         donation.payment_set.create(amount='5')
         response = self.client.get(self.index_url)

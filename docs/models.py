@@ -1,11 +1,11 @@
 import datetime
+import html
 import json
 import operator
 from functools import reduce
 from pathlib import Path
 
 from django.conf import settings
-from django.contrib.postgres.fields.jsonb import JSONField
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import (
     SearchQuery, SearchRank, SearchVectorField, TrigramSimilarity,
@@ -15,7 +15,6 @@ from django.db import models, transaction
 from django.db.models import Prefetch
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
-from django.utils.text import unescape_entities
 from django_hosts.resolvers import reverse
 
 from releases.models import Release
@@ -170,7 +169,7 @@ class DocumentRelease(models.Model):
             Document.objects.create(
                 release=self,
                 path=document_path,
-                title=unescape_entities(strip_tags(document['title'])),
+                title=html.unescape(strip_tags(document['title'])),
                 metadata=document,
                 config=TSEARCH_CONFIG_LANGUAGES.get(self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG),
             )
@@ -252,7 +251,7 @@ class Document(models.Model):
     )
     path = models.CharField(max_length=500)
     title = models.CharField(max_length=500)
-    metadata = JSONField(default=dict)
+    metadata = models.JSONField(default=dict)
     search = SearchVectorField(null=True, editable=False)
     config = models.SlugField(default=DEFAULT_TEXT_SEARCH_CONFIG)
 
@@ -273,7 +272,7 @@ class Document(models.Model):
 
     @cached_property
     def content_raw(self):
-        return strip_tags(unescape_entities(self.metadata['content']).replace(u'¶', ''))
+        return strip_tags(html.unescape(self.metadata['content']).replace(u'¶', ''))
 
     @cached_property
     def root(self):

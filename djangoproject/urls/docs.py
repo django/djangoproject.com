@@ -1,4 +1,4 @@
-from collections import MutableMapping
+from collections.abc import MutableMapping
 
 from django.contrib.sitemaps.views import sitemap
 from django.http import HttpResponse
