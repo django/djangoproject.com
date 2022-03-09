@@ -41,12 +41,15 @@ class TestDisplayDjangoHeroes(TestCase):
     def test_display_django_heroes(self):
         def create_hero_with_payment_amount(amount):
             hero = DjangoHero.objects.create(
-                email='%s@djangoproject.com' % get_random_string(),
+                email='%s@djangoproject.com' % get_random_string(length=12),
                 approved=True,
                 is_visible=True,
             )
             donation = hero.donation_set.create(interval='onetime')
-            donation.payment_set.create(amount=amount, stripe_charge_id=get_random_string())
+            donation.payment_set.create(
+                amount=amount,
+                stripe_charge_id=get_random_string(length=12),
+            )
             return hero
 
         hero1 = create_hero_with_payment_amount(LEADERSHIP_LEVEL_AMOUNT + 1)
@@ -65,12 +68,15 @@ class TestDisplayDjangoHeroes(TestCase):
         """
         def create_hero_with_payment_date(days):
             hero = DjangoHero.objects.create(
-                email='%s@djangoproject.com' % get_random_string(),
+                email='%s@djangoproject.com' % get_random_string(length=12),
                 approved=True,
                 is_visible=True,
             )
             donation = hero.donation_set.create(interval='onetime')
-            payment = donation.payment_set.create(amount=10 + days, stripe_charge_id=get_random_string())
+            payment = donation.payment_set.create(
+                amount=10 + days,
+                stripe_charge_id=get_random_string(length=12),
+            )
             date = datetime.today() - timedelta(days=DISPLAY_DONOR_DAYS + days)
             Payment.objects.filter(pk=payment.pk).update(date=date)
             return hero
