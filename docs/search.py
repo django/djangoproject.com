@@ -1,6 +1,6 @@
-from django.contrib.postgres.fields.jsonb import KeyTextTransform
 from django.contrib.postgres.search import SearchVector
 from django.db.models import F
+from django.db.models.fields.json import KeyTextTransform
 
 # Imported from https://github.com/postgres/postgres/blob/REL_10_STABLE/src/bin/initdb/initdb.c#L664
 TSEARCH_CONFIG_LANGUAGES = {

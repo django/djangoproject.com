@@ -248,7 +248,8 @@ class UpdateDocTests(TestCase):
             'title': 'This is the title',
             'current_page_name': 'foo/bar',
         }])
-        self.assertQuerysetEqual(self.release.documents.all(), ['<Document: en/dev/foo/bar>'])
+        document = self.release.documents.get()
+        self.assertEqual(document.path, 'foo/bar')
 
     def test_clean_path(self):
         self.release.sync_to_db([{
@@ -256,7 +257,8 @@ class UpdateDocTests(TestCase):
             'title': 'This is the title',
             'current_page_name': 'foo/bar/index',
         }])
-        self.assertQuerysetEqual(self.release.documents.all(), ['<Document: en/dev/foo/bar>'])
+        document = self.release.documents.get()
+        self.assertEqual(document.path, 'foo/bar')
 
     def test_title_strip_tags(self):
         self.release.sync_to_db([{
@@ -302,10 +304,8 @@ class UpdateDocTests(TestCase):
             {'body': '', 'title': '', 'current_page_name': 'nonexcluded/bar'},
             {'body': '', 'title': '', 'current_page_name': '%s/bar' % path},
         ])
-        self.assertQuerysetEqual(
-            release.documents.all(),
-            ['<Document: %s/%s/nonexcluded/bar>' % (lang, version)]
-        )
+        document = release.documents.get()
+        self.assertEqual(document.path, 'nonexcluded/bar')
 
 
 class SitemapTests(TestCase):

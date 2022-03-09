@@ -297,3 +297,5 @@ THUMBNAIL_ALTERNATIVE_RESOLUTIONS = [2]
 # dashboard settings
 TRAC_RPC_URL = "https://code.djangoproject.com/rpc"
 TRAC_URL = "https://code.djangoproject.com/"
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
