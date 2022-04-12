@@ -1,0 +1,104 @@
+@media (prefers-color-scheme: dark) {
+	body,
+	div[role="complementary"],
+	#billboard,
+	#generic,
+	.layout-tertiary,
+	.full-width.container,
+	.homepage .copy-banner {
+	  color: $text-very-light;
+	  background: $black;
+	}
+
+	[role="main"] {
+		color: $text-very-light;
+		background: $black;
+
+		h1 {
+			color: lighten($green-dark, 10%);
+		}
+	}
+
+
+	.mdzr-boxshadow {
+		[role="main"],
+		[role="complementary"],
+		.layout-tertiary,
+		.full-width {
+			box-shadow: none;
+		}
+		.sidebar-right {
+			& [role="main"],
+			& [role="complementary"] {
+				box-shadow: none;
+			}
+		}
+	}
+
+	.copy-banner, .footer, .subfooter {
+		.container {
+			background-color: initial;
+		}
+	}
+
+	a {
+	  color: lighten($green-dark, 20%);
+
+	  #docs-content & {
+		color: lighten($green-dark, 20%);
+		&.reference {
+			color: lighten($green-dark, 20%);
+			&:visited {
+				border-color: lighten($green-dark, 20%);
+			}
+			&:active,
+			&:focus,
+			&:hover {
+				color: lighten($green-dark, 20%);
+			}
+		}
+	  }
+	}
+
+
+	pre.literal-block, .literal-block {
+		border: 1px solid #343940;
+		background: #343940;
+		color: $white-dark;
+	}
+
+	code {
+		color: $white-dark;
+	}
+
+	table.django-supported-versions, t
+	table.django-unsupported-versions {
+		color: $green-dark;
+	}
+
+	blockquote {
+		background-color: $green-dark;
+	}
+
+	form {
+		select, textarea {
+			background: $black;
+			color: $white-dark;
+		}
+		input {
+			&[type="search"],
+			&[type="text"],
+			&[type="email"],
+			&[type="password"],
+			&[type="number"],
+			&[type="url"] {
+				background: $black;
+				color: $white-dark;
+			}
+		}
+	}
+
+	.cta, a.cta {
+		background-color: $green-dark;
+	}
+  }
