@@ -17,7 +17,7 @@ services:
       - SQL_ENGINE=django.db.backends.postgresql
       - SQL_DATABASE=djangoproject
       - SQL_USER=djangoproject
-      - SQL_PASSWORD=djangoproject
+      - SQL_PASSWORD=secret
       - SQL_HOST=db
       - SQL_PORT=5432
     depends_on:
@@ -26,5 +26,5 @@ services:
     image: postgres:11.2-alpine
     environment:
       - POSTGRES_USER=djangoproject
-      - POSTGRES_PASSWORD=djangoproject
+      - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=djangoproject

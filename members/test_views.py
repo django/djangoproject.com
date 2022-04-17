@@ -89,10 +89,7 @@ class CorporateMemberListViewTests(TestCase):
             sorted(members.keys()),
             ['bronze', 'diamond', 'gold', 'platinum', 'silver']
         )
-        self.assertQuerysetEqual(
-            members['silver'],
-            ['<CorporateMember: Corporation>', '<CorporateMember: AAA>']
-        )
+        self.assertSequenceEqual(members['silver'], [self.member, member])
 
 
 class CorporateMemberJoinViewTests(TestCase):

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load fundraising_extras release_notes staticfiles %}
+{% load fundraising_extras release_notes static %}
 
 {% block sectionid %}download{% endblock %}
 {% block title %}Download Django{% endblock %}
@@ -87,12 +87,6 @@
         <td>December 2021</td>
         <td>April 2024</td>
       </tr>
-      <tr>
-        <td>2.2 LTS</td>
-        <td>{% get_latest_micro_release '2.2' %}</td>
-        <td>December 2, 2019</td>
-        <td>April 2022</td>
-      </tr>
   </table>
 
   <h2 id="future-versions">Future Roadmap</h2>
@@ -105,10 +99,22 @@
       <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
     </tr>
     <tr>
-      <td>4.1</td>
-      <td>August 2022</td>
-      <td>April 2023</td>
+      <td>5.2 LTS</td>
+      <td>April 2025</td>
+      <td>December 2025</td>
+      <td>April 2028</td>
+    </tr>
+    <tr>
+      <td>5.1</td>
+      <td>August 2024</td>
+      <td>April 2025</td>
+      <td>December 2025</td>
+    </tr>
+    <tr>
+      <td>5.0</td>
       <td>December 2023</td>
+      <td>August 2024</td>
+      <td>April 2025</td>
     </tr>
     <tr>
       <td>4.2 LTS</td>
@@ -117,10 +123,10 @@
       <td>April 2026</td>
     </tr>
     <tr>
-      <td>5.0</td>
+      <td>4.1</td>
+      <td>August 2022</td>
+      <td>April 2023</td>
       <td>December 2023</td>
-      <td>August 2024</td>
-      <td>April 2025</td>
     </tr>
   </table>
 
@@ -145,6 +151,12 @@
         <td>{% get_latest_micro_release '3.0' %}</td>
         <td>August 3, 2020</td>
         <td>April 6, 2021</td>
+      </tr>
+      <tr>
+        <td>2.2 LTS</td>
+        <td>{% get_latest_micro_release '2.2' %}</td>
+        <td>December 2, 2019</td>
+        <td>April 11, 2022</td>
       </tr>
       <tr>
         <td>2.1</td>

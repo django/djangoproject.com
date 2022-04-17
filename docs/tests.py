@@ -248,7 +248,8 @@ class UpdateDocTests(TestCase):
             'title': 'This is the title',
             'current_page_name': 'foo/bar',
         }])
-        self.assertQuerysetEqual(self.release.documents.all(), ['<Document: en/dev/foo/bar>'])
+        document = self.release.documents.get()
+        self.assertEqual(document.path, 'foo/bar')
 
     def test_clean_path(self):
         self.release.sync_to_db([{
@@ -256,7 +257,8 @@ class UpdateDocTests(TestCase):
             'title': 'This is the title',
             'current_page_name': 'foo/bar/index',
         }])
-        self.assertQuerysetEqual(self.release.documents.all(), ['<Document: en/dev/foo/bar>'])
+        document = self.release.documents.get()
+        self.assertEqual(document.path, 'foo/bar')
 
     def test_title_strip_tags(self):
         self.release.sync_to_db([{
@@ -302,10 +304,8 @@ class UpdateDocTests(TestCase):
             {'body': '', 'title': '', 'current_page_name': 'nonexcluded/bar'},
             {'body': '', 'title': '', 'current_page_name': '%s/bar' % path},
         ])
-        self.assertQuerysetEqual(
-            release.documents.all(),
-            ['<Document: %s/%s/nonexcluded/bar>' % (lang, version)]
-        )
+        document = release.documents.get()
+        self.assertEqual(document.path, 'nonexcluded/bar')
 
 
 class SitemapTests(TestCase):
@@ -470,15 +470,15 @@ class DocumentManagerTest(TestCase):
     def test_search(self):
         query_text = 'django'
         document_queryset = Document.objects.search(query_text, self.release).values_list('title', 'rank')
-        document_list = [('Django 1.2.1 release notes', 0.969828), ('Django 1.9.4 release notes', 0.949088)]
+        document_list = [('Django 1.2.1 release notes', 0.96982837), ('Django 1.9.4 release notes', 0.9490876)]
         self.assertSequenceEqual(list(document_queryset), document_list)
 
     def test_multilingual_search(self):
         query_text = 'publication'
         queryset = Document.objects.search(query_text, self.release_fr).values_list('title', 'rank')
         self.assertSequenceEqual(queryset, [
-            ('Notes de publication de Django 1.2.1', 1.06933),
-            ('Notes de publication de Django 1.9.4', 1.04587),
+            ('Notes de publication de Django 1.2.1', 1.0693262),
+            ('Notes de publication de Django 1.9.4', 1.0458658),
         ])
 
     def test_empty_search(self):

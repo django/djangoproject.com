@@ -2,7 +2,6 @@ import datetime
 
 from django import db
 from django.shortcuts import render
-from django.utils.timezone import FixedOffset
 
 
 def bouncing_tickets(request):
@@ -22,7 +21,7 @@ def bouncing_tickets(request):
 
 
 def ts2dt(ts):
-    epoc = datetime.datetime(1970, 1, 1, tzinfo=FixedOffset(0))
+    epoc = datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)
     return epoc + datetime.timedelta(microseconds=ts)
 
 
