@@ -15,8 +15,8 @@ CSS rendered with Libsass 0.7.0
 body {
     @include serif;
     @include font-size(18);
-    background: #f8f8f8;
-    color: $text;
+    background: var(--sidebar-bg);
+    color: var(--body-fg);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -32,26 +32,26 @@ body {
     }
 }
 a {
-    color: $text;
+    color: var(--link-color);
     text-decoration: underline;
     -webkit-tap-highlight-color: transparent;
 
     &:visited {
-        color: lighten($text, 10%);
+        color: var(--text-l10);
     }
 
     &:active,
     &:focus,
     &:hover {
-        color: lighten($text, 20%);
+        color: var(--text-l20);
     }
 }
 
 ::selection { // Text Selection Colors
-    background: $green-very-light;
+    background: var(--secondary-accent);
 }
 ::-moz-selection {
-    background: $green-very-light;
+    background: var(--secondary-accent);
 }
 ol li, ul li { //list style
     margin-top: 10px;
@@ -96,7 +96,7 @@ h6 {
 }
 h1 {
     @include font-size(28);
-    color: #fff;
+    color: var(--white-color);
     letter-spacing: -1px;
     line-height: 1.1;
     @include respond-min(768px) {
@@ -104,13 +104,13 @@ h1 {
     }
 
     .layout-secondary & {
-        color: $text;
+        color: var(--body-fg);
     }
 
     [role="main"] & {
         @include font-size(32);
         margin: 40px 0px 30px;
-        color: $text;
+        color: var(--body-fg);
     }
 
     [role="complementary"] & {
@@ -122,7 +122,7 @@ h2 {
     [role="complementary"] &,
     .layout-secondary & {
         @include font-size(20);
-        border-bottom: 1px solid $gray-line;
+        border-bottom: 1px solid var(--hairline-color);
         font-weight: 400;
         padding-bottom: 15px;
         margin-top: 30px;
@@ -150,7 +150,7 @@ h2 {
 h3 {
     @include font-size(20);
     font-weight: 700;
-    color: $text;
+    color: var(--body-fg);
     line-height: 1.2;
     margin: 35px 0 20px;
 
@@ -169,13 +169,13 @@ h3 {
 
     [role="complementary"] & {
         @include font-size(18);
-        border-bottom: 1px solid $gray-line;
+        border-bottom: 1px solid var(--hairline-color);
     }
 }
 
 h4 {
     @include font-size(16);
-    color: $text;
+    color: var(--body-fg);
     line-height: 1.2;
     margin: 35px 0 20px;
     font-weight: 700;
@@ -183,7 +183,7 @@ h4 {
 
 h5 {
     @include font-size(14);
-    color: $text;
+    color: var(--body-fg);
     line-height: 1.2;
     margin: 35px 0 20px;
     font-weight: 700;
@@ -195,7 +195,7 @@ kbd,
 pre,
 samp {
     @include monospace;
-    color: $green-dark;
+    color: var(--code-fg);
     font-size: 1em;
 }
 
@@ -209,7 +209,7 @@ span.pre {
 
 a:hover, a:active, a:focus {
     tt {
-        color: lighten($text, 20%);
+        color: var(--text-l20);
     }
 }
 
@@ -226,9 +226,9 @@ ul {
 
 // TODO: most of this is copy/pasted from .admonition. We should factor out the common bits
 blockquote {
-    background: $white;
+    background: var(--body-bg);
     padding: 15px 20px 15px 70px;
-    border: 1px solid $green-very-light;
+    border: 1px solid var(--secondary-accent);
     border-radius: 4px;
     margin: 25px 0;
     position: relative;
@@ -254,7 +254,7 @@ blockquote {
 
 [role="main"] {
     //Main column. Left aligned by default. See /styleguide for explanation.
-    background: #fff;
+    background: var(--white-color);
     padding: 1px 10px 40px;
     @include respond-min(768px) {
         min-height: 800px;
@@ -267,7 +267,7 @@ blockquote {
         width: 60%;
         .mdzr-boxshadow & {
             border: none;
-            box-shadow: 0px 0px 0 0 #fff, 0px 0px 0 0 #fff, 460px 0 0 0 #fff, 1000px 0 0 0 #fff, 0px 600px 0 0px #fff, 460px 600px 0 0px #fff;
+            box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), 460px 0 0 0 var(--white-color), 1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), 460px 600px 0 0px var(--white-color);
             padding-left: 4%;
             padding-right: 0;
             width: 63%;
@@ -277,7 +277,7 @@ blockquote {
             float: left;
             .mdzr-boxshadow & {
                 border: none;
-                box-shadow: 0px 0px 0 0 #fff, 0px 0px 0 0 #fff, -460px 0 0 0 #fff, -1000px 0 0 0 #fff, 0px 600px 0 0px #fff, -460px 600px 0 0px #fff;
+                box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), -460px 0 0 0 var(--white-color), -1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), -460px 600px 0 0px var(--white-color);
                 padding-left: 0;
                 width: 62%;
                 padding-right: 4%;
@@ -302,7 +302,7 @@ blockquote {
 
     .section {
         padding-bottom: 40px;
-        border-bottom: 1px solid $gray-line;
+        border-bottom: 1px solid var(--hairline-color);
         &:last-of-type {
             padding-bottom: 0;
             border-bottom: 0;
@@ -322,7 +322,7 @@ blockquote {
         padding: 0;
         max-width: none;
         border-bottom: 1px solid #ddd;
-        background: #fff;
+        background: var(--white-color);
     }
     // High-level class denoting full-width layout
     @include clearfix;
@@ -366,7 +366,7 @@ blockquote {
                 padding: 10px 40px 10px 0;
                 font-size: 18px;
                 border-bottom: 0;
-                color: $green-medium;
+                color: var(--primary);
 
                 .collapsing-icon {
                     font-size: 10px;
@@ -394,7 +394,7 @@ blockquote {
 }
 .layout-tertiary {
     // Tertiary (white) content area on full-width pages
-    background: #fff;
+    background: var(--white-color);
     border-top: 1px solid #ddd;
     padding: 20px 10px 50px;
     .mdzr-boxshadow & {
@@ -411,7 +411,7 @@ blockquote {
 
     &.sidebar-right {
         .mdzr-boxshadow & {
-            box-shadow: -1200px 0 0 0px #fff;
+            box-shadow: -1200px 0 0 0px var(--white-color);
         }
     }
 }
@@ -448,7 +448,7 @@ blockquote {
 
     .meta {
         @include font-size(13);
-        color: $green-medium;
+        color: var(--primary);
         font-weight: 700;
         width: auto;
         float: left;
@@ -469,7 +469,7 @@ blockquote {
         @include font-size(40);
         @include sans-serif;
         background: url(../img/logo-django.png) 0 0 no-repeat;
-        color: #FFF;
+        color: var(--white-color);
         display: block;
         float: left;
         font-weight: 700;
@@ -493,7 +493,7 @@ blockquote {
         @include font-size(20);
         background: $green-dark;
         border-radius: 23px;
-        color: #fff;
+        color: var(--menu);
         cursor: pointer;
         display: block;
         float: right;
@@ -509,7 +509,7 @@ blockquote {
         }
 
         &:active {
-            color: $green-medium;
+            color: var(--primary);
         }
 
         span {
@@ -537,7 +537,7 @@ blockquote {
         }
 
         &.active {
-            max-height: 500px;
+            max-height: 580px;
         }
     }
 
@@ -579,24 +579,38 @@ blockquote {
             }
 
             &.active a {
-                color: $green-medium;
+                color: var(--primary);
             }
         }
 
         a {
-            color: #fff;
+            color: var(--menu);
             display: block;
             padding: 20px 0px;
             text-decoration: none;
 
             &:active, &:hover {
-                color: $green-very-light;
+                color: var(--secondary-accent);
             }
 
             @include respond-min(768px) {
                 padding: 20px 10px;
             }
         }
+
+		span {
+			display: inline-block;
+			padding: 20px 10px;
+			color: var(--white-color);
+
+			&:active, &:hover {
+                color: var(--secondary-accent);
+            }
+
+            @include respond-min(768px) {
+                padding: 20px 10px;
+            }
+		}
 
         .nav-primary {
             @include respond-min(768px) {
@@ -622,7 +636,7 @@ blockquote {
     p {
         @include serif;
         @include font-size(18);
-        color: #fff;
+        color: var(--white-color);
         left: -9999px;
         line-height: 1.5;
         padding: 0 0 10px;
@@ -637,7 +651,7 @@ blockquote {
 }
 .copy-banner {
     // Large green callout at the top of the page
-    background: $green-medium;
+    background: var(--primary);
     padding: 1px 10px;
 
     @include respond-min(768px) {
@@ -648,7 +662,7 @@ blockquote {
     h1 {
         @include sans-serif;
         @include font-size(24);
-        color: $green-very-light;
+        color: var(--secondary-accent);
         font-weight: 300;
         line-height: 1.3;
         padding: 1px 0 6px;
@@ -656,21 +670,21 @@ blockquote {
 
         em {
             font-style: normal;
-            color: white;
+            color: var(--menu);
         }
 
         @include respond-min(768px) {
             @include font-size(32);
 
             margin: .35em 0 .35em;
-            color: $green-very-light;
+            color: var(--secondary-accent);
             padding: 1px 0 6px;
 
         }
 
         a {
             font-weight: 300;
-            color: $green-very-light;
+            color: var(--secondary-accent);
         }
 
         a.cta, .cta {
@@ -682,65 +696,65 @@ blockquote {
     a.cta, .cta {
         margin: 15px 0;
         padding: 0.4em 1.5em 0.5em;
-        background: $green-medium-dark;
+        background: var(--primary-light);
         &:hover {
             background: lighten($green-medium-dark, 4%);
         }
 
         background: none;
-        border: 1px solid $green-very-light;
-        color: $green-very-light;
+        border: 1px solid var(--secondary-accent);
+        color: var(--cta-color-accent);
         font-weight: 400;
         em {
-            color: white;
+            color: var(--white-color);
         }
         &:hover {
-            background: $white;
-            color: $green;
-            border-color: $white;
+            background: var(--body-bg);
+            color: var(--secondary);
+            border-color: var(--body-bg);
             em {
-                color: $green;
+                color: var(--secondary);
             }
         }
 
         &.white {
-            background: $white;
-            color: $green;
+            background: var(--body-bg);
+            color: var(--secondary);
             font-weight: 700;
             border: 0;
             &:hover {
-                background: #fff;
+                background: var(--white-color);
             }
         }
     }
 
     .homepage & {
         padding: 50px 0;
-        background: white;
+        background: var(--white-color);
         text-align: center;
-        border-bottom: 1px solid $gray-line;
+        border-bottom: 1px solid var(--hairline-color);
         p {
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
             margin: 1em auto .5em;
-            color: $text;
+            color: var(--body-fg);
             @include font-size(36);
             &.small {
-                color: $text-light;
+                color: var(--text-light);
                 margin: 2em auto 1em;
                 @include font-size(14);
             }
             em {
-                color: $text;
+                color: var(--body-fg);
             }
         }
         a.cta, .cta {
             display: inline-block;
             padding: 1em 50px 1.1em;
             margin-bottom: 40px;
-            background: $green-medium;
-            color: white;
+            background: var(--primary);
+            color: var(--white-color);
             border: 0;
             font-weight: 700;
             &:hover {
@@ -796,7 +810,7 @@ blockquote {
 [role="alert"] {
     //Announcement banner above the footer.
     clear: both;
-    background: $white;
+    background: var(--body-bg);
     position: relative;
     box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.05);
 
@@ -813,7 +827,7 @@ blockquote {
         @include clearfix;
         dt {
             i.icon {
-                color: $green;
+                color: var(--secondary);
                 margin-right: 8px;
             }
         }
@@ -846,7 +860,7 @@ blockquote {
     @include clearfix;
     @include sans-serif;
     position: relative;
-    background: $green-medium;
+    background: var(--primary);
     clear: both;
     margin-top: 0px;
 
@@ -889,8 +903,8 @@ blockquote {
 
     h2 {
         @include font-size(16);
-        border-top: 1px solid $gray-line;
-        color: #fff;
+        border-top: 1px solid var(--hairline-color);
+        color: var(--menu);
         font-weight: 700;
         margin-top: 20px;
         padding: 30px 0 10px;
@@ -913,7 +927,7 @@ blockquote {
         }
 
         a {
-            color: $white;
+            color: var(--menu);
             text-decoration: none;
 
             &:hover,
@@ -928,7 +942,7 @@ blockquote {
         background: $green-dark;
         margin-top: 20px;
         padding: 10px 0 30px;
-        color: $green-medium-dark;
+        color: var(--primary-accent);
 
         .footer-logo {
             float: left;
@@ -973,7 +987,7 @@ blockquote {
 
     .thanks {
         @include font-size(12);
-        color: $green-medium-dark;
+        color: var(--primary-accent);
         margin: 0;
         padding: 0;
         @include respond-min(768px) {
@@ -1027,7 +1041,7 @@ blockquote {
 
         a.in-kind-donors {
             @include font-size(20);
-            color: $green-medium-dark;
+            color: var(--primary-accent);
         }
 
         a.threespot, a.andrevv {
@@ -1068,7 +1082,7 @@ blockquote {
         }
 
         a {
-            color: $green-medium-dark;
+            color: var(--primary-accent);
         }
     }
 }
@@ -1096,10 +1110,10 @@ blockquote {
     font-weight: 700;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background: $green-medium;
+    background: var(--primary);
     border: none;
     border-radius: 5px;
-    color: #fff;
+    color: var(--white-color);
     display: block;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -1113,7 +1127,7 @@ blockquote {
     }
 
     em {
-        color: $green-very-light;
+        color: var(--cta-color-accent);
         font-style: normal;
     }
 
@@ -1141,8 +1155,8 @@ blockquote {
     &.outline {
         // Outline button for less-dominant CTA
         background: none;
-        border: 1px solid $gray-line;
-        color: $gray-medium;
+        border: 1px solid var(--hairline-color);
+        color: var(--dark-hairline-color);
         font-weight: 400;
 
         &.inline {
@@ -1155,17 +1169,17 @@ blockquote {
         }
 
         &:hover {
-            border-color: $green;
-            color: $green;
+            border-color: var(--secondary);
+            color: var(--secondary);
             em {
-                color: $green;
+                color: var(--secondary);
             }
         }
         &:active {
-            border-color: $green-medium;
-            color: $green-medium;
+            border-color: var(--primary);
+            color: var(--primary);
             em {
-                color: $green-medium;
+                color: var(--primary);
             }
         }
     }
@@ -1241,7 +1255,7 @@ blockquote {
 }
 .blue {
     // overide blue color class
-    color: $green;
+    color: var(--secondary);
 }
 .label {
     // Label style associated with forms and other global elements.
@@ -1306,8 +1320,8 @@ blockquote {
 }
 
 .codedump {
-    background: #f8f8f8;
-    border: 1px solid $gray-line;
+    background: var(--code-bg);
+    border: 1px solid var(--hairline-color);
     padding: 10px;
     border-radius: 4px;
     @include sans-serif;
@@ -1325,7 +1339,7 @@ blockquote {
 
     li {
         @include font-size(18);
-        border-top: 1px solid $gray-line;
+        border-top: 1px solid var(--hairline-color);
         display: block;
         line-height: 1.3;
         margin: 0;
@@ -1382,7 +1396,7 @@ blockquote {
 
     a {
         background: $green-light;
-        color: $white;
+        color: var(--body-bg);
         display: inline-block;
         line-height: 1.2;
         margin: 0;
@@ -1392,8 +1406,8 @@ blockquote {
         &:hover,
         &:active,
         &:focus {
-            background-color: $green-medium;
-            color: #fff;
+            background-color: var(--primary);
+            color: var(--white-color);
         }
     }
 }
@@ -1409,7 +1423,7 @@ blockquote {
     }
 
     li {
-        border-top: 1px solid $gray-line;
+        border-top: 1px solid var(--hairline-color);
         margin-top: 35px;
         padding-top: 10px;
 
@@ -1421,15 +1435,15 @@ blockquote {
 
         &.unpublished,
         &.unpublished * {
-            color: $gray-medium;
+            color: var(--dark-hairline-color);
         }
     }
 
     .meta {
         margin-top: 10px;
-        color: $gray-medium;
+        color: var(--dark-hairline-color);
         a:link {
-            color: $text-light;
+            color: var(--text-light);
             text-decoration: underline;
         }
     }
@@ -1447,7 +1461,7 @@ blockquote {
     }
 
     li {
-        border-top: 1px solid $gray-line;
+        border-top: 1px solid var(--hairline-color);
         margin-top: 20px;
         padding-top: 20px;
         @include respond-min(1024px) {
@@ -1549,7 +1563,7 @@ blockquote {
     @include sans-serif;
     @include clearfix;
     @include font-size(16);
-    border-top: 1px solid $gray-line;
+    border-top: 1px solid var(--hairline-color);
     list-style: none;
     margin: 20px 0 0;
     padding: 20px 0 10px;
@@ -1588,17 +1602,17 @@ h2 + .list-link-soup {
 
     dt {
         @include font-size(24);
-        border-top: 1px solid $gray-line;
+        border-top: 1px solid var(--hairline-color);
         padding-top: 25px;
     }
 
     i {
-        color: $white;
+        color: var(--body-bg);
         margin-right: 10px;
         width: 40px;
         height: 40px;
         border-radius: 25px;
-        background: $green;
+        background: var(--secondary);
         line-height: 1.68em;
         display: inline-block;
         text-align: center;
@@ -1656,9 +1670,9 @@ h2 + .list-link-soup {
 
             // Border Radius Enabled
             .mdzr-borderradius & {
-                background: $green-medium;
+                background: var(--primary);
                 border-radius: 100px;
-                color: #fff;
+                color: var(--white-color);
             }
 
             // SVG Enabled
@@ -1751,13 +1765,13 @@ h2 + .list-link-soup {
         }
 
         i {
-                color: $white;
+                color: var(--body-bg);
                 margin-right: 10px;
                 width: 40px;
                 height: 40px;
                 top: 10px;
                 border-radius: 20px;
-                background: $green;
+                background: var(--secondary);
                 display: inline-block;
                 text-align: center;
                 @include font-size(24);
@@ -1829,7 +1843,7 @@ h2 + .list-link-soup {
 
 .list-collapsing {
     // reusable accordion style collapsing list, as seen on the Get Started Page. 'Expand/Collapse All' toggle is generated by the javascript. H2 is used for label, and 'collapsing-content' class is used to identify all content that should expand and collapse onclick.
-    border-bottom: 1px solid $gray-line;
+    border-bottom: 1px solid var(--hairline-color);
     list-style: none;
     margin: 30px 0;
     padding: 0;
@@ -1838,7 +1852,7 @@ h2 + .list-link-soup {
     &.active {
 
         > li {
-            border-top: 1px solid $gray-line;
+            border-top: 1px solid var(--hairline-color);
             margin: 0;
             padding: 0;
 
@@ -1863,7 +1877,7 @@ h2 + .list-link-soup {
             &:hover,
             &:focus,
             &:active {
-                color: lighten($text, 20%);
+                color: var(--text-l20);
                 outline: none;
             }
 
@@ -1909,7 +1923,7 @@ h2 + .list-link-soup {
     padding: 0;
 
     li {
-        border-top: 1px solid $gray-line;
+        border-top: 1px solid var(--hairline-color);
         margin-top: 20px;
         padding-top: 40px;
         @include respond-min(768px) {
@@ -1930,7 +1944,7 @@ h2 + .list-link-soup {
         &:hover,
         &:active,
         &:focus {
-            color: $text-light;
+            color: var(--text-light);
         }
 
         &.link-readmore {
@@ -2080,9 +2094,9 @@ h2 + .list-link-soup {
 .note,
 .admonition,
 .help-block {
-        background: $white;
+        background: var(--body-bg);
         padding: 15px 20px 15px 70px;
-        border: 1px solid $green-very-light;
+        border: 1px solid var(--secondary-accent);
         border-radius: 4px;
         margin: 25px 0;
         position: relative;
@@ -2112,8 +2126,8 @@ h2 + .list-link-soup {
             }
         }
         &.warning {
-            background-color: $warning-yellow;
-            border-color: $warning-dark-yellow;
+            background-color: var(--warning);
+            border-color: var(--warning-dark);
             .admonition-title::before {
                 color: #E9BD46;
                 content: $fa-var-exclamation-triangle;
@@ -2143,8 +2157,8 @@ h2 + .list-link-soup {
     @include clearfix;
     font-weight: 700;
 
-    border-top: 1px solid $gray-line;
-    border-bottom: 1px solid $gray-line;
+    border-top: 1px solid var(--hairline-color);
+    border-bottom: 1px solid var(--hairline-color);
     padding: 20px 0;
     margin-top: 2em;
 
@@ -2201,15 +2215,15 @@ h2 + .list-link-soup {
         display: none;
         margin: 0 3px;
         @include sans-serif;
-        color: $text;
+        color: var(--body-fg);
         @include font-size(12);
         pointer-events: auto;
 
         &.current {
             display: inline-block;
-            background: $white;
+            background: var(--body-bg);
             padding: 8px 15px;
-            border: 1px solid $gray-line;
+            border: 1px solid var(--hairline-color);
             border-radius: 4px;
         }
         &.current-link {
@@ -2218,15 +2232,15 @@ h2 + .list-link-soup {
 
         a {
             display: inline-block;
-            background: $white;
-            color: $green-medium;
+            background: var(--body-bg);
+            color: var(--primary);
             text-decoration: none;
             font-weight: 700;
             padding: 8px 15px;
-            border: 1px solid $gray-line;
+            border: 1px solid var(--hairline-color);
             border-radius: 4px;
             &:hover {
-                color: $green;
+                color: var(--secondary);
                 border: 1px solid $green-light;
             }
         }
@@ -2264,8 +2278,8 @@ h2 + .list-link-soup {
 }
 
 #outdated-warning {
-    background-color: $red-light;
-    color: $red-dark;
+    background-color: var(--error-light);
+    color: var(--error-dark);
 }
 
 #docs-content {
@@ -2292,18 +2306,18 @@ h2 + .list-link-soup {
 
     a.reference {
         // for docs links. if we keep text-decoration, then underscores in function names become invisible.
-        color: $red-dark;
+        color: var(--error-dark);
         text-decoration: none;
-        border-bottom: 1px dotted $text-light;
+        border-bottom: 1px dotted var(--text-light);
 
         &:visited {
-            border-color: lighten($red-dark, 10%);
+            border-color: var(--error-dark-l10);
         }
 
         &:active,
         &:focus,
         &:hover {
-            background: $white;
+            background: var(--body-bg);
             color: $red;
         }
 
@@ -2327,7 +2341,7 @@ h2 + .list-link-soup {
     margin-bottom: 20px;
 
     padding: 10px 13px;
-    border: 1px solid $green-very-light;
+    border: 1px solid var(--secondary-accent);
     border-radius: 4px;
 
     p {
@@ -2371,7 +2385,7 @@ dl.function, dl.class, dl.method, dl.classmethod, dl.staticmethod, dl.attribute,
 
 
 table.docutils td, table.docutils th {
-    border-bottom: 1px solid $gray-line;
+    border-bottom: 1px solid var(--hairline-color);
 }
 
 .list-links {
@@ -2409,7 +2423,7 @@ table.docutils td, table.docutils th {
         dt,
         li {
             @include font-size(16);
-            border-top: 1px solid $gray-line;
+            border-top: 1px solid var(--hairline-color);
             margin-top: 0;
             padding-top: 20px;
 
@@ -2439,16 +2453,16 @@ table.docutils td, table.docutils th {
 
     em {
         font-weight: 700;
-        color: $text;
+        color: var(--body-fg);
     }
 
     span.meta {
         margin-top: 0;
         margin-bottom: 10px;
-        color: $gray-medium;
+        color: var(--dark-hairline-color);
 
         a {
-            color: $text-light;
+            color: var(--text-light);
 
             &:visited {
                 color: darken($text-light, 10%);
@@ -2467,7 +2481,7 @@ table.docutils td, table.docutils th {
     }
 
     span.arrow {
-        color: $text;
+        color: var(--body-fg);
         font-weight: 700;
     }
 
@@ -2502,7 +2516,7 @@ table.docutils td, table.docutils th {
     }
 
     dd {
-        color: $text-light;
+        color: var(--text-light);
         padding-top: 2px;
     }
 
@@ -2589,8 +2603,8 @@ form {
         @include font-size(16);
         -webkit-appearance: none;
         -moz-appearance: none;
-        background: #fff;
-        border: 1px solid $gray-line;
+        background: var(--white-color);
+        border: 1px solid var(--hairline-color);
         border-radius: 4px;
         cursor: auto;
         display: block;
@@ -2614,7 +2628,7 @@ form {
         &:active,
         &:focus {
             outline: none;
-            border-color: $green;
+            border-color: var(--secondary);
         }
     }
 
@@ -2628,8 +2642,9 @@ form {
     }
 
     select {
-        border: 1px solid $gray-line;
-        background: white;
+        border: 1px solid var(--hairline-color);
+        background: var(--white-color);
+        color: var(--body-fg);
         height: 46px;
         padding: 0 10px;
         border-radius: 4px;
@@ -2646,16 +2661,16 @@ form {
         -webkit-appearance: none;
         appearance: none;
 
-        background: $green;
+        background: var(--secondary);
         border-radius: 4px;
-        color: white;
+        color: var(--white-color);
         border: 0;
         height: 46px;
         padding: 0 15px;
         @include sans-serif;
         @include font-size(16);
         &:hover {
-            background: $green-medium;
+            background: var(--primary);
         }
     }
 }
@@ -2691,7 +2706,7 @@ form {
     button {
         background: none;
         border: none;
-        color: $green-medium;
+        color: var(--primary);
         height: 40px;
         padding: 0;
         position: absolute;
@@ -2758,7 +2773,7 @@ form.donate {
     label {
         position: absolute;
         left: 0px;
-        color: $green-medium-dark;
+        color: var(--primary-accent);
         padding-top: 0.3em;
         padding-left: 0.5em;
     }
@@ -2779,7 +2794,7 @@ div[role=main] {
 :-moz-placeholder,
 ::-moz-placeholder,
 :-ms-input-placeholder {
-    color: $gray-medium;
+    color: var(--dark-hairline-color);
 }
 
 .form-email {
@@ -2801,7 +2816,7 @@ div[role=main] {
     // Pagination style for use with the News & Events pages.
     @include sans-serif;
     @include font-size(14);
-    border-top: 1px solid $gray-line;
+    border-top: 1px solid var(--hairline-color);
     font-weight: 700;
     line-height: 31px;
     list-style: none;
@@ -2814,7 +2829,7 @@ div[role=main] {
     }
     a {
         border: none;
-        color: $text-light;
+        color: var(--text-light);
         height: auto;
         width: auto;
         margin: 0 5px;
@@ -2822,8 +2837,8 @@ div[role=main] {
         display: block;
         text-decoration: none;
         @include device-min(320px) {
-            background: $text-light;
-            color: #fff;
+            background: var(--text-light);
+            color: var(--white-color);
             height: 30px;
             margin: 0 2px;
             width: 30px;
@@ -2858,17 +2873,17 @@ div[role=main] {
         &:active,
         &.active {
             background: none;
-            color: $green;
+            color: var(--secondary);
             @include device-min(320px) {
-                background: $green;
-                color: white;
+                background: var(--secondary);
+                color: var(--white-color);
             }
         }
 
         .mdzr-no-borderradius & {
             display: inline;
             background: none;
-            color: $text-light;
+            color: var(--text-light);
             height: auto;
             width: auto;
             margin: 0 5px !important;
@@ -2878,7 +2893,7 @@ div[role=main] {
             &:focus,
             &.active {
                 background: none;
-                color: $green;
+                color: var(--secondary);
             }
         }
     }
@@ -2886,7 +2901,7 @@ div[role=main] {
 
 hr {
     border: 0;
-    border-top: 1px solid $gray-line;
+    border-top: 1px solid var(--hairline-color);
 }
 
 // em {
@@ -2902,8 +2917,8 @@ hr {
     letter-spacing: 0px;
     position: relative;
     bottom: 0.3em;
-    color: $white;
-    background-color: $green;
+    color: var(--body-bg);
+    background-color: var(--secondary);
 }
 
 .user-info {
@@ -3035,7 +3050,7 @@ hr {
 }
 
 .footnote {
-    color: $gray-medium;
+    color: var(--dark-hairline-color);
     @include font-size(14);
     margin-top: 20px;
     text-align: center;
@@ -3130,17 +3145,18 @@ form .footnote {
 table.django-supported-versions, table.django-unsupported-versions {
     border: 1px solid black;
     text-align: center;
+	color: var(--table-color);
     th, td {
         padding: 5px;
     }
 }
 
 table.django-supported-versions tr {
-    background-color: $green-very-light;
+    background-color: var(--secondary-accent);
 }
 
 table.django-unsupported-versions tr {
-    background-color: $red-light;
+    background-color: var(--error-light);
 }
 
 /* Corporate membership list page */
@@ -3165,7 +3181,7 @@ ul.corporate-members li {
 
     li {
         padding: 15px;
-        background-color: lighten($green-very-light, 10);
+        background-color: var(--secondary-accent-l10);
         color: $green-dark;
         border: 1px solid $green-dark;
         border-radius: 4px;
@@ -3187,7 +3203,7 @@ ul.corporate-members li {
         }
 
         &.success {
-            background-color: lighten($green-very-light, 5);
+            background-color: var(--secondary-accent-l5);
             content: $fa-var-check-circle;
             &::before {
                 content: $fa-var-check-circle;
@@ -3195,18 +3211,18 @@ ul.corporate-members li {
         }
 
         &.warning {
-            background-color: $warning-yellow;
-            border-color: darken($warning-dark-yellow, 50);
+            background-color: var(--warning);
+            border-color: var(--warning-dark-d50);
             &::before {
-                color: darken($warning-dark-yellow, 50);
+                color: var(--warning-dark-d50);
                 content: $fa-var-exclamation-triangle;
             }
         }
 
         &.error {
-            background-color: lighten($red-light, 10);
-            color: $red-dark;
-            border-color: $red-dark;
+            background-color: var(--error-light-l10);
+            color: var(--error-dark);
+            border-color: var(--error-dark);
             &::before {
                 content: $fa-var-times-circle;
             }

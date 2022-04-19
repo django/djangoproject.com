@@ -31,6 +31,13 @@
         <li{% if 'fundraising' in request.path %} class="active"{% endif %}>
           <a href="{% url 'fundraising:index' %}">&#9829; Donate</a>
         </li>
+        <li>
+         <label for="toggle">dark mode
+          <button type="button" id="toggle" role="switch" aria-checked="false">
+            <span>on</span><span>off</span>  
+          </button>
+        </label>
+        </li>
       </ul>
     </div>
   </div>
