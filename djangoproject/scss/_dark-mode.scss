@@ -1,104 +1,189 @@
-@media (prefers-color-scheme: dark) {
-	body,
-	div[role="complementary"],
-	#billboard,
-	#generic,
-	.layout-tertiary,
-	.full-width.container,
-	.homepage .copy-banner {
-	  color: $text-very-light;
-	  background: $black;
+// default theme: light
+:root {
+	--body-fg: #{$text};
+	--body-bg: #{$white};
+
+	--menu: #{$white};
+
+	--text-l10: #{$text-l10};
+	--text-l20: #{$text-l20};
+	--text-light: #{$text-light};
+
+	--primary: #{$green-medium};
+	--primary-accent: #{$green-medium-dark};
+
+	--secondary: #{$green};
+	--secondary-accent: #{$green-very-light};
+	--secondary-accent-l5: #{$green-very-light-l5};
+	--secondary-accent-l10: #{$green-very-light-l10};
+
+	--link-color: #{$green};
+	--sidebar-bg: #{$white-dark};
+
+	--code-bg: #{$white-dark};
+	--code-fg: #{$green-dark};
+	--code-border: #EAEAEA;
+
+	--warning: #{$warning-yellow};
+	--warning-dark: #{$warning-dark-yellow};
+	--warning-dark-d50: #{$warning-dark-yellow-d50};
+
+	--hairline-color: #{$gray-line};
+	--dark-hairline-color: #{$gray-medium};
+
+	--error-fg: #{$red};
+	--error-light: #{$red-light};
+	--error-light-l10: #{$red-light-l10};
+	--error-dark: #{$red-dark};
+	--error-dark-l10: #{$red-dark-l10};
+
+	--cta-color-accent: #{$green-very-light};
+	--table-color: var(--body-fg);
+	--white-color: #fff;
+
+}
+
+
+.dark-mode {
+	--body-fg: #C1CAD2;
+	--body-bg: #{$black};
+
+	--text-l10: #{$green-light};
+	--text-l20: #{$green-very-light};
+	--text-light: #{$text-light-l20};
+
+	--primary: #{$green};
+	--primary-accent: #{$green-light};
+
+	--secondary-accent: #{$green-medium};
+
+	--link-color: #{$green-light};
+	--sidebar-bg: #{$black-light-5};
+
+	--code-bg: #{$gray-dark};
+	--code-fg: #{$white-dark};
+	--code-border: #{$black-light-5};
+
+	--hairline-color: #{$gray-line};
+	--dark-hairline-color: #{gray-medium-l10};
+
+	--error-light: #E46767;
+	--error-dark: #E46767;
+
+	--table-color: var(--body-bg);
+	--cta-color-accent: #{$black};
+	--white-color: #{$black};
+
+
+	.img-release {
+		filter: invert(1);
 	}
 
-	[role="main"] {
-		color: $text-very-light;
-		background: $black;
+	.homepage {
+		.copy-banner {
+			background: var(--white-color);
+		}
+	}
 
+	.copy-banner {
+		background: darken($green, 10%);
+
+		p,
 		h1 {
-			color: lighten($green-dark, 10%);
-		}
-	}
+			color: $green-very-light;
 
+			@include respond-min(768px) {
+				color: $green-very-light;
+			}
 
-	.mdzr-boxshadow {
-		[role="main"],
-		[role="complementary"],
-		.layout-tertiary,
-		.full-width {
-			box-shadow: none;
-		}
-		.sidebar-right {
-			& [role="main"],
-			& [role="complementary"] {
-				box-shadow: none;
+			a {
+				color: $green-very-light;
 			}
 		}
 	}
 
-	.copy-banner, .footer, .subfooter {
-		.container {
-			background-color: initial;
-		}
-	}
+	table.django-supported-versions,
+	table.django-unsupported-versions {
+		a {
+			color: $black;
 
-	a {
-	  color: lighten($green-dark, 20%);
-
-	  #docs-content & {
-		color: lighten($green-dark, 20%);
-		&.reference {
-			color: lighten($green-dark, 20%);
-			&:visited {
-				border-color: lighten($green-dark, 20%);
-			}
 			&:active,
 			&:focus,
 			&:hover {
-				color: lighten($green-dark, 20%);
-			}
-		}
-	  }
-	}
-
-
-	pre.literal-block, .literal-block {
-		border: 1px solid #343940;
-		background: #343940;
-		color: $white-dark;
-	}
-
-	code {
-		color: $white-dark;
-	}
-
-	table.django-supported-versions, t
-	table.django-unsupported-versions {
-		color: $green-dark;
-	}
-
-	blockquote {
-		background-color: $green-dark;
-	}
-
-	form {
-		select, textarea {
-			background: $black;
-			color: $white-dark;
-		}
-		input {
-			&[type="search"],
-			&[type="text"],
-			&[type="email"],
-			&[type="password"],
-			&[type="number"],
-			&[type="url"] {
-				background: $black;
-				color: $white-dark;
+				color: $gray-medium;
 			}
 		}
 	}
 
-	.cta, a.cta {
-		background-color: $green-dark;
+	::-webkit-input-placeholder {
+		/* Chrome/Opera/Safari */
+		color: $gray-medium-l10;
 	}
-  }
+
+	::-moz-placeholder {
+		/* Firefox 19+ */
+		color: $gray-medium-l10;
+	}
+
+	:-ms-input-placeholder {
+		/* IE 10+ */
+		color: $gray-medium-l10;
+	}
+
+	:-moz-placeholder {
+		/* Firefox 18- */
+		color: $gray-medium-l10;
+	}
+
+	[role="contentinfo"] {
+		background: darken($green, 10%);
+	}
+}
+
+.img-release {
+	filter: invert(0);
+}
+
+label[for="toggle"] {
+	padding: 18px 0px;
+	display: inline-block;
+	color: var(--menu);
+
+	@include respond-min(768px) {
+		padding: 18px 10px;
+	}
+}
+
+#toggle[role="switch"] {
+	padding: 0;
+	width: 4rem;
+	height: 2rem;
+	border: 0;
+	border-radius: 1rem;
+	margin-left: 0.5rem;
+	background-color: lighten($gray-medium, 20);
+
+	&[aria-checked="true"] {
+		background-color: $white-dark;
+	}
+
+	&[aria-checked="false"] :last-child {
+		padding-left: .2em;
+	}
+
+	&[aria-checked="true"] :last-child,
+	&[aria-checked="false"] :first-child {
+		background: $black-light-5;
+	}
+
+	span {
+		display: inline;
+		color: $black-light-5;
+		font-weight: 600;
+		padding: 0.1rem;
+		pointer-events: none;
+		border-radius: 2rem;
+	}
+
+}
+

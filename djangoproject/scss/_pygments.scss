@@ -3,18 +3,18 @@
 pre.literal-block,
 .literal-block {
     @include font-size(14);
-    border: 1px solid #EAEAEA;
-    background: #F4F4F4;
-    background: #f8f8f8; overflow: auto;
+    border: 1px solid var(--code-border);
+    background: var(--code-bg);
+	overflow: auto;
     border-radius: 4px;
     margin: 25px 0;
     padding: 10px 20px;
-    color: $green-dark;
+    color: var(--code-fg);
 }
 
 .code-block-caption {
-    background: $green-very-light;
-    color: $green-dark;
+    background: var(--secondary-accent);
+    color: var(--code-fg);
     @include monospace;
     font-size: 1em;
     padding: 5px 20px;
@@ -29,8 +29,8 @@ pre.literal-block,
 
 // For Django 2.0 docs and older.
 .snippet-filename {
-    background: $green-very-light;
-    color: $green-dark;
+    background: var(--secondary-accent);
+    color: var(--code-fg);
     @include monospace;
     font-size: 1em;
     padding: 5px 20px;
@@ -45,9 +45,9 @@ pre.literal-block,
 
 .highlight {
     @include font-size(14);
-    border: 1px solid #EAEAEA;
-    background: #F4F4F4;
-    background: #f8f8f8; overflow: auto;
+    border: 1px solid var(--code-border);
+    background: var(--code-bg);
+	overflow: auto;
     border-radius: 4px;
     margin: 25px 0;
 
@@ -57,7 +57,7 @@ pre.literal-block,
 
     li {
         margin-top: 0;
-        border-left: 1px solid #EAEAEA;
+        border-left: 1px solid var(--code-border);
         padding: 0 0 2px 15px;
 
         &:first-child {

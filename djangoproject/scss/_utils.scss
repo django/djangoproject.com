@@ -1,26 +1,41 @@
 // Colors
 
 $gray-medium: #859D94;
+$gray-medium-l10: lighten($gray-medium, 10);
+$gray-dark: #343940;
 $text: #0C3C26;
+$text-l10: lighten($text, 10);
+$text-l20: lighten($text, 20);
 $text-light: #798780;
-$text-very-light: #bec7cf;
+$text-light-l20: lighten($text-light, 20);
+$text-light-l30: lighten($text-light, 30);
+$text-light-d10: darken($text-light, 10);
+$text-light-d20: darken($text-light, 20);
 $gray-line: #CFE3DC;
 $green-very-light: #C9F0DD;
+$green-very-light-l5: lighten($green-very-light, 5);
+$green-very-light-l10: lighten($green-very-light, 10);
 $green-light: #93D7B7;
 $green-medium: #44B78B;
 $green-medium-dark: #2B8C67;
 $green: #20AA76;
+$green-l6: lighten($green, 6);
 $green-dark: #0C4B33;
 $green-dark-text: #3C8866;
 $white: #F1FFF7;
-$white-dark: #f8f8f8;
+$white-dark: #F8F8F8;
 $warning-yellow: #FFFDF1;
 $warning-dark-yellow: #F5F1C7;
+$warning-dark-yellow-d50: darken($warning-dark-yellow, 50);
 $red: #BA2121;
 $red-light: #FFBABA;
+$red-light-l10: lighten($red-light, 10);
 $red-dark: #6A0E0E;
+$red-dark-l10: lighten($red-dark, 10);
 $black: #0e1117;
+$black-light-5: lighten($black, 5);
 $font-path: "../fonts/fira-mono";
+
 
 // @font-face declarations
 
@@ -119,10 +134,10 @@ html {
 
 // Green Link Mixin
 @mixin link-green {
-    color: $green;
+    color: var(--link-color);
     text-decoration: none;
     &:visited {
-        color: $green;
+        color: var(--link-color);
     }
     &:hover,
     &:active,
@@ -148,6 +163,6 @@ html {
 
 @mixin framed-image {
     padding: 20px;
-    border: 1px solid $gray-line;
+    border: 1px solid var(--hairline-color);
     border-radius: 4px;
 }
