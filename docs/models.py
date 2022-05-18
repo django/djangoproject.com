@@ -135,7 +135,7 @@ class DocumentRelease(models.Model):
 
     @property
     def scm_url(self):
-        url = 'git://github.com/django/django.git'
+        url = 'https://github.com/django/django.git'
         if not self.is_dev:
             url += '@stable/' + self.version + '.x'
         return url

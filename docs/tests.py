@@ -21,6 +21,14 @@ from .utils import get_doc_path
 
 class ModelsTests(TestCase):
 
+    def test_scm_url(self):
+        r = Release.objects.create(version='4.1', date=None)
+        d = DocumentRelease.objects.create(release=r)
+        self.assertEqual(
+            d.scm_url,
+            "https://github.com/django/django.git@stable/4.1.x",
+        )
+
     def test_dev_is_supported(self):
         """
         Document without a release ("dev") is supported.
