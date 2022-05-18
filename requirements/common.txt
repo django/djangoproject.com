@@ -2,6 +2,7 @@ Django==3.2.13
 django-contact-form==1.9
 django-hosts==5.1
 django-money==2.1.1
+Babel==2.10.1
 django-push==1.1
 django-recaptcha==3.0.0
 django-registration-redux==2.10
