@@ -29,7 +29,10 @@ class Command(BaseCommand):
             '--force',
             action='store_true',
             default=False,
-            help="Force docs update even if docs in git didn't change",
+            help=(
+                "Force docs update even if docs in git didn't change or the "
+                "version is no longer supported."
+            ),
         )
         parser.add_argument(
             '--update-index',
@@ -87,6 +90,9 @@ class Command(BaseCommand):
                     self.stdout.write("No docs changes; skipping cache purge.")
 
     def build_doc_release(self, release, force=False):
+        # Skip not supported releases.
+        if not release.is_supported and not force:
+            return
         if self.verbosity >= 1:
             self.stdout.write("Starting update for %s at %s..." % (release, datetime.now()))
 
