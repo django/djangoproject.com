@@ -2314,6 +2314,11 @@ h2 + .list-link-soup {
     code.literal {
         font-weight: 700;
     }
+    .code-block-caption {
+        code.literal {
+            font-weight: 400;
+        }
+    }
 }
 
 .versionadded, .versionchanged, .versionmodified {
