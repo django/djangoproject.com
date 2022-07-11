@@ -1,4 +1,4 @@
-Django==3.2.13
+Django==3.2.14
 django-contact-form==1.9
 django-hosts==5.1
 django-money==2.1.1
