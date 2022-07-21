@@ -8,9 +8,8 @@ django-recaptcha==3.0.0
 django-registration-redux==2.10
 docutils==0.17.1
 feedparser==6.0.8
-Jinja2==2.11.3
+Jinja2==3.1.2
 libsass==0.21.0
-MarkupSafe==2.0.1
 Pillow==9.0.1
 psycopg2==2.9.3
 Pygments==2.12.0
