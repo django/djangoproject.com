@@ -1,4 +1,4 @@
 -r common.txt
-
+pre-commit~=2.20.0
 transifex-client==0.14.4
 watchdog==2.1.6

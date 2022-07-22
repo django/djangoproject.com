@@ -39,6 +39,21 @@ isort:
 isort-check:
 	isort -c $(APP_LIST)
 
+pip_install:
+	python3 -m pip install -r requirements/dev.txt
+
+pip_outdated:
+	python3 -m pip list --outdated
+
+precommit_install:
+	python3 -m pre_commit install
+
+precommit_run:
+	python3 -m pre_commit run --all-files
+
+precommit_update:
+	python3 -m pre_commit autoupdate
+
 $(JQUERY_FLOT)/jquery.flot.min.js: $(JQUERY_FLOT)
 	cat $(JQUERY_FLOT)/jquery.flot.js $(JQUERY_FLOT)/jquery.flot.time.js > $(JQUERY_FLOT)/jquery.flot.concat.js
 	yuicompressor $(JQUERY_FLOT)/jquery.flot.concat.js -o $(JQUERY_FLOT)/jquery.flot.min.js
