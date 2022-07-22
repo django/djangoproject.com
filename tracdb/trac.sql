@@ -1177,4 +1177,3 @@ CREATE INDEX wiki_time_idx ON public.wiki USING btree ("time");
 --
 -- PostgreSQL database dump complete
 --
-

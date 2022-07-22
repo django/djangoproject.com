@@ -1485,5 +1485,3 @@ goog.inherits = function(childCtor, parentCtor) {
 goog.scope = function(fn) {
   fn.call(goog.global);
 };
-
-

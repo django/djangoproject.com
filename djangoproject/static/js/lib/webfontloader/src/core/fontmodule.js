@@ -19,4 +19,3 @@ goog.scope(function () {
    */
   FontModule.prototype.load = function (onReady) {};
 });
-

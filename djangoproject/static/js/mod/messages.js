@@ -5,5 +5,3 @@ define([
         $(this).parents('.messages > li').fadeOut();
     });
 });
-
-

@@ -1,11 +1,11 @@
-Django==3.2.14
+Babel==2.10.1
 django-contact-form==1.9
 django-hosts==5.1
 django-money==2.1.1
-Babel==2.10.1
 django-push==1.1
 django-recaptcha==3.0.0
 django-registration-redux==2.10
+Django==3.2.14
 docutils==0.17.1
 feedparser==6.0.8
 Jinja2==3.1.2
