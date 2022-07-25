@@ -1,0 +1,29 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019
+# Song M. Kim <songmink@hawaii.edu>, 2019
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-11 20:38-0500\n"
+"PO-Revision-Date: 2019-02-21 14:15+0000\n"
+"Last-Translator: Song M. Kim <songmink@hawaii.edu>, 2019\n"
+"Language-Team: Korean (https://www.transifex.com/django/teams/17080/ko/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ko\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Development dashboard"
+msgstr "개발용 대시보드"
+
+#, python-format
+msgid "Updated %(timestamp)s ago."
+msgstr "%(timestamp)s전에 업데이트 되었습니다."

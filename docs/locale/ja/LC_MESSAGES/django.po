@@ -8,16 +8,17 @@
 # Hiroki KIYOHARA <hirokiky@gmail.com>, 2019
 # Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019
 # Masashi SHIBATA <contact@c-bata.link>, 2019
-# Shuuji TAKAHASHI (shuuji3) <shuuji3@gmail.com>, 2019
+# Shuuji TAKAHASHI <shuuji3@gmail.com>, 2019
+# Takuya N <takninnovationresearch@gmail.com>, 2020
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-11 20:38-0500\n"
+"POT-Creation-Date: 2019-07-17 01:14-0500\n"
 "PO-Revision-Date: 2019-02-19 01:18+0000\n"
-"Last-Translator: Shuuji TAKAHASHI (shuuji3) <shuuji3@gmail.com>, 2019\n"
+"Last-Translator: Takuya N <takninnovationresearch@gmail.com>, 2020\n"
 "Language-Team: Japanese (https://www.transifex.com/django/teams/17080/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -68,8 +69,8 @@ msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases."
 msgstr ""
-"この文書は開発版Djangoに関するものです。以前のリリースから、特に異なるところ"
-"を示しています。"
+"このドキュメントは Django 開発版に関するものです。以前のリリースから、特に異"
+"なるところを示しています。"
 
 #, python-format
 msgid "This document describes Django %(version)s."
@@ -176,35 +177,20 @@ msgid "Search | Django documentation"
 msgstr "検索 | Django ドキュメント"
 
 #, python-format
-msgid ""
-"\n"
-"    Only 1 result for <em>%(query)s</em> in the development version\n"
-"  "
+msgid "Only 1 result for <em>%(query)s</em> in the development version"
 msgid_plural ""
-"\n"
-"    %(num_results)s results for <em>%(query)s</em> in the development "
-"version\n"
-"  "
+"%(num_results)s results for <em>%(query)s</em> in the development version"
 msgstr[0] ""
-"\n"
-"    <em>%(query)s</em> に対して、開発版ドキュメント中に %(num_results)s 件の"
-"結果が見つかりました\n"
-"  "
+"開発版ドキュメント中に、<em>%(query)s</em> の%(num_results)s 件の結果が見つか"
+"りました"
 
 #, python-format
-msgid ""
-"\n"
-"    Only 1 result for <em>%(query)s</em> in version %(version)s\n"
-"  "
+msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
 msgid_plural ""
-"\n"
-"    %(num_results)s results for <em>%(query)s</em> in version %(version)s\n"
-"  "
+"%(num_results)s results for <em>%(query)s</em> in version %(version)s"
 msgstr[0] ""
-"\n"
-"    <em>%(query)s</em> に対して、バージョン %(version)s のドキュメント中に "
-"%(num_results)s 件の結果が見つかりました\n"
-"  "
+"バージョン %(version)s のドキュメント中に、<em>%(query)s</em> "
+"の%(num_results)s 件の結果が見つかりました"
 
 msgid "No search query given"
 msgstr "検索クエリが指定されていません"
@@ -213,14 +199,8 @@ msgid "Previous"
 msgstr "前へ"
 
 #, python-format
-msgid ""
-"\n"
-"        Page %(page_number)s of %(num_pages)s\n"
-"      "
-msgstr ""
-"\n"
-"        %(page_number)s / %(num_pages)s ページ\n"
-"      "
+msgid "Page %(page_number)s of %(num_pages)s"
+msgstr "%(page_number)s / %(num_pages)s ページ"
 
 msgid "Next"
 msgstr "次へ"

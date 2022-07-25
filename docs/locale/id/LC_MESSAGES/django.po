@@ -4,17 +4,12 @@
 #
 # Translators:
 # Claude Paroz <claude@2xlibre.net>, 2019
-# 吴彬 <xiake21x@qq.com>, 2019
-# HuanCheng Bai白宦成 <xiqingongzi@gmail.com>, 2019
-# Ziya Tang <tcztzy@gmail.com>, 2019
-# df2dc1c92e792f7ae8417c51df43db8f_594d92a <0f49be28017426edb1db1a2ab6e67088_717605>, 2019
-# yf zhan <daxian12345@gmail.com>, 2019
-# mrgaolei <gaolei@liheran.com>, 2019
-# tianlong zhou <tlongzou@gmail.com>, 2019
-# 小彧 郭 <guoxiaoxiaoyu@gmail.com>, 2019
-# Ray Wang <pivstone@gmail.com>, 2019
-# Ronald White <tkliuxing@me.com>, 2019
-# Veoco <one@nomox.cn>, 2020
+# rodin <romihardiyanto@gmail.com>, 2019
+# sag᠎e <laymonage@gmail.com>, 2019
+# Patricia Rusli <patricia.rusli@gmail.com>, 2019
+# Adiyat Mubarak <adiyatmubarak@gmail.com>, 2019
+# Zaky Hermawan <zaky.hermawan9615@gmail.com>, 2019
+# Fery Setiawan <gembelweb@gmail.com>, 2020
 #
 #, fuzzy
 msgid ""
@@ -23,180 +18,192 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-07-17 01:14-0500\n"
 "PO-Revision-Date: 2019-02-19 01:18+0000\n"
-"Last-Translator: Veoco <one@nomox.cn>, 2020\n"
-"Language-Team: Chinese (China) (https://www.transifex.com/django/teams/17080/"
-"zh_CN/)\n"
+"Last-Translator: Fery Setiawan <gembelweb@gmail.com>, 2020\n"
+"Language-Team: Indonesian (https://www.transifex.com/django/teams/17080/"
+"id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_CN\n"
+"Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Documentation"
-msgstr "文档"
+msgstr "Dokumentasi"
 
 #, python-format
 msgid "Search %s documentation"
-msgstr "搜索 %s 文档"
+msgstr "Cari dokumentasi %s"
 
 msgid "Search"
-msgstr "搜索"
+msgstr "Cari"
 
 msgid "Django Documentation"
-msgstr "Django 文档"
+msgstr "Dokumentasi Django"
 
 msgid "Django documentation"
-msgstr "Django 文档"
+msgstr "Dokumentasi Django"
 
 msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases. For older releases, use the "
 "version selector floating in the bottom right corner of this page."
 msgstr ""
-"这份文档适用于Django的开发版本，它可能与之前发行的版本有很大的不同。想查看旧"
-"的发行版的文档，请点击右下角的版本选择器。"
+"Dokumen ini adalah untuk versi pengembangan Django, yang mungkin berbeda "
+"secara signifikan dari yang dirilis sebelumnya. Untuk yang dirilis lebih "
+"lama, gunakan pemilih versi yang berada pada sudut kanan bawah halaman."
 
 msgid ""
 "This document is for an insecure version of Django that is no longer "
 "supported. Please upgrade to a newer release!"
 msgstr ""
-"这份文档只适用于一个不安全的 Django 版本，并且这个版本不再被支持了。请升级到"
-"更新的发行版。"
+"Dokumen ini adalah untuk versi Django yang tidak lagi di support. Harap "
+"tingkatkan ke versi yang baru!"
 
 msgid "Click on the links on the left to switch to another language."
-msgstr "点击左侧的链接以切换到另一种语言。"
+msgstr "Klik link di kiri untuk mengganti bahasa lain."
 
 msgid "Language:"
-msgstr "语言："
+msgstr "Bahasa:"
 
 msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases."
-msgstr "本文档适用于 Django 的开发版本，该版本与以前的版本有很大不同。"
+msgstr ""
+"Dokumen ini untuk versi pengembangan Django, yang mungkin berbeda secara "
+"signifikan dari yang di rilis sebelumnya."
 
 #, python-format
 msgid "This document describes Django %(version)s."
-msgstr "此文档是为 Django %(version)s 编写的。"
+msgstr "Dokumen ini mendeskripsikan Django %(version)s."
 
 msgid "Click on the links on the left to see other versions."
-msgstr "点击左侧的链接查看其它版本"
+msgstr "Klik link di sebelah kiri untuk melihat versi lain"
 
 msgid "Documentation version:"
-msgstr "文档版本："
+msgstr "Versi dokumentasi:"
 
 msgid "Additional Information"
-msgstr "附加信息"
+msgstr "Informasi Tambahan"
 
 msgid "Contents"
-msgstr "内容"
+msgstr "Isi"
 
 msgid "Browse"
-msgstr "浏览"
+msgstr "Cari"
 
 msgid "Prev:"
-msgstr "上一个："
+msgstr "Sebelumnya:"
 
 msgid "Next:"
-msgstr "下一个："
+msgstr "Selanjutnya:"
 
 msgid "Table of contents"
-msgstr "目录"
+msgstr "Daftar isi"
 
 msgid "You are here:"
-msgstr "当前位置："
+msgstr "Anda berada di:"
 
 #, python-format
 msgid "Django %(version)s documentation"
-msgstr "Django %(version)s 文档"
+msgstr "Dokumentasi Django %(version)s"
 
 msgid "Getting help"
-msgstr "获取帮助"
+msgstr "Mendapatkan bantuan"
 
 msgid "Try the FAQ — it's got answers to many common questions."
-msgstr "尝试查看 FAQ — 它包括了很多常见问题的答案"
+msgstr "Coba FAQ -- yang menjawab banyak pertanyaan-pertanyaan umum."
 
 msgid "Index"
-msgstr "索引"
+msgstr "Indeks"
 
 msgid "Module Index"
-msgstr "模块索引"
+msgstr "Indeks Modul"
 
 msgid "Table of Contents"
-msgstr "目录"
+msgstr "Daftar Isi"
 
 msgid "Handy when looking for specific information."
-msgstr "查找特定信息时比较容易"
+msgstr "Mudah digunakan untuk mencari informasi yang lebih spesifik."
 
 msgid ""
 "Search for information in the archives of the django-users mailing list, or "
 "post a question."
-msgstr "在 django-users 邮件列表存档中搜索信息，或者发布一个问题。"
+msgstr ""
+"Cari informasi di arsip alamat pengguna-django, atau posting pertanyaan."
 
 msgid ""
 "Ask a question in the #django IRC channel, or search the IRC logs to see if "
 "it’s been asked before."
-msgstr "在 #django IRC 频道上提问，或者搜索 IRC 历史找到相似的问题与解答。"
+msgstr ""
+"Tanya pertanyaan di #django IRC channel, atau cari log IRC untuk memeriksa "
+"jika pertanyaan tersebut sudah pernah ditanyakan."
 
 msgid "Report bugs with Django or Django documentation in our ticket tracker."
-msgstr "在我们的 `ticket tracker`_ 中报告 Django 或 Django 文档的 Bug。"
+msgstr ""
+"Laporkan kesalahan pada Django atau Dokumentasi Django pada pelacak tiket "
+"kami."
 
 msgid "Download:"
-msgstr "下载："
+msgstr "Unduh:"
 
 msgid "Offline (development version):"
-msgstr "离线（开发中的版本）:"
+msgstr "Luring (versi pengembangan):"
 
 #, python-format
 msgid "Offline (Django %(version)s):"
-msgstr "离线（Django %(version)s）："
+msgstr "Offline(Django %(version)s):"
 
 msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
-msgstr "由 <a href=\"https://readthedocs.org/\"> Read the Docs </a> 提供。"
+msgstr ""
+"Disediakan oleh <a href=\"https://readthedocs.org/\">Read the Docs</a>."
 
 msgid "General Index | Django Documentation"
-msgstr "通用索引 | Django 文档"
+msgstr "Index Umum | Dokumentasi Django"
 
 msgid "General Index"
-msgstr "通用索引"
+msgstr "Index Umum"
 
 msgid "[Link]"
-msgstr "[链接]"
+msgstr "[Link]"
 
 msgid "Module Index | Django Documentation"
-msgstr "模块索引 | Django 文档"
+msgstr "Index Modul | Dokumentasi Django"
 
 msgid "Search | Django documentation"
-msgstr "搜索 | Django 文档"
+msgstr "Cari | Dokumentasi Django"
 
 #, python-format
 msgid "Only 1 result for <em>%(query)s</em> in the development version"
 msgid_plural ""
 "%(num_results)s results for <em>%(query)s</em> in the development version"
-msgstr[0] "用 <em>%(query)s</em> 在开发版中找到了 %(num_results)s 个结果"
+msgstr[0] ""
+"%(num_results)s hasil untuk <em>%(query)s</em> dalam versi pengembangan"
 
 #, python-format
 msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
 msgid_plural ""
 "%(num_results)s results for <em>%(query)s</em> in version %(version)s"
 msgstr[0] ""
-"用 <em>%(query)s</em> 在版本 %(version)s 中找到了 %(num_results)s 个结果"
+"%(num_results)s hasil untuk <em>%(query)s</em> dalam versi %(version)s"
 
 msgid "No search query given"
-msgstr "没有提供搜索参数"
+msgstr "Tidak ada permintaan pencarian yang diberikan"
 
 msgid "Previous"
-msgstr "上一个"
+msgstr "Sebelumnya"
 
 #, python-format
 msgid "Page %(page_number)s of %(num_pages)s"
-msgstr "第 %(page_number)s 页，共 %(num_pages)s 页"
+msgstr "Halaman%(page_number)s dari %(num_pages)s"
 
 msgid "Next"
-msgstr "下一个"
+msgstr "Selanjutnya"
 
 msgid "Page is not 'last', nor can it be converted to an int."
-msgstr "页码既不为'last'，也不能被转为数字。"
+msgstr ""
+"Laman bukan yang 'terakhir' atau juga tidak dapat dikonversikan ke bilangan "
+"bulat."
 
 #, python-format
 msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr "非法页面（%(page_number)s）： %(message)s"
+msgstr "Laman tidak valid (%(page_number)s): %(message)s"
