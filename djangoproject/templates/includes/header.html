@@ -32,11 +32,18 @@
           <a href="{% url 'fundraising:index' %}">&#9829; Donate</a>
         </li>
         <li>
-         <label for="toggle">dark mode
-          <button type="button" id="toggle" role="switch" aria-checked="false">
-            <span>on</span><span>off</span>  
+          <button class="theme-toggle">
+            <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+            <svg class="theme-icon-when-auto">
+              <use xlink:href="#icon-auto" />
+            </svg>
+            <svg class="theme-icon-when-dark">
+              <use xlink:href="#icon-moon" />
+            </svg>
+            <svg class="theme-icon-when-light">
+              <use xlink:href="#icon-sun" />
+            </svg>
           </button>
-        </label>
         </li>
       </ul>
     </div>
