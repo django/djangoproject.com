@@ -53,6 +53,13 @@ class AggregatorTests(TestCase):
             approval_status=models.APPROVED_FEED,
             feed_type=self.feed_type,
         )
+        self.approved_feed_long_url, _ = models.Feed.objects.get_or_create(
+            title="Approved long URL",
+            feed_url="www.reddit.com/rss/",
+            public_url="https://www.reddit.com/r/django/?param=" + "x" * 511,
+            approval_status=models.APPROVED_FEED,
+            feed_type=self.feed_type,
+        )
         self.denied_feed, _ = models.Feed.objects.get_or_create(
             title="Denied",
             feed_url="bar.com/rss/",
@@ -68,7 +75,12 @@ class AggregatorTests(TestCase):
             feed_type=self.feed_type,
         )
 
-        for feed in [self.approved_feed, self.denied_feed, self.pending_feed]:
+        for feed in [
+            self.approved_feed,
+            self.approved_feed_long_url,
+            self.denied_feed,
+            self.pending_feed,
+        ]:
             models.FeedItem.objects.get_or_create(
                 feed=feed,
                 title="%s Item" % feed.title,
