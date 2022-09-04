@@ -60,7 +60,7 @@ INSTALLED_APPS = [
     'blog',
     'contact',
     'dashboard',
-    'docs.apps.DocsConfig',
+    'docs',
     'foundation',
     'legacy',
     'members',

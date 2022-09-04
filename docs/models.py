@@ -12,7 +12,7 @@ from django.contrib.postgres.search import (
 )
 from django.core.cache import cache
 from django.db import models, transaction
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Q
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django_hosts.resolvers import reverse
@@ -20,7 +20,10 @@ from django_hosts.resolvers import reverse
 from releases.models import Release
 
 from . import utils
-from .search import DEFAULT_TEXT_SEARCH_CONFIG, TSEARCH_CONFIG_LANGUAGES
+from .search import (
+    DEFAULT_TEXT_SEARCH_CONFIG, DOCUMENT_SEARCH_VECTOR,
+    TSEARCH_CONFIG_LANGUAGES,
+)
 
 
 class DocumentReleaseManager(models.Manager):
@@ -238,6 +241,22 @@ class DocumentManager(models.Manager):
             )
         else:
             return self.get_queryset().none()
+
+    def search_reset(self):
+        """Set to null all not null Document's search vector fields."""
+        return Document.objects.exclude(search=None).update(search=None)
+
+    def search_update(self):
+        """
+        Update Document's search vector fields using the document definition.
+
+        This method don't index the module pages (since source code is hard to
+        combine with full text search) and the big flattened index of the CBVs.
+        """
+        return Document.objects.exclude(
+            Q(path__startswith="_modules") |
+            Q(path__startswith="ref/class-based-views/flattened-index")
+        ).update(search=DOCUMENT_SEARCH_VECTOR)
 
 
 class Document(models.Model):
