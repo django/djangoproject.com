@@ -23,7 +23,7 @@ services:
     depends_on:
       - db
   db:
-    image: postgres:11.2-alpine
+    image: postgres:12-alpine
     environment:
       - POSTGRES_USER=djangoproject
       - POSTGRES_PASSWORD=secret
