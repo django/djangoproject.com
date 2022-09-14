@@ -9,29 +9,33 @@ djangoproject.com source code
 
 To run locally, do the usual:
 
-#. Create a Python 3.8 virtualenv
+#. Create a Python 3.8+ virtualenv and activate it
 
 #. Install dependencies::
 
-    pip install -r requirements/dev.txt
+    python3 -m pip install -r requirements/dev.txt
     npm install
+
+   *Note: for Python 3.10+ you have to append* ``--ignore-requires-python`` *to* ``pip``
 
    Alternatively, use the make task::
 
     make install
 
-#. Make a directory to store the project's data (MEDIA_ROOT, DOC_BUILDS_ROOT,
+#. Make a directory to store the project's data (``MEDIA_ROOT``, ``DOC_BUILDS_ROOT``,
    etc.). We'll use ``~/.djangoproject`` for example purposes.
 
    Create a ``secrets.json`` file in a directory named ``conf`` in that directory,
    containing something like::
 
-    { "secret_key": "xyz",
+    {
+      "secret_key": "xyz",
       "superfeedr_creds": ["any@email.com", "some_string"],
       "db_host": "localhost",
       "db_password": "secret",
       "trac_db_host": "localhost",
-      "trac_db_password": "secret" }
+      "trac_db_password": "secret"
+    }
 
 #. Add ``export DJANGOPROJECT_DATA_DIR=~/.djangoproject`` (without the backticks)
    to your ``~/.bashrc`` (or ``~/.zshrc`` if you're using zsh, ``~/.bash_profile`` if
@@ -62,44 +66,44 @@ To run locally, do the usual:
 
     psql -d code.djangoproject < tracdb/trac.sql
 
-    ./manage.py migrate
+    python -m manage migrate
 
 #. Create a superuser::
 
-   ./manage.py createsuperuser
+    python -m manage createsuperuser
 
 #. Populate the www and docs hostnames in the django.contrib.sites app::
 
-    ./manage.py loaddata dev_sites
+    python -m manage loaddata dev_sites
 
 #. For docs (next step requires ``gettext``)::
 
-    ./manage.py loaddata doc_releases
-    ./manage.py update_docs
+    python -m manage loaddata doc_releases
+    python -m manage update_docs
 
-#. For dashboard::
+#. For dashboard:
 
    To load the latest dashboard categories and metrics::
 
-    ./manage.py loaddata dashboard_production_metrics
+    python -m manage loaddata dashboard_production_metrics
 
    Alternatively, to load a full set of sample data (takes a few minutes)::
 
-    ./manage.py loaddata dashboard_example_data
+    python -m manage loaddata dashboard_example_data
 
    Finally, make sure the loaded metrics have at least one data point (this
    makes API calls to the URLs from the metrics objects loaded above and may
    take some time depending on the metrics chosen)::
 
-    ./manage.py update_metrics
+    python -m manage update_metrics
 
-#. Point the ``www.djangoproject.localhost``, ``docs.djangoproject.localhost``,
+#. **(Optional)** Point the ``www.djangoproject.localhost``, ``docs.djangoproject.localhost``,
    and ``dashboard.djangoproject.localhost`` hostnames with your ``/etc/hosts``
    file to ``localhost``/``127.0.0.1`` by adding::
 
      127.0.0.1 docs.djangoproject.localhost www.djangoproject.localhost dashboard.djangoproject.localhost
 
-   This is unnecessary with some browsers (e.g. Opera and Chromium/Chrome) as
+   This is unnecessary with some browsers (e.g. Firefox, Opera and Chromium/Chrome) as
    they handle localhost subdomains automatically.
 
    If you're on macOS and don't feel like editing the ``/etc/hosts`` file
@@ -139,7 +143,7 @@ with those systems you should not have any problems writing tests.
 
 Our test results can be found here:
 
-    https://github.com/django/djangoproject.com/actions
+* https://github.com/django/djangoproject.com/actions
 
 For local development don't hesitate to install
 `tox <https://tox.readthedocs.io/>`_ to run the website's test suite.
@@ -148,7 +152,7 @@ Then in the root directory (next to the ``manage.py`` file) run::
 
     tox
 
-Behind the scenes, this will run the usual ``./manage.py test`` management
+Behind the scenes, this will run the usual ``python -m manage test`` management
 command with a preset list of apps that we want to test as well as
 `flake8 <https://flake8.readthedocs.io/>`_ for code quality checks. We
 collect test coverage data as part of that tox run, to show the result
@@ -172,7 +176,7 @@ Then run::
 
 or simply the usual test management command::
 
-    ./manage.py test [list of app labels]
+    python -m manage test [list of app labels]
 
 Supported browsers
 ------------------
@@ -265,12 +269,12 @@ library from ``bower.json``, you will need to commit the changes in
 Documentation search
 --------------------
 
-When running ``./manage.py update_docs`` to build all documents it will also
+When running ``python -m manage update_docs`` to build all documents it will also
 automatically index every document it builds in the search engine as well.
 In case you've already built the documents and would like to reindex the
 search index run the command::
 
-    ./manage.py update_index
+    python -m manage update_index
 
 This is also the right command to run when you work on the search feature
 itself. You can pass the ``-d`` option to try to drop the search index
@@ -287,7 +291,7 @@ from a copy of the production database and saved to the
 
 To update this file, run::
 
-    ./manage.py dumpdata dashboard --exclude dashboard.Datum --indent=4 > dashboard_production_metrics.json
+    python -m manage dumpdata dashboard --exclude dashboard.Datum --indent=4 > dashboard_production_metrics.json
 
 Translation
 -----------
@@ -328,7 +332,7 @@ the translations team will need to update Transifex as follows:
 
 1. Regenerate the English (only) .po file::
 
-    python manage.py makemessages -l en
+    python -m manage makemessages -l en
 
    (Never update alternate language .po files using makemessages. We'll update
    the English file, upload it to Transifex, then later pull the .po files with
@@ -362,11 +366,11 @@ our translation files as follows:
 
 4. Compile the messages::
 
-    python manage.py compilemessages
+    python -m manage compilemessages
 
 5. Run the test suite one more time::
 
-    python manage.py test
+    python -m manage test
 
 6. Commit and push the changes to GitHub::
 
@@ -389,4 +393,4 @@ Running Locally with Docker
 4. Run the tests::
 
     docker-compose exec web tox
-    docker-compose exec web python manage.py test
+    docker-compose exec web python -m manage test
