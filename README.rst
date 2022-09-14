@@ -113,7 +113,7 @@ To run locally, do the usual:
    ``/etc/hosts`` with your favorite editor.
 
    If you don't have admin rights but have an internet connection, you can use a
-   service like `xip.io <http://xip.io>`_. In that case, you'll also have to
+   service like `nip.io <http://nip.io>`_. In that case, you'll also have to
    update `ALLOWED_HOSTS` in `djangoproject/settings/dev.py` as well as the
    content of the `django_site` table in your database.
 
