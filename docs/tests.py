@@ -14,7 +14,6 @@ from djangoproject.urls import www as www_urls
 from releases.models import Release
 
 from .models import Document, DocumentRelease
-from .search import DOCUMENT_SEARCH_VECTOR
 from .sitemaps import DocsSitemap
 from .utils import get_doc_path
 
@@ -473,7 +472,9 @@ class DocumentManagerTest(TestCase):
             }
         ]
         Document.objects.bulk_create(((Document(**doc) for doc in documents)))
-        Document.objects.update(search=DOCUMENT_SEARCH_VECTOR)
+
+    def setUp(self):
+        Document.objects.search_update()
 
     def test_search(self):
         query_text = 'django'
@@ -497,3 +498,13 @@ class DocumentManagerTest(TestCase):
 
     def test_empty_search(self):
         self.assertSequenceEqual(Document.objects.search('', self.release), [])
+
+    def test_search_reset(self):
+        self.assertEqual(Document.objects.exclude(search=None).count(), 6)
+        self.assertEqual(Document.objects.search_reset(), 6)
+        self.assertEqual(Document.objects.exclude(search=None).count(), 0)
+
+    def test_search_update(self):
+        self.assertEqual(Document.objects.exclude(search=None).count(), 6)
+        self.assertEqual(Document.objects.search_update(), 6)
+        self.assertEqual(Document.objects.exclude(search=None).count(), 6)
