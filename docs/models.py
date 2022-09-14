@@ -227,7 +227,7 @@ class DocumentManager(models.Manager):
         """Use full-text search to return documents matching query_text."""
         query_text = query_text.strip()
         if query_text:
-            search_query = SearchQuery(query_text, config=models.F('config'))
+            search_query = SearchQuery(query_text, config=models.F('config'), search_type='websearch')
             search_rank = SearchRank(models.F('search'), search_query)
             similarity = TrigramSimilarity('title', query_text)
             return self.get_queryset().prefetch_related(
