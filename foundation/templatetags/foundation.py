@@ -1,9 +1,8 @@
 from decimal import ROUND_HALF_EVEN
 
-from django import template
 import moneyed
-from moneyed.localization import _format, format_money, _sign
-
+from django import template
+from moneyed.localization import _format, _sign, format_money
 
 register = template.Library()
 
