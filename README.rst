@@ -23,10 +23,13 @@ To run locally, do the usual:
     make install
 
 #. Make a directory to store the project's data (``MEDIA_ROOT``, ``DOC_BUILDS_ROOT``,
-   etc.). We'll use ``~/.djangoproject`` for example purposes.
+   etc.). We'll use ``~/.djangoproject`` for example purposes. Create a sub-directory
+   named ``conf`` inside that directory::
 
-   Create a ``secrets.json`` file in a directory named ``conf`` in that directory,
-   containing something like::
+    mkdir -p ~/.djangoproject/conf
+
+   Create a ``secrets.json`` file in the ``conf`` directory, containing something
+   like::
 
     {
       "secret_key": "xyz",
