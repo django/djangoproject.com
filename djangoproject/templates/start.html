@@ -68,11 +68,12 @@
       <p>Deﬁne your data models entirely in Python. You get a rich, dynamic database-access API for free — but you can still write SQL if needed.</p>
       <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/db/models' host 'docs' %}">Read more</a>
       {% pygment 'python' %}
+from django.db import models
+
 class Band(models.Model):
     """A model of a rock band."""
     name = models.CharField(max_length=200)
     can_rock = models.BooleanField(default=True)
-
 
 class Member(models.Model):
     """A model of a rock band member."""
@@ -107,10 +108,11 @@ urlpatterns = [
       {% endpygment %}
       {% pygment 'python' %}
 from django.shortcuts import render
+from bands.models import Band
 
 def band_listing(request):
     """A view of all bands."""
-    bands = models.Band.objects.all()
+    bands = Band.objects.all()
     return render(request, 'bands/band_listing.html', {'bands': bands})
       {% endpygment %}
     </div>
