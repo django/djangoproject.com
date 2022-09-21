@@ -482,12 +482,6 @@ class DocumentManagerTest(TestCase):
         document_list = [('Django 1.2.1 release notes', 0.96982837), ('Django 1.9.4 release notes', 0.9490876)]
         self.assertSequenceEqual(list(document_queryset), document_list)
 
-    def test_websearch(self):
-        query_text = 'django "release notes" -packaging'
-        document_queryset = Document.objects.search(query_text, self.release).values_list('title', 'rank')
-        document_list = [('Django 1.9.4 release notes', 1.5675676)]
-        self.assertSequenceEqual(list(document_queryset), document_list)
-
     def test_multilingual_search(self):
         query_text = 'publication'
         queryset = Document.objects.search(query_text, self.release_fr).values_list('title', 'rank')
