@@ -66,6 +66,12 @@ $font-path: "../fonts/fira-mono";
     }
 }
 
+@mixin respond-max($width) {
+    @media screen and (max-width: $width) {
+        @content;
+    }
+}
+
 @mixin device-min($width) {
     @media screen and (min-device-width: $width) {
         @content;

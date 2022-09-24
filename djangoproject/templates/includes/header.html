@@ -2,6 +2,9 @@
   <div class="container">
     <a class="logo" href="{% url 'homepage' %}">Django</a>
     <p class="meta">The web framework for perfectionists with deadlines.</p>
+    <div class="mobile-toggle">
+      {% include "includes/toggle_theme.html" %}
+    </div>
     <div role="navigation">
       <ul>
         <li{% if 'start' in request.path %} class="active"{% endif %}>
@@ -32,18 +35,7 @@
           <a href="{% url 'fundraising:index' %}">&#9829; Donate</a>
         </li>
         <li>
-          <button class="theme-toggle">
-            <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-            <svg class="theme-icon-when-auto">
-              <use xlink:href="#icon-auto" />
-            </svg>
-            <svg class="theme-icon-when-dark">
-              <use xlink:href="#icon-moon" />
-            </svg>
-            <svg class="theme-icon-when-light">
-              <use xlink:href="#icon-sun" />
-            </svg>
-          </button>
+          {% include "includes/toggle_theme.html" %}
         </li>
       </ul>
     </div>
