@@ -42,10 +42,6 @@ html[data-theme="light"],
 	--table-color: var(--body-fg);
 	--white-color: #fff;
 
-	body .img-release {
-		filter: invert(0);
-	}
-
 }
 
 @media (prefers-color-scheme: dark) {
@@ -78,10 +74,6 @@ html[data-theme="light"],
 		--table-color: var(--body-bg);
 		--cta-color-accent: #{$black};
 		--white-color: #{$black};
-	}
-
-	body .img-release {
-		filter: invert(1);
 	}
 
 	body .homepage {
@@ -242,7 +234,12 @@ html[data-theme="dark"] {
 }
 
 .img-release {
-	filter: invert(0);
+	&.light {
+		filter: invert(0);
+	}
+	&.dark {
+		filter: invert(1);
+	}
 }
 
 
