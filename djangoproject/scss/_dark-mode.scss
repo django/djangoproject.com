@@ -42,6 +42,10 @@ html[data-theme="light"],
 	--table-color: var(--body-fg);
 	--white-color: #fff;
 
+	body .img-release {
+		filter: invert(0);
+	}
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -61,7 +65,7 @@ html[data-theme="light"],
 		--link-color: #{$green-light};
 		--sidebar-bg: #{$black-light-5};
 
-		--code-bg: #{$gray-dark};
+		--code-bg: #{$black-light-5};
 		--code-fg: #{$white-dark};
 		--code-border: #{$black-light-5};
 
@@ -157,7 +161,7 @@ html[data-theme="dark"] {
 	--link-color: #{$green-light};
 	--sidebar-bg: #{$black-light-5};
 
-	--code-bg: #{$gray-dark};
+	--code-bg: #{$black-light-5};
 	--code-fg: #{$white-dark};
 	--code-border: #{$black-light-5};
 
