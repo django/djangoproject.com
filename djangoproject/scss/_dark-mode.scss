@@ -279,6 +279,23 @@ html[data-theme="light"] .theme-toggle svg.theme-icon-when-light {
 	display: block;
 }
 
+/* Fully hide screen reader text so we only show the one matching the current theme */
+.theme-toggle .visually-hidden {
+    display: none;
+}
+
+html[data-theme="auto"] .theme-toggle .theme-label-when-auto {
+    display: block;
+}
+
+html[data-theme="dark"] .theme-toggle .theme-label-when-dark {
+    display: block;
+}
+
+html[data-theme="light"] .theme-toggle .theme-label-when-light {
+    display: block;
+}
+
 .visually-hidden {
 	position: absolute;
 	width: 1px;
@@ -291,4 +308,19 @@ html[data-theme="light"] .theme-toggle svg.theme-icon-when-light {
 	border: 0;
 	color: var(--body-fg);
 	background-color: var(--body-bg);
+}
+
+.mobile-toggle {
+	width: 45px;
+	float: right;
+
+	@include respond-min(768px) {
+		display: none;
+	}
+}
+
+[role="banner"] .nav-menu-on li:last-child {
+	@include respond-max(768px) {
+		display: none;
+	}
 }
