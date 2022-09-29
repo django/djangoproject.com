@@ -12,9 +12,9 @@
             display: none;
         }
         &:checked + label {
-            color: #555;
+            color: var(--console-tabs-color);
             border: 1px solid #ddd;
-            border-top: 2px solid #ab5603;
+            border-top: 2px solid var(--console-tabs-border);
             border-bottom: 1px solid var(--white-color);
         }
     }

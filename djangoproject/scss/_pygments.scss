@@ -27,7 +27,7 @@ html[data-theme="light"],
 :root {
 	.code-block-caption {
 		background: var(--secondary-accent);
-		color: var(--code-fg);
+		color: var(--code-block-title);
 		@include monospace;
 		font-size: 1em;
 		padding: 5px 20px;

@@ -23,7 +23,12 @@ html[data-theme="light"],
 
 	--code-bg: #{$white-dark};
 	--code-fg: #{$green-dark};
+	--code-block-title: #{$green-dark};
 	--code-border: #EAEAEA;
+
+
+	--console-tabs-color: #555;
+	--console-tabs-border: #{$orange};
 
 	--warning: #{$warning-yellow};
 	--warning-text: #{$text};
@@ -66,6 +71,11 @@ html[data-theme="light"],
 		--code-bg: #{$black-light-5};
 		--code-fg: #{$white-dark};
 		--code-border: #{$black-light-5};
+		--code-block-title: #{$black-light-5};
+
+		--console-tabs-color: #{$dark-orange};
+		--console-tabs-border: #{$dark-orange};
+
 
 		--warning-text: #{$black-light-5};
 		--warning-link-block: #($red);
@@ -162,6 +172,10 @@ html[data-theme="dark"] {
 	--code-bg: #{$black-light-5};
 	--code-fg: #{$white-dark};
 	--code-border: #{$black-light-5};
+	--code-block-title: #{$black-light-5};
+
+	--console-tabs-color: #{$dark-orange};
+	--console-tabs-border: #{$dark-orange};
 
 	--hairline-color: #{$gray-line};
 	--dark-hairline-color: #{gray-medium-l10};
