@@ -26,6 +26,8 @@ html[data-theme="light"],
 	--code-border: #EAEAEA;
 
 	--warning: #{$warning-yellow};
+	--warning-text: #{$text};
+	--warning-link-block: #{$red-medium};
 	--warning-dark: #{$warning-dark-yellow};
 	--warning-dark-d50: #{$warning-dark-yellow-d50};
 
@@ -53,7 +55,7 @@ html[data-theme="light"],
 		--text-l20: #{$green-very-light};
 		--text-light: #{$text-light-l20};
 
-		--primary: #{$green};
+		--primary: #($green-medium);
 		--primary-accent: #{$green-light};
 
 		--secondary-accent: #{$green-medium};
@@ -65,11 +67,15 @@ html[data-theme="light"],
 		--code-fg: #{$white-dark};
 		--code-border: #{$black-light-5};
 
+		--warning-text: #{$black-light-5};
+		--warning-link-block: #($red);
+
+
 		--hairline-color: #{$gray-line};
 		--dark-hairline-color: #{gray-medium-l10};
 
-		--error-light: #E46767;
-		--error-dark: #E46767;
+		--error-light: #{$red-medium};
+		--error-dark: #{$red-medium};
 
 		--table-color: var(--body-bg);
 		--cta-color-accent: #{$black};
@@ -145,7 +151,7 @@ html[data-theme="dark"] {
 	--text-l20: #{$green-very-light};
 	--text-light: #{$text-light-l20};
 
-	--primary: #{$green};
+	--primary: #($green-medium);
 	--primary-accent: #{$green-light};
 
 	--secondary-accent: #{$green-medium};
@@ -160,8 +166,8 @@ html[data-theme="dark"] {
 	--hairline-color: #{$gray-line};
 	--dark-hairline-color: #{gray-medium-l10};
 
-	--error-light: #E46767;
-	--error-dark: #E46767;
+	--error-light: #{$red-medium};
+	--error-dark: #{$red-medium};
 
 	--table-color: var(--body-bg);
 	--cta-color-accent: #{$black};

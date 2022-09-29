@@ -2128,10 +2128,15 @@ h2 + .list-link-soup {
         &.warning {
             background-color: var(--warning);
             border-color: var(--warning-dark);
+			color: var(--warning-text);
             .admonition-title::before {
                 color: #E9BD46;
                 content: $fa-var-exclamation-triangle;
             }
+
+			code {
+				color: var(--warning-text);
+			}
         }
         &.admonition-philosophy {
             .admonition-title::before {
@@ -2304,6 +2309,12 @@ h2 + .list-link-soup {
     @include font-size(14);
     line-height: 1.5em;
 
+	.warning {
+		a.reference {
+			color: var(--warning-link-block);
+		}
+	}
+
     a.reference {
         // for docs links. if we keep text-decoration, then underscores in function names become invisible.
         color: var(--error-dark);
@@ -2318,7 +2329,7 @@ h2 + .list-link-soup {
         &:focus,
         &:hover {
             background: var(--body-bg);
-            color: $red;
+            color: var(--error-dark-l10);
         }
 
         em {
