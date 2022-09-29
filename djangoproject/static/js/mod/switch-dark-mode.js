@@ -9,11 +9,15 @@ define([
             mode = "auto";
         }
         document.documentElement.dataset.theme = mode;
-        localStorage.setItem("theme", mode);
+		// trim host to get base domain name for set in cookie domain name for subdomain access
+		arrHost = window.location.hostname.split('.')
+		prefix = arrHost.shift()
+		host = arrHost.join('.')
+		setCookie('theme', mode, host)
     }
 
     function cycleTheme() {
-        const currentTheme = localStorage.getItem("theme") || "auto";
+        const currentTheme = getCookie("theme") || "auto";
 
         if (prefersDark) {
             // Auto (dark) -> Light -> Dark
@@ -40,7 +44,7 @@ define([
 
     function initTheme() {
         // set theme defined in localStorage if there is one, or fallback to auto mode
-        const currentTheme = localStorage.getItem("theme");
+        const currentTheme = getCookie("theme");
         currentTheme ? setTheme(currentTheme) : setTheme("auto");
 		setReleaseImgClass();
     }
@@ -77,6 +81,29 @@ define([
 			$(image).removeClass('light')
 		}
 	}
+
+	function setCookie(cname, cvalue, domain, exdays) {
+		const d = new Date();
+		d.setTime(d.getTime() + (exdays*24*60*60*1000));
+		let expires = "expires="+ d.toUTCString();
+		document.cookie = `${cname}=${cvalue}; Domain=${domain}; ${expires};path=/`;
+	}
+
+	function getCookie(cname) {
+		let name = cname + "=";
+		let decodedCookie = decodeURIComponent(document.cookie);
+		let ca = decodedCookie.split(';');
+		for(let i = 0; i <ca.length; i++) {
+		  let c = ca[i];
+		  while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		  }
+		  if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		  }
+		}
+		return "";
+	  }
 
 
 
