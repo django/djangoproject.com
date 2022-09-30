@@ -69,7 +69,7 @@ class CorporateMemberBadgesView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         levels = ['bronze', 'silver', 'gold', 'platinum']
-        img_variants = ['c', '', 'g', 'b', 'w']
+        img_variants = ['', 'g', 'b', 'w']
 
         badges = {}
         for level in levels:
