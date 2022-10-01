@@ -2,8 +2,11 @@ from unittest import skipIf
 
 import requests
 from django.core import mail
+from django.http import HttpRequest
 from django.test import TestCase
 from django.test.utils import override_settings
+
+from .views import FoundationContactForm
 
 
 def check_network_connection():
@@ -39,7 +42,8 @@ class ContactFormTests(TestCase):
             'name': 'A. Random Hacker',
             'email': 'a.random@example.com',
             'message_subject': 'Hello',
-            'body': 'Hello, World!'
+            'body': 'Hello, World!',
+            'captcha': 'TESTING',
         })
         self.assertRedirects(response, '/contact/sent/')
         self.assertEqual(mail.outbox[-1].subject, '[Contact form] Hello')
@@ -71,7 +75,19 @@ class ContactFormTests(TestCase):
             'name': 'administrator',
             'email': 'a.random@example.com',
             'message_subject': 'Hello',
-            'body': 'Hello, World!'
+            'body': 'Hello, World!',
+            'captcha': 'TESTING',
         })
         self.assertRedirects(response, '/contact/sent/')
         self.assertEqual(mail.outbox[-1].subject, '[Contact form] Hello')
+
+    @skipIf(not has_network_connection, 'Requires a network connection')
+    def test_captcha_token_required(self):
+        form = FoundationContactForm(data={
+            'name': 'administrator',
+            'email': 'a.random@example.com',
+            'message_subject': 'Hello',
+            'body': 'Hello, World!',
+        }, request=HttpRequest())
+        self.assertFalse(form.is_valid())
+        self.assertIn('captcha', form.errors)

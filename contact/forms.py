@@ -1,6 +1,8 @@
 import logging
 
 import django
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV3
 from contact_form.forms import ContactForm
 from django import forms
 from django.conf import settings
@@ -20,6 +22,7 @@ class BaseContactForm(ContactForm):
     email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'E-mail'}))
     name = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'Name'}))
     body = forms.CharField(widget=forms.Textarea(attrs={'class': 'required', 'placeholder': 'Your message'}))
+    captcha = ReCaptchaField(widget=ReCaptchaV3)
 
     def subject(self):
         # Strip all linebreaks from the subject string.
