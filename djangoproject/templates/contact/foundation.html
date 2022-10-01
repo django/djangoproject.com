@@ -30,6 +30,7 @@
     {% if form.body.errors %}<p class="errors">{{ form.body.errors.as_text }}</p>{% endif %}
     {{ form.body }}
   </p>
+  <p>{{ form.captcha }}</p>
   <p class="submit"><input type="submit" class="cta" value="Send &rarr;"></p>
 </form>
 {% endblock %}
