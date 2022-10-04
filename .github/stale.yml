@@ -1,10 +1,10 @@
 # Documentation: https://github.com/probot/stale
 
 # Number of days of inactivity before an issue becomes stale
-daysUntilStale: 60
+daysUntilStale: 180
 
 # Number of days of inactivity before a stale issue is closed
-daysUntilClose: 7
+daysUntilClose: 14
 
 # Comment to post when marking an issue as stale. Set to `false` to disable
 markComment: >
