@@ -60,7 +60,7 @@ html[data-theme="light"],
 		--text-l20: #{$green-very-light};
 		--text-light: #{$text-light-l20};
 
-		--primary: #($green-medium);
+		--primary: #{$green-medium};
 		--primary-accent: #{$green-light};
 
 		--secondary-accent: #{$green-medium};
@@ -78,7 +78,7 @@ html[data-theme="light"],
 
 
 		--warning-text: #{$black-light-5};
-		--warning-link-block: #($red);
+		--warning-link-block: #{$red};
 
 
 		--hairline-color: #{$gray-line};
@@ -161,7 +161,7 @@ html[data-theme="dark"] {
 	--text-l20: #{$green-very-light};
 	--text-light: #{$text-light-l20};
 
-	--primary: #($green-medium);
+	--primary: #{$green-medium};
 	--primary-accent: #{$green-light};
 
 	--secondary-accent: #{$green-medium};
