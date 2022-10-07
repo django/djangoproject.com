@@ -1,4 +1,4 @@
-	const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+	let prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     function setTheme(mode) {
         if (mode !== "light" && mode !== "dark" && mode !== "auto") {
@@ -52,6 +52,7 @@
 		for (var i = 0; i < buttons.length; i++) {
             buttons[i].addEventListener("click", cycleTheme);
         };
+		setReleaseImgClass();
     }
 
 	function setReleaseImgClass() {
@@ -105,4 +106,11 @@ initTheme();
 
 document.addEventListener('DOMContentLoaded', function() {
 	setupTheme();
+})
+
+// reset theme and release image if auto mode activated and os preferences have changed
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (e) {
+	prefersDark = e.matches;
+	initTheme();
+	setReleaseImgClass();
 })
