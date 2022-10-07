@@ -1,0 +1,347 @@
+// default theme: light
+html[data-theme="light"],
+:root {
+	--body-fg: #{$text};
+	--body-bg: #{$white};
+
+	--menu: #{$white};
+
+	--text-l10: #{$text-l10};
+	--text-l20: #{$text-l20};
+	--text-light: #{$text-light};
+
+	--primary: #{$green-medium};
+	--primary-accent: #{$green-medium-dark};
+
+	--secondary: #{$green};
+	--secondary-accent: #{$green-very-light};
+	--secondary-accent-l5: #{$green-very-light-l5};
+	--secondary-accent-l10: #{$green-very-light-l10};
+
+	--link-color: #{$green};
+	--sidebar-bg: #{$white-dark};
+
+	--code-bg: #{$white-dark};
+	--code-fg: #{$green-dark};
+	--code-block-title: #{$green-dark};
+	--code-border: #EAEAEA;
+
+
+	--console-tabs-color: #555;
+	--console-tabs-border: #{$orange};
+
+	--warning: #{$warning-yellow};
+	--warning-text: #{$text};
+	--warning-link-block: #{$red-medium};
+	--warning-dark: #{$warning-dark-yellow};
+	--warning-dark-d50: #{$warning-dark-yellow-d50};
+
+	--hairline-color: #{$gray-line};
+	--dark-hairline-color: #{$gray-medium};
+
+	--error-fg: #{$red};
+	--error-light: #{$red-light};
+	--error-light-l10: #{$red-light-l10};
+	--error-dark: #{$red-dark};
+	--error-dark-l10: #{$red-dark-l10};
+
+	--cta-color-accent: #{$green-very-light};
+	--table-color: var(--body-fg);
+	--white-color: #fff;
+
+}
+
+@media (prefers-color-scheme: dark) {
+	html:not([data-theme="light"])  {
+		--body-fg: #C1CAD2;
+		--body-bg: #{$black};
+
+		--text-l10: #{$green-light};
+		--text-l20: #{$green-very-light};
+		--text-light: #{$text-light-l20};
+
+		--primary: #{$green-medium};
+		--primary-accent: #{$green-light};
+
+		--secondary-accent: #{$green-medium};
+
+		--link-color: #{$green-light};
+		--sidebar-bg: #{$black-light-5};
+
+		--code-bg: #{$black-light-5};
+		--code-fg: #{$white-dark};
+		--code-border: #{$black-light-5};
+		--code-block-title: #{$black-light-5};
+
+		--console-tabs-color: #{$dark-orange};
+		--console-tabs-border: #{$dark-orange};
+
+
+		--warning-text: #{$black-light-5};
+		--warning-link-block: #{$red};
+
+
+		--hairline-color: #{$gray-line};
+		--dark-hairline-color: #{gray-medium-l10};
+
+		--error-light: #{$red-medium};
+		--error-dark: #{$red-medium};
+
+		--table-color: var(--body-bg);
+		--cta-color-accent: #{$black};
+		--white-color: #{$black};
+	}
+
+	body .homepage {
+		.copy-banner {
+			background: var(--white-color);
+		}
+	}
+
+	body .copy-banner {
+		background: darken($green, 10%);
+
+		p,
+		h1 {
+			color: $green-very-light;
+
+			@include respond-min(768px) {
+				color: $green-very-light;
+			}
+
+			a {
+				color: $green-very-light;
+			}
+		}
+	}
+
+	body table.django-supported-versions,
+	body table.django-unsupported-versions {
+		a {
+			color: $black;
+
+			&:active,
+			&:focus,
+			&:hover {
+				color: $gray-medium;
+			}
+		}
+	}
+
+	body ::-webkit-input-placeholder {
+		/* Chrome/Opera/Safari */
+		color: $gray-medium-l10;
+	}
+
+	body ::-moz-placeholder {
+		/* Firefox 19+ */
+		color: $gray-medium-l10;
+	}
+
+	body :-ms-input-placeholder {
+		/* IE 10+ */
+		color: $gray-medium-l10;
+	}
+
+	body :-moz-placeholder {
+		/* Firefox 18- */
+		color: $gray-medium-l10;
+	}
+
+	body [role="contentinfo"] {
+		background: darken($green, 10%);
+	}
+}
+
+html[data-theme="dark"] {
+	--body-fg: #C1CAD2;
+	--body-bg: #{$black};
+
+	--text-l10: #{$green-light};
+	--text-l20: #{$green-very-light};
+	--text-light: #{$text-light-l20};
+
+	--primary: #{$green-medium};
+	--primary-accent: #{$green-light};
+
+	--secondary-accent: #{$green-medium};
+
+	--link-color: #{$green-light};
+	--sidebar-bg: #{$black-light-5};
+
+	--code-bg: #{$black-light-5};
+	--code-fg: #{$white-dark};
+	--code-border: #{$black-light-5};
+	--code-block-title: #{$black-light-5};
+
+	--console-tabs-color: #{$dark-orange};
+	--console-tabs-border: #{$dark-orange};
+
+	--hairline-color: #{$gray-line};
+	--dark-hairline-color: #{gray-medium-l10};
+
+	--error-light: #{$red-medium};
+	--error-dark: #{$red-medium};
+
+	--table-color: var(--body-bg);
+	--cta-color-accent: #{$black};
+	--white-color: #{$black};
+
+
+	.img-release {
+		filter: invert(1);
+	}
+
+	.homepage {
+		.copy-banner {
+			background: var(--white-color);
+		}
+	}
+
+	.copy-banner {
+		background: darken($green, 10%);
+
+		p,
+		h1 {
+			color: $green-very-light;
+
+			@include respond-min(768px) {
+				color: $green-very-light;
+			}
+
+			a {
+				color: $green-very-light;
+			}
+		}
+	}
+
+	table.django-supported-versions,
+	table.django-unsupported-versions {
+		a {
+			color: $black;
+
+			&:active,
+			&:focus,
+			&:hover {
+				color: $gray-medium;
+			}
+		}
+	}
+
+	::-webkit-input-placeholder {
+		/* Chrome/Opera/Safari */
+		color: $gray-medium-l10;
+	}
+
+	::-moz-placeholder {
+		/* Firefox 19+ */
+		color: $gray-medium-l10;
+	}
+
+	:-ms-input-placeholder {
+		/* IE 10+ */
+		color: $gray-medium-l10;
+	}
+
+	:-moz-placeholder {
+		/* Firefox 18- */
+		color: $gray-medium-l10;
+	}
+
+	[role="contentinfo"] {
+		background: darken($green, 10%);
+	}
+}
+
+.img-release {
+	&.light {
+		filter: invert(0);
+	}
+	&.dark {
+		filter: invert(1);
+	}
+}
+
+
+/* THEME SWITCH */
+.theme-toggle {
+	cursor: pointer;
+	border: none;
+	padding: 0;
+	background: transparent;
+	vertical-align: middle;
+	padding: 20px 10px;
+}
+
+.theme-toggle svg {
+	vertical-align: middle;
+	height: 2rem;
+	width: 2rem;
+	display: none;
+}
+
+/* ICONS */
+.theme-toggle svg.theme-icon-when-auto,
+.theme-toggle svg.theme-icon-when-dark,
+.theme-toggle svg.theme-icon-when-light {
+	fill: var(--menu);
+	color: $green-dark;
+}
+
+html[data-theme="auto"] .theme-toggle svg.theme-icon-when-auto {
+	display: block;
+}
+
+html[data-theme="dark"] .theme-toggle svg.theme-icon-when-dark {
+	display: block;
+}
+
+html[data-theme="light"] .theme-toggle svg.theme-icon-when-light {
+	display: block;
+}
+
+/* Fully hide screen reader text so we only show the one matching the current theme */
+.theme-toggle .visually-hidden {
+    display: none;
+}
+
+html[data-theme="auto"] .theme-toggle .theme-label-when-auto {
+    display: block;
+}
+
+html[data-theme="dark"] .theme-toggle .theme-label-when-dark {
+    display: block;
+}
+
+html[data-theme="light"] .theme-toggle .theme-label-when-light {
+    display: block;
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+	color: var(--body-fg);
+	background-color: var(--body-bg);
+}
+
+.mobile-toggle {
+	width: 45px;
+	float: right;
+
+	@include respond-min(768px) {
+		display: none;
+	}
+}
+
+[role="banner"] .nav-menu-on li:last-child {
+	@include respond-max(768px) {
+		display: none;
+	}
+}

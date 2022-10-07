@@ -1,7 +1,7 @@
 // Require.js Module Loader - http://requirejs.org
 define(function() {
     var mods = [
-        'mod/mobile-menu' // require mobile menu automatically
+        'mod/mobile-menu', // require mobile menu automatically
     ];
 
     //detect Class function
