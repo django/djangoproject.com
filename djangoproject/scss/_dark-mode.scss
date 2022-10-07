@@ -52,7 +52,7 @@ html[data-theme="light"],
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
+	html:not([data-theme="light"])  {
 		--body-fg: #C1CAD2;
 		--body-bg: #{$black};
 

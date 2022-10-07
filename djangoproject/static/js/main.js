@@ -2,7 +2,6 @@
 define(function() {
     var mods = [
         'mod/mobile-menu', // require mobile menu automatically
-        'mod/switch-dark-mode' // require switch dark mode automatically
     ];
 
     //detect Class function

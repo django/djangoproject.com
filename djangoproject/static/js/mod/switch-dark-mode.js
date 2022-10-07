@@ -1,6 +1,3 @@
-define([
-    'jquery' //requires jquery
-], function ($) {
 	const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
     function setTheme(mode) {
@@ -51,34 +48,32 @@ define([
 
     function setupTheme() {
         // Attach event handlers for toggling themes
-        const buttons = document.getElementsByClassName("theme-toggle");
-        Array.from(buttons).forEach((btn) => {
-            btn.addEventListener("click", cycleTheme);
-        });
-        initTheme();
-		setReleaseImgClass();
+        let buttons = document.getElementsByClassName("theme-toggle");
+		for (var i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener("click", cycleTheme);
+        };
     }
 
 	function setReleaseImgClass() {
 		// set class for the image about releases to invert color if needed
-		const currentTheme = localStorage.getItem("theme") || "auto";
+		const currentTheme = getCookie("theme") || "auto";
 		const image = document.getElementsByClassName("img-release")[0];
 
-		if(currentTheme == "auto" && prefersDark) {
-			$(image).addClass('dark')
-			$(image).removeClass('light')
+		if(image && (currentTheme == "auto" && prefersDark)) {
+			image.classList.add('dark')
+			image.classList.remove('light')
 		}
-		if(currentTheme == "auto" && !prefersDark) {
-			$(image).addClass('light')
-			$(image).removeClass('dark')
+		if(image && (currentTheme == "auto" && !prefersDark)) {
+			image.classList.add('light')
+			image.classList.remove('dark')
 		}
-		if(currentTheme == "light") {
-			$(image).addClass('light')
-			$(image).removeClass('dark')
+		if(image && (currentTheme == "light")) {
+			image.classList.add('light')
+			image.classList.remove('dark')
 		}
-		if(currentTheme == "dark") {
-			$(image).addClass('dark')
-			$(image).removeClass('light')
+		if(image && (currentTheme == "dark")) {
+			image.classList.add('dark')
+			image.classList.remove('light')
 		}
 	}
 
@@ -106,8 +101,8 @@ define([
 	  }
 
 
+initTheme();
 
-    $(document).on('ready', function () {
-        setupTheme();
-    });
+document.addEventListener('DOMContentLoaded', function() {
+	setupTheme();
 })
