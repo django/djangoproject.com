@@ -36,17 +36,17 @@
     {% for result in page.object_list %}
     <dt>
       <h2 class="result-title">
-        <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}">{{ result.title }}</a>
+        <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}">{{ result.headline|safe }}</a>
       </h2>
       <span class="meta breadcrumbs">
-        {% for breadcrumb in result.metadata.breadcrumbs %}
+        {% for breadcrumb in result.breadcrumbs %}
         <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=breadcrumb.path host 'docs' %}">{{ breadcrumb.title }}</a>{% if not forloop.last %} <span class="arrow">»</span>{% endif %}
         {% endfor %}
       </span>
     </dt>
     <dd>
-      {% if result.meta.highlight %}
-      {{ result.meta.highlight.content_raw.0|safe }}…
+      {% if result.highlight %}
+      …&nbsp;{{ result.highlight|cut:"¶"|safe }}&nbsp;…
       {% endif %}
     </dd>
     {% endfor %}
