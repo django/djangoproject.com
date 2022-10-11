@@ -434,7 +434,7 @@ blockquote {
     // Includes global navigation, logo, and tagline at top of document
     @include clearfix;
     background: $green-dark;
-    color: var(--menu);
+    color: $white;
     overflow: hidden;
     margin: 0;
     padding: 10px 0 6px;
@@ -449,7 +449,7 @@ blockquote {
 
     .meta {
         @include font-size(13);
-        color: var(--primary);
+        color: $green-medium;
         font-weight: 700;
         width: auto;
         float: left;
@@ -493,7 +493,6 @@ blockquote {
     .menu-button {
         @include font-size(20);
         border-radius: 23px;
-        color: var(--menu);
         cursor: pointer;
         display: block;
         float: right;
@@ -509,7 +508,7 @@ blockquote {
         }
 
         &:active {
-            color: var(--primary);
+            color: $green-medium;
         }
 
         span {
@@ -577,7 +576,7 @@ blockquote {
             }
 
             &.active a {
-                color: var(--primary);
+                color: $green-medium;
             }
         }
 
@@ -588,7 +587,7 @@ blockquote {
             text-decoration: none;
 
             &:active, &:hover {
-                color: var(--secondary-accent);
+                color: $green-medium;
             }
 
             @include respond-min(768px) {
@@ -602,7 +601,7 @@ blockquote {
 			color: var(--white-color);
 
 			&:active, &:hover {
-                color: var(--secondary-accent);
+                color: $green-medium;
             }
 
             @include respond-min(768px) {
@@ -649,8 +648,8 @@ blockquote {
 }
 .copy-banner {
     // Large green callout at the top of the page
-    background: var(--primary);
-    color: var(--secondary-accent);
+    background: darken($green, 10%);
+    color: $white;
     padding: 1px 10px;
 
     @include respond-min(768px) {
@@ -858,8 +857,8 @@ blockquote {
     @include clearfix;
     @include sans-serif;
     position: relative;
-    background: var(--primary);
-    color: var(--menu);
+    background: darken($green, 10%);
+    color: $white;
     clear: both;
     margin-top: 0px;
 
@@ -938,9 +937,9 @@ blockquote {
 
     .footer {
         background: $green-dark;
+        color: $green-light;
         margin-top: 20px;
         padding: 10px 0 30px;
-        color: var(--primary-accent);
 
         .footer-logo {
             float: left;

@@ -92,17 +92,6 @@ html[data-theme="light"],
 		--white-color: #{$black};
 	}
 
-	body .homepage {
-		.copy-banner {
-			background: var(--white-color);
-		}
-	}
-
-	body .copy-banner {
-		background: darken($green, 10%);
-		color: $green-very-light;
-	}
-
 	body table.django-supported-versions,
 	body table.django-unsupported-versions {
 		a {
@@ -134,10 +123,6 @@ html[data-theme="light"],
 	body :-moz-placeholder {
 		/* Firefox 18- */
 		color: $gray-medium-l10;
-	}
-
-	body [role="contentinfo"] {
-		background: darken($green, 10%);
 	}
 }
 
@@ -180,17 +165,6 @@ html[data-theme="dark"] {
 		filter: invert(1);
 	}
 
-	.homepage {
-		.copy-banner {
-			background: var(--white-color);
-		}
-	}
-
-	.copy-banner {
-		background: darken($green, 10%);
-		color: $green-very-light;
-	}
-
 	table.django-supported-versions,
 	table.django-unsupported-versions {
 		a {
@@ -222,10 +196,6 @@ html[data-theme="dark"] {
 	:-moz-placeholder {
 		/* Firefox 18- */
 		color: $gray-medium-l10;
-	}
-
-	[role="contentinfo"] {
-		background: darken($green, 10%);
 	}
 }
 
