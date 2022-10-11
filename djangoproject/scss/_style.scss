@@ -434,6 +434,7 @@ blockquote {
     // Includes global navigation, logo, and tagline at top of document
     @include clearfix;
     background: $green-dark;
+    color: var(--menu);
     overflow: hidden;
     margin: 0;
     padding: 10px 0 6px;
@@ -491,7 +492,6 @@ blockquote {
 
     .menu-button {
         @include font-size(20);
-        background: $green-dark;
         border-radius: 23px;
         color: var(--menu);
         cursor: pointer;
@@ -542,8 +542,6 @@ blockquote {
     }
 
     [role="navigation"] {
-        background: $green-dark;
-
         width: 100%;
 
         @include respond-min(768px) {
@@ -584,7 +582,7 @@ blockquote {
         }
 
         a {
-            color: var(--menu);
+            color: inherit;
             display: block;
             padding: 20px 0px;
             text-decoration: none;
@@ -652,6 +650,7 @@ blockquote {
 .copy-banner {
     // Large green callout at the top of the page
     background: var(--primary);
+    color: var(--secondary-accent);
     padding: 1px 10px;
 
     @include respond-min(768px) {
@@ -662,7 +661,7 @@ blockquote {
     h1 {
         @include sans-serif;
         @include font-size(24);
-        color: var(--secondary-accent);
+        color: inherit;
         font-weight: 300;
         line-height: 1.3;
         padding: 1px 0 6px;
@@ -677,14 +676,13 @@ blockquote {
             @include font-size(32);
 
             margin: .35em 0 .35em;
-            color: var(--secondary-accent);
             padding: 1px 0 6px;
 
         }
 
         a {
             font-weight: 300;
-            color: var(--secondary-accent);
+            color: inherit;
         }
 
         a.cta, .cta {
@@ -861,6 +859,7 @@ blockquote {
     @include sans-serif;
     position: relative;
     background: var(--primary);
+    color: var(--menu);
     clear: both;
     margin-top: 0px;
 
@@ -904,7 +903,6 @@ blockquote {
     h2 {
         @include font-size(16);
         border-top: 1px solid var(--hairline-color);
-        color: var(--menu);
         font-weight: 700;
         margin-top: 20px;
         padding: 30px 0 10px;
@@ -927,7 +925,7 @@ blockquote {
         }
 
         a {
-            color: var(--menu);
+            color: inherit;
             text-decoration: none;
 
             &:hover,
@@ -958,6 +956,10 @@ blockquote {
                 margin-top: 20px;
             }
         }
+
+        a {
+            color: inherit;
+        }
     }
 
     .logo {
@@ -987,7 +989,6 @@ blockquote {
 
     .thanks {
         @include font-size(12);
-        color: var(--primary-accent);
         margin: 0;
         padding: 0;
         @include respond-min(768px) {
@@ -1041,7 +1042,6 @@ blockquote {
 
         a.in-kind-donors {
             @include font-size(20);
-            color: var(--primary-accent);
         }
 
         a.threespot, a.andrevv {
@@ -1079,10 +1079,6 @@ blockquote {
             max-width: 80%;
             padding-top: 30px;
             margin: 0;
-        }
-
-        a {
-            color: var(--primary-accent);
         }
     }
 }

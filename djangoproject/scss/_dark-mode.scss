@@ -100,19 +100,7 @@ html[data-theme="light"],
 
 	body .copy-banner {
 		background: darken($green, 10%);
-
-		p,
-		h1 {
-			color: $green-very-light;
-
-			@include respond-min(768px) {
-				color: $green-very-light;
-			}
-
-			a {
-				color: $green-very-light;
-			}
-		}
+		color: $green-very-light;
 	}
 
 	body table.django-supported-versions,
@@ -200,19 +188,7 @@ html[data-theme="dark"] {
 
 	.copy-banner {
 		background: darken($green, 10%);
-
-		p,
-		h1 {
-			color: $green-very-light;
-
-			@include respond-min(768px) {
-				color: $green-very-light;
-			}
-
-			a {
-				color: $green-very-light;
-			}
-		}
+		color: $green-very-light;
 	}
 
 	table.django-supported-versions,
