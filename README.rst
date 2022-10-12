@@ -233,7 +233,7 @@ to run all process at once:
 
 - the site (similar to www.djangoproject.com) on http://0.0.0.0:8000/ to be used
   with the modified /etc/hosts file (see above)
-- the ``make`` task to automatically compile the SASS files to CSS files
+- the ``make`` task to automatically compile the SCSS files to CSS files
 
 This is great during development. Assuming you're using Foreman simply run::
 
@@ -275,7 +275,7 @@ Documentation search
 When running ``python -m manage update_docs_and_index`` to build all documents it will also
 automatically index every document it builds in the search engine as well.
 In case you've already built the documents and would like to reindex the
-search index run the command::
+search index, run the command::
 
     python -m manage update_index
 
@@ -324,7 +324,7 @@ website domain. At the moment, we have:
 
 **Important:** To keep this working properly, note that any templates for the
 ``dashboard`` and ``docs`` apps **must** be placed in the
-``<app name>/templates/docs/`` directory for their respective app, **not** in
+``<app name>/templates/<app name>/`` directory of the respective app, **not** in
 the ``djangoproject/templates/`` directory.
 
 Updating messages on Transifex
@@ -357,7 +357,7 @@ Anytime translations on Transifex have been updated, someone should update
 our translation files as follows:
 
 1. Review the translations in Transifex and add to the space-delimited
-   ``LANGUAGES`` list in ``update-translations.sh`` any new languages that have
+   ``LANGUAGES`` list in ``update-translations.sh``, any new languages that have
    reached 100% translation.
 
 2. Pull the updated translation files::
@@ -404,12 +404,12 @@ Pre-commit checks
 `pre-commit <https://pre-commit.com>`_ is a framework for managing pre-commit
 hooks. These hooks help to identify simple issues before committing code for
 review. By checking for these issues before code review it allows the reviewer
-to focus on the change itself, and it can also help to reduce the number CI
+to focus on the change itself, and it can also help to reduce the number of CI
 runs.
 
-To use the tool, first install ``pre-commit`` and then the git hooks::
+To use the tool, first install ``pre-commit`` and then the git hooks
 
-.. console::
+.. code-block:: console
 
     $ python3 -m pip install pre-commit
     $ python3 -m pre_commit install
