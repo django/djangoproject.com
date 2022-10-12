@@ -12,7 +12,7 @@ define([
             var self = this;
             $(document).ready(function () {
                 $(window).keydown(function(e) {
-                    if ($('input:focus, textarea:focus').length === 0 && e.key === 'k' && e.ctrlKey) {
+                    if (e.key === 'k' && e.ctrlKey && $('input:focus, textarea:focus').length === 0) {
                         self.search_form.find('input').focus().select();
                         return false;
                     }
