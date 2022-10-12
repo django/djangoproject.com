@@ -11,9 +11,15 @@ define([
         init: function(){
             var self = this;
             $(document).ready(function () {
+				var search_form_input = self.search_form.find('input');
+				var raw_placeholder = search_form_input.attr('placeholder');
+				var kbd_shortcut_suffix = "Ctrl + K";
+				if (navigator.userAgent.indexOf("Mac") !== -1) kbd_shortcut_suffix = "⌘ + K";
+				search_form_input.attr('placeholder', `${raw_placeholder} (${kbd_shortcut_suffix})`);
+
                 $(window).keydown(function(e) {
                     if (e.key === 'k' && e.ctrlKey && $('input:focus, textarea:focus').length === 0) {
-                        self.search_form.find('input').focus().select();
+                        search_form_input.focus().select();
                         return false;
                     }
                 });
