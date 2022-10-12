@@ -11,9 +11,8 @@ define([
         init: function(){
             var self = this;
             $(document).ready(function () {
-                $(window).keypress(function(e) {
-                    if ($('input:focus, textarea:focus').length === 0 &&
-                            e.which === 47) {  // The slash is 47.
+                $(window).keydown(function(e) {
+                    if ($('input:focus, textarea:focus').length === 0 && e.key === 'k' && e.ctrlKey) {
                         self.search_form.find('input').focus().select();
                         return false;
                     }
