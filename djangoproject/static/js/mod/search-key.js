@@ -1,25 +1,24 @@
 define([
     'jquery' //requires jquery
 ], function( $ ) {
-
-    var SearchForm = function(search_form) {
+    const SearchForm = function(search_form) {
         this.search_form = $(search_form); // the search form
         this.init();
     };
 
     SearchForm.prototype = {
         init: function(){
-            var self = this;
+            const self = this;
             $(document).ready(function () {
-                var search_form_input = self.search_form.find('input');
-                var raw_placeholder = search_form_input.attr('placeholder');
-                var kbd_shortcut_suffix = "Ctrl + K";
-                if (navigator.userAgent.indexOf("Mac") !== -1) kbd_shortcut_suffix = "⌘ + K";
-                search_form_input.attr('placeholder', `${raw_placeholder} (${kbd_shortcut_suffix})`);
+                const search_form_input = self.search_form.find('input');
+                const raw_placeholder = search_form_input.attr('placeholder');
+                const shortcut = navigator.userAgent.indexOf("Mac") === -1 ? "⌘ + K" :  "Ctrl + K";
+                search_form_input.attr('placeholder', `${raw_placeholder} (${shortcut})`);
 
                 $(window).keydown(function(e) {
-                    if (e.key === 'k' && e.ctrlKey && $('input:focus, textarea:focus').length === 0) {
+                    if ((e.metaKey || e.ctrlKey) && e.key === 'k' && $('input:focus, textarea:focus').length === 0) {
                         search_form_input.focus().select();
+                        search_form_input[0].scrollIntoView({ behavior: "smooth", block: "start" });
                         return false;
                     }
                 });
