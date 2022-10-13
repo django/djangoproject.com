@@ -2213,8 +2213,18 @@ h2 + .list-link-soup {
 }
 
 #doc-versions, #doc-languages, #faq-link {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    margin: 0;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+
+    &.open {
+        li{
+            display: inline-block;
+            &.current {
+                border: 1px solid $green-light;
+            }
+        }
+    }
 
     li {
         display: none;
@@ -2230,7 +2240,9 @@ h2 + .list-link-soup {
             padding: 8px 15px;
             border: 1px solid var(--hairline-color);
             border-radius: 4px;
+            cursor: pointer;
         }
+
         &.current-link {
             display: inline-block;
         }
@@ -2251,8 +2263,10 @@ h2 + .list-link-soup {
         }
     }
 
-    &:hover, .hover-on {
+    &:hover {
         pointer-events: auto;
+        padding: 2em 0;
+        margin: -1.75em 0;
         li {
             display: inline-block;
         }
