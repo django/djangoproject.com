@@ -60,7 +60,7 @@
       </a>
     </li>
   </ul>
-  <ul id="doc-languages" class="language-switcher">
+  <ul id="doc-languages" class="language-switcher doc-switcher">
   {% for available_lang in available_languages %}
   {% if lang != available_lang %}
   <li class="other">
@@ -80,7 +80,7 @@
   </ul>
 
   {% get_all_doc_versions docurl as other_versions %}
-  <ul id="doc-versions" class="version-switcher">
+  <ul id="doc-versions" class="version-switcher doc-switcher">
     {% for other_version in other_versions %}
     {% if version != other_version %}
     <li class="other">
