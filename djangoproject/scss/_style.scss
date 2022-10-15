@@ -2657,14 +2657,22 @@ form {
             outline: none;
             border-color: var(--secondary);
         }
-        
-        &::-webkit-input-placeholder,
-	&:-ms-input-placeholder,
-	&::-moz-placeholder,
-	&:-moz-placeholder,
-	&::placeholder {
-		color: var(--body-fg);
-	}
+
+        &::-webkit-input-placeholder {
+			color: var(--body-fg);
+		}
+		&:-ms-input-placeholder {
+			color: var(--body-fg);
+		}
+		&::-moz-placeholder {
+			color: var(--body-fg);
+		}
+		&:-moz-placeholder {
+			color: var(--body-fg);
+		}
+		&::placeholder {
+			color: var(--body-fg);
+		}
     }
 
     textarea {
@@ -2825,12 +2833,6 @@ div[role=main] {
     }
 }
 
-::-webkit-input-placeholder,
-:-moz-placeholder,
-::-moz-placeholder,
-:-ms-input-placeholder {
-    color: var(--dark-hairline-color);
-}
 
 .form-email {
     // Email submission forms on Community page.
