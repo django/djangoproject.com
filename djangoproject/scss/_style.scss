@@ -2657,15 +2657,14 @@ form {
             outline: none;
             border-color: var(--secondary);
         }
-    }
-	
-    input[type="search"]::placeholder,
-    input[type="text"]::placeholder,
-    input[type="email"]::placeholder,
-    input[type="password"]::placeholder,
-    input[type="number"]::placeholder,
-    input[type="url"]::placeholder {
-        color: var(--body-fg);
+        
+        &::-webkit-input-placeholder,
+	&:-ms-input-placeholder,
+	&::-moz-placeholder,
+	&:-moz-placeholder,
+	&::placeholder {
+		color: var(--body-fg);
+	}
     }
 
     textarea {
