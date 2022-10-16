@@ -4,10 +4,11 @@
 {% block sectionid %}download{% endblock %}
 {% block layout_class %}sidebar-right{% endblock %}
 {% block title %}Download Django{% endblock %}
+
 {% block og_title %}Download Django{% endblock %}
-{% block twitter_title %}Download Django{% endblock %}
 {% block og_image %}{% static "img/release-roadmap.png" %}{% endblock %}
-{% block twitter_image %}{% static "img/release-roadmap.png" %}{% endblock %}
+{% block og_image_alt %}Django's release roadmap{% endblock %}
+{% block og_description %}The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}{% endblock %}
 
 {% block header %}
   <h1>Download</h1>
