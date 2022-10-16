@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import crypto, timezone
 from django_hosts.resolvers import reverse
+from django.utils.translation import gettext_lazy as _
 from sorl.thumbnail import ImageField, get_thumbnail
 
 GOAL_AMOUNT = Decimal("200000.00")
@@ -14,10 +15,10 @@ DISPLAY_DONOR_DAYS = 365
 DEFAULT_DONATION_AMOUNT = 50
 LEADERSHIP_LEVEL_AMOUNT = Decimal("1000.00")
 INTERVAL_CHOICES = (
-    ('monthly', 'Monthly donation'),
-    ('quarterly', 'Quarterly donation'),
-    ('yearly', 'Yearly donation'),
-    ('onetime', 'One-time donation'),
+    ('monthly', _('Monthly donation')),
+    ('quarterly', _('Quarterly donation')),
+    ('yearly', _('Yearly donation')),
+    ('onetime', _('One-time donation')),
 )
 
 
@@ -65,15 +66,15 @@ class DjangoHero(FundraisingModel):
     hero_type = models.CharField(max_length=30, choices=HERO_TYPE_CHOICES, blank=True)
     is_visible = models.BooleanField(
         default=False,
-        verbose_name="Agreed to displaying on the fundraising page?",
+        verbose_name=_("Agreed to displaying on the fundraising page?"),
     )
     is_subscribed = models.BooleanField(
         default=False,
-        verbose_name="Agreed to being contacted by DSF?",
+        verbose_name=_("Agreed to being contacted by DSF?"),
     )
     approved = models.BooleanField(
         null=True,
-        verbose_name="Name, URL, and Logo approved?",
+        verbose_name=_("Name, URL, and Logo approved?"),
     )
 
     objects = DjangoHeroManager()

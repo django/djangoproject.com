@@ -1,4 +1,4 @@
-{% load static fundraising_extras humanize %}
+{% load fundraising_extras humanize i18n static %}
 
 {% with goal_percent=donated_amount|as_percentage:goal_amount %}
 <div class="fundraising-index" id="donate">
@@ -21,10 +21,15 @@
 
   <div class="description">
     <ul>
-      <li><strong>{{ goal_percent }}% funded</strong></li>
-      <li><strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ goal_amount|intcomma }} goal for
-        {{ goal_start_date|date:"Y" }}</li>
-      <li><strong>{{ total_donors }} donor{{ total_donors|pluralize:",s" }}</strong></li>
+      <li><strong>{% blocktranslate with goal_percent=goal_percent %}{{ goal_percent }}% funded{% endblocktranslate %}</strong></li>
+      <li>
+        {% blocktranslate trimmed with donated_amount=donated_amount goal_amount=goal_amount goal_start_date=goal_start_date %}
+        <strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ goal_amount|intcomma }} goal for
+        {{ goal_start_date|date:"Y" }}{% endblocktranslate %}
+      </li>
+      <li><strong>{% blocktranslate total_donors=total_donors %}
+        {{ total_donors }} donor{{ total_donors|pluralize:",s" }}
+      {% endblocktranslate %}</strong></li>
     </ul>
 
     <div class="donate">
@@ -41,18 +46,17 @@
         {{ form.interval }}
         {{ form.amount }}
         <div class="custom-donation">
-          <span class="prefix">US $ (integer only)</span>
+          <span class="prefix">US $ ({% translate "integer only" %})</span>
         </div>
         {{ form.captcha }}
-        <input id="donate-button" type="submit" value="Donate monthly" class="cta" />
+        <input id="donate-button" type="submit" value="{% translate "Donate monthly" %}" class="cta" />
       </form>
     </div>
   </div>
   <div class="cls"></div>
-  <p class="footnote">
-    Your logo will be visible below if you contribute at least
-    US&nbsp;${{ display_logo_amount|intcomma }}.<br>
-  </p>
+  <p class="footnote">{% blocktranslate trimmed with amount=display_logo_amount %}
+    Your logo will be visible below if you contribute at least US&nbsp;${{ amount|intcomma }}.<br>
+  {% endblocktranslate %}</p>
 </div>
 {% endwith %}
 
