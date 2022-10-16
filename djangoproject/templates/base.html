@@ -18,6 +18,26 @@
     <meta name="msapplication-TileColor" content="#113228">
     <meta name="msapplication-TileImage" content="{% static "img/icon-tile.png" %}">
     <meta name="theme-color" content="#0C4B33">
+  
+    {% block og_tags %}
+      <meta property="og:title" content="{% block og_title %}Django: The web framework for perfectionists with deadlines{% endblock %}" />
+      <meta property="og:description" content="{% block og_description %}{% spaceless %}
+        With Django, you can take web applications from concept to launch in a matter of hours. Django takes care of much of the hassle of web development, so you can focus
+           on writing your app without needing to reinvent the wheel. It’s free and open source.
+      {% endspaceless %}{% endblock %}" />
+      <meta property="og:image" content="{% block og_image %}{% static "img/logos/django-logo-negative.png" %}{% endblock %}" />
+      <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+      <meta property="og:site_name" content="Django Project" />
+      
+      <meta property="twitter:title" content="{% block twitter_title %}Django: The web framework for perfectionists with deadlines{% endblock %}" />
+      <meta property="twitter:url" content="{{ request.build_absolute_uri }}" />
+      <meta property="twitter:description" content="{% block twitter_description %}{% spaceless %}
+        With Django, you can take web applications from concept to launch in a matter of hours. Django takes care of much of the hassle of web development, so you can focus
+           on writing your app without needing to reinvent the wheel. It’s free and open source.
+      {% endspaceless %}{% endblock %}" />
+      <meta property="twitter:image" content="{% block twitter_image %}{% static "img/logos/django-logo-negative.png" %}{% endblock %}" />
+      <meta property="twitter:card" content="{% block twitter_card %}summary{% endblock %}">
+    {% endblock og_tags %}
 
     <title>{% block title %}The web framework for perfectionists with deadlines{% endblock %} | Django</title>
 
