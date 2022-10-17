@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.contenttypes import views as contenttypes_views
@@ -16,6 +17,7 @@ from aggregator.feeds import (
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
 from foundation.views import CoreDevelopers
+from djangoproject import views as project_views
 
 admin.autodiscover()
 
@@ -25,8 +27,9 @@ sitemaps = {
 }
 
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path('', TemplateView.as_view(template_name='homepage.html'), name="homepage"),
+    path('change-language/<str:lang_code>/', project_views.change_language, name="change_language"),
     path('start/overview/', TemplateView.as_view(template_name='overview.html'), name="overview"),
     path('start/', TemplateView.as_view(template_name='start.html'), name="start"),
     # to work around a permanent redirect stored in the db that existed before the redesign:
@@ -83,7 +86,7 @@ urlpatterns = [
     path('download/', include('releases.urls')),
     path('svntogit/', include('svntogit.urls')),
     path('', include('legacy.urls')),
-]
+)
 
 if settings.DEBUG:
     urlpatterns += [

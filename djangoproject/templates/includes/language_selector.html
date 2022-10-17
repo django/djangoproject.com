@@ -1,0 +1,18 @@
+{% load i18n %}
+<div id="version-switcher">
+  <ul id="doc-languages" class="language-switcher doc-switcher">
+  {% get_available_languages as languages %}
+  {% for available_lang in languages %}
+  {% if lang != available_lang %}
+  <li class="other">
+    {% url 'change_language' lang_code=available_lang.0 as language_url %}
+    <a href="{{ language_url }}">{{ available_lang.1 }}</a>
+  </li>
+  {% endif %}
+  {% endfor %}
+    <li class="current"
+        title="{% blocktrans %}Click on the links on the left to switch to another language.{% endblocktrans %}">
+      <span>{% trans "Language:" %} <strong>{{ LANGUAGE_CODE|language_name_translated }}</strong></span>
+    </li>
+  </ul>
+</div>

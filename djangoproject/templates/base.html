@@ -1,4 +1,4 @@
-{% load static %}<!DOCTYPE html>
+{% load i18n static %}<!DOCTYPE html>
 <html lang="{% block html_language_code %}en{% endblock %}">
   <head>
     <meta charset="utf-8">
@@ -63,7 +63,9 @@
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
 
     {% include "includes/header.html" %}
-
+    
+    {% include "includes/language_selector.html" %}
+    
     <div class="copy-banner">
       <div class="container {% block header-classes %}{% endblock %}">
         {% block header %}{% endblock %}
