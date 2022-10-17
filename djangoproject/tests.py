@@ -1,6 +1,8 @@
 from http import HTTPStatus
 
+from django.conf import settings
 from django.test import TestCase
+from django.utils import translation
 from django_hosts.resolvers import reverse
 
 from docs.models import DocumentRelease, Release
@@ -94,7 +96,7 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
     def test_www_host(self):
         "www should still use LocaleMiddleware"
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get('/', HTTP_HOST=self.www_host)
+            resp = self.client.get('/en/', HTTP_HOST=self.www_host)
         self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn('Content-Language', resp)
         self.assertIn('Vary', resp)
@@ -102,7 +104,27 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
     def test_www_host_with_port(self):
         "www (with a port) should still use LocaleMiddleware"
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get('/', HTTP_HOST='%s:8000' % self.www_host)
+            resp = self.client.get('/en/', HTTP_HOST='%s:8000' % self.www_host)
         self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn('Content-Language', resp)
         self.assertIn('Vary', resp)
+
+
+class TestChangeLanguage(TestCase):
+    """ Test case to verify language changing behaviour """
+
+    def test_change_language(self):
+        """ Verify default language and switching to a new language """
+        self.client.get(reverse('change_language', kwargs={'lang_code': 'fr'}))
+        lang = translation.get_language()
+        self.assertEqual('fr', lang)
+
+        # Change back to default
+        self.client.get(reverse('change_language', kwargs={'lang_code': settings.LANGUAGE_CODE}))
+        lang = translation.get_language()
+        self.assertEqual(settings.LANGUAGE_CODE, lang)
+
+    def test_default_language(self):
+        """ Verify default language """
+        default_lang = translation.get_language()
+        self.assertEqual(settings.LANGUAGE_CODE, default_lang)

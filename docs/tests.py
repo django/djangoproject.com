@@ -161,7 +161,7 @@ class RedirectsTests(TestCase):
 
     def test_team_url(self):
         # This URL is linked from the docs.
-        self.assertEqual('/foundation/teams/', reverse('members:teams', urlconf=www_urls))
+        self.assertEqual('/en/foundation/teams/', reverse('members:teams', urlconf=www_urls))
 
     def test_internals_team(self):
         response = self.client.get(

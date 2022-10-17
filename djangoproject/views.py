@@ -2,7 +2,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.urls import translate_url
 from django.utils.http import url_has_allowed_host_and_scheme
-from django.utils.translation import check_for_language
+from django.utils.translation import activate, check_for_language
 
 
 def change_language(request, lang_code):
@@ -28,6 +28,7 @@ def change_language(request, lang_code):
             if next_trans != next_url:
                 response = HttpResponseRedirect(next_trans)
 
+        activate(lang_code)
         response.set_cookie(
             settings.LANGUAGE_COOKIE_NAME, lang_code,
             max_age=settings.LANGUAGE_COOKIE_AGE,
