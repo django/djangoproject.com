@@ -96,19 +96,7 @@ $font-path: "../fonts/fira-mono";
     font-family: Palatino, "Palatino Linotype", "Book Antiqua", "Hoefler Text", Georgia, "Lucida Bright", Cambria, Times, "Times New Roman", serif;
 }
 @mixin sans-serif {
-    font-family:
-		-apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        system-ui,
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        sans-serif,
-        "Apple Color Emoji",
-        "Segoe UI Emoji",
-        "Segoe UI Symbol",
-        "Noto Color Emoji";
+    font-family: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
 }
 @mixin monospace {
     font-family: "Fira Mono", Consolas, Menlo, Monaco, "Courier New", Courier, monospace;
