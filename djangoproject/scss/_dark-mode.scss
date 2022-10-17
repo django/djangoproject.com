@@ -128,26 +128,6 @@ html[data-theme="light"],
 		}
 	}
 
-	body ::-webkit-input-placeholder {
-		/* Chrome/Opera/Safari */
-		color: $gray-medium-l10;
-	}
-
-	body ::-moz-placeholder {
-		/* Firefox 19+ */
-		color: $gray-medium-l10;
-	}
-
-	body :-ms-input-placeholder {
-		/* IE 10+ */
-		color: $gray-medium-l10;
-	}
-
-	body :-moz-placeholder {
-		/* Firefox 18- */
-		color: $gray-medium-l10;
-	}
-
 	body [role="contentinfo"] {
 		background: darken($green, 10%);
 	}
@@ -228,25 +208,6 @@ html[data-theme="dark"] {
 		}
 	}
 
-	::-webkit-input-placeholder {
-		/* Chrome/Opera/Safari */
-		color: $gray-medium-l10;
-	}
-
-	::-moz-placeholder {
-		/* Firefox 19+ */
-		color: $gray-medium-l10;
-	}
-
-	:-ms-input-placeholder {
-		/* IE 10+ */
-		color: $gray-medium-l10;
-	}
-
-	:-moz-placeholder {
-		/* Firefox 18- */
-		color: $gray-medium-l10;
-	}
 
 	[role="contentinfo"] {
 		background: darken($green, 10%);
