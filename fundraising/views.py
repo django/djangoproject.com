@@ -11,10 +11,10 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.utils.translation import gettext_lazy as _
 
 from .forms import DjangoHeroForm, DonationForm, PaymentForm
 from .models import DjangoHero, Donation, Payment, Testimonial

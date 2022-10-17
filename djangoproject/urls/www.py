@@ -16,8 +16,8 @@ from aggregator.feeds import (
 )
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
-from foundation.views import CoreDevelopers
 from djangoproject import views as project_views
+from foundation.views import CoreDevelopers
 
 admin.autodiscover()
 
