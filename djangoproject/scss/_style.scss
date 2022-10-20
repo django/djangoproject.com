@@ -3295,3 +3295,10 @@ ul.corporate-members li {
         background: $green-light;
     }
 }
+
+.column-container {
+    @include respond-min(768px) {
+        display: flex;
+        justify-content: space-between;
+    }
+}
