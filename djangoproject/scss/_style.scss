@@ -3608,4 +3608,33 @@ ul.corporate-members li {
         display: flex;
         justify-content: space-between;
     }
+.community-cta-wrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.community-cta-a {
+    display: inline-block;
+    width: 300px;
+    height: 300px;
+}
+
+.community-cta {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--secondary-accent);
+    border-radius: 20px;
+}
+
+.community-cta svg {
+    color: var(--body-fg);
 }
