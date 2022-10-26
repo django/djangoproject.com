@@ -15,6 +15,7 @@ from releases.models import Release
 
 from .models import Document, DocumentRelease
 from .sitemaps import DocsSitemap
+from .templatetags.docs import get_all_doc_versions
 from .utils import get_doc_path
 
 
@@ -194,6 +195,11 @@ class SearchFormTestCase(TestCase):
 
 
 class TemplateTagTests(TestCase):
+    fixtures = ['doc_test_fixtures']
+
+    def test_get_all_doc_versions(self):
+        with self.assertNumQueries(1):
+            get_all_doc_versions({})
 
     def test_pygments_template_tag(self):
         template = Template('''
