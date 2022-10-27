@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     path(
         '',
-        views.index,
+        views.IndexView.as_view(),
         name='community-index'
     ),
     path(
