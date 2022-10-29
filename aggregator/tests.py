@@ -95,6 +95,14 @@ class AggregatorTests(TestCase):
         for item in response.context['object_list']:
             self.assertEqual(models.APPROVED_FEED, item.feed.approval_status)
 
+    def test_feed_list_number_of_queries(self):
+        url = reverse(
+            'community-feed-list',
+            kwargs={'feed_type_slug': self.feed_type.slug}
+        )
+        with self.assertNumQueries(5):
+            self.client.get(url)
+
     def test_management_command_sends_no_email_with_no_pending_feeds(self):
         self.pending_feed.delete()
         call_command('send_pending_approval_email', verbosity=0)
