@@ -43,8 +43,13 @@ class FeedListView(ListView):
     paginate_by = 25
 
     def get_queryset(self):
-        self.feed_type = get_object_or_404(FeedType, slug=self.kwargs.pop('feed_type_slug'))
-        return FeedItem.objects.filter(feed__feed_type=self.feed_type, feed__approval_status=APPROVED_FEED)
+        self.feed_type = get_object_or_404(
+            FeedType, slug=self.kwargs.pop('feed_type_slug')
+        )
+        return FeedItem.objects.filter(
+            feed__feed_type=self.feed_type,
+            feed__approval_status=APPROVED_FEED
+        ).select_related('feed')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
