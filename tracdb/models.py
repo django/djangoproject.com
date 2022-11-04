@@ -269,7 +269,6 @@ class Wiki(models.Model):
     _time = models.BigIntegerField(db_column='time')
     time = time_property('time')
     author = models.TextField()
-    ipnr = models.TextField()
     text = models.TextField()
     comment = models.TextField()
     readonly = models.IntegerField()
@@ -297,7 +296,6 @@ class Attachment(models.Model):
     time = time_property('time')
     description = models.TextField()
     author = models.TextField()
-    ipnr = models.TextField()
 
     class Meta:
         db_table = 'attachment_django_view'
