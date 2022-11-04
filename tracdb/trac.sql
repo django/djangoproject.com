@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.20
--- Dumped by pg_dump version 10.20
+-- Dumped from database version 12.12
+-- Dumped by pg_dump version 12.12
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -16,23 +16,9 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 -- Name: attachment; Type: TABLE; Schema: public; Owner: code.djangoproject
@@ -45,8 +31,7 @@ CREATE TABLE public.attachment (
     size integer,
     "time" bigint,
     description text,
-    author text,
-    ipnr text
+    author text
 );
 
 
@@ -99,7 +84,8 @@ ALTER TABLE public.component OWNER TO "code.djangoproject";
 CREATE TABLE public.enum (
     type text NOT NULL,
     name text NOT NULL,
-    value text
+    value text,
+    description text
 );
 
 
@@ -597,7 +583,6 @@ CREATE TABLE public.wiki (
     version integer NOT NULL,
     "time" bigint,
     author text,
-    ipnr text,
     text text,
     comment text,
     readonly integer
@@ -773,8 +758,8 @@ ALTER TABLE ONLY public.ticket ALTER COLUMN id SET DEFAULT nextval('public.ticke
 -- Data for Name: system; Type: TABLE DATA; Schema: public; Owner: code.djangoproject
 --
 
-INSERT INTO public.system (name, value) VALUES ('database_version', '41');
 INSERT INTO public.system (name, value) VALUES ('spamfilter_version', '4');
+INSERT INTO public.system (name, value) VALUES ('database_version', '45');
 
 
 --
