@@ -1,5 +1,8 @@
 {% extends "base_foundation.html" %}
 
+{% block og_title %}Meeting minutes archive{% endblock %}
+{% block og_description %}View meeting minutes for {{ month|date:"F, Y" }}{% endblock %}
+
 {% block content %}
 <h1>Meeting minutes archive: {{ month|date:"F, Y" }}</h1>
 
