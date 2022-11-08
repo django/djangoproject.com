@@ -2,6 +2,8 @@
 
 {% block title %}{{ month|date:"F" }} | Weblog{% endblock %}
 
+{% block og_title %}Django news: {{ month|date:"F Y" }} archive{% endblock %}
+
 {% block content %}
 
 <h1>{{ month|date:"F Y" }} archive</h1>
