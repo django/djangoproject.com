@@ -228,16 +228,19 @@ html[data-theme="dark"] {
 .theme-toggle {
 	cursor: pointer;
 	border: none;
-	padding: 0;
 	background: transparent;
 	vertical-align: middle;
 	padding: 20px 10px;
+
+	@include respond-max(768px) {
+		padding: 0;
+	}
 }
 
 .theme-toggle svg {
 	vertical-align: middle;
-	height: 2rem;
-	width: 2rem;
+	max-width: 16px;
+    max-height: 16px;
 	display: none;
 }
 
@@ -294,6 +297,10 @@ html[data-theme="light"] .theme-toggle .theme-label-when-light {
 
 .mobile-toggle {
 	width: 45px;
+	height: 45px;
+    line-height: 45px;
+    text-align: center;
+    margin: 4px 10px;
 	float: right;
 
 	@include respond-min(768px) {
