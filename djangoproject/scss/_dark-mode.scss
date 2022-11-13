@@ -52,7 +52,7 @@ html[data-theme="light"],
 }
 
 @media (prefers-color-scheme: dark) {
-	html:not([data-theme="light"])  {
+	html:not([data-theme="light"]) {
 		--body-fg: #C1CAD2;
 		--body-bg: #{$black};
 
@@ -218,6 +218,7 @@ html[data-theme="dark"] {
 	&.light {
 		filter: invert(0);
 	}
+
 	&.dark {
 		filter: invert(1);
 	}
@@ -228,16 +229,19 @@ html[data-theme="dark"] {
 .theme-toggle {
 	cursor: pointer;
 	border: none;
-	padding: 0;
 	background: transparent;
 	vertical-align: middle;
 	padding: 20px 10px;
+
+	@include respond-max(768px) {
+		padding: 0;
+	}
 }
 
 .theme-toggle svg {
 	vertical-align: middle;
-	height: 2rem;
-	width: 2rem;
+	max-width: 16px;
+	max-height: 16px;
 	display: none;
 }
 
@@ -263,19 +267,19 @@ html[data-theme="light"] .theme-toggle svg.theme-icon-when-light {
 
 /* Fully hide screen reader text so we only show the one matching the current theme */
 .theme-toggle .visually-hidden {
-    display: none;
+	display: none;
 }
 
 html[data-theme="auto"] .theme-toggle .theme-label-when-auto {
-    display: block;
+	display: block;
 }
 
 html[data-theme="dark"] .theme-toggle .theme-label-when-dark {
-    display: block;
+	display: block;
 }
 
 html[data-theme="light"] .theme-toggle .theme-label-when-light {
-    display: block;
+	display: block;
 }
 
 .visually-hidden {
@@ -294,6 +298,10 @@ html[data-theme="light"] .theme-toggle .theme-label-when-light {
 
 .mobile-toggle {
 	width: 45px;
+	height: 45px;
+	line-height: 45px;
+	text-align: center;
+	margin: 4px 10px;
 	float: right;
 
 	@include respond-min(768px) {
