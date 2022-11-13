@@ -85,8 +85,11 @@ urlpatterns = i18n_patterns(
     path('weblog/', include('blog.urls')),
     path('download/', include('releases.urls')),
     path('svntogit/', include('svntogit.urls')),
-    path('', include('legacy.urls')),
 )
+
+urlpatterns += [
+    path('', include('legacy.urls'))  # Exclude from i18n patterns
+]
 
 if settings.DEBUG:
     urlpatterns += [
