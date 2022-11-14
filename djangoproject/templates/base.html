@@ -26,6 +26,9 @@
     {% endspaceless %}{% endblock %}" />
     <meta property="og:image" content="{% block og_image %}{% static "img/logos/django-logo-negative.png" %}{% endblock %}" />
     <meta property="og:image:alt" content="{% block og_image_alt %}Django logo{% endblock %}" />
+    <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}" />
+    <meta property="og:image:height" content="{% block og_image_height %}546{% endblock %}" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:url" content="{{ request.build_absolute_uri }}" />
     <meta property="og:site_name" content="Django Project" />
     
