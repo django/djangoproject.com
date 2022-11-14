@@ -18,6 +18,24 @@
     <meta name="msapplication-TileColor" content="#113228">
     <meta name="msapplication-TileImage" content="{% static "img/icon-tile.png" %}">
     <meta name="theme-color" content="#0C4B33">
+  
+    {% block og_tags %}
+    <meta property="og:title" content="{% block og_title %}Django{% endblock %}" />
+    <meta property="og:description" content="{% block og_description %}{% spaceless %}
+      The web framework for perfectionists with deadlines.
+    {% endspaceless %}{% endblock %}" />
+    <meta property="og:image" content="{% block og_image %}{% static "img/logos/django-logo-negative.png" %}{% endblock %}" />
+    <meta property="og:image:alt" content="{% block og_image_alt %}Django logo{% endblock %}" />
+    <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}" />
+    <meta property="og:image:height" content="{% block og_image_height %}546{% endblock %}" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:site_name" content="Django Project" />
+    
+    <meta property="twitter:creator" content="djangoproject" />
+    <meta property="twitter:site" content="djangoproject" />
+    <meta property="twitter:card" content="{% block twitter_card %}summary{% endblock %}">
+    {% endblock og_tags %}
 
     <title>{% block title %}The web framework for perfectionists with deadlines{% endblock %} | Django</title>
 

@@ -1,5 +1,8 @@
 {% extends "base_foundation.html" %}
 
+{% block og_title %}Meeting minutes: {{ meeting }}{% endblock %}
+{% block og_description %}Meeting minutes for {{ meeting }}{% endblock %}
+
 {% block content %}
 {% load foundation %}
 

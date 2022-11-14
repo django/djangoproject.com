@@ -5,6 +5,13 @@
 {% block title %}Download Django{% endblock %}
 {% block layout_class %}sidebar-right{% endblock %}
 
+{% block og_title %}Download Django{% endblock %}
+{% block og_image %}{% static "img/release-roadmap.png" %}{% endblock %}
+{% block og_image_alt %}Django's release roadmap{% endblock %}
+{% block og_description %}The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}{% endblock %}
+{% block og_image_width %}1030{% endblock %}
+{% block og_image_height %}480{% endblock %}
+
 {% block header %}
   <h1>Download</h1>
 {% endblock %}
