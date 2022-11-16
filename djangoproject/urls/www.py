@@ -83,11 +83,12 @@ urlpatterns = i18n_patterns(
 
     path('sitemap.xml', cache_page(60 * 60 * 6)(sitemap_views.sitemap), {'sitemaps': sitemaps}),
     path('weblog/', include('blog.urls')),
-    path('download/', include('releases.urls')),
+    path('download/', include('releases.urls.i18n_paths')),
     path('svntogit/', include('svntogit.urls')),
 )
 
 urlpatterns += [
+    path('download/', include('releases.urls.download')),
     path('', include('legacy.urls'))  # Exclude from i18n patterns
 ]
 
