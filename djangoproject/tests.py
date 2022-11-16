@@ -99,7 +99,6 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
             resp = self.client.get('/en/', HTTP_HOST=self.www_host)
         self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn('Content-Language', resp)
-        self.assertIn('Vary', resp)
 
     def test_www_host_with_port(self):
         "www (with a port) should still use LocaleMiddleware"
@@ -107,7 +106,6 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
             resp = self.client.get('/en/', HTTP_HOST='%s:8000' % self.www_host)
         self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn('Content-Language', resp)
-        self.assertIn('Vary', resp)
 
 
 class TestChangeLanguage(TestCase):
