@@ -27,7 +27,7 @@
         <strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ goal_amount|intcomma }} goal for
         {{ goal_start_date|date:"Y" }}{% endblocktranslate %}
       </li>
-      <li><strong>{% blocktranslate donors=total_donors %}
+      <li><strong>{% blocktranslate trimmed with donors=total_donors %}
         {{ donors }} donor{{ donors|pluralize:",s" }}
       {% endblocktranslate %}</strong></li>
     </ul>
