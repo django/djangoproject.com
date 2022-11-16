@@ -11,7 +11,7 @@
   <h1 class="visuallyhidden">{% translate "Community" %}</h1>
   {% if community_stats and community_stats.age %}
     {% blocktranslate trimmed with age=community_stats.age %}
-      <p>Building the <em>Django</em> Community {% if age %} for <em>{{ age }}</em>{% endif %}. Come join us!</p>
+      <p>Building the <em>Django</em> Community for <em>{{ age }}</em>. Come join us!</p>
     {% endblocktranslate %}
   {% else %}
     <p>{% blocktranslate %}Building the <em>Django</em> Community. Come join us!{% endblocktranslate %}</p>
