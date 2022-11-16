@@ -37,7 +37,7 @@
     <meta property="twitter:card" content="{% block twitter_card %}summary{% endblock %}">
     {% endblock og_tags %}
 
-    <title>{% block title %}The web framework for perfectionists with deadlines{% endblock %} | Django</title>
+    <title>{% block title %}{% translate "The web framework for perfectionists with deadlines" %}{% endblock %} | Django</title>
 
     <link rel="stylesheet" href="{% static "css/output.css" %}" >
     <script src="{% static "js/lib/webfontloader/webfontloader.js" %}"></script>
@@ -90,7 +90,7 @@
         {% endblock %}
 
         {% block content %}{% endblock %}
-        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> {% translate "Back to Top" %}</a>
       </div>
 
       {% block content-related %}{% endblock %}

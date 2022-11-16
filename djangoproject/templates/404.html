@@ -1,14 +1,19 @@
 {% extends 'base_error.html' %}
+{% load i18n %}
 
-{% block title %}Page not found{% endblock %}
+{% block title %}{% translate "Page not found" %}{% endblock %}
 
 {% block header %}<h1>404</h1>{% endblock %}
 
 {% block content %}
-<h2>Page not found</h2>
+<h2>{% translate "Page not found" %}</h2>
 
-<p>Looks like you followed a bad link. If you think it's our fault, please <a href="https://code.djangoproject.com/">let us know</a>.</p>
+<p>{% blocktranslate trimmed %}
+  Looks like you followed a bad link. If you think it's our fault, please <a href="https://code.djangoproject.com/">let us know</a>.
+{% endblocktranslate %}</p>
+  
+{% url 'homepage' with home_url %}
+<p>{% blocktranslate %}Here's a link to the <a href="{{ home_url }}">homepage</a>. You know, just in case.{% endblocktranslate %}</p>
 
-<p>Here's a link to the <a href="{% url 'homepage' %}">homepage</a>. You know, just in case.</p>
 
 {% endblock %}
