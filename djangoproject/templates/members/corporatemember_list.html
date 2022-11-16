@@ -16,8 +16,11 @@
   </p>
 
 {% if members.diamond %}
-<h3>{% translate "Diamond Corporate Members" %} (${{ corporate_membership_amounts.diamond|intcomma }}+)</h3>
-<p>{% blocktranslate trimmed %}Our diamond <a href="/foundation/corporate-membership/">corporate
+<h3>{% blocktranslate trimmed with diamond=corporate_membership_amounts.diamond %}
+  Diamond Corporate Members (${{ diamond|intcomma }}+)
+{% endblocktranslate %}</h3>
+<p>{% blocktranslate trimmed %}
+  Our diamond <a href="/foundation/corporate-membership/">corporate
   members</a> include mega corporations and foundations.{% endblocktranslate %}</p>
 <ul class="corporate-members">
 {% for obj in members.diamond %}
@@ -27,9 +30,12 @@
 {% endif %}
 
 {% if members.platinum %}
-<h3>{% translate "Platinum Corporate Members" %} (${{ corporate_membership_amounts.platinum|intcomma }}+)</h3>
-<p>{% blocktranslate trimmed %}Our platinum <a href="/foundation/corporate-membership/">corporate
-   members</a> include organizations of ~500 people.{% endblocktranslate %}</p>
+<h3>{% blocktranslate trimmed with platinum=corporate_membership_amounts.platinum %}
+  Platinum Corporate Members (${{ platinum|intcomma }}+)
+{% endblocktranslate %}</h3>
+<p>{% blocktranslate trimmed %}
+  Our platinum <a href="/foundation/corporate-membership/">corporate
+  members</a> include organizations of ~500 people.{% endblocktranslate %}</p>
 <ul class="corporate-members">
 {% for obj in members.platinum %}
 {% include "members/includes/_member_with_logo.html" %}
@@ -38,9 +44,12 @@
 {% endif %}
 
 {% if members.gold %}
-<h3>{% translate "Gold Corporate Members" %} (${{ corporate_membership_amounts.gold|intcomma }}+)</h3>
-<p>{% blocktranslate trimmed %}Our gold <a href="/foundation/corporate-membership/">corporate
-members</a> include organizations of ~200 people.{% endblocktranslate %}</p>
+<h3>{% blocktranslate trimmed with gold=corporate_membership_amounts.gold %}
+  Gold Corporate Members (${{ gold|intcomma }}+)
+{% endblocktranslate %}</h3>
+<p>{% blocktranslate trimmed %}
+  Our gold <a href="/foundation/corporate-membership/">corporate
+  members</a> include organizations of ~200 people.{% endblocktranslate %}</p>
 <ul class="corporate-members">
 {% for obj in members.gold %}
 {% include "members/includes/_member_with_logo.html" %}
@@ -49,9 +58,12 @@ members</a> include organizations of ~200 people.{% endblocktranslate %}</p>
 {% endif %}
 
 {% if members.silver %}
-<h3>{% translate "Silver Corporate Members" %} (${{ corporate_membership_amounts.silver|intcomma }}+)</h3>
-<p>{% blocktranslate trimmed %}Our silver <a href="/foundation/corporate-membership/">corporate
-members</a> include organizations of ~50 people.{% endblocktranslate %}</p>
+<h3>{% blocktranslate trimmed with silver=corporate_membership_amounts.silver %}
+  Silver Corporate Members (${{ silver|intcomma }}+)
+{% endblocktranslate %}</h3>
+<p>{% blocktranslate trimmed %}
+  Our silver <a href="/foundation/corporate-membership/">corporate
+  members</a> include organizations of ~50 people.{% endblocktranslate %}</p>
 <ul class="corporate-members">
 {% for obj in members.silver %}
 {% include "members/includes/_member_with_logo.html" %}
@@ -60,9 +72,12 @@ members</a> include organizations of ~50 people.{% endblocktranslate %}</p>
 {% endif %}
 
 {% if members.bronze %}
-<h3>{% translate "Bronze Corporate Members" %} (${{ corporate_membership_amounts.bronze|intcomma }}+)</h3>
-<p>{% blocktranslate trimmed %}Our bronze <a href="/foundation/corporate-membership/">corporate
-members</a> include organizations of ~10 people.{% endblocktranslate %}</p>
+<h3>{% blocktranslate trimmed with bronze=corporate_membership_amounts.bronze %}
+  Bronze Corporate Members (${{ bronze|intcomma }}+)
+{% endblocktranslate %}</h3>
+<p>{% blocktranslate trimmed %}
+  Our bronze <a href="/foundation/corporate-membership/">corporate
+  members</a> include organizations of ~10 people.{% endblocktranslate %}</p>
 <ul class="corporate-members">
 {% for obj in members.bronze %}
 {% include "members/includes/_member_with_logo.html" %}
