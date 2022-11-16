@@ -11,9 +11,11 @@
   {% endif %}
   {% endfor %}
   {% get_language_info for LANGUAGE_CODE as lang %}
+  {% if lang %}
     <li class="current"
         title="{% blocktrans %}Click on the links on the left to switch to another language.{% endblocktrans %}">
       <span>{% trans "Language:" %} <strong>{{ lang.name_local }}</strong></span>
     </li>
+  {% endif %}
   </ul>
 </div>
