@@ -1,49 +1,52 @@
+{% load i18n %}
+
 <div class="layout-2col">
   <div class="col form-email">
-    <h3><a href="https://groups.google.com/group/django-users">Using Django</a></h3>
-    <p class="meta">Get help with Django and follow announcements.</p>
+    <h3><a href="https://groups.google.com/group/django-users">{% translate "Using Django" %}</a></h3>
+    <p class="meta">{% translate "Get help with Django and follow announcements." %}</p>
     <form class="form-input" action="https://groups.google.com/group/django-users/boxsubscribe">
-      <input type="email" name="email" placeholder="Enter email">
+      <input type="email" name="email" placeholder="{% translate "Enter email" %}">
       <button type="submit">
         <i class="icon icon-envelope-o"></i>
-        <span class="visuallyhidden">Subscribe</span>
+        <span class="visuallyhidden">{% translate "Subscribe" %}</span>
       </button>
     </form>
-    <p class="meta">
+    <p class="meta">{% blocktranslate trimmed %}
       You can also subscribe by sending an email to
       <a href="mailto:django-users+subscribe@googlegroups.com">
       django-users+subscribe@googlegroups.com</a> and following the
-      instructions that will be sent to you.
+      instructions that will be sent to you.{% endblocktranslate %}
     </p>
   </div>
   <div class="col form-email last-child">
-    <h3><a href="https://groups.google.com/group/django-developers">Contributing to Django</a></h3>
-    <p class="meta">Contribute to the development of Django itself.</p>
+    <h3><a href="https://groups.google.com/group/django-developers">{% translate "Contributing to Django" %}</a></h3>
+    <p class="meta">{% translate "Contribute to the development of Django itself." %}</p>
     <form class="form-input" action="https://groups.google.com/group/django-developers/boxsubscribe">
-      <input type="email" name="email" placeholder="Enter email">
+      <input type="email" name="email" placeholder="{% translate "Enter email" %}">
       <button type="submit">
         <i class="icon icon-envelope-o"></i>
-        <span class="visuallyhidden">Subscribe</span>
+        <span class="visuallyhidden">{% translate "Subscribe" %}</span>
       </button>
     </form>
-    <p class="meta">
+    <p class="meta">{% blocktranslate trimmed %}
       Before asking a question about how to contribute, read
       <a href="https://docs.djangoproject.com/en/dev/internals/contributing/">
-      Contributing to Django</a>. Many frequently asked questions are answered there.
+      Contributing to Django</a>. Many frequently asked questions are answered there.{% endblocktranslate %}
     </p>
     <hr>
-    <p class="meta">
+    <p class="meta">{% blocktranslate trimmed %}
       You can also subscribe by sending an email to
       <a href="mailto:django-developers+subscribe@googlegroups.com">
       django-developers+subscribe@googlegroups.com</a> and following the
-      instructions that will be sent to you.
+      instructions that will be sent to you.{% endblocktranslate %}
     </p>
   </div>
 
 </div>
-<p>
+{% url 'document-detail' url='internals/mailing-lists' lang='en' version='dev' host 'docs' as dev_mailing_list_url %}
+<p>{% blocktranslate trimmed %}
     We have a few other specialized lists (announce, i18n, ...). You can
     find more information about them in our
-    <a href="{% url 'document-detail' url='internals/mailing-lists' lang='en' version='dev' host 'docs' %}">
-    mailing list documentation</a>.
+    <a href="{{ dev_mailing_list_url }}">
+    mailing list documentation</a>.{% endblocktranslate %}
   </p>
