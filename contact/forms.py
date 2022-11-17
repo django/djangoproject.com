@@ -8,6 +8,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.utils.encoding import force_bytes
+from django.utils.translation import gettext_lazy as _
 from pykismet3 import Akismet, AkismetServerError
 
 logger = logging.getLogger(__name__)
@@ -16,18 +17,18 @@ logger = logging.getLogger(__name__)
 class BaseContactForm(ContactForm):
     message_subject = forms.CharField(
         max_length=100,
-        widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'Message subject'}),
-        label='Message subject',
+        widget=forms.TextInput(attrs={'class': 'required', 'placeholder': _('Message subject')}),
+        label=_('Message subject'),
     )
-    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'E-mail'}))
-    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': 'Name'}))
-    body = forms.CharField(widget=forms.Textarea(attrs={'class': 'required', 'placeholder': 'Your message'}))
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': _('E-mail')}))
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'required', 'placeholder': _('Name')}))
+    body = forms.CharField(widget=forms.Textarea(attrs={'class': 'required', 'placeholder': _('Your message')}))
     captcha = ReCaptchaField(widget=ReCaptchaV3)
 
     def subject(self):
         # Strip all linebreaks from the subject string.
         subject = ''.join(self.cleaned_data["message_subject"].splitlines())
-        return "[Contact form] " + subject
+        return _("[Contact form] ") + subject
 
     def message(self):
         return "From: {name} <{email}>\n\n{body}".format(**self.cleaned_data)
@@ -61,7 +62,7 @@ class BaseContactForm(ContactForm):
                     # they should ignore the request so that test runs affect the heuristics
                     akismet_data['test'] = 1
                 if akismet_api.check(akismet_data):
-                    raise forms.ValidationError("Akismet thinks this message is spam")
+                    raise forms.ValidationError(_("Akismet thinks this message is spam"))
             except AkismetServerError:
                 logger.error('Akismet server error')
         return self.cleaned_data['body']

@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.list import ListView
+from django.utils.translation import gettext_lazy as _
 
 from .forms import FeedModelForm
 from .models import APPROVED_FEED, Feed, FeedItem, FeedType
@@ -72,7 +73,7 @@ def add_feed(request, feed_type_slug):
     if f.is_valid():
         f.save()
         messages.add_message(
-            request, messages.INFO, 'Your feed has entered moderation. Please allow up to 1 week for processing.')
+            request, messages.INFO, _('Your feed has entered moderation. Please allow up to 1 week for processing.'))
         return redirect('community-index')
 
     ctx = {'form': f, 'feed_type': ft, 'adding': True}

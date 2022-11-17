@@ -5,6 +5,7 @@ import feedparser
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from django_push.subscriber import signals as push_signals
 from django_push.subscriber.models import Subscription
 
@@ -28,9 +29,9 @@ DENIED_FEED = 'D'
 PENDING_FEED = 'P'
 
 STATUS_CHOICES = (
-    (PENDING_FEED, 'Pending'),
-    (DENIED_FEED, 'Denied'),
-    (APPROVED_FEED, 'Approved')
+    (PENDING_FEED, _('Pending')),
+    (DENIED_FEED, _('Denied')),
+    (APPROVED_FEED, _('Approved'))
 )
 
 

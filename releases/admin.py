@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from .models import Release
 
@@ -14,7 +15,7 @@ class ReleaseAdmin(admin.ModelAdmin):
     def show_status(self, obj):
         return obj.get_status_display()
     show_status.admin_order_field = 'status'
-    show_status.short_description = 'status'
+    show_status.short_description = _('status')
 
 
 admin.site.register(Release, ReleaseAdmin)

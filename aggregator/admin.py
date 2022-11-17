@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 
 from .models import APPROVED_FEED, DENIED_FEED, Feed, FeedItem, FeedType
 
@@ -9,7 +10,7 @@ def mark_approved(modeladmin, request, queryset):
         item.save()
 
 
-mark_approved.short_description = "Mark selected feeds as approved."
+mark_approved.short_description = _("Mark selected feeds as approved.")
 
 
 def mark_denied(modeladmin, request, queryset):
@@ -18,7 +19,7 @@ def mark_denied(modeladmin, request, queryset):
         item.save()
 
 
-mark_denied.short_description = "Mark selected feeds as denied."
+mark_denied.short_description = _("Mark selected feeds as denied.")
 
 
 admin.site.register(
