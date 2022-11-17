@@ -12,7 +12,7 @@
   Looks like you followed a bad link. If you think it's our fault, please <a href="https://code.djangoproject.com/">let us know</a>.
 {% endblocktranslate %}</p>
   
-{% url 'homepage' with home_url %}
+{% url 'homepage' as home_url %}
 <p>{% blocktranslate %}Here's a link to the <a href="{{ home_url }}">homepage</a>. You know, just in case.{% endblocktranslate %}</p>
 
 
