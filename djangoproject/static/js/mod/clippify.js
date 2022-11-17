@@ -3,7 +3,8 @@ define(['jquery', 'clipboard'], function($, Clipboard) {
         var header = $(this);
         var wrapper = header.parent();
         var code = $('.highlight', wrapper);
-        var btn = $('<span class="btn-clipboard" title="Copy this code">');
+		var copy_str = gettext("Copy this code");
+        var btn = $('<span class="btn-clipboard" title="' + copy_str + '">');
         btn.append('<i class="icon icon-clipboard">');
         btn.data('clipboard-text', $.trim(code.text()));
         header.append(btn);
@@ -11,7 +12,8 @@ define(['jquery', 'clipboard'], function($, Clipboard) {
     // For Django 2.0 docs and older.
     $('.snippet').each(function() {
         var code = $('.highlight', this);
-        var btn = $('<span class="btn-clipboard" title="Copy this code">');
+		var copy_str = gettext("Copy this code");
+        var btn = $('<span class="btn-clipboard" title="' + copy_str + '">');
         var header = $('.snippet-filename', this);
 
         btn.append('<i class="icon icon-clipboard">');
@@ -24,14 +26,16 @@ define(['jquery', 'clipboard'], function($, Clipboard) {
         }
     });
     clip.on('success', function(e) {
-        var success = $('<span class="clipboard-success">').text('Copied!')
+		var copy_str = gettext("Copied!");
+        var success = $('<span class="clipboard-success">').text(copy_str);
         success.prependTo(e.trigger).delay(1000).fadeOut();
     });
     clip.on('error', function(e) {
         // Safari doesn't support the execCommand (yet) but because clipboardjs
         // also uses Selection API, we can instruct users to just press the keyboard shortcut
         // See https://clipboardjs.com/#browser-support
-        var success = $('<span class="clipboard-success">').text('Press ⌘-C to copy');
+		var copy_str = gettext("Press ⌘-C to copy");
+        var success = $('<span class="clipboard-success">').text(copy_str);
         success.prependTo(e.trigger).delay(5000).fadeOut();
     });
 });

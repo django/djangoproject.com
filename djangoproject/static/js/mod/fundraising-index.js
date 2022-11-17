@@ -28,7 +28,7 @@ define([
                 }
             },
             setDonateButtonText: function(event) {
-                var text = 'Donate';
+                var text = gettext('Donate');
                 var interval = $('#id_interval').val();
                 if (interval != 'onetime') {
                     text += ' ' + interval;

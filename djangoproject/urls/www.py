@@ -8,6 +8,7 @@ from django.contrib.sitemaps import views as sitemap_views
 from django.urls import include, path, re_path
 from django.views.decorators.cache import cache_page
 from django.views.generic import RedirectView, TemplateView
+from django.views.i18n import JavaScriptCatalog
 from django.views.static import serve
 
 from accounts import views as account_views
@@ -29,6 +30,7 @@ sitemaps = {
 
 urlpatterns = i18n_patterns(
     path('', TemplateView.as_view(template_name='homepage.html'), name="homepage"),
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     path('change-language/<str:lang_code>/', project_views.change_language, name="change_language"),
     path('start/overview/', TemplateView.as_view(template_name='overview.html'), name="overview"),
     path('start/', TemplateView.as_view(template_name='start.html'), name="start"),

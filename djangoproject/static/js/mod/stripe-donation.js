@@ -28,11 +28,11 @@ define([
                     var stripe = Stripe($donationForm.data('stripeKey'))
                     return stripe.redirectToCheckout({sessionId: data.sessionId})
                 } else {
-                    msg = 'There was an error setting up your donation. '
+                    msg = gettext('There was an error setting up your donation. ');
                     if (data.error.amount) {
                         msg += data.error.amount
                     } else {
-                        msg += 'Sorry. Please refresh the page and try again.'
+                        msg += gettext('Sorry. Please refresh the page and try again.');
                     }
                     alert(msg);
                 }
