@@ -9,7 +9,7 @@
 <h2>{% translate "Page removed." %}</h2>
 
 <p>
-{% url 'homepage' host 'docs' with docs_url %}
+{% url 'homepage' host 'docs' as docs_url %}
 {% blocktranslate trimmed %}
   Sorry, we've removed some of parts of the site that were completely out
   of date. In most cases, that content has been moved into
