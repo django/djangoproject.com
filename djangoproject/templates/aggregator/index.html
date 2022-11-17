@@ -13,31 +13,32 @@
 </div>
 
 <ul class="list-collapsing">
-{% regroup feed_items by feed.feed_type as feed_type_list %}
-  {% for feed_type in feed_type_list %}
-    <li id="{{ feed_type.grouper.slug }}">
-    <h2 class="bullet-icon"><i class="icon icon-rss blue"></i> {{ feed_type.grouper.name }}</h2>
+
+{% for feedtype, latest_feeds in feedtype_list %}
+  <li id="{{ feedtype.slug }}">
+    <h2 class="bullet-icon"><i class="icon icon-rss blue"></i> {{ feedtype.name }}</h2>
     <div class="collapsing-content">
       <dl class="list-links">
-        {% for item in feed_type.list %}
+        {% for item in latest_feeds %}
             <dt><a href="{{ item.link }}">{{ item.title }}</a></dt>
             <dd>{{ item.date_modified|date:"N jS, Y \a\t P" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a></dd>
         {% endfor %}
       </dl>
       <p class="meta">
-        {% if feed_type.list %}
-          <a href="{% url 'community-feed-list' feed_type.grouper.slug %}">View more</a>
+        {% if latest_feeds %}
+          <a href="{% url 'community-feed-list' feedtype.slug %}">View more</a>
         {% endif %}
-        {% if feed_type.list and feed_type.grouper.can_self_add %}
+        {% if latest_feeds and feedtype.can_self_add %}
           or
         {% endif %}
-        {% if feed_type.grouper.can_self_add %}
-          <a href="{% url 'community-add-feed' feed_type.grouper.slug %}">Add your feed</a>
+        {% if feedtype.can_self_add %}
+          <a href="{% url 'community-add-feed' feedtype.slug %}">Add your feed</a>
         {% endif %}
       </p>
     </div>
   </li>
-  {% endfor %}
+{% endfor %}
+
 </ul>
 
 {% endblock %}

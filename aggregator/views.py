@@ -1,38 +1,21 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.postgres.aggregates import ArrayAgg
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import TemplateView
 from django.views.generic.list import ListView
 
 from .forms import FeedModelForm
 from .models import APPROVED_FEED, Feed, FeedItem, FeedType
 
 
-class IndexView(TemplateView):
+def index(request):
     """
     Displays the latest feeds of each type.
     """
-    template_name = 'aggregator/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Get the latest feed item ids for each feed type
-        feed_item_ids = FeedType.objects.annotate(
-            feed_item_ids=ArrayAgg(
-                'feed__feeditem__id',
-                distinct=True,
-            )
-        ).values_list('feed_item_ids', flat=True)
-        # Merge the lists of feed item ids and get the latest 5 for each feed type
-        cleaned_ids = [
-            item for sublist in feed_item_ids for item in sublist[:5] if item
-        ]
-        context['feed_items'] = FeedItem.objects.filter(
-            id__in=cleaned_ids
-        ).select_related('feed__feed_type')
-
-        return context
+    feeds = []
+    for ft in FeedType.objects.all():
+        feeds.append((ft, ft.items()[0:5]))
+    ctx = {'feedtype_list': feeds}
+    return render(request, 'aggregator/index.html', ctx)
 
 
 class FeedListView(ListView):
