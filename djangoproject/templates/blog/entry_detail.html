@@ -1,4 +1,5 @@
 {% extends "base_weblog.html" %}
+{% load i18n %}
 
 {% block title %}{{ object.headline|escape }} | Weblog{% endblock %}
 
@@ -8,7 +9,9 @@
 {% block content %}
 <h2>{{ object.headline|safe }}</h2>
 
-<span class="meta">Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }} {% comment %}in <a href="#">Release Announcements</a>{% endcomment %}</span>
+<span class="meta">{% blocktranslate trimmed with author=object.author pub_date=object.pub_date|date:"F j, Y" %}
+  Posted by <strong>{{ author }}</strong> on {{ pub_date }} {% comment %}in <a href="#">Release Announcements</a>{% endcomment %}
+{% endblocktranslate %}</span>
 
 {{ object.body_html|safe }}
 {% endblock %}
