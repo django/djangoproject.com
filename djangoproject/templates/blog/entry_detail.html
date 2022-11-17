@@ -10,8 +10,8 @@
 <h2>{{ object.headline|safe }}</h2>
 
 <span class="meta">{% blocktranslate trimmed with author=object.author pub_date=object.pub_date|date:"F j, Y" %}
-  Posted by <strong>{{ author }}</strong> on {{ pub_date }} {% comment %}in <a href="#">Release Announcements</a>{% endcomment %}
-{% endblocktranslate %}</span>
+  Posted by <strong>{{ author }}</strong> on {{ pub_date }} 
+{% endblocktranslate %}{% comment %}in <a href="#">Release Announcements</a>{% endcomment %}</span>
 
 {{ object.body_html|safe }}
 {% endblock %}
