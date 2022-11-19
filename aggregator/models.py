@@ -151,7 +151,7 @@ class FeedItem(models.Model):
                 return FeedItem.objects.none()
             return items
 
-        items = FeedItem.objects.select_related('feed', 'feed__feed_type').filter(
+        items = FeedItem.objects.filter(
             feed__feed_type_id=feed_type_id
         ).select_related('feed', 'feed__feed_type')
 
