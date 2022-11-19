@@ -20,7 +20,7 @@ class FeedType(models.Model):
         return "%s" % (self.name,)
 
     def items(self):
-        return FeedItem.objects.filter(feed__feed_type=self)
+        return FeedItem.objects.select_related('feed', 'feed__feed_type').filter(feed__feed_type=self)
 
 
 APPROVED_FEED = 'A'
