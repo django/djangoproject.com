@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from .models import FeedType, FeedItem
+from .models import FeedItem, FeedType
 
 
 def push_credentials(hub_url):
