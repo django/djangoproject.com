@@ -164,13 +164,13 @@ class FeedItem(models.Model):
 
 
 @receiver((post_delete, post_save), sender=FeedItem)
-def invalidate_feed_item_cache_from_items(sender, instance, created, **kwargs):
+def invalidate_feed_item_cache_from_items(sender, instance, **kwargs):
     """ Invalidate the feed item cached data when items or are changed or deleted """
     cache.delete(CACHED_FEEDITEMS_KEY.format(feed_type_id=instance.feed.feed_type_id))
 
 
 @receiver((post_delete, post_save), sender=FeedType)
-def invalidate_feed_item_cache_from_feedtype(sender, instance, created, **kwargs):
+def invalidate_feed_item_cache_from_feedtype(sender, instance, **kwargs):
     """ Invalidate the feed item cached data when items or are changed or deleted """
     cache.delete(CACHED_FEEDITEMS_KEY.format(feed_type_id=instance.id))
 
