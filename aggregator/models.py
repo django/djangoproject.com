@@ -4,11 +4,21 @@ import logging
 import feedparser
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.cache import cache
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 from django_push.subscriber import signals as push_signals
 from django_push.subscriber.models import Subscription
 
 log = logging.getLogger(__name__)
+
+CACHED_FEEDITEMS_KEY = 'feeditems_for_feedtype_{feed_type_id}'
+CACHED_FEEDITEMS_LENGTH = 86400  # 24 hours
+
+
+class NotFound:
+    """ Used by the caching """
 
 
 class FeedType(models.Model):
@@ -120,6 +130,49 @@ class FeedItem(models.Model):
 
     def get_absolute_url(self):
         return self.link
+
+    @staticmethod
+    def cached_by_feed_type_id(feed_type_id):
+        """
+        Return the feed items (from the cache if possible) for a given feed type ID
+
+        :param feed_type_id: the FeedType ID of the items to retrieve
+        :type feed_type_id: int
+        :return: the FeedItems related to the FeedType,
+                 from the cache if possible, else from the database.
+                 Will return None if not found
+        :rtype: Queryset or NoneType
+        """
+        key = CACHED_FEEDITEMS_KEY.format(feed_type_id=feed_type_id)
+
+        items = cache.get(key)
+        if items:
+            if isinstance(items, NotFound):
+                return FeedItem.objects.none()
+            return items
+
+        items = FeedItem.objects.select_related('feed', 'feed__feed_type').filter(
+            feed__feed_type_id=feed_type_id
+        ).select_related('feed', 'feed__feed_type')
+
+        if not items:
+            cache.set(key, NotFound(), CACHED_FEEDITEMS_LENGTH)
+            return FeedItem.objects.none()
+
+        cache.set(key, items, CACHED_FEEDITEMS_LENGTH)
+        return items
+
+
+@receiver((post_delete, post_save), sender=FeedItem)
+def invalidate_feed_item_cache_from_items(sender, instance, created, **kwargs):
+    """ Invalidate the feed item cached data when items or are changed or deleted """
+    cache.delete(CACHED_FEEDITEMS_KEY.format(feed_type_id=instance.feed.feed_type_id))
+
+
+@receiver((post_delete, post_save), sender=FeedType)
+def invalidate_feed_item_cache_from_feedtype(sender, instance, created, **kwargs):
+    """ Invalidate the feed item cached data when items or are changed or deleted """
+    cache.delete(CACHED_FEEDITEMS_KEY.format(feed_type_id=instance.id))
 
 
 def feed_updated(sender, notification, **kwargs):

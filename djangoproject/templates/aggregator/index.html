@@ -14,21 +14,21 @@
 
 <ul class="list-collapsing">
 
-{% for feedtype, latest_feeds in feedtype_list %}
+{% for feedtype, latest_items in feed_data %}
   <li id="{{ feedtype.slug }}">
     <h2 class="bullet-icon"><i class="icon icon-rss blue"></i> {{ feedtype.name }}</h2>
     <div class="collapsing-content">
       <dl class="list-links">
-        {% for item in latest_feeds %}
+        {% for item in latest_items %}
             <dt><a href="{{ item.link }}">{{ item.title }}</a></dt>
             <dd>{{ item.date_modified|date:"N jS, Y \a\t P" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a></dd>
         {% endfor %}
       </dl>
       <p class="meta">
-        {% if latest_feeds %}
+        {% if latest_items %}
           <a href="{% url 'community-feed-list' feedtype.slug %}">View more</a>
         {% endif %}
-        {% if latest_feeds and feedtype.can_self_add %}
+        {% if latest_items and feedtype.can_self_add %}
           or
         {% endif %}
         {% if feedtype.can_self_add %}

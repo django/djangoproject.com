@@ -5,16 +5,18 @@ from django.views.generic.list import ListView
 
 from .forms import FeedModelForm
 from .models import APPROVED_FEED, Feed, FeedItem, FeedType
+from .utils import get_feed_data
 
 
 def index(request):
     """
     Displays the latest feeds of each type.
+
+    Template requires;
+        FeedType name, slug & can_self_add
+        FeedItem date_modified, link, title, feed__public_url, feed__title
     """
-    feeds = []
-    for ft in FeedType.objects.all():
-        feeds.append((ft, ft.items()[0:5]))
-    ctx = {'feedtype_list': feeds}
+    ctx = {'feed_data': get_feed_data()}
     return render(request, 'aggregator/index.html', ctx)
 
 
