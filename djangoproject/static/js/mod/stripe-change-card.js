@@ -17,6 +17,7 @@ define([
                     'donation_id': donationId,
                     'csrfmiddlewaretoken': csrfToken
                 };
+				var success_copy = gettext('Card updated');
                 $.ajax({
                     type: "POST",
                     url: $heroForm.data('update-card-url'),
@@ -24,7 +25,7 @@ define([
                     dataType: 'json',
                     success: function (data) {
                         if (data.success) {
-                            $this.parent().find('.change-card-result').text('Card updated');
+                            $this.parent().find('.change-card-result').text(success_copy);
                         } else {
                             alert(data.error);
                         }

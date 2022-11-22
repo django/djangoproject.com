@@ -3,6 +3,12 @@ import json
 import os
 from pathlib import Path
 
+
+def gettext(s):
+    """ i18n passthrough """
+    return s
+
+
 # Utilities
 PROJECT_PACKAGE = Path(__file__).resolve().parent.parent
 
@@ -90,7 +96,19 @@ INSTALLED_APPS = [
     'django_push.subscriber',
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = (
+    ('en', gettext('English')),
+    ('fr', gettext('French')),
+    ('id', gettext('Indonesian')),
+    ('pl', gettext('Polish')),
+    ('pt-br', gettext('Portuguese (Brazil)')),
+)
+
+LOCALE_PATHS = [
+    str(BASE_DIR.joinpath('locale')),
+]
 
 LOGGING = {
     "version": 1,

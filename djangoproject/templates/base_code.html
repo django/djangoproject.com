@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block sectionid %}code{% endblock %}
 
 {% block og_title %}Django source code{% endblock %}
 {% block og_description %}Django source code{% endblock %}
 
-{% block title %}Code{% endblock %}
+{% block title %}{% translate "Code" %}{% endblock %}
 {% block layout_class %}full-width{% endblock %}
 
-{% block header %}<h1>Django source code</h1>{% endblock %}
+{% block header %}<h1>{% translate "Django source code" %}</h1>{% endblock %}

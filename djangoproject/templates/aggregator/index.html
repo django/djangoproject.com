@@ -1,15 +1,16 @@
 {% extends "base_community.html" %}
+{% load i18n %}
 
 {% block content %}
 
-<h2>Forum</h2>
+<h2>{% translate "Forum" %}</h2>
 {% include "includes/forum.html" %}
 
-<h2>Mailing lists</h2>
+<h2>{% translate "Mailing lists" %}</h2>
 {% include "includes/mailing_lists.html" %}
 
 <div class="list-collapsing-header">
-  <h2>Django RSS feeds</h2>
+  <h2>{% translate "Django RSS feeds" %}</h2>
 </div>
 
 <ul class="list-collapsing">
@@ -25,14 +26,14 @@
         {% endfor %}
       </dl>
       <p class="meta">
-        {% if latest_feeds %}
-          <a href="{% url 'community-feed-list' feedtype.slug %}">View more</a>
+        {% if feed_type.list %}
+          <a href="{% url 'community-feed-list' feed_type.grouper.slug %}">{% translate "View more" %}</a>
         {% endif %}
-        {% if latest_feeds and feedtype.can_self_add %}
-          or
+        {% if feed_type.list and feed_type.grouper.can_self_add %}
+          {% translate "or" %}
         {% endif %}
-        {% if feedtype.can_self_add %}
-          <a href="{% url 'community-add-feed' feedtype.slug %}">Add your feed</a>
+        {% if feed_type.grouper.can_self_add %}
+          <a href="{% url 'community-add-feed' feed_type.grouper.slug %}">{% translate "Add your feed" %}</a>
         {% endif %}
       </p>
     </div>

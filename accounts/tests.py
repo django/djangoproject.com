@@ -19,7 +19,7 @@ class ViewTests(TestCase):
 
     def test_login_redirect(self):
         response = self.client.post(reverse('login'), self.credentials)
-        self.assertRedirects(response, '/accounts/edit/')
+        self.assertRedirects(response, '/en/accounts/edit/')
 
     def test_profile_view_reversal(self):
         """

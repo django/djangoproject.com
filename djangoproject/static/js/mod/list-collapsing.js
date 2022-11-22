@@ -16,8 +16,8 @@ define([
             this.items = this.list.children('li'); //get items
             this.headings = this.items.children('h2'); //get headings
 
-            this.buttonExpand = $('<span class="expandall">Expand All</span>'); //build buttons
-            this.buttonCollapse = $('<span class="collapseall">Collapse All</span>'); //build buttons
+            this.buttonExpand = $('<span class="expandall">' + gettext("Expand All") + '</span>'); //build buttons
+            this.buttonCollapse = $('<span class="collapseall">' + gettext("Collapse All") + '</span>'); //build buttons
             this.buttonContainer = $('<span class="form-controls label"></span>').insertBefore(this.list); //create a button container
             this.buttonContainer //append container to label
                 .append(this.buttonExpand)

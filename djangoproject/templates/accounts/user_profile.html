@@ -1,50 +1,50 @@
 {% extends "base_community.html" %}
-{% load humanize %}
+{% load humanize i18n %}
 
 {% block title %}{% firstof user_obj.profile.name user_obj.username %}{% endblock %}
 
 {% block content-related %}
-    <h1 class="visuallyhidden">Additional Information</h1>
+    <h1 class="visuallyhidden">{% translate "Additional Information" %}</h1>
     <div role="complementary">
         <h2>
             {% if user_obj == user %}
-                This is you!
+                {% translate "This is you!" %}
             {% else %}
-                Is this you?
+                {% translate "Is this you?" %}
             {% endif %}
         </h2>
 
-        <p>Need to edit something? Here's how:</p>
+        <p>{% translate "Need to edit something? Here's how:" %}</p>
         <ul>
-            <li><a href="{% url 'edit_profile' %}">Edit your name and email here.</a></li>
-            <li>
+            <li><a href="{% url 'edit_profile' %}">{% translate "Edit your name and email here." %}</a></li>
+            <li>{% blocktranslate trimmed %}
                 The image is the <a href="https://en.gravatar.com/">Gravatar</a> linked
                 to the email address you signed up with. You can change the image over
                 at <a href="https://en.gravatar.com/">Gravatar</a>. If you see a robot, that's
                 because you don't have a Gravatar yet.
-                (Robots provided by <a href="https://robohash.org/">Robohash</a>.)
+                (Robots provided by <a href="https://robohash.org/">Robohash</a>.){% endblocktranslate %}
             </li>
-            <li>
+            <li>{% blocktranslate trimmed %}
                 The rest of the data is read-only for the time being. If you see
-                outrageous errors, please email <kbd>jacob</kbd> @ this domain.
+                outrageous errors, please email <kbd>jacob</kbd> @ this domain.{% endblocktranslate %}
             </li>
         </ul>
     </div>
 {% endblock %}
 
 {% block content %}
-    <div class  ="user-info">
+    <div class="user-info">
         <img class='avatar' width='150' height='150'
              src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=150&amp;d=https%3A%2F%2Frobohash.org%2F{{ email_hash }}%3Fset%3Dset3%26size%3D150x150">
 
         <h1>
             {% firstof user_obj.profile.name user_obj.username %}
-            {% if user_can_commit %}<span class="badge" title="Core team member">core
+            {% if user_can_commit %}<span class="badge" title="{% translate "Core team member" %}">{% translate "core" %}
                 </span>{% endif %}
         </h1>
 
         {% if stats %}
-            <h2>Lies, damned lies, and statistics:</h2>
+            <h2>{% translate "Lies, damned lies, and statistics:" %}</h2>
             <ul>
                 {% for stat, value in stats.items %}
                     <li>{{ stat }}: {{ value|intcomma }}.</li>
@@ -54,7 +54,7 @@
 
         {% with user_obj.owned_feeds.all as feeds %}
             {% if feeds %}
-                <h2>Community feeds:</h2>
+                <h2>{% translate "Community feeds:" %}</h2>
                 <ul>
                     {% for f in feeds %}
                         <li><a href="{{ f.public_url }}">{{ f.title }}</a></li>

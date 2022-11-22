@@ -1,12 +1,13 @@
 {% extends "base_foundation.html" %}
+{% load i18n %}
 
 {% block og_title %}Log in{% endblock %}
 {% block og_description %}Log in to your account{% endblock %}
 
 {% block content %}
 
-<h2>Teams</h2>
-<p>Teams indicate who is actively contributing in certain areas.</p>
+<h2>{% translate "Teams" %}</h2>
+<p>{% translate "Teams indicate who is actively contributing in certain areas." %}</p>
 
 {% for team in teams %}
 <div class="section">

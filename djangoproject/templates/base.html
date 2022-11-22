@@ -1,4 +1,4 @@
-{% load static %}<!DOCTYPE html>
+{% load i18n static %}<!DOCTYPE html>
 <html lang="{% block html_language_code %}en{% endblock %}">
   <head>
     <meta charset="utf-8">
@@ -37,7 +37,7 @@
     <meta property="twitter:card" content="{% block twitter_card %}summary{% endblock %}">
     {% endblock og_tags %}
 
-    <title>{% block title %}The web framework for perfectionists with deadlines{% endblock %} | Django</title>
+    <title>{% block title %}{% translate "The web framework for perfectionists with deadlines" %}{% endblock %} | Django</title>
 
     <link rel="stylesheet" href="{% static "css/output.css" %}" >
     <script src="{% static "js/lib/webfontloader/webfontloader.js" %}"></script>
@@ -57,13 +57,16 @@
     </script>
     <script src="{% static "js/lib/modernizr.js" %}"></script>
     <script src="{% static "js/mod/switch-dark-mode.js" %}"></script>
+    <script src="{% url 'javascript-catalog' %}"></script>
     {% block head_extra %}{% endblock head_extra %}
   </head>
 
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
 
     {% include "includes/header.html" %}
-
+    
+    {% include "includes/language_selector.html" %}
+    
     <div class="copy-banner">
       <div class="container {% block header-classes %}{% endblock %}">
         {% block header %}{% endblock %}
@@ -88,7 +91,7 @@
         {% endblock %}
 
         {% block content %}{% endblock %}
-        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> {% translate "Back to Top" %}</a>
       </div>
 
       {% block content-related %}{% endblock %}

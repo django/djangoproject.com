@@ -1,13 +1,14 @@
 import datetime
 
 from django.contrib.redirects.models import Redirect
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils.safestring import SafeString
 
 from .models import Release, create_releases_up_to_1_5
 from .templatetags.release_notes import get_latest_micro_release, release_notes
 
 
+@override_settings(USE_I18N=False)
 class LegacyURLsTests(TestCase):
 
     fixtures = ['redirects-downloads']          # provided by the legacy app

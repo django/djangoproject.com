@@ -5,6 +5,7 @@ from django.core.cache import cache
 from django.forms.models import model_to_dict
 from django.http.response import Http404, JsonResponse
 from django.shortcuts import render
+from django.utils.translation import gettext_lazy as _
 
 from .models import Metric
 from .utils import generation_key
@@ -65,4 +66,4 @@ def _find_metric_or_404(slug):
             return MC.objects.get(slug=slug)
         except MC.DoesNotExist:
             continue
-    raise Http404('Could not find metric with slug %s' % slug)
+    raise Http404(_('Could not find metric with slug %s' % slug))

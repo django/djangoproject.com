@@ -11,8 +11,9 @@ define([
     MobileMenuExport.prototype = {
         init: function(){
             var self = this;
+			var label = gettext('Menu');
             self.menu.addClass('nav-menu-on');
-            self.button = $('<div class="menu-button"><i class="icon icon-reorder"></i><span>Menu</span></div>');
+            self.button = $('<div class="menu-button"><i class="icon icon-reorder"></i><span>' + label + '</span></div>');
             self.button.insertBefore(self.menuBtn);
             self.button.on( 'click', function(){
                 self.menu.toggleClass('active');

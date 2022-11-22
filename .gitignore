@@ -8,6 +8,8 @@ data
 *.db
 locale/*/LC_MESSAGES/django.mo
 */locale/*/LC_MESSAGES/django.mo
+locale/*/LC_MESSAGES/djangojs.mo
+*/locale/*/LC_MESSAGES/djangojs.mo
 .sass-cache/
 .coverage
 .tox

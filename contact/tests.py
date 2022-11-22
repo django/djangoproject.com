@@ -23,7 +23,7 @@ has_network_connection = check_network_connection()
 @override_settings(AKISMET_TESTING=True)
 class ContactFormTests(TestCase):
     def setUp(self):
-        self.url = '/contact/foundation/'
+        self.url = '/en/contact/foundation/'
 
     @override_settings(AKISMET_API_KEY='')  # Disable Akismet in tests
     def test_invalid_email(self):
@@ -45,7 +45,7 @@ class ContactFormTests(TestCase):
             'body': 'Hello, World!',
             'captcha': 'TESTING',
         })
-        self.assertRedirects(response, '/contact/sent/')
+        self.assertRedirects(response, '/en/contact/sent/')
         self.assertEqual(mail.outbox[-1].subject, '[Contact form] Hello')
 
     @skipIf(not has_network_connection, 'Requires a network connection')
@@ -78,7 +78,7 @@ class ContactFormTests(TestCase):
             'body': 'Hello, World!',
             'captcha': 'TESTING',
         })
-        self.assertRedirects(response, '/contact/sent/')
+        self.assertRedirects(response, '/en/contact/sent/')
         self.assertEqual(mail.outbox[-1].subject, '[Contact form] Hello')
 
     @skipIf(not has_network_connection, 'Requires a network connection')

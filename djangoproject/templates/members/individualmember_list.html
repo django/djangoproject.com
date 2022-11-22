@@ -2,14 +2,14 @@
 {% load i18n %}
 
 {% block content %}
-  <h1>{% trans "Individual members" %}</h1>
+  <h1>{% translate "Individual members" %}</h1>
   <p>
-    {% blocktrans %}
+    {% blocktranslate trimmed %}
       The following are Individual Members of the Django Software Foundation. Individual Members
       are appointed by the DSF in recognition of their service to the Django community. If you
       know someone who you think should be considered for Individual Membership, please
-    {% endblocktrans %}
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5lbWxAO-sylEEjHVKBNIpmHlhdJRf0_LCo8glnLUWd-Q2Sw/viewform?usp=sf_link">{% trans "fill out this form" %}</a>.
+    {% endblocktranslate %}
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5lbWxAO-sylEEjHVKBNIpmHlhdJRf0_LCo8glnLUWd-Q2Sw/viewform?usp=sf_link">{% translate "fill out this form" %}</a>.
   </p>
   <ul>
     {% for member in members %}
@@ -18,8 +18,8 @@
   </ul>
 
   {% if former_members %}
-    <h2>{% trans "Former members" %}</h2>
-    <p>{% trans "The following are former Individual Members of the DSF." %}</p>
+    <h2>{% translate "Former members" %}</h2>
+    <p>{% translate "The following are former Individual Members of the DSF." %}</p>
 
     <ul>
       {% for member in former_members %}

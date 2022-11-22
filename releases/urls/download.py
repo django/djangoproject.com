@@ -1,8 +1,7 @@
-from django.urls import path, re_path
+from django.urls import re_path
 
-from .views import index, redirect
+from ..views import redirect
 
 urlpatterns = [
-    path('', index, name='download'),
     re_path('^([0-9a-z_.-]+)/(tarball|checksum|egg)/$', redirect, name='download-redirect'),
 ]

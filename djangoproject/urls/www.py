@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.contenttypes import views as contenttypes_views
@@ -7,6 +8,7 @@ from django.contrib.sitemaps import views as sitemap_views
 from django.urls import include, path, re_path
 from django.views.decorators.cache import cache_page
 from django.views.generic import RedirectView, TemplateView
+from django.views.i18n import JavaScriptCatalog
 from django.views.static import serve
 
 from accounts import views as account_views
@@ -15,6 +17,7 @@ from aggregator.feeds import (
 )
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
+from djangoproject import views as project_views
 from foundation.views import CoreDevelopers
 
 admin.autodiscover()
@@ -25,8 +28,10 @@ sitemaps = {
 }
 
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path('', TemplateView.as_view(template_name='homepage.html'), name="homepage"),
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    path('change-language/<str:lang_code>/', project_views.change_language, name="change_language"),
     path('start/overview/', TemplateView.as_view(template_name='overview.html'), name="overview"),
     path('start/', TemplateView.as_view(template_name='start.html'), name="start"),
     # to work around a permanent redirect stored in the db that existed before the redesign:
@@ -80,9 +85,13 @@ urlpatterns = [
 
     path('sitemap.xml', cache_page(60 * 60 * 6)(sitemap_views.sitemap), {'sitemaps': sitemaps}),
     path('weblog/', include('blog.urls')),
-    path('download/', include('releases.urls')),
+    path('download/', include('releases.urls.i18n_paths')),
     path('svntogit/', include('svntogit.urls')),
-    path('', include('legacy.urls')),
+)
+
+urlpatterns += [
+    path('download/', include('releases.urls.download')),
+    path('', include('legacy.urls'))  # Exclude from i18n patterns
 ]
 
 if settings.DEBUG:
