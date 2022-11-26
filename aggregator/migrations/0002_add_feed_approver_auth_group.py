@@ -6,19 +6,23 @@ from django.db import migrations
 
 
 def forwards_func(apps, schema_editor):
-    if schema_editor.connection.alias == 'default':
-        apps.get_model('auth', 'Group').objects.create(name=settings.FEED_APPROVERS_GROUP_NAME)
+    if schema_editor.connection.alias == "default":
+        apps.get_model("auth", "Group").objects.create(
+            name=settings.FEED_APPROVERS_GROUP_NAME
+        )
 
 
 def reverse_func(apps, schema_editor):
-    if schema_editor.connection.alias == 'default':
-        apps.get_model('auth', 'Group').objects.get(name=settings.FEED_APPROVERS_GROUP_NAME).delete()
+    if schema_editor.connection.alias == "default":
+        apps.get_model("auth", "Group").objects.get(
+            name=settings.FEED_APPROVERS_GROUP_NAME
+        ).delete()
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('aggregator', '0001_initial'),
+        ("aggregator", "0001_initial"),
     ]
 
     operations = [

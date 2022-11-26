@@ -5,4 +5,4 @@ from .models import Revision
 
 class TestModels(TestCase):
     def test_router(self):
-        self.assertEqual(Revision.objects.db, 'trac')
+        self.assertEqual(Revision.objects.db, "trac")

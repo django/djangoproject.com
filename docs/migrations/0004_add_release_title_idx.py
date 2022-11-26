@@ -8,12 +8,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('docs', '0003_auto_20171107_1513'),
+        ("docs", "0003_auto_20171107_1513"),
     ]
 
     operations = [
         migrations.AddIndex(
-            model_name='document',
-            index=models.Index(fields=['release', 'title'], name='document_release_title_idx'),
+            model_name="document",
+            index=models.Index(
+                fields=["release", "title"], name="document_release_title_idx"
+            ),
         ),
     ]

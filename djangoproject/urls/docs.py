@@ -12,11 +12,14 @@ from docs.views import sitemap_index
 
 class Sitemaps(MutableMapping):
     """Lazy dict to allow for later additions to DocumentRelease languages."""
+
     _data = {}
 
     def __iter__(self):
         return iter(
-            DocumentRelease.objects.values_list('lang', flat=True).distinct().order_by('lang')
+            DocumentRelease.objects.values_list("lang", flat=True)
+            .distinct()
+            .order_by("lang")
         )
 
     def __getitem__(self, key):
@@ -39,9 +42,20 @@ class Sitemaps(MutableMapping):
 sitemaps = Sitemaps()
 
 urlpatterns = docs_urlpatterns + [
-    path('sitemap.xml', sitemap_index, {'sitemaps': sitemaps}),
-    path('sitemap-<section>.xml', sitemap, {'sitemaps': sitemaps}, name='document-sitemap'),
-    path('google79eabba6bf6fd6d3.html', lambda req: HttpResponse('google-site-verification: google79eabba6bf6fd6d3.html')),
-    # This just exists to make sure we can proof that the error pages work under both hostnames.
-    path('', include('legacy.urls')),
+    path("sitemap.xml", sitemap_index, {"sitemaps": sitemaps}),
+    path(
+        "sitemap-<section>.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="document-sitemap",
+    ),
+    path(
+        "google79eabba6bf6fd6d3.html",
+        lambda req: HttpResponse(
+            "google-site-verification: google79eabba6bf6fd6d3.html"
+        ),
+    ),
+    # This just exists to make sure we can proof that the error pages work
+    # under both hostnames.
+    path("", include("legacy.urls")),
 ]

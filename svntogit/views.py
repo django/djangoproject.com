@@ -10,5 +10,5 @@ def redirect_to_github(request, svn_revision):
         git_changeset = None
     if git_changeset is None:
         raise Http404
-    github_url = 'https://github.com/django/django/commit/%s' % git_changeset
+    github_url = "https://github.com/django/django/commit/%s" % git_changeset
     return HttpResponsePermanentRedirect(github_url)

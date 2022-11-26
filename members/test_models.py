@@ -3,25 +3,27 @@ from datetime import date, timedelta
 from django.test import TestCase
 
 from members.models import (
-    GOLD_MEMBERSHIP, PLATINUM_MEMBERSHIP, SILVER_MEMBERSHIP, CorporateMember,
-    IndividualMember, Team,
+    GOLD_MEMBERSHIP,
+    PLATINUM_MEMBERSHIP,
+    SILVER_MEMBERSHIP,
+    CorporateMember,
+    IndividualMember,
+    Team,
 )
 
 
 class IndividualMemberTests(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         cls.member = IndividualMember.objects.create(
-            name='DjangoDeveloper',
-            email='developer@example.com'
+            name="DjangoDeveloper", email="developer@example.com"
         )
 
     def setUp(self):
         self.member.refresh_from_db()
 
     def test_str(self):
-        self.assertEqual(str(self.member), 'DjangoDeveloper')
+        self.assertEqual(str(self.member), "DjangoDeveloper")
 
     def test_member_since_should_have_default(self):
         self.assertEqual(IndividualMember().member_since, date.today())
@@ -39,10 +41,10 @@ class CorporateMemberTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.member = CorporateMember.objects.create(
-            display_name='Corporation',
-            billing_name='foo',
-            billing_email='c@example.com',
-            contact_email='c@example.com',
+            display_name="Corporation",
+            billing_name="foo",
+            billing_email="c@example.com",
+            contact_email="c@example.com",
             membership_level=SILVER_MEMBERSHIP,
         )
 
@@ -50,7 +52,7 @@ class CorporateMemberTests(TestCase):
         self.member.refresh_from_db()
 
     def test_str(self):
-        self.assertEqual(str(self.member), 'Corporation')
+        self.assertEqual(str(self.member), "Corporation")
 
     def test_is_invoiced(self):
         # No invoices == not invoiced.
@@ -86,16 +88,21 @@ class CorporateMemberTests(TestCase):
     def test_manager_by_membership_level(self):
         self.assertEqual(CorporateMember.objects.by_membership_level(), {})
         self.member.invoice_set.create(amount=500, expiration_date=self.tomorrow)
-        self.assertEqual(CorporateMember.objects.by_membership_level(), {'silver': [self.member]})
+        self.assertEqual(
+            CorporateMember.objects.by_membership_level(), {"silver": [self.member]}
+        )
         self.member.membership_level = GOLD_MEMBERSHIP
         self.member.save()
-        self.assertEqual(CorporateMember.objects.by_membership_level(), {'gold': [self.member]})
+        self.assertEqual(
+            CorporateMember.objects.by_membership_level(), {"gold": [self.member]}
+        )
         self.member.membership_level = PLATINUM_MEMBERSHIP
         self.member.save()
-        self.assertEqual(CorporateMember.objects.by_membership_level(), {'platinum': [self.member]})
+        self.assertEqual(
+            CorporateMember.objects.by_membership_level(), {"platinum": [self.member]}
+        )
 
 
 class TeamTests(TestCase):
-
     def test_str(self):
-        self.assertEqual(str(Team(name='Ops')), 'Ops')
+        self.assertEqual(str(Team(name="Ops")), "Ops")

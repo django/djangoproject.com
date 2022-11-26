@@ -13,17 +13,17 @@ from ..utils import get_doc_path, get_doc_root
 register = template.Library()
 
 
-@register.inclusion_tag('docs/search_form.html', takes_context=True)
+@register.inclusion_tag("docs/search_form.html", takes_context=True)
 def search_form(context):
-    request = context['request']
+    request = context["request"]
     release = DocumentRelease.objects.get_by_version_and_lang(
-        context['version'],
-        context['lang'],
+        context["version"],
+        context["lang"],
     )
     return {
-        'form': DocSearchForm(request.GET, release=release),
-        'version': context['version'],
-        'lang': context['lang'],
+        "form": DocSearchForm(request.GET, release=release),
+        "version": context["version"],
+        "lang": context["lang"],
     }
 
 
@@ -34,11 +34,11 @@ def get_all_doc_versions(context, url=None):
 
     Usage: {% get_all_doc_versions <url> as "varname" %}
     """
-    lang = context.get('lang', 'en')
+    lang = context.get("lang", "en")
     versions = []
 
     # Look for each version of the docs.
-    for release in DocumentRelease.objects.select_related('release').filter(lang=lang):
+    for release in DocumentRelease.objects.select_related("release").filter(lang=lang):
         version_root = get_doc_root(release.lang, release.version)
         if version_root.exists():
             doc_path = get_doc_path(version_root, url)
@@ -46,12 +46,11 @@ def get_all_doc_versions(context, url=None):
                 versions.append(release.version)
 
     # Save the versions into the context
-    versions = sorted(StrictVersion(x) for x in versions if x != 'dev')
-    return [str(x) for x in versions] + ['dev']
+    versions = sorted(StrictVersion(x) for x in versions if x != "dev")
+    return [str(x) for x in versions] + ["dev"]
 
 
 class PygmentsNode(template.Node):
-
     def __init__(self, lexer_name, nodelist):
         self.nodelist = nodelist
         self.lexer_name = lexer_name
@@ -64,7 +63,7 @@ class PygmentsNode(template.Node):
         return mark_safe(output)
 
 
-@register.tag(name='pygment')
+@register.tag(name="pygment")
 def do_pygments(parser, token):
     """
     Template tag that uses pygments to highlight code examples.
@@ -80,6 +79,6 @@ def do_pygments(parser, token):
 
     """
     tokens = token.split_contents()
-    nodelist = parser.parse(('endpygment',))
+    nodelist = parser.parse(("endpygment",))
     parser.delete_first_token()
     return PygmentsNode(parser.compile_filter(tokens[1]), nodelist)

@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class FundraisingConfig(AppConfig):
-    name = 'fundraising'
+    name = "fundraising"
     verbose_name = _("Fundraising")
 
     def ready(self):
