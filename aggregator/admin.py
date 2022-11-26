@@ -27,7 +27,7 @@ admin.site.register(
     list_filter=["feed_type", "approval_status"],
     ordering=["title"],
     search_fields=["title", "public_url"],
-    raw_id_fields=['owner'],
+    raw_id_fields=["owner"],
     list_editable=["approval_status"],
     list_per_page=500,
     actions=[mark_approved, mark_denied],
@@ -35,13 +35,13 @@ admin.site.register(
 
 admin.site.register(
     FeedItem,
-    list_display=['title', 'feed', 'date_modified'],
-    list_filter=['feed'],
-    search_fields=['feed__title', 'feed__public_url', 'title'],
-    date_heirarchy=['date_modified'],
+    list_display=["title", "feed", "date_modified"],
+    list_filter=["feed"],
+    search_fields=["feed__title", "feed__public_url", "title"],
+    date_heirarchy=["date_modified"],
 )
 
 admin.site.register(
     FeedType,
-    prepopulated_fields={'slug': ('name',)},
+    prepopulated_fields={"slug": ("name",)},
 )

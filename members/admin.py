@@ -11,13 +11,13 @@ from members.models import CorporateMember, IndividualMember, Invoice, Team
 @admin.register(IndividualMember)
 class IndividualMemberAdmin(admin.ModelAdmin):
     list_display = [
-        'name',
-        'email',
-        'is_active',
-        'member_since',
-        'member_until',
+        "name",
+        "email",
+        "is_active",
+        "member_since",
+        "member_until",
     ]
-    search_fields = ['name']
+    search_fields = ["name"]
 
 
 class InvoiceInline(admin.TabularInline):
@@ -28,28 +28,29 @@ class StatusFilter(admin.SimpleListFilter):
     """
     Display only active members in the changelist page, by default.
     """
-    title = 'Status'
-    parameter_name = 'status'
+
+    title = "Status"
+    parameter_name = "status"
 
     def lookups(self, request, model_admin):
         return (
-            (None, 'Active'),
-            ('inactive', 'Inactive'),
-            ('all', 'All'),
+            (None, "Active"),
+            ("inactive", "Inactive"),
+            ("all", "All"),
         )
 
     def choices(self, cl):
         for lookup, title in self.lookup_choices:
             yield {
-                'selected': self.value() == lookup,
-                'query_string': cl.get_query_string({self.parameter_name: lookup}, []),
-                'display': title,
+                "selected": self.value() == lookup,
+                "query_string": cl.get_query_string({self.parameter_name: lookup}, []),
+                "display": title,
             }
 
     def queryset(self, request, queryset):
         if self.value() is None:
             return queryset.filter(inactive=False)
-        elif self.value() == 'inactive':
+        elif self.value() == "inactive":
             return queryset.filter(inactive=True)
         else:
             return queryset
@@ -58,26 +59,26 @@ class StatusFilter(admin.SimpleListFilter):
 @admin.register(CorporateMember)
 class CorporateMemberAdmin(admin.ModelAdmin):
     list_display = [
-        'display_name',
-        'membership_expires',
-        '_is_invoiced',
-        '_is_paid',
-        'contact_email',
-        'membership_level',
-        'renewal_link',
+        "display_name",
+        "membership_expires",
+        "_is_invoiced",
+        "_is_paid",
+        "contact_email",
+        "membership_level",
+        "renewal_link",
     ]
-    list_filter = [StatusFilter, 'membership_level']
+    list_filter = [StatusFilter, "membership_level"]
     inlines = [InvoiceInline]
-    search_fields = ['display_name', 'billing_name']
+    search_fields = ["display_name", "billing_name"]
 
     def get_queryset(self, request):
-        return super().get_queryset(request).prefetch_related('invoice_set')
+        return super().get_queryset(request).prefetch_related("invoice_set")
 
     def renewal_link(self, obj):
         return format_html(
             '<a href="{}"><img src="{}" alt="renewal link" />',
             obj.get_renewal_link(),
-            static('admin/img/icon-changelink.svg'),
+            static("admin/img/icon-changelink.svg"),
         )
 
     def membership_expires(self, obj):
@@ -86,13 +87,13 @@ class CorporateMemberAdmin(admin.ModelAdmin):
             today = date.today()
             # Expired.
             if expiry_date < today:
-                color = 'red'
+                color = "red"
             # Expires within 30 days.
             elif expiry_date < today + timedelta(days=30):
-                color = 'orange'
+                color = "orange"
             # Expires more than 30 days from today.
             else:
-                color = 'green'
+                color = "green"
             expiry_date = format_html(
                 '<span style="color: {}">{}</span>',
                 color,
@@ -103,5 +104,5 @@ class CorporateMemberAdmin(admin.ModelAdmin):
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    filter_horizontal = ['members']
-    prepopulated_fields = {'slug': ('name',)}
+    filter_horizontal = ["members"]
+    prepopulated_fields = {"slug": ("name",)}

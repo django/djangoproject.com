@@ -8,7 +8,10 @@ from pathlib import Path
 from django.conf import settings
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import (
-    SearchHeadline, SearchQuery, SearchRank, SearchVectorField,
+    SearchHeadline,
+    SearchQuery,
+    SearchRank,
+    SearchVectorField,
     TrigramSimilarity,
 )
 from django.core.cache import cache
@@ -23,16 +26,16 @@ from releases.models import Release
 
 from . import utils
 from .search import (
-    DEFAULT_TEXT_SEARCH_CONFIG, DOCUMENT_SEARCH_VECTOR,
+    DEFAULT_TEXT_SEARCH_CONFIG,
+    DOCUMENT_SEARCH_VECTOR,
     TSEARCH_CONFIG_LANGUAGES,
 )
 
 
 class DocumentReleaseManager(models.Manager):
-
-    def current(self, lang='en'):
+    def current(self, lang="en"):
         current = self.get(is_default=True)
-        if lang != 'en':
+        if lang != "en":
             try:
                 return self.get(lang=lang, release=current.release)
             except DocumentRelease.DoesNotExist:
@@ -45,7 +48,7 @@ class DocumentReleaseManager(models.Manager):
             try:
                 current_version = self.current().version
             except DocumentRelease.DoesNotExist:
-                current_version = 'dev'
+                current_version = "dev"
             cache.set(
                 DocumentRelease.DEFAULT_CACHE_KEY,
                 current_version,
@@ -54,26 +57,29 @@ class DocumentReleaseManager(models.Manager):
         return current_version
 
     def by_version(self, version):
-        return self.filter(**{'release__isnull': True} if version == 'dev' else {'release': version})
+        return self.filter(
+            **{"release__isnull": True} if version == "dev" else {"release": version}
+        )
 
     def get_by_version_and_lang(self, version, lang):
         return self.by_version(version).get(lang=lang)
 
     def get_available_languages_by_version(self, version):
-        return self.by_version(version).values_list('lang', flat=True).order_by('lang')
+        return self.by_version(version).values_list("lang", flat=True).order_by("lang")
 
 
 class DocumentRelease(models.Model):
     """
     A "release" of documentation -- i.e. English for v1.2.
     """
+
     DEFAULT_CACHE_KEY = "%s_docs_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
 
-    lang = models.CharField(max_length=7, choices=settings.LANGUAGES, default='en')
+    lang = models.CharField(max_length=7, choices=settings.LANGUAGES, default="en")
     release = models.ForeignKey(
         Release,
         null=True,
-        limit_choices_to={'status': 'f'},
+        limit_choices_to={"status": "f"},
         on_delete=models.CASCADE,
     )
     is_default = models.BooleanField(default=False)
@@ -81,17 +87,17 @@ class DocumentRelease(models.Model):
     objects = DocumentReleaseManager()
 
     class Meta:
-        unique_together = ('lang', 'release')
+        unique_together = ("lang", "release")
 
     def __str__(self):
         return "%s/%s" % (self.lang, self.version)
 
     def get_absolute_url(self):
         kwargs = {
-            'lang': self.lang,
-            'version': self.version,
+            "lang": self.lang,
+            "version": self.version,
         }
-        return reverse('document-index', host='docs', kwargs=kwargs)
+        return reverse("document-index", host="docs", kwargs=kwargs)
 
     def save(self, *args, **kwargs):
         # There can be only one. Default, that is.
@@ -106,7 +112,7 @@ class DocumentRelease(models.Model):
 
     @property
     def version(self):
-        return 'dev' if self.release is None else self.release.version
+        return "dev" if self.release is None else self.release.version
 
     @property
     def human_version(self):
@@ -127,12 +133,13 @@ class DocumentRelease(models.Model):
     def is_supported(self):
         if self.release is None:
             return True
-        latest_release = (Release.objects
-                                 .filter(major=self.release.major,
-                                         minor=self.release.minor,
-                                         status='f')
-                                 .order_by('-micro')
-                                 .first())
+        latest_release = (
+            Release.objects.filter(
+                major=self.release.major, minor=self.release.minor, status="f"
+            )
+            .order_by("-micro")
+            .first()
+        )
         if latest_release is None:
             return True
         eol_date = latest_release.eol_date
@@ -140,9 +147,9 @@ class DocumentRelease(models.Model):
 
     @property
     def scm_url(self):
-        url = 'https://github.com/django/django.git'
+        url = "https://github.com/django/django.git"
         if not self.is_dev:
-            url += '@stable/' + self.version + '.x'
+            url += "@stable/" + self.version + ".x"
         return url
 
     @transaction.atomic
@@ -155,41 +162,50 @@ class DocumentRelease(models.Model):
         self.documents.all().delete()
 
         # Read excluded paths from robots.docs.txt.
-        robots_path = settings.BASE_DIR.joinpath('djangoproject', 'static', 'robots.docs.txt')
-        with open(str(robots_path), 'r') as fh:
+        robots_path = settings.BASE_DIR.joinpath(
+            "djangoproject", "static", "robots.docs.txt"
+        )
+        with open(str(robots_path), "r") as fh:
             excluded_paths = [
-                line.strip().split('/')[-1] for line in fh
+                line.strip().split("/")[-1]
+                for line in fh
                 if line.startswith("Disallow: /%s/%s/" % (self.lang, self.release_id))
             ]
 
         for document in decoded_documents:
-            if ('body' not in document or 'title' not in document or
-                    document['current_page_name'].split('/')[0] in excluded_paths):
-                # We don't care about indexing documents with no body or title, or partially translated
+            if (
+                "body" not in document
+                or "title" not in document
+                or document["current_page_name"].split("/")[0] in excluded_paths
+            ):
+                # We don't care about indexing documents with no body or title,
+                # or partially translated
                 continue
 
-            document_path = _clean_document_path(document['current_page_name'])
-            document['slug'] = Path(document_path).parts[-1]
-            document['parents'] = ' '.join(Path(document_path).parts[:-1])
+            document_path = _clean_document_path(document["current_page_name"])
+            document["slug"] = Path(document_path).parts[-1]
+            document["parents"] = " ".join(Path(document_path).parts[:-1])
             Document.objects.create(
                 release=self,
                 path=document_path,
-                title=html.unescape(strip_tags(document['title'])),
+                title=html.unescape(strip_tags(document["title"])),
                 metadata=document,
-                config=TSEARCH_CONFIG_LANGUAGES.get(self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG),
+                config=TSEARCH_CONFIG_LANGUAGES.get(
+                    self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG
+                ),
             )
         for document in self.documents.all():
-            document.metadata['breadcrumbs'] = list(
-                Document.objects.breadcrumbs(document).values('title', 'path')
+            document.metadata["breadcrumbs"] = list(
+                Document.objects.breadcrumbs(document).values("title", "path")
             )
-            document.save(update_fields=('metadata',))
+            document.save(update_fields=("metadata",))
 
 
 def _clean_document_path(path):
     # We have to be a bit careful to reverse-engineer the correct
     # relative path component, especially for "index" documents,
     # otherwise the search results will be incorrect.
-    if path.endswith('/index'):
+    if path.endswith("/index"):
         path = path[:-6]
 
     return path
@@ -198,30 +214,31 @@ def _clean_document_path(path):
 def document_url(doc):
     if doc.path:
         kwargs = {
-            'lang': doc.release.lang,
-            'version': doc.release.version,
-            'url': doc.path,
+            "lang": doc.release.lang,
+            "version": doc.release.version,
+            "url": doc.path,
         }
-        return reverse('document-detail', host='docs', kwargs=kwargs)
+        return reverse("document-detail", host="docs", kwargs=kwargs)
     else:
         kwargs = {
-            'lang': doc.release.lang,
-            'version': doc.release.version,
+            "lang": doc.release.lang,
+            "version": doc.release.version,
         }
-        return reverse('document-index', host='docs', kwargs=kwargs)
+        return reverse("document-index", host="docs", kwargs=kwargs)
 
 
 class DocumentManager(models.Manager):
-
     def breadcrumbs(self, document):
         # get an ascending list of parent paths except the root path ('.')
         parent_paths = list(Path(document.path).parents)[:-1]
         if parent_paths:
             or_queries = [models.Q(path=str(path)) for path in parent_paths]
-            return (self.filter(reduce(operator.or_, or_queries))
-                        .filter(release_id=document.release_id)
-                        .exclude(pk=document.pk)
-                        .order_by('path'))
+            return (
+                self.filter(reduce(operator.or_, or_queries))
+                .filter(release_id=document.release_id)
+                .exclude(pk=document.pk)
+                .order_by("path")
+            )
         else:
             return self.none()
 
@@ -229,34 +246,47 @@ class DocumentManager(models.Manager):
         """Use full-text search to return documents matching query_text."""
         query_text = query_text.strip()
         if query_text:
-            search_query = SearchQuery(query_text, config=models.F('config'), search_type='websearch')
-            search_rank = SearchRank(models.F('search'), search_query)
-            similarity = TrigramSimilarity('title', query_text)
-            return self.get_queryset().prefetch_related(
-                Prefetch('release', queryset=DocumentRelease.objects.only('lang', 'release')),
-                Prefetch('release__release', queryset=Release.objects.only('version')),
-            ).filter(
-                release_id=release.id,
-                search=search_query,
-            ).annotate(
-                rank=search_rank + similarity,
-                headline=SearchHeadline(
-                    "title",
-                    search_query,
-                    start_sel="<mark>",
-                    stop_sel="</mark>",
-                ),
-                highlight=SearchHeadline(
-                    KeyTextTransform("body", "metadata"),
-                    search_query,
-                    start_sel="<mark>",
-                    stop_sel="</mark>",
-                ),
-                breadcrumbs=KeyTextTransform("breadcrumbs", "metadata"),
-            ).order_by(
-                '-rank'
-            ).only(
-                'path', 'release',
+            search_query = SearchQuery(
+                query_text, config=models.F("config"), search_type="websearch"
+            )
+            search_rank = SearchRank(models.F("search"), search_query)
+            similarity = TrigramSimilarity("title", query_text)
+            return (
+                self.get_queryset()
+                .prefetch_related(
+                    Prefetch(
+                        "release",
+                        queryset=DocumentRelease.objects.only("lang", "release"),
+                    ),
+                    Prefetch(
+                        "release__release", queryset=Release.objects.only("version")
+                    ),
+                )
+                .filter(
+                    release_id=release.id,
+                    search=search_query,
+                )
+                .annotate(
+                    rank=search_rank + similarity,
+                    headline=SearchHeadline(
+                        "title",
+                        search_query,
+                        start_sel="<mark>",
+                        stop_sel="</mark>",
+                    ),
+                    highlight=SearchHeadline(
+                        KeyTextTransform("body", "metadata"),
+                        search_query,
+                        start_sel="<mark>",
+                        stop_sel="</mark>",
+                    ),
+                    breadcrumbs=KeyTextTransform("breadcrumbs", "metadata"),
+                )
+                .order_by("-rank")
+                .only(
+                    "path",
+                    "release",
+                )
             )
         else:
             return self.get_queryset().none()
@@ -273,8 +303,8 @@ class DocumentManager(models.Manager):
         combine with full text search) and the big flattened index of the CBVs.
         """
         return Document.objects.exclude(
-            Q(path__startswith="_modules") |
-            Q(path__startswith="ref/class-based-views/flattened-index")
+            Q(path__startswith="_modules")
+            | Q(path__startswith="ref/class-based-views/flattened-index")
         ).update(search=DOCUMENT_SEARCH_VECTOR)
 
 
@@ -282,9 +312,10 @@ class Document(models.Model):
     """
     An individual document. Used mainly as a hook point for the search.
     """
+
     release = models.ForeignKey(
         DocumentRelease,
-        related_name='documents',
+        related_name="documents",
         on_delete=models.CASCADE,
     )
     path = models.CharField(max_length=500)
@@ -297,10 +328,12 @@ class Document(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['release', 'title'], name='document_release_title_idx'),
-            GinIndex(fields=['search']),
+            models.Index(
+                fields=["release", "title"], name="document_release_title_idx"
+            ),
+            GinIndex(fields=["search"]),
         ]
-        unique_together = ('release', 'path')
+        unique_together = ("release", "path")
 
     def __str__(self):
         return "/".join([self.release.lang, self.release.version, self.path])
@@ -310,7 +343,7 @@ class Document(models.Model):
 
     @cached_property
     def content_raw(self):
-        return strip_tags(html.unescape(self.metadata['content']).replace(u'¶', ''))
+        return strip_tags(html.unescape(self.metadata["content"]).replace("¶", ""))
 
     @cached_property
     def root(self):
@@ -325,4 +358,4 @@ class Document(models.Model):
         """The document's body"""
         with open(str(self.full_path)) as fp:
             doc = json.load(fp)
-        return doc['body']
+        return doc["body"]

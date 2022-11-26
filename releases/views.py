@@ -22,13 +22,13 @@ def index(request):
     unsupported = Release.objects.unsupported()
 
     context = {
-        'current': current,
-        'previous': previous,
-        'lts': lts,
-        'unsupported': unsupported,
-        'preview': preview,
+        "current": current,
+        "previous": previous,
+        "lts": lts,
+        "unsupported": unsupported,
+        "preview": preview,
     }
-    return render(request, 'releases/download.html', context)
+    return render(request, "releases/download.html", context)
 
 
 def redirect(request, version, kind):

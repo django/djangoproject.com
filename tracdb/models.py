@@ -60,6 +60,7 @@ class time_property:
     Like the rest of this module this is far from perfect -- no setters, for
     example! That's good enough for now.
     """
+
     def __init__(self, fieldname):
         self.fieldname = fieldname
 
@@ -74,16 +75,16 @@ class Ticket(models.Model):
     id = models.IntegerField(primary_key=True)
     type = models.TextField()
 
-    _time = models.BigIntegerField(db_column='time')
-    time = time_property('_time')
+    _time = models.BigIntegerField(db_column="time")
+    time = time_property("_time")
 
-    _changetime = models.BigIntegerField(db_column='changetime')
-    changetime = time_property('_changetime')
+    _changetime = models.BigIntegerField(db_column="changetime")
+    changetime = time_property("_changetime")
 
     component = models.ForeignKey(
-        'Component',
-        related_name='tickets',
-        db_column='component',
+        "Component",
+        related_name="tickets",
+        db_column="component",
         on_delete=models.DO_NOTHING,
     )
     severity = models.TextField()
@@ -91,15 +92,15 @@ class Ticket(models.Model):
     reporter = models.TextField()
     cc = models.TextField()
     version = models.ForeignKey(
-        'Version',
-        related_name='tickets',
-        db_column='version',
+        "Version",
+        related_name="tickets",
+        db_column="version",
         on_delete=models.DO_NOTHING,
     )
     milestone = models.ForeignKey(
-        'Milestone',
-        related_name='tickets',
-        db_column='milestone',
+        "Milestone",
+        related_name="tickets",
+        db_column="milestone",
         on_delete=models.DO_NOTHING,
     )
     priority = models.TextField()
@@ -110,7 +111,7 @@ class Ticket(models.Model):
     keywords = models.TextField()
 
     class Meta:
-        db_table = 'ticket'
+        db_table = "ticket"
         managed = False
 
     def __str__(self):
@@ -124,8 +125,8 @@ class Ticket(models.Model):
         # Also notice that *nasty* mapping of Trac's "booleanish" things to
         # real booleans. This can fail in a bunch of ways, but not in our
         # particular install.
-        for name, value in self.custom_fields.values_list('name', 'value'):
-            if value in ('0', '1'):
+        for name, value in self.custom_fields.values_list("name", "value"):
+            if value in ("0", "1"):
                 value = bool(int(value))
             setattr(self, name, value)
 
@@ -133,8 +134,8 @@ class Ticket(models.Model):
 class TicketCustom(models.Model):
     ticket = models.ForeignKey(
         Ticket,
-        related_name='custom_fields',
-        db_column='ticket',
+        related_name="custom_fields",
+        db_column="ticket",
         primary_key=True,
         on_delete=models.DO_NOTHING,
     )
@@ -142,7 +143,7 @@ class TicketCustom(models.Model):
     value = models.TextField()
 
     class Meta:
-        db_table = 'ticket_custom'
+        db_table = "ticket_custom"
         managed = False
 
     def __str__(self):
@@ -152,8 +153,8 @@ class TicketCustom(models.Model):
 class TicketChange(models.Model):
     ticket = models.ForeignKey(
         Ticket,
-        related_name='changes',
-        db_column='ticket',
+        related_name="changes",
+        db_column="ticket",
         primary_key=True,
         on_delete=models.DO_NOTHING,
     )
@@ -162,13 +163,13 @@ class TicketChange(models.Model):
     oldvalue = models.TextField()
     newvalue = models.TextField()
 
-    _time = models.BigIntegerField(db_column='time')
-    time = time_property('_time')
+    _time = models.BigIntegerField(db_column="time")
+    time = time_property("_time")
 
     class Meta:
-        db_table = 'ticket_change'
+        db_table = "ticket_change"
         managed = False
-        ordering = ['_time']
+        ordering = ["_time"]
 
     def __str__(self):
         return "#%s: changed %s" % (self.ticket.id, self.field)
@@ -180,7 +181,7 @@ class Component(models.Model):
     description = models.TextField()
 
     class Meta:
-        db_table = 'component'
+        db_table = "component"
         managed = False
 
     def __str__(self):
@@ -191,11 +192,11 @@ class Version(models.Model):
     name = models.TextField(primary_key=True)
     description = models.TextField()
 
-    _time = models.BigIntegerField(db_column='time')
-    time = time_property('_time')
+    _time = models.BigIntegerField(db_column="time")
+    time = time_property("_time")
 
     class Meta:
-        db_table = 'version'
+        db_table = "version"
         managed = False
 
     def __str__(self):
@@ -206,14 +207,14 @@ class Milestone(models.Model):
     name = models.TextField(primary_key=True)
     description = models.TextField()
 
-    _due = models.BigIntegerField(db_column='_due')
-    due = time_property('due')
+    _due = models.BigIntegerField(db_column="_due")
+    due = time_property("due")
 
-    _completed = models.BigIntegerField(db_column='_completed')
-    completed = time_property('completed')
+    _completed = models.BigIntegerField(db_column="_completed")
+    completed = time_property("completed")
 
     class Meta:
-        db_table = 'milestone'
+        db_table = "milestone"
         managed = False
 
     def __str__(self):
@@ -225,6 +226,7 @@ class SingleRepoRevisionManager(models.Manager):
     Forces Revision to only query against a single repo, thus making
     Revision.rev behave something like a primary key.
     """
+
     def __init__(self, repo_id):
         self.repo_id = repo_id
         super().__init__()
@@ -241,8 +243,8 @@ class Revision(models.Model):
     repos = models.IntegerField()
     rev = models.TextField(primary_key=True)
 
-    _time = models.BigIntegerField(db_column='time')
-    time = time_property('time')
+    _time = models.BigIntegerField(db_column="time")
+    time = time_property("time")
 
     author = models.TextField()
     message = models.TextField()
@@ -250,11 +252,11 @@ class Revision(models.Model):
     objects = SingleRepoRevisionManager(repo_id=SINGLE_REPO_ID)
 
     class Meta:
-        db_table = 'revision'
+        db_table = "revision"
         managed = False
 
     def __str__(self):
-        return '[%s] %s' % (self.rev, self.message.split('\n', 1)[0])
+        return "[%s] %s" % (self.rev, self.message.split("\n", 1)[0])
 
 
 # The Wiki table uses a composite primary key (name, version). Since
@@ -266,19 +268,19 @@ class Wiki(models.Model):
     django_id = models.TextField(primary_key=True)
     name = models.TextField()
     version = models.IntegerField()
-    _time = models.BigIntegerField(db_column='time')
-    time = time_property('time')
+    _time = models.BigIntegerField(db_column="time")
+    time = time_property("time")
     author = models.TextField()
     text = models.TextField()
     comment = models.TextField()
     readonly = models.IntegerField()
 
     class Meta:
-        db_table = 'wiki_django_view'
+        db_table = "wiki_django_view"
         managed = False
 
     def __str__(self):
-        return '%s (v%s)' % (self.name, self.version)
+        return "%s (v%s)" % (self.name, self.version)
 
 
 # Same story as for Wiki: attachment's PK is (type, id, filename), so again
@@ -292,15 +294,15 @@ class Attachment(models.Model):
     id = models.TextField()
     filename = models.TextField()
     size = models.IntegerField()
-    _time = models.BigIntegerField(db_column='time')
-    time = time_property('time')
+    _time = models.BigIntegerField(db_column="time")
+    time = time_property("time")
     description = models.TextField()
     author = models.TextField()
 
     class Meta:
-        db_table = 'attachment_django_view'
+        db_table = "attachment_django_view"
         managed = False
 
     def __str__(self):
-        attached_to = ('#%s' % self.id) if self.type == 'ticket' else self.id
-        return '%s (on %s)' % (self.filename, attached_to)
+        attached_to = ("#%s" % self.id) if self.type == "ticket" else self.id
+        return "%s (on %s)" % (self.filename, attached_to)

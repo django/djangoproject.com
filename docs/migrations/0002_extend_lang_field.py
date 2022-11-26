@@ -9,13 +9,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('docs', '0001_squashed_0005_remove_version'),
+        ("docs", "0001_squashed_0005_remove_version"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='documentrelease',
-            name='lang',
-            field=models.CharField(choices=settings.LANGUAGES, default='en', max_length=7),
+            model_name="documentrelease",
+            name="lang",
+            field=models.CharField(
+                choices=settings.LANGUAGES, default="en", max_length=7
+            ),
         ),
     ]

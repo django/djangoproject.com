@@ -12,89 +12,180 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='DjangoHero',
+            name="DjangoHero",
             fields=[
-                ('id', models.CharField(max_length=12, primary_key=True, serialize=False)),
-                ('created', models.DateTimeField(default=django.utils.timezone.now)),
-                ('modified', models.DateTimeField(default=django.utils.timezone.now)),
-                ('email', models.EmailField(blank=True, max_length=254)),
-                ('stripe_customer_id', models.CharField(blank=True, max_length=100)),
-                ('logo', sorl.thumbnail.fields.ImageField(blank=True, upload_to='fundraising/logos/')),
-                ('url', models.URLField(blank=True, verbose_name='URL')),
-                ('name', models.CharField(blank=True, max_length=100)),
-                ('location', models.CharField(blank=True, max_length=255)),
-                ('hero_type', models.CharField(blank=True, choices=[('individual', 'Individual'), ('organization', 'Organization')], max_length=30)),
-                ('is_visible', models.BooleanField(default=False, verbose_name='Agreed to displaying on the fundraising page?')),
-                ('is_subscribed', models.BooleanField(default=False, verbose_name='Agreed to being contacted by DSF?')),
-                ('approved', models.NullBooleanField(verbose_name='Name, URL, and Logo approved?')),
+                (
+                    "id",
+                    models.CharField(max_length=12, primary_key=True, serialize=False),
+                ),
+                ("created", models.DateTimeField(default=django.utils.timezone.now)),
+                ("modified", models.DateTimeField(default=django.utils.timezone.now)),
+                ("email", models.EmailField(blank=True, max_length=254)),
+                ("stripe_customer_id", models.CharField(blank=True, max_length=100)),
+                (
+                    "logo",
+                    sorl.thumbnail.fields.ImageField(
+                        blank=True, upload_to="fundraising/logos/"
+                    ),
+                ),
+                ("url", models.URLField(blank=True, verbose_name="URL")),
+                ("name", models.CharField(blank=True, max_length=100)),
+                ("location", models.CharField(blank=True, max_length=255)),
+                (
+                    "hero_type",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("individual", "Individual"),
+                            ("organization", "Organization"),
+                        ],
+                        max_length=30,
+                    ),
+                ),
+                (
+                    "is_visible",
+                    models.BooleanField(
+                        default=False,
+                        verbose_name="Agreed to displaying on the fundraising page?",
+                    ),
+                ),
+                (
+                    "is_subscribed",
+                    models.BooleanField(
+                        default=False, verbose_name="Agreed to being contacted by DSF?"
+                    ),
+                ),
+                (
+                    "approved",
+                    models.NullBooleanField(
+                        verbose_name="Name, URL, and Logo approved?"
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'Django heroes',
-                'verbose_name': 'Django hero',
+                "verbose_name_plural": "Django heroes",
+                "verbose_name": "Django hero",
             },
         ),
         migrations.CreateModel(
-            name='Donation',
+            name="Donation",
             fields=[
-                ('id', models.CharField(max_length=12, primary_key=True, serialize=False)),
-                ('created', models.DateTimeField(default=django.utils.timezone.now)),
-                ('modified', models.DateTimeField(default=django.utils.timezone.now)),
-                ('interval', models.CharField(
-                    blank=True,
-                    choices=[
-                        ('monthly', 'Monthly donation'),
-                        ('quarterly', 'Quarterly donation'),
-                        ('yearly', 'Yearly donation'),
-                        ('onetime', 'One-time donation'),
-                    ],
-                    max_length=20,
-                )),
-                ('subscription_amount', models.DecimalField(blank=True, decimal_places=2, max_digits=9, null=True)),
-                ('stripe_subscription_id', models.CharField(blank=True, max_length=100)),
-                ('stripe_customer_id', models.CharField(blank=True, max_length=100)),
-                ('receipt_email', models.EmailField(blank=True, max_length=254)),
-                ('donor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fundraising.DjangoHero')),
+                (
+                    "id",
+                    models.CharField(max_length=12, primary_key=True, serialize=False),
+                ),
+                ("created", models.DateTimeField(default=django.utils.timezone.now)),
+                ("modified", models.DateTimeField(default=django.utils.timezone.now)),
+                (
+                    "interval",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("monthly", "Monthly donation"),
+                            ("quarterly", "Quarterly donation"),
+                            ("yearly", "Yearly donation"),
+                            ("onetime", "One-time donation"),
+                        ],
+                        max_length=20,
+                    ),
+                ),
+                (
+                    "subscription_amount",
+                    models.DecimalField(
+                        blank=True, decimal_places=2, max_digits=9, null=True
+                    ),
+                ),
+                (
+                    "stripe_subscription_id",
+                    models.CharField(blank=True, max_length=100),
+                ),
+                ("stripe_customer_id", models.CharField(blank=True, max_length=100)),
+                ("receipt_email", models.EmailField(blank=True, max_length=254)),
+                (
+                    "donor",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="fundraising.DjangoHero",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='InKindDonor',
+            name="InKindDonor",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('url', models.URLField(blank=True, verbose_name='URL')),
-                ('description', models.TextField()),
-                ('logo', sorl.thumbnail.fields.ImageField(blank=True, upload_to='fundraising/logos/')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("url", models.URLField(blank=True, verbose_name="URL")),
+                ("description", models.TextField()),
+                (
+                    "logo",
+                    sorl.thumbnail.fields.ImageField(
+                        blank=True, upload_to="fundraising/logos/"
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'in-kind heroes',
-                'verbose_name': 'in-kind hero',
+                "verbose_name_plural": "in-kind heroes",
+                "verbose_name": "in-kind hero",
             },
         ),
         migrations.CreateModel(
-            name='Payment',
+            name="Payment",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('amount', models.DecimalField(decimal_places=2, max_digits=9, null=True)),
-                ('stripe_charge_id', models.CharField(max_length=100, unique=True)),
-                ('date', models.DateTimeField(auto_now_add=True)),
-                ('donation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fundraising.Donation')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "amount",
+                    models.DecimalField(decimal_places=2, max_digits=9, null=True),
+                ),
+                ("stripe_charge_id", models.CharField(max_length=100, unique=True)),
+                ("date", models.DateTimeField(auto_now_add=True)),
+                (
+                    "donation",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="fundraising.Donation",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Testimonial',
+            name="Testimonial",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('author', models.CharField(max_length=255)),
-                ('body', models.TextField()),
-                ('is_active', models.BooleanField(default=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("author", models.CharField(max_length=255)),
+                ("body", models.TextField()),
+                ("is_active", models.BooleanField(default=True)),
             ],
         ),
     ]

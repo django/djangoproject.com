@@ -10,29 +10,28 @@ class ProfileForm(forms.ModelForm):
     Assumes that the Profile instance passed in has an associated User
     object. The view (see views.py) takes care of that.
     """
+
     name = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'Name'})
+        required=False, widget=forms.TextInput(attrs={"placeholder": "Name"})
     )
     email = forms.EmailField(
-        required=False,
-        widget=forms.TextInput(attrs={'placeholder': 'Email'})
+        required=False, widget=forms.TextInput(attrs={"placeholder": "Email"})
     )
 
     class Meta:
         model = Profile
-        fields = ['name']
+        fields = ["name"]
 
     def __init__(self, *args, **kwargs):
-        instance = kwargs.get('instance', None)
+        instance = kwargs.get("instance", None)
         if instance:
-            kwargs.setdefault('initial', {}).update({'email': instance.user.email})
+            kwargs.setdefault("initial", {}).update({"email": instance.user.email})
         super().__init__(*args, **kwargs)
 
     def save(self, commit=True):
         instance = super().save(commit=commit)
-        if 'email' in self.cleaned_data:
-            instance.user.email = self.cleaned_data['email']
+        if "email" in self.cleaned_data:
+            instance.user.email = self.cleaned_data["email"]
             if commit:
                 instance.user.save()
         return instance

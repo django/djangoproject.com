@@ -1,32 +1,29 @@
 from .common import *  # noqa
 
 ALLOWED_HOSTS = [
-    'www.djangoproject.com',
-    'djangoproject.com',
-    'docs.djangoproject.com',
-    'dashboard.djangoproject.com',
-] + SECRETS.get('allowed_hosts', [])
+    "www.djangoproject.com",
+    "djangoproject.com",
+    "docs.djangoproject.com",
+    "dashboard.djangoproject.com",
+] + SECRETS.get("allowed_hosts", [])
 
-LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = ['docs.djangoproject.com']
+LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = ["docs.djangoproject.com"]
 
 DEBUG = False
 THUMBNAIL_DEBUG = DEBUG
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-        'LOCATION': SECRETS.get('memcached_host', '127.0.0.1:11211'),
-        'BINARY': True,
-        'OPTIONS': {
-            'tcp_nodelay': True,
-            'ketama': True
-        }
+    "default": {
+        "BACKEND": "django_pylibmc.memcached.PyLibMCCache",
+        "LOCATION": SECRETS.get("memcached_host", "127.0.0.1:11211"),
+        "BINARY": True,
+        "OPTIONS": {"tcp_nodelay": True, "ketama": True},
     },
-    'docs-pages': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': SECRETS.get('redis_host', 'localhost:6379'),
-        'OPTIONS': {
-            'DB': 2,
+    "docs-pages": {
+        "BACKEND": "redis_cache.RedisCache",
+        "LOCATION": SECRETS.get("redis_host", "localhost:6379"),
+        "OPTIONS": {
+            "DB": 2,
         },
     },
 }
@@ -42,47 +39,47 @@ LOGGING["handlers"]["syslog"] = {
 }
 LOGGING["loggers"]["django.request"]["handlers"].append("syslog")
 
-MEDIA_ROOT = str(DATA_DIR.joinpath('media'))
+MEDIA_ROOT = str(DATA_DIR.joinpath("media"))
 
-MEDIA_URL = 'https://media.djangoproject.com/'
+MEDIA_URL = "https://media.djangoproject.com/"
 
 MIDDLEWARE = (
-    ['django.middleware.cache.UpdateCacheMiddleware'] +
-    MIDDLEWARE +
-    ['django.middleware.cache.FetchFromCacheMiddleware']
+    ["django.middleware.cache.UpdateCacheMiddleware"]
+    + MIDDLEWARE
+    + ["django.middleware.cache.FetchFromCacheMiddleware"]
 )
 
 SESSION_COOKIE_SECURE = True
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
-STATIC_ROOT = str(DATA_DIR.joinpath('static'))
+STATIC_ROOT = str(DATA_DIR.joinpath("static"))
 
-STATIC_URL = 'https://static.djangoproject.com/'
+STATIC_URL = "https://static.djangoproject.com/"
 
 # Docs settings
-DOCS_BUILD_ROOT = DATA_DIR.joinpath('data', 'docbuilds')
+DOCS_BUILD_ROOT = DATA_DIR.joinpath("data", "docbuilds")
 
 # django-hosts settings
 
-HOST_SCHEME = 'https'
+HOST_SCHEME = "https"
 
-PARENT_HOST = 'djangoproject.com'
+PARENT_HOST = "djangoproject.com"
 
 # django-push settings
 
 PUSH_SSL_CALLBACK = True
 
 # Log errors to Sentry instead of email, if available.
-if 'sentry_dsn' in SECRETS and not DEBUG:
+if "sentry_dsn" in SECRETS and not DEBUG:
     import sentry_sdk
     from sentry_sdk.integrations.django import DjangoIntegration
     from sentry_sdk.integrations.redis import RedisIntegration
 
     sentry_sdk.init(
-        dsn=SECRETS['sentry_dsn'],
+        dsn=SECRETS["sentry_dsn"],
         integrations=[
-            DjangoIntegration(transaction_style='function_name'),
+            DjangoIntegration(transaction_style="function_name"),
             RedisIntegration(),
         ],
         traces_sample_rate=0.1,
@@ -90,6 +87,6 @@ if 'sentry_dsn' in SECRETS and not DEBUG:
 
 # RECAPTCHA KEYS
 # Defaults will trigger 'captcha.recaptcha_test_key_error' system check
-if 'recaptcha_public_key' in SECRETS:
-    RECAPTCHA_PUBLIC_KEY = SECRETS.get('recaptcha_public_key')
-    RECAPTCHA_PRIVATE_KEY = SECRETS.get('recaptcha_private_key')
+if "recaptcha_public_key" in SECRETS:
+    RECAPTCHA_PUBLIC_KEY = SECRETS.get("recaptcha_public_key")
+    RECAPTCHA_PRIVATE_KEY = SECRETS.get("recaptcha_private_key")

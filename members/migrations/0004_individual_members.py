@@ -8,12 +8,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0003_corporatemember_django_usage_verbose_name'),
+        ("members", "0003_corporatemember_django_usage_verbose_name"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='DeveloperMember',
-            new_name='IndividualMember',
+            old_name="DeveloperMember",
+            new_name="IndividualMember",
         ),
     ]

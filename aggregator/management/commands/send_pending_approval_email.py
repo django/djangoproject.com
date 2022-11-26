@@ -12,15 +12,19 @@ from ...models import PENDING_FEED, Feed
 
 
 class Command(BaseCommand):
-
     def handle(self, **kwargs):
         try:
-            verbosity = int(kwargs['verbosity'])
+            verbosity = int(kwargs["verbosity"])
         except (KeyError, TypeError, ValueError):
             verbosity = 1
 
         feeds = Feed.objects.filter(approval_status=PENDING_FEED)
-        to_email = [x.email for x in User.objects.filter(groups__name=settings.FEED_APPROVERS_GROUP_NAME)]
+        to_email = [
+            x.email
+            for x in User.objects.filter(
+                groups__name=settings.FEED_APPROVERS_GROUP_NAME
+            )
+        ]
 
         if len(feeds) == 0:
             if verbosity >= 1:
@@ -36,14 +40,20 @@ class Command(BaseCommand):
 To approve them, visit: {% url 'admin:aggregator_feed_changelist' %}
 """
 
-        message = Template(email).render(Context({'feeds': feeds}))
+        message = Template(email).render(Context({"feeds": feeds}))
         if verbosity >= 2:
             self.stdout.write("Pending approval email:\n")
             self.stdout.write(message)
 
-        mail.send_mail("django community feeds pending approval", message,
-                       'nobody@djangoproject.com', to_email,
-                       fail_silently=False)
+        mail.send_mail(
+            "django community feeds pending approval",
+            message,
+            "nobody@djangoproject.com",
+            to_email,
+            fail_silently=False,
+        )
 
         if verbosity >= 1:
-            self.stdout.write("Sent pending approval email to: %s" % (', '.join(to_email)))
+            self.stdout.write(
+                "Sent pending approval email to: %s" % (", ".join(to_email))
+            )

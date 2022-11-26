@@ -12,5 +12,5 @@ def community_stats(request):
     Context processor to calculate Django's age for the community pages.
     """
     # Django 3.2 introduces depth kwarg. Set timesince(..., depth=1) then.
-    stats = {'age': timesince(DJANGO_DOB)}
-    return {'community_stats': stats}
+    stats = {"age": timesince(DJANGO_DOB)}
+    return {"community_stats": stats}
