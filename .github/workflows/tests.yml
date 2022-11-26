@@ -62,23 +62,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: coveralls --service=github
-
-  lint:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Ensure latest setuptools
-        run: |
-          python -m pip install --upgrade pip setuptools
-      - name: Install dependencies
-        run: |
-          python -m pip install tox
-      - name: Run tox
-        run: |
-          python -m pip --version
-          python -m tox --version
-          python -m tox -e isort,flake8
