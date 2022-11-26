@@ -8,18 +8,29 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0005_corporatemember_inactive'),
+        ("members", "0005_corporatemember_inactive"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Team',
+            name="Team",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.SlugField()),
-                ('name', models.CharField(max_length=250)),
-                ('description', models.TextField(help_text='HTML, without surrounding <p> tags.')),
-                ('members', models.ManyToManyField(to='members.IndividualMember')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("slug", models.SlugField()),
+                ("name", models.CharField(max_length=250)),
+                (
+                    "description",
+                    models.TextField(help_text="HTML, without surrounding <p> tags."),
+                ),
+                ("members", models.ManyToManyField(to="members.IndividualMember")),
             ],
         ),
     ]

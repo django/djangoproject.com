@@ -18,7 +18,7 @@ from .forms import DocSearchForm
 from .models import Document, DocumentRelease
 from .utils import get_doc_path_or_404, get_doc_root_or_404
 
-SIMPLE_SEARCH_OPERATORS = ['+', '|', '-', '"', '*', '(', ')', '~']
+SIMPLE_SEARCH_OPERATORS = ["+", "|", "-", '"', "*", "(", ")", "~"]
 
 
 def index(request):
@@ -50,7 +50,7 @@ def document(request, lang, version, url):
 
     canonical_version = DocumentRelease.objects.current_version()
     canonical = version == canonical_version
-    if version == 'stable':
+    if version == "stable":
         version = canonical_version
 
     docroot = get_doc_root_or_404(lang, version)
@@ -60,49 +60,59 @@ def document(request, lang, version, url):
     except DocumentRelease.DoesNotExist:
         raise Http404
 
-    if version == 'dev':
-        rtd_version = 'latest'
+    if version == "dev":
+        rtd_version = "latest"
     else:
-        rtd_version = version + '.x'
+        rtd_version = version + ".x"
 
     template_names = [
-        'docs/%s.html' % str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), ''),
-        'docs/doc.html',
+        "docs/%s.html"
+        % str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), ""),
+        "docs/doc.html",
     ]
 
     def load_json_file(path):
-        with path.open('r') as f:
+        with path.open("r") as f:
             return json.load(f)
 
+    available_languages = DocumentRelease.objects.get_available_languages_by_version(
+        version
+    )
+
     context = {
-        'doc': load_json_file(doc_path),
-        'env': load_json_file(docroot.joinpath('globalcontext.json')),
-        'lang': lang,
-        'version': version,
-        'canonical_version': canonical_version,
-        'canonical': canonical,
-        'available_languages': DocumentRelease.objects.get_available_languages_by_version(version),
-        'release': release,
-        'rtd_version': rtd_version,
-        'docurl': url,
-        'update_date': datetime.datetime.fromtimestamp((docroot.joinpath('last_build')).stat().st_mtime),
-        'redirect_from': request.GET.get('from', None),
+        "doc": load_json_file(doc_path),
+        "env": load_json_file(docroot.joinpath("globalcontext.json")),
+        "lang": lang,
+        "version": version,
+        "canonical_version": canonical_version,
+        "canonical": canonical,
+        "available_languages": available_languages,
+        "release": release,
+        "rtd_version": rtd_version,
+        "docurl": url,
+        "update_date": datetime.datetime.fromtimestamp(
+            (docroot.joinpath("last_build")).stat().st_mtime
+        ),
+        "redirect_from": request.GET.get("from", None),
     }
     response = render(request, template_names, context)
-    # Tell Fastly to re-fetch from the origin once a week (we'll invalidate the cache sooner if needed)
-    response['Surrogate-Control'] = 'max-age=%d' % (7 * 24 * 60 * 60)
+    # Tell Fastly to re-fetch from the origin once a week
+    # (we'll invalidate the cache sooner if needed)
+    response["Surrogate-Control"] = "max-age=%d" % (7 * 24 * 60 * 60)
     return response
 
 
 if not settings.DEBUG:
-    # Specify a dedicated cache for docs pages that need to be purged after docs rebuilds
-    # (see docs/management/commands/update_docs.py):
-    document = cache_page(settings.CACHE_MIDDLEWARE_SECONDS, cache='docs-pages')(document)
+    # Specify a dedicated cache for docs pages that need to be purged after
+    # docs rebuilds (see docs/management/commands/update_docs.py):
+    document = cache_page(settings.CACHE_MIDDLEWARE_SECONDS, cache="docs-pages")(
+        document
+    )
 
 
 def pot_file(request, pot_name):
     version = DocumentRelease.objects.current().version
-    doc_root = str(get_doc_root_or_404('en', version, subroot='gettext'))
+    doc_root = str(get_doc_root_or_404("en", version, subroot="gettext"))
     return static.serve(request, document_root=doc_root, path=pot_name)
 
 
@@ -115,15 +125,17 @@ def sphinx_static(request, lang, version, path, subpath=None):
 
 
 def objects_inventory(request, lang, version):
-    response = static.serve(request,
-                            document_root=str(get_doc_root_or_404(lang, version)),
-                            path="objects.inv")
-    response['Content-Type'] = "text/plain"
+    response = static.serve(
+        request,
+        document_root=str(get_doc_root_or_404(lang, version)),
+        path="objects.inv",
+    )
+    response["Content-Type"] = "text/plain"
     return response
 
 
 def redirect_index(request, *args, **kwargs):
-    assert request.path.endswith('index/')
+    assert request.path.endswith("index/")
     return redirect(request.path[:-6])
 
 
@@ -134,13 +146,13 @@ def redirect_search(request):
     """
     release = DocumentRelease.objects.current()
     kwargs = {
-        'lang': release.lang,
-        'version': release.version,
+        "lang": release.lang,
+        "version": release.version,
     }
-    search_url = reverse('document-search', host='docs', kwargs=kwargs)
-    q = request.GET.get('q') or None
+    search_url = reverse("document-search", host="docs", kwargs=kwargs)
+    q = request.GET.get("q") or None
     if q:
-        search_url += '?q=%s' % q
+        search_url += "?q=%s" % q
     return redirect(search_url)
 
 
@@ -159,15 +171,15 @@ def search_results(request, lang, version, per_page=10, orphans=3):
     form = DocSearchForm(request.GET or None, release=release)
 
     context = {
-        'form': form,
-        'lang': release.lang,
-        'version': release.version,
-        'release': release,
-        'searchparams': request.GET.urlencode(),
+        "form": form,
+        "lang": release.lang,
+        "version": release.version,
+        "release": release,
+        "searchparams": request.GET.urlencode(),
     }
 
     if form.is_valid():
-        q = form.cleaned_data.get('q')
+        q = form.cleaned_data.get("q")
 
         if q:
             # catch queries that are coming from browser search bars
@@ -177,33 +189,36 @@ def search_results(request, lang, version, per_page=10, orphans=3):
 
             results = Document.objects.search(q, release)
 
-            page_number = request.GET.get('page') or 1
+            page_number = request.GET.get("page") or 1
             paginator = Paginator(results, per_page=per_page, orphans=orphans)
 
             try:
                 page_number = int(page_number)
             except ValueError:
-                if page_number == 'last':
+                if page_number == "last":
                     page_number = paginator.num_pages
                 else:
-                    raise Http404(_("Page is not 'last', "
-                                    "nor can it be converted to an int."))
+                    raise Http404(
+                        _("Page is not 'last', " "nor can it be converted to an int.")
+                    )
 
             try:
                 page = paginator.page(page_number)
             except InvalidPage as e:
-                raise Http404(_('Invalid page (%(page_number)s): %(message)s') % {
-                    'page_number': page_number,
-                    'message': str(e)
-                })
+                raise Http404(
+                    _("Invalid page (%(page_number)s): %(message)s")
+                    % {"page_number": page_number, "message": str(e)}
+                )
 
-            context.update({
-                'query': q,
-                'page': page,
-                'paginator': paginator,
-            })
+            context.update(
+                {
+                    "query": q,
+                    "page": page,
+                    "paginator": paginator,
+                }
+            )
 
-    return render(request, 'docs/search_results.html', context)
+    return render(request, "docs/search_results.html", context)
 
 
 def search_suggestions(request, lang, version, per_page=20):
@@ -227,14 +242,18 @@ def search_suggestions(request, lang, version, per_page=20):
     suggestions = []
 
     if form.is_valid():
-        q = form.cleaned_data.get('q')
+        q = form.cleaned_data.get("q")
         if q:
-            results = Document.objects.filter(
-                release__lang=release.lang,
-            ).filter(
-                release__release__version=release.version,
-            ).filter(
-                title__contains=q,
+            results = (
+                Document.objects.filter(
+                    release__lang=release.lang,
+                )
+                .filter(
+                    release__release__version=release.version,
+                )
+                .filter(
+                    title__contains=q,
+                )
             )
             suggestions.append(q)
             titles = []
@@ -243,10 +262,10 @@ def search_suggestions(request, lang, version, per_page=20):
             for result in results:
                 titles.append(result.title)
                 kwargs = {
-                    'content_type_id': content_type.pk,
-                    'object_id': result.id,
+                    "content_type_id": content_type.pk,
+                    "object_id": result.id,
                 }
-                links.append(reverse('contenttypes-shortcut', kwargs=kwargs))
+                links.append(reverse("contenttypes-shortcut", kwargs=kwargs))
             suggestions.append(titles)
             suggestions.append([])
             suggestions.append(links)
@@ -271,11 +290,15 @@ def search_description(request, lang, version):
     activate(lang)
 
     context = {
-        'site': Site.objects.get_current(),
-        'release': release,
+        "site": Site.objects.get_current(),
+        "release": release,
     }
-    return render(request, 'docs/search_description.xml', context,
-                  content_type='application/opensearchdescription+xml')
+    return render(
+        request,
+        "docs/search_description.xml",
+        context,
+        content_type="application/opensearchdescription+xml",
+    )
 
 
 if not settings.DEBUG:
@@ -291,11 +314,13 @@ def sitemap_index(request, sitemaps):
     """
     sites = []
     for section in sitemaps.keys():
-        sitemap_url = reverse('document-sitemap', host='docs', kwargs={'section': section})
+        sitemap_url = reverse(
+            "document-sitemap", host="docs", kwargs={"section": section}
+        )
         sites.append(sitemap_url)
     return TemplateResponse(
         request,
-        'sitemap_index.xml',
-        {'sitemaps': sites},
-        content_type='application/xml',
+        "sitemap_index.xml",
+        {"sitemaps": sites},
+        content_type="application/xml",
     )

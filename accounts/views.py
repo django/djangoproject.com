@@ -16,12 +16,16 @@ from .models import Profile
 
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
-    return render(request, "accounts/user_profile.html", {
-        'user_obj': user,
-        'email_hash': hashlib.md5(user.email.encode('ascii', 'ignore')).hexdigest(),
-        'user_can_commit': user.has_perm('auth.commit'),
-        'stats': get_user_stats(user),
-    })
+    return render(
+        request,
+        "accounts/user_profile.html",
+        {
+            "user_obj": user,
+            "email_hash": hashlib.md5(user.email.encode("ascii", "ignore")).hexdigest(),
+            "user_can_commit": user.has_perm("auth.commit"),
+            "stats": get_user_stats(user),
+        },
+    )
 
 
 @login_required
@@ -30,8 +34,8 @@ def edit_profile(request):
     form = ProfileForm(request.POST or None, instance=profile)
     if form.is_valid():
         form.save()
-        return redirect('user_profile', request.user.username)
-    return render(request, "accounts/edit_profile.html", {'form': form})
+        return redirect("user_profile", request.user.username)
+    return render(request, "accounts/edit_profile.html", {"form": form})
 
 
 def json_user_info(request):
@@ -50,17 +54,16 @@ def json_user_info(request):
     De-duplication on GET['user'] is performed since I don't want to have to
     think about how best to do it in JavaScript :)
     """
-    userinfo = dict([
-        (name, get_user_info(name))
-        for name in set(request.GET.getlist('user'))
-    ])
+    userinfo = dict(
+        [(name, get_user_info(name)) for name in set(request.GET.getlist("user"))]
+    )
     return JSONResponse(userinfo)
 
 
 def get_user_info(username):
-    c = caches['default']
-    username = username.encode('ascii', 'ignore')
-    key = 'trac_user_info:%s' % hashlib.md5(username).hexdigest()
+    c = caches["default"]
+    username = username.encode("ascii", "ignore")
+    key = "trac_user_info:%s" % hashlib.md5(username).hexdigest()
     info = c.get(key)
     if info is None:
         try:
@@ -69,16 +72,16 @@ def get_user_info(username):
             info = {"core": False, "cla": False}
         else:
             info = {
-                "core": u.has_perm('auth.commit'),
+                "core": u.has_perm("auth.commit"),
             }
         c.set(key, info, 60 * 60)
     return info
 
 
 def get_user_stats(user):
-    c = caches['default']
-    username = user.username.encode('ascii', 'ignore')
-    key = 'user_vital_status:%s' % hashlib.md5(username).hexdigest()
+    c = caches["default"]
+    username = user.username.encode("ascii", "ignore")
+    key = "user_vital_status:%s" % hashlib.md5(username).hexdigest()
     info = c.get(key)
     if info is None:
         info = trac_stats.get_user_stats(user.username)
@@ -95,5 +98,5 @@ class JSONResponse(HttpResponse):
     def __init__(self, obj):
         super().__init__(
             json.dumps(obj, indent=(2 if settings.DEBUG else None)),
-            content_type='application/json',
+            content_type="application/json",
         )
