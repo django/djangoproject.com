@@ -81,4 +81,4 @@ jobs:
         run: |
           python -m pip --version
           python -m tox --version
-          python -m tox -e isort,flake8
+          python -m tox -e black,isort,flake8
