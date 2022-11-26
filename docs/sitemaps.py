@@ -8,18 +8,21 @@ class DocsSitemap(Sitemap):
         self.lang = lang
 
     def items(self):
-        return (Document.objects.filter(release__lang=self.lang)
-                .order_by('-release__release', 'path')
-                .select_related('release__release'))
+        return (
+            Document.objects.filter(release__lang=self.lang)
+            .order_by("-release__release", "path")
+            .select_related("release__release")
+        )
 
     def changefreq(self, obj):
-        return 'daily'
-#        if obj.release.is_dev:
-#            return 'daily'
-#        elif obj.release.is_default:
-#            return 'monthly'
-#        else:
-#            return 'yearly'
+        return "daily"
+
+    #        if obj.release.is_dev:
+    #            return 'daily'
+    #        elif obj.release.is_default:
+    #            return 'monthly'
+    #        else:
+    #            return 'yearly'
 
     def priority(self, obj):
         if obj.release.is_dev:
@@ -37,10 +40,10 @@ class DocsSitemap(Sitemap):
             loc = item.get_absolute_url()
             priority = self.priority(item)
             url_info = {
-                'item': item,
-                'location': loc,
-                'changefreq': self.changefreq(item),
-                'priority': str(priority if priority is not None else ''),
+                "item": item,
+                "location": loc,
+                "changefreq": self.changefreq(item),
+                "priority": str(priority if priority is not None else ""),
             }
             urls.append(url_info)
         return urls

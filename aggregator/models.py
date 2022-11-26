@@ -23,14 +23,14 @@ class FeedType(models.Model):
         return FeedItem.objects.filter(feed__feed_type=self)
 
 
-APPROVED_FEED = 'A'
-DENIED_FEED = 'D'
-PENDING_FEED = 'P'
+APPROVED_FEED = "A"
+DENIED_FEED = "D"
+PENDING_FEED = "P"
 
 STATUS_CHOICES = (
-    (PENDING_FEED, 'Pending'),
-    (DENIED_FEED, 'Denied'),
-    (APPROVED_FEED, 'Approved')
+    (PENDING_FEED, "Pending"),
+    (DENIED_FEED, "Denied"),
+    (APPROVED_FEED, "Approved"),
 )
 
 
@@ -38,9 +38,17 @@ class Feed(models.Model):
     title = models.CharField(max_length=500)
     feed_url = models.URLField(unique=True, max_length=500)
     public_url = models.URLField(max_length=1023)
-    approval_status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=PENDING_FEED)
+    approval_status = models.CharField(
+        max_length=1, choices=STATUS_CHOICES, default=PENDING_FEED
+    )
     feed_type = models.ForeignKey(FeedType, on_delete=models.CASCADE)
-    owner = models.ForeignKey(User, blank=True, null=True, related_name='owned_feeds', on_delete=models.SET_NULL)
+    owner = models.ForeignKey(
+        User,
+        blank=True,
+        null=True,
+        related_name="owned_feeds",
+        on_delete=models.SET_NULL,
+    )
 
     def __str__(self):
         return self.title
@@ -82,18 +90,18 @@ class FeedItemManager(models.Manager):
 
         except self.model.DoesNotExist:
             # Create a new item
-            log.debug('Creating entry: %s', guid)
-            kwargs['guid'] = guid
+            log.debug("Creating entry: %s", guid)
+            kwargs["guid"] = guid
             item = self.create(**kwargs)
 
         else:
-            log.debug('Updating entry: %s', guid)
+            log.debug("Updating entry: %s", guid)
 
             # Update an existing one.
-            kwargs.pop('feed', None)
+            kwargs.pop("feed", None)
 
             # Don't update the date since most feeds get this wrong.
-            kwargs.pop('date_modified')
+            kwargs.pop("date_modified")
 
             for k, v in kwargs.items():
                 setattr(item, k, v)
@@ -123,13 +131,15 @@ class FeedItem(models.Model):
 
 
 def feed_updated(sender, notification, **kwargs):
-    log.debug('Received notification on subscription ID %s (%s)',
-              sender.id, sender.topic)
+    log.debug(
+        "Received notification on subscription ID %s (%s)", sender.id, sender.topic
+    )
     try:
         feed = Feed.objects.get(feed_url=sender.topic)
     except Feed.DoesNotExist:
-        log.error("Subscription ID %s (%s) doesn't have a feed.",
-                  sender.id, sender.topic)
+        log.error(
+            "Subscription ID %s (%s) doesn't have a feed.", sender.id, sender.topic
+        )
         return
 
     notification = feedparser.parse(notification)
@@ -139,10 +149,14 @@ def feed_updated(sender, notification, **kwargs):
         try:
             guid = entry.get("id", entry.link)
         except AttributeError:
-            log.error("Feed ID %s has an entry ('%s') without a link or guid. Skipping.", feed.id, title)
+            log.error(
+                "Feed ID %s has an entry ('%s') without a link or guid. Skipping.",
+                feed.id,
+                title,
+            )
         link = getattr(entry, "link", guid)
 
-        content = ''
+        content = ""
         if hasattr(entry, "summary"):
             content = entry.summary
 
@@ -152,13 +166,13 @@ def feed_updated(sender, notification, **kwargs):
         # 'content' takes precedence on anything else. 'summary' and
         # 'description' are usually truncated so it's safe to overwrite them
         if hasattr(entry, "content"):
-            content = ''
+            content = ""
             for item in entry.content:
                 content += item.value
 
-        if 'published_parsed' in entry and entry.published_parsed is not None:
+        if "published_parsed" in entry and entry.published_parsed is not None:
             date_modified = datetime.datetime(*entry.published_parsed[:6])
-        elif 'updated_parsed' in entry and entry.updated_parsed is not None:
+        elif "updated_parsed" in entry and entry.updated_parsed is not None:
             date_modified = datetime.datetime(*entry.updated_parsed[:6])
         else:
             date_modified = datetime.datetime.now()

@@ -8,13 +8,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0001_squashed_0004_corporatemember_notes'),
+        ("members", "0001_squashed_0004_corporatemember_notes"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='corporatemember',
-            name='django_usage',
-            field=models.TextField(blank=True, help_text='Not displayed publicly.', verbose_name='How does your organization use Django'),
+            model_name="corporatemember",
+            name="django_usage",
+            field=models.TextField(
+                blank=True,
+                help_text="Not displayed publicly.",
+                verbose_name="How does your organization use Django",
+            ),
         ),
     ]

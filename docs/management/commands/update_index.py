@@ -5,7 +5,6 @@ from ...models import Document
 
 
 class Command(BaseCommand):
-
     @transaction.atomic
     def handle(self, *args, **options):
         """
@@ -17,4 +16,8 @@ class Command(BaseCommand):
         Document.objects.search_reset()
         updated_documents = Document.objects.search_update()
         if options["verbosity"] >= 2:
-            self.stdout.write(self.style.SUCCESS(f"Successfully indexed {updated_documents} documents."))
+            self.stdout.write(
+                self.style.SUCCESS(
+                    f"Successfully indexed {updated_documents} documents."
+                )
+            )

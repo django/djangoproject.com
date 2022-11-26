@@ -8,13 +8,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0004_individual_members'),
+        ("members", "0004_individual_members"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='corporatemember',
-            name='inactive',
-            field=models.BooleanField(default=False, help_text='No longer renewing.'),
+            model_name="corporatemember",
+            name="inactive",
+            field=models.BooleanField(default=False, help_text="No longer renewing."),
         ),
     ]

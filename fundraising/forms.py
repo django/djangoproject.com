@@ -4,16 +4,14 @@ from captcha.widgets import ReCaptchaV3
 from django import forms
 from django.utils.safestring import mark_safe
 
-from .models import (
-    INTERVAL_CHOICES, LEADERSHIP_LEVEL_AMOUNT, DjangoHero, Donation,
-)
+from .models import INTERVAL_CHOICES, LEADERSHIP_LEVEL_AMOUNT, DjangoHero, Donation
 
 
 class DjangoHeroForm(forms.ModelForm):
     hero_type = forms.ChoiceField(
         required=False,
         widget=forms.RadioSelect,
-        label='I am donating as an',
+        label="I am donating as an",
         choices=DjangoHero.HERO_TYPE_CHOICES,
         initial=DjangoHero.HERO_TYPE_CHOICES[0][0],
     )
@@ -21,26 +19,28 @@ class DjangoHeroForm(forms.ModelForm):
         required=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'required',
-                'placeholder': 'Your name or the name of your organization',
+                "class": "required",
+                "placeholder": "Your name or the name of your organization",
             },
-        )
+        ),
     )
     location = forms.CharField(
         required=False,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Where are you located? (optional; will not be displayed)',
+                "placeholder": (
+                    "Where are you located? " "(optional; will not be displayed)"
+                ),
             },
-        )
+        ),
     )
     url = forms.CharField(
         required=False,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Which URL should we link your name to?',
+                "placeholder": "Which URL should we link your name to?",
             },
-        )
+        ),
     )
     logo = forms.FileField(
         required=False,
@@ -59,16 +59,21 @@ class DjangoHeroForm(forms.ModelForm):
     is_subscribed = forms.BooleanField(
         required=False,
         label=(
-            'Yes, the Django Software Foundation can inform me about '
-            'future fundraising campaigns by email.'
+            "Yes, the Django Software Foundation can inform me about "
+            "future fundraising campaigns by email."
         ),
     )
 
     class Meta:
         model = DjangoHero
         fields = (
-            'hero_type', 'name', 'location', 'url', 'logo', 'is_visible',
-            'is_subscribed',
+            "hero_type",
+            "name",
+            "location",
+            "url",
+            "logo",
+            "is_visible",
+            "is_subscribed",
         )
 
     def __init__(self, *args, **kwargs):
@@ -95,12 +100,13 @@ class StripeTextInput(forms.TextInput):
     """
     Inspired by widgets in django-zebra
     """
+
     def _add_data_stripe_attr(self, name, kwargs):
-        kwargs.setdefault('attrs', {}).update({'data-stripe': name})
+        kwargs.setdefault("attrs", {}).update({"data-stripe": name})
         return kwargs
 
     def _strip_name_attr(self, widget_string, name):
-        return widget_string.replace("name=\"%s\"" % (name,), "")
+        return widget_string.replace('name="%s"' % (name,), "")
 
     def render(self, name, *args, **kwargs):
         kwargs = self._add_data_stripe_attr(name, kwargs)
@@ -112,17 +118,18 @@ class DonateForm(forms.Form):
     """
     Used to generate the HTML form in the fundraising page.
     """
+
     AMOUNT_CHOICES = (
-        (25, 'US $25'),
-        (50, 'US $50'),
-        (100, 'US $100'),
-        (250, 'US $250'),
-        (500, 'US $500'),
-        (750, 'US $750'),
-        (1000, 'US $1,000'),
-        (1250, 'US $1,250'),
-        (2500, 'US $2,500'),
-        ('custom', 'Other amount'),
+        (25, "US $25"),
+        (50, "US $50"),
+        (100, "US $100"),
+        (250, "US $250"),
+        (500, "US $500"),
+        (750, "US $750"),
+        (1000, "US $1,000"),
+        (1250, "US $1,250"),
+        (2500, "US $2,500"),
+        ("custom", "Other amount"),
     )
 
     amount = forms.ChoiceField(choices=AMOUNT_CHOICES)
@@ -134,18 +141,21 @@ class DonationForm(forms.ModelForm):
     """
     Used in the manage donations view.
     """
-    subscription_amount = forms.DecimalField(max_digits=9, decimal_places=2, required=True)
+
+    subscription_amount = forms.DecimalField(
+        max_digits=9, decimal_places=2, required=True
+    )
     # here we're removing "onetime" option from interval choices:
     interval = forms.ChoiceField(choices=INTERVAL_CHOICES[:3], required=True)
 
     class Meta:
         model = Donation
-        fields = ('subscription_amount', 'interval')
+        fields = ("subscription_amount", "interval")
 
     def save(self, commit=True, *args, **kwargs):
         donation = super().save(commit=commit)
-        interval = self.cleaned_data.get('interval')
-        amount = self.cleaned_data.get('subscription_amount')
+        interval = self.cleaned_data.get("interval")
+        amount = self.cleaned_data.get("subscription_amount")
 
         # Send data to Stripe
         customer = stripe.Customer.retrieve(donation.stripe_customer_id)
@@ -165,6 +175,7 @@ class PaymentForm(forms.Form):
 
     `amount` can be any integer, so a ChoiceField is not appropriate.
     """
+
     captcha = ReCaptchaField(widget=ReCaptchaV3)
     amount = forms.IntegerField(
         required=True,

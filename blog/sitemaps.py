@@ -4,7 +4,7 @@ from .models import Entry
 
 
 class WeblogSitemap(Sitemap):
-    changefreq = 'never'
+    changefreq = "never"
     priority = 0.4
 
     def items(self):
@@ -17,8 +17,8 @@ class WeblogSitemap(Sitemap):
         for item in self.paginator.page(page).object_list:
             loc = item.get_absolute_url()
             url_info = {
-                'item': item,
-                'location': loc,
+                "item": item,
+                "location": loc,
             }
             urls.append(url_info)
         return urls
