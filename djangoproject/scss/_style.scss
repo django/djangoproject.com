@@ -256,6 +256,7 @@ blockquote {
     //Main column. Left aligned by default. See /styleguide for explanation.
     background: var(--white-color);
     padding: 1px 10px 40px;
+    overflow-wrap: break-word;	
     @include respond-min(768px) {
         min-height: 800px;
         border: 1px solid #ddd;
@@ -336,6 +337,7 @@ blockquote {
 [role="complementary"] {
     //Sidebar in column layouts, gray section in fullwidth layout
     padding: 0 10px 20px;
+    overflow-wrap: break-word;
     @include font-size(14);
     @include respond-min(768px) {
         float: right;
