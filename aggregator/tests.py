@@ -89,8 +89,8 @@ class AggregatorTests(TestCase):
             )
 
     def test_community_index_number_of_queries(self):
-        """ Intended to prevent an n+1 issue on the community index view """
-        url = reverse('community-index')
+        """Intended to prevent an n+1 issue on the community index view"""
+        url = reverse("community-index")
         with self.assertNumQueries(4):
             self.client.get(url)
 
