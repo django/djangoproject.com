@@ -2478,6 +2478,25 @@ table.docutils td, table.docutils th {
 .search-links {
     @extend .list-links;
 
+    a {
+        mark {
+			color: var(--search-mark-text);
+			text-decoration: none;
+
+			&:visited {
+				color: var(--link-color);
+			}
+
+			&:hover,
+			&:active,
+			&:focus {
+				color: var(--search-link-hover);
+				text-decoration: none;
+			}
+            background-color: var(--secondary-accent);
+        }
+    }
+
     em {
         font-weight: 700;
         color: var(--body-fg);
@@ -2514,6 +2533,10 @@ table.docutils td, table.docutils th {
 
     dd {
         margin-bottom: 30px;
+        mark {
+            background-color: var(--secondary-accent);
+            color: var(--search-mark-text);
+        }
     }
 }
 

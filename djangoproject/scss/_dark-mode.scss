@@ -49,6 +49,10 @@ html[data-theme="light"],
 	--table-color: var(--body-fg);
 	--white-color: #fff;
 
+	--search-link: #{$green};
+	--search-link-hover: #{$green-light};
+	--search-mark-text: #{$green-dark};
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -90,6 +94,11 @@ html[data-theme="light"],
 		--table-color: var(--body-bg);
 		--cta-color-accent: #{$black};
 		--white-color: #{$black};
+
+		--search-link: #{$green-dark};
+		--search-link-hover: #{$green-light};
+		--search-mark-text: #{$black-light-5};
+
 	}
 
 	body .homepage {
@@ -166,6 +175,10 @@ html[data-theme="dark"] {
 	--table-color: var(--body-bg);
 	--cta-color-accent: #{$black};
 	--white-color: #{$black};
+
+	--search-link: #{$green-dark};
+	--search-link-hover: #{$green-light};
+	--search-mark-text: #{$black-light-5};
 
 
 	.img-release {

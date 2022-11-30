@@ -8,11 +8,13 @@ from pathlib import Path
 from django.conf import settings
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import (
-    SearchQuery, SearchRank, SearchVectorField, TrigramSimilarity,
+    SearchHeadline, SearchQuery, SearchRank, SearchVectorField,
+    TrigramSimilarity,
 )
 from django.core.cache import cache
 from django.db import models, transaction
 from django.db.models import Prefetch, Q
+from django.db.models.fields.json import KeyTextTransform
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django_hosts.resolvers import reverse
@@ -236,8 +238,25 @@ class DocumentManager(models.Manager):
             ).filter(
                 release_id=release.id,
                 search=search_query,
-            ).annotate(rank=search_rank + similarity).order_by('-rank').only(
-                'title', 'path', 'metadata', 'release',
+            ).annotate(
+                rank=search_rank + similarity,
+                headline=SearchHeadline(
+                    "title",
+                    search_query,
+                    start_sel="<mark>",
+                    stop_sel="</mark>",
+                ),
+                highlight=SearchHeadline(
+                    KeyTextTransform("body", "metadata"),
+                    search_query,
+                    start_sel="<mark>",
+                    stop_sel="</mark>",
+                ),
+                breadcrumbs=KeyTextTransform("breadcrumbs", "metadata"),
+            ).order_by(
+                '-rank'
+            ).only(
+                'path', 'release',
             )
         else:
             return self.get_queryset().none()
