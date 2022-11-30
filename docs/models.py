@@ -178,7 +178,8 @@ class DocumentRelease(models.Model):
                 or "title" not in document
                 or document["current_page_name"].split("/")[0] in excluded_paths
             ):
-                # We don't care about indexing documents with no body or title, or partially translated
+                # We don't care about indexing documents with no body or title,
+                # or partially translated
                 continue
 
             document_path = _clean_document_path(document["current_page_name"])
