@@ -100,29 +100,6 @@ To run locally, do the usual:
 
     python -m manage update_metrics
 
-#. **(Optional)** Point the ``www.djangoproject.localhost``, ``docs.djangoproject.localhost``,
-   and ``dashboard.djangoproject.localhost`` hostnames with your ``/etc/hosts``
-   file to ``localhost``/``127.0.0.1`` by adding::
-
-     127.0.0.1 docs.djangoproject.localhost www.djangoproject.localhost dashboard.djangoproject.localhost
-
-   This is unnecessary with some browsers (e.g. Firefox, Opera and Chromium/Chrome) as
-   they handle localhost subdomains automatically.
-
-   If you're on macOS and don't feel like editing the ``/etc/hosts`` file
-   manually, there is a great preference pane called `Hosts.prefpane`_. On
-   Ubuntu, there is a `built-in network admin`_ GUI to do the same. Remember
-   both require admin privileges, just like you'd need when editing
-   ``/etc/hosts`` with your favorite editor.
-
-   If you don't have admin rights but have an internet connection, you can use a
-   service like `nip.io <http://nip.io>`_. In that case, you'll also have to
-   update `ALLOWED_HOSTS` in `djangoproject/settings/dev.py` as well as the
-   content of the `django_site` table in your database.
-
-   .. _`Hosts.prefpane`: https://github.com/specialunderwear/Hosts.prefpane
-   .. _`built-in network admin`: https://help.ubuntu.com/community/NetworkAdmin
-
 #. Compile the CSS (only the source SCSS files are stored in the repository)::
 
     make compile-scss
