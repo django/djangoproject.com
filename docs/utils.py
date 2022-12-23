@@ -15,7 +15,10 @@ def get_doc_root_or_404(lang, version, subroot="json"):
 
 def get_doc_path(docroot, subpath):
     # First look for <bits>/index.fjson, then for <bits>.fjson
-    bits = subpath.strip("/").split("/") + ["index.fjson"]
+    try:
+        bits = subpath.strip("/").split("/") + ["index.fjson"]
+    except AttributeError:
+        bits = []
     doc = docroot.joinpath(*bits)
     try:
         if doc.exists():
