@@ -171,7 +171,7 @@ or for a HTML-based report::
 tests manually using the ``test`` task of the ``Makefile``. Don't forget to
 install the test requirements with the following command first though::
 
-    pip install -r requirements/tests.txt
+    python -m pip install -r requirements/tests.txt
 
 Then run::
 
