@@ -16,8 +16,6 @@ To run locally, do the usual:
     python3 -m pip install -r requirements/dev.txt
     npm install
 
-   *Note: for Python 3.10+ you have to append* ``--ignore-requires-python`` *to* ``pip``
-
    Alternatively, use the make task::
 
     make install
@@ -300,7 +298,9 @@ Translation
 -----------
 
 We're using Transifex to help manage the translation process. The
-``requirements/dev.txt`` file will install the Transifex client.
+Transifex client app is required. To install it, run::
+
+    curl -o- https://raw.githubusercontent.com/transifex/cli/master/install.sh | bash
 
 Before using the command-line Transifex client, create ``~/.transifexrc``
 according to the instructions at
