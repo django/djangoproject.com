@@ -30,7 +30,7 @@ MEMBERSHIP_LEVELS = (
     (DIAMOND_MEMBERSHIP, "Diamond"),
 )
 
-MEMBERSHIP_TO_KEY = dict((k, v.lower()) for k, v in MEMBERSHIP_LEVELS)
+MEMBERSHIP_TO_KEY = {k: v.lower() for k, v in MEMBERSHIP_LEVELS}
 
 
 class IndividualMember(models.Model):

@@ -84,7 +84,7 @@ class DjangoHero(FundraisingModel):
     objects = DjangoHeroManager()
 
     def __str__(self):
-        return self.name if self.name else "Anonymous #{}".format(self.pk)
+        return self.name if self.name else f"Anonymous #{self.pk}"
 
     class Meta:
         verbose_name = "Django hero"
@@ -114,7 +114,7 @@ class Donation(FundraisingModel):
     receipt_email = models.EmailField(blank=True)
 
     def __str__(self):
-        return "{} from {}".format(self.get_interval_display(), self.donor)
+        return f"{self.get_interval_display()} from {self.donor}"
 
     def get_absolute_url(self):
         return reverse("fundraising:thank-you", kwargs={"donation": self.id})
@@ -135,7 +135,7 @@ class Payment(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "${}".format(self.amount)
+        return f"${self.amount}"
 
 
 class Testimonial(models.Model):

@@ -20,10 +20,9 @@ class BoardMemberAdmin(admin.ModelAdmin):
     list_select_related = True
     raw_id_fields = ("account",)
 
+    @admin.display(ordering="account__last_name")
     def full_name(self, obj):
         return obj.account.get_full_name()
-
-    full_name.admin_order_field = "account__last_name"
 
 
 @admin.register(models.NonBoardAttendee)

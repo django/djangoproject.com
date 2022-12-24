@@ -47,9 +47,7 @@ class BoardMember(models.Model):
     )
 
     def __str__(self):
-        return "{} ({} - {})".format(
-            self.account.get_full_name(), self.office, self.term.year
-        )
+        return f"{self.account.get_full_name()} ({self.office} - {self.term.year})"
 
 
 class NonBoardAttendee(models.Model):
@@ -66,7 +64,7 @@ class NonBoardAttendee(models.Model):
         verbose_name_plural = "Non-board attendees"
 
     def __str__(self):
-        return "{} ({})".format(self.name, self.role)
+        return f"{self.name} ({self.role})"
 
 
 class Meeting(models.Model):
@@ -142,7 +140,7 @@ class ApprovedGrant(models.Model):
         ordering = ("entity",)
 
     def __str__(self):
-        return "{}: {}".format(self.entity, self.amount)
+        return f"{self.entity}: {self.amount}"
 
 
 class ApprovedIndividualMember(models.Model):
