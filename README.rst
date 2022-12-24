@@ -136,11 +136,11 @@ command with a preset list of apps that we want to test as well as
 collect test coverage data as part of that tox run, to show the result
 simply run::
 
-    coverage report
+    python -m coverage report
 
 or for a HTML-based report::
 
-    coverage html
+    python -m coverage html
 
 **(Optional)** In case you're using an own virtualenv you can also run the
 tests manually using the ``test`` task of the ``Makefile``. Don't forget to
