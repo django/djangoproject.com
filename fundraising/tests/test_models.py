@@ -43,9 +43,7 @@ class TestDjangoHero(TestCase):
         os.remove(image_path)
         self.assertTrue(
             os.path.exists(
-                thumbnail.url.replace(
-                    settings.MEDIA_URL, "{}/".format(settings.MEDIA_ROOT)
-                )
+                thumbnail.url.replace(settings.MEDIA_URL, f"{settings.MEDIA_ROOT}/")
             )
         )
 

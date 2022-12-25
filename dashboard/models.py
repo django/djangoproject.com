@@ -128,7 +128,7 @@ class TracTicketMetric(Metric):
         return len(s.ticket.query(self.query + "&max=0"))
 
     def link(self):
-        return "%squery?%s&desc=1&order=changetime" % (settings.TRAC_URL, self.query)
+        return f"{settings.TRAC_URL}query?{self.query}&desc=1&order=changetime"
 
 
 class GithubItemCountMetric(Metric):
@@ -258,4 +258,4 @@ class Datum(models.Model):
         verbose_name_plural = "data"
 
     def __str__(self):
-        return "%s at %s: %s" % (self.metric, self.timestamp, self.measurement)
+        return f"{self.metric} at {self.timestamp}: {self.measurement}"

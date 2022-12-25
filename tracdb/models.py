@@ -115,7 +115,7 @@ class Ticket(models.Model):
         managed = False
 
     def __str__(self):
-        return "#%s: %s" % (self.id, self.summary)
+        return f"#{self.id}: {self.summary}"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -147,7 +147,7 @@ class TicketCustom(models.Model):
         managed = False
 
     def __str__(self):
-        return "%s: %s" % (self.name, self.value)
+        return f"{self.name}: {self.value}"
 
 
 class TicketChange(models.Model):
@@ -172,7 +172,7 @@ class TicketChange(models.Model):
         ordering = ["_time"]
 
     def __str__(self):
-        return "#%s: changed %s" % (self.ticket.id, self.field)
+        return f"#{self.ticket.id}: changed {self.field}"
 
 
 class Component(models.Model):
@@ -256,7 +256,7 @@ class Revision(models.Model):
         managed = False
 
     def __str__(self):
-        return "[%s] %s" % (self.rev, self.message.split("\n", 1)[0])
+        return "[{}] {}".format(self.rev, self.message.split("\n", 1)[0])
 
 
 # The Wiki table uses a composite primary key (name, version). Since
@@ -280,7 +280,7 @@ class Wiki(models.Model):
         managed = False
 
     def __str__(self):
-        return "%s (v%s)" % (self.name, self.version)
+        return f"{self.name} (v{self.version})"
 
 
 # Same story as for Wiki: attachment's PK is (type, id, filename), so again
@@ -305,4 +305,4 @@ class Attachment(models.Model):
 
     def __str__(self):
         attached_to = ("#%s" % self.id) if self.type == "ticket" else self.id
-        return "%s (on %s)" % (self.filename, attached_to)
+        return f"{self.filename} (on {attached_to})"

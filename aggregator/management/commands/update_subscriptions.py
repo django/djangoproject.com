@@ -25,15 +25,11 @@ class Command(BaseCommand):
         extra_feeds = subscribed_urls - feed_urls
 
         for url in missing_feeds:
-            logger.info("Subscribing to {0}".format(url))
+            logger.info(f"Subscribing to {url}")
             Subscription.objects.subscribe(url, settings.PUSH_HUB)
 
         for subscription in Subscription.objects.filter(topic__in=extra_feeds):
-            logger.info(
-                "Unsubscribing from {0} ({1})".format(
-                    subscription.pk, subscription.topic
-                )
-            )
+            logger.info(f"Unsubscribing from {subscription.pk} ({subscription.topic})")
             subscription.unsubscribe()
 
         limit = timezone.now() + timedelta(days=2)
@@ -41,8 +37,6 @@ class Command(BaseCommand):
             lease_expiration__lte=limit
         ):
             logger.info(
-                "Renewing subscription for {0} ({1})".format(
-                    subscription.topic, subscription.pk
-                )
+                f"Renewing subscription for {subscription.topic} ({subscription.pk})"
             )
             subscription.subscribe()

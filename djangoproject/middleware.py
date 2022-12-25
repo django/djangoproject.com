@@ -5,7 +5,7 @@ from django.utils.functional import cached_property
 from django.utils.http import is_same_domain
 
 
-class CORSMiddleware(object):
+class CORSMiddleware:
     """
     Set the CORS 'Access-Control-Allow-Origin' header to allow the debug
     toolbar to work on the docs domain.

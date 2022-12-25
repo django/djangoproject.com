@@ -332,7 +332,7 @@ class UpdateDocTests(TestCase):
         robots_path = settings.BASE_DIR.joinpath(
             "djangoproject", "static", "robots.docs.txt"
         )
-        with open(str(robots_path), "r") as fh:
+        with open(str(robots_path)) as fh:
             for line in fh:
                 if line.startswith("Disallow:"):
                     break
@@ -513,7 +513,7 @@ class DocumentManagerTest(TestCase):
                 "title": "Notes de publication de Django 1.9.4",
             },
         ]
-        Document.objects.bulk_create(((Document(**doc) for doc in documents)))
+        Document.objects.bulk_create(Document(**doc) for doc in documents)
 
     def setUp(self):
         Document.objects.search_update()

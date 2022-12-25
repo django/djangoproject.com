@@ -87,15 +87,15 @@ class Command(BaseCommand):
             call_command("update_index", **{"verbosity": self.verbosity})
 
         if self.purge_cache:
-            changed_versions = set(
+            changed_versions = {
                 version
                 for version, changed in self.release_docs_changed.items()
                 if changed
-            )
+            }
             if changed_versions or kwargs["force"]:
                 call_command(
                     "purge_docs_cache",
-                    **{"doc_versions": changed_versions, "verbosity": self.verbosity}
+                    **{"doc_versions": changed_versions, "verbosity": self.verbosity},
                 )
             else:
                 if self.verbosity >= 1:
@@ -106,9 +106,7 @@ class Command(BaseCommand):
         if not release.is_supported and not force:
             return
         if self.verbosity >= 1:
-            self.stdout.write(
-                "Starting update for %s at %s..." % (release, datetime.now())
-            )
+            self.stdout.write(f"Starting update for {release} at {datetime.now()}...")
 
         # checkout_dir is shared for all languages.
         checkout_dir = settings.DOCS_BUILD_ROOT.joinpath("sources", release.version)
@@ -175,9 +173,7 @@ class Command(BaseCommand):
             build_dir.mkdir(parents=True)
 
             if self.verbosity >= 2:
-                self.stdout.write(
-                    "  building %s (%s -> %s)" % (builder, source_dir, build_dir)
-                )
+                self.stdout.write(f"  building {builder} ({source_dir} -> {build_dir})")
             try:
                 # Translated docs builds generate a lot of warnings, so send
                 # stderr to stdout to be logged (rather than generating an
@@ -207,7 +203,7 @@ class Command(BaseCommand):
         # This gets moved into MEDIA_ROOT for downloading.
         #
         html_build_dir = parent_build_dir.joinpath("_build", "djangohtml")
-        zipfile_name = "django-docs-%s-%s.zip" % (release.version, release.lang)
+        zipfile_name = f"django-docs-{release.version}-{release.lang}.zip"
         zipfile_path = Path(settings.MEDIA_ROOT).joinpath("docs", zipfile_name)
         if not zipfile_path.parent.exists():
             zipfile_path.parent.mkdir(parents=True)
@@ -238,8 +234,8 @@ class Command(BaseCommand):
                 "rsync",
                 "--archive",
                 "--delete",
-                "--link-dest={}".format(build_dir),
-                "{}/".format(build_dir),
+                f"--link-dest={build_dir}",
+                f"{build_dir}/",
                 str(built_dir),
             ]
         )
@@ -269,7 +265,7 @@ class Command(BaseCommand):
             repo, branch = url, "main"
         if destdir.joinpath(".git").exists():
             remote = "origin"
-            branch_with_remote = "%s/%s" % (remote, branch)
+            branch_with_remote = f"{remote}/{branch}"
             try:
                 cwd = os.getcwd()
                 os.chdir(str(destdir))
@@ -286,7 +282,7 @@ class Command(BaseCommand):
                         "git",
                         "fetch",
                         remote,
-                        "%s:refs/remotes/%s" % (branch, branch_with_remote),
+                        f"{branch}:refs/remotes/{branch_with_remote}",
                         quiet,
                     ],
                     stderr=sys.stdout,

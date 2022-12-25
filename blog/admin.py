@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import Entry, Event
 
 
+@admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
     list_display = ("headline", "pub_date", "is_active", "is_published", "author")
     list_filter = ("is_active",)
@@ -21,6 +22,7 @@ class EntryAdmin(admin.ModelAdmin):
         return formfield
 
 
+@admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     list_display = (
         "headline",
@@ -32,7 +34,3 @@ class EventAdmin(admin.ModelAdmin):
         "is_published",
     )
     list_filter = ("is_active",)
-
-
-admin.site.register(Entry, EntryAdmin)
-admin.site.register(Event, EventAdmin)

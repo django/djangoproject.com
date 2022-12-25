@@ -50,7 +50,7 @@ def metric_json(request, metric_slug):
         daysback = 30
 
     generation = generation_key()
-    key = "dashboard:metric:%s:%s" % (metric_slug, daysback)
+    key = f"dashboard:metric:{metric_slug}:{daysback}"
 
     doc = cache.get(key, version=generation)
     if doc is None:
@@ -69,4 +69,4 @@ def _find_metric_or_404(slug):
             return MC.objects.get(slug=slug)
         except MC.DoesNotExist:
             continue
-    raise Http404("Could not find metric with slug %s" % slug)
+    raise Http404(f"Could not find metric with slug {slug}")

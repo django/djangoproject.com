@@ -90,7 +90,7 @@ class DocumentRelease(models.Model):
         unique_together = ("lang", "release")
 
     def __str__(self):
-        return "%s/%s" % (self.lang, self.version)
+        return f"{self.lang}/{self.version}"
 
     def get_absolute_url(self):
         kwargs = {
@@ -165,11 +165,11 @@ class DocumentRelease(models.Model):
         robots_path = settings.BASE_DIR.joinpath(
             "djangoproject", "static", "robots.docs.txt"
         )
-        with open(str(robots_path), "r") as fh:
+        with open(str(robots_path)) as fh:
             excluded_paths = [
                 line.strip().split("/")[-1]
                 for line in fh
-                if line.startswith("Disallow: /%s/%s/" % (self.lang, self.release_id))
+                if line.startswith(f"Disallow: /{self.lang}/{self.release_id}/")
             ]
 
         for document in decoded_documents:
