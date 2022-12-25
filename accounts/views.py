@@ -54,9 +54,7 @@ def json_user_info(request):
     De-duplication on GET['user'] is performed since I don't want to have to
     think about how best to do it in JavaScript :)
     """
-    userinfo = dict(
-        [(name, get_user_info(name)) for name in set(request.GET.getlist("user"))]
-    )
+    userinfo = {name: get_user_info(name) for name in set(request.GET.getlist("user"))}
     return JSONResponse(userinfo)
 
 

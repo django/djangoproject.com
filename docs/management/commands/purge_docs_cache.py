@@ -88,10 +88,10 @@ class Command(BaseCommand):
             # want these pages to update as soon as possible anyways.
             url = urljoin(fastly_service_url, "purge_all")
         if self.verbosity >= 1:
-            self.stdout.write("Purging Fastly cache: %s" % url)
+            self.stdout.write(f"Purging Fastly cache: {url}")
         result = s.post(url).json()
         if result.get("status") != "ok":
             self.stderr.write(
-                "WARNING: Fastly purge failed for URL: %s; result=%s" % (url, result)
+                f"WARNING: Fastly purge failed for URL: {url}; result={result}"
             )
             sys.exit(1)

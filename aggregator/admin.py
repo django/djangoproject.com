@@ -3,22 +3,18 @@ from django.contrib import admin
 from .models import APPROVED_FEED, DENIED_FEED, Feed, FeedItem, FeedType
 
 
+@admin.action(description="Mark selected feeds as approved.")
 def mark_approved(modeladmin, request, queryset):
     for item in queryset.iterator():
         item.approval_status = APPROVED_FEED
         item.save()
 
 
-mark_approved.short_description = "Mark selected feeds as approved."
-
-
+@admin.action(description="Mark selected feeds as denied.")
 def mark_denied(modeladmin, request, queryset):
     for item in queryset.iterator():
         item.approval_status = DENIED_FEED
         item.save()
-
-
-mark_denied.short_description = "Mark selected feeds as denied."
 
 
 admin.site.register(

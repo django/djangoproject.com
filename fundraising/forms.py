@@ -106,7 +106,7 @@ class StripeTextInput(forms.TextInput):
         return kwargs
 
     def _strip_name_attr(self, widget_string, name):
-        return widget_string.replace('name="%s"' % (name,), "")
+        return widget_string.replace(f'name="{name}"', "")
 
     def render(self, name, *args, **kwargs):
         kwargs = self._add_data_stripe_attr(name, kwargs)

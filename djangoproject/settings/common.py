@@ -17,7 +17,7 @@ DATA_DIR = (
 try:
     with DATA_DIR.joinpath("conf", "secrets.json").open() as handle:
         SECRETS = json.load(handle)
-except IOError:
+except OSError:
     SECRETS = {
         "secret_key": "a",
         "superfeedr_creds": ["any@email.com", "some_string"],

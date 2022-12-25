@@ -17,7 +17,7 @@ class FeedType(models.Model):
     can_self_add = models.BooleanField(default=True)
 
     def __str__(self):
-        return "%s" % (self.name,)
+        return f"{self.name}"
 
     def items(self):
         return FeedItem.objects.select_related("feed", "feed__feed_type").filter(
