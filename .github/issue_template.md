@@ -1,7 +1,6 @@
 ---
 name: Issue
 about: Submit a bug report or feature request for the website djangoproject.com
-
 ---
 
 ### Please read this first:
