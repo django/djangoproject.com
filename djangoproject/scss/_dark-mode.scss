@@ -244,7 +244,7 @@ html[data-theme="dark"] {
 	border: none;
 	background: transparent;
 	vertical-align: middle;
-	padding: 20px 10px;
+	padding: 20px 16px 20px 10px;
 
 	@include respond-max(768px) {
 		padding: 0;
