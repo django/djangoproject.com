@@ -69,7 +69,10 @@
         {% block header %}{% endblock %}
       </div>
     </div>
-    <!-- use the .banner css class for divs with id="billboard" -->
+    <!-- use the .banner-container css class for divs with id="billboard"
+        as a wrapper for the billboard contents. Use the .banner class
+        for the actual billboard content.
+    -->
     <div id="billboard">{% block billboard %}{% endblock %}</div>
 
     <div class="container {% block layout_class %}{% endblock %}">
