@@ -687,6 +687,17 @@ blockquote {
     }
 }
 
+/* banner for billboard */
+.banner {
+    background: #0C4B33;
+    color: #FFF;
+    text-align: center;
+    padding: 1em 3em;
+    max-width: 60em;
+    margin: 0 auto;
+}
+
+
 .copy-banner {
     // Large green callout at the top of the page
     background: var(--primary);
