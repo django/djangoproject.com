@@ -3,6 +3,7 @@ django-contact-form==1.9
 django-hosts==5.1
 django-money==2.1.1
 django-push==1.1
+django-read-only==1.11.0
 django-recaptcha==3.0.0
 django-registration-redux==2.10
 Django==3.2.16
@@ -18,4 +19,3 @@ requests==2.27.1
 sorl-thumbnail==12.8.0
 Sphinx==4.5.0
 stripe==2.56.0
-django-read-only==1.11.0
