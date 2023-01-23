@@ -3,7 +3,6 @@ import json
 import os
 from pathlib import Path
 
-
 # Utilities
 PROJECT_PACKAGE = Path(__file__).resolve().parent.parent
 
@@ -136,9 +135,9 @@ LOGGING = {
 }
 
 LOGIN_REDIRECT_URL = "edit_profile"
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGOUT_REDIRECT_URL = 'login'
+LOGIN_URL = "login"
+LOGOUT_URL = "logout"
+LOGOUT_REDIRECT_URL = "login"
 
 MEDIA_URL = "/m/"
 
@@ -310,7 +309,6 @@ TRAC_URL = "https://code.djangoproject.com/"
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 AUTHENTICATION_BACKENDS = [
-    'social_core.backends.github.GithubOAuth2',
-    'django.contib.auth.backends.ModelBackend'
+    "social_core.backends.github.GithubOAuth2",
+    "django.contib.auth.backends.ModelBackend",
 ]
-
