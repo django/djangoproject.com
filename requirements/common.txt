@@ -18,3 +18,4 @@ requests==2.27.1
 sorl-thumbnail==12.8.0
 Sphinx==4.5.0
 stripe==2.56.0
+django-read-only==1.11.0
