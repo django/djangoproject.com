@@ -70,11 +70,19 @@
       </div>
     </div>
 
-    <div id="billboard" class="banner-container">{% block billboard %}
-      <div class="banner">
-        {% comment %}<p> Banner content goes here </p>{% endcomment %}
+    {% comment %}
+    Replace the div#billboard below with banner using the skeleton here to
+    add a site banner for surveys/promotions/etc 
+    
+    <div id="billboard" class="banner">{% block billboard %}
+      <p> Banner content goes here </p>
       {% endblock %}
     </div>
+
+    The CSS targets the `#billboard` selector and expects nested `div` and `p`
+    elements. 
+    {% endcomment %}
+    <div id="billboard">{% block billboard %}{% endblock %}</div>
 
     <div class="container {% block layout_class %}{% endblock %}">
       <div role="main">
