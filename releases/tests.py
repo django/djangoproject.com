@@ -9,7 +9,6 @@ from .templatetags.release_notes import get_latest_micro_release, release_notes
 
 
 class LegacyURLsTests(TestCase):
-
     fixtures = ["redirects-downloads"]  # provided by the legacy app
 
     def test_legacy_redirects(self):

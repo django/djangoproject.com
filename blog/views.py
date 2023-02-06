@@ -10,7 +10,6 @@ from .models import Entry, Event
 
 
 class BlogViewMixin:
-
     date_field = "pub_date"
     paginate_by = 10
 
