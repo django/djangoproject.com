@@ -133,7 +133,6 @@ class ReleaseManager(models.Manager):
 
 
 class Release(models.Model):
-
     DEFAULT_CACHE_KEY = "%s_django_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
     STATUS_CHOICES = (
         ("a", "alpha"),
