@@ -8,6 +8,7 @@
         border-radius: 4px;
         margin-top: 20px;
         margin-bottom: 64px;
+
         &:before {
             content: "Example";
             font-size: 16px;
@@ -54,6 +55,7 @@
         list-style: none;
         @include clearfix;
         margin: 30px 0;
+
         li {
             width: 30%;
             height: 30px;
@@ -68,19 +70,24 @@
             &.text {
                 background: var(--body-fg);
             }
+
             &.green-dark {
                 background: $green-dark;
             }
+
             &.green {
                 background: var(--secondary);
             }
+
             &.green-light {
                 background: $green-light;
             }
+
             &.white {
                 background: var(--body-bg);
                 border: 1px solid var(--hairline-color);
             }
+
             &.red-dark {
                 background: var(--error-dark);
             }

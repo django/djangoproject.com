@@ -31,6 +31,7 @@ body {
         min-width: 768px;
     }
 }
+
 a {
     color: var(--link-color);
     text-decoration: underline;
@@ -50,12 +51,16 @@ a {
 ::selection { // Text Selection Colors
     background: var(--secondary-accent);
 }
+
 ::-moz-selection {
     background: var(--secondary-accent);
 }
-ol li, ul li { //list style
+
+ol li,
+ul li { //list style
     margin-top: 10px;
 }
+
 dl {
     margin: 20px 0 10px;
 
@@ -67,6 +72,7 @@ dl {
     dd {
         margin: 0.2em 0 1.2em;
         padding: 0;
+
         &:last-of-type {
             margin-bottom: 0;
         }
@@ -78,6 +84,7 @@ dl {
         }
     }
 }
+
 h1,
 h2,
 h3,
@@ -94,11 +101,13 @@ h6 {
 
 
 }
+
 h1 {
     @include font-size(28);
     color: var(--white-color);
     letter-spacing: -1px;
     line-height: 1.1;
+
     @include respond-min(768px) {
         @include font-size(32);
     }
@@ -117,8 +126,10 @@ h1 {
         @include font-size(28);
     }
 }
+
 h2 {
     @include font-size(24);
+
     [role="complementary"] &,
     .layout-secondary & {
         @include font-size(20);
@@ -147,6 +158,7 @@ h2 {
         margin-bottom: 15px;
     }
 }
+
 h3 {
     @include font-size(20);
     font-weight: 700;
@@ -207,15 +219,18 @@ span.pre {
     @include monospace;
 }
 
-a:hover, a:active, a:focus {
+a:hover,
+a:active,
+a:focus {
     tt {
         color: var(--text-l20);
     }
 }
 
 p {
+
     //increase top margin if first item in container
-    [role="main"] > &:first-child {
+    [role="main"]>&:first-child {
         margin-top: 30px;
     }
 }
@@ -236,6 +251,7 @@ blockquote {
     p:first-child {
         margin-top: 0;
     }
+
     &::before {
         @include fa-icon();
         position: absolute;
@@ -256,6 +272,7 @@ blockquote {
     //Main column. Left aligned by default. See /styleguide for explanation.
     background: var(--white-color);
     padding: 1px 10px 40px;
+
     @include respond-min(768px) {
         min-height: 800px;
         border: 1px solid #ddd;
@@ -265,6 +282,7 @@ blockquote {
         padding-left: 3%;
         padding-right: 3%;
         width: 60%;
+
         .mdzr-boxshadow & {
             border: none;
             box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), 460px 0 0 0 var(--white-color), 1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), 460px 600px 0 0px var(--white-color);
@@ -275,6 +293,7 @@ blockquote {
 
         .sidebar-right & {
             float: left;
+
             .mdzr-boxshadow & {
                 border: none;
                 box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), -460px 0 0 0 var(--white-color), -1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), -460px 600px 0 0px var(--white-color);
@@ -303,10 +322,12 @@ blockquote {
     .section {
         padding-bottom: 40px;
         border-bottom: 1px solid var(--hairline-color);
+
         &:last-of-type {
             padding-bottom: 0;
             border-bottom: 0;
         }
+
         dd {
             &.last-child {
                 padding-bottom: 0;
@@ -316,6 +337,7 @@ blockquote {
 }
 
 .full-width {
+
     // Single column, full width layout. See /styleguide for explanation.
     &.container {
         width: 100%;
@@ -324,6 +346,7 @@ blockquote {
         border-bottom: 1px solid #ddd;
         background: var(--white-color);
     }
+
     // High-level class denoting full-width layout
     @include clearfix;
 
@@ -337,6 +360,7 @@ blockquote {
     //Sidebar in column layouts, gray section in fullwidth layout
     padding: 0 10px 20px;
     @include font-size(14);
+
     @include respond-min(768px) {
         float: right;
         margin: 20px 0;
@@ -362,6 +386,7 @@ blockquote {
             li {
                 border-top: 0;
             }
+
             h2 {
                 padding: 10px 40px 10px 0;
                 font-size: 18px;
@@ -392,16 +417,19 @@ blockquote {
     // Secondary (gray) content area on full-width pages
     padding: 20px 10px 50px;
 }
+
 .layout-tertiary {
     // Tertiary (white) content area on full-width pages
     background: var(--white-color);
     border-top: 1px solid #ddd;
     padding: 20px 10px 50px;
+
     .mdzr-boxshadow & {
         border: none;
         @include secondary-shadow-bottom;
     }
 }
+
 .container {
     @include respond-min(768px) {
         margin: 0 auto;
@@ -415,13 +443,16 @@ blockquote {
         }
     }
 }
+
 .container--flex {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
 .container--flex--wrap--mobile {
     flex-wrap: wrap;
+
     @include respond-min(768px) {
         flex-wrap: no-wrap;
     }
@@ -480,7 +511,8 @@ blockquote {
         width: 104px;
         height: 36px;
 
-        .mdzr-svg & { // deliver svg logo if applicable
+        .mdzr-svg & {
+            // deliver svg logo if applicable
             background: url(../img/logo-django.svg) center center no-repeat;
         }
 
@@ -589,7 +621,8 @@ blockquote {
             padding: 20px 0px;
             text-decoration: none;
 
-            &:active, &:hover {
+            &:active,
+            &:hover {
                 color: var(--secondary-accent);
             }
 
@@ -598,19 +631,20 @@ blockquote {
             }
         }
 
-		span {
-			display: inline-block;
-			padding: 20px 10px;
-			color: var(--white-color);
+        span {
+            display: inline-block;
+            padding: 20px 10px;
+            color: var(--white-color);
 
-			&:active, &:hover {
+            &:active,
+            &:hover {
                 color: var(--secondary-accent);
             }
 
             @include respond-min(768px) {
                 padding: 20px 10px;
             }
-		}
+        }
 
         .nav-primary {
             @include respond-min(768px) {
@@ -621,6 +655,7 @@ blockquote {
         }
     }
 }
+
 .header {
     // dark green bar containing the page title
     @include sans-serif;
@@ -649,6 +684,7 @@ blockquote {
         }
     }
 }
+
 .copy-banner {
     // Large green callout at the top of the page
     background: var(--primary);
@@ -687,16 +723,19 @@ blockquote {
             color: var(--secondary-accent);
         }
 
-        a.cta, .cta {
+        a.cta,
+        .cta {
             margin: 0;
             @include font-size(18);
         }
     }
 
-    a.cta, .cta {
+    a.cta,
+    .cta {
         margin: 15px 0;
         padding: 0.4em 1.5em 0.5em;
         background: var(--primary-light);
+
         &:hover {
             background: lighten($green-medium-dark, 4%);
         }
@@ -705,13 +744,16 @@ blockquote {
         border: 1px solid var(--secondary-accent);
         color: var(--cta-color-accent);
         font-weight: 400;
+
         em {
             color: var(--white-color);
         }
+
         &:hover {
             background: var(--body-bg);
             color: var(--secondary);
             border-color: var(--body-bg);
+
             em {
                 color: var(--secondary);
             }
@@ -722,6 +764,7 @@ blockquote {
             color: var(--secondary);
             font-weight: 700;
             border: 0;
+
             &:hover {
                 background: var(--white-color);
             }
@@ -733,6 +776,7 @@ blockquote {
         background: var(--white-color);
         text-align: center;
         border-bottom: 1px solid var(--hairline-color);
+
         p {
             max-width: 700px;
             margin-left: auto;
@@ -740,16 +784,20 @@ blockquote {
             margin: 1em auto .5em;
             color: var(--body-fg);
             @include font-size(36);
+
             &.small {
                 color: var(--text-light);
                 margin: 2em auto 1em;
                 @include font-size(14);
             }
+
             em {
                 color: var(--body-fg);
             }
         }
-        a.cta, .cta {
+
+        a.cta,
+        .cta {
             display: inline-block;
             padding: 1em 50px 1.1em;
             margin-bottom: 40px;
@@ -757,9 +805,11 @@ blockquote {
             color: var(--white-color);
             border: 0;
             font-weight: 700;
+
             &:hover {
                 background: lighten($green-medium, 4%);
             }
+
             &:active {
                 background: darken($green-medium, 2%);
             }
@@ -770,33 +820,40 @@ blockquote {
             margin: 0 auto;
             list-style: none;
             padding: 0 0 0 30px;
+
             li {
                 width: 144px;
                 display: inline-block;
                 text-indent: -1000px;
                 overflow: hidden;
                 margin: 0;
+
                 a {
                     display: block;
                     height: 46px;
                     background-position: center;
                     background-repeat: no-repeat;
+
                     &.company-mozilla {
                         @include svg-image(company-mozilla);
                         background-position: center 7px;
                     }
+
                     &.company-pinterest {
                         @include svg-image(company-pinterest);
                         background-position: center 7px;
                     }
+
                     &.company-theguardian {
                         @include svg-image(company-theguardian);
                         background-position: center 14px;
                     }
+
                     &.company-instagram {
                         @include svg-image(company-instagram);
                         background-position: center 10px;
                     }
+
                     &.company-rdio {
                         @include svg-image(company-rdio);
                         background-position: 15px 6px;
@@ -816,6 +873,7 @@ blockquote {
 
     a {
         @include link-green;
+
         &.link-readmore {
             margin: 0;
         }
@@ -825,18 +883,21 @@ blockquote {
         margin: 0 10px;
         padding: 25px 0;
         @include clearfix;
+
         dt {
             i.icon {
                 color: var(--secondary);
                 margin-right: 8px;
             }
         }
+
         dd {
             float: left;
             width: 60%;
             margin-top: 0;
             @include sans-serif;
         }
+
         .link-readmore {
             margin-left: 10px;
         }
@@ -848,6 +909,7 @@ blockquote {
             width: 31%;
             padding-right: 2%;
         }
+
         dl {
             margin: 0;
         }
@@ -882,6 +944,7 @@ blockquote {
                     border-top: 0;
                 }
             }
+
             @include respond-min(768px) {
                 float: left;
                 margin-bottom: -999px;
@@ -893,6 +956,7 @@ blockquote {
                 margin-left: 0;
                 padding-left: 0;
             }
+
             &.last-child {
                 margin-right: 0;
                 padding-right: 0;
@@ -908,6 +972,7 @@ blockquote {
         font-weight: 700;
         margin-top: 20px;
         padding: 30px 0 10px;
+
         @include respond-min(768px) {
             border: none;
             margin-top: 0;
@@ -952,6 +1017,7 @@ blockquote {
         .logo {
             margin-right: 0;
             margin-top: 28px;
+
             .mdzr-svg & {
                 background-position: left center;
                 margin-right: 0;
@@ -973,6 +1039,7 @@ blockquote {
         text-decoration: none;
         text-indent: 100%;
         width: 142px;
+
         @include respond-min(768px) {
             float: left;
             margin: 20px 90px 0 0;
@@ -990,6 +1057,7 @@ blockquote {
         color: var(--primary-accent);
         margin: 0;
         padding: 0;
+
         @include respond-min(768px) {
             border: none;
         }
@@ -1000,6 +1068,7 @@ blockquote {
             padding: 17px 10px 11px;
             display: block;
             clear: both;
+
             @include respond-min(768px) {
                 background: none;
                 float: left;
@@ -1009,9 +1078,11 @@ blockquote {
 
                 &.design {
 
-                    span.ampersand, a {
+                    span.ampersand,
+                    a {
                         display: inline-block;
                         vertical-align: top;
+
                         &.threespot {
                             clear: both;
                         }
@@ -1044,12 +1115,14 @@ blockquote {
             color: var(--primary-accent);
         }
 
-        a.threespot, a.andrevv {
+        a.threespot,
+        a.andrevv {
             display: block;
             height: 33px;
             overflow: hidden;
             text-indent: -200px;
             width: 94px;
+
             @include respond-min(768px) {
                 clear: both;
                 margin-top: 5px;
@@ -1057,12 +1130,15 @@ blockquote {
 
             &.threespot {
                 background: url(../img/logo-threespot.png) no-repeat left center;
+
                 .mdzr-svg & {
                     background: url(../img/logo-threespot.svg) no-repeat left center;
                 }
             }
+
             &.andrevv {
                 background: url(../img/logo-andrevv.png) no-repeat left center;
+
                 .mdzr-svg & {
                     background: url(../img/logo-andrevv.svg) no-repeat left center;
                 }
@@ -1075,6 +1151,7 @@ blockquote {
         @include font-size(12);
         clear: both;
         margin: 20px 0 0 10px;
+
         @include respond-min(768px) {
             max-width: 80%;
             padding-top: 30px;
@@ -1100,11 +1177,14 @@ blockquote {
     padding: 10px 0;
     text-align: center;
     text-transform: uppercase;
+
     @include respond-min(768px) {
         display: none;
     }
 }
-.cta, a.cta {
+
+.cta,
+a.cta {
     // Call To Action buttons
     @include sans-serif;
     font-weight: 700;
@@ -1121,6 +1201,7 @@ blockquote {
     padding: 1em 1.5em;
     text-align: center;
     text-decoration: none;
+
     @include respond-min(768px) {
         margin: 20px auto;
         max-width: 400px;
@@ -1131,7 +1212,8 @@ blockquote {
         font-style: normal;
     }
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         background: lighten($green-medium, 4%);
     }
 
@@ -1142,9 +1224,10 @@ blockquote {
     [role="complementary"] & {
         @include font-size(16);
 
-        + .link-readmore {
+        +.link-readmore {
             display: block;
             text-align: center;
+
             @include respond-min(768px) {
                 margin-top: -10px;
             }
@@ -1171,23 +1254,28 @@ blockquote {
         &:hover {
             border-color: var(--secondary);
             color: var(--secondary);
+
             em {
                 color: var(--secondary);
             }
         }
+
         &:active {
             border-color: var(--primary);
             color: var(--primary);
+
             em {
                 color: var(--primary);
             }
         }
     }
 }
+
 .link-green {
     // class render of the link-green mixin
     @include link-green;
 }
+
 .link-readmore {
     // Read More links. Should exist outside of <p> tag, and include the '&rsaquo;' arrow after the text.
     @include link-green;
@@ -1195,19 +1283,23 @@ blockquote {
     @include font-size(14);
     display: inline-block;
     margin: 10px 0;
+
     &:after {
         content: " ›";
         font-size: 1.2em;
     }
+
     &.back-link {
         &:after {
             content: "";
         }
+
         &:before {
             content: "‹ ";
             font-size: 1.2em;
         }
     }
+
     font-weight: 700;
     text-transform: uppercase;
 
@@ -1215,6 +1307,7 @@ blockquote {
         @include font-size(12);
     }
 }
+
 .meta {
     // Re-usable meta class for alternate-style content.
     @include sans-serif;
@@ -1227,6 +1320,7 @@ blockquote {
         @include link-green;
     }
 }
+
 .layout-2col {
     //two column layout module
     margin: 20px 0;
@@ -1234,29 +1328,36 @@ blockquote {
     @include respond-min(768px) {
         @include clearfix;
         margin: 0;
+
         .col {
             float: left;
             width: 46%;
             margin: 0 4%;
+
             &:first-child {
                 margin-left: 0;
             }
+
             &.last-child {
                 margin-right: 0;
             }
         }
+
         .one-third {
             width: 29%;
         }
+
         .two-third {
             width: 62%;
         }
     }
 }
+
 .blue {
     // overide blue color class
     color: var(--secondary);
 }
+
 .label {
     // Label style associated with forms and other global elements.
     @include sans-serif;
@@ -1286,6 +1387,7 @@ blockquote {
         }
     }
 }
+
 .callout-right {
     @include respond-min(768px) {
         float: right;
@@ -1302,6 +1404,7 @@ blockquote {
         max-width: 100%;
     }
 }
+
 .callout-left {
     @include respond-min(768px) {
         float: left;
@@ -1381,6 +1484,7 @@ blockquote {
         @include link-green;
     }
 }
+
 .list-tags {
     // Tag list style with blue block links. (See sidebar-news.html include.)
     @include sans-serif;
@@ -1412,6 +1516,7 @@ blockquote {
         }
     }
 }
+
 .list-news {
     // News article listing style. (See News & Events Page.)
     list-style: none;
@@ -1443,12 +1548,14 @@ blockquote {
     .meta {
         margin-top: 10px;
         color: var(--dark-hairline-color);
+
         a:link {
             color: var(--text-light);
             text-decoration: underline;
         }
     }
 }
+
 .list-case-study {
     // Three column list for Case Studies that switches to one column on mobile. (See Overview page.)
     @include clearfix;
@@ -1465,12 +1572,14 @@ blockquote {
         border-top: 1px solid var(--hairline-color);
         margin-top: 20px;
         padding-top: 20px;
+
         @include respond-min(1024px) {
             border: none;
             float: left;
             padding-right: 5%;
             padding-top: 0;
             width: 28%;
+
             &:nth-child(3) {
                 &:after {
                     clear: both;
@@ -1482,13 +1591,14 @@ blockquote {
         }
     }
 
-    li > a {
+    li>a {
         @include sans-serif;
         @include link-green;
         @include font-size(12);
         font-weight: 700;
         margin-top: 10px;
         text-transform: uppercase;
+
         &:after {
             content: " ›";
             font-size: 1.2em;
@@ -1516,6 +1626,7 @@ blockquote {
             background: url(../img/logo-knight.svg) no-repeat bottom left;
         }
     }
+
     [title="Mozilla"] {
         background: url(../img/logo-mozilla.png) no-repeat bottom left;
         height: 32px;
@@ -1525,6 +1636,7 @@ blockquote {
             background: url(../img/logo-mozilla.svg) no-repeat bottom left;
         }
     }
+
     [title="Disqus"] {
         background: url(../img/logo-disqus.png) no-repeat bottom left;
         height: 28px;
@@ -1541,10 +1653,12 @@ blockquote {
             margin-top: 0;
             margin-bottom: 30px;
             width: auto;
+
             p {
                 @include font-size(18);
                 margin-right: 40px;
             }
+
             h3 {
                 margin-top: 20px;
             }
@@ -1573,6 +1687,7 @@ blockquote {
         float: left;
         margin: 10px 5% 0 0;
         width: 45%;
+
         @include respond-min(768px) {
             margin-right: 3%;
             width: 30%;
@@ -1591,7 +1706,7 @@ blockquote {
 }
 
 
-h2 + .list-link-soup {
+h2+.list-link-soup {
     border-top: 0;
 }
 
@@ -1617,9 +1732,11 @@ h2 + .list-link-soup {
         line-height: 1.68em;
         display: inline-block;
         text-align: center;
+
         &.icon-briefcase {
             line-height: 1.7em;
         }
+
         &.icon-dashboard {
             line-height: 1.5em;
         }
@@ -1683,15 +1800,19 @@ h2 + .list-link-soup {
                 &.icon-bolt {
                     background-position: -150px -269px;
                 }
+
                 &.icon-briefcase {
                     background-position: -354px -7px;
                 }
+
                 &.icon-lock {
                     background-position: -36px -96px;
                 }
+
                 &.icon-dashboard {
                     background-position: -270px -9px;
                 }
+
                 &.icon-cogs {
                     background-position: -334px -12px;
                 }
@@ -1712,30 +1833,39 @@ h2 + .list-link-soup {
 
                 &.icon-bolt {
                     background-position: 40px -369px;
+
                     &.inview {
                         background-position: -150px -269px;
                     }
                 }
+
                 &.icon-briefcase {
                     background-position: -494px 207px;
+
                     &.inview {
                         background-position: -354px -7px;
                     }
                 }
+
                 &.icon-lock {
                     background-position: 144px -206px;
+
                     &.inview {
                         background-position: -36px -96px;
                     }
                 }
+
                 &.icon-dashboard {
                     background-position: -360px 201px;
+
                     &.inview {
                         background-position: -270px -9px;
                     }
                 }
+
                 &.icon-cogs {
                     background-position: -500px -180px;
+
                     &.inview {
                         background-position: -334px -12px;
                     }
@@ -1766,30 +1896,30 @@ h2 + .list-link-soup {
         }
 
         i {
-                color: var(--body-bg);
-                margin-right: 10px;
-                width: 40px;
-                height: 40px;
-                top: 10px;
-                border-radius: 20px;
-                background: var(--secondary);
-                display: inline-block;
-                text-align: center;
-                @include font-size(24);
+            color: var(--body-bg);
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+            top: 10px;
+            border-radius: 20px;
+            background: var(--secondary);
+            display: inline-block;
+            text-align: center;
+            @include font-size(24);
 
-                .mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
-                    -webkit-transition: all 0.3s ease-out;
-                    transition: all 0.3s ease-out;
+            .mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
+                -webkit-transition: all 0.3s ease-out;
+                transition: all 0.3s ease-out;
 
-                    -webkit-transform: rotate(0.5turn);
-                    transform: rotate(0.5turn);
+                -webkit-transform: rotate(0.5turn);
+                transform: rotate(0.5turn);
 
-                    &.inview {
-                        -webkit-transform: rotate(0turn);
-                        transform: rotate(0turn);
-                    }
+                &.inview {
+                    -webkit-transform: rotate(0turn);
+                    transform: rotate(0turn);
                 }
             }
+        }
 
         @include respond-min(768px) {
 
@@ -1803,6 +1933,7 @@ h2 + .list-link-soup {
             dd {
                 padding: 0 60px 20px 110px;
                 min-height: 0;
+
                 p {
                     margin-top: 0;
                     @include font-size(18);
@@ -1830,7 +1961,7 @@ h2 + .list-link-soup {
             margin: 40px 0 20px;
         }
 
-        + .form-controls.label {
+        +.form-controls.label {
             margin: 50px 0 0;
             text-align: right;
         }
@@ -1852,7 +1983,7 @@ h2 + .list-link-soup {
 
     &.active {
 
-        > li {
+        >li {
             border-top: 1px solid var(--hairline-color);
             margin: 0;
             padding: 0;
@@ -1886,6 +2017,7 @@ h2 + .list-link-soup {
                 position: absolute;
                 right: 0;
                 top: 24px;
+
                 &:before {
                     content: "\f067";
                 }
@@ -1895,7 +2027,7 @@ h2 + .list-link-soup {
                 // H2 class for using icons as 'bullets' much like the layout of a list. When the line breaks, the text won't fold under the icon. See the community page for an example.
                 padding-left: 1.5em;
 
-                > i:first-child {
+                >i:first-child {
                     position: absolute;
                     top: 24px;
                     left: 0;
@@ -1910,6 +2042,7 @@ h2 + .list-link-soup {
             -webkit-transition: all 0.5s ease-out;
             transition: all 0.5s ease-out;
         }
+
         li.active .collapsing-content {
             max-height: 1000px;
             overflow: auto;
@@ -1927,6 +2060,7 @@ h2 + .list-link-soup {
         border-top: 1px solid var(--hairline-color);
         margin-top: 20px;
         padding-top: 40px;
+
         @include respond-min(768px) {
             @include clearfix;
             margin-top: 20px;
@@ -1967,7 +2101,10 @@ h2 + .list-link-soup {
             max-height: 200px;
         }
 
-        h2, h3, h4, p {
+        h2,
+        h3,
+        h4,
+        p {
             padding-left: 240px;
         }
 
@@ -1986,7 +2123,10 @@ h2 + .list-link-soup {
             margin: 0 20px 10px 0;
         }
 
-        h2, h3, h4, p {
+        h2,
+        h3,
+        h4,
+        p {
             padding-left: 0px;
             border: 0;
         }
@@ -2005,7 +2145,8 @@ h2 + .list-link-soup {
 
 //-------------------Documentation styles
 
-#s-django-documentation, #s-feed {
+#s-django-documentation,
+#s-feed {
     @include sans-serif;
 }
 
@@ -2021,31 +2162,36 @@ h2 + .list-link-soup {
         text-decoration: none;
     }
 
-    > li > ul > li {
+    >li>ul>li {
         margin-top: 12px;
+
         &:first-child {
             margin-top: 6px;
         }
     }
 
-    > li > a { //top level
+    >li>a {
+        //top level
         text-transform: uppercase;
         font-weight: 700;
         @include link-green;
     }
 
-    > li > ul { //second level
+    >li>ul {
+        //second level
         list-style: none;
         @include font-size(12);
         padding: 5px 0 0 10px;
-        > li > a {
+
+        >li>a {
             font-weight: 700;
             text-transform: uppercase;
             @include link-green;
         }
     }
 
-    > li > ul > li  ul { //third level & down
+    >li>ul>li ul {
+        //third level & down
         @include font-size(14);
         padding: 0 0 0 20px;
 
@@ -2071,87 +2217,101 @@ h2 + .list-link-soup {
     text-decoration: none;
     -webkit-transition: opacity 200ms ease-in-out;
     transition: opacity 200ms ease-in-out;
+
     &:focus {
         opacity: 1;
     }
 }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    dl,
-    dt {
-        &:hover {
-            > .headerlink {
-                opacity: 1;
-            }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+dl,
+dt {
+    &:hover {
+        >.headerlink {
+            opacity: 1;
         }
     }
+}
 
 //Notes, help blocks, and annotation sections
 .note,
 .admonition,
 .help-block {
-        background: var(--body-bg);
-        padding: 15px 20px 15px 70px;
-        border: 1px solid var(--secondary-accent);
-        border-radius: 4px;
-        margin: 25px 0;
-        position: relative;
+    background: var(--body-bg);
+    padding: 15px 20px 15px 70px;
+    border: 1px solid var(--secondary-accent);
+    border-radius: 4px;
+    margin: 25px 0;
+    position: relative;
 
-        h1,h2,h3,h4 {
-            margin-top: 20px;
-        }
-        p {
-            margin: 0.8em 0;
-        }
-        .first {
-            margin-top: 0;
-        }
-        // Add an icon on the left of the box
-        .admonition-title {
-            font-weight: bold;
-            &::before {
-                @include fa-icon();
-                position: absolute;
-                top: 20px;
-                left: 20px;
-                font-size: 30px;
-                width: 34px;
-                text-align: center;
-                content: $fa-var-file-text-o; // default icon
-                opacity: 0.5;
-            }
-        }
-        &.warning {
-            background-color: var(--warning);
-            border-color: var(--warning-dark);
-			color: var(--warning-text);
-            .admonition-title::before {
-                color: #E9BD46;
-                content: $fa-var-exclamation-triangle;
-            }
+    h1,
+    h2,
+    h3,
+    h4 {
+        margin-top: 20px;
+    }
 
-			code {
-				color: var(--warning-text);
-			}
+    p {
+        margin: 0.8em 0;
+    }
+
+    .first {
+        margin-top: 0;
+    }
+
+    // Add an icon on the left of the box
+    .admonition-title {
+        font-weight: bold;
+
+        &::before {
+            @include fa-icon();
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            width: 34px;
+            text-align: center;
+            content: $fa-var-file-text-o; // default icon
+            opacity: 0.5;
         }
-        &.admonition-philosophy {
-            .admonition-title::before {
-                content: $fa-var-lightbulb-o;
-            }
+    }
+
+    &.warning {
+        background-color: var(--warning);
+        border-color: var(--warning-dark);
+        color: var(--warning-text);
+
+        .admonition-title::before {
+            color: #E9BD46;
+            content: $fa-var-exclamation-triangle;
         }
-        &.admonition-behind-the-scenes {
-            .admonition-title::before {
-                content: $fa-var-cogs;
-            }
+
+        code {
+            color: var(--warning-text);
         }
-        .last, .highlight {
-            margin-bottom: 0px;
+    }
+
+    &.admonition-philosophy {
+        .admonition-title::before {
+            content: $fa-var-lightbulb-o;
         }
+    }
+
+    &.admonition-behind-the-scenes {
+        .admonition-title::before {
+            content: $fa-var-cogs;
+        }
+    }
+
+    .last,
+    .highlight {
+        margin-bottom: 0px;
+    }
 }
 
 
@@ -2170,6 +2330,7 @@ h2 + .list-link-soup {
 
     .left {
         float: left;
+
         .icon {
             margin-right: 4px;
             @include font-size(12);
@@ -2178,6 +2339,7 @@ h2 + .list-link-soup {
 
     .right {
         float: right;
+
         .icon {
             margin-left: 4px;
             @include font-size(12);
@@ -2213,14 +2375,17 @@ h2 + .list-link-soup {
     }
 }
 
-#doc-versions, #doc-languages, #faq-link {
+#doc-versions,
+#doc-languages,
+#faq-link {
     margin: 0;
     padding-top: 0.25em;
     padding-bottom: 0.25em;
 
     &.open {
-        li{
+        li {
             display: inline-block;
+
             &.current {
                 border: 1px solid $green-light;
             }
@@ -2257,6 +2422,7 @@ h2 + .list-link-soup {
             padding: 8px 15px;
             border: 1px solid var(--hairline-color);
             border-radius: 4px;
+
             &:hover {
                 color: var(--secondary);
                 border: 1px solid $green-light;
@@ -2268,6 +2434,7 @@ h2 + .list-link-soup {
         pointer-events: auto;
         padding: 2em 0;
         margin: -1.75em 0;
+
         li {
             display: inline-block;
         }
@@ -2275,7 +2442,8 @@ h2 + .list-link-soup {
 
 }
 
-#dev-warning, #outdated-warning {
+#dev-warning,
+#outdated-warning {
     position: absolute;
     top: 0;
     width: 100%;
@@ -2290,7 +2458,7 @@ h2 + .list-link-soup {
     font-size: 14px;
     text-align: center;
     background-color: $warning-bg;
-	color: $text;
+    color: $text;
 
     @include respond-min(768px) {
         position: fixed;
@@ -2307,7 +2475,12 @@ h2 + .list-link-soup {
 
     // Decrease vertical spacing in docs for less scrolling
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         margin: 0.6em 0;
         line-height: 1.1em;
     }
@@ -2325,11 +2498,11 @@ h2 + .list-link-soup {
     @include font-size(14);
     line-height: 1.5em;
 
-	.warning {
-		a.reference {
-			color: var(--warning-link-block);
-		}
-	}
+    .warning {
+        a.reference {
+            color: var(--warning-link-block);
+        }
+    }
 
     a.reference {
         // for docs links. if we keep text-decoration, then underscores in function names become invisible.
@@ -2352,9 +2525,11 @@ h2 + .list-link-soup {
             font-style: normal;
         }
     }
+
     code.literal {
         font-weight: 700;
     }
+
     .code-block-caption {
         code.literal {
             font-weight: 400;
@@ -2362,7 +2537,9 @@ h2 + .list-link-soup {
     }
 }
 
-.versionadded, .versionchanged, .versionmodified {
+.versionadded,
+.versionchanged,
+.versionmodified {
     @include sans-serif;
     font-weight: bold;
     margin-bottom: 20px;
@@ -2374,6 +2551,7 @@ h2 + .list-link-soup {
     p {
         font-weight: normal;
         margin-top: 0.3em;
+
         &:last-child {
             margin-bottom: 0;
         }
@@ -2383,7 +2561,9 @@ h2 + .list-link-soup {
 .deprecated {
     @extend .versionchanged;
 
-    .versionadded, .versionchanged, .versionmodified {
+    .versionadded,
+    .versionchanged,
+    .versionmodified {
         border: none;
         padding: 0;
         margin-bottom: 0;
@@ -2393,6 +2573,7 @@ h2 + .list-link-soup {
     p {
         font-weight: normal;
         margin-top: 0;
+
         &:last-child {
             margin-bottom: 0;
         }
@@ -2401,17 +2582,26 @@ h2 + .list-link-soup {
 
 }
 
-dl.function, dl.class, dl.method, dl.classmethod, dl.staticmethod, dl.attribute, dl.exception, dl.data {
+dl.function,
+dl.class,
+dl.method,
+dl.classmethod,
+dl.staticmethod,
+dl.attribute,
+dl.exception,
+dl.data {
     dt {
         font-weight: 700;
     }
+
     dd {
         padding-left: 1.4em;
     }
 }
 
 
-table.docutils td, table.docutils th {
+table.docutils td,
+table.docutils th {
     border-bottom: 1px solid var(--hairline-color);
 }
 
@@ -2434,6 +2624,7 @@ table.docutils td, table.docutils th {
         &:first-child {
             margin-top: 0;
         }
+
         font-weight: 400;
     }
 
@@ -2470,7 +2661,7 @@ table.docutils td, table.docutils th {
         }
     }
 
-    + h2 {
+    +h2 {
         margin-top: 34px;
     }
 }
@@ -2480,19 +2671,20 @@ table.docutils td, table.docutils th {
 
     a {
         mark {
-			color: var(--search-mark-text);
-			text-decoration: none;
+            color: var(--search-mark-text);
+            text-decoration: none;
 
-			&:visited {
-				color: var(--link-color);
-			}
+            &:visited {
+                color: var(--link-color);
+            }
 
-			&:hover,
-			&:active,
-			&:focus {
-				color: var(--search-link-hover);
-				text-decoration: none;
-			}
+            &:hover,
+            &:active,
+            &:focus {
+                color: var(--search-link-hover);
+                text-decoration: none;
+            }
+
             background-color: var(--secondary-accent);
         }
     }
@@ -2533,6 +2725,7 @@ table.docutils td, table.docutils th {
 
     dd {
         margin-bottom: 30px;
+
         mark {
             background-color: var(--secondary-accent);
             color: var(--search-mark-text);
@@ -2544,13 +2737,14 @@ table.docutils td, table.docutils th {
     //List style used to display links, with optional icons. See Homepage sidebar
     padding-left: 0;
     list-style: none;
+
     a {
         @include link-green;
         text-decoration: none;
     }
 
-    li > a,
-    dt > a {
+    li>a,
+    dt>a {
         &:before {
             font-family: FontAwesome;
             font-weight: normal;
@@ -2573,8 +2767,9 @@ table.docutils td, table.docutils th {
     // Add document icon before list item link
     &.docs-list {
         list-style: none;
-        li > a,
-        dt > a {
+
+        li>a,
+        dt>a {
             &:before {
                 content: "\f0f6";
             }
@@ -2588,14 +2783,15 @@ table.docutils td, table.docutils th {
     // Add news icon before list item link
     &.news-list {
         list-style: none;
-        li > a,
-        dt > a {
+
+        li>a,
+        dt>a {
             &:before {
                 content: "\f0a1";
             }
         }
 
-        dt.event > a {
+        dt.event>a {
             &:before {
                 content: "\f133";
             }
@@ -2609,8 +2805,9 @@ table.docutils td, table.docutils th {
     // Add link icon before list item link
     &.resource-list {
         list-style: none;
-        li > a,
-        dt > a {
+
+        li>a,
+        dt>a {
             &:before {
                 content: "\f0c1";
             }
@@ -2624,8 +2821,9 @@ table.docutils td, table.docutils th {
     // Add rss icon before list item link
     &.rss-list {
         list-style: none;
-        li > a,
-        dt > a {
+
+        li>a,
+        dt>a {
             &:before {
                 content: "\f09e";
             }
@@ -2641,6 +2839,7 @@ table.docutils td, table.docutils th {
 form {
     @include sans-serif;
     @include font-size(16);
+
     // Global input styles
     input[type="search"],
     input[type="text"],
@@ -2683,20 +2882,24 @@ form {
         }
 
         &::-webkit-input-placeholder {
-			color: var(--body-fg);
-		}
-		&:-ms-input-placeholder {
-			color: var(--body-fg);
-		}
-		&::-moz-placeholder {
-			color: var(--body-fg);
-		}
-		&:-moz-placeholder {
-			color: var(--body-fg);
-		}
-		&::placeholder {
-			color: var(--body-fg);
-		}
+            color: var(--body-fg);
+        }
+
+        &:-ms-input-placeholder {
+            color: var(--body-fg);
+        }
+
+        &::-moz-placeholder {
+            color: var(--body-fg);
+        }
+
+        &:-moz-placeholder {
+            color: var(--body-fg);
+        }
+
+        &::placeholder {
+            color: var(--body-fg);
+        }
     }
 
     textarea {
@@ -2736,6 +2939,7 @@ form {
         padding: 0 15px;
         @include sans-serif;
         @include font-size(16);
+
         &:hover {
             background: var(--primary);
         }
@@ -2743,6 +2947,7 @@ form {
 }
 
 .form-general {
+
     // Multi-input forms with seperate submit button. For use in Login and Register forms, or other general form uses.
     fieldset {
         max-width: 700px;
@@ -2802,31 +3007,38 @@ form {
     [role="complementary"] & {
         min-height: 30px;
         margin: 20px 0 30px;
+
         input[type="search"],
         input[type="text"],
         input[type="email"] {
             height: 20px;
             @include font-size(14);
         }
+
         button {
             height: 30px;
             width: 30px;
             top: 3px;
+
             @include respond-min(768px) {
                 right: 0;
             }
+
             i {
                 @include font-size(20);
             }
         }
     }
+
     &.search {
         @include respond-min(768px) {
             flex: 0 0 40%;
             margin: 10px 0;
         }
+
         flex: 0 0 100%;
         margin: 0 0 10px 0;
+
         button {
             top: 19%;
         }
@@ -2837,6 +3049,7 @@ form {
 
 form.donate {
     max-width: 150px;
+
     label {
         position: absolute;
         left: 0px;
@@ -2844,11 +3057,13 @@ form.donate {
         padding-top: 0.3em;
         padding-left: 0.5em;
     }
+
     input[type=text] {
         padding-left: 20px;
         padding-right: 9px; /* Magic value to right-align the button inside the input */
     }
 }
+
 div[role=main] {
     form.donate {
         label {
@@ -2859,14 +3074,17 @@ div[role=main] {
 
 
 .form-email {
+
     // Email submission forms on Community page.
     h3 {
         @include font-size(18);
         margin: 10px 0;
     }
+
     .meta {
         margin: 0;
     }
+
     form {
         margin: 10px 0 30px;
     }
@@ -2885,9 +3103,10 @@ div[role=main] {
     padding: 30px 0 0;
     text-align: center;
 
-    li{
+    li {
         display: inline-block;
     }
+
     a {
         border: none;
         color: var(--text-light);
@@ -2897,6 +3116,7 @@ div[role=main] {
         border-radius: 15px;
         display: block;
         text-decoration: none;
+
         @include device-min(320px) {
             background: var(--text-light);
             color: var(--white-color);
@@ -2908,6 +3128,7 @@ div[role=main] {
         &.previous,
         &.next {
             @include font-size(16);
+
             @include device-min(320px) {
                 border-radius: 20px;
                 height: 40px;
@@ -2915,15 +3136,19 @@ div[role=main] {
                 width: 40px;
             }
         }
+
         &.previous {
             margin-right: 10px;
+
             @include respond-min(768px) {
                 margin-right: 70px;
             }
         }
+
         &.next {
             margin-left: 10px;
             text-indent: 1px;
+
             @include respond-min(768px) {
                 margin-left: 70px;
             }
@@ -2935,6 +3160,7 @@ div[role=main] {
         &.active {
             background: none;
             color: var(--secondary);
+
             @include device-min(320px) {
                 background: var(--secondary);
                 color: var(--white-color);
@@ -2993,33 +3219,48 @@ hr {
 .visuallyhidden {
     @include visuallyhidden;
 }
-.clearfix, .group-container {
+
+.clearfix,
+.group-container {
     @include clearfix;
 }
 
 /// Fundraising page
 @keyframes pixel-pulse {
-    0%, 100% { opacity: 0.10; }
-    50% { opacity: 0.25; }
+
+    0%,
+    100% {
+        opacity: 0.10;
+    }
+
+    50% {
+        opacity: 0.25;
+    }
 }
+
 .fundraising-index {
     margin-top: 50px;
 
     .fundraising-heart {
         width: 100%;
         float: none;
-        img, svg {
+
+        img,
+        svg {
             width: 100%;
             height: auto;
         }
+
         rect {
             -webkit-transition: opacity 250ms ease-out;
             transition: opacity 250ms ease-out;
+
             &.faded {
                 opacity: 0.05;
                 animation: pixel-pulse 3s infinite;
             }
         }
+
         text {
             @include font-size(120);
             fill: rgba(50, 50, 50, 0.3);
@@ -3031,11 +3272,13 @@ hr {
             user-select: none;
             cursor: default;
         }
+
         @include respond-min(768px) {
             width: 55%;
             float: left;
         }
     }
+
     .description {
         margin-left: 5%;
         width: 100%;
@@ -3064,24 +3307,30 @@ hr {
                 width: 100%;
             }
         }
+
         .cta {
             margin: 10px 0;
+
             & .disabled {
                 opacity: 0.5;
             }
         }
+
         .custom-donation {
             display: none;
         }
+
         .prefix {
             float: left;
             @include font-size(19);
             margin: 8px 9px 0 3px;
         }
-        input[type="text"]{
+
+        input[type="text"] {
             width: 70%;
         }
     }
+
     .cls {
         clear: both;
     }
@@ -3099,6 +3348,7 @@ hr {
             max-width: 64px;
         }
     }
+
     .small-cta {
         width: 70%;
         float: left;
@@ -3107,6 +3357,7 @@ hr {
         margin-right: 5%;
         margin-bottom: 20px;
     }
+
     clear: both;
 }
 
@@ -3115,16 +3366,19 @@ hr {
     @include font-size(14);
     margin-top: 20px;
     text-align: center;
+
     /* The IDs in documentation footnotes should stay as table cells */
     .label {
         display: table-cell;
         padding-right: 1em;
     }
 }
+
 form .footnote {
     margin-top: 10px;
     text-align: left;
 }
+
 .footnote.docutils {
     text-align: left;
 }
@@ -3139,48 +3393,60 @@ form .footnote {
             clear: both;
             text-align: center;
         }
+
         .hero {
             width: calc(100% / 3);
             position: relative;
             height: auto;
+
             div {
                 width: 100%;
             }
         }
+
         .hero-logo {
             height: 170px;
             line-height: 170px;
+
             img {
                 vertical-align: middle;
             }
         }
+
         .hero-name {
             min-height: 87px;
             vertical-align: top;
             margin-bottom: 5px;
         }
+
         .no-logo-hero {
             min-height: 60px;
             margin-right: 24px;
         }
+
         div {
             float: left;
             text-align: center;
+
             img {
                 max-width: 90%;
                 max-height: 170px;
             }
         }
     }
+
     .pagination {
         clear: both;
     }
 }
 
 .manage-donations-form {
-    select, input[type="number"] {
+
+    select,
+    input[type="number"] {
         width: 300px;
     }
+
     input[type="number"] {
         padding: 7px 10px;
         width: 278px;
@@ -3191,23 +3457,28 @@ form .footnote {
     .form-control {
         margin: 1em 0;
     }
+
     ul {
         list-style: none;
         display: inline-block;
         margin: 0;
         padding: 0;
     }
+
     li {
         display: inline-block;
         margin-left: 1em;
     }
 }
 
-table.django-supported-versions, table.django-unsupported-versions {
+table.django-supported-versions,
+table.django-unsupported-versions {
     border: 1px solid black;
     text-align: center;
-	color: var(--table-color);
-    th, td {
+    color: var(--table-color);
+
+    th,
+    td {
         padding: 5px;
     }
 }
@@ -3266,6 +3537,7 @@ ul.corporate-members li {
         &.success {
             background-color: var(--secondary-accent-l5);
             content: $fa-var-check-circle;
+
             &::before {
                 content: $fa-var-check-circle;
             }
@@ -3274,6 +3546,7 @@ ul.corporate-members li {
         &.warning {
             background-color: var(--warning);
             border-color: var(--warning-dark-d50);
+
             &::before {
                 color: var(--warning-dark-d50);
                 content: $fa-var-exclamation-triangle;
@@ -3284,6 +3557,7 @@ ul.corporate-members li {
             background-color: var(--error-light-l10);
             color: var(--error-dark);
             border-color: var(--error-dark);
+
             &::before {
                 content: $fa-var-times-circle;
             }
@@ -3299,7 +3573,8 @@ ul.corporate-members li {
     }
 }
 
-.code-block-caption, .snippet {
+.code-block-caption,
+.snippet {
     .btn-clipboard {
         float: right;
         cursor: pointer;
@@ -3309,12 +3584,14 @@ ul.corporate-members li {
         i:hover {
             color: lighten($green-dark, 20);
         }
+
         .clipboard-success {
             font-size: 80%;
             margin-right: 10px;
         }
     }
-    .caption-text::selection{
+
+    .caption-text::selection {
         background: $green-light;
     }
 }

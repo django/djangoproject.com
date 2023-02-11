@@ -3,6 +3,7 @@
         margin: 0 auto;
         text-align: center;
     }
+
     @include sans-serif;
 }
 
@@ -24,6 +25,7 @@
         display: block;
         text-align: left;
         color: var(--body-fg);
+
         a {
             color: var(--link-color);
 
@@ -70,6 +72,7 @@
                 color: var(--text-l20);
             }
         }
+
         .timestamp {
             font-size: 0.16em;
             font-weight: 400;
