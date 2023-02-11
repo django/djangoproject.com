@@ -12,7 +12,7 @@ define([
             $(document).ready(function () {
                 const search_form_input = self.search_form.find('input');
                 const raw_placeholder = search_form_input.attr('placeholder');
-                const shortcut = navigator.userAgent.indexOf("Mac") === -1 ? "⌘ + K" :  "Ctrl + K";
+                const shortcut = navigator.userAgent.indexOf("Mac") === -1 ? "Ctrl + K" : "⌘ + K";
                 search_form_input.attr('placeholder', `${raw_placeholder} (${shortcut})`);
 
                 $(window).keydown(function(e) {
