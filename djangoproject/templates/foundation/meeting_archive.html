@@ -3,6 +3,10 @@
 {% block og_title %}Meeting minutes archive{% endblock %}
 {% block og_description %}View meeting minutes{% endblock %}
 
+{% block head_extra %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url 'foundation-minutes-feed' %}" />
+{% endblock %}
+
 {% block content %}
 <h1>Meeting minutes archive</h1>
 
