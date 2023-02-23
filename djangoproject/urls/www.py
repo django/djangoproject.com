@@ -13,6 +13,7 @@ from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
+from foundation.feeds import FoundationMinutesFeed
 from foundation.views import CoreDevelopers
 
 admin.autodiscover()
@@ -115,6 +116,11 @@ urlpatterns = [
         name="aggregator-firehose-feed",
     ),
     path("rss/community/<slug>/", CommunityAggregatorFeed(), name="aggregator-feed"),
+    path(
+        "rss/foundation/minutes/",
+        FoundationMinutesFeed(),
+        name="foundation-minutes-feed",
+    ),
     # django-push
     path("subscriber/", include("django_push.subscriber.urls")),
     # Trac schtuff
