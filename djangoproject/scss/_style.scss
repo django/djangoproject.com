@@ -439,6 +439,8 @@ blockquote {
     padding: 10px 0 6px;
     position: relative;
     z-index: 0;
+    position:sticky;
+    top:0;
 
     .container {
         @include respond-min(768px) {
