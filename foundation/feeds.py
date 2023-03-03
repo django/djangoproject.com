@@ -20,5 +20,5 @@ class FoundationMinutesFeed(Feed):
     def item_author_name(self, item):
         return "DSF Board"
 
-    def item_description(self, item):
-        return item.treasurer_report_html
+    def item_title(self, item):
+        return str(item)
