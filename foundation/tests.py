@@ -20,12 +20,12 @@ class MeetingTestCase(TestCase):
         )
         Meeting.objects.create(
             date=date.today(),
-            title="Minutes",
-            slug="minutes",
+            title="DSF Board monthly meeting",
+            slug="dsf-board-monthly-meeting",
             leader=member,
             treasurer_report="Hello World",
         )
 
         response = self.client.get(reverse("foundation-minutes-feed"))
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b"Hello World", response.content)
+        self.assertIn(b"DSF Board monthly meeting", response.content)
