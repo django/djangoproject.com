@@ -12,7 +12,7 @@ class FoundationMinutesFeed(Feed):
     description = "The meeting minutes of the Django Software Foundation's board."
 
     def items(self):
-        return Meeting.objects.all()[:10]
+        return Meeting.objects.order_by("-date")[:10]
 
     def item_pubdate(self, item):
         return make_aware(datetime.combine(item.date, time.min))
