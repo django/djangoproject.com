@@ -15,6 +15,7 @@
     <link rel="apple-touch-icon" href="{% static "img/icon-touch.png" %}">
     <link rel="icon" sizes="192x192" href="{% static "img/icon-touch.png" %}">
     <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+       <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <meta name="msapplication-TileColor" content="#113228">
     <meta name="msapplication-TileImage" content="{% static "img/icon-tile.png" %}">
     <meta name="theme-color" content="#0C4B33">
@@ -153,6 +154,10 @@
     };
     </script>
     <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
     {% block body_extra %}{% endblock body_extra %}
   </body>
 </html>
