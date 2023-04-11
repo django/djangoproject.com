@@ -3140,7 +3140,10 @@ form .footnote {
             text-align: center;
         }
         .hero {
-            width: calc(100% / 3);
+            width: 30%;
+            background-color: var(--logo-bg);
+			border-radius: 10px;
+			margin: 5px;
             position: relative;
             height: auto;
             div {
