@@ -3,7 +3,7 @@ html[data-theme="light"],
 :root {
 	--body-fg: #{$text};
 	--body-bg: #{$white};
-	--logo-bg: #ffffff;
+	--logo-bg: #{$white};
 
 	--menu: #{$white};
 
@@ -60,7 +60,7 @@ html[data-theme="light"],
 	html:not([data-theme="light"]) {
 		--body-fg: #C1CAD2;
 		--body-bg: #{$black};
-		--logo-bg: #272c27;
+		--logo-bg: #{$logo-bg-dark};
 
 		--text-l10: #{$green-light};
 		--text-l20: #{$green-very-light};
@@ -147,7 +147,7 @@ html[data-theme="light"],
 html[data-theme="dark"] {
 	--body-fg: #C1CAD2;
 	--body-bg: #{$black};
-	--logo-bg: #272c27;
+	--logo-bg: #{$logo-bg-dark};
 
 	--text-l10: #{$green-light};
 	--text-l20: #{$green-very-light};
