@@ -158,6 +158,9 @@ class TeamListViewTests(TestCase):
         self.assertSequenceEqual(
             response.context["teams"], [self.ops_team, self.security_team]
         )
-        self.assertContains(response, '<h3 id="ops-team">Ops team</h3>')
+        self.assertContains(
+            response,
+            '<h3 id="ops-team">Ops team<a class="plink" href="#ops-team">¶</a></h3>',
+        )
         self.assertContains(response, "<p>Ops stuff.</p>")
         self.assertContains(response, "<ul><li>DjangoDeveloper</li></ul>", html=True)

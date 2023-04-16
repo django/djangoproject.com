@@ -10,7 +10,7 @@
 
 {% for team in teams %}
 <div class="section">
-<h3 id="{{ team.slug }}-team">{{ team.name }}</h3>
+  <h3 id="{{ team.slug }}-team">{{ team.name }}<a class="plink" href="#{{ team.slug }}-team">¶</a></h3>
 <p>{{ team.description|safe }}</p>
 <ul>
 {% for member in team.members.all %}
