@@ -6,7 +6,7 @@ django-push==1.1
 django-read-only==1.12.0
 django-recaptcha==3.0.0
 django-registration-redux==2.10
-Django==3.2.18
+Django==3.2.19
 docutils==0.17.1
 feedparser==6.0.8
 Jinja2==3.1.2
