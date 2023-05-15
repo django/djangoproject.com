@@ -223,6 +223,12 @@ class TestWebhooks(TestCase):
         self.assertTrue(response.status_code, 422)
 
     @patch("stripe.Event.retrieve")
+    def test_empty_object(self, event):
+        event.return_value = self.stripe_data("empty_payment")
+        response = self.post_event()
+        self.assertEqual(response.status_code, 422)
+
+    @patch("stripe.Event.retrieve")
     def test_zero_invoice_amount(self, event):
         """Zero payment amounts don't need to be created."""
         event.return_value = self.stripe_data("zero_invoice_amount")
