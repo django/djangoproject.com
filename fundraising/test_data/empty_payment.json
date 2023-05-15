@@ -1,0 +1,14 @@
+{
+  "id": "evt_103MXP2kbIgHtIBFeIFqPxp7",
+  "object": "event",
+  "api_version": "2015-01-11",
+  "created": 1683928544,
+  "data": {
+    "object": ""
+  },
+  "livemode": true,
+  "object": "event",
+  "pending_webhooks": 1,
+  "request": null,
+  "type": "invoice.payment_succeeded"
+}

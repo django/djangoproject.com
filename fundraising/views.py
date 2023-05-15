@@ -212,6 +212,8 @@ class WebhookHandler:
             "checkout.session.completed": self.checkout_session_completed,
         }
         handler = handlers.get(self.event.type, lambda: HttpResponse(422))
+        if not self.event.data.object:
+            return HttpResponse(status=422)
         return handler()
 
     def payment_succeeded(self):
