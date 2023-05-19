@@ -20,7 +20,6 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-wrap: break-word;
 
     .layout-secondary,
     [role="complementary"] {
@@ -216,10 +215,12 @@ samp {
 
 tt {
     font-weight: 700;
+    overflow-wrap: break-word;
 }
 
 span.pre {
     @include monospace;
+    overflow-wrap: break-word;
 }
 
 a:hover,
