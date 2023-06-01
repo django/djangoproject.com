@@ -6,16 +6,16 @@
 
 {% block content %}
 
-<h1>{{ day|date:"F j" }} archive</h1>
+  <h1>{{ day|date:"F j" }} archive</h1>
 
-<ul class="list-news">
+  <ul class="list-news">
 
-{% for object in object_list %}
-  {% include 'blog/news_summary.html' with object=object %}
-{% endfor %}
+    {% for object in object_list %}
+      {% include 'blog/news_summary.html' with object=object %}
+    {% endfor %}
 
-</ul>
+  </ul>
 
-{% include 'blog/blog_pagination.html' %}
+  {% include 'blog/blog_pagination.html' %}
 
 {% endblock %}

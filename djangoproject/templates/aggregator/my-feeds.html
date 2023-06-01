@@ -1,26 +1,26 @@
 {% extends "base_community.html" %}
 
 {% block content %}
-<h1>Community</h1>
+  <h1>Community</h1>
 
-<h2 class="deck">Manage your community aggregator feeds:</h2>
+  <h2 class="deck">Manage your community aggregator feeds:</h2>
 
-<div id="s-feed">
-<ul class="simple">
-  {% for feed in feeds %}
-    <li>
-    <strong>{{ feed }}</strong> (<code>{{ feed.feed_url }}</code> — <strong>{{ feed.get_approval_status_display }}</strong>) —
-    <a href="{% url 'community-edit-feed' feed.id %}">Edit</a> |
-    <a href="{% url 'community-delete-feed' feed.id %}">Delete</a>
-    </li>
-  {% endfor %}
-  <li>Add a new feed:
-    {% for t in feed_types %}
-      <a href="{% url 'community-add-feed' t.slug %}">{{ t }}</a>
-      {% if not forloop.last %}|{% endif %}
-    {% endfor %}
-  </li>
+  <div id="s-feed">
+    <ul class="simple">
+      {% for feed in feeds %}
+        <li>
+          <strong>{{ feed }}</strong> (<code>{{ feed.feed_url }}</code> — <strong>{{ feed.get_approval_status_display }}</strong>) —
+          <a href="{% url 'community-edit-feed' feed.id %}">Edit</a> |
+          <a href="{% url 'community-delete-feed' feed.id %}">Delete</a>
+        </li>
+      {% endfor %}
+      <li>Add a new feed:
+        {% for t in feed_types %}
+          <a href="{% url 'community-add-feed' t.slug %}">{{ t }}</a>
+          {% if not forloop.last %}|{% endif %}
+        {% endfor %}
+      </li>
   {# <li>Claim a feed already in the system.</li> #}
-</ul>
-</div>
+    </ul>
+  </div>
 {% endblock %}

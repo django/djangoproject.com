@@ -1,17 +1,17 @@
 <li{% if not object.is_published %} class="unpublished"{% endif %}>
   <{{ header_tag|default:'h2' }}>
-    <a href="{{ object.get_absolute_url }}">{{ object.headline|safe }}</a>
-  </{{ header_tag|default:'h2' }}>
-  {% if summary_first %}
-    {{ object.summary_html|safe }}
-  {% endif %}
-  <span class="meta">
-    Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }}
-  </span>
-  {% if not summary_first %}
-    {{ object.summary_html|safe }}
-  {% endif %}
-  {% if not hide_readmore %}
+  <a href="{{ object.get_absolute_url }}">{{ object.headline|safe }}</a>
+</{{ header_tag|default:'h2' }}>
+{% if summary_first %}
+  {{ object.summary_html|safe }}
+{% endif %}
+<span class="meta">
+  Posted by <strong>{{ object.author }}</strong> on {{ object.pub_date|date:"F j, Y" }}
+</span>
+{% if not summary_first %}
+  {{ object.summary_html|safe }}
+{% endif %}
+{% if not hide_readmore %}
   <a class="link-readmore" href="{{ object.get_absolute_url }}">Read more</a>
-  {% endif %}
+{% endif %}
 </li>

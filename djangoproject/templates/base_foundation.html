@@ -13,17 +13,17 @@
 {% block content-related %}
 
 {# Always include <h1> label and <div> with aria role. #}
-<h1 class="visuallyhidden">Additional Information</h1>
-<div role="complementary">
-  {% donation_snippet %}
+  <h1 class="visuallyhidden">Additional Information</h1>
+  <div role="complementary">
+    {% donation_snippet %}
 
-  <h2>About the foundation</h2>
-  <ul class="list-links">
-    <li><a href="/foundation/faq/">FAQ</a></li>
-    <li><a href="/foundation/records/">Records</a></li>
-    <li><a href="{% url 'contact_foundation' %}">Contact us</a></li>
-    <li><a href="/foundation/cla/">Contributor license agreements</a></li>
-    <li><a href="/foundation/conferences/">Organizing a Django conference</a></li>
-  </ul>
-</div>
+    <h2>About the foundation</h2>
+    <ul class="list-links">
+      <li><a href="/foundation/faq/">FAQ</a></li>
+      <li><a href="/foundation/records/">Records</a></li>
+      <li><a href="{% url 'contact_foundation' %}">Contact us</a></li>
+      <li><a href="/foundation/cla/">Contributor license agreements</a></li>
+      <li><a href="/foundation/conferences/">Organizing a Django conference</a></li>
+    </ul>
+  </div>
 {% endblock %}

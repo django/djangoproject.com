@@ -3,14 +3,14 @@
   <div class="hero-logo">
     {% if obj.url %}<a href="{{ obj.url }}" rel="nofollow">{% endif %}
     <img src="{% static 'img/fundraising-heart.svg' %}"
-      data-src="{% if obj.logo %}{{ obj.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.svg' %}{% endif %}"
-      data-src-retina="{% if obj.logo %}{{ obj.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.svg' %}{% endif %}"
-      alt="{{ obj.display_name }}" />
+         data-src="{% if obj.logo %}{{ obj.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.svg' %}{% endif %}"
+         data-src-retina="{% if obj.logo %}{{ obj.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.svg' %}{% endif %}"
+         alt="{{ obj.display_name }}" />
     {% if obj.url %}</a>{% endif %}
   </div>
   <div class="hero-name">
     {% if obj.url %}<a href="{{ obj.url }}" rel="nofollow">{% endif %}{% spaceless %}
-    {{ obj.display_name }}
+      {{ obj.display_name }}
     {% endspaceless %}{% if obj.url %}</a>{% endif %}
     {% if show_description %}{{ obj.description }}{% endif %}
   </div>
