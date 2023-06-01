@@ -62,17 +62,19 @@
 
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
 
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     {% include "includes/header.html" %}
 
-    <div class="copy-banner">
-      <div class="container {% block header-classes %}{% endblock %}">
-        {% block header %}{% endblock %}
-      </div>
-    </div>
-    <div id="billboard">{% block billboard %}{% endblock %}</div>
-
     <div class="container {% block layout_class %}{% endblock %}">
-      <div role="main">
+      <main id="main-content">
+        <div class="copy-banner">
+          <div class="container {% block header-classes %}{% endblock %}">
+            {% block header %}{% endblock %}
+          </div>
+        </div>
+
+        <div id="billboard">{% block billboard %}{% endblock %}</div>
 
         {% block messages %}
           {% if messages %}
@@ -89,7 +91,7 @@
 
         {% block content %}{% endblock %}
         <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
-      </div>
+      </main>
 
       {% block content-related %}{% endblock %}
       {% block content-extra %}{% endblock %}
