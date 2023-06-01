@@ -2,24 +2,24 @@
 {% load i18n %}
 
 {% block content %}
-<div class="dashboard-index">
-  {% for report in data %}
-    {% ifchanged report.metric.category %}
-      {% if report.metric.category %}<h2>{{ report.metric.category }}</h2>{% endif %}
-    {% endifchanged %}
-    <div class="metric{% if report.metric.show_sparkline %} has-sparkline{% endif %}">
-      <h3><a href="{{ report.metric.link }}">{{ report.metric.name }}</a></h3>
-      <div class="value" >
-        <a href="{{ report.metric.get_absolute_url }}">{{ report.latest.measurement }}{% if report.metric.unit == "%" %}%{% endif %}</a>
-        <div class="timestamp">&nbsp;</div>
+  <div class="dashboard-index">
+    {% for report in data %}
+      {% ifchanged report.metric.category %}
+        {% if report.metric.category %}<h2>{{ report.metric.category }}</h2>{% endif %}
+      {% endifchanged %}
+      <div class="metric{% if report.metric.show_sparkline %} has-sparkline{% endif %}">
+        <h3><a href="{{ report.metric.link }}">{{ report.metric.name }}</a></h3>
+        <div class="value" >
+          <a href="{{ report.metric.get_absolute_url }}">{{ report.latest.measurement }}{% if report.metric.unit == "%" %}%{% endif %}</a>
+          <div class="timestamp">&nbsp;</div>
+        </div>
+        {% if report.metric.show_sparkline %}
+          <div class="sparkline" id="spark{{ forloop.counter0 }}" data-path="{% url "metric-list" host "dashboard" %}" data-metric="{{ report.metric.slug }}"></div>
+        {% endif %}
       </div>
-      {% if report.metric.show_sparkline %}
-      <div class="sparkline" id="spark{{ forloop.counter0 }}" data-path="{% url "metric-list" host "dashboard" %}" data-metric="{{ report.metric.slug }}"></div>
-      {% endif %}
-    </div>
-  {% endfor %}
-  <p class="updated">
-    {% blocktrans with timestamp=data.0.latest.timestamp|timesince %}Updated {{ timestamp }} ago.{% endblocktrans %}
-  </p>
-</div>
+    {% endfor %}
+    <p class="updated">
+      {% blocktrans with timestamp=data.0.latest.timestamp|timesince %}Updated {{ timestamp }} ago.{% endblocktrans %}
+    </p>
+  </div>
 {% endblock %}

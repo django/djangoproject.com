@@ -7,41 +7,41 @@
 
 {% block header %}
   <h1 class="visuallyhidden">Django</h1>
-    <p>
-        <em>Django makes it easier to build better web apps more quickly and with less code.</em>
-    </p>
-    <p>
-        <a href="{% url 'start' %}" class="cta">Get started with Django</a>
-    </p>
+  <p>
+    <em>Django makes it easier to build better web apps more quickly and with less code.</em>
+  </p>
+  <p>
+    <a href="{% url 'start' %}" class="cta">Get started with Django</a>
+  </p>
 {% endblock %}
 
 {% block content %}
-    <div class="section">
-        <h1>Meet Django</h1>
-        <p>
-          Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design.
-          Built by experienced developers, it takes care of much of the hassle of web development, so you can focus
-          on writing your app without needing to reinvent the wheel. It’s free and open source.
-        </p>
-        <dl class="list-features">
-          <dt><i class="icon icon-bolt"></i> Ridiculously fast.</dt>
-          <dd>
-            <p>Django was designed to help developers take applications from concept to completion as quickly as possible.</p>
-          </dd>
+  <div class="section">
+    <h1>Meet Django</h1>
+    <p>
+      Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design.
+      Built by experienced developers, it takes care of much of the hassle of web development, so you can focus
+      on writing your app without needing to reinvent the wheel. It’s free and open source.
+    </p>
+    <dl class="list-features">
+      <dt><i class="icon icon-bolt"></i> Ridiculously fast.</dt>
+      <dd>
+        <p>Django was designed to help developers take applications from concept to completion as quickly as possible.</p>
+      </dd>
 
-          <dt><i class="icon icon-lock"></i> Reassuringly secure.</dt>
-          <dd>
-            <p>Django takes security seriously and helps developers avoid many common security mistakes.</p>
-          </dd>
+      <dt><i class="icon icon-lock"></i> Reassuringly secure.</dt>
+      <dd>
+        <p>Django takes security seriously and helps developers avoid many common security mistakes.</p>
+      </dd>
 
-          <dt><i class="icon icon-dashboard"></i> Exceedingly scalable.</dt>
-          <dd>
-            <p>Some of the busiest sites on the web leverage Django’s ability to quickly and flexibly scale.</p>
-          </dd>
-        </dl>
+      <dt><i class="icon icon-dashboard"></i> Exceedingly scalable.</dt>
+      <dd>
+        <p>Some of the busiest sites on the web leverage Django’s ability to quickly and flexibly scale.</p>
+      </dd>
+    </dl>
 
-        <a href="{% url 'overview' %}" class="cta outline">Learn more about Django</a>
-    </div>
+    <a href="{% url 'overview' %}" class="cta outline">Learn more about Django</a>
+  </div>
 
     {% comment %}
 
@@ -76,91 +76,91 @@
 
     {% endcomment %}
 
-    <div class="section">
+  <div class="section">
     <h1>Stay in the loop</h1>
     <p>Subscribe to one of our mailing lists to stay up to date with everything in the Django community:</p>
     {% include "includes/mailing_lists.html" %}
-    </div>
+  </div>
 
     <!-- END #content-secondary -->
 {% endblock %}
 
 {% block content-related %}
   <div role="complementary">
-      <a href="{% url 'download' %}" class="cta">
-          Download <em>latest release: {{ DJANGO_VERSION }}</em>
-      </a>
-      <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}" class="link-readmore">Django documentation</a>
+    <a href="{% url 'download' %}" class="cta">
+      Download <em>latest release: {{ DJANGO_VERSION }}</em>
+    </a>
+    <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}" class="link-readmore">Django documentation</a>
 
-      {% donation_snippet %}
+    {% donation_snippet %}
 
-      <h3>Latest news</h3>
-      {% render_latest_blog_entries 2 hide_readmore=True summary_first=True header_tag='h4' %}
-      <a href="{% url 'weblog:index' %}" class="link-readmore">More news</a>
+    <h3>Latest news</h3>
+    {% render_latest_blog_entries 2 hide_readmore=True summary_first=True header_tag='h4' %}
+    <a href="{% url 'weblog:index' %}" class="link-readmore">More news</a>
 
-      <h3>New to Django?</h3>
-      <ul class="list-links-small docs-list">
-          <li><a href="{% url 'document-detail' lang='en' version='stable' url='intro/install' host 'docs' %}">Installation guide</a></li>
-          <li><a href="{% url 'document-detail' lang='en' version='stable' url='intro/tutorial01' host 'docs' %}">Write your first Django app</a></li>
-      </ul>
-      <a href="{% url 'start' %}" class="link-readmore">Getting started with Django</a>
+    <h3>New to Django?</h3>
+    <ul class="list-links-small docs-list">
+      <li><a href="{% url 'document-detail' lang='en' version='stable' url='intro/install' host 'docs' %}">Installation guide</a></li>
+      <li><a href="{% url 'document-detail' lang='en' version='stable' url='intro/tutorial01' host 'docs' %}">Write your first Django app</a></li>
+    </ul>
+    <a href="{% url 'start' %}" class="link-readmore">Getting started with Django</a>
 
-      <h3>The power of Django</h3>
-      <ul class="list-links-small docs-list">
-          <li><a href="{% url 'document-detail' lang='en' version='stable' url='topics/db/models' host 'docs' %}">Object-relational mapper</a></li>
-          <li><a href="{% url 'document-detail' lang='en' version='stable' url='intro/tutorial02' host 'docs' %}">Automatic admin interface</a></li>
-          <li><a href="{% url 'document-detail' lang='en' version='stable' url='topics/templates' host 'docs' %}">Robust template system</a></li>
-          <li><a href="{% url 'document-detail' lang='en' version='stable' url='topics/i18n' host 'docs' %}">Quick internationalization</a></li>
-      </ul>
-      <a href="{% url 'overview' %}" class="link-readmore">Explore more features</a>
+    <h3>The power of Django</h3>
+    <ul class="list-links-small docs-list">
+      <li><a href="{% url 'document-detail' lang='en' version='stable' url='topics/db/models' host 'docs' %}">Object-relational mapper</a></li>
+      <li><a href="{% url 'document-detail' lang='en' version='stable' url='intro/tutorial02' host 'docs' %}">Automatic admin interface</a></li>
+      <li><a href="{% url 'document-detail' lang='en' version='stable' url='topics/templates' host 'docs' %}">Robust template system</a></li>
+      <li><a href="{% url 'document-detail' lang='en' version='stable' url='topics/i18n' host 'docs' %}">Quick internationalization</a></li>
+    </ul>
+    <a href="{% url 'overview' %}" class="link-readmore">Explore more features</a>
 
-      <h3>Get involved</h3>
-      <dl class="list-links-small">
-          <dt><a href="https://code.djangoproject.com/">Ticket system</a></dt>
-          <dd>
-            Report bugs and make feature requests
-          </dd>
-          <dt><a href="https://dashboard.djangoproject.com/">Development dashboard</a></dt>
-          <dd>
-            see what's currently being worked on
-          </dd>
-      </dl>
-      <a href="{% url 'community-index' %}" class="link-readmore">Inside the Django community</a>
+    <h3>Get involved</h3>
+    <dl class="list-links-small">
+      <dt><a href="https://code.djangoproject.com/">Ticket system</a></dt>
+      <dd>
+        Report bugs and make feature requests
+      </dd>
+      <dt><a href="https://dashboard.djangoproject.com/">Development dashboard</a></dt>
+      <dd>
+        see what's currently being worked on
+      </dd>
+    </dl>
+    <a href="{% url 'community-index' %}" class="link-readmore">Inside the Django community</a>
 
-      <h3>Get Help</h3>
-      <dl class="list-links-small">
-         <dt><a href="irc://irc.libera.chat/django">#django IRC channel</a></dt>
-          <dd>
-            Chat with other Django users
-          </dd>
+    <h3>Get Help</h3>
+    <dl class="list-links-small">
+      <dt><a href="irc://irc.libera.chat/django">#django IRC channel</a></dt>
+      <dd>
+        Chat with other Django users
+      </dd>
 
-          <dt><a href="https://discord.gg/xcRH6mN4fa" target="_blank">Django Discord Server</a></dt>
-          <dd>
-            Join the Django Discord Community
-          </dd>
+      <dt><a href="https://discord.gg/xcRH6mN4fa" target="_blank">Django Discord Server</a></dt>
+      <dd>
+        Join the Django Discord Community
+      </dd>
 
-          <dt><a href="https://forum.djangoproject.com/" target="_blank">Official Django Forum</a></dt>
-          <dd>
-            Join the community on the Django Forum.
-          </dd>
-      </dl>
+      <dt><a href="https://forum.djangoproject.com/" target="_blank">Official Django Forum</a></dt>
+      <dd>
+        Join the community on the Django Forum.
+      </dd>
+    </dl>
 
-      <h3>The Django Software Foundation</h3>
-      <dl class="list-links-small">
-        <dt><a href="/foundation/">About the Foundation</a></dt>
-        <dd>
-          Our non-profit supports the project
-        </dd>
+    <h3>The Django Software Foundation</h3>
+    <dl class="list-links-small">
+      <dt><a href="/foundation/">About the Foundation</a></dt>
+      <dd>
+        Our non-profit supports the project
+      </dd>
 
-        <dt><a href="/foundation/donate/">Support Django</a></dt>
-        <dd>
-          Your contribution makes Django stronger
-        </dd>
+      <dt><a href="/foundation/donate/">Support Django</a></dt>
+      <dd>
+        Your contribution makes Django stronger
+      </dd>
 
-        <dt><a href="/contact/foundation/">Contact the Django Software Foundation</a></dt>
-        <dd></dd>
-      </dl>
-      <a href="/foundation/" class="link-readmore">More about the DSF</a>
+      <dt><a href="/contact/foundation/">Contact the Django Software Foundation</a></dt>
+      <dd></dd>
+    </dl>
+    <a href="/foundation/" class="link-readmore">More about the DSF</a>
       {% comment %}
       <h3>Upcoming Events</h3>
       <dl class="list-links-small news-list">

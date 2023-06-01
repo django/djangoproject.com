@@ -2,10 +2,10 @@
 
 <form action="{% url 'document-search' version=version lang=lang host 'docs' %}" class="search form-input" role="search">
   <label class="visuallyhidden" for="id_q">Search:</label>
-    {{ form.q }}
+  {{ form.q }}
 
-    <button type="submit">
-      <i class="icon icon-search"></i>
-      <span class="visuallyhidden">{% trans 'Search' %}</span>
-    </button>
+  <button type="submit">
+    <i class="icon icon-search"></i>
+    <span class="visuallyhidden">{% trans 'Search' %}</span>
+  </button>
 </form>

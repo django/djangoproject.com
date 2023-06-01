@@ -1,9 +1,9 @@
 {% load static thumbnail %}
 <li>
-{% if obj.logo %}
-<img src="{{ obj.thumbnail.url }}"
-      alt="{{ obj.display_name }}" class="corporate-member-logo" />
-{% endif %}
-<h3><a href="{{ obj.url }}">{{ obj.display_name }}</a></h3>
-<p>{{ obj.description|linebreaksbr }}</p>
+    {% if obj.logo %}
+        <img src="{{ obj.thumbnail.url }}"
+             alt="{{ obj.display_name }}" class="corporate-member-logo" />
+    {% endif %}
+    <h3><a href="{{ obj.url }}">{{ obj.display_name }}</a></h3>
+    <p>{{ obj.description|linebreaksbr }}</p>
 </li>
