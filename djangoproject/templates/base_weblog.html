@@ -19,16 +19,16 @@
     {% donation_snippet %}
 
     {% if events %}
-    <h2>Upcoming Events</h2>
-    <ul class="list-events">
-      {% for event in events %}
-        <li>
-          <a href="{{ event.external_url }}" target="_blank">{{ event.headline }}</a>
-          <span class="meta"><span>{{ event.date|date:"F j, Y" }}</span>  |  {{ event.location }}</span>
-          <i class="icon icon-calendar"></i>
-        </li>
-      {% endfor %}
-    </ul>
+      <h2>Upcoming Events</h2>
+      <ul class="list-events">
+        {% for event in events %}
+          <li>
+            <a href="{{ event.external_url }}" target="_blank">{{ event.headline }}</a>
+            <span class="meta"><span>{{ event.date|date:"F j, Y" }}</span>  |  {{ event.location }}</span>
+            <i class="icon icon-calendar"></i>
+          </li>
+        {% endfor %}
+      </ul>
     {% endif %}
     <p><a href="/foundation/conferences/">Want your event listed here?</a></p>
 
@@ -52,5 +52,5 @@
       <li><a href="{% url 'weblog-feed' %}">Latest news entries</a></li>
       <li><a href="https://code.djangoproject.com/timeline?daysback=90&max=50&wiki=on&ticket=on&changeset=on&milestone=on&format=rss">Recent code changes</a></li>
     </ul>
-</div>
+  </div>
 {% endblock %}

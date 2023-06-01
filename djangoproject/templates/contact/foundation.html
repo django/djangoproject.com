@@ -3,34 +3,34 @@
 {% block title %}Contact the Django Software Foundation{% endblock %}
 
 {% block content %}
-<h1>Contact the Django Software Foundation</h1>
-<p>This contact form is for the Django Software Foundation - the legal and
-  fundraising arm of the Django project.</p>
-<p>If you want to report a bug, feature request, or documentation issue in Django,
-  use the <a href="https://code.djangoproject.com">ticket tracker</a>.</p>
-<p>If you want to report a problem with this website, use the
-  <a href="https://github.com/django/djangoproject.com">GitHub repo</a>.</p>
-<p>If you've got questions about how to use Django, use the
-  <a href="https://groups.google.com/forum/#!forum/django-users">django-users mailing list</a>.</p>
-<form action="." method="post" accept-charset="utf-8" class="form-input">
-{% csrf_token %}
-  <p>
-    {% if form.name.errors %}<p class="errors">{{ form.name.errors.as_text }}</p>{% endif %}
-    {{ form.name }}
-  </p>
-  <p class="form-email">
-    {% if form.email.errors %}<p class="errors">{{ form.email.errors.as_text }}</p>{% endif %}
-    {{ form.email }}
-  </p>
-  <p>
-    {% if form.message_subject.errors %}<p class="errors">{{ form.message_subject.errors.as_text }}</p>{% endif %}
-    {{ form.message_subject }}
-  </p>
-  <p>
-    {% if form.body.errors %}<p class="errors">{{ form.body.errors.as_text }}</p>{% endif %}
-    {{ form.body }}
-  </p>
-  <p>{{ form.captcha }}</p>
-  <p class="submit"><input type="submit" class="cta" value="Send &rarr;"></p>
-</form>
+  <h1>Contact the Django Software Foundation</h1>
+  <p>This contact form is for the Django Software Foundation - the legal and
+    fundraising arm of the Django project.</p>
+  <p>If you want to report a bug, feature request, or documentation issue in Django,
+    use the <a href="https://code.djangoproject.com">ticket tracker</a>.</p>
+  <p>If you want to report a problem with this website, use the
+    <a href="https://github.com/django/djangoproject.com">GitHub repo</a>.</p>
+  <p>If you've got questions about how to use Django, use the
+    <a href="https://groups.google.com/forum/#!forum/django-users">django-users mailing list</a>.</p>
+  <form action="." method="post" accept-charset="utf-8" class="form-input">
+    {% csrf_token %}
+    <p>
+      {% if form.name.errors %}<p class="errors">{{ form.name.errors.as_text }}</p>{% endif %}
+      {{ form.name }}
+    </p>
+    <p class="form-email">
+      {% if form.email.errors %}<p class="errors">{{ form.email.errors.as_text }}</p>{% endif %}
+      {{ form.email }}
+    </p>
+    <p>
+      {% if form.message_subject.errors %}<p class="errors">{{ form.message_subject.errors.as_text }}</p>{% endif %}
+      {{ form.message_subject }}
+    </p>
+    <p>
+      {% if form.body.errors %}<p class="errors">{{ form.body.errors.as_text }}</p>{% endif %}
+      {{ form.body }}
+    </p>
+    <p>{{ form.captcha }}</p>
+    <p class="submit"><input type="submit" class="cta" value="Send &rarr;"></p>
+  </form>
 {% endblock %}

@@ -10,19 +10,19 @@
     {% endblocktrans %}
   </p>
   <form class="form-input corporate-membership-join-form" method="post" action="."
-      enctype="multipart/form-data">
+        enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form %}
-    <div class="form-control">
-    {% if field.name in form.label_fields  %}
-      {{ field.label }}: {{ field }}
-    {% else %}
-      {{ field }}
-    {% endif %}
-    {% if field.errors %}<p class="errors">{{ field.errors.as_text }}</p>{% endif %}
-    {% if field.help_text %}<p class="footnote">{{ field.help_text|safe }}</p>{% endif %}
-    </div>
+      <div class="form-control">
+        {% if field.name in form.label_fields  %}
+          {{ field.label }}: {{ field }}
+        {% else %}
+          {{ field }}
+        {% endif %}
+        {% if field.errors %}<p class="errors">{{ field.errors.as_text }}</p>{% endif %}
+        {% if field.help_text %}<p class="footnote">{{ field.help_text|safe }}</p>{% endif %}
+      </div>
     {% endfor %}
-  <input class="cta" type="submit" value="Send →">
+    <input class="cta" type="submit" value="Send →">
   </form>
 {% endblock %}
