@@ -215,12 +215,10 @@ samp {
 
 tt {
     font-weight: 700;
-    overflow-wrap: break-word;
 }
 
 span.pre {
     @include monospace;
-    overflow-wrap: break-word;
 }
 
 a:hover,
