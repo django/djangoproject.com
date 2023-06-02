@@ -5,7 +5,7 @@
     <div class="mobile-toggle">
       {% include "includes/toggle_theme.html" %}
     </div>
-    <nav id="top-navigation">
+    <nav id="header-navigation">
       <ul>
         <li{% if 'start' in request.path %} class="active"{% endif %}>
           <a href="{% url 'overview' %}">Overview</a>
