@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from .models import APPROVED_FEED, DENIED_FEED, Feed, FeedItem, FeedType, LocalDjangoCommunity
+from .models import (
+    APPROVED_FEED,
+    DENIED_FEED,
+    Feed,
+    FeedItem,
+    FeedType,
+    LocalDjangoCommunity,
+)
 
 
 @admin.action(description="Mark selected feeds as approved.")

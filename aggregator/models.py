@@ -4,8 +4,8 @@ import logging
 import feedparser
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.db import models
 from django.core.exceptions import ValidationError
+from django.db import models
 from django_countries.fields import CountryField
 from django_push.subscriber import signals as push_signals
 from django_push.subscriber.models import Subscription
@@ -203,6 +203,7 @@ CONTINENTS = [
     ("Antarctica", "Antarctica"),
 ]
 
+
 class LocalDjangoCommunity(models.Model):
     name = models.CharField(max_length=120)
     description = models.TextField()
@@ -211,7 +212,9 @@ class LocalDjangoCommunity(models.Model):
     country = CountryField()
     continent = models.CharField(choices=CONTINENTS, max_length=15)
     website_url = models.URLField(max_length=250, default=None, blank=True, null=True)
-    event_site_url = models.URLField(max_length=250, default=None, blank=True, null=True)
+    event_site_url = models.URLField(
+        max_length=250, default=None, blank=True, null=True
+    )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -219,17 +222,19 @@ class LocalDjangoCommunity(models.Model):
         constraints = [
             models.CheckConstraint(
                 check=(
-                    models.Q(website_url__isnull=False, event_site_url__isnull=False) |
-                    models.Q(website_url__isnull=True, event_site_url__isnull=False) |
-                    models.Q(website_url__isnull=False, event_site_url__isnull=True)
+                    models.Q(website_url__isnull=False, event_site_url__isnull=False)
+                    | models.Q(website_url__isnull=True, event_site_url__isnull=False)
+                    | models.Q(website_url__isnull=False, event_site_url__isnull=True)
                 ),
-                name="website_url_and_or_event_site_url"
+                name="website_url_and_or_event_site_url",
             ),
         ]
 
     def clean(self):
         if not self.website_url and not self.event_site_url:
-            raise ValidationError("You must provide at least a website or event site URL")
+            raise ValidationError(
+                "You must provide at least a website or event site URL"
+            )
 
     def __str__(self):
         return self.name
