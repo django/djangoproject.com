@@ -253,6 +253,29 @@
   <h1 class="visuallyhidden">Additional information</h1>
   <div role="complementary">
 
+    {% if corporate_members %}
+      <div class="corporate-members">
+        <h2>Diamond and Platinum Members</h2>
+        {% for obj in corporate_members %}
+          <div class="clearfix">
+            <div class="member-logo">
+              <a href="{{ obj.url }}" title="{{ obj.display_name }}">
+                <img src="{{ obj.thumbnail.url }}" alt="{{ obj.display_name }}" />
+              </a>
+            </div>
+            <div class="small-cta">
+              <ul class="list-links-small">
+                <li><strong>{{ obj.display_name }}</strong></li>
+                <li><a href="{{ obj.url }}" title="{{ obj.display_name }}">
+                  {{ obj.notes }}
+                </a></li>
+              </ul>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     {% donation_snippet %}
 
     <h2>For the impatient:</h2>
