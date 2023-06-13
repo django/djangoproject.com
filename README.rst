@@ -7,7 +7,13 @@ djangoproject.com source code
 .. image:: https://coveralls.io/repos/django/djangoproject.com/badge.svg?branch=main
     :target: https://coveralls.io/r/django/djangoproject.com?branch=main
 
-To run locally, do the usual:
+To run locally, you can either:
+
+- Install and run from a virtual environment
+- Run with docker compose (see below)
+
+Install and run locally from a virtual environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Create a `Python 3.8+ virtualenv and activate it <https://docs.python.org/3/library/venv.html>`_
 
