@@ -17,7 +17,7 @@ SILENCED_SYSTEM_CHECKS = SILENCED_SYSTEM_CHECKS + [
     "captcha.recaptcha_test_key_error"  # Default test keys for development.
 ]
 
-ALLOWED_HOSTS = [".localhost", "127.0.0.1", "www.127.0.0.1","0.0.0.0"]
+ALLOWED_HOSTS = [".localhost", "127.0.0.1", "www.127.0.0.1", "0.0.0.0"]
 
 LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = ["docs.djangoproject.localhost"]
 
