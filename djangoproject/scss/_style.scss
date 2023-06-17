@@ -442,8 +442,19 @@ blockquote {
 	&.sidebar-right {
 		.mdzr-boxshadow & {
 			box-shadow: -1200px 0 0 0px var(--white-color);
+			max-height: 100vh;
 		}
+		& div[role="main"]{
+			max-height: 100vh;
+			overflow-y: scroll;
+		}
+		& div[role="complementary"] {
+			max-height: 100vh;
+			overflow-y: scroll;
+		}
+	
 	}
+
 }
 
 .container--flex {
@@ -3651,3 +3662,10 @@ ul.corporate-members li {
 		color: var(--body-fg);
 	}
 }
+
+
+$scrollbar-width: 10px;
+/* Apply the scrollbar width */
+::-webkit-scrollbar {
+	width: $scrollbar-width;
+  }
