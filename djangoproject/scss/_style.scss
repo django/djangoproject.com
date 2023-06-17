@@ -373,8 +373,6 @@ blockquote {
 		.sidebar-right & {
 			margin-left: 3%;
 			margin-right: 0;
-			overflow-y: auto;
-			height: 100vh;
 		}
 	}
 
@@ -444,6 +442,15 @@ blockquote {
 	&.sidebar-right {
 		.mdzr-boxshadow & {
 			box-shadow: -1200px 0 0 0px var(--white-color);
+		}
+		
+		div[role="main"],div[role="complementary"] {
+			max-height: 100vh;
+			overflow-y: scroll;
+			
+		}
+		& ::-webkit-scrollbar {
+			width: 0;
 		}
 	}
 }
