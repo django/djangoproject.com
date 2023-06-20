@@ -24,7 +24,11 @@
         <li><strong>{{ goal_percent }}% funded</strong></li>
         <li><strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ goal_amount|intcomma }} goal for
           {{ goal_start_date|date:"Y" }}</li>
-        <li><strong>{{ total_donors }} donor{{ total_donors|pluralize:",s" }}</strong></li>
+        <li>
+          Companies able to make a <strong>larger donation</strong>
+          ($2,000+/year) are invited to apply to be Corporate Members
+          <a href="{% url 'members:corporate-members-join' %}">here</a>.
+        </li>
       </ul>
 
       <div class="donate">
