@@ -3511,6 +3511,33 @@ ul.corporate-members li {
 	padding: 0 0 10px 10px;
 }
 
+/* Corporate membership download page, this mimics .fundraising-sidebar */
+
+.corporate-members {
+	.member-logo {
+		margin-top: 20px;
+		width: 20%;
+		float: left;
+		margin-bottom: 20px;
+
+		img {
+			width: 100%;
+			max-width: 75px;
+		}
+	}
+
+	.small-cta {
+		width: 70%;
+		float: left;
+		vertical-align: top;
+		margin-left: 5%;
+		margin-right: 5%;
+		margin-bottom: 20px;
+	}
+
+	clear: both;
+}
+
 /* Messages */
 
 .messages {
