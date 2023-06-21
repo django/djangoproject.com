@@ -2,7 +2,10 @@ import datetime
 
 from django.contrib.redirects.models import Redirect
 from django.test import TestCase
+from django.urls import reverse
 from django.utils.safestring import SafeString
+
+from members.models import MEMBERSHIP_LEVELS, PLATINUM_MEMBERSHIP, CorporateMember
 
 from .models import Release, create_releases_up_to_1_5
 from .templatetags.release_notes import get_latest_micro_release, release_notes
@@ -140,3 +143,67 @@ class TestReleaseManager(TestCase):
             version="1.9b2", date=datetime.date.today(), eol_date=None
         )
         self.assertEqual(Release.objects.preview().version, "1.9b2")
+
+
+class CorporateMembersTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.today = today = datetime.date.today()
+        day = datetime.timedelta(1)
+        Release.objects.create(
+            version="1.7", date=today - 150 * day, eol_date=today + 50 * day
+        )
+        Release.objects.create(
+            version="1.8", is_lts=True, date=today - 50 * day, eol_date=None
+        )
+
+    def make_member(self, level, level_name):
+        member = CorporateMember.objects.create(
+            display_name=f"{level_name} Member",
+            url=f"https://{level_name.lower()}.example.com",
+            membership_level=level,
+            notes=f"Some notes about this {level_name} member",
+        )
+        # ensure each member is included in `for_public_display`
+        member.invoice_set.create(
+            amount=level * 1000,
+            sent_date=self.today,
+            paid_date=self.today,
+            expiration_date=self.today + datetime.timedelta(days=30),
+        )
+        return member
+
+    def test_diamond_and_platinum_members_shown(self):
+        members = [
+            self.make_member(level, level_name)
+            for level, level_name in MEMBERSHIP_LEVELS
+        ]
+
+        response = self.client.get(reverse("download"))
+
+        self.assertContains(response, "<h2>Diamond and Platinum Members</h2>")
+        member_link = (
+            lambda m: f'<a href="{m.url}" title="{m.display_name}">{m.notes}</a>'
+        )
+        for member in members:
+            if member.membership_level < PLATINUM_MEMBERSHIP:
+                self.assertNotContains(response, member.display_name)
+                self.assertNotContains(response, member.url)
+                self.assertNotContains(response, member.notes)
+            else:
+                self.assertContains(response, member_link(member), html=True)
+
+    def test_no_diamond_and_platinum_members(self):
+        members = [
+            self.make_member(level, level_name)
+            for level, level_name in MEMBERSHIP_LEVELS
+            if level < PLATINUM_MEMBERSHIP
+        ]
+
+        response = self.client.get(reverse("download"))
+
+        self.assertNotContains(response, "<h2>Diamond and Platinum Members</h2>")
+        for member in members:
+            self.assertNotContains(response, member.display_name)
+            self.assertNotContains(response, member.url)
+            self.assertNotContains(response, member.notes)
