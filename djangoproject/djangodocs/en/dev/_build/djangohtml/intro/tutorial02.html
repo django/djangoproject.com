@@ -1,0 +1,880 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Writing your first Django app, part 2 &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Writing your first Django app, part 3" href="tutorial03.html" />
+    <link rel="prev" title="Writing your first Django app, part 1" href="tutorial01.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);(function($) {
+    $(document).ready(function() {
+        $(".c-tab-unix").on("click", function() {
+            $("section.c-content-unix").show();
+            $("section.c-content-win").hide();
+            $(".c-tab-unix").prop("checked", true);
+        });
+        $(".c-tab-win").on("click", function() {
+            $("section.c-content-win").show();
+            $("section.c-content-unix").hide();
+            $(".c-tab-win").prop("checked", true);
+        });
+    });
+})(jQuery);</script>
+<link rel="stylesheet" href="../_static/console-tabs.css">
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="tutorial01.html" title="Writing your first Django app, part 1">previous</a>
+     |
+    <a href="index.html" title="Getting started" accesskey="U">up</a>
+   |
+    <a href="tutorial03.html" title="Writing your first Django app, part 3">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="intro-tutorial02">
+            
+  <div class="section" id="s-writing-your-first-django-app-part-2">
+<span id="writing-your-first-django-app-part-2"></span><h1>Writing your first Django app, part 2<a class="headerlink" href="#writing-your-first-django-app-part-2" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial begins where <a class="reference internal" href="tutorial01.html"><span class="doc">Tutorial 1</span></a> left off.
+We’ll set up the database, create your first model, and get a quick
+introduction to Django’s automatically-generated admin site.</p>
+<div class="admonition-where-to-get-help admonition">
+<p class="first admonition-title">Where to get help:</p>
+<p class="last">If you’re having trouble going through this tutorial, please head over to
+the <a class="reference internal" href="../faq/help.html"><span class="doc">Getting Help</span></a> section of the FAQ.</p>
+</div>
+<div class="section" id="s-database-setup">
+<span id="database-setup"></span><h2>Database setup<a class="headerlink" href="#database-setup" title="Permalink to this headline">¶</a></h2>
+<p>Now, open up <code class="file docutils literal notranslate"><span class="pre">mysite/settings.py</span></code>. It’s a normal Python module with
+module-level variables representing Django settings.</p>
+<p>By default, the configuration uses SQLite. If you’re new to databases, or
+you’re just interested in trying Django, this is the easiest choice. SQLite is
+included in Python, so you won’t need to install anything else to support your
+database. When starting your first real project, however, you may want to use a
+more scalable database like PostgreSQL, to avoid database-switching headaches
+down the road.</p>
+<p>If you wish to use another database, install the appropriate <a class="reference internal" href="../topics/install.html#database-installation"><span class="std std-ref">database
+bindings</span></a> and change the following keys in the
+<a class="reference internal" href="../ref/settings.html#std-setting-DATABASES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DATABASES</span></code></a> <code class="docutils literal notranslate"><span class="pre">'default'</span></code> item to match your database connection
+settings:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../ref/settings.html#std-setting-DATABASE-ENGINE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">ENGINE</span></code></a> – Either
+<code class="docutils literal notranslate"><span class="pre">'django.db.backends.sqlite3'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'django.db.backends.postgresql'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'django.db.backends.mysql'</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">'django.db.backends.oracle'</span></code>. Other backends are <a class="reference internal" href="../ref/databases.html#third-party-notes"><span class="std std-ref">also available</span></a>.</li>
+<li><a class="reference internal" href="../ref/settings.html#std-setting-NAME"><code class="xref std std-setting docutils literal notranslate"><span class="pre">NAME</span></code></a> – The name of your database. If you’re using SQLite, the
+database will be a file on your computer; in that case, <a class="reference internal" href="../ref/settings.html#std-setting-NAME"><code class="xref std std-setting docutils literal notranslate"><span class="pre">NAME</span></code></a>
+should be the full absolute path, including filename, of that file. The
+default value, <code class="docutils literal notranslate"><span class="pre">BASE_DIR</span> <span class="pre">/</span> <span class="pre">'db.sqlite3'</span></code>, will store the file in your
+project directory.</li>
+</ul>
+<p>If you are not using SQLite as your database, additional settings such as
+<a class="reference internal" href="../ref/settings.html#std-setting-USER"><code class="xref std std-setting docutils literal notranslate"><span class="pre">USER</span></code></a>, <a class="reference internal" href="../ref/settings.html#std-setting-PASSWORD"><code class="xref std std-setting docutils literal notranslate"><span class="pre">PASSWORD</span></code></a>, and <a class="reference internal" href="../ref/settings.html#std-setting-HOST"><code class="xref std std-setting docutils literal notranslate"><span class="pre">HOST</span></code></a> must be added.
+For more details, see the reference documentation for <a class="reference internal" href="../ref/settings.html#std-setting-DATABASES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DATABASES</span></code></a>.</p>
+<div class="admonition-for-databases-other-than-sqlite admonition">
+<p class="first admonition-title">For databases other than SQLite</p>
+<p>If you’re using a database besides SQLite, make sure you’ve created a
+database by this point. Do that with “<code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">DATABASE</span> <span class="pre">database_name;</span></code>”
+within your database’s interactive prompt.</p>
+<p>Also make sure that the database user provided in <code class="file docutils literal notranslate"><span class="pre">mysite/settings.py</span></code>
+has “create database” privileges. This allows automatic creation of a
+<a class="reference internal" href="../topics/testing/overview.html#the-test-database"><span class="std std-ref">test database</span></a> which will be needed in a later
+tutorial.</p>
+<p class="last">If you’re using SQLite, you don’t need to create anything beforehand - the
+database file will be created automatically when it is needed.</p>
+</div>
+<p>While you’re editing <code class="file docutils literal notranslate"><span class="pre">mysite/settings.py</span></code>, set <a class="reference internal" href="../ref/settings.html#std-setting-TIME_ZONE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">TIME_ZONE</span></code></a> to
+your time zone.</p>
+<p>Also, note the <a class="reference internal" href="../ref/settings.html#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> setting at the top of the file. That
+holds the names of all Django applications that are activated in this Django
+instance. Apps can be used in multiple projects, and you can package and
+distribute them for use by others in their projects.</p>
+<p>By default, <a class="reference internal" href="../ref/settings.html#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> contains the following apps, all of which
+come with Django:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../ref/contrib/admin/index.html#module-django.contrib.admin" title="django.contrib.admin: Django's admin site."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.admin</span></code></a> – The admin site. You’ll use it shortly.</li>
+<li><a class="reference internal" href="../topics/auth/index.html#module-django.contrib.auth" title="django.contrib.auth: Django's authentication framework."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.auth</span></code></a> – An authentication system.</li>
+<li><a class="reference internal" href="../ref/contrib/contenttypes.html#module-django.contrib.contenttypes" title="django.contrib.contenttypes: Provides generic interface to installed models."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.contenttypes</span></code></a> – A framework for content types.</li>
+<li><a class="reference internal" href="../topics/http/sessions.html#module-django.contrib.sessions" title="django.contrib.sessions: Provides session management for Django projects."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.sessions</span></code></a> – A session framework.</li>
+<li><a class="reference internal" href="../ref/contrib/messages.html#module-django.contrib.messages" title="django.contrib.messages: Provides cookie- and session-based temporary message storage."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.messages</span></code></a> – A messaging framework.</li>
+<li><a class="reference internal" href="../ref/contrib/staticfiles.html#module-django.contrib.staticfiles" title="django.contrib.staticfiles: An app for handling static files."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.staticfiles</span></code></a> – A framework for managing
+static files.</li>
+</ul>
+<p>These applications are included by default as a convenience for the common case.</p>
+<p>Some of these applications make use of at least one database table, though,
+so we need to create the tables in the database before we can use them. To do
+that, run the following command:</p>
+<div class="console-block" id="console-block-0">
+<input class="c-tab-unix" id="c-tab-0-unix" type="radio" name="console-0" checked>
+<label for="c-tab-0-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
+<input class="c-tab-win" id="c-tab-0-win" type="radio" name="console-0">
+<label for="c-tab-0-win" title="Windows">&#xf17a</label>
+<section class="c-content-unix" id="c-content-0-unix">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python manage.py migrate
+</pre></div>
+</div>
+</section>
+<section class="c-content-win" id="c-content-0-win">
+<div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py manage.py migrate
+</pre></div>
+</section>
+</div>
+<p>The <a class="reference internal" href="../ref/django-admin.html#django-admin-migrate"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">migrate</span></code></a> command looks at the <a class="reference internal" href="../ref/settings.html#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> setting
+and creates any necessary database tables according to the database settings
+in your <code class="file docutils literal notranslate"><span class="pre">mysite/settings.py</span></code> file and the database migrations shipped
+with the app (we’ll cover those later). You’ll see a message for each
+migration it applies. If you’re interested, run the command-line client for your
+database and type <code class="docutils literal notranslate"><span class="pre">\dt</span></code> (PostgreSQL), <code class="docutils literal notranslate"><span class="pre">SHOW</span> <span class="pre">TABLES;</span></code> (MariaDB, MySQL),
+<code class="docutils literal notranslate"><span class="pre">.tables</span></code> (SQLite), or <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">TABLE_NAME</span> <span class="pre">FROM</span> <span class="pre">USER_TABLES;</span></code> (Oracle) to
+display the tables Django created.</p>
+<div class="admonition-for-the-minimalists admonition">
+<p class="first admonition-title">For the minimalists</p>
+<p class="last">Like we said above, the default applications are included for the common
+case, but not everybody needs them. If you don’t need any or all of them,
+feel free to comment-out or delete the appropriate line(s) from
+<a class="reference internal" href="../ref/settings.html#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> before running <a class="reference internal" href="../ref/django-admin.html#django-admin-migrate"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">migrate</span></code></a>. The
+<a class="reference internal" href="../ref/django-admin.html#django-admin-migrate"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">migrate</span></code></a> command will only run migrations for apps in
+<a class="reference internal" href="../ref/settings.html#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a>.</p>
+</div>
+</div>
+<div class="section" id="s-creating-models">
+<span id="s-id1"></span><span id="creating-models"></span><span id="id1"></span><h2>Creating models<a class="headerlink" href="#creating-models" title="Permalink to this headline">¶</a></h2>
+<p>Now we’ll define your models – essentially, your database layout, with
+additional metadata.</p>
+<div class="admonition-philosophy admonition">
+<p class="first admonition-title">Philosophy</p>
+<p>A model is the single, definitive source of information about your data. It
+contains the essential fields and behaviors of the data you’re storing.
+Django follows the <a class="reference internal" href="../misc/design-philosophies.html#dry"><span class="std std-ref">DRY Principle</span></a>. The goal is to define your
+data model in one place and automatically derive things from it.</p>
+<p class="last">This includes the migrations - unlike in Ruby On Rails, for example, migrations
+are entirely derived from your models file, and are essentially a
+history that Django can roll through to update your database schema to
+match your current models.</p>
+</div>
+<p>In our poll app, we’ll create two models: <code class="docutils literal notranslate"><span class="pre">Question</span></code> and <code class="docutils literal notranslate"><span class="pre">Choice</span></code>. A
+<code class="docutils literal notranslate"><span class="pre">Question</span></code> has a question and a publication date. A <code class="docutils literal notranslate"><span class="pre">Choice</span></code> has two
+fields: the text of the choice and a vote tally. Each <code class="docutils literal notranslate"><span class="pre">Choice</span></code> is associated
+with a <code class="docutils literal notranslate"><span class="pre">Question</span></code>.</p>
+<p>These concepts are represented by Python classes. Edit the
+<code class="file docutils literal notranslate"><span class="pre">polls/models.py</span></code> file so it looks like this:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/models.py</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+
+<span class="k">class</span> <span class="nc">Question</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">question_text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">pub_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="s2">&quot;date published&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Choice</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Question</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">choice_text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">votes</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Here, each model is represented by a class that subclasses
+<a class="reference internal" href="../ref/models/instances.html#django.db.models.Model" title="django.db.models.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.Model</span></code></a>. Each model has a number of class variables,
+each of which represents a database field in the model.</p>
+<p>Each field is represented by an instance of a <a class="reference internal" href="../ref/models/fields.html#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a>
+class – e.g., <a class="reference internal" href="../ref/models/fields.html#django.db.models.CharField" title="django.db.models.CharField"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharField</span></code></a> for character fields and
+<a class="reference internal" href="../ref/models/fields.html#django.db.models.DateTimeField" title="django.db.models.DateTimeField"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a> for datetimes. This tells Django what
+type of data each field holds.</p>
+<p>The name of each <a class="reference internal" href="../ref/models/fields.html#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> instance (e.g.
+<code class="docutils literal notranslate"><span class="pre">question_text</span></code> or <code class="docutils literal notranslate"><span class="pre">pub_date</span></code>) is the field’s name, in machine-friendly
+format. You’ll use this value in your Python code, and your database will use
+it as the column name.</p>
+<p>You can use an optional first positional argument to a
+<a class="reference internal" href="../ref/models/fields.html#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> to designate a human-readable name. That’s used
+in a couple of introspective parts of Django, and it doubles as documentation.
+If this field isn’t provided, Django will use the machine-readable name. In this
+example, we’ve only defined a human-readable name for <code class="docutils literal notranslate"><span class="pre">Question.pub_date</span></code>.
+For all other fields in this model, the field’s machine-readable name will
+suffice as its human-readable name.</p>
+<p>Some <a class="reference internal" href="../ref/models/fields.html#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> classes have required arguments.
+<a class="reference internal" href="../ref/models/fields.html#django.db.models.CharField" title="django.db.models.CharField"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharField</span></code></a>, for example, requires that you give it a
+<a class="reference internal" href="../ref/models/fields.html#django.db.models.CharField.max_length" title="django.db.models.CharField.max_length"><code class="xref py py-attr docutils literal notranslate"><span class="pre">max_length</span></code></a>. That’s used not only in the
+database schema, but in validation, as we’ll soon see.</p>
+<p>A <a class="reference internal" href="../ref/models/fields.html#django.db.models.Field" title="django.db.models.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> can also have various optional arguments; in
+this case, we’ve set the <a class="reference internal" href="../ref/models/fields.html#django.db.models.Field.default" title="django.db.models.Field.default"><code class="xref py py-attr docutils literal notranslate"><span class="pre">default</span></code></a> value of
+<code class="docutils literal notranslate"><span class="pre">votes</span></code> to 0.</p>
+<p>Finally, note a relationship is defined, using
+<a class="reference internal" href="../ref/models/fields.html#django.db.models.ForeignKey" title="django.db.models.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a>. That tells Django each <code class="docutils literal notranslate"><span class="pre">Choice</span></code> is
+related to a single <code class="docutils literal notranslate"><span class="pre">Question</span></code>. Django supports all the common database
+relationships: many-to-one, many-to-many, and one-to-one.</p>
+</div>
+<div class="section" id="s-activating-models">
+<span id="activating-models"></span><h2>Activating models<a class="headerlink" href="#activating-models" title="Permalink to this headline">¶</a></h2>
+<p>That small bit of model code gives Django a lot of information. With it, Django
+is able to:</p>
+<ul class="simple">
+<li>Create a database schema (<code class="docutils literal notranslate"><span class="pre">CREATE</span> <span class="pre">TABLE</span></code> statements) for this app.</li>
+<li>Create a Python database-access API for accessing <code class="docutils literal notranslate"><span class="pre">Question</span></code> and <code class="docutils literal notranslate"><span class="pre">Choice</span></code> objects.</li>
+</ul>
+<p>But first we need to tell our project that the <code class="docutils literal notranslate"><span class="pre">polls</span></code> app is installed.</p>
+<div class="admonition-philosophy admonition">
+<p class="first admonition-title">Philosophy</p>
+<p class="last">Django apps are “pluggable”: You can use an app in multiple projects, and
+you can distribute apps, because they don’t have to be tied to a given
+Django installation.</p>
+</div>
+<p>To include the app in our project, we need to add a reference to its
+configuration class in the <a class="reference internal" href="../ref/settings.html#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> setting. The
+<code class="docutils literal notranslate"><span class="pre">PollsConfig</span></code> class is in the <code class="file docutils literal notranslate"><span class="pre">polls/apps.py</span></code> file, so its dotted path
+is <code class="docutils literal notranslate"><span class="pre">'polls.apps.PollsConfig'</span></code>. Edit the <code class="file docutils literal notranslate"><span class="pre">mysite/settings.py</span></code> file and
+add that dotted path to the <a class="reference internal" href="../ref/settings.html#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> setting. It’ll look like
+this:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">mysite/settings.py</span></code></span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;polls.apps.PollsConfig&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;django.contrib.admin&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;django.contrib.auth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;django.contrib.contenttypes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;django.contrib.sessions&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;django.contrib.messages&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;django.contrib.staticfiles&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>Now Django knows to include the <code class="docutils literal notranslate"><span class="pre">polls</span></code> app. Let’s run another command:</p>
+<div class="console-block" id="console-block-1">
+<input class="c-tab-unix" id="c-tab-1-unix" type="radio" name="console-1" checked>
+<label for="c-tab-1-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
+<input class="c-tab-win" id="c-tab-1-win" type="radio" name="console-1">
+<label for="c-tab-1-win" title="Windows">&#xf17a</label>
+<section class="c-content-unix" id="c-content-1-unix">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python manage.py makemigrations polls
+</pre></div>
+</div>
+</section>
+<section class="c-content-win" id="c-content-1-win">
+<div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py manage.py makemigrations polls
+</pre></div>
+</section>
+</div>
+<p>You should see something similar to the following:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Migrations for &#39;polls&#39;:
+  polls/migrations/0001_initial.py
+    - Create model Question
+    - Create model Choice
+</pre></div>
+</div>
+<p>By running <code class="docutils literal notranslate"><span class="pre">makemigrations</span></code>, you’re telling Django that you’ve made
+some changes to your models (in this case, you’ve made new ones) and that
+you’d like the changes to be stored as a <em>migration</em>.</p>
+<p>Migrations are how Django stores changes to your models (and thus your
+database schema) - they’re files on disk. You can read the migration for your
+new model if you like; it’s the file <code class="docutils literal notranslate"><span class="pre">polls/migrations/0001_initial.py</span></code>.
+Don’t worry, you’re not expected to read them every time Django makes one, but
+they’re designed to be human-editable in case you want to manually tweak how
+Django changes things.</p>
+<p>There’s a command that will run the migrations for you and manage your database
+schema automatically - that’s called <a class="reference internal" href="../ref/django-admin.html#django-admin-migrate"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">migrate</span></code></a>, and we’ll come to it in a
+moment - but first, let’s see what SQL that migration would run. The
+<a class="reference internal" href="../ref/django-admin.html#django-admin-sqlmigrate"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">sqlmigrate</span></code></a> command takes migration names and returns their SQL:</p>
+<div class="console-block" id="console-block-2">
+<input class="c-tab-unix" id="c-tab-2-unix" type="radio" name="console-2" checked>
+<label for="c-tab-2-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
+<input class="c-tab-win" id="c-tab-2-win" type="radio" name="console-2">
+<label for="c-tab-2-win" title="Windows">&#xf17a</label>
+<section class="c-content-unix" id="c-content-2-unix">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python manage.py sqlmigrate polls <span class="m">0001</span>
+</pre></div>
+</div>
+</section>
+<section class="c-content-win" id="c-content-2-win">
+<div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py manage.py sqlmigrate polls 0001
+</pre></div>
+</section>
+</div>
+<p>You should see something similar to the following (we’ve reformatted it for
+readability):</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">BEGIN</span><span class="p">;</span><span class="w"></span>
+<span class="c1">--</span>
+<span class="c1">-- Create model Question</span>
+<span class="c1">--</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="ss">&quot;polls_question&quot;</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;id&quot;</span><span class="w"> </span><span class="nb">bigint</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="k">GENERATED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">IDENTITY</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;question_text&quot;</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;pub_date&quot;</span><span class="w"> </span><span class="k">timestamp</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="k">time</span><span class="w"> </span><span class="k">zone</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
+<span class="c1">--</span>
+<span class="c1">-- Create model Choice</span>
+<span class="c1">--</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="ss">&quot;polls_choice&quot;</span><span class="w"> </span><span class="p">(</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;id&quot;</span><span class="w"> </span><span class="nb">bigint</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="k">GENERATED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">IDENTITY</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;choice_text&quot;</span><span class="w"> </span><span class="nb">varchar</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;votes&quot;</span><span class="w"> </span><span class="nb">integer</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="ss">&quot;question_id&quot;</span><span class="w"> </span><span class="nb">bigint</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"></span>
+<span class="p">);</span><span class="w"></span>
+<span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="ss">&quot;polls_choice&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="k">ADD</span><span class="w"> </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="ss">&quot;polls_choice_question_id_c5b4b260_fk_polls_question_id&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;question_id&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">REFERENCES</span><span class="w"> </span><span class="ss">&quot;polls_question&quot;</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;id&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="k">DEFERRABLE</span><span class="w"> </span><span class="k">INITIALLY</span><span class="w"> </span><span class="k">DEFERRED</span><span class="p">;</span><span class="w"></span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="ss">&quot;polls_choice_question_id_c5b4b260&quot;</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="ss">&quot;polls_choice&quot;</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;question_id&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="k">COMMIT</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Note the following:</p>
+<ul class="simple">
+<li>The exact output will vary depending on the database you are using. The
+example above is generated for PostgreSQL.</li>
+<li>Table names are automatically generated by combining the name of the app
+(<code class="docutils literal notranslate"><span class="pre">polls</span></code>) and the lowercase name of the model – <code class="docutils literal notranslate"><span class="pre">question</span></code> and
+<code class="docutils literal notranslate"><span class="pre">choice</span></code>. (You can override this behavior.)</li>
+<li>Primary keys (IDs) are added automatically. (You can override this, too.)</li>
+<li>By convention, Django appends <code class="docutils literal notranslate"><span class="pre">&quot;_id&quot;</span></code> to the foreign key field name.
+(Yes, you can override this, as well.)</li>
+<li>The foreign key relationship is made explicit by a <code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code>
+constraint. Don’t worry about the <code class="docutils literal notranslate"><span class="pre">DEFERRABLE</span></code> parts; it’s telling
+PostgreSQL to not enforce the foreign key until the end of the transaction.</li>
+<li>It’s tailored to the database you’re using, so database-specific field types
+such as <code class="docutils literal notranslate"><span class="pre">auto_increment</span></code> (MySQL), <code class="docutils literal notranslate"><span class="pre">bigint</span> <span class="pre">PRIMARY</span> <span class="pre">KEY</span> <span class="pre">GENERATED</span> <span class="pre">BY</span> <span class="pre">DEFAULT</span>
+<span class="pre">AS</span> <span class="pre">IDENTITY</span></code> (PostgreSQL), or <code class="docutils literal notranslate"><span class="pre">integer</span> <span class="pre">primary</span> <span class="pre">key</span> <span class="pre">autoincrement</span></code> (SQLite)
+are handled for you automatically. Same goes for the quoting of field names
+– e.g., using double quotes or single quotes.</li>
+<li>The <a class="reference internal" href="../ref/django-admin.html#django-admin-sqlmigrate"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">sqlmigrate</span></code></a> command doesn’t actually run the migration on your
+database - instead, it prints it to the screen so that you can see what SQL
+Django thinks is required. It’s useful for checking what Django is going to
+do or if you have database administrators who require SQL scripts for
+changes.</li>
+</ul>
+<p>If you’re interested, you can also run
+<a class="reference internal" href="../ref/django-admin.html#django-admin-check"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">check</span></code></a>; this checks for any problems in
+your project without making migrations or touching the database.</p>
+<p>Now, run <a class="reference internal" href="../ref/django-admin.html#django-admin-migrate"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">migrate</span></code></a> again to create those model tables in your database:</p>
+<div class="console-block" id="console-block-3">
+<input class="c-tab-unix" id="c-tab-3-unix" type="radio" name="console-3" checked>
+<label for="c-tab-3-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
+<input class="c-tab-win" id="c-tab-3-win" type="radio" name="console-3">
+<label for="c-tab-3-win" title="Windows">&#xf17a</label>
+<section class="c-content-unix" id="c-content-3-unix">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python manage.py migrate
+<span class="go">Operations to perform:</span>
+<span class="go">  Apply all migrations: admin, auth, contenttypes, polls, sessions</span>
+<span class="go">Running migrations:</span>
+<span class="go">  Rendering model states... DONE</span>
+<span class="go">  Applying polls.0001_initial... OK</span>
+</pre></div>
+</div>
+</section>
+<section class="c-content-win" id="c-content-3-win">
+<div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py manage.py migrate
+<span class="go">Operations to perform:</span>
+<span class="go">  Apply all migrations: admin, auth, contenttypes, polls, sessions</span>
+<span class="go">Running migrations:</span>
+<span class="go">  Rendering model states... DONE</span>
+<span class="go">  Applying polls.0001_initial... OK</span>
+</pre></div>
+</section>
+</div>
+<p>The <a class="reference internal" href="../ref/django-admin.html#django-admin-migrate"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">migrate</span></code></a> command takes all the migrations that haven’t been
+applied (Django tracks which ones are applied using a special table in your
+database called <code class="docutils literal notranslate"><span class="pre">django_migrations</span></code>) and runs them against your database -
+essentially, synchronizing the changes you made to your models with the schema
+in the database.</p>
+<p>Migrations are very powerful and let you change your models over time, as you
+develop your project, without the need to delete your database or tables and
+make new ones - it specializes in upgrading your database live, without
+losing data. We’ll cover them in more depth in a later part of the tutorial,
+but for now, remember the three-step guide to making model changes:</p>
+<ul class="simple">
+<li>Change your models (in <code class="docutils literal notranslate"><span class="pre">models.py</span></code>).</li>
+<li>Run <a class="reference internal" href="../ref/django-admin.html#django-admin-makemigrations"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">makemigrations</span></code></a> to create
+migrations for those changes</li>
+<li>Run <a class="reference internal" href="../ref/django-admin.html#django-admin-migrate"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">migrate</span></code></a> to apply those changes to
+the database.</li>
+</ul>
+<p>The reason that there are separate commands to make and apply migrations is
+because you’ll commit migrations to your version control system and ship them
+with your app; they not only make your development easier, they’re also
+usable by other developers and in production.</p>
+<p>Read the <a class="reference internal" href="../ref/django-admin.html"><span class="doc">django-admin documentation</span></a> for full
+information on what the <code class="docutils literal notranslate"><span class="pre">manage.py</span></code> utility can do.</p>
+</div>
+<div class="section" id="s-playing-with-the-api">
+<span id="playing-with-the-api"></span><h2>Playing with the API<a class="headerlink" href="#playing-with-the-api" title="Permalink to this headline">¶</a></h2>
+<p>Now, let’s hop into the interactive Python shell and play around with the free
+API Django gives you. To invoke the Python shell, use this command:</p>
+<div class="console-block" id="console-block-4">
+<input class="c-tab-unix" id="c-tab-4-unix" type="radio" name="console-4" checked>
+<label for="c-tab-4-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
+<input class="c-tab-win" id="c-tab-4-win" type="radio" name="console-4">
+<label for="c-tab-4-win" title="Windows">&#xf17a</label>
+<section class="c-content-unix" id="c-content-4-unix">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python manage.py shell
+</pre></div>
+</div>
+</section>
+<section class="c-content-win" id="c-content-4-win">
+<div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py manage.py shell
+</pre></div>
+</section>
+</div>
+<p>We’re using this instead of simply typing “python”, because <code class="file docutils literal notranslate"><span class="pre">manage.py</span></code>
+sets the <span class="target" id="index-0"></span><a class="reference internal" href="../topics/settings.html#envvar-DJANGO_SETTINGS_MODULE"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">DJANGO_SETTINGS_MODULE</span></code></a> environment variable, which gives
+Django the Python import path to your <code class="file docutils literal notranslate"><span class="pre">mysite/settings.py</span></code> file.</p>
+<p>Once you’re in the shell, explore the <a class="reference internal" href="../topics/db/queries.html"><span class="doc">database API</span></a>:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">polls.models</span> <span class="kn">import</span> <span class="n">Choice</span><span class="p">,</span> <span class="n">Question</span>  <span class="c1"># Import the model classes we just wrote.</span>
+
+<span class="go"># No questions are in the system yet.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="go">&lt;QuerySet []&gt;</span>
+
+<span class="go"># Create a new Question.</span>
+<span class="go"># Support for time zones is enabled in the default settings file, so</span>
+<span class="go"># Django expects a datetime with tzinfo for pub_date. Use timezone.now()</span>
+<span class="go"># instead of datetime.datetime.now() and it will do the right thing.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">Question</span><span class="p">(</span><span class="n">question_text</span><span class="o">=</span><span class="s2">&quot;What&#39;s new?&quot;</span><span class="p">,</span> <span class="n">pub_date</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+<span class="go"># Save the object into the database. You have to call save() explicitly.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="go"># Now it has an ID.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">id</span>
+<span class="go">1</span>
+
+<span class="go"># Access model field values via Python attributes.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">question_text</span>
+<span class="go">&quot;What&#39;s new?&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">pub_date</span>
+<span class="go">datetime.datetime(2012, 2, 26, 13, 0, 0, 775217, tzinfo=datetime.timezone.utc)</span>
+
+<span class="go"># Change values by changing the attributes, then calling save().</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">question_text</span> <span class="o">=</span> <span class="s2">&quot;What&#39;s up?&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="go"># objects.all() displays all the questions in the database.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="go">&lt;QuerySet [&lt;Question: Question object (1)&gt;]&gt;</span>
+</pre></div>
+</div>
+<p>Wait a minute. <code class="docutils literal notranslate"><span class="pre">&lt;Question:</span> <span class="pre">Question</span> <span class="pre">object</span> <span class="pre">(1)&gt;</span></code> isn’t a helpful
+representation of this object. Let’s fix that by editing the <code class="docutils literal notranslate"><span class="pre">Question</span></code> model
+(in the <code class="docutils literal notranslate"><span class="pre">polls/models.py</span></code> file) and adding a
+<a class="reference internal" href="../ref/models/instances.html#django.db.models.Model.__str__" title="django.db.models.Model.__str__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__str__()</span></code></a> method to both <code class="docutils literal notranslate"><span class="pre">Question</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Choice</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/models.py</span></code></span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+
+<span class="k">class</span> <span class="nc">Question</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">question_text</span>
+
+
+<span class="k">class</span> <span class="nc">Choice</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">choice_text</span>
+</pre></div>
+</div>
+</div>
+<p>It’s important to add <a class="reference internal" href="../ref/models/instances.html#django.db.models.Model.__str__" title="django.db.models.Model.__str__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__str__()</span></code></a> methods to your
+models, not only for your own convenience when dealing with the interactive
+prompt, but also because objects’ representations are used throughout Django’s
+automatically-generated admin.</p>
+<p id="tutorial02-import-timezone">Let’s also add a custom method to this model:</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/models.py</span></code></span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+
+
+<span class="k">class</span> <span class="nc">Question</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="k">def</span> <span class="nf">was_published_recently</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pub_date</span> <span class="o">&gt;=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Note the addition of <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">datetime</span></code> and <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">django.utils</span> <span class="pre">import</span>
+<span class="pre">timezone</span></code>, to reference Python’s standard <a class="reference external" href="https://docs.python.org/3/library/datetime.html#module-datetime" title="(in Python v3.11)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code></a> module and Django’s
+time-zone-related utilities in <a class="reference internal" href="../ref/utils.html#module-django.utils.timezone" title="django.utils.timezone: Timezone support."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.utils.timezone</span></code></a>, respectively. If
+you aren’t familiar with time zone handling in Python, you can learn more in
+the <a class="reference internal" href="../topics/i18n/timezones.html"><span class="doc">time zone support docs</span></a>.</p>
+<p>Save these changes and start a new Python interactive shell by running
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">shell</span></code> again:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">polls.models</span> <span class="kn">import</span> <span class="n">Choice</span><span class="p">,</span> <span class="n">Question</span>
+
+<span class="go"># Make sure our __str__() addition worked.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="go">&lt;QuerySet [&lt;Question: What&#39;s up?&gt;]&gt;</span>
+
+<span class="go"># Django provides a rich database lookup API that&#39;s entirely driven by</span>
+<span class="go"># keyword arguments.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&lt;QuerySet [&lt;Question: What&#39;s up?&gt;]&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">question_text__startswith</span><span class="o">=</span><span class="s2">&quot;What&quot;</span><span class="p">)</span>
+<span class="go">&lt;QuerySet [&lt;Question: What&#39;s up?&gt;]&gt;</span>
+
+<span class="go"># Get the question that was published this year.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">current_year</span> <span class="o">=</span> <span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pub_date__year</span><span class="o">=</span><span class="n">current_year</span><span class="p">)</span>
+<span class="go">&lt;Question: What&#39;s up?&gt;</span>
+
+<span class="go"># Request an ID that doesn&#39;t exist, this will raise an exception.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">DoesNotExist</span>: <span class="n">Question matching query does not exist.</span>
+
+<span class="go"># Lookup by a primary key is the most common case, so Django provides a</span>
+<span class="go"># shortcut for primary-key exact lookups.</span>
+<span class="go"># The following is identical to Question.objects.get(id=1).</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">&lt;Question: What&#39;s up?&gt;</span>
+
+<span class="go"># Make sure our custom method worked.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">was_published_recently</span><span class="p">()</span>
+<span class="go">True</span>
+
+<span class="go"># Give the Question a couple of Choices. The create call constructs a new</span>
+<span class="go"># Choice object, does the INSERT statement, adds the choice to the set</span>
+<span class="go"># of available choices and returns the new Choice object. Django creates</span>
+<span class="go"># a set to hold the &quot;other side&quot; of a ForeignKey relation</span>
+<span class="go"># (e.g. a question&#39;s choice) which can be accessed via the API.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span> <span class="o">=</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="go"># Display any choices from the related object set -- none so far.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="go">&lt;QuerySet []&gt;</span>
+
+<span class="go"># Create three choices.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">choice_text</span><span class="o">=</span><span class="s2">&quot;Not much&quot;</span><span class="p">,</span> <span class="n">votes</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">&lt;Choice: Not much&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">choice_text</span><span class="o">=</span><span class="s2">&quot;The sky&quot;</span><span class="p">,</span> <span class="n">votes</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">&lt;Choice: The sky&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">choice_text</span><span class="o">=</span><span class="s2">&quot;Just hacking again&quot;</span><span class="p">,</span> <span class="n">votes</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="go"># Choice objects have API access to their related Question objects.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">question</span>
+<span class="go">&lt;Question: What&#39;s up?&gt;</span>
+
+<span class="go"># And vice versa: Question objects get access to Choice objects.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="go">&lt;QuerySet [&lt;Choice: Not much&gt;, &lt;Choice: The sky&gt;, &lt;Choice: Just hacking again&gt;]&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="go">3</span>
+
+<span class="go"># The API automatically follows relationships as far as you need.</span>
+<span class="go"># Use double underscores to separate relationships.</span>
+<span class="go"># This works as many levels deep as you want; there&#39;s no limit.</span>
+<span class="go"># Find all Choices for any question whose pub_date is in this year</span>
+<span class="go"># (reusing the &#39;current_year&#39; variable we created above).</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Choice</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">question__pub_date__year</span><span class="o">=</span><span class="n">current_year</span><span class="p">)</span>
+<span class="go">&lt;QuerySet [&lt;Choice: Not much&gt;, &lt;Choice: The sky&gt;, &lt;Choice: Just hacking again&gt;]&gt;</span>
+
+<span class="go"># Let&#39;s delete one of the choices. Use delete() for that.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">choice_text__startswith</span><span class="o">=</span><span class="s2">&quot;Just hacking&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For more information on model relations, see <a class="reference internal" href="../ref/models/relations.html"><span class="doc">Accessing related objects</span></a>. For more on how to use double underscores to perform
+field lookups via the API, see <a class="reference internal" href="../topics/db/queries.html#field-lookups-intro"><span class="std std-ref">Field lookups</span></a>. For
+full details on the database API, see our <a class="reference internal" href="../topics/db/queries.html"><span class="doc">Database API reference</span></a>.</p>
+</div>
+<div class="section" id="s-introducing-the-django-admin">
+<span id="introducing-the-django-admin"></span><h2>Introducing the Django Admin<a class="headerlink" href="#introducing-the-django-admin" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-philosophy admonition">
+<p class="first admonition-title">Philosophy</p>
+<p>Generating admin sites for your staff or clients to add, change, and delete
+content is tedious work that doesn’t require much creativity. For that
+reason, Django entirely automates creation of admin interfaces for models.</p>
+<p>Django was written in a newsroom environment, with a very clear separation
+between “content publishers” and the “public” site. Site managers use the
+system to add news stories, events, sports scores, etc., and that content is
+displayed on the public site. Django solves the problem of creating a
+unified interface for site administrators to edit content.</p>
+<p class="last">The admin isn’t intended to be used by site visitors. It’s for site
+managers.</p>
+</div>
+<div class="section" id="s-creating-an-admin-user">
+<span id="creating-an-admin-user"></span><h3>Creating an admin user<a class="headerlink" href="#creating-an-admin-user" title="Permalink to this headline">¶</a></h3>
+<p>First we’ll need to create a user who can login to the admin site. Run the
+following command:</p>
+<div class="console-block" id="console-block-5">
+<input class="c-tab-unix" id="c-tab-5-unix" type="radio" name="console-5" checked>
+<label for="c-tab-5-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
+<input class="c-tab-win" id="c-tab-5-win" type="radio" name="console-5">
+<label for="c-tab-5-win" title="Windows">&#xf17a</label>
+<section class="c-content-unix" id="c-content-5-unix">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python manage.py createsuperuser
+</pre></div>
+</div>
+</section>
+<section class="c-content-win" id="c-content-5-win">
+<div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py manage.py createsuperuser
+</pre></div>
+</section>
+</div>
+<p>Enter your desired username and press enter.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Username: admin
+</pre></div>
+</div>
+<p>You will then be prompted for your desired email address:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Email address: admin@example.com
+</pre></div>
+</div>
+<p>The final step is to enter your password. You will be asked to enter your
+password twice, the second time as a confirmation of the first.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Password: **********
+Password (again): *********
+Superuser created successfully.
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-start-the-development-server">
+<span id="start-the-development-server"></span><h3>Start the development server<a class="headerlink" href="#start-the-development-server" title="Permalink to this headline">¶</a></h3>
+<p>The Django admin site is activated by default. Let’s start the development
+server and explore it.</p>
+<p>If the server is not running start it like so:</p>
+<div class="console-block" id="console-block-6">
+<input class="c-tab-unix" id="c-tab-6-unix" type="radio" name="console-6" checked>
+<label for="c-tab-6-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
+<input class="c-tab-win" id="c-tab-6-win" type="radio" name="console-6">
+<label for="c-tab-6-win" title="Windows">&#xf17a</label>
+<section class="c-content-unix" id="c-content-6-unix">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python manage.py runserver
+</pre></div>
+</div>
+</section>
+<section class="c-content-win" id="c-content-6-win">
+<div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py manage.py runserver
+</pre></div>
+</section>
+</div>
+<p>Now, open a web browser and go to “/admin/” on your local domain – e.g.,
+<a class="reference external" href="http://127.0.0.1:8000/admin/">http://127.0.0.1:8000/admin/</a>. You should see the admin’s login screen:</p>
+<img alt="Django admin login screen" src="../_images/admin01.png" />
+<p>Since <a class="reference internal" href="../topics/i18n/translation.html"><span class="doc">translation</span></a> is turned on by default, if
+you set <a class="reference internal" href="../ref/settings.html#std-setting-LANGUAGE_CODE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LANGUAGE_CODE</span></code></a>, the login screen will be displayed in the
+given language (if Django has appropriate translations).</p>
+</div>
+<div class="section" id="s-enter-the-admin-site">
+<span id="enter-the-admin-site"></span><h3>Enter the admin site<a class="headerlink" href="#enter-the-admin-site" title="Permalink to this headline">¶</a></h3>
+<p>Now, try logging in with the superuser account you created in the previous step.
+You should see the Django admin index page:</p>
+<img alt="Django admin index page" src="../_images/admin02.png" />
+<p>You should see a few types of editable content: groups and users. They are
+provided by <a class="reference internal" href="../topics/auth/index.html#module-django.contrib.auth" title="django.contrib.auth: Django's authentication framework."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.contrib.auth</span></code></a>, the authentication framework shipped
+by Django.</p>
+</div>
+<div class="section" id="s-make-the-poll-app-modifiable-in-the-admin">
+<span id="make-the-poll-app-modifiable-in-the-admin"></span><h3>Make the poll app modifiable in the admin<a class="headerlink" href="#make-the-poll-app-modifiable-in-the-admin" title="Permalink to this headline">¶</a></h3>
+<p>But where’s our poll app? It’s not displayed on the admin index page.</p>
+<p>Only one more thing to do: we need to tell the admin that <code class="docutils literal notranslate"><span class="pre">Question</span></code> objects
+have an admin interface. To do this, open the <code class="file docutils literal notranslate"><span class="pre">polls/admin.py</span></code> file, and
+edit it to look like this:</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/admin.py</span></code></span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Question</span>
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Question</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="s-explore-the-free-admin-functionality">
+<span id="explore-the-free-admin-functionality"></span><h3>Explore the free admin functionality<a class="headerlink" href="#explore-the-free-admin-functionality" title="Permalink to this headline">¶</a></h3>
+<p>Now that we’ve registered <code class="docutils literal notranslate"><span class="pre">Question</span></code>, Django knows that it should be displayed on
+the admin index page:</p>
+<img alt="Django admin index page, now with polls displayed" src="../_images/admin03t.png" />
+<p>Click “Questions”. Now you’re at the “change list” page for questions. This page
+displays all the questions in the database and lets you choose one to change it.
+There’s the “What’s up?” question we created earlier:</p>
+<img alt="Polls change list page" src="../_images/admin04t.png" />
+<p>Click the “What’s up?” question to edit it:</p>
+<img alt="Editing form for question object" src="../_images/admin05t.png" />
+<p>Things to note here:</p>
+<ul class="simple">
+<li>The form is automatically generated from the <code class="docutils literal notranslate"><span class="pre">Question</span></code> model.</li>
+<li>The different model field types (<a class="reference internal" href="../ref/models/fields.html#django.db.models.DateTimeField" title="django.db.models.DateTimeField"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a>,
+<a class="reference internal" href="../ref/models/fields.html#django.db.models.CharField" title="django.db.models.CharField"><code class="xref py py-class docutils literal notranslate"><span class="pre">CharField</span></code></a>) correspond to the appropriate HTML
+input widget. Each type of field knows how to display itself in the Django
+admin.</li>
+<li>Each <a class="reference internal" href="../ref/models/fields.html#django.db.models.DateTimeField" title="django.db.models.DateTimeField"><code class="xref py py-class docutils literal notranslate"><span class="pre">DateTimeField</span></code></a> gets free JavaScript
+shortcuts. Dates get a “Today” shortcut and calendar popup, and times get
+a “Now” shortcut and a convenient popup that lists commonly entered times.</li>
+</ul>
+<p>The bottom part of the page gives you a couple of options:</p>
+<ul class="simple">
+<li>Save – Saves changes and returns to the change-list page for this type of
+object.</li>
+<li>Save and continue editing – Saves changes and reloads the admin page for
+this object.</li>
+<li>Save and add another – Saves changes and loads a new, blank form for this
+type of object.</li>
+<li>Delete – Displays a delete confirmation page.</li>
+</ul>
+<p>If the value of “Date published” doesn’t match the time when you created the
+question in <a class="reference internal" href="tutorial01.html"><span class="doc">Tutorial 1</span></a>, it probably
+means you forgot to set the correct value for the <a class="reference internal" href="../ref/settings.html#std-setting-TIME_ZONE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">TIME_ZONE</span></code></a> setting.
+Change it, reload the page and check that the correct value appears.</p>
+<p>Change the “Date published” by clicking the “Today” and “Now” shortcuts. Then
+click “Save and continue editing.” Then click “History” in the upper right.
+You’ll see a page listing all changes made to this object via the Django admin,
+with the timestamp and username of the person who made the change:</p>
+<img alt="History page for question object" src="../_images/admin06t.png" />
+<p>When you’re comfortable with the models API and have familiarized yourself with
+the admin site, read <a class="reference internal" href="tutorial03.html"><span class="doc">part 3 of this tutorial</span></a> to learn
+about how to add more views to our polls app.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Writing your first Django app, part 2</a><ul>
+<li><a class="reference internal" href="#database-setup">Database setup</a></li>
+<li><a class="reference internal" href="#creating-models">Creating models</a></li>
+<li><a class="reference internal" href="#activating-models">Activating models</a></li>
+<li><a class="reference internal" href="#playing-with-the-api">Playing with the API</a></li>
+<li><a class="reference internal" href="#introducing-the-django-admin">Introducing the Django Admin</a><ul>
+<li><a class="reference internal" href="#creating-an-admin-user">Creating an admin user</a></li>
+<li><a class="reference internal" href="#start-the-development-server">Start the development server</a></li>
+<li><a class="reference internal" href="#enter-the-admin-site">Enter the admin site</a></li>
+<li><a class="reference internal" href="#make-the-poll-app-modifiable-in-the-admin">Make the poll app modifiable in the admin</a></li>
+<li><a class="reference internal" href="#explore-the-free-admin-functionality">Explore the free admin functionality</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="tutorial01.html"
+                          title="previous chapter">Writing your first Django app, part 1</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="tutorial03.html"
+                          title="next chapter">Writing your first Django app, part 3</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/intro/tutorial02.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="tutorial01.html" title="Writing your first Django app, part 1">previous</a>
+     |
+    <a href="index.html" title="Getting started" accesskey="U">up</a>
+   |
+    <a href="tutorial03.html" title="Writing your first Django app, part 3">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

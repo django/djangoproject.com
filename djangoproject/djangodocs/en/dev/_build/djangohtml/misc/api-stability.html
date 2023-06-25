@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API stability &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Design philosophies" href="design-philosophies.html" />
+    <link rel="prev" title="Meta-documentation and miscellany" href="index.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="index.html" title="Meta-documentation and miscellany">previous</a>
+     |
+    <a href="index.html" title="Meta-documentation and miscellany" accesskey="U">up</a>
+   |
+    <a href="design-philosophies.html" title="Design philosophies">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="misc-api-stability">
+            
+  <div class="section" id="s-api-stability">
+<span id="api-stability"></span><h1>API stability<a class="headerlink" href="#api-stability" title="Permalink to this headline">¶</a></h1>
+<p>Django is committed to API stability and forwards-compatibility. In a nutshell,
+this means that code you develop against a version of Django will continue to
+work with future releases. You may need to make minor changes when upgrading
+the version of Django your project uses: see the “Backwards incompatible
+changes” section of the <a class="reference internal" href="../releases/index.html"><span class="doc">release note</span></a> for the version
+or versions to which you are upgrading.</p>
+<p>At the same time as making API stability a very high priority, Django is also
+committed to continual improvement, along with aiming for “one way to do it”
+(eventually) in the APIs we provide. This means that when we discover clearly
+superior ways to do things, we will deprecate and eventually remove the old
+ways. Our aim is to provide a modern, dependable web framework of the highest
+quality that encourages best practices in all projects that use it. By using
+incremental improvements, we try to avoid both stagnation and large breaking
+upgrades.</p>
+<div class="section" id="s-what-stable-means">
+<span id="what-stable-means"></span><h2>What “stable” means<a class="headerlink" href="#what-stable-means" title="Permalink to this headline">¶</a></h2>
+<p>In this context, stable means:</p>
+<ul>
+<li><p class="first">All the public APIs (everything in this documentation) will not be moved
+or renamed without providing backwards-compatible aliases.</p>
+</li>
+<li><p class="first">If new features are added to these APIs – which is quite possible –
+they will not break or change the meaning of existing methods. In other
+words, “stable” does not (necessarily) mean “complete.”</p>
+</li>
+<li><p class="first">If, for some reason, an API declared stable must be removed or replaced, it
+will be declared deprecated but will remain in the API for at least two
+feature releases. Warnings will be issued when the deprecated method is
+called.</p>
+<p>See <a class="reference internal" href="../internals/release-process.html#official-releases"><span class="std std-ref">Official releases</span></a> for more details on how Django’s version
+numbering scheme works, and how features will be deprecated.</p>
+</li>
+<li><p class="first">We’ll only break backwards compatibility of these APIs without a deprecation
+process if a bug or security hole makes it completely unavoidable.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="s-stable-apis">
+<span id="stable-apis"></span><h2>Stable APIs<a class="headerlink" href="#stable-apis" title="Permalink to this headline">¶</a></h2>
+<p>In general, everything covered in the documentation – with the exception of
+anything in the <a class="reference internal" href="../internals/index.html"><span class="doc">internals area</span></a> is considered stable.</p>
+</div>
+<div class="section" id="s-exceptions">
+<span id="exceptions"></span><h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<p>There are a few exceptions to this stability and backwards-compatibility
+promise.</p>
+<div class="section" id="s-security-fixes">
+<span id="security-fixes"></span><h3>Security fixes<a class="headerlink" href="#security-fixes" title="Permalink to this headline">¶</a></h3>
+<p>If we become aware of a security problem – hopefully by someone following our
+<a class="reference internal" href="../internals/security.html#reporting-security-issues"><span class="std std-ref">security reporting policy</span></a> – we’ll do
+everything necessary to fix it. This might mean breaking backwards
+compatibility; security trumps the compatibility guarantee.</p>
+</div>
+<div class="section" id="s-apis-marked-as-internal">
+<span id="apis-marked-as-internal"></span><h3>APIs marked as internal<a class="headerlink" href="#apis-marked-as-internal" title="Permalink to this headline">¶</a></h3>
+<p>Certain APIs are explicitly marked as “internal” in a couple of ways:</p>
+<ul class="simple">
+<li>Some documentation refers to internals and mentions them as such. If the
+documentation says that something is internal, we reserve the right to
+change it.</li>
+<li>Functions, methods, and other objects prefixed by a leading underscore
+(<code class="docutils literal notranslate"><span class="pre">_</span></code>). This is the standard Python way of indicating that something is
+private; if any method starts with a single <code class="docutils literal notranslate"><span class="pre">_</span></code>, it’s an internal API.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">API stability</a><ul>
+<li><a class="reference internal" href="#what-stable-means">What “stable” means</a></li>
+<li><a class="reference internal" href="#stable-apis">Stable APIs</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a><ul>
+<li><a class="reference internal" href="#security-fixes">Security fixes</a></li>
+<li><a class="reference internal" href="#apis-marked-as-internal">APIs marked as internal</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Meta-documentation and miscellany</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="design-philosophies.html"
+                          title="next chapter">Design philosophies</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/misc/api-stability.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="index.html" title="Meta-documentation and miscellany">previous</a>
+     |
+    <a href="index.html" title="Meta-documentation and miscellany" accesskey="U">up</a>
+   |
+    <a href="design-philosophies.html" title="Design philosophies">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

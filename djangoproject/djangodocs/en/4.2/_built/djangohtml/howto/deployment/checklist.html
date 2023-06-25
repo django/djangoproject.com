@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deployment checklist &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="How to upgrade Django to a newer version" href="../upgrade-version.html" />
+    <link rel="prev" title="How to use Django with Uvicorn" href="asgi/uvicorn.html" />
+
+
+
+ 
+<script src="../../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../../index.html">Home</a>  |
+        <a title="Table of contents" href="../../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../../genindex.html">Index</a>  |
+        <a title="Module index" href="../../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="asgi/uvicorn.html" title="How to use Django with Uvicorn">previous</a>
+     |
+    <a href="../index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="../upgrade-version.html" title="How to upgrade Django to a newer version">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="howto-deployment-checklist">
+            
+  <div class="section" id="s-deployment-checklist">
+<span id="deployment-checklist"></span><h1>Deployment checklist<a class="headerlink" href="#deployment-checklist" title="Permalink to this headline">¶</a></h1>
+<p>The internet is a hostile environment. Before deploying your Django project,
+you should take some time to review your settings, with security, performance,
+and operations in mind.</p>
+<p>Django includes many <a class="reference internal" href="../../topics/security.html"><span class="doc">security features</span></a>. Some are
+built-in and always enabled. Others are optional because they aren’t always
+appropriate, or because they’re inconvenient for development. For example,
+forcing HTTPS may not be suitable for all websites, and it’s impractical for
+local development.</p>
+<p>Performance optimizations are another category of trade-offs with convenience.
+For instance, caching is useful in production, less so for local development.
+Error reporting needs are also widely different.</p>
+<p>The following checklist includes settings that:</p>
+<ul class="simple">
+<li>must be set properly for Django to provide the expected level of security;</li>
+<li>are expected to be different in each environment;</li>
+<li>enable optional security features;</li>
+<li>enable performance optimizations;</li>
+<li>provide error reporting.</li>
+</ul>
+<p>Many of these settings are sensitive and should be treated as confidential. If
+you’re releasing the source code for your project, a common practice is to
+publish suitable settings for development, and to use a private settings
+module for production.</p>
+<div class="section" id="s-run-manage-py-check-deploy">
+<span id="run-manage-py-check-deploy"></span><h2>Run <code class="docutils literal notranslate"><span class="pre">manage.py</span> <span class="pre">check</span> <span class="pre">--deploy</span></code><a class="headerlink" href="#run-manage-py-check-deploy" title="Permalink to this headline">¶</a></h2>
+<p>Some of the checks described below can be automated using the <a class="reference internal" href="../../ref/django-admin.html#cmdoption-check-deploy"><code class="xref std std-option docutils literal notranslate"><span class="pre">check</span>
+<span class="pre">--deploy</span></code></a> option. Be sure to run it against your production settings file as
+described in the option’s documentation.</p>
+</div>
+<div class="section" id="s-critical-settings">
+<span id="critical-settings"></span><h2>Critical settings<a class="headerlink" href="#critical-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-secret-key">
+<span id="secret-key"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-SECRET_KEY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECRET_KEY</span></code></a><a class="headerlink" href="#secret-key" title="Permalink to this headline">¶</a></h3>
+<p><strong>The secret key must be a large random value and it must be kept secret.</strong></p>
+<p>Make sure that the key used in production isn’t used anywhere else and avoid
+committing it to source control. This reduces the number of vectors from which
+an attacker may acquire the key.</p>
+<p>Instead of hardcoding the secret key in your settings module, consider loading
+it from an environment variable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SECRET_KEY&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>or from a file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/etc/secret_key.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If rotating secret keys, you may use <a class="reference internal" href="../../ref/settings.html#std-setting-SECRET_KEY_FALLBACKS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECRET_KEY_FALLBACKS</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;CURRENT_SECRET_KEY&quot;</span><span class="p">]</span>
+<span class="n">SECRET_KEY_FALLBACKS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;OLD_SECRET_KEY&quot;</span><span class="p">],</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Ensure that old secret keys are removed from <code class="docutils literal notranslate"><span class="pre">SECRET_KEY_FALLBACKS</span></code> in a
+timely manner.</p>
+</div>
+<div class="section" id="s-debug">
+<span id="debug"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-DEBUG"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DEBUG</span></code></a><a class="headerlink" href="#debug" title="Permalink to this headline">¶</a></h3>
+<p><strong>You must never enable debug in production.</strong></p>
+<p>You’re certainly developing your project with <a class="reference internal" href="../../ref/settings.html#std-setting-DEBUG"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DEBUG</span> <span class="pre">=</span> <span class="pre">True</span></code></a>,
+since this enables handy features like full tracebacks in your browser.</p>
+<p>For a production environment, though, this is a really bad idea, because it
+leaks lots of information about your project: excerpts of your source code,
+local variables, settings, libraries used, etc.</p>
+</div>
+</div>
+<div class="section" id="s-environment-specific-settings">
+<span id="environment-specific-settings"></span><h2>Environment-specific settings<a class="headerlink" href="#environment-specific-settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-allowed-hosts">
+<span id="allowed-hosts"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-ALLOWED_HOSTS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">ALLOWED_HOSTS</span></code></a><a class="headerlink" href="#allowed-hosts" title="Permalink to this headline">¶</a></h3>
+<p>When <a class="reference internal" href="../../ref/settings.html#std-setting-DEBUG"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DEBUG</span> <span class="pre">=</span> <span class="pre">False</span></code></a>, Django doesn’t work at all without a
+suitable value for <a class="reference internal" href="../../ref/settings.html#std-setting-ALLOWED_HOSTS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">ALLOWED_HOSTS</span></code></a>.</p>
+<p>This setting is required to protect your site against some CSRF attacks. If
+you use a wildcard, you must perform your own validation of the <code class="docutils literal notranslate"><span class="pre">Host</span></code> HTTP
+header, or otherwise ensure that you aren’t vulnerable to this category of
+attacks.</p>
+<p>You should also configure the web server that sits in front of Django to
+validate the host. It should respond with a static error page or ignore
+requests for incorrect hosts instead of forwarding the request to Django. This
+way you’ll avoid spurious errors in your Django logs (or emails if you have
+error reporting configured that way). For example, on nginx you might set up a
+default server to return “444 No Response” on an unrecognized host:</p>
+<div class="highlight-nginx notranslate"><div class="highlight"><pre><span></span><span class="k">server</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">80</span><span class="w"> </span><span class="s">default_server</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="kn">return</span><span class="w"> </span><span class="mi">444</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-caches">
+<span id="caches"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-CACHES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CACHES</span></code></a><a class="headerlink" href="#caches" title="Permalink to this headline">¶</a></h3>
+<p>If you’re using a cache, connection parameters may be different in development
+and in production. Django defaults to per-process <a class="reference internal" href="../../topics/cache.html#local-memory-caching"><span class="std std-ref">local-memory caching</span></a> which may not be desirable.</p>
+<p>Cache servers often have weak authentication. Make sure they only accept
+connections from your application servers.</p>
+</div>
+<div class="section" id="s-databases">
+<span id="databases"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-DATABASES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DATABASES</span></code></a><a class="headerlink" href="#databases" title="Permalink to this headline">¶</a></h3>
+<p>Database connection parameters are probably different in development and in
+production.</p>
+<p>Database passwords are very sensitive. You should protect them exactly like
+<a class="reference internal" href="../../ref/settings.html#std-setting-SECRET_KEY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECRET_KEY</span></code></a>.</p>
+<p>For maximum security, make sure database servers only accept connections from
+your application servers.</p>
+<p>If you haven’t set up backups for your database, do it right now!</p>
+</div>
+<div class="section" id="s-email-backend-and-related-settings">
+<span id="email-backend-and-related-settings"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-EMAIL_BACKEND"><code class="xref std std-setting docutils literal notranslate"><span class="pre">EMAIL_BACKEND</span></code></a> and related settings<a class="headerlink" href="#email-backend-and-related-settings" title="Permalink to this headline">¶</a></h3>
+<p>If your site sends emails, these values need to be set correctly.</p>
+<p>By default, Django sends email from <a class="reference external" href="mailto:webmaster&#37;&#52;&#48;localhost">webmaster<span>&#64;</span>localhost</a> and <a class="reference external" href="mailto:root&#37;&#52;&#48;localhost">root<span>&#64;</span>localhost</a>.
+However, some mail providers reject email from these addresses. To use
+different sender addresses, modify the <a class="reference internal" href="../../ref/settings.html#std-setting-DEFAULT_FROM_EMAIL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DEFAULT_FROM_EMAIL</span></code></a> and
+<a class="reference internal" href="../../ref/settings.html#std-setting-SERVER_EMAIL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SERVER_EMAIL</span></code></a> settings.</p>
+</div>
+<div class="section" id="s-static-root-and-static-url">
+<span id="static-root-and-static-url"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-STATIC_ROOT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATIC_ROOT</span></code></a> and <a class="reference internal" href="../../ref/settings.html#std-setting-STATIC_URL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATIC_URL</span></code></a><a class="headerlink" href="#static-root-and-static-url" title="Permalink to this headline">¶</a></h3>
+<p>Static files are automatically served by the development server. In
+production, you must define a <a class="reference internal" href="../../ref/settings.html#std-setting-STATIC_ROOT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATIC_ROOT</span></code></a> directory where
+<a class="reference internal" href="../../ref/contrib/staticfiles.html#django-admin-collectstatic"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">collectstatic</span></code></a> will copy them.</p>
+<p>See <a class="reference internal" href="../static-files/index.html"><span class="doc">How to manage static files (e.g. images, JavaScript, CSS)</span></a> for more information.</p>
+</div>
+<div class="section" id="s-media-root-and-media-url">
+<span id="media-root-and-media-url"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-MEDIA_ROOT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">MEDIA_ROOT</span></code></a> and <a class="reference internal" href="../../ref/settings.html#std-setting-MEDIA_URL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">MEDIA_URL</span></code></a><a class="headerlink" href="#media-root-and-media-url" title="Permalink to this headline">¶</a></h3>
+<p>Media files are uploaded by your users. They’re untrusted! Make sure your web
+server never attempts to interpret them. For instance, if a user uploads a
+<code class="docutils literal notranslate"><span class="pre">.php</span></code> file, the web server shouldn’t execute it.</p>
+<p>Now is a good time to check your backup strategy for these files.</p>
+</div>
+</div>
+<div class="section" id="s-https">
+<span id="https"></span><h2>HTTPS<a class="headerlink" href="#https" title="Permalink to this headline">¶</a></h2>
+<p>Any website which allows users to log in should enforce site-wide HTTPS to
+avoid transmitting access tokens in clear. In Django, access tokens include
+the login/password, the session cookie, and password reset tokens. (You can’t
+do much to protect password reset tokens if you’re sending them by email.)</p>
+<p>Protecting sensitive areas such as the user account or the admin isn’t
+sufficient, because the same session cookie is used for HTTP and HTTPS. Your
+web server must redirect all HTTP traffic to HTTPS, and only transmit HTTPS
+requests to Django.</p>
+<p>Once you’ve set up HTTPS, enable the following settings.</p>
+<div class="section" id="s-csrf-cookie-secure">
+<span id="csrf-cookie-secure"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-CSRF_COOKIE_SECURE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CSRF_COOKIE_SECURE</span></code></a><a class="headerlink" href="#csrf-cookie-secure" title="Permalink to this headline">¶</a></h3>
+<p>Set this to <code class="docutils literal notranslate"><span class="pre">True</span></code> to avoid transmitting the CSRF cookie over HTTP
+accidentally.</p>
+</div>
+<div class="section" id="s-session-cookie-secure">
+<span id="session-cookie-secure"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-SESSION_COOKIE_SECURE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SESSION_COOKIE_SECURE</span></code></a><a class="headerlink" href="#session-cookie-secure" title="Permalink to this headline">¶</a></h3>
+<p>Set this to <code class="docutils literal notranslate"><span class="pre">True</span></code> to avoid transmitting the session cookie over HTTP
+accidentally.</p>
+</div>
+</div>
+<div class="section" id="s-performance-optimizations">
+<span id="performance-optimizations"></span><h2>Performance optimizations<a class="headerlink" href="#performance-optimizations" title="Permalink to this headline">¶</a></h2>
+<p>Setting <a class="reference internal" href="../../ref/settings.html#std-setting-DEBUG"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DEBUG</span> <span class="pre">=</span> <span class="pre">False</span></code></a> disables several features that are
+only useful in development. In addition, you can tune the following settings.</p>
+<div class="section" id="s-sessions">
+<span id="sessions"></span><h3>Sessions<a class="headerlink" href="#sessions" title="Permalink to this headline">¶</a></h3>
+<p>Consider using <a class="reference internal" href="../../topics/http/sessions.html#cached-sessions-backend"><span class="std std-ref">cached sessions</span></a> to improve
+performance.</p>
+<p>If using database-backed sessions, regularly <a class="reference internal" href="../../topics/http/sessions.html#clearing-the-session-store"><span class="std std-ref">clear old sessions</span></a> to avoid storing unnecessary data.</p>
+</div>
+<div class="section" id="s-conn-max-age">
+<span id="conn-max-age"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-CONN_MAX_AGE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CONN_MAX_AGE</span></code></a><a class="headerlink" href="#conn-max-age" title="Permalink to this headline">¶</a></h3>
+<p>Enabling <a class="reference internal" href="../../ref/databases.html#persistent-database-connections"><span class="std std-ref">persistent database connections</span></a> can result in a nice speed-up when
+connecting to the database accounts for a significant part of the request
+processing time.</p>
+<p>This helps a lot on virtualized hosts with limited network performance.</p>
+</div>
+<div class="section" id="s-templates">
+<span id="templates"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-TEMPLATES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">TEMPLATES</span></code></a><a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h3>
+<p>Enabling the cached template loader often improves performance drastically, as
+it avoids compiling each template every time it needs to be rendered. When
+<a class="reference internal" href="../../ref/settings.html#std-setting-DEBUG"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DEBUG</span> <span class="pre">=</span> <span class="pre">False</span></code></a>, the cached template loader is enabled
+automatically. See <a class="reference internal" href="../../ref/templates/api.html#django.template.loaders.cached.Loader" title="django.template.loaders.cached.Loader"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.template.loaders.cached.Loader</span></code></a> for more
+information.</p>
+</div>
+</div>
+<div class="section" id="s-error-reporting">
+<span id="error-reporting"></span><h2>Error reporting<a class="headerlink" href="#error-reporting" title="Permalink to this headline">¶</a></h2>
+<p>By the time you push your code to production, it’s hopefully robust, but you
+can’t rule out unexpected errors. Thankfully, Django can capture errors and
+notify you accordingly.</p>
+<div class="section" id="s-logging">
+<span id="logging"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-LOGGING"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOGGING</span></code></a><a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h3>
+<p>Review your logging configuration before putting your website in production,
+and check that it works as expected as soon as you have received some traffic.</p>
+<p>See <a class="reference internal" href="../../topics/logging.html"><span class="doc">Logging</span></a> for details on logging.</p>
+</div>
+<div class="section" id="s-admins-and-managers">
+<span id="admins-and-managers"></span><h3><a class="reference internal" href="../../ref/settings.html#std-setting-ADMINS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">ADMINS</span></code></a> and <a class="reference internal" href="../../ref/settings.html#std-setting-MANAGERS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">MANAGERS</span></code></a><a class="headerlink" href="#admins-and-managers" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../../ref/settings.html#std-setting-ADMINS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">ADMINS</span></code></a> will be notified of 500 errors by email.</p>
+<p><a class="reference internal" href="../../ref/settings.html#std-setting-MANAGERS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">MANAGERS</span></code></a> will be notified of 404 errors.
+<a class="reference internal" href="../../ref/settings.html#std-setting-IGNORABLE_404_URLS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">IGNORABLE_404_URLS</span></code></a> can help filter out spurious reports.</p>
+<p>See <a class="reference internal" href="../error-reporting.html"><span class="doc">How to manage error reporting</span></a> for details on error reporting by email.</p>
+<div class="admonition-error-reporting-by-email-doesn-t-scale-very-well admonition">
+<p class="first admonition-title">Error reporting by email doesn’t scale very well</p>
+<p class="last">Consider using an error monitoring system such as <a class="reference external" href="https://docs.sentry.io/">Sentry</a> before your
+inbox is flooded by reports. Sentry can also aggregate logs.</p>
+</div>
+</div>
+<div class="section" id="s-customize-the-default-error-views">
+<span id="customize-the-default-error-views"></span><h3>Customize the default error views<a class="headerlink" href="#customize-the-default-error-views" title="Permalink to this headline">¶</a></h3>
+<p>Django includes default views and templates for several HTTP error codes. You
+may want to override the default templates by creating the following templates
+in your root template directory: <code class="docutils literal notranslate"><span class="pre">404.html</span></code>, <code class="docutils literal notranslate"><span class="pre">500.html</span></code>, <code class="docutils literal notranslate"><span class="pre">403.html</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">400.html</span></code>. The <a class="reference internal" href="../../ref/views.html#error-views"><span class="std std-ref">default error views</span></a> that use these
+templates should suffice for 99% of web applications, but you can
+<a class="reference internal" href="../../topics/http/views.html#customizing-error-views"><span class="std std-ref">customize them</span></a> as well.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Deployment checklist</a><ul>
+<li><a class="reference internal" href="#run-manage-py-check-deploy">Run <code class="docutils literal notranslate"><span class="pre">manage.py</span> <span class="pre">check</span> <span class="pre">--deploy</span></code></a></li>
+<li><a class="reference internal" href="#critical-settings">Critical settings</a><ul>
+<li><a class="reference internal" href="#secret-key"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECRET_KEY</span></code></a></li>
+<li><a class="reference internal" href="#debug"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DEBUG</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#environment-specific-settings">Environment-specific settings</a><ul>
+<li><a class="reference internal" href="#allowed-hosts"><code class="xref std std-setting docutils literal notranslate"><span class="pre">ALLOWED_HOSTS</span></code></a></li>
+<li><a class="reference internal" href="#caches"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CACHES</span></code></a></li>
+<li><a class="reference internal" href="#databases"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DATABASES</span></code></a></li>
+<li><a class="reference internal" href="#email-backend-and-related-settings"><code class="xref std std-setting docutils literal notranslate"><span class="pre">EMAIL_BACKEND</span></code> and related settings</a></li>
+<li><a class="reference internal" href="#static-root-and-static-url"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATIC_ROOT</span></code> and <code class="xref std std-setting docutils literal notranslate"><span class="pre">STATIC_URL</span></code></a></li>
+<li><a class="reference internal" href="#media-root-and-media-url"><code class="xref std std-setting docutils literal notranslate"><span class="pre">MEDIA_ROOT</span></code> and <code class="xref std std-setting docutils literal notranslate"><span class="pre">MEDIA_URL</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#https">HTTPS</a><ul>
+<li><a class="reference internal" href="#csrf-cookie-secure"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CSRF_COOKIE_SECURE</span></code></a></li>
+<li><a class="reference internal" href="#session-cookie-secure"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SESSION_COOKIE_SECURE</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#performance-optimizations">Performance optimizations</a><ul>
+<li><a class="reference internal" href="#sessions">Sessions</a></li>
+<li><a class="reference internal" href="#conn-max-age"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CONN_MAX_AGE</span></code></a></li>
+<li><a class="reference internal" href="#templates"><code class="xref std std-setting docutils literal notranslate"><span class="pre">TEMPLATES</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#error-reporting">Error reporting</a><ul>
+<li><a class="reference internal" href="#logging"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOGGING</span></code></a></li>
+<li><a class="reference internal" href="#admins-and-managers"><code class="xref std std-setting docutils literal notranslate"><span class="pre">ADMINS</span></code> and <code class="xref std std-setting docutils literal notranslate"><span class="pre">MANAGERS</span></code></a></li>
+<li><a class="reference internal" href="#customize-the-default-error-views">Customize the default error views</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="asgi/uvicorn.html"
+                          title="previous chapter">How to use Django with Uvicorn</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../upgrade-version.html"
+                          title="next chapter">How to upgrade Django to a newer version</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/howto/deployment/checklist.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="asgi/uvicorn.html" title="How to use Django with Uvicorn">previous</a>
+     |
+    <a href="../index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="../upgrade-version.html" title="How to upgrade Django to a newer version">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

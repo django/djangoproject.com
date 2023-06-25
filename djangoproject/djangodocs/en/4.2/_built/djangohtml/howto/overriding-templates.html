@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to override templates &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to manage static files (e.g. images, JavaScript, CSS)" href="static-files/index.html" />
+    <link rel="prev" title="How to create PDF files" href="outputting-pdf.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="outputting-pdf.html" title="How to create PDF files">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="static-files/index.html" title="How to manage static files (e.g. images, JavaScript, CSS)">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="howto-overriding-templates">
+            
+  <div class="section" id="s-how-to-override-templates">
+<span id="how-to-override-templates"></span><h1>How to override templates<a class="headerlink" href="#how-to-override-templates" title="Permalink to this headline">¶</a></h1>
+<p>In your project, you might want to override a template in another Django
+application, whether it be a third-party application or a contrib application
+such as <code class="docutils literal notranslate"><span class="pre">django.contrib.admin</span></code>. You can either put template overrides in your
+project’s templates directory or in an application’s templates directory.</p>
+<p>If you have app and project templates directories that both contain overrides,
+the default Django template loader will try to load the template from the
+project-level directory first. In other words, <a class="reference internal" href="../ref/settings.html#std-setting-TEMPLATES-DIRS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DIRS</span></code></a>
+is searched before <a class="reference internal" href="../ref/settings.html#std-setting-TEMPLATES-APP_DIRS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">APP_DIRS</span></code></a>.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Read <a class="reference internal" href="../ref/forms/renderers.html#overriding-built-in-widget-templates"><span class="std std-ref">Overriding built-in widget templates</span></a> if you’re looking to
+do that.</p>
+</div>
+<div class="section" id="s-overriding-from-the-project-s-templates-directory">
+<span id="overriding-from-the-project-s-templates-directory"></span><h2>Overriding from the project’s templates directory<a class="headerlink" href="#overriding-from-the-project-s-templates-directory" title="Permalink to this headline">¶</a></h2>
+<p>First, we’ll explore overriding templates by creating replacement templates in
+your project’s templates directory.</p>
+<p>Let’s say you’re trying to override the templates for a third-party application
+called <code class="docutils literal notranslate"><span class="pre">blog</span></code>, which provides the templates <code class="docutils literal notranslate"><span class="pre">blog/post.html</span></code> and
+<code class="docutils literal notranslate"><span class="pre">blog/list.html</span></code>. The relevant settings for your project would look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">BASE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+
+<span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="o">...</span><span class="p">,</span>
+    <span class="s2">&quot;blog&quot;</span><span class="p">,</span>
+    <span class="o">...</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">TEMPLATES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;BACKEND&quot;</span><span class="p">:</span> <span class="s2">&quot;django.template.backends.django.DjangoTemplates&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;DIRS&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;templates&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;APP_DIRS&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="c1"># ...</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../ref/settings.html#std-setting-TEMPLATES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">TEMPLATES</span></code></a> setting and <code class="docutils literal notranslate"><span class="pre">BASE_DIR</span></code> will already exist if you
+created your project using the default project template. The setting that needs
+to be modified is <a class="reference internal" href="../ref/settings.html#std-setting-TEMPLATES-DIRS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DIRS</span></code></a>.</p>
+<p>These settings assume you have a <code class="docutils literal notranslate"><span class="pre">templates</span></code> directory in the root of your
+project. To override the templates for the <code class="docutils literal notranslate"><span class="pre">blog</span></code> app, create a folder
+in the <code class="docutils literal notranslate"><span class="pre">templates</span></code> directory, and add the template files to that folder:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>templates/
+    blog/
+        list.html
+        post.html
+</pre></div>
+</div>
+<p>The template loader first looks for templates in the <code class="docutils literal notranslate"><span class="pre">DIRS</span></code> directory. When
+the views in the <code class="docutils literal notranslate"><span class="pre">blog</span></code> app ask for the <code class="docutils literal notranslate"><span class="pre">blog/post.html</span></code> and
+<code class="docutils literal notranslate"><span class="pre">blog/list.html</span></code> templates, the loader will return the files you just created.</p>
+</div>
+<div class="section" id="s-overriding-from-an-app-s-template-directory">
+<span id="overriding-from-an-app-s-template-directory"></span><h2>Overriding from an app’s template directory<a class="headerlink" href="#overriding-from-an-app-s-template-directory" title="Permalink to this headline">¶</a></h2>
+<p>Since you’re overriding templates located outside of one of your project’s
+apps, it’s more common to use the first method and put template overrides in a
+project’s templates folder. If you prefer, however, it’s also possible to put
+the overrides in an app’s template directory.</p>
+<p>First, make sure your template settings are checking inside app directories:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TEMPLATES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="c1"># ...</span>
+        <span class="s2">&quot;APP_DIRS&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="c1"># ...</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>If you want to put the template overrides in an app called <code class="docutils literal notranslate"><span class="pre">myapp</span></code> and the
+templates to override are named <code class="docutils literal notranslate"><span class="pre">blog/list.html</span></code> and <code class="docutils literal notranslate"><span class="pre">blog/post.html</span></code>,
+then your directory structure will look like:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>myapp/
+    templates/
+        blog/
+            list.html
+            post.html
+</pre></div>
+</div>
+<p>With <a class="reference internal" href="../ref/settings.html#std-setting-TEMPLATES-APP_DIRS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">APP_DIRS</span></code></a> set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the template
+loader will look in the app’s templates directory and find the templates.</p>
+</div>
+<div class="section" id="s-extending-an-overridden-template">
+<span id="s-id1"></span><span id="extending-an-overridden-template"></span><span id="id1"></span><h2>Extending an overridden template<a class="headerlink" href="#extending-an-overridden-template" title="Permalink to this headline">¶</a></h2>
+<p>With your template loaders configured, you can extend a template using the
+<a class="reference internal" href="../ref/templates/builtins.html#std-templatetag-extends"><code class="xref std std-ttag docutils literal notranslate"><span class="pre">{%</span> <span class="pre">extends</span> <span class="pre">%}</span></code></a> template tag whilst at the same time overriding
+it. This can allow you to make small customizations without needing to
+reimplement the entire template.</p>
+<p>For example, you can use this technique to add a custom logo to the
+<code class="docutils literal notranslate"><span class="pre">admin/base_site.html</span></code> template:</p>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">templates/admin/base_site.html</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span> <span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;admin/base_site.html&quot;</span> <span class="cp">%}</span>
+
+ <span class="cp">{%</span> <span class="k">block</span> <span class="nv">branding</span> <span class="cp">%}</span>
+     <span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;link/to/logo.png&quot;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;logo&quot;</span><span class="p">&gt;</span>
+     <span class="cp">{{</span> <span class="nb">block</span><span class="nv">.super</span> <span class="cp">}}</span>
+ <span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+<p>Key points to note:</p>
+<ul class="simple">
+<li>The example creates a file at <code class="docutils literal notranslate"><span class="pre">templates/admin/base_site.html</span></code> that uses
+the configured project-level <code class="docutils literal notranslate"><span class="pre">templates</span></code> directory to override
+<code class="docutils literal notranslate"><span class="pre">admin/base_site.html</span></code>.</li>
+<li>The new template extends <code class="docutils literal notranslate"><span class="pre">admin/base_site.html</span></code>, which is the same template
+as is being overridden.</li>
+<li>The template replaces just the <code class="docutils literal notranslate"><span class="pre">branding</span></code> block, adding a custom logo, and
+using <code class="docutils literal notranslate"><span class="pre">block.super</span></code> to retain the prior content.</li>
+<li>The rest of the template is inherited unchanged from
+<code class="docutils literal notranslate"><span class="pre">admin/base_site.html</span></code>.</li>
+</ul>
+<p>This technique works because the template loader does not consider the already
+loaded override template (at <code class="docutils literal notranslate"><span class="pre">templates/admin/base_site.html</span></code>) when
+resolving the <code class="docutils literal notranslate"><span class="pre">extends</span></code> tag. Combined with <code class="docutils literal notranslate"><span class="pre">block.super</span></code> it is a powerful
+technique to make small customizations.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">How to override templates</a><ul>
+<li><a class="reference internal" href="#overriding-from-the-project-s-templates-directory">Overriding from the project’s templates directory</a></li>
+<li><a class="reference internal" href="#overriding-from-an-app-s-template-directory">Overriding from an app’s template directory</a></li>
+<li><a class="reference internal" href="#extending-an-overridden-template">Extending an overridden template</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="outputting-pdf.html"
+                          title="previous chapter">How to create PDF files</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="static-files/index.html"
+                          title="next chapter">How to manage static files (e.g. images, JavaScript, CSS)</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/howto/overriding-templates.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="outputting-pdf.html" title="How to create PDF files">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="static-files/index.html" title="How to manage static files (e.g. images, JavaScript, CSS)">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1148 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Django Deprecation Timeline &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Django source code repository" href="git.html" />
+    <link rel="prev" title="Django’s release process" href="release-process.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="release-process.html" title="Django’s release process">previous</a>
+     |
+    <a href="index.html" title="Django internals" accesskey="U">up</a>
+   |
+    <a href="git.html" title="The Django source code repository">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="internals-deprecation">
+            
+  <div class="section" id="s-django-deprecation-timeline">
+<span id="django-deprecation-timeline"></span><h1>Django Deprecation Timeline<a class="headerlink" href="#django-deprecation-timeline" title="Permalink to this headline">¶</a></h1>
+<p>This document outlines when various pieces of Django will be removed or altered
+in a backward incompatible way, following their deprecation, as per the
+<a class="reference internal" href="release-process.html#internal-release-deprecation-policy"><span class="std std-ref">deprecation policy</span></a>. More details
+about each item can often be found in the release notes of two versions prior.</p>
+<div class="section" id="s-deprecation-removed-in-6-0">
+<span id="s-id1"></span><span id="deprecation-removed-in-6-0"></span><span id="id1"></span><h2>6.0<a class="headerlink" href="#deprecation-removed-in-6-0" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/5.0.html#deprecated-features-5-0"><span class="std std-ref">Django 5.0 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">DjangoDivFormRenderer</span></code> and <code class="docutils literal notranslate"><span class="pre">Jinja2DivFormRenderer</span></code> transitional form
+renderers will be removed.</li>
+<li>Support for passing positional arguments to <code class="docutils literal notranslate"><span class="pre">BaseConstraint</span></code> will be
+removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">request</span></code> will be required in the signature of
+<code class="docutils literal notranslate"><span class="pre">ModelAdmin.lookup_allowed()</span></code> subclasses.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.db.models.sql.datastructures.Join</span></code> will no longer fallback to
+<code class="docutils literal notranslate"><span class="pre">get_joining_columns()</span></code>.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">get_joining_columns()</span></code> method of <code class="docutils literal notranslate"><span class="pre">ForeignObject</span></code> and
+<code class="docutils literal notranslate"><span class="pre">ForeignObjectRel</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">ForeignObject.get_reverse_joining_columns()</span></code> method will be removed.</li>
+<li>The default scheme for <code class="docutils literal notranslate"><span class="pre">forms.URLField</span></code> will change from <code class="docutils literal notranslate"><span class="pre">&quot;http&quot;</span></code> to
+<code class="docutils literal notranslate"><span class="pre">&quot;https&quot;</span></code>.</li>
+<li>Support for calling <code class="docutils literal notranslate"><span class="pre">format_html()</span></code> without passing args or kwargs will be
+removed.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-5-1">
+<span id="s-id2"></span><span id="deprecation-removed-in-5-1"></span><span id="id2"></span><h2>5.1<a class="headerlink" href="#deprecation-removed-in-5-1" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/4.2.html#deprecated-features-4-2"><span class="std std-ref">Django 4.2 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">BaseUserManager.make_random_password()</span></code> method will be removed.</li>
+<li>The model’s <code class="docutils literal notranslate"><span class="pre">Meta.index_together</span></code> option will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">length_is</span></code> template filter will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.auth.hashers.SHA1PasswordHasher</span></code>,
+<code class="docutils literal notranslate"><span class="pre">django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">django.contrib.auth.hashers.UnsaltedMD5PasswordHasher</span></code> will be removed.</li>
+<li>The model <code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.fields.CICharField</span></code>,
+<code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.fields.CIEmailField</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.fields.CITextField</span></code> will be removed. Stub fields
+will remain for compatibility with historical migrations.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.fields.CIText</span></code> mixin will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">map_width</span></code> and <code class="docutils literal notranslate"><span class="pre">map_height</span></code> attributes of <code class="docutils literal notranslate"><span class="pre">BaseGeometryWidget</span></code>
+will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">SimpleTestCase.assertFormsetError()</span></code> method will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">TransactionTestCase.assertQuerysetEqual()</span></code> method will be removed.</li>
+<li>Support for passing encoded JSON string literals to <code class="docutils literal notranslate"><span class="pre">JSONField</span></code> and
+associated lookups and expressions will be removed.</li>
+<li>Support for passing positional arguments to <code class="docutils literal notranslate"><span class="pre">Signer</span></code> and
+<code class="docutils literal notranslate"><span class="pre">TimestampSigner</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">DEFAULT_FILE_STORAGE</span></code> and <code class="docutils literal notranslate"><span class="pre">STATICFILES_STORAGE</span></code> settings will be
+removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.core.files.storage.get_storage_class()</span></code> function will be
+removed.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-5-0">
+<span id="s-id3"></span><span id="deprecation-removed-in-5-0"></span><span id="id3"></span><h2>5.0<a class="headerlink" href="#deprecation-removed-in-5-0" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/4.0.html#deprecated-features-4-0"><span class="std std-ref">Django 4.0 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">SERIALIZE</span></code> test setting will be removed.</li>
+<li>The undocumented <code class="docutils literal notranslate"><span class="pre">django.utils.baseconv</span></code> module will be removed.</li>
+<li>The undocumented <code class="docutils literal notranslate"><span class="pre">django.utils.datetime_safe</span></code> module will be removed.</li>
+<li>The default value of the <code class="docutils literal notranslate"><span class="pre">USE_TZ</span></code> setting will change from <code class="docutils literal notranslate"><span class="pre">False</span></code> to
+<code class="docutils literal notranslate"><span class="pre">True</span></code>.</li>
+<li>The default sitemap protocol for sitemaps built outside the context of a
+request will change from <code class="docutils literal notranslate"><span class="pre">'http'</span></code> to <code class="docutils literal notranslate"><span class="pre">'https'</span></code>.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">extra_tests</span></code> argument for <code class="docutils literal notranslate"><span class="pre">DiscoverRunner.build_suite()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">DiscoverRunner.run_tests()</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.aggregates.ArrayAgg</span></code>, <code class="docutils literal notranslate"><span class="pre">JSONBAgg</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">StringAgg</span></code> aggregates will return <code class="docutils literal notranslate"><span class="pre">None</span></code> when there are no rows instead
+of <code class="docutils literal notranslate"><span class="pre">[]</span></code>, <code class="docutils literal notranslate"><span class="pre">[]</span></code>, and <code class="docutils literal notranslate"><span class="pre">''</span></code> respectively.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">USE_L10N</span></code> setting will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">USE_DEPRECATED_PYTZ</span></code> transitional setting will be removed.</li>
+<li>Support for <code class="docutils literal notranslate"><span class="pre">pytz</span></code> timezones will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">is_dst</span></code> argument will be removed from:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">QuerySet.datetimes()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.timezone.make_aware()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.functions.Trunc()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.functions.TruncSecond()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.functions.TruncMinute()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.functions.TruncHour()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.functions.TruncDay()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.functions.TruncWeek()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.functions.TruncMonth()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.functions.TruncQuarter()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.functions.TruncYear()</span></code></li>
+</ul>
+</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.gis.admin.GeoModelAdmin</span></code> and <code class="docutils literal notranslate"><span class="pre">OSMGeoAdmin</span></code> classes
+will be removed.</li>
+<li>The undocumented <code class="docutils literal notranslate"><span class="pre">BaseForm._html_output()</span></code> method will be removed.</li>
+<li>The ability to return a <code class="docutils literal notranslate"><span class="pre">str</span></code>, rather than a <code class="docutils literal notranslate"><span class="pre">SafeString</span></code>, when rendering
+an <code class="docutils literal notranslate"><span class="pre">ErrorDict</span></code> and <code class="docutils literal notranslate"><span class="pre">ErrorList</span></code> will be removed.</li>
+</ul>
+<p>See the <a class="reference internal" href="../releases/4.1.html#deprecated-features-4-1"><span class="std std-ref">Django 4.1 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">SitemapIndexItem.__str__()</span></code> method will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">CSRF_COOKIE_MASKED</span></code> transitional setting will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">name</span></code> argument of <code class="docutils literal notranslate"><span class="pre">django.utils.functional.cached_property()</span></code> will
+be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">opclasses</span></code> argument of
+<code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.constraints.ExclusionConstraint</span></code> will be removed.</li>
+<li>The undocumented ability to pass <code class="docutils literal notranslate"><span class="pre">errors=None</span></code> to
+<code class="docutils literal notranslate"><span class="pre">SimpleTestCase.assertFormError()</span></code> and <code class="docutils literal notranslate"><span class="pre">assertFormsetError()</span></code> will be
+removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.sessions.serializers.PickleSerializer</span></code> will be removed.</li>
+<li>The usage of <code class="docutils literal notranslate"><span class="pre">QuerySet.iterator()</span></code> on a queryset that prefetches related
+objects without providing the <code class="docutils literal notranslate"><span class="pre">chunk_size</span></code> argument will no longer be
+allowed.</li>
+<li>Passing unsaved model instances to related filters will no longer be allowed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">created=True</span></code> will be required in the signature of
+<code class="docutils literal notranslate"><span class="pre">RemoteUserBackend.configure_user()</span></code> subclasses.</li>
+<li>Support for logging out via <code class="docutils literal notranslate"><span class="pre">GET</span></code> requests in the
+<code class="docutils literal notranslate"><span class="pre">django.contrib.auth.views.LogoutView</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.contrib.auth.views.logout_then_login()</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.utils.timezone.utc</span></code> alias to <code class="docutils literal notranslate"><span class="pre">datetime.timezone.utc</span></code> will be
+removed.</li>
+<li>Passing a response object and a form/formset name to
+<code class="docutils literal notranslate"><span class="pre">SimpleTestCase.assertFormError()</span></code> and <code class="docutils literal notranslate"><span class="pre">assertFormsetError()</span></code> will no
+longer be allowed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.gis.admin.OpenLayersWidget</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.auth.hashers.CryptPasswordHasher</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">&quot;django/forms/default.html&quot;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&quot;django/forms/formsets/default.html&quot;</span></code> templates will be removed.</li>
+<li>The ability to pass <code class="docutils literal notranslate"><span class="pre">nulls_first=False</span></code> or <code class="docutils literal notranslate"><span class="pre">nulls_last=False</span></code> to
+<code class="docutils literal notranslate"><span class="pre">Expression.asc()</span></code> and <code class="docutils literal notranslate"><span class="pre">Expression.desc()</span></code> methods, and the <code class="docutils literal notranslate"><span class="pre">OrderBy</span></code>
+expression will be removed.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-4-1">
+<span id="s-id4"></span><span id="deprecation-removed-in-4-1"></span><span id="id4"></span><h2>4.1<a class="headerlink" href="#deprecation-removed-in-4-1" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/3.2.html#deprecated-features-3-2"><span class="std std-ref">Django 3.2 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li>Support for assigning objects which don’t support creating deep copies with
+<code class="docutils literal notranslate"><span class="pre">copy.deepcopy()</span></code> to class attributes in <code class="docutils literal notranslate"><span class="pre">TestCase.setUpTestData()</span></code> will
+be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">BaseCommand.requires_system_checks</span></code> won’t support boolean values.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">whitelist</span></code> argument and <code class="docutils literal notranslate"><span class="pre">domain_whitelist</span></code> attribute of
+<code class="docutils literal notranslate"><span class="pre">django.core.validators.EmailValidator</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">default_app_config</span></code> module variable will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">TransactionTestCase.assertQuerysetEqual()</span></code> will no longer automatically
+call <code class="docutils literal notranslate"><span class="pre">repr()</span></code> on a queryset when compared to string values.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.core.cache.backends.memcached.MemcachedCache</span></code> will be removed.</li>
+<li>Support for the pre-Django 3.2 format of messages used by
+<code class="docutils literal notranslate"><span class="pre">django.contrib.messages.storage.cookie.CookieStorage</span></code> will be removed.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-4-0">
+<span id="s-id5"></span><span id="deprecation-removed-in-4-0"></span><span id="id5"></span><h2>4.0<a class="headerlink" href="#deprecation-removed-in-4-0" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/3.0.html#deprecated-features-3-0"><span class="std std-ref">Django 3.0 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.http.urlquote()</span></code>, <code class="docutils literal notranslate"><span class="pre">urlquote_plus()</span></code>, <code class="docutils literal notranslate"><span class="pre">urlunquote()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">urlunquote_plus()</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.encoding.force_text()</span></code> and <code class="docutils literal notranslate"><span class="pre">smart_text()</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.translation.ugettext()</span></code>, <code class="docutils literal notranslate"><span class="pre">ugettext_lazy()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ugettext_noop()</span></code>, <code class="docutils literal notranslate"><span class="pre">ungettext()</span></code>, and <code class="docutils literal notranslate"><span class="pre">ungettext_lazy()</span></code> will be
+removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.views.i18n.set_language()</span></code> will no longer set the user language in
+<code class="docutils literal notranslate"><span class="pre">request.session</span></code> (key <code class="docutils literal notranslate"><span class="pre">django.utils.translation.LANGUAGE_SESSION_KEY</span></code>).</li>
+<li><code class="docutils literal notranslate"><span class="pre">alias=None</span></code> will be required in the signature of
+<code class="docutils literal notranslate"><span class="pre">django.db.models.Expression.get_group_by_cols()</span></code> subclasses.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.text.unescape_entities()</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.http.is_safe_url()</span></code> will be removed.</li>
+</ul>
+<p>See the <a class="reference internal" href="../releases/3.1.html#deprecated-features-3-1"><span class="std std-ref">Django 3.1 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">PASSWORD_RESET_TIMEOUT_DAYS</span></code> setting will be removed.</li>
+<li>The undocumented usage of the <a class="reference internal" href="../ref/models/querysets.html#std-fieldlookup-isnull"><code class="xref std std-lookup docutils literal notranslate"><span class="pre">isnull</span></code></a> lookup with non-boolean values
+as the right-hand side will no longer be allowed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.db.models.query_utils.InvalidQuery</span></code> exception class will be
+removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django-admin.py</span></code> entry point will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">HttpRequest.is_ajax()</span></code> method will be removed.</li>
+<li>Support for the pre-Django 3.1 encoding format of cookies values used by
+<code class="docutils literal notranslate"><span class="pre">django.contrib.messages.storage.cookie.CookieStorage</span></code> will be removed.</li>
+<li>Support for the pre-Django 3.1 password reset tokens in the admin site (that
+use the SHA-1 hashing algorithm) will be removed.</li>
+<li>Support for the pre-Django 3.1 encoding format of sessions will be removed.</li>
+<li>Support for the pre-Django 3.1 <code class="docutils literal notranslate"><span class="pre">django.core.signing.Signer</span></code> signatures
+(encoded with the SHA-1 algorithm) will be removed.</li>
+<li>Support for the pre-Django 3.1 <code class="docutils literal notranslate"><span class="pre">django.core.signing.dumps()</span></code> signatures
+(encoded with the SHA-1 algorithm) in <code class="docutils literal notranslate"><span class="pre">django.core.signing.loads()</span></code> will be
+removed.</li>
+<li>Support for the pre-Django 3.1 user sessions (that use the SHA-1 algorithm)
+will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">get_response</span></code> argument for
+<code class="docutils literal notranslate"><span class="pre">django.utils.deprecation.MiddlewareMixin.__init__()</span></code> will be required and
+won’t accept <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">providing_args</span></code> argument for <code class="docutils literal notranslate"><span class="pre">django.dispatch.Signal</span></code> will be
+removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">length</span></code> argument for <code class="docutils literal notranslate"><span class="pre">django.utils.crypto.get_random_string()</span></code> will
+be required.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">list</span></code> message for <code class="docutils literal notranslate"><span class="pre">ModelMultipleChoiceField</span></code> will be removed.</li>
+<li>Support for passing raw column aliases to <code class="docutils literal notranslate"><span class="pre">QuerySet.order_by()</span></code> will be
+removed.</li>
+<li>The model <code class="docutils literal notranslate"><span class="pre">NullBooleanField</span></code> will be removed. A stub field will remain for
+compatibility with historical migrations.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.conf.urls.url()</span></code> will be removed.</li>
+<li>The model <code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.fields.JSONField</span></code> will be removed. A
+stub field will remain for compatibility with historical migrations.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.forms.JSONField</span></code>,
+<code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.fields.jsonb.KeyTransform</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.fields.jsonb.KeyTextTransform</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">ifequal</span> <span class="pre">%}</span></code> and <code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">ifnotequal</span> <span class="pre">%}</span></code> template tags will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">DEFAULT_HASHING_ALGORITHM</span></code> transitional setting will be removed.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-3-1">
+<span id="s-id6"></span><span id="deprecation-removed-in-3-1"></span><span id="id6"></span><h2>3.1<a class="headerlink" href="#deprecation-removed-in-3-1" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/2.2.html#deprecated-features-2-2"><span class="std std-ref">Django 2.2 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.timezone.FixedOffset</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.core.paginator.QuerySetPaginator</span></code> will be removed.</li>
+<li>A model’s <code class="docutils literal notranslate"><span class="pre">Meta.ordering</span></code> will no longer affect <code class="docutils literal notranslate"><span class="pre">GROUP</span> <span class="pre">BY</span></code> queries.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.fields.FloatRangeField</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.contrib.postgres.forms.FloatRangeField</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">FILE_CHARSET</span></code> setting will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.staticfiles.storage.CachedStaticFilesStorage</span></code> will be
+removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">RemoteUserBackend.configure_user()</span></code> will require <code class="docutils literal notranslate"><span class="pre">request</span></code> as the first
+positional argument.</li>
+<li>Support for <code class="docutils literal notranslate"><span class="pre">SimpleTestCase.allow_database_queries</span></code> and
+<code class="docutils literal notranslate"><span class="pre">TransactionTestCase.multi_db</span></code> will be removed.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-3-0">
+<span id="s-id7"></span><span id="deprecation-removed-in-3-0"></span><span id="id7"></span><h2>3.0<a class="headerlink" href="#deprecation-removed-in-3-0" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/2.0.html#deprecated-features-2-0"><span class="std std-ref">Django 2.0 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">django.db.backends.postgresql_psycopg2</span></code> module will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.shortcuts.render_to_response()</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">DEFAULT_CONTENT_TYPE</span></code> setting will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">HttpRequest.xreadlines()</span></code> will be removed.</li>
+<li>Support for the <code class="docutils literal notranslate"><span class="pre">context</span></code> argument of <code class="docutils literal notranslate"><span class="pre">Field.from_db_value()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Expression.convert_value()</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">field_name</span></code> keyword argument of <code class="docutils literal notranslate"><span class="pre">QuerySet.earliest()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">latest()</span></code> will be removed.</li>
+</ul>
+<p>See the <a class="reference internal" href="../releases/2.1.html#deprecated-features-2-1"><span class="std std-ref">Django 2.1 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.gis.db.models.functions.ForceRHR</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.http.cookie_date()</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">staticfiles</span></code> and <code class="docutils literal notranslate"><span class="pre">admin_static</span></code> template tag libraries will be
+removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.staticfiles.templatetags.static()</span></code> will be removed.</li>
+<li>The shim to allow <code class="docutils literal notranslate"><span class="pre">InlineModelAdmin.has_add_permission()</span></code> to be defined
+without an <code class="docutils literal notranslate"><span class="pre">obj</span></code> argument will be removed.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-2-1">
+<span id="s-id8"></span><span id="deprecation-removed-in-2-1"></span><span id="id8"></span><h2>2.1<a class="headerlink" href="#deprecation-removed-in-2-1" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/1.11.html#deprecated-features-1-11"><span class="std std-ref">Django 1.11 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">contrib.auth.views.login()</span></code>, <code class="docutils literal notranslate"><span class="pre">logout()</span></code>, <code class="docutils literal notranslate"><span class="pre">password_change()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">password_change_done()</span></code>, <code class="docutils literal notranslate"><span class="pre">password_reset()</span></code>, <code class="docutils literal notranslate"><span class="pre">password_reset_done()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">password_reset_confirm()</span></code>, and <code class="docutils literal notranslate"><span class="pre">password_reset_complete()</span></code> will be
+removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">extra_context</span></code> parameter of <code class="docutils literal notranslate"><span class="pre">contrib.auth.views.logout_then_login()</span></code>
+will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.test.runner.setup_databases()</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.translation.string_concat()</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.core.cache.backends.memcached.PyLibMCCache</span></code> will no longer support
+passing <code class="docutils literal notranslate"><span class="pre">pylibmc</span></code> behavior settings as top-level attributes of <code class="docutils literal notranslate"><span class="pre">OPTIONS</span></code>.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">host</span></code> parameter of <code class="docutils literal notranslate"><span class="pre">django.utils.http.is_safe_url()</span></code> will be
+removed.</li>
+<li>Silencing of exceptions raised while rendering the <code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">include</span> <span class="pre">%}</span></code> template
+tag will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">DatabaseIntrospection.get_indexes()</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">authenticate()</span></code> method of authentication backends will require
+<code class="docutils literal notranslate"><span class="pre">request</span></code> as the first positional argument.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.db.models.permalink()</span></code> decorator will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">USE_ETAGS</span></code> setting will be removed. <code class="docutils literal notranslate"><span class="pre">CommonMiddleware</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.utils.cache.patch_response_headers()</span></code> will no longer set ETags.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">Model._meta.has_auto_field</span></code> attribute will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">url()</span></code>’s support for inline flags in regular expression groups (<code class="docutils literal notranslate"><span class="pre">(?i)</span></code>,
+<code class="docutils literal notranslate"><span class="pre">(?L)</span></code>, <code class="docutils literal notranslate"><span class="pre">(?m)</span></code>, <code class="docutils literal notranslate"><span class="pre">(?s)</span></code>, and <code class="docutils literal notranslate"><span class="pre">(?u)</span></code>) will be removed.</li>
+<li>Support for <code class="docutils literal notranslate"><span class="pre">Widget.render()</span></code> methods without the <code class="docutils literal notranslate"><span class="pre">renderer</span></code> argument
+will be removed.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-2-0">
+<span id="s-id9"></span><span id="deprecation-removed-in-2-0"></span><span id="id9"></span><h2>2.0<a class="headerlink" href="#deprecation-removed-in-2-0" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/1.9.html#deprecated-features-1-9"><span class="std std-ref">Django 1.9 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">weak</span></code> argument to <code class="docutils literal notranslate"><span class="pre">django.dispatch.signals.Signal.disconnect()</span></code> will
+be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.backends.base.BaseDatabaseOperations.check_aggregate_support()</span></code>
+will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.forms.extras</span></code> package will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">assignment_tag</span></code> helper will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">host</span></code> argument to <code class="docutils literal notranslate"><span class="pre">assertsRedirects</span></code> will be removed. The
+compatibility layer which allows absolute URLs to be considered equal to
+relative ones when the path is identical will also be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">Field.rel</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">Field.remote_field.to</span></code> attribute will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">on_delete</span></code> argument for <code class="docutils literal notranslate"><span class="pre">ForeignKey</span></code> and <code class="docutils literal notranslate"><span class="pre">OneToOneField</span></code>  will be
+required.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.fields.add_lazy_relation()</span></code> will be removed.</li>
+<li>When time zone support is enabled, database backends that don’t support time
+zones won’t convert aware datetimes to naive values in UTC anymore when such
+values are passed as parameters to SQL queries executed outside of the ORM,
+e.g. with <code class="docutils literal notranslate"><span class="pre">cursor.execute()</span></code>.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.auth.tests.utils.skipIfCustomUser()</span></code> decorator will be
+removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">GeoManager</span></code> and <code class="docutils literal notranslate"><span class="pre">GeoQuerySet</span></code> classes will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.gis.geoip</span></code> module will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">supports_recursion</span></code> check for template loaders will be removed from:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.engine.Engine.find_template()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.loader_tags.ExtendsNode.find_template()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.loaders.base.Loader.supports_recursion()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.loaders.cached.Loader.supports_recursion()</span></code></li>
+</ul>
+</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">load_template()</span></code> and <code class="docutils literal notranslate"><span class="pre">load_template_sources()</span></code> template loader
+methods will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">template_dirs</span></code> argument for template loaders will be removed:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.loaders.base.Loader.get_template()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.loaders.cached.Loader.cache_key()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.loaders.cached.Loader.get_template()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.loaders.cached.Loader.get_template_sources()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.loaders.filesystem.Loader.get_template_sources()</span></code></li>
+</ul>
+</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.template.loaders.base.Loader.__call__()</span></code> method will be
+removed.</li>
+<li>Support for custom error views with a single positional parameter will be
+dropped.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">mime_type</span></code> attribute of <code class="docutils literal notranslate"><span class="pre">django.utils.feedgenerator.Atom1Feed</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.utils.feedgenerator.RssFeed</span></code> will be removed in favor of
+<code class="docutils literal notranslate"><span class="pre">content_type</span></code>.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">app_name</span></code> argument to <code class="docutils literal notranslate"><span class="pre">django.conf.urls.include()</span></code> will be
+removed.</li>
+<li>Support for passing a 3-tuple as the first argument to <code class="docutils literal notranslate"><span class="pre">include()</span></code> will
+be removed.</li>
+<li>Support for setting a URL instance namespace without an application
+namespace will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">Field._get_val_from_obj()</span></code> will be removed in favor of
+<code class="docutils literal notranslate"><span class="pre">Field.value_from_object()</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.loaders.eggs.Loader</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">current_app</span></code> parameter to the <code class="docutils literal notranslate"><span class="pre">contrib.auth</span></code> views will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">callable_obj</span></code> keyword argument to
+<code class="docutils literal notranslate"><span class="pre">SimpleTestCase.assertRaisesMessage()</span></code> will be removed.</li>
+<li>Support for the <code class="docutils literal notranslate"><span class="pre">allow_tags</span></code> attribute on <code class="docutils literal notranslate"><span class="pre">ModelAdmin</span></code> methods will be
+removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">enclosure</span></code> keyword argument to <code class="docutils literal notranslate"><span class="pre">SyndicationFeed.add_item()</span></code> will be
+removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.template.loader.LoaderOrigin</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.template.base.StringOrigin</span></code> aliases for
+<code class="docutils literal notranslate"><span class="pre">django.template.base.Origin</span></code> will be removed.</li>
+</ul>
+<p>See the <a class="reference internal" href="../releases/1.10.html#deprecated-features-1-10"><span class="std std-ref">Django 1.10 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">makemigrations</span> <span class="pre">--exit</span></code> option will be removed.</li>
+<li>Support for direct assignment to a reverse foreign key or many-to-many
+relation will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">get_srid()</span></code> and <code class="docutils literal notranslate"><span class="pre">set_srid()</span></code> methods of
+<code class="docutils literal notranslate"><span class="pre">django.contrib.gis.geos.GEOSGeometry</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">get_x()</span></code>, <code class="docutils literal notranslate"><span class="pre">set_x()</span></code>, <code class="docutils literal notranslate"><span class="pre">get_y()</span></code>, <code class="docutils literal notranslate"><span class="pre">set_y()</span></code>, <code class="docutils literal notranslate"><span class="pre">get_z()</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">set_z()</span></code> methods of <code class="docutils literal notranslate"><span class="pre">django.contrib.gis.geos.Point</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">get_coords()</span></code> and <code class="docutils literal notranslate"><span class="pre">set_coords()</span></code> methods of
+<code class="docutils literal notranslate"><span class="pre">django.contrib.gis.geos.Point</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">cascaded_union</span></code> property of <code class="docutils literal notranslate"><span class="pre">django.contrib.gis.geos.MultiPolygon</span></code>
+will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.functional.allow_lazy()</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">shell</span> <span class="pre">--plain</span></code> option will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.core.urlresolvers</span></code> module will be removed.</li>
+<li>The model <code class="docutils literal notranslate"><span class="pre">CommaSeparatedIntegerField</span></code> will be removed. A stub field will
+remain for compatibility with historical migrations.</li>
+<li>Support for the template <code class="docutils literal notranslate"><span class="pre">Context.has_key()</span></code> method will be removed.</li>
+<li>Support for the <code class="docutils literal notranslate"><span class="pre">django.core.files.storage.Storage.accessed_time()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">created_time()</span></code>, and <code class="docutils literal notranslate"><span class="pre">modified_time()</span></code> methods will be removed.</li>
+<li>Support for query lookups using the model name when
+<code class="docutils literal notranslate"><span class="pre">Meta.default_related_name</span></code> is set will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">__search</span></code> query lookup and the
+<code class="docutils literal notranslate"><span class="pre">DatabaseOperations.fulltext_search_sql()</span></code> method will be removed.</li>
+<li>The shim for supporting custom related manager classes without a
+<code class="docutils literal notranslate"><span class="pre">_apply_rel_filters()</span></code> method will be removed.</li>
+<li>Using <code class="docutils literal notranslate"><span class="pre">User.is_authenticated()</span></code> and <code class="docutils literal notranslate"><span class="pre">User.is_anonymous()</span></code> as methods
+will no longer be supported.</li>
+<li>The private attribute <code class="docutils literal notranslate"><span class="pre">virtual_fields</span></code> of <code class="docutils literal notranslate"><span class="pre">Model._meta</span></code> will be removed.</li>
+<li>The private keyword arguments <code class="docutils literal notranslate"><span class="pre">virtual_only</span></code> in
+<code class="docutils literal notranslate"><span class="pre">Field.contribute_to_class()</span></code> and <code class="docutils literal notranslate"><span class="pre">virtual</span></code> in
+<code class="docutils literal notranslate"><span class="pre">Model._meta.add_field()</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">javascript_catalog()</span></code> and <code class="docutils literal notranslate"><span class="pre">json_catalog()</span></code> views will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.gis.utils.precision_wkt()</span></code> function will be removed.</li>
+<li>In multi-table inheritance, implicit promotion of a <code class="docutils literal notranslate"><span class="pre">OneToOneField</span></code> to a
+<code class="docutils literal notranslate"><span class="pre">parent_link</span></code> will be removed.</li>
+<li>Support for <code class="docutils literal notranslate"><span class="pre">Widget._format_value()</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">FileField</span></code> methods <code class="docutils literal notranslate"><span class="pre">get_directory_name()</span></code> and <code class="docutils literal notranslate"><span class="pre">get_filename()</span></code> will be
+removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">mark_for_escaping()</span></code> function and the classes it uses: <code class="docutils literal notranslate"><span class="pre">EscapeData</span></code>,
+<code class="docutils literal notranslate"><span class="pre">EscapeBytes</span></code>, <code class="docutils literal notranslate"><span class="pre">EscapeText</span></code>, <code class="docutils literal notranslate"><span class="pre">EscapeString</span></code>, and <code class="docutils literal notranslate"><span class="pre">EscapeUnicode</span></code> will
+be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">escape</span></code> filter will change to use
+<code class="docutils literal notranslate"><span class="pre">django.utils.html.conditional_escape()</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">Manager.use_for_related_fields</span></code> will be removed.</li>
+<li>Model <code class="docutils literal notranslate"><span class="pre">Manager</span></code> inheritance will follow MRO inheritance rules and the
+<code class="docutils literal notranslate"><span class="pre">Meta.manager_inheritance_from_future</span></code> to opt-in to this behavior will be
+removed.</li>
+<li>Support for old-style middleware using <code class="docutils literal notranslate"><span class="pre">settings.MIDDLEWARE_CLASSES</span></code> will
+be removed.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-1-10">
+<span id="s-id10"></span><span id="deprecation-removed-in-1-10"></span><span id="id10"></span><h2>1.10<a class="headerlink" href="#deprecation-removed-in-1-10" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/1.8.html#deprecated-features-1-8"><span class="std std-ref">Django 1.8 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li>Support for calling a <code class="docutils literal notranslate"><span class="pre">SQLCompiler</span></code> directly as an alias for calling its
+<code class="docutils literal notranslate"><span class="pre">quote_name_unless_alias</span></code> method will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">cycle</span></code> and <code class="docutils literal notranslate"><span class="pre">firstof</span></code> template tags will be removed from the <code class="docutils literal notranslate"><span class="pre">future</span></code>
+template tag library (used during the 1.6/1.7 deprecation period).</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.conf.urls.patterns()</span></code> will be removed.</li>
+<li>Support for the <code class="docutils literal notranslate"><span class="pre">prefix</span></code> argument to
+<code class="docutils literal notranslate"><span class="pre">django.conf.urls.i18n.i18n_patterns()</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">SimpleTestCase.urls</span></code> will be removed.</li>
+<li>Using an incorrect count of unpacked values in the <code class="docutils literal notranslate"><span class="pre">for</span></code> template tag
+will raise an exception rather than fail silently.</li>
+<li>The ability to reverse URLs using a dotted Python path will be removed.</li>
+<li>The ability to use a dotted Python path for the <code class="docutils literal notranslate"><span class="pre">LOGIN_URL</span></code> and
+<code class="docutils literal notranslate"><span class="pre">LOGIN_REDIRECT_URL</span></code> settings will be removed.</li>
+<li>Support for <a class="reference external" href="https://docs.python.org/3/library/optparse.html#module-optparse" title="(in Python v3.11)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code></a> will be dropped for custom management commands
+(replaced by <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.11)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a>).</li>
+<li>The class <code class="docutils literal notranslate"><span class="pre">django.core.management.NoArgsCommand</span></code> will be removed. Use
+<a class="reference internal" href="../howto/custom-management-commands.html#django.core.management.BaseCommand" title="django.core.management.BaseCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseCommand</span></code></a> instead, which takes no arguments
+by default.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.core.context_processors</span></code> module will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.sql.aggregates</span></code> module will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.gis.db.models.sql.aggregates</span></code> module will be removed.</li>
+<li>The following methods and properties of <code class="docutils literal notranslate"><span class="pre">django.db.sql.query.Query</span></code> will
+be removed:<ul>
+<li>Properties: <code class="docutils literal notranslate"><span class="pre">aggregates</span></code> and <code class="docutils literal notranslate"><span class="pre">aggregate_select</span></code></li>
+<li>Methods: <code class="docutils literal notranslate"><span class="pre">add_aggregate</span></code>, <code class="docutils literal notranslate"><span class="pre">set_aggregate_mask</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">append_aggregate_mask</span></code>.</li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.resolve_variable</span></code> will be removed.</li>
+<li>The following private APIs will be removed from
+<a class="reference internal" href="../ref/models/meta.html#django.db.models.options.Options" title="django.db.models.options.Options"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.options.Options</span></code></a> (<code class="docutils literal notranslate"><span class="pre">Model._meta</span></code>):<ul>
+<li><code class="docutils literal notranslate"><span class="pre">get_field_by_name()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">get_all_field_names()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">get_fields_with_model()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">get_concrete_fields_with_model()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">get_m2m_with_model()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">get_all_related_objects()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">get_all_related_objects_with_model()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">get_all_related_many_to_many_objects()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">get_all_related_m2m_objects_with_model()</span></code></li>
+</ul>
+</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">error_message</span></code> argument of <code class="docutils literal notranslate"><span class="pre">django.forms.RegexField</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">unordered_list</span></code> filter will no longer support old style lists.</li>
+<li>Support for string <code class="docutils literal notranslate"><span class="pre">view</span></code> arguments to <code class="docutils literal notranslate"><span class="pre">url()</span></code> will be removed.</li>
+<li>The backward compatible shim  to rename <code class="docutils literal notranslate"><span class="pre">django.forms.Form._has_changed()</span></code>
+to <code class="docutils literal notranslate"><span class="pre">has_changed()</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">removetags</span></code> template filter will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">remove_tags()</span></code> and <code class="docutils literal notranslate"><span class="pre">strip_entities()</span></code> functions in
+<code class="docutils literal notranslate"><span class="pre">django.utils.html</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">is_admin_site</span></code> argument to
+<code class="docutils literal notranslate"><span class="pre">django.contrib.auth.views.password_reset()</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.field.subclassing.SubfieldBase</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.checksums</span></code> will be removed; its functionality is included
+in <code class="docutils literal notranslate"><span class="pre">django-localflavor</span></code> 1.1+.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">original_content_type_id</span></code> attribute on
+<code class="docutils literal notranslate"><span class="pre">django.contrib.admin.helpers.InlineAdminForm</span></code> will be removed.</li>
+<li>The backwards compatibility shim to allow <code class="docutils literal notranslate"><span class="pre">FormMixin.get_form()</span></code> to be
+defined with no default value for its <code class="docutils literal notranslate"><span class="pre">form_class</span></code> argument will be removed.</li>
+<li>The following settings will be removed:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">ALLOWED_INCLUDE_ROOTS</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">TEMPLATE_CONTEXT_PROCESSORS</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">TEMPLATE_DEBUG</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">TEMPLATE_DIRS</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">TEMPLATE_LOADERS</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">TEMPLATE_STRING_IF_INVALID</span></code></li>
+</ul>
+</li>
+<li>The backwards compatibility alias <code class="docutils literal notranslate"><span class="pre">django.template.loader.BaseLoader</span></code> will
+be removed.</li>
+<li>Django template objects returned by
+<a class="reference internal" href="../topics/templates.html#django.template.loader.get_template" title="django.template.loader.get_template"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_template()</span></code></a> and
+<a class="reference internal" href="../topics/templates.html#django.template.loader.select_template" title="django.template.loader.select_template"><code class="xref py py-func docutils literal notranslate"><span class="pre">select_template()</span></code></a> won’t accept a
+<a class="reference internal" href="../ref/templates/api.html#django.template.Context" title="django.template.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code></a> in their
+<a class="reference internal" href="../topics/templates.html#django.template.backends.base.Template.render" title="django.template.backends.base.Template.render"><code class="xref py py-meth docutils literal notranslate"><span class="pre">render()</span></code></a> method anymore.</li>
+<li><a class="reference internal" href="../ref/template-response.html"><span class="doc">Template response APIs</span></a> will enforce the use
+of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> and backend-dependent template objects instead of
+<a class="reference internal" href="../ref/templates/api.html#django.template.Context" title="django.template.Context"><code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code></a> and <a class="reference internal" href="../ref/templates/api.html#django.template.Template" title="django.template.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">Template</span></code></a>
+respectively.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">current_app</span></code> parameter for the following function and classes will be
+removed:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">django.shortcuts.render()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.Context()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.RequestContext()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.response.TemplateResponse()</span></code></li>
+</ul>
+</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">dictionary</span></code> and <code class="docutils literal notranslate"><span class="pre">context_instance</span></code> parameters for the following
+functions will be removed:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">django.shortcuts.render()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.shortcuts.render_to_response()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.loader.render_to_string()</span></code></li>
+</ul>
+</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">dirs</span></code> parameter for the following functions will be removed:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.loader.get_template()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.template.loader.select_template()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.shortcuts.render()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.shortcuts.render_to_response()</span></code></li>
+</ul>
+</li>
+<li>Session verification will be enabled regardless of whether or not
+<code class="docutils literal notranslate"><span class="pre">'django.contrib.auth.middleware.SessionAuthenticationMiddleware'</span></code> is in
+<code class="docutils literal notranslate"><span class="pre">MIDDLEWARE_CLASSES</span></code>.</li>
+<li>Private attribute <code class="docutils literal notranslate"><span class="pre">django.db.models.Field.related</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">--list</span></code> option of the <code class="docutils literal notranslate"><span class="pre">migrate</span></code> management command will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">ssi</span></code> template tag will be removed.</li>
+<li>Support for the <code class="docutils literal notranslate"><span class="pre">=</span></code> comparison operator in the <code class="docutils literal notranslate"><span class="pre">if</span></code> template tag will be
+removed.</li>
+<li>The backwards compatibility shims to allow <code class="docutils literal notranslate"><span class="pre">Storage.get_available_name()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">Storage.save()</span></code> to be defined without a <code class="docutils literal notranslate"><span class="pre">max_length</span></code> argument will
+be removed.</li>
+<li>Support for the legacy <code class="docutils literal notranslate"><span class="pre">%(&lt;foo&gt;)s</span></code> syntax in <code class="docutils literal notranslate"><span class="pre">ModelFormMixin.success_url</span></code>
+will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">GeoQuerySet</span></code> aggregate methods <code class="docutils literal notranslate"><span class="pre">collect()</span></code>, <code class="docutils literal notranslate"><span class="pre">extent()</span></code>, <code class="docutils literal notranslate"><span class="pre">extent3d()</span></code>,
+<code class="docutils literal notranslate"><span class="pre">make_line()</span></code>, and <code class="docutils literal notranslate"><span class="pre">unionagg()</span></code> will be removed.</li>
+<li>Ability to specify <code class="docutils literal notranslate"><span class="pre">ContentType.name</span></code> when creating a content type instance
+will be removed.</li>
+<li>Support for the old signature of <code class="docutils literal notranslate"><span class="pre">allow_migrate</span></code> will be removed. It changed
+from <code class="docutils literal notranslate"><span class="pre">allow_migrate(self,</span> <span class="pre">db,</span> <span class="pre">model)</span></code> to
+<code class="docutils literal notranslate"><span class="pre">allow_migrate(self,</span> <span class="pre">db,</span> <span class="pre">app_label,</span> <span class="pre">model_name=None,</span> <span class="pre">**hints)</span></code>.</li>
+<li>Support for the syntax of <code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">cycle</span> <span class="pre">%}</span></code> that uses comma-separated arguments
+will be removed.</li>
+<li>The warning that <a class="reference internal" href="../topics/signing.html#django.core.signing.Signer" title="django.core.signing.Signer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signer</span></code></a> issues when given an
+invalid separator will become an exception.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-1-9">
+<span id="s-id11"></span><span id="deprecation-removed-in-1-9"></span><span id="id11"></span><h2>1.9<a class="headerlink" href="#deprecation-removed-in-1-9" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/1.7.html#deprecated-features-1-7"><span class="std std-ref">Django 1.7 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.dictconfig</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.importlib</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.tzinfo</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.unittest</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">syncdb</span></code> command will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.signals.pre_syncdb</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.db.models.signals.post_syncdb</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">allow_syncdb</span></code> on database routers will no longer automatically become
+<code class="docutils literal notranslate"><span class="pre">allow_migrate</span></code>.</li>
+<li>Automatic syncing of apps without migrations will be removed. Migrations will
+become compulsory for all apps unless you pass the <code class="docutils literal notranslate"><span class="pre">--run-syncdb</span></code> option to
+<code class="docutils literal notranslate"><span class="pre">migrate</span></code>.</li>
+<li>The SQL management commands for apps without migrations, <code class="docutils literal notranslate"><span class="pre">sql</span></code>, <code class="docutils literal notranslate"><span class="pre">sqlall</span></code>,
+<code class="docutils literal notranslate"><span class="pre">sqlclear</span></code>, <code class="docutils literal notranslate"><span class="pre">sqldropindexes</span></code>, and <code class="docutils literal notranslate"><span class="pre">sqlindexes</span></code>, will be removed.</li>
+<li>Support for automatic loading of <code class="docutils literal notranslate"><span class="pre">initial_data</span></code> fixtures and initial SQL
+data will be removed.</li>
+<li>All models will need to be defined inside an installed application or
+declare an explicit <a class="reference internal" href="../ref/models/options.html#django.db.models.Options.app_label" title="django.db.models.Options.app_label"><code class="xref py py-attr docutils literal notranslate"><span class="pre">app_label</span></code></a>.
+Furthermore, it won’t be possible to import them before their application
+is loaded. In particular, it won’t be possible to import models inside
+the root package of their application.</li>
+<li>The model and form <code class="docutils literal notranslate"><span class="pre">IPAddressField</span></code> will be removed. A stub field will
+remain for compatibility with historical migrations.</li>
+<li><code class="docutils literal notranslate"><span class="pre">AppCommand.handle_app()</span></code> will no longer be supported.</li>
+<li><code class="docutils literal notranslate"><span class="pre">RequestSite</span></code> and <code class="docutils literal notranslate"><span class="pre">get_current_site()</span></code> will no longer be importable from
+<code class="docutils literal notranslate"><span class="pre">django.contrib.sites.models</span></code>.</li>
+<li>FastCGI support via the <code class="docutils literal notranslate"><span class="pre">runfcgi</span></code> management command will be
+removed. Please deploy your project using WSGI.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.datastructures.SortedDict</span></code> will be removed. Use
+<a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a> from the Python standard library instead.</li>
+<li><code class="docutils literal notranslate"><span class="pre">ModelAdmin.declared_fieldsets</span></code> will be removed.</li>
+<li>Instances of <code class="docutils literal notranslate"><span class="pre">util.py</span></code> in the Django codebase have been renamed to
+<code class="docutils literal notranslate"><span class="pre">utils.py</span></code> in an effort to unify all util and utils references.
+The modules that provided backwards compatibility will be removed:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.admin.util</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.gis.db.backends.util</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.backends.util</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.forms.util</span></code></li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">ModelAdmin.get_formsets</span></code> will be removed.</li>
+<li>The backward compatibility shim introduced to rename the
+<code class="docutils literal notranslate"><span class="pre">BaseMemcachedCache._get_memcache_timeout()</span></code> method to
+<code class="docutils literal notranslate"><span class="pre">get_backend_timeout()</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">--natural</span></code> and <code class="docutils literal notranslate"><span class="pre">-n</span></code> options for <a class="reference internal" href="../ref/django-admin.html#django-admin-dumpdata"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">dumpdata</span></code></a> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">use_natural_keys</span></code> argument for <code class="docutils literal notranslate"><span class="pre">serializers.serialize()</span></code> will be
+removed.</li>
+<li>Private API <code class="docutils literal notranslate"><span class="pre">django.forms.forms.get_declared_fields()</span></code> will be removed.</li>
+<li>The ability to use a <code class="docutils literal notranslate"><span class="pre">SplitDateTimeWidget</span></code> with <code class="docutils literal notranslate"><span class="pre">DateTimeField</span></code> will be
+removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">WSGIRequest.REQUEST</span></code> property will be removed.</li>
+<li>The class <code class="docutils literal notranslate"><span class="pre">django.utils.datastructures.MergeDict</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">zh-cn</span></code> and <code class="docutils literal notranslate"><span class="pre">zh-tw</span></code> language codes will be removed and have been
+replaced by the <code class="docutils literal notranslate"><span class="pre">zh-hans</span></code> and <code class="docutils literal notranslate"><span class="pre">zh-hant</span></code> language code respectively.</li>
+<li>The internal <code class="docutils literal notranslate"><span class="pre">django.utils.functional.memoize</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.core.cache.get_cache</span></code> will be removed. Add suitable entries
+to <a class="reference internal" href="../ref/settings.html#std-setting-CACHES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CACHES</span></code></a> and use <a class="reference internal" href="../topics/cache.html#django.core.cache.caches" title="django.core.cache.caches"><code class="xref py py-data docutils literal notranslate"><span class="pre">django.core.cache.caches</span></code></a> instead.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.loading</span></code> will be removed.</li>
+<li>Passing callable arguments to querysets will no longer be possible.</li>
+<li><code class="docutils literal notranslate"><span class="pre">BaseCommand.requires_model_validation</span></code> will be removed in favor of
+<code class="docutils literal notranslate"><span class="pre">requires_system_checks</span></code>. Admin validators will be replaced by admin
+checks.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">ModelAdmin.validator_class</span></code> and <code class="docutils literal notranslate"><span class="pre">default_validator_class</span></code> attributes
+will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">ModelAdmin.validate()</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.backends.DatabaseValidation.validate_field</span></code> will be removed in
+favor of the <code class="docutils literal notranslate"><span class="pre">check_field</span></code> method.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">validate</span></code> management command will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.module_loading.import_by_path</span></code> will be removed in favor of
+<code class="docutils literal notranslate"><span class="pre">django.utils.module_loading.import_string</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">ssi</span></code> and <code class="docutils literal notranslate"><span class="pre">url</span></code> template tags will be removed from the <code class="docutils literal notranslate"><span class="pre">future</span></code> template
+tag library (used during the 1.3/1.4 deprecation period).</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.text.javascript_quote</span></code> will be removed.</li>
+<li>Database test settings as independent entries in the database settings,
+prefixed by <code class="docutils literal notranslate"><span class="pre">TEST_</span></code>, will no longer be supported.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">cache_choices</span></code> option to <a class="reference internal" href="../ref/forms/fields.html#django.forms.ModelChoiceField" title="django.forms.ModelChoiceField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelChoiceField</span></code></a> and
+<a class="reference internal" href="../ref/forms/fields.html#django.forms.ModelMultipleChoiceField" title="django.forms.ModelMultipleChoiceField"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelMultipleChoiceField</span></code></a> will be removed.</li>
+<li>The default value of the
+<a class="reference internal" href="../ref/class-based-views/base.html#django.views.generic.base.RedirectView.permanent" title="django.views.generic.base.RedirectView.permanent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RedirectView.permanent</span></code></a>
+attribute will change from <code class="docutils literal notranslate"><span class="pre">True</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.sitemaps.FlatPageSitemap</span></code> will be removed in favor of
+<code class="docutils literal notranslate"><span class="pre">django.contrib.flatpages.sitemaps.FlatPageSitemap</span></code>.</li>
+<li>Private API <code class="docutils literal notranslate"><span class="pre">django.test.utils.TestTemplateLoader</span></code> will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.contenttypes.generic</span></code> module will be removed.</li>
+<li>Private APIs <code class="docutils literal notranslate"><span class="pre">django.db.models.sql.where.WhereNode.make_atom()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.db.models.sql.where.Constraint</span></code> will be removed.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-1-8">
+<span id="s-id12"></span><span id="deprecation-removed-in-1-8"></span><span id="id12"></span><h2>1.8<a class="headerlink" href="#deprecation-removed-in-1-8" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/1.6.html#deprecated-features-1-6"><span class="std std-ref">Django 1.6 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.comments</span></code> will be removed.</li>
+<li>The following transaction management APIs will be removed:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">TransactionMiddleware</span></code>,</li>
+<li>the decorators and context managers <code class="docutils literal notranslate"><span class="pre">autocommit</span></code>, <code class="docutils literal notranslate"><span class="pre">commit_on_success</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">commit_manually</span></code>, defined in <code class="docutils literal notranslate"><span class="pre">django.db.transaction</span></code>,</li>
+<li>the functions <code class="docutils literal notranslate"><span class="pre">commit_unless_managed</span></code> and <code class="docutils literal notranslate"><span class="pre">rollback_unless_managed</span></code>,
+also defined in <code class="docutils literal notranslate"><span class="pre">django.db.transaction</span></code>,</li>
+<li>the <code class="docutils literal notranslate"><span class="pre">TRANSACTIONS_MANAGED</span></code> setting.</li>
+</ul>
+</li>
+<li>The <a class="reference internal" href="../ref/templates/builtins.html#std-templatetag-cycle"><code class="xref std std-ttag docutils literal notranslate"><span class="pre">cycle</span></code></a> and <a class="reference internal" href="../ref/templates/builtins.html#std-templatetag-firstof"><code class="xref std std-ttag docutils literal notranslate"><span class="pre">firstof</span></code></a> template tags will auto-escape their
+arguments. In 1.6 and 1.7, this behavior is provided by the version of these
+tags in the <code class="docutils literal notranslate"><span class="pre">future</span></code> template tag library.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">SEND_BROKEN_LINK_EMAILS</span></code> setting will be removed. Add the
+<a class="reference internal" href="../ref/middleware.html#django.middleware.common.BrokenLinkEmailsMiddleware" title="django.middleware.common.BrokenLinkEmailsMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">django.middleware.common.BrokenLinkEmailsMiddleware</span></code></a> middleware to
+your <code class="docutils literal notranslate"><span class="pre">MIDDLEWARE_CLASSES</span></code> setting instead.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.middleware.doc.XViewMiddleware</span></code> will be removed. Use
+<code class="docutils literal notranslate"><span class="pre">django.contrib.admindocs.middleware.XViewMiddleware</span></code> instead.</li>
+<li><code class="docutils literal notranslate"><span class="pre">Model._meta.module_name</span></code> was renamed to <code class="docutils literal notranslate"><span class="pre">model_name</span></code>.</li>
+<li>Remove the backward compatible shims introduced to rename <code class="docutils literal notranslate"><span class="pre">get_query_set</span></code>
+and similar queryset methods. This affects the following classes:
+<code class="docutils literal notranslate"><span class="pre">BaseModelAdmin</span></code>, <code class="docutils literal notranslate"><span class="pre">ChangeList</span></code>, <code class="docutils literal notranslate"><span class="pre">BaseCommentNode</span></code>,
+<code class="docutils literal notranslate"><span class="pre">GenericForeignKey</span></code>, <code class="docutils literal notranslate"><span class="pre">Manager</span></code>, <code class="docutils literal notranslate"><span class="pre">SingleRelatedObjectDescriptor</span></code> and
+<code class="docutils literal notranslate"><span class="pre">ReverseSingleRelatedObjectDescriptor</span></code>.</li>
+<li>Remove the backward compatible shims introduced to rename the attributes
+<code class="docutils literal notranslate"><span class="pre">ChangeList.root_query_set</span></code> and <code class="docutils literal notranslate"><span class="pre">ChangeList.query_set</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.views.defaults.shortcut</span></code> will be removed, as part of the
+goal of removing all <code class="docutils literal notranslate"><span class="pre">django.contrib</span></code> references from the core
+Django codebase. Instead use
+<code class="docutils literal notranslate"><span class="pre">django.contrib.contenttypes.views.shortcut</span></code>. <code class="docutils literal notranslate"><span class="pre">django.conf.urls.shortcut</span></code>
+will also be removed.</li>
+<li>Support for the Python Imaging Library (PIL) module will be removed, as it
+no longer appears to be actively maintained &amp; does not work on Python 3.</li>
+<li>The following private APIs will be removed:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.backend</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.close_connection()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.backends.creation.BaseDatabaseCreation.set_autocommit()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.transaction.is_managed()</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.transaction.managed()</span></code></li>
+</ul>
+</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.forms.widgets.RadioInput</span></code> will be removed in favor of
+<code class="docutils literal notranslate"><span class="pre">django.forms.widgets.RadioChoiceInput</span></code>.</li>
+<li>The module <code class="docutils literal notranslate"><span class="pre">django.test.simple</span></code> and the class
+<code class="docutils literal notranslate"><span class="pre">django.test.simple.DjangoTestSuiteRunner</span></code> will be removed. Instead use
+<code class="docutils literal notranslate"><span class="pre">django.test.runner.DiscoverRunner</span></code>.</li>
+<li>The module <code class="docutils literal notranslate"><span class="pre">django.test._doctest</span></code> will be removed. Instead use the doctest
+module from the Python standard library.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">CACHE_MIDDLEWARE_ANONYMOUS_ONLY</span></code> setting will be removed.</li>
+<li>Usage of the hard-coded <em>Hold down “Control”, or “Command” on a Mac, to select
+more than one.</em> string to override or append to user-provided <code class="docutils literal notranslate"><span class="pre">help_text</span></code> in
+forms for ManyToMany model fields will not be performed by Django anymore
+either at the model or forms layer.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">Model._meta.get_(add|change|delete)_permission</span></code> methods will
+be removed.</li>
+<li>The session key <code class="docutils literal notranslate"><span class="pre">django_language</span></code> will no longer be read for backwards
+compatibility.</li>
+<li>Geographic Sitemaps will be removed
+(<code class="docutils literal notranslate"><span class="pre">django.contrib.gis.sitemaps.views.index</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.contrib.gis.sitemaps.views.sitemap</span></code>).</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.html.fix_ampersands</span></code>, the <code class="docutils literal notranslate"><span class="pre">fix_ampersands</span></code> template filter and
+<code class="docutils literal notranslate"><span class="pre">django.utils.html.clean_html</span></code> will be removed following an accelerated deprecation.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-1-7">
+<span id="s-id13"></span><span id="deprecation-removed-in-1-7"></span><span id="id13"></span><h2>1.7<a class="headerlink" href="#deprecation-removed-in-1-7" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/1.5.html#deprecated-features-1-5"><span class="std std-ref">Django 1.5 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li>The module <code class="docutils literal notranslate"><span class="pre">django.utils.simplejson</span></code> will be removed. The standard library
+provides <a class="reference external" href="https://docs.python.org/3/library/json.html#module-json" title="(in Python v3.11)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code></a> which should be used instead.</li>
+<li>The function <code class="docutils literal notranslate"><span class="pre">django.utils.itercompat.product</span></code> will be removed. The Python
+builtin version should be used instead.</li>
+<li>Auto-correction of INSTALLED_APPS and TEMPLATE_DIRS settings when they are
+specified as a plain string instead of a tuple will be removed and raise an
+exception.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">mimetype</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> methods of
+<a class="reference internal" href="../ref/request-response.html#django.http.HttpResponse" title="django.http.HttpResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponse</span></code></a>,
+<a class="reference internal" href="../ref/template-response.html#django.template.response.SimpleTemplateResponse" title="django.template.response.SimpleTemplateResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleTemplateResponse</span></code></a>, and
+<a class="reference internal" href="../ref/template-response.html#django.template.response.TemplateResponse" title="django.template.response.TemplateResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateResponse</span></code></a>, will be removed.
+<code class="docutils literal notranslate"><span class="pre">content_type</span></code> should be used instead. This also applies to the
+<code class="docutils literal notranslate"><span class="pre">render_to_response()</span></code> shortcut and the sitemap views,
+<a class="reference internal" href="../ref/contrib/sitemaps.html#django.contrib.sitemaps.views.index" title="django.contrib.sitemaps.views.index"><code class="xref py py-func docutils literal notranslate"><span class="pre">index()</span></code></a> and
+<a class="reference internal" href="../ref/contrib/sitemaps.html#django.contrib.sitemaps.views.sitemap" title="django.contrib.sitemaps.views.sitemap"><code class="xref py py-func docutils literal notranslate"><span class="pre">sitemap()</span></code></a>.</li>
+<li>When <a class="reference internal" href="../ref/request-response.html#django.http.HttpResponse" title="django.http.HttpResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponse</span></code></a> is instantiated with an iterator,
+or when <a class="reference internal" href="../ref/request-response.html#django.http.HttpResponse.content" title="django.http.HttpResponse.content"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content</span></code></a> is set to an iterator,
+that iterator will be immediately consumed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">AUTH_PROFILE_MODULE</span></code> setting, and the <code class="docutils literal notranslate"><span class="pre">get_profile()</span></code> method on
+the User model, will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">cleanup</span></code> management command will be removed. It’s replaced by
+<code class="docutils literal notranslate"><span class="pre">clearsessions</span></code>.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">daily_cleanup.py</span></code> script will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">depth</span></code> keyword argument will be removed from
+<a class="reference internal" href="../ref/models/querysets.html#django.db.models.query.QuerySet.select_related" title="django.db.models.query.QuerySet.select_related"><code class="xref py py-meth docutils literal notranslate"><span class="pre">select_related()</span></code></a>.</li>
+<li>The undocumented <code class="docutils literal notranslate"><span class="pre">get_warnings_state()</span></code>/<code class="docutils literal notranslate"><span class="pre">restore_warnings_state()</span></code>
+functions from <a class="reference internal" href="../topics/testing/advanced.html#module-django.test.utils" title="django.test.utils: Helpers to write custom test runners."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.test.utils</span></code></a> and the <code class="docutils literal notranslate"><span class="pre">save_warnings_state()</span></code>/
+<code class="docutils literal notranslate"><span class="pre">restore_warnings_state()</span></code>
+<a class="reference internal" href="../topics/testing/tools.html#django-testcase-subclasses"><span class="std std-ref">django.test.*TestCase</span></a> methods are
+deprecated. Use the <a class="reference external" href="https://docs.python.org/3/library/warnings.html#warnings.catch_warnings" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">warnings.catch_warnings</span></code></a> context manager
+available starting with Python 2.6 instead.</li>
+<li>The undocumented <code class="docutils literal notranslate"><span class="pre">check_for_test_cookie</span></code> method in
+<a class="reference internal" href="../topics/auth/default.html#django.contrib.auth.forms.AuthenticationForm" title="django.contrib.auth.forms.AuthenticationForm"><code class="xref py py-class docutils literal notranslate"><span class="pre">AuthenticationForm</span></code></a> will be removed
+following an accelerated deprecation. Users subclassing this form should
+remove calls to this method, and instead ensure that their auth related views
+are CSRF protected, which ensures that cookies are enabled.</li>
+<li>The version of <code class="docutils literal notranslate"><span class="pre">django.contrib.auth.views.password_reset_confirm()</span></code> that
+supports base36 encoded user IDs
+(<code class="docutils literal notranslate"><span class="pre">django.contrib.auth.views.password_reset_confirm_uidb36</span></code>) will be
+removed. If your site has been running Django 1.6 for more than
+<code class="docutils literal notranslate"><span class="pre">PASSWORD_RESET_TIMEOUT_DAYS</span></code>, this change will have no effect. If not,
+then any password reset links generated before you upgrade to Django 1.7
+won’t work after the upgrade.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.utils.encoding.StrAndUnicode</span></code> mix-in will be removed.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-1-6">
+<span id="s-id14"></span><span id="deprecation-removed-in-1-6"></span><span id="id14"></span><h2>1.6<a class="headerlink" href="#deprecation-removed-in-1-6" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/1.4.html#deprecated-features-1-4"><span class="std std-ref">Django 1.4 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.databrowse</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.localflavor</span></code> will be removed following an accelerated
+deprecation.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.contrib.markup</span></code> will be removed following an accelerated
+deprecation.</li>
+<li>The compatibility modules <code class="docutils literal notranslate"><span class="pre">django.utils.copycompat</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.utils.hashcompat</span></code> as well as the functions
+<code class="docutils literal notranslate"><span class="pre">django.utils.itercompat.all</span></code> and <code class="docutils literal notranslate"><span class="pre">django.utils.itercompat.any</span></code> will
+be removed. The Python builtin versions should be used instead.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">csrf_response_exempt</span></code> and <code class="docutils literal notranslate"><span class="pre">csrf_view_exempt</span></code> decorators will
+be removed. Since 1.4 <code class="docutils literal notranslate"><span class="pre">csrf_response_exempt</span></code> has been a no-op (it
+returns the same function), and <code class="docutils literal notranslate"><span class="pre">csrf_view_exempt</span></code> has been a
+synonym for <code class="docutils literal notranslate"><span class="pre">django.views.decorators.csrf.csrf_exempt</span></code>, which should
+be used to replace it.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.core.cache.backends.memcached.CacheClass</span></code> backend
+was split into two in Django 1.3 in order to introduce support for
+PyLibMC. The historical <code class="docutils literal notranslate"><span class="pre">CacheClass</span></code> will be removed in favor of
+<code class="docutils literal notranslate"><span class="pre">django.core.cache.backends.memcached.MemcachedCache</span></code>.</li>
+<li>The UK-prefixed objects of <code class="docutils literal notranslate"><span class="pre">django.contrib.localflavor.uk</span></code> will only
+be accessible through their GB-prefixed names (GB is the correct
+ISO 3166 code for United Kingdom).</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">IGNORABLE_404_STARTS</span></code> and <code class="docutils literal notranslate"><span class="pre">IGNORABLE_404_ENDS</span></code> settings have been
+superseded by <a class="reference internal" href="../ref/settings.html#std-setting-IGNORABLE_404_URLS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">IGNORABLE_404_URLS</span></code></a> in the 1.4 release. They will be
+removed.</li>
+<li>The form wizard has been refactored to use class-based views with pluggable
+backends in 1.4. The previous implementation will be removed.</li>
+<li>Legacy ways of calling
+<a class="reference internal" href="../topics/cache.html#django.views.decorators.cache.cache_page" title="django.views.decorators.cache.cache_page"><code class="xref py py-func docutils literal notranslate"><span class="pre">cache_page()</span></code></a> will be removed.</li>
+<li>The backward-compatibility shim to automatically add a debug-false
+filter to the <code class="docutils literal notranslate"><span class="pre">'mail_admins'</span></code> logging handler will be removed. The
+<a class="reference internal" href="../ref/settings.html#std-setting-LOGGING"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOGGING</span></code></a> setting should include this filter explicitly if
+it is desired.</li>
+<li>The builtin truncation functions <code class="docutils literal notranslate"><span class="pre">django.utils.text.truncate_words()</span></code>
+and <code class="docutils literal notranslate"><span class="pre">django.utils.text.truncate_html_words()</span></code> will be removed in
+favor of the <code class="docutils literal notranslate"><span class="pre">django.utils.text.Truncator</span></code> class.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.gis.geoip.GeoIP</span></code> class was moved to
+<code class="docutils literal notranslate"><span class="pre">django.contrib.gis.geoip</span></code> in 1.4 – the shortcut in
+<code class="docutils literal notranslate"><span class="pre">django.contrib.gis.utils</span></code> will be removed.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.conf.urls.defaults</span></code> will be removed. The functions
+<code class="docutils literal notranslate"><span class="pre">include()</span></code>, <code class="docutils literal notranslate"><span class="pre">patterns()</span></code>, and <code class="docutils literal notranslate"><span class="pre">url()</span></code>, plus
+<a class="reference internal" href="../ref/urls.html#django.conf.urls.handler404" title="django.conf.urls.handler404"><code class="xref py py-data docutils literal notranslate"><span class="pre">handler404</span></code></a> and <a class="reference internal" href="../ref/urls.html#django.conf.urls.handler500" title="django.conf.urls.handler500"><code class="xref py py-data docutils literal notranslate"><span class="pre">handler500</span></code></a>
+are now available through <code class="docutils literal notranslate"><span class="pre">django.conf.urls</span></code>.</li>
+<li>The functions <code class="docutils literal notranslate"><span class="pre">setup_environ()</span></code> and <code class="docutils literal notranslate"><span class="pre">execute_manager()</span></code> will be removed
+from <a class="reference internal" href="../howto/custom-management-commands.html#module-django.core.management" title="django.core.management"><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.core.management</span></code></a>. This also means that the old (pre-1.4)
+style of <code class="file docutils literal notranslate"><span class="pre">manage.py</span></code> file will no longer work.</li>
+<li>Setting the <code class="docutils literal notranslate"><span class="pre">is_safe</span></code> and <code class="docutils literal notranslate"><span class="pre">needs_autoescape</span></code> flags as attributes of
+template filter functions will no longer be supported.</li>
+<li>The attribute <code class="docutils literal notranslate"><span class="pre">HttpRequest.raw_post_data</span></code> was renamed to <code class="docutils literal notranslate"><span class="pre">HttpRequest.body</span></code>
+in 1.4. The backward compatibility will be removed –
+<code class="docutils literal notranslate"><span class="pre">HttpRequest.raw_post_data</span></code> will no longer work.</li>
+<li>The value for the <code class="docutils literal notranslate"><span class="pre">post_url_continue</span></code> parameter in
+<code class="docutils literal notranslate"><span class="pre">ModelAdmin.response_add()</span></code> will have to be either <code class="docutils literal notranslate"><span class="pre">None</span></code> (to redirect
+to the newly created object’s edit page) or a pre-formatted url. String
+formats, such as the previous default <code class="docutils literal notranslate"><span class="pre">'../%s/'</span></code>, will not be accepted any
+more.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-1-5">
+<span id="s-id15"></span><span id="deprecation-removed-in-1-5"></span><span id="id15"></span><h2>1.5<a class="headerlink" href="#deprecation-removed-in-1-5" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/1.3.html#deprecated-features-1-3"><span class="std std-ref">Django 1.3 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li>Starting Django without a <a class="reference internal" href="../ref/settings.html#std-setting-SECRET_KEY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SECRET_KEY</span></code></a> will result in an exception
+rather than a <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>. (This is accelerated from the usual
+deprecation path; see the <a class="reference internal" href="../releases/1.4.html"><span class="doc">Django 1.4 release notes</span></a>.)</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">mod_python</span></code> request handler will be removed. The <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code>
+handler should be used instead.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">template</span></code> attribute on <code class="docutils literal notranslate"><span class="pre">django.test.client.Response</span></code>
+objects returned by the <a class="reference internal" href="../topics/testing/tools.html#test-client"><span class="std std-ref">test client</span></a> will be removed.
+The <a class="reference internal" href="../topics/testing/tools.html#django.test.Response.templates" title="django.test.Response.templates"><code class="xref py py-attr docutils literal notranslate"><span class="pre">templates</span></code></a> attribute should be
+used instead.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.test.simple.DjangoTestRunner</span></code> will be removed.
+Instead use a <code class="docutils literal notranslate"><span class="pre">unittest</span></code>-native class. The features of the
+<code class="docutils literal notranslate"><span class="pre">django.test.simple.DjangoTestRunner</span></code> (including fail-fast and
+Ctrl-C test termination) can be provided by <a class="reference external" href="https://docs.python.org/3/library/unittest.html#unittest.TextTestRunner" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.TextTestRunner</span></code></a>.</li>
+<li>The undocumented function
+<code class="docutils literal notranslate"><span class="pre">django.contrib.formtools.utils.security_hash</span></code> will be removed,
+instead use <code class="docutils literal notranslate"><span class="pre">django.contrib.formtools.utils.form_hmac</span></code></li>
+<li>The function-based generic view modules will be removed in favor of their
+class-based equivalents, outlined <a class="reference internal" href="../topics/class-based-views/index.html"><span class="doc">here</span></a>.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.core.servers.basehttp.AdminMediaHandler</span></code> will be
+removed.  In its place use
+<code class="docutils literal notranslate"><span class="pre">django.contrib.staticfiles.handlers.StaticFilesHandler</span></code>.</li>
+<li>The template tags library <code class="docutils literal notranslate"><span class="pre">adminmedia</span></code> and the template tag <code class="docutils literal notranslate"><span class="pre">{%</span>
+<span class="pre">admin_media_prefix</span> <span class="pre">%}</span></code> will be removed in favor of the generic static files
+handling. (This is faster than the usual deprecation path; see the
+<a class="reference internal" href="../releases/1.4.html"><span class="doc">Django 1.4 release notes</span></a>.)</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">url</span></code> and <code class="docutils literal notranslate"><span class="pre">ssi</span></code> template tags will be modified so that the first
+argument to each tag is a template variable, not an implied string. In 1.4,
+this behavior is provided by a version of the tag in the <code class="docutils literal notranslate"><span class="pre">future</span></code> template
+tag library.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">reset</span></code> and <code class="docutils literal notranslate"><span class="pre">sqlreset</span></code> management commands will be removed.</li>
+<li>Authentication backends will need to support an inactive user
+being passed to all methods dealing with permissions.
+The <code class="docutils literal notranslate"><span class="pre">supports_inactive_user</span></code> attribute will no longer be checked
+and can be removed from custom backends.</li>
+<li><a class="reference internal" href="../ref/contrib/gis/geos.html#django.contrib.gis.geos.GEOSGeometry.transform" title="django.contrib.gis.geos.GEOSGeometry.transform"><code class="xref py py-meth docutils literal notranslate"><span class="pre">transform()</span></code></a> will raise
+a <a class="reference internal" href="../ref/contrib/gis/geos.html#django.contrib.gis.geos.GEOSException" title="django.contrib.gis.geos.GEOSException"><code class="xref py py-class docutils literal notranslate"><span class="pre">GEOSException</span></code></a> when called
+on a geometry with no SRID value.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.http.CompatCookie</span></code> will be removed in favor of
+<code class="docutils literal notranslate"><span class="pre">django.http.SimpleCookie</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.core.context_processors.PermWrapper</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.core.context_processors.PermLookupDict</span></code> will be removed in
+favor of the corresponding
+<code class="docutils literal notranslate"><span class="pre">django.contrib.auth.context_processors.PermWrapper</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.contrib.auth.context_processors.PermLookupDict</span></code>, respectively.</li>
+<li>The <a class="reference internal" href="../ref/settings.html#std-setting-MEDIA_URL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">MEDIA_URL</span></code></a> or <a class="reference internal" href="../ref/settings.html#std-setting-STATIC_URL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STATIC_URL</span></code></a> settings will be
+required to end with a trailing slash to ensure there is a consistent
+way to combine paths in templates.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.fields.URLField.verify_exists</span></code> will be removed. The
+feature was deprecated in 1.3.1 due to intractable security and
+performance issues and will follow a slightly accelerated deprecation
+timeframe.</li>
+<li>Translations located under the so-called <em>project path</em> will be ignored during
+the translation building process performed at runtime. The
+<a class="reference internal" href="../ref/settings.html#std-setting-LOCALE_PATHS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOCALE_PATHS</span></code></a> setting can be used for the same task by including the
+filesystem path to a <code class="docutils literal notranslate"><span class="pre">locale</span></code> directory containing non-app-specific
+translations in its value.</li>
+<li>The Markup contrib app will no longer support versions of Python-Markdown
+library earlier than 2.1. An accelerated timeline was used as this was
+a security related deprecation.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">CACHE_BACKEND</span></code> setting will be removed. The cache backend(s) should be
+specified in the <a class="reference internal" href="../ref/settings.html#std-setting-CACHES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CACHES</span></code></a> setting.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-1-4">
+<span id="s-id16"></span><span id="deprecation-removed-in-1-4"></span><span id="id16"></span><h2>1.4<a class="headerlink" href="#deprecation-removed-in-1-4" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/1.2.html#deprecated-features-1-2"><span class="std std-ref">Django 1.2 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">CsrfResponseMiddleware</span></code> and <code class="docutils literal notranslate"><span class="pre">CsrfMiddleware</span></code> will be removed.  Use
+the <code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">csrf_token</span> <span class="pre">%}</span></code> template tag inside forms to enable CSRF
+protection. <code class="docutils literal notranslate"><span class="pre">CsrfViewMiddleware</span></code> remains and is enabled by default.</li>
+<li>The old imports for CSRF functionality (<code class="docutils literal notranslate"><span class="pre">django.contrib.csrf.*</span></code>),
+which moved to core in 1.2, will be removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">django.contrib.gis.db.backend</span></code> module will be removed in favor
+of the specific backends.</li>
+<li><code class="docutils literal notranslate"><span class="pre">SMTPConnection</span></code> will be removed in favor of a generic email backend API.</li>
+<li>The many to many SQL generation functions on the database backends
+will be removed.</li>
+<li>The ability to use the <code class="docutils literal notranslate"><span class="pre">DATABASE_*</span></code> family of top-level settings to
+define database connections will be removed.</li>
+<li>The ability to use shorthand notation to specify a database backend
+(i.e., <code class="docutils literal notranslate"><span class="pre">sqlite3</span></code> instead of <code class="docutils literal notranslate"><span class="pre">django.db.backends.sqlite3</span></code>) will be
+removed.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">get_db_prep_save</span></code>, <code class="docutils literal notranslate"><span class="pre">get_db_prep_value</span></code> and
+<code class="docutils literal notranslate"><span class="pre">get_db_prep_lookup</span></code> methods will have to support multiple databases.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">Message</span></code> model (in <code class="docutils literal notranslate"><span class="pre">django.contrib.auth</span></code>), its related
+manager in the <code class="docutils literal notranslate"><span class="pre">User</span></code> model (<code class="docutils literal notranslate"><span class="pre">user.message_set</span></code>), and the
+associated methods (<code class="docutils literal notranslate"><span class="pre">user.message_set.create()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">user.get_and_delete_messages()</span></code>), will be removed.  The
+<a class="reference internal" href="../ref/contrib/messages.html"><span class="doc">messages framework</span></a> should be used
+instead. The related <code class="docutils literal notranslate"><span class="pre">messages</span></code> variable returned by the
+auth context processor will also be removed. Note that this
+means that the admin application will depend on the messages
+context processor.</li>
+<li>Authentication backends will need to support the <code class="docutils literal notranslate"><span class="pre">obj</span></code> parameter for
+permission checking. The <code class="docutils literal notranslate"><span class="pre">supports_object_permissions</span></code> attribute
+will no longer be checked and can be removed from custom backends.</li>
+<li>Authentication backends will need to support the <code class="docutils literal notranslate"><span class="pre">AnonymousUser</span></code> class
+being passed to all methods dealing with permissions.  The
+<code class="docutils literal notranslate"><span class="pre">supports_anonymous_user</span></code> variable will no longer be checked and can be
+removed from custom backends.</li>
+<li>The ability to specify a callable template loader rather than a
+<code class="docutils literal notranslate"><span class="pre">Loader</span></code> class will be removed, as will the <code class="docutils literal notranslate"><span class="pre">load_template_source</span></code>
+functions that are included with the built in template loaders for
+backwards compatibility.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.utils.translation.get_date_formats()</span></code> and
+<code class="docutils literal notranslate"><span class="pre">django.utils.translation.get_partial_date_formats()</span></code>. These functions
+will be removed; use the locale-aware
+<code class="docutils literal notranslate"><span class="pre">django.utils.formats.get_format()</span></code> to get the appropriate formats.</li>
+<li>In <code class="docutils literal notranslate"><span class="pre">django.forms.fields</span></code>, the constants: <code class="docutils literal notranslate"><span class="pre">DEFAULT_DATE_INPUT_FORMATS</span></code>,
+<code class="docutils literal notranslate"><span class="pre">DEFAULT_TIME_INPUT_FORMATS</span></code> and
+<code class="docutils literal notranslate"><span class="pre">DEFAULT_DATETIME_INPUT_FORMATS</span></code> will be removed. Use
+<code class="docutils literal notranslate"><span class="pre">django.utils.formats.get_format()</span></code> to get the appropriate
+formats.</li>
+<li>The ability to use a function-based test runner will be removed,
+along with the <code class="docutils literal notranslate"><span class="pre">django.test.simple.run_tests()</span></code> test runner.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">views.feed()</span></code> view and <code class="docutils literal notranslate"><span class="pre">feeds.Feed</span></code> class in
+<code class="docutils literal notranslate"><span class="pre">django.contrib.syndication</span></code> will be removed. The class-based view
+<code class="docutils literal notranslate"><span class="pre">views.Feed</span></code> should be used instead.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.core.context_processors.auth</span></code>.  This release will
+remove the old method in favor of the new method in
+<code class="docutils literal notranslate"><span class="pre">django.contrib.auth.context_processors.auth</span></code>.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">postgresql</span></code> database backend will be removed, use the
+<code class="docutils literal notranslate"><span class="pre">postgresql_psycopg2</span></code> backend instead.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">no</span></code> language code will be removed and has been replaced by the
+<code class="docutils literal notranslate"><span class="pre">nb</span></code> language code.</li>
+<li>Authentication backends will need to define the boolean attribute
+<code class="docutils literal notranslate"><span class="pre">supports_inactive_user</span></code> until version 1.5 when it will be assumed that
+all backends will handle inactive users.</li>
+<li><code class="docutils literal notranslate"><span class="pre">django.db.models.fields.XMLField</span></code> will be removed. This was
+deprecated as part of the 1.3 release. An accelerated deprecation
+schedule has been used because the field hasn’t performed any role
+beyond that of a simple <code class="docutils literal notranslate"><span class="pre">TextField</span></code> since the removal of <code class="docutils literal notranslate"><span class="pre">oldforms</span></code>.
+All uses of <code class="docutils literal notranslate"><span class="pre">XMLField</span></code> can be replaced with <code class="docutils literal notranslate"><span class="pre">TextField</span></code>.</li>
+<li>The undocumented <code class="docutils literal notranslate"><span class="pre">mixin</span></code> parameter to the <code class="docutils literal notranslate"><span class="pre">open()</span></code> method of
+<code class="docutils literal notranslate"><span class="pre">django.core.files.storage.Storage</span></code> (and subclasses) will be removed.</li>
+</ul>
+</div>
+<div class="section" id="s-deprecation-removed-in-1-3">
+<span id="s-id17"></span><span id="deprecation-removed-in-1-3"></span><span id="id17"></span><h2>1.3<a class="headerlink" href="#deprecation-removed-in-1-3" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference internal" href="../releases/1.1.html#deprecated-features-1-1"><span class="std std-ref">Django 1.1 release notes</span></a> for more
+details on these changes.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">AdminSite.root()</span></code>.  This method of hooking up the admin URLs will be
+removed in favor of including <code class="docutils literal notranslate"><span class="pre">admin.site.urls</span></code>.</li>
+<li>Authentication backends need to define the boolean attributes
+<code class="docutils literal notranslate"><span class="pre">supports_object_permissions</span></code> and <code class="docutils literal notranslate"><span class="pre">supports_anonymous_user</span></code> until
+version 1.4, at which point it will be assumed that all backends will
+support these options.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Django Deprecation Timeline</a><ul>
+<li><a class="reference internal" href="#deprecation-removed-in-6-0">6.0</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-5-1">5.1</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-5-0">5.0</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-4-1">4.1</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-4-0">4.0</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-3-1">3.1</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-3-0">3.0</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-2-1">2.1</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-2-0">2.0</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-1-10">1.10</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-1-9">1.9</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-1-8">1.8</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-1-7">1.7</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-1-6">1.6</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-1-5">1.5</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-1-4">1.4</a></li>
+<li><a class="reference internal" href="#deprecation-removed-in-1-3">1.3</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="release-process.html"
+                          title="previous chapter">Django’s release process</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="git.html"
+                          title="next chapter">The Django source code repository</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/internals/deprecation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="release-process.html" title="Django’s release process">previous</a>
+     |
+    <a href="index.html" title="Django internals" accesskey="U">up</a>
+   |
+    <a href="git.html" title="The Django source code repository">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

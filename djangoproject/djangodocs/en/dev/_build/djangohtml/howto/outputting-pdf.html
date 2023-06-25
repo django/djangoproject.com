@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to create PDF files &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to override templates" href="overriding-templates.html" />
+    <link rel="prev" title="How to create CSV output" href="outputting-csv.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);(function($) {
+    $(document).ready(function() {
+        $(".c-tab-unix").on("click", function() {
+            $("section.c-content-unix").show();
+            $("section.c-content-win").hide();
+            $(".c-tab-unix").prop("checked", true);
+        });
+        $(".c-tab-win").on("click", function() {
+            $("section.c-content-win").show();
+            $("section.c-content-unix").hide();
+            $(".c-tab-win").prop("checked", true);
+        });
+    });
+})(jQuery);</script>
+<link rel="stylesheet" href="../_static/console-tabs.css">
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="outputting-csv.html" title="How to create CSV output">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="overriding-templates.html" title="How to override templates">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="howto-outputting-pdf">
+            
+  <div class="section" id="s-how-to-create-pdf-files">
+<span id="how-to-create-pdf-files"></span><h1>How to create PDF files<a class="headerlink" href="#how-to-create-pdf-files" title="Permalink to this headline">¶</a></h1>
+<p>This document explains how to output PDF files dynamically using Django views.
+This is made possible by the excellent, open-source <a class="reference external" href="https://docs.reportlab.com/">ReportLab</a> Python PDF
+library.</p>
+<p>The advantage of generating PDF files dynamically is that you can create
+customized PDFs for different purposes – say, for different users or different
+pieces of content.</p>
+<p>For example, Django was used at <a class="reference external" href="http://www2.kusports.com/">kusports.com</a> to generate customized,
+printer-friendly NCAA tournament brackets, as PDF files, for people
+participating in a March Madness contest.</p>
+<div class="section" id="s-install-reportlab">
+<span id="install-reportlab"></span><h2>Install ReportLab<a class="headerlink" href="#install-reportlab" title="Permalink to this headline">¶</a></h2>
+<p>The ReportLab library is <a class="reference external" href="https://pypi.org/project/reportlab/">available on PyPI</a>. A <a class="reference external" href="https://www.reportlab.com/docs/reportlab-userguide.pdf">user guide</a>
+(not coincidentally, a PDF file) is also available for download.
+You can install ReportLab with <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="console-block" id="console-block-0">
+<input class="c-tab-unix" id="c-tab-0-unix" type="radio" name="console-0" checked>
+<label for="c-tab-0-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
+<input class="c-tab-win" id="c-tab-0-win" type="radio" name="console-0">
+<label for="c-tab-0-win" title="Windows">&#xf17a</label>
+<section class="c-content-unix" id="c-content-0-unix">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python -m pip install reportlab
+</pre></div>
+</div>
+</section>
+<section class="c-content-win" id="c-content-0-win">
+<div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py -m pip install reportlab
+</pre></div>
+</section>
+</div>
+<p>Test your installation by importing it in the Python interactive interpreter:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reportlab</span>
+</pre></div>
+</div>
+<p>If that command doesn’t raise any errors, the installation worked.</p>
+</div>
+<div class="section" id="s-write-your-view">
+<span id="write-your-view"></span><h2>Write your view<a class="headerlink" href="#write-your-view" title="Permalink to this headline">¶</a></h2>
+<p>The key to generating PDFs dynamically with Django is that the ReportLab API
+acts on file-like objects, and Django’s <a class="reference internal" href="../ref/request-response.html#django.http.FileResponse" title="django.http.FileResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileResponse</span></code></a>
+objects accept file-like objects.</p>
+<p>Here’s a “Hello World” example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">FileResponse</span>
+<span class="kn">from</span> <span class="nn">reportlab.pdfgen</span> <span class="kn">import</span> <span class="n">canvas</span>
+
+
+<span class="k">def</span> <span class="nf">some_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># Create a file-like buffer to receive PDF data.</span>
+    <span class="n">buffer</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+
+    <span class="c1"># Create the PDF object, using the buffer as its &quot;file.&quot;</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+
+    <span class="c1"># Draw things on the PDF. Here&#39;s where the PDF generation happens.</span>
+    <span class="c1"># See the ReportLab documentation for the full list of functionality.</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;Hello world.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Close the PDF object cleanly, and we&#39;re done.</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+    <span class="c1"># FileResponse sets the Content-Disposition header so that browsers</span>
+    <span class="c1"># present the option to save the file.</span>
+    <span class="n">buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">FileResponse</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">as_attachment</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;hello.pdf&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The code and comments should be self-explanatory, but a few things deserve a
+mention:</p>
+<ul class="simple">
+<li>The response will automatically set the MIME type <em class="mimetype">application/pdf</em>
+based on the filename extension. This tells browsers that the document is a
+PDF file, rather than an HTML file or a generic
+<em class="mimetype">application/octet-stream</em> binary content.</li>
+<li>When <code class="docutils literal notranslate"><span class="pre">as_attachment=True</span></code> is passed to <code class="docutils literal notranslate"><span class="pre">FileResponse</span></code>, it sets the
+appropriate <code class="docutils literal notranslate"><span class="pre">Content-Disposition</span></code> header and that tells web browsers to
+pop-up a dialog box prompting/confirming how to handle the document even if a
+default is set on the machine. If the <code class="docutils literal notranslate"><span class="pre">as_attachment</span></code> parameter is omitted,
+browsers will handle the PDF using whatever program/plugin they’ve been
+configured to use for PDFs.</li>
+<li>You can provide an arbitrary <code class="docutils literal notranslate"><span class="pre">filename</span></code> parameter. It’ll be used by browsers
+in the “Save as…” dialog.</li>
+<li>You can hook into the ReportLab API: The same buffer passed as the first
+argument to <code class="docutils literal notranslate"><span class="pre">canvas.Canvas</span></code> can be fed to the
+<a class="reference internal" href="../ref/request-response.html#django.http.FileResponse" title="django.http.FileResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileResponse</span></code></a> class.</li>
+<li>Note that all subsequent PDF-generation methods are called on the PDF
+object (in this case, <code class="docutils literal notranslate"><span class="pre">p</span></code>) – not on <code class="docutils literal notranslate"><span class="pre">buffer</span></code>.</li>
+<li>Finally, it’s important to call <code class="docutils literal notranslate"><span class="pre">showPage()</span></code> and <code class="docutils literal notranslate"><span class="pre">save()</span></code> on the PDF
+file.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">ReportLab is not thread-safe. Some of our users have reported odd issues
+with building PDF-generating Django views that are accessed by many people
+at the same time.</p>
+</div>
+</div>
+<div class="section" id="s-other-formats">
+<span id="other-formats"></span><h2>Other formats<a class="headerlink" href="#other-formats" title="Permalink to this headline">¶</a></h2>
+<p>Notice that there isn’t a lot in these examples that’s PDF-specific – just the
+bits using <code class="docutils literal notranslate"><span class="pre">reportlab</span></code>. You can use a similar technique to generate any
+arbitrary format that you can find a Python library for. Also see
+<a class="reference internal" href="outputting-csv.html"><span class="doc">How to create CSV output</span></a> for another example and some techniques you can use
+when generated text-based formats.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Django Packages provides a <a class="reference external" href="https://djangopackages.org/grids/g/pdf/">comparison of packages</a> that help generate PDF files
+from Django.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">How to create PDF files</a><ul>
+<li><a class="reference internal" href="#install-reportlab">Install ReportLab</a></li>
+<li><a class="reference internal" href="#write-your-view">Write your view</a></li>
+<li><a class="reference internal" href="#other-formats">Other formats</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="outputting-csv.html"
+                          title="previous chapter">How to create CSV output</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="overriding-templates.html"
+                          title="next chapter">How to override templates</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/howto/outputting-pdf.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="outputting-csv.html" title="How to create CSV output">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="overriding-templates.html" title="How to override templates">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

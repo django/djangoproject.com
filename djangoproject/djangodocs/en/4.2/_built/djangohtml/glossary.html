@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glossary &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/default.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release notes" href="releases/index.html" />
+    <link rel="prev" title="Third-party distributions of Django" href="misc/distributions.html" />
+
+
+
+ 
+<script src="templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="index.html">Home</a>  |
+        <a title="Table of contents" href="contents.html">Table of contents</a>  |
+        <a title="Global index" href="genindex.html">Index</a>  |
+        <a title="Module index" href="py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="misc/distributions.html" title="Third-party distributions of Django">previous</a>
+     |
+    <a title="Django 5.0.dev20230612063128 documentation" href="index.html" accesskey="U">up</a>
+   |
+    <a href="releases/index.html" title="Release notes">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="glossary">
+            
+  <div class="section" id="s-glossary">
+<span id="glossary"></span><h1>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h1>
+<dl class="glossary docutils">
+<dt id="term-concrete-model">concrete model<a class="headerlink" href="#term-concrete-model" title="Permalink to this term">¶</a></dt><dd>A non-abstract (<a class="reference internal" href="ref/models/options.html#django.db.models.Options.abstract" title="django.db.models.Options.abstract"><code class="xref py py-attr docutils literal notranslate"><span class="pre">abstract=False</span></code></a>) model.</dd>
+<dt id="term-field">field<a class="headerlink" href="#term-field" title="Permalink to this term">¶</a></dt><dd><p>An attribute on a <a class="reference internal" href="#term-model"><span class="xref std std-term">model</span></a>; a given field usually maps directly to
+a single database column.</p>
+<p>See <a class="reference internal" href="topics/db/models.html"><span class="doc">Models</span></a>.</p>
+</dd>
+<dt id="term-generic-view">generic view<a class="headerlink" href="#term-generic-view" title="Permalink to this term">¶</a></dt><dd><p>A higher-order <a class="reference internal" href="#term-view"><span class="xref std std-term">view</span></a> function that provides an abstract/generic
+implementation of a common idiom or pattern found in view development.</p>
+<p>See <a class="reference internal" href="topics/class-based-views/index.html"><span class="doc">Class-based views</span></a>.</p>
+</dd>
+<dt id="term-model">model<a class="headerlink" href="#term-model" title="Permalink to this term">¶</a></dt><dd><p>Models store your application’s data.</p>
+<p>See <a class="reference internal" href="topics/db/models.html"><span class="doc">Models</span></a>.</p>
+</dd>
+<dt id="term-MTV">MTV<a class="headerlink" href="#term-MTV" title="Permalink to this term">¶</a></dt><dd><p>“Model-template-view”; a software pattern, similar in style to MVC, but
+a better description of the way Django does things.</p>
+<p>See <a class="reference internal" href="faq/general.html#faq-mtv"><span class="std std-ref">the FAQ entry</span></a>.</p>
+</dd>
+<dt id="term-MVC">MVC<a class="headerlink" href="#term-MVC" title="Permalink to this term">¶</a></dt><dd><a class="reference external" href="https://en.wikipedia.org/wiki/Model-view-controller">Model-view-controller</a>; a software pattern. Django <a class="reference internal" href="faq/general.html#faq-mtv"><span class="std std-ref">follows MVC
+to some extent</span></a>.</dd>
+<dt id="term-project">project<a class="headerlink" href="#term-project" title="Permalink to this term">¶</a></dt><dd>A Python package – i.e. a directory of code – that contains all the
+settings for an instance of Django. This would include database
+configuration, Django-specific options and application-specific
+settings.</dd>
+<dt id="term-property">property<a class="headerlink" href="#term-property" title="Permalink to this term">¶</a></dt><dd><p>Also known as “managed attributes”, and a feature of Python since
+version 2.2. This is a neat way to implement attributes whose usage
+resembles attribute access, but whose implementation uses method calls.</p>
+<p>See <a class="reference external" href="https://docs.python.org/3/library/functions.html#property" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">property</span></code></a>.</p>
+</dd>
+<dt id="term-queryset">queryset<a class="headerlink" href="#term-queryset" title="Permalink to this term">¶</a></dt><dd><p>An object representing some set of rows to be fetched from the database.</p>
+<p>See <a class="reference internal" href="topics/db/queries.html"><span class="doc">Making queries</span></a>.</p>
+</dd>
+<dt id="term-slug">slug<a class="headerlink" href="#term-slug" title="Permalink to this term">¶</a></dt><dd><p>A short label for something, containing only letters, numbers,
+underscores or hyphens. They’re generally used in URLs. For
+example, in a typical blog entry URL:</p>
+<pre class="literal-block">
+<a class="reference external" href="https://www.djangoproject.com/weblog/2008/apr/12/">https://www.djangoproject.com/weblog/2008/apr/12/</a><strong>spring</strong>/
+</pre>
+<p>the last bit (<code class="docutils literal notranslate"><span class="pre">spring</span></code>) is the slug.</p>
+</dd>
+<dt id="term-template">template<a class="headerlink" href="#term-template" title="Permalink to this term">¶</a></dt><dd><p>A chunk of text that acts as formatting for representing data. A
+template helps to abstract the presentation of data from the data
+itself.</p>
+<p>See <a class="reference internal" href="topics/templates.html"><span class="doc">Templates</span></a>.</p>
+</dd>
+<dt id="term-view">view<a class="headerlink" href="#term-view" title="Permalink to this term">¶</a></dt><dd>A function responsible for rendering a page.</dd>
+</dl>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="misc/distributions.html"
+                          title="previous chapter">Third-party distributions of Django</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="releases/index.html"
+                          title="next chapter">Release notes</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/glossary.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="misc/distributions.html" title="Third-party distributions of Django">previous</a>
+     |
+    <a title="Django 5.0.dev20230612063128 documentation" href="index.html" accesskey="U">up</a>
+   |
+    <a href="releases/index.html" title="Release notes">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

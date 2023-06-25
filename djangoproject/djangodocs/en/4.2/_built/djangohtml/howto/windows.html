@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to install Django on Windows &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to create database migrations" href="writing-migrations.html" />
+    <link rel="prev" title="How to deploy static files" href="static-files/deployment.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="static-files/deployment.html" title="How to deploy static files">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="writing-migrations.html" title="How to create database migrations">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="howto-windows">
+            
+  <div class="section" id="s-how-to-install-django-on-windows">
+<span id="how-to-install-django-on-windows"></span><h1>How to install Django on Windows<a class="headerlink" href="#how-to-install-django-on-windows" title="Permalink to this headline">¶</a></h1>
+<p>This document will guide you through installing Python 3.11 and Django on
+Windows. It also provides instructions for setting up a virtual environment,
+which makes it easier to work on Python projects. This is meant as a beginner’s
+guide for users working on Django projects and does not reflect how Django
+should be installed when developing patches for Django itself.</p>
+<p>The steps in this guide have been tested with Windows 10. In other
+versions, the steps would be similar. You will need to be familiar with using
+the Windows command prompt.</p>
+<div class="section" id="s-install-python">
+<span id="s-install-python-windows"></span><span id="install-python"></span><span id="install-python-windows"></span><h2>Install Python<a class="headerlink" href="#install-python" title="Permalink to this headline">¶</a></h2>
+<p>Django is a Python web framework, thus requiring Python to be installed on your
+machine. At the time of writing, Python 3.11 is the latest version.</p>
+<p>To install Python on your machine go to <a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>. The
+website should offer you a download button for the latest Python version.
+Download the executable installer and run it. Check the boxes next to “Install
+launcher for all users (recommended)” then click “Install Now”.</p>
+<p>After installation, open the command prompt and check that the Python version
+matches the version you installed by executing:</p>
+<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py --version
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">For more details, see <a class="reference external" href="https://docs.python.org/3/using/windows.html" title="(in Python v3.11)"><span>Using Python on Windows</span></a> documentation.</p>
+</div>
+</div>
+<div class="section" id="s-about-pip">
+<span id="about-pip"></span><h2>About <code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#about-pip" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pypi.org/project/pip/">pip</a> is a package manager for Python and is included by default with the
+Python installer. It helps to install and uninstall Python packages
+(such as Django!). For the rest of the installation, we’ll use <code class="docutils literal notranslate"><span class="pre">pip</span></code> to
+install Python packages from the command line.</p>
+</div>
+<div class="section" id="s-setting-up-a-virtual-environment">
+<span id="s-virtualenvironment"></span><span id="setting-up-a-virtual-environment"></span><span id="virtualenvironment"></span><h2>Setting up a virtual environment<a class="headerlink" href="#setting-up-a-virtual-environment" title="Permalink to this headline">¶</a></h2>
+<p>It is best practice to provide a dedicated environment for each Django project
+you create. There are many options to manage environments and packages within
+the Python ecosystem, some of which are recommended in the <a class="reference external" href="https://packaging.python.org/guides/tool-recommendations/">Python
+documentation</a>.
+Python itself comes with <a class="reference external" href="https://docs.python.org/3/tutorial/venv.html" title="(in Python v3.11)"><span class="xref std std-doc">venv</span></a> for managing
+environments which we will use for this guide.</p>
+<p>To create a virtual environment for your project, open a new command prompt,
+navigate to the folder where you want to create your project and then enter the
+following:</p>
+<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py -m venv project-name
+</pre></div>
+</div>
+<p>This will create a folder called ‘project-name’ if it does not already exist
+and set up the virtual environment. To activate the environment, run:</p>
+<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> project-name\Scripts\activate.bat
+</pre></div>
+</div>
+<p>The virtual environment will be activated and you’ll see “(project-name)” next
+to the command prompt to designate that. Each time you start a new command
+prompt, you’ll need to activate the environment again.</p>
+</div>
+<div class="section" id="s-install-django">
+<span id="install-django"></span><h2>Install Django<a class="headerlink" href="#install-django" title="Permalink to this headline">¶</a></h2>
+<p>Django can be installed easily using <code class="docutils literal notranslate"><span class="pre">pip</span></code> within your virtual environment.</p>
+<p>In the command prompt, ensure your virtual environment is active, and execute
+the following command:</p>
+<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py -m pip install Django
+</pre></div>
+</div>
+<p>This will download and install the latest Django release.</p>
+<p>After the installation has completed, you can verify your Django installation
+by executing <code class="docutils literal notranslate"><span class="pre">django-admin</span> <span class="pre">--version</span></code> in the command prompt.</p>
+<p>See <a class="reference internal" href="../topics/install.html#database-installation"><span class="std std-ref">Get your database running</span></a> for information on database installation
+with Django.</p>
+</div>
+<div class="section" id="s-colored-terminal-output">
+<span id="colored-terminal-output"></span><h2>Colored terminal output<a class="headerlink" href="#colored-terminal-output" title="Permalink to this headline">¶</a></h2>
+<p>A quality-of-life feature adds colored (rather than monochrome) output to the
+terminal. In modern terminals this should work for both CMD and PowerShell. If
+for some reason this needs to be disabled, set the environmental variable
+<span class="target" id="index-0"></span><a class="reference internal" href="../ref/django-admin.html#envvar-DJANGO_COLORS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">DJANGO_COLORS</span></code></a> to <code class="docutils literal notranslate"><span class="pre">nocolor</span></code>.</p>
+<p>On older Windows versions, or legacy terminals, <a class="reference external" href="https://pypi.org/project/colorama/">colorama</a> must be
+installed to enable syntax coloring:</p>
+<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py -m pip install colorama
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../ref/django-admin.html#syntax-coloring"><span class="std std-ref">Syntax coloring</span></a> for more information on color settings.</p>
+</div>
+<div class="section" id="s-common-pitfalls">
+<span id="common-pitfalls"></span><h2>Common pitfalls<a class="headerlink" href="#common-pitfalls" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">If <code class="docutils literal notranslate"><span class="pre">django-admin</span></code> only displays the help text no matter what arguments
+it is given, there is probably a problem with the file association in
+Windows. Check if there is more than one environment variable set for
+running Python scripts in <code class="docutils literal notranslate"><span class="pre">PATH</span></code>. This usually occurs when there is more
+than one Python version installed.</p>
+</li>
+<li><p class="first">If you are connecting to the internet behind a proxy, there might be problems
+in running the command <code class="docutils literal notranslate"><span class="pre">py</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">Django</span></code>. Set the environment
+variables for proxy configuration in the command prompt as follows:</p>
+<div class="highlight-doscon notranslate"><div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> <span class="k">set</span> <span class="nv">http_proxy</span><span class="p">=</span>http://username:password@proxyserver:proxyport
+<span class="gp">...\&gt;</span> <span class="k">set</span> <span class="nv">https_proxy</span><span class="p">=</span>https://username:password@proxyserver:proxyport
+</pre></div>
+</div>
+</li>
+<li><p class="first">In general, Django assumes that <code class="docutils literal notranslate"><span class="pre">UTF-8</span></code> encoding is used for I/O. This may
+cause problems if your system is set to use a different encoding. Recent
+versions of Python allow setting the <span class="target" id="index-1"></span><a class="reference external" href="https://docs.python.org/3/using/cmdline.html#envvar-PYTHONUTF8" title="(in Python v3.11)"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONUTF8</span></code></a> environment
+variable in order to force a <code class="docutils literal notranslate"><span class="pre">UTF-8</span></code> encoding. Windows 10 also provides a
+system-wide setting by checking <code class="docutils literal notranslate"><span class="pre">Use</span> <span class="pre">Unicode</span> <span class="pre">UTF-8</span> <span class="pre">for</span> <span class="pre">worldwide</span> <span class="pre">language</span>
+<span class="pre">support</span></code> in <span class="menuselection">Language ‣ Administrative Language Settings
+‣ Change system locale</span> in system settings.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">How to install Django on Windows</a><ul>
+<li><a class="reference internal" href="#install-python">Install Python</a></li>
+<li><a class="reference internal" href="#about-pip">About <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li><a class="reference internal" href="#setting-up-a-virtual-environment">Setting up a virtual environment</a></li>
+<li><a class="reference internal" href="#install-django">Install Django</a></li>
+<li><a class="reference internal" href="#colored-terminal-output">Colored terminal output</a></li>
+<li><a class="reference internal" href="#common-pitfalls">Common pitfalls</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="static-files/deployment.html"
+                          title="previous chapter">How to deploy static files</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="writing-migrations.html"
+                          title="next chapter">How to create database migrations</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/howto/windows.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="static-files/deployment.html" title="How to deploy static files">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="writing-migrations.html" title="How to create database migrations">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

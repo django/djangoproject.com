@@ -1,0 +1,295 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/default.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Writing documentation" href="../writing-documentation.html" />
+    <link rel="prev" title="Working with Git and GitHub" href="working-with-git.html" />
+
+
+
+ 
+<script src="../../../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../../../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);(function($) {
+    $(document).ready(function() {
+        $(".c-tab-unix").on("click", function() {
+            $("section.c-content-unix").show();
+            $("section.c-content-win").hide();
+            $(".c-tab-unix").prop("checked", true);
+        });
+        $(".c-tab-win").on("click", function() {
+            $("section.c-content-win").show();
+            $("section.c-content-unix").hide();
+            $(".c-tab-win").prop("checked", true);
+        });
+    });
+})(jQuery);</script>
+<link rel="stylesheet" href="../../../_static/console-tabs.css">
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../../../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../../../index.html">Home</a>  |
+        <a title="Table of contents" href="../../../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../../../genindex.html">Index</a>  |
+        <a title="Module index" href="../../../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="working-with-git.html" title="Working with Git and GitHub">previous</a>
+     |
+    <a href="../../index.html" title="Django internals" accesskey="U">up</a>
+   |
+    <a href="../writing-documentation.html" title="Writing documentation">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="internals-contributing-writing-code-javascript">
+            
+  <div class="section" id="s-javascript">
+<span id="javascript"></span><h1>JavaScript<a class="headerlink" href="#javascript" title="Permalink to this headline">¶</a></h1>
+<p>While most of Django core is Python, the <code class="docutils literal notranslate"><span class="pre">admin</span></code> and <code class="docutils literal notranslate"><span class="pre">gis</span></code> contrib apps
+contain JavaScript code.</p>
+<p>Please follow these coding standards when writing JavaScript code for inclusion
+in Django.</p>
+<div class="section" id="s-code-style">
+<span id="code-style"></span><h2>Code style<a class="headerlink" href="#code-style" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Please conform to the indentation style dictated in the <code class="docutils literal notranslate"><span class="pre">.editorconfig</span></code>
+file. We recommend using a text editor with <a class="reference external" href="https://editorconfig.org/">EditorConfig</a> support to avoid
+indentation and whitespace issues. Most of the JavaScript files use 4 spaces
+for indentation, but there are some exceptions.</li>
+<li>When naming variables, use <code class="docutils literal notranslate"><span class="pre">camelCase</span></code> instead of <code class="docutils literal notranslate"><span class="pre">underscore_case</span></code>.
+Different JavaScript files sometimes use a different code style. Please try to
+conform to the code style of each file.</li>
+<li>Use the <a class="reference external" href="https://eslint.org/">ESLint</a> code linter to check your code for bugs and style errors.
+ESLint will be run when you run the JavaScript tests. We also recommended
+installing a ESLint plugin in your text editor.</li>
+<li>Where possible, write code that will work even if the page structure is later
+changed with JavaScript. For instance, when binding a click handler, use
+<code class="docutils literal notranslate"><span class="pre">$('body').on('click',</span> <span class="pre">selector,</span> <span class="pre">func)</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">$(selector).click(func)</span></code>. This makes it easier for projects to extend
+Django’s default behavior with JavaScript.</li>
+</ul>
+</div>
+<div class="section" id="s-javascript-patches">
+<span id="s-id1"></span><span id="javascript-patches"></span><span id="id1"></span><h2>JavaScript patches<a class="headerlink" href="#javascript-patches" title="Permalink to this headline">¶</a></h2>
+<p>Django’s admin system leverages the jQuery framework to increase the
+capabilities of the admin interface. In conjunction, there is an emphasis on
+admin JavaScript performance and minimizing overall admin media file size.</p>
+</div>
+<div class="section" id="s-javascript-tests">
+<span id="s-id2"></span><span id="javascript-tests"></span><span id="id2"></span><h2>JavaScript tests<a class="headerlink" href="#javascript-tests" title="Permalink to this headline">¶</a></h2>
+<p>Django’s JavaScript tests can be run in a browser or from the command line.
+The tests are located in a top level <a class="reference external" href="https://github.com/django/django/blob/main/js_tests">js_tests</a> directory.</p>
+<div class="section" id="s-writing-tests">
+<span id="writing-tests"></span><h3>Writing tests<a class="headerlink" href="#writing-tests" title="Permalink to this headline">¶</a></h3>
+<p>Django’s JavaScript tests use <a class="reference external" href="https://qunitjs.com/">QUnit</a>. Here is an example test module:</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="nx">QUnit</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;magicTricks&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">beforeEach</span><span class="o">:</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="kd">const</span><span class="w"> </span><span class="nx">$</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">django</span><span class="p">.</span><span class="nx">jQuery</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#qunit-fixture&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;button class=&quot;button&quot;&gt;&lt;/button&gt;&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
+
+<span class="nx">QUnit</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;removeOnClick removes button on click&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">assert</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">$</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">django</span><span class="p">.</span><span class="nx">jQuery</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">removeOnClick</span><span class="p">(</span><span class="s1">&#39;.button&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.button&#39;</span><span class="p">).</span><span class="nx">length</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.button&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.button&#39;</span><span class="p">).</span><span class="nx">length</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">);</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
+
+<span class="nx">QUnit</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;copyOnClick adds button on click&#39;</span><span class="p">,</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">assert</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">$</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">django</span><span class="p">.</span><span class="nx">jQuery</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="nx">copyOnClick</span><span class="p">(</span><span class="s1">&#39;.button&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.button&#39;</span><span class="p">).</span><span class="nx">length</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.button&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.button&#39;</span><span class="p">).</span><span class="nx">length</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">);</span><span class="w"></span>
+<span class="p">});</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Please consult the <code class="docutils literal notranslate"><span class="pre">QUnit</span></code> documentation for information on the types of
+<a class="reference external" href="https://api.qunitjs.com/assert/">assertions supported by QUnit</a>.</p>
+</div>
+<div class="section" id="s-running-tests">
+<span id="running-tests"></span><h3>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h3>
+<p>The JavaScript tests may be run from a web browser or from the command line.</p>
+<div class="section" id="s-testing-from-a-web-browser">
+<span id="testing-from-a-web-browser"></span><h4>Testing from a web browser<a class="headerlink" href="#testing-from-a-web-browser" title="Permalink to this headline">¶</a></h4>
+<p>To run the tests from a web browser, open up <a class="reference external" href="https://github.com/django/django/blob/main/js_tests/tests.html">js_tests/tests.html</a> in your
+browser.</p>
+<p>To measure code coverage when running the tests, you need to view that file
+over HTTP. To view code coverage:</p>
+<ul class="simple">
+<li>Execute <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">http.server</span></code> from the root directory (not from inside
+<code class="docutils literal notranslate"><span class="pre">js_tests</span></code>).</li>
+<li>Open <a class="reference external" href="http://localhost:8000/js_tests/tests.html">http://localhost:8000/js_tests/tests.html</a> in your web browser.</li>
+</ul>
+</div>
+<div class="section" id="s-testing-from-the-command-line">
+<span id="testing-from-the-command-line"></span><h4>Testing from the command line<a class="headerlink" href="#testing-from-the-command-line" title="Permalink to this headline">¶</a></h4>
+<p>To run the tests from the command line, you need to have <a class="reference external" href="https://nodejs.org/">Node.js</a> installed.</p>
+<p>After installing <code class="docutils literal notranslate"><span class="pre">Node.js</span></code>, install the JavaScript test dependencies by
+running the following from the root of your Django checkout:</p>
+<div class="console-block" id="console-block-0">
+<input class="c-tab-unix" id="c-tab-0-unix" type="radio" name="console-0" checked>
+<label for="c-tab-0-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
+<input class="c-tab-win" id="c-tab-0-win" type="radio" name="console-0">
+<label for="c-tab-0-win" title="Windows">&#xf17a</label>
+<section class="c-content-unix" id="c-content-0-unix">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>npm install
+</pre></div>
+</div>
+</section>
+<section class="c-content-win" id="c-content-0-win">
+<div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> npm install
+</pre></div>
+</section>
+</div>
+<p>Then run the tests with:</p>
+<div class="console-block" id="console-block-1">
+<input class="c-tab-unix" id="c-tab-1-unix" type="radio" name="console-1" checked>
+<label for="c-tab-1-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
+<input class="c-tab-win" id="c-tab-1-win" type="radio" name="console-1">
+<label for="c-tab-1-win" title="Windows">&#xf17a</label>
+<section class="c-content-unix" id="c-content-1-unix">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>npm <span class="nb">test</span>
+</pre></div>
+</div>
+</section>
+<section class="c-content-win" id="c-content-1-win">
+<div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> npm test
+</pre></div>
+</section>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">JavaScript</a><ul>
+<li><a class="reference internal" href="#code-style">Code style</a></li>
+<li><a class="reference internal" href="#javascript-patches">JavaScript patches</a></li>
+<li><a class="reference internal" href="#javascript-tests">JavaScript tests</a><ul>
+<li><a class="reference internal" href="#writing-tests">Writing tests</a></li>
+<li><a class="reference internal" href="#running-tests">Running tests</a><ul>
+<li><a class="reference internal" href="#testing-from-a-web-browser">Testing from a web browser</a></li>
+<li><a class="reference internal" href="#testing-from-the-command-line">Testing from the command line</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="working-with-git.html"
+                          title="previous chapter">Working with Git and GitHub</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../writing-documentation.html"
+                          title="next chapter">Writing documentation</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/internals/contributing/writing-code/javascript.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="working-with-git.html" title="Working with Git and GitHub">previous</a>
+     |
+    <a href="../../index.html" title="Django internals" accesskey="U">up</a>
+   |
+    <a href="../writing-documentation.html" title="Writing documentation">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

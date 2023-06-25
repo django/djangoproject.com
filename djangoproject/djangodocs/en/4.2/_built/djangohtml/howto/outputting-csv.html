@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to create CSV output &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to create PDF files" href="outputting-pdf.html" />
+    <link rel="prev" title="How to configure and use logging" href="logging.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="logging.html" title="How to configure and use logging">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="outputting-pdf.html" title="How to create PDF files">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="howto-outputting-csv">
+            
+  <div class="section" id="s-how-to-create-csv-output">
+<span id="how-to-create-csv-output"></span><h1>How to create CSV output<a class="headerlink" href="#how-to-create-csv-output" title="Permalink to this headline">¶</a></h1>
+<p>This document explains how to output CSV (Comma Separated Values) dynamically
+using Django views. To do this, you can either use the Python CSV library or the
+Django template system.</p>
+<div class="section" id="s-using-the-python-csv-library">
+<span id="using-the-python-csv-library"></span><h2>Using the Python CSV library<a class="headerlink" href="#using-the-python-csv-library" title="Permalink to this headline">¶</a></h2>
+<p>Python comes with a CSV library, <a class="reference external" href="https://docs.python.org/3/library/csv.html#module-csv" title="(in Python v3.11)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code></a>. The key to using it with Django is
+that the <a class="reference external" href="https://docs.python.org/3/library/csv.html#module-csv" title="(in Python v3.11)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code></a> module’s CSV-creation capability acts on file-like objects,
+and Django’s <a class="reference internal" href="../ref/request-response.html#django.http.HttpResponse" title="django.http.HttpResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponse</span></code></a> objects are file-like objects.</p>
+<p>Here’s an example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+
+<span class="k">def</span> <span class="nf">some_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># Create the HttpResponse object with the appropriate CSV header.</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span>
+        <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/csv&quot;</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Content-Disposition&quot;</span><span class="p">:</span> <span class="s1">&#39;attachment; filename=&quot;somefilename.csv&quot;&#39;</span><span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;First row&quot;</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="s2">&quot;Bar&quot;</span><span class="p">,</span> <span class="s2">&quot;Baz&quot;</span><span class="p">])</span>
+    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&quot;Second row&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s1">&#39;&quot;Testing&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;Here&#39;s a quote&quot;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+<p>The code and comments should be self-explanatory, but a few things deserve a
+mention:</p>
+<ul class="simple">
+<li>The response gets a special MIME type, <em class="mimetype">text/csv</em>. This tells
+browsers that the document is a CSV file, rather than an HTML file. If
+you leave this off, browsers will probably interpret the output as HTML,
+which will result in ugly, scary gobbledygook in the browser window.</li>
+<li>The response gets an additional <code class="docutils literal notranslate"><span class="pre">Content-Disposition</span></code> header, which
+contains the name of the CSV file. This filename is arbitrary; call it
+whatever you want. It’ll be used by browsers in the “Save as…” dialog, etc.</li>
+<li>You can hook into the CSV-generation API by passing <code class="docutils literal notranslate"><span class="pre">response</span></code> as the first
+argument to <code class="docutils literal notranslate"><span class="pre">csv.writer</span></code>. The <code class="docutils literal notranslate"><span class="pre">csv.writer</span></code> function expects a file-like
+object, and <a class="reference internal" href="../ref/request-response.html#django.http.HttpResponse" title="django.http.HttpResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponse</span></code></a> objects fit the bill.</li>
+<li>For each row in your CSV file, call <code class="docutils literal notranslate"><span class="pre">writer.writerow</span></code>, passing it an
+<a class="reference external" href="https://docs.python.org/3/glossary.html#term-iterable" title="(in Python v3.11)"><span class="xref std std-term">iterable</span></a>.</li>
+<li>The CSV module takes care of quoting for you, so you don’t have to worry
+about escaping strings with quotes or commas in them. Pass <code class="docutils literal notranslate"><span class="pre">writerow()</span></code>
+your raw strings, and it’ll do the right thing.</li>
+</ul>
+<div class="section" id="s-streaming-large-csv-files">
+<span id="s-streaming-csv-files"></span><span id="streaming-large-csv-files"></span><span id="streaming-csv-files"></span><h3>Streaming large CSV files<a class="headerlink" href="#streaming-large-csv-files" title="Permalink to this headline">¶</a></h3>
+<p>When dealing with views that generate very large responses, you might want to
+consider using Django’s <a class="reference internal" href="../ref/request-response.html#django.http.StreamingHttpResponse" title="django.http.StreamingHttpResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamingHttpResponse</span></code></a> instead.
+For example, by streaming a file that takes a long time to generate you can
+avoid a load balancer dropping a connection that might have otherwise timed out
+while the server was generating the response.</p>
+<p>In this example, we make full use of Python generators to efficiently handle
+the assembly and transmission of a large CSV file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">StreamingHttpResponse</span>
+
+
+<span class="k">class</span> <span class="nc">Echo</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;An object that implements just the write method of the file-like</span>
+<span class="sd">    interface.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write the value by returning it, instead of storing in a buffer.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">def</span> <span class="nf">some_streaming_csv_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A view that streams a large CSV file.&quot;&quot;&quot;</span>
+    <span class="c1"># Generate a sequence of rows. The range is based on the maximum number of</span>
+    <span class="c1"># rows that can be handled by a single sheet in most spreadsheet</span>
+    <span class="c1"># applications.</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="p">([</span><span class="s2">&quot;Row </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">65536</span><span class="p">))</span>
+    <span class="n">pseudo_buffer</span> <span class="o">=</span> <span class="n">Echo</span><span class="p">()</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">pseudo_buffer</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">StreamingHttpResponse</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">),</span>
+        <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/csv&quot;</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Content-Disposition&quot;</span><span class="p">:</span> <span class="s1">&#39;attachment; filename=&quot;somefilename.csv&quot;&#39;</span><span class="p">},</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="s-using-the-template-system">
+<span id="using-the-template-system"></span><h2>Using the template system<a class="headerlink" href="#using-the-template-system" title="Permalink to this headline">¶</a></h2>
+<p>Alternatively, you can use the <a class="reference internal" href="../topics/templates.html"><span class="doc">Django template system</span></a>
+to generate CSV. This is lower-level than using the convenient Python <a class="reference external" href="https://docs.python.org/3/library/csv.html#module-csv" title="(in Python v3.11)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code></a>
+module, but the solution is presented here for completeness.</p>
+<p>The idea here is to pass a list of items to your template, and have the
+template output the commas in a <a class="reference internal" href="../ref/templates/builtins.html#std-templatetag-for"><code class="xref std std-ttag docutils literal notranslate"><span class="pre">for</span></code></a> loop.</p>
+<p>Here’s an example, which generates the same CSV file as above:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">loader</span>
+
+
+<span class="k">def</span> <span class="nf">some_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># Create the HttpResponse object with the appropriate CSV header.</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span>
+        <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/csv&quot;</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Content-Disposition&quot;</span><span class="p">:</span> <span class="s1">&#39;attachment; filename=&quot;somefilename.csv&quot;&#39;</span><span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="c1"># The data is hard-coded here, but you could load it from a database or</span>
+    <span class="c1"># some other source.</span>
+    <span class="n">csv_data</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="p">(</span><span class="s2">&quot;First row&quot;</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="s2">&quot;Bar&quot;</span><span class="p">,</span> <span class="s2">&quot;Baz&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;Second row&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s1">&#39;&quot;Testing&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;Here&#39;s a quote&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s2">&quot;my_template_name.txt&quot;</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">csv_data</span><span class="p">}</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+<p>The only difference between this example and the previous example is that this
+one uses template loading instead of the CSV module. The rest of the code –
+such as the <code class="docutils literal notranslate"><span class="pre">content_type='text/csv'</span></code> – is the same.</p>
+<p>Then, create the template <code class="docutils literal notranslate"><span class="pre">my_template_name.txt</span></code>, with this template code:</p>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">row</span> <span class="k">in</span> <span class="nv">data</span> <span class="cp">%}</span>&quot;<span class="cp">{{</span> <span class="nv">row.0</span><span class="o">|</span><span class="nf">addslashes</span> <span class="cp">}}</span>&quot;, &quot;<span class="cp">{{</span> <span class="nv">row.1</span><span class="o">|</span><span class="nf">addslashes</span> <span class="cp">}}</span>&quot;, &quot;<span class="cp">{{</span> <span class="nv">row.2</span><span class="o">|</span><span class="nf">addslashes</span> <span class="cp">}}</span>&quot;, &quot;<span class="cp">{{</span> <span class="nv">row.3</span><span class="o">|</span><span class="nf">addslashes</span> <span class="cp">}}</span>&quot;, &quot;<span class="cp">{{</span> <span class="nv">row.4</span><span class="o">|</span><span class="nf">addslashes</span> <span class="cp">}}</span>&quot;
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>This short template iterates over the given data and displays a line of CSV for
+each row. It uses the <a class="reference internal" href="../ref/templates/builtins.html#std-templatefilter-addslashes"><code class="xref std std-tfilter docutils literal notranslate"><span class="pre">addslashes</span></code></a> template filter to ensure there
+aren’t any problems with quotes.</p>
+</div>
+<div class="section" id="s-other-text-based-formats">
+<span id="other-text-based-formats"></span><h2>Other text-based formats<a class="headerlink" href="#other-text-based-formats" title="Permalink to this headline">¶</a></h2>
+<p>Notice that there isn’t very much specific to CSV here – just the specific
+output format. You can use either of these techniques to output any text-based
+format you can dream of. You can also use a similar technique to generate
+arbitrary binary data; see <a class="reference internal" href="outputting-pdf.html"><span class="doc">How to create PDF files</span></a> for an example.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">How to create CSV output</a><ul>
+<li><a class="reference internal" href="#using-the-python-csv-library">Using the Python CSV library</a><ul>
+<li><a class="reference internal" href="#streaming-large-csv-files">Streaming large CSV files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-the-template-system">Using the template system</a></li>
+<li><a class="reference internal" href="#other-text-based-formats">Other text-based formats</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="logging.html"
+                          title="previous chapter">How to configure and use logging</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="outputting-pdf.html"
+                          title="next chapter">How to create PDF files</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/howto/outputting-csv.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="logging.html" title="How to configure and use logging">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="outputting-pdf.html" title="How to create PDF files">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

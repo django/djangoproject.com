@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Writing your first Django app, part 8 &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Advanced tutorial: How to write reusable apps" href="reusable-apps.html" />
+    <link rel="prev" title="Writing your first Django app, part 7" href="tutorial07.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);(function($) {
+    $(document).ready(function() {
+        $(".c-tab-unix").on("click", function() {
+            $("section.c-content-unix").show();
+            $("section.c-content-win").hide();
+            $(".c-tab-unix").prop("checked", true);
+        });
+        $(".c-tab-win").on("click", function() {
+            $("section.c-content-win").show();
+            $("section.c-content-unix").hide();
+            $(".c-tab-win").prop("checked", true);
+        });
+    });
+})(jQuery);</script>
+<link rel="stylesheet" href="../_static/console-tabs.css">
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="tutorial07.html" title="Writing your first Django app, part 7">previous</a>
+     |
+    <a href="index.html" title="Getting started" accesskey="U">up</a>
+   |
+    <a href="reusable-apps.html" title="Advanced tutorial: How to write reusable apps">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="intro-tutorial08">
+            
+  <div class="section" id="s-writing-your-first-django-app-part-8">
+<span id="writing-your-first-django-app-part-8"></span><h1>Writing your first Django app, part 8<a class="headerlink" href="#writing-your-first-django-app-part-8" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial begins where <a class="reference internal" href="tutorial07.html"><span class="doc">Tutorial 7</span></a> left off. We’ve
+built our web-poll application and will now look at third-party packages. One of
+Django’s strengths is the rich ecosystem of third-party packages. They’re
+community developed packages that can be used to quickly improve the feature set
+of an application.</p>
+<p>This tutorial will show how to add <a class="reference external" href="https://django-debug-toolbar.readthedocs.io">Django Debug Toolbar</a>, a commonly used third-party
+package. The Django Debug Toolbar has ranked in the top three most used
+third-party packages in the Django Developers Survey in recent years.</p>
+<div class="admonition-where-to-get-help admonition">
+<p class="first admonition-title">Where to get help:</p>
+<p class="last">If you’re having trouble going through this tutorial, please head over to
+the <a class="reference internal" href="../faq/help.html"><span class="doc">Getting Help</span></a> section of the FAQ.</p>
+</div>
+<div class="section" id="s-installing-django-debug-toolbar">
+<span id="installing-django-debug-toolbar"></span><h2>Installing Django Debug Toolbar<a class="headerlink" href="#installing-django-debug-toolbar" title="Permalink to this headline">¶</a></h2>
+<p>Django Debug Toolbar is a useful tool for debugging Django web applications.
+It’s a third-party package maintained by the <a class="reference external" href="https://jazzband.co">Jazzband</a> organization. The toolbar helps you understand how your
+application functions and to identify problems. It does so by providing panels
+that provide debug information about the current request and response.</p>
+<p>To install a third-party application like the toolbar, you need to install
+the package by running the below command within an activated virtual
+environment. This is similar to our earlier step to <a class="reference internal" href="../topics/install.html#installing-official-release"><span class="std std-ref">install Django</span></a>.</p>
+<div class="console-block" id="console-block-0">
+<input class="c-tab-unix" id="c-tab-0-unix" type="radio" name="console-0" checked>
+<label for="c-tab-0-unix" title="Linux/macOS">&#xf17c/&#xf179</label>
+<input class="c-tab-win" id="c-tab-0-win" type="radio" name="console-0">
+<label for="c-tab-0-win" title="Windows">&#xf17a</label>
+<section class="c-content-unix" id="c-content-0-unix">
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python -m pip install django-debug-toolbar
+</pre></div>
+</div>
+</section>
+<section class="c-content-win" id="c-content-0-win">
+<div class="highlight"><pre><span></span><span class="gp">...\&gt;</span> py -m pip install django-debug-toolbar
+</pre></div>
+</section>
+</div>
+<p>Third-party packages that integrate with Django need some post-installation
+setup to integrate them with your project. Often you will need to add the
+package’s Django app to your <a class="reference internal" href="../ref/settings.html#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> setting. Some packages
+need other changes, like additions to your URLconf (<code class="docutils literal notranslate"><span class="pre">urls.py</span></code>).</p>
+<p>Django Debug Toolbar requires several setup steps. Follow them in <a class="reference external" href="https://django-debug-toolbar.readthedocs.io/en/latest/installation.html">its
+installation guide</a>.
+The steps are not duplicated in this tutorial, because as a third-party
+package, it may change separately to Django’s schedule.</p>
+<p>Once installed, you should be able to see the DjDT “handle” on the right side
+of the browser window when you refresh the polls application. Click it to open
+the debug toolbar and use the tools in each panel. See the <a class="reference external" href="https://django-debug-toolbar.readthedocs.io/en/latest/panels.html">panels
+documentation page</a> for more
+information on what the panels show.</p>
+</div>
+<div class="section" id="s-getting-help-from-others">
+<span id="getting-help-from-others"></span><h2>Getting help from others<a class="headerlink" href="#getting-help-from-others" title="Permalink to this headline">¶</a></h2>
+<p>At some point you will run into a problem, for example the
+toolbar may not render. When this happens and you’re unable to
+resolve the issue yourself, there are options available to you.</p>
+<ol class="arabic simple">
+<li>If the problem is with a specific package, check if there’s a
+troubleshooting of FAQ in the package’s documentation. For example the
+Django Debug Toolbar has a <a class="reference external" href="https://django-debug-toolbar.readthedocs.io/en/latest/tips.html">Tips section</a> that
+outlines troubleshooting options.</li>
+<li>Search for similar issues on the package’s issue tracker. Django Debug
+Toolbar’s is <a class="reference external" href="https://github.com/jazzband/django-debug-toolbar/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">on GitHub</a>.</li>
+<li>Consult the <a class="reference external" href="https://forum.djangoproject.com/">Django Forum</a>.</li>
+<li>Join the <a class="reference external" href="https://discord.gg/xcRH6mN4fa">Django Discord server</a>.</li>
+<li>Join the #Django IRC channel on <a class="reference external" href="https://libera.chat/">Libera.chat</a>.</li>
+</ol>
+</div>
+<div class="section" id="s-installing-other-third-party-packages">
+<span id="installing-other-third-party-packages"></span><h2>Installing other third-party packages<a class="headerlink" href="#installing-other-third-party-packages" title="Permalink to this headline">¶</a></h2>
+<p>There are many more third-party packages, which you can find using the
+fantastic Django resource, <a class="reference external" href="https://djangopackages.org/">Django Packages</a>.</p>
+<p>It can be difficult to know what third-party packages you should use. This
+depends on your needs and goals. Sometimes it’s fine to use a package that’s
+in its alpha state. Other times, you need to know it’s production ready.
+<a class="reference external" href="https://adamj.eu/tech/2021/11/04/the-well-maintained-test/">Adam Johnson has a blog post</a> that outlines
+a set of characteristics a that qualifies a package as “well maintained”.
+Django Packages shows data for some of these characteristics, such as when the
+package was last updated.</p>
+<p>As Adam points out in his post, when the answer to one of the questions is
+“no”, that’s an opportunity to contribute.</p>
+</div>
+<div class="section" id="s-what-s-next">
+<span id="what-s-next"></span><h2>What’s next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline">¶</a></h2>
+<p>The beginner tutorial ends here. In the meantime, you might want to check out
+some pointers on <a class="reference internal" href="whatsnext.html"><span class="doc">where to go from here</span></a>.</p>
+<p>If you are familiar with Python packaging and interested in learning how to
+turn polls into a “reusable app”, check out <a class="reference internal" href="reusable-apps.html"><span class="doc">Advanced tutorial: How to
+write reusable apps</span></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Writing your first Django app, part 8</a><ul>
+<li><a class="reference internal" href="#installing-django-debug-toolbar">Installing Django Debug Toolbar</a></li>
+<li><a class="reference internal" href="#getting-help-from-others">Getting help from others</a></li>
+<li><a class="reference internal" href="#installing-other-third-party-packages">Installing other third-party packages</a></li>
+<li><a class="reference internal" href="#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="tutorial07.html"
+                          title="previous chapter">Writing your first Django app, part 7</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="reusable-apps.html"
+                          title="next chapter">Advanced tutorial: How to write reusable apps</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/intro/tutorial08.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="tutorial07.html" title="Writing your first Django app, part 7">previous</a>
+     |
+    <a href="index.html" title="Getting started" accesskey="U">up</a>
+   |
+    <a href="reusable-apps.html" title="Advanced tutorial: How to write reusable apps">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

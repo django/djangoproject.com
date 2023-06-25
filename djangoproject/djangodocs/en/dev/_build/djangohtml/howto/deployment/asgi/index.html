@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to deploy with ASGI &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/default.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="How to use Django with Daphne" href="daphne.html" />
+    <link rel="prev" title="How to authenticate against Django’s user database from Apache" href="../wsgi/apache-auth.html" />
+
+
+
+ 
+<script src="../../../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../../../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../../../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../../../index.html">Home</a>  |
+        <a title="Table of contents" href="../../../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../../../genindex.html">Index</a>  |
+        <a title="Module index" href="../../../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="../wsgi/apache-auth.html" title="How to authenticate against Django’s user database from Apache">previous</a>
+     |
+    <a href="../../index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="daphne.html" title="How to use Django with Daphne">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="howto-deployment-asgi-index">
+            
+  <div class="section" id="s-how-to-deploy-with-asgi">
+<span id="how-to-deploy-with-asgi"></span><h1>How to deploy with ASGI<a class="headerlink" href="#how-to-deploy-with-asgi" title="Permalink to this headline">¶</a></h1>
+<p>As well as WSGI, Django also supports deploying on <a class="reference external" href="https://asgi.readthedocs.io/en/latest/">ASGI</a>, the emerging Python
+standard for asynchronous web servers and applications.</p>
+<p>Django’s <a class="reference internal" href="../../../ref/django-admin.html#django-admin-startproject"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">startproject</span></code></a> management command sets up a default ASGI
+configuration for you, which you can tweak as needed for your project, and
+direct any ASGI-compliant application server to use.</p>
+<p>Django includes getting-started documentation for the following ASGI servers:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="daphne.html">How to use Django with Daphne</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hypercorn.html">How to use Django with Hypercorn</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uvicorn.html">How to use Django with Uvicorn</a></li>
+</ul>
+</div>
+<div class="section" id="s-the-application-object">
+<span id="the-application-object"></span><h2>The <code class="docutils literal notranslate"><span class="pre">application</span></code> object<a class="headerlink" href="#the-application-object" title="Permalink to this headline">¶</a></h2>
+<p>Like WSGI, ASGI has you supply an <code class="docutils literal notranslate"><span class="pre">application</span></code> callable which
+the application server uses to communicate with your code. It’s commonly
+provided as an object named <code class="docutils literal notranslate"><span class="pre">application</span></code> in a Python module accessible to
+the server.</p>
+<p>The <a class="reference internal" href="../../../ref/django-admin.html#django-admin-startproject"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">startproject</span></code></a> command creates a file
+<code class="file docutils literal notranslate"><span class="pre">&lt;project_name&gt;/asgi.py</span></code> that contains such an <code class="docutils literal notranslate"><span class="pre">application</span></code> callable.</p>
+<p>It’s not used by the development server (<code class="docutils literal notranslate"><span class="pre">runserver</span></code>), but can be used by
+any ASGI server either in development or in production.</p>
+<p>ASGI servers usually take the path to the application callable as a string;
+for most Django projects, this will look like <code class="docutils literal notranslate"><span class="pre">myproject.asgi:application</span></code>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>While Django’s default ASGI handler will run all your code in a synchronous
+thread, if you choose to run your own async handler you must be aware of
+async-safety.</p>
+<p class="last">Do not call blocking synchronous functions or libraries in any async code.
+Django prevents you from doing this with the parts of Django that are not
+async-safe, but the same may not be true of third-party apps or Python
+libraries.</p>
+</div>
+</div>
+<div class="section" id="s-configuring-the-settings-module">
+<span id="configuring-the-settings-module"></span><h2>Configuring the settings module<a class="headerlink" href="#configuring-the-settings-module" title="Permalink to this headline">¶</a></h2>
+<p>When the ASGI server loads your application, Django needs to import the
+settings module — that’s where your entire application is defined.</p>
+<p>Django uses the <span class="target" id="index-0"></span><a class="reference internal" href="../../../topics/settings.html#envvar-DJANGO_SETTINGS_MODULE"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">DJANGO_SETTINGS_MODULE</span></code></a> environment variable to locate
+the appropriate settings module. It must contain the dotted path to the
+settings module. You can use a different value for development and production;
+it all depends on how you organize your settings.</p>
+<p>If this variable isn’t set, the default <code class="file docutils literal notranslate"><span class="pre">asgi.py</span></code> sets it to
+<code class="docutils literal notranslate"><span class="pre">mysite.settings</span></code>, where <code class="docutils literal notranslate"><span class="pre">mysite</span></code> is the name of your project.</p>
+</div>
+<div class="section" id="s-applying-asgi-middleware">
+<span id="applying-asgi-middleware"></span><h2>Applying ASGI middleware<a class="headerlink" href="#applying-asgi-middleware" title="Permalink to this headline">¶</a></h2>
+<p>To apply ASGI middleware, or to embed Django in another ASGI application, you
+can wrap Django’s <code class="docutils literal notranslate"><span class="pre">application</span></code> object in the <code class="docutils literal notranslate"><span class="pre">asgi.py</span></code> file. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">some_asgi_library</span> <span class="kn">import</span> <span class="n">AmazingMiddleware</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="n">AmazingMiddleware</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">How to deploy with ASGI</a><ul>
+<li><a class="reference internal" href="#the-application-object">The <code class="docutils literal notranslate"><span class="pre">application</span></code> object</a></li>
+<li><a class="reference internal" href="#configuring-the-settings-module">Configuring the settings module</a></li>
+<li><a class="reference internal" href="#applying-asgi-middleware">Applying ASGI middleware</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../wsgi/apache-auth.html"
+                          title="previous chapter">How to authenticate against Django’s user database from Apache</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="daphne.html"
+                          title="next chapter">How to use Django with Daphne</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/howto/deployment/asgi/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="../wsgi/apache-auth.html" title="How to authenticate against Django’s user database from Apache">previous</a>
+     |
+    <a href="../../index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="daphne.html" title="How to use Django with Daphne">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

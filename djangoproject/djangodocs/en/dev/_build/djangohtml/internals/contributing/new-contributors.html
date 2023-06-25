@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advice for new contributors &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Reporting bugs and requesting features" href="bugs-and-features.html" />
+    <link rel="prev" title="Contributing to Django" href="index.html" />
+
+
+
+ 
+<script src="../../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../../index.html">Home</a>  |
+        <a title="Table of contents" href="../../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../../genindex.html">Index</a>  |
+        <a title="Module index" href="../../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="index.html" title="Contributing to Django">previous</a>
+     |
+    <a href="../index.html" title="Django internals" accesskey="U">up</a>
+   |
+    <a href="bugs-and-features.html" title="Reporting bugs and requesting features">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="internals-contributing-new-contributors">
+            
+  <div class="section" id="s-advice-for-new-contributors">
+<span id="advice-for-new-contributors"></span><h1>Advice for new contributors<a class="headerlink" href="#advice-for-new-contributors" title="Permalink to this headline">¶</a></h1>
+<p>New contributor and not sure what to do? Want to help but just don’t know how
+to get started? This is the section for you.</p>
+<div class="admonition-get-up-and-running admonition">
+<p class="first admonition-title">Get up and running!</p>
+<p class="last">If you are new to contributing to Django, the <a class="reference internal" href="../../intro/contributing.html"><span class="doc">Writing your first patch for Django</span></a>
+tutorial will give you an introduction to the tools and the workflow.</p>
+</div>
+<p>This page contains more general advice on ways you can contribute to Django,
+and how to approach that.</p>
+<p>If you are looking for a reference on the details of making code contributions,
+see the <a class="reference internal" href="writing-code/index.html"><span class="doc">Writing code</span></a> documentation.</p>
+<div class="section" id="s-first-steps">
+<span id="first-steps"></span><h2>First steps<a class="headerlink" href="#first-steps" title="Permalink to this headline">¶</a></h2>
+<p>Start with these steps to discover Django’s development process.</p>
+<ul>
+<li><p class="first"><strong>Triage tickets</strong></p>
+<p>If an <a class="reference external" href="https://code.djangoproject.com/query?status=!closed&amp;stage=Unreviewed">unreviewed ticket</a> reports a bug, try and reproduce it. If you
+can reproduce it and it seems valid, make a note that you confirmed the bug
+and accept the ticket. Make sure the ticket is filed under the correct
+component area. Consider writing a patch that adds a test for the bug’s
+behavior, even if you don’t fix the bug itself. See more at
+<a class="reference internal" href="triaging-tickets.html#how-can-i-help-with-triaging"><span class="std std-ref">How can I help with triaging?</span></a></p>
+</li>
+<li><p class="first"><strong>Look for tickets that are accepted and review patches to build familiarity
+with the codebase and the process</strong></p>
+<p>Mark the appropriate flags if a patch needs docs or tests. Look through the
+changes a patch makes, and keep an eye out for syntax that is incompatible
+with older but still supported versions of Python. <a class="reference internal" href="writing-code/unit-tests.html"><span class="doc">Run the tests</span></a> and make sure they pass.
+Where possible and relevant, try them out on a database other than SQLite.
+Leave comments and feedback!</p>
+</li>
+<li><p class="first"><strong>Keep old patches up to date</strong></p>
+<p>Oftentimes the codebase will change between a patch being submitted and the
+time it gets reviewed. Make sure it still applies cleanly and functions as
+expected. Updating a patch is both useful and important! See more on
+<a class="reference internal" href="writing-code/submitting-patches.html"><span class="doc">Submitting patches</span></a>.</p>
+</li>
+<li><p class="first"><strong>Write some documentation</strong></p>
+<p>Django’s documentation is great but it can always be improved. Did you find
+a typo? Do you think that something should be clarified? Go ahead and
+suggest a documentation patch! See also the guide on
+<a class="reference internal" href="writing-documentation.html"><span class="doc">Writing documentation</span></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <a class="reference external" href="https://code.djangoproject.com/wiki/Reports">reports page</a> contains links to many useful Trac queries, including
+several that are useful for triaging tickets and reviewing patches as
+suggested above.</p>
+</div>
+</li>
+<li><p class="first"><strong>Sign the Contributor License Agreement</strong></p>
+<p>The code that you write belongs to you or your employer. If your
+contribution is more than one or two lines of code, you need to sign the
+<a class="reference external" href="https://www.djangoproject.com/foundation/cla/">CLA</a>. See the <a class="reference external" href="https://www.djangoproject.com/foundation/cla/faq/">Contributor License Agreement FAQ</a> for a more thorough
+explanation.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="s-guidelines">
+<span id="guidelines"></span><h2>Guidelines<a class="headerlink" href="#guidelines" title="Permalink to this headline">¶</a></h2>
+<p>As a newcomer on a large project, it’s easy to experience frustration. Here’s
+some advice to make your work on Django more useful and rewarding.</p>
+<ul>
+<li><p class="first"><strong>Pick a subject area that you care about, that you are familiar with, or
+that you want to learn about</strong></p>
+<p>You don’t already have to be an expert on the area you want to work on; you
+become an expert through your ongoing contributions to the code.</p>
+</li>
+<li><p class="first"><strong>Analyze tickets’ context and history</strong></p>
+<p>Trac isn’t an absolute; the context is just as important as the words.
+When reading Trac, you need to take into account who says things, and when
+they were said. Support for an idea two years ago doesn’t necessarily mean
+that the idea will still have support. You also need to pay attention to who
+<em>hasn’t</em> spoken – for example, if an experienced contributor hasn’t been
+recently involved in a discussion, then a ticket may not have the support
+required to get into Django.</p>
+</li>
+<li><p class="first"><strong>Start small</strong></p>
+<p>It’s easier to get feedback on a little issue than on a big one. See the
+<a class="reference external" href="https://code.djangoproject.com/query?status=!closed&amp;easy=1">easy pickings</a>.</p>
+</li>
+<li><p class="first"><strong>If you’re going to engage in a big task, make sure that your idea has
+support first</strong></p>
+<p>This means getting someone else to confirm that a bug is real before you fix
+the issue, and ensuring that there’s consensus on a proposed feature before
+you go implementing it.</p>
+</li>
+<li><p class="first"><strong>Be bold! Leave feedback!</strong></p>
+<p>Sometimes it can be scary to put your opinion out to the world and say “this
+ticket is correct” or “this patch needs work”, but it’s the only way the
+project moves forward. The contributions of the broad Django community
+ultimately have a much greater impact than that of any one person. We can’t
+do it without <strong>you</strong>!</p>
+</li>
+<li><p class="first"><strong>Err on the side of caution when marking things Ready For Check-in</strong></p>
+<p>If you’re really not certain if a ticket is ready, don’t mark it as
+such. Leave a comment instead, letting others know your thoughts.  If you’re
+mostly certain, but not completely certain, you might also try asking on IRC
+to see if someone else can confirm your suspicions.</p>
+</li>
+<li><p class="first"><strong>Wait for feedback, and respond to feedback that you receive</strong></p>
+<p>Focus on one or two tickets, see them through from start to finish, and
+repeat. The shotgun approach of taking on lots of tickets and letting some
+fall by the wayside ends up doing more harm than good.</p>
+</li>
+<li><p class="first"><strong>Be rigorous</strong></p>
+<p>When we say “<span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0008/"><strong>PEP 8</strong></a>, and must have docs and tests”, we mean it. If a patch
+doesn’t have docs and tests, there had better be a good reason. Arguments
+like “I couldn’t find any existing tests of this feature” don’t carry much
+weight–while it may be true, that means you have the extra-important job of
+writing the very first tests for that feature, not that you get a pass from
+writing tests altogether.</p>
+</li>
+<li><p class="first"><strong>Be patient</strong></p>
+<p>It’s not always easy for your ticket or your patch to be reviewed quickly.
+This isn’t personal. There are a lot of tickets and pull requests to get
+through.</p>
+<p>Keeping your patch up to date is important. Review the ticket on Trac to
+ensure that the <em>Needs tests</em>, <em>Needs documentation</em>, and <em>Patch needs
+improvement</em> flags are unchecked once you’ve addressed all review comments.</p>
+<p>Remember that Django has an eight-month release cycle, so there’s plenty of
+time for your patch to be reviewed.</p>
+<p>Finally, a well-timed reminder can help. See <a class="reference internal" href="../../faq/contributing.html#new-contributors-faq"><span class="std std-ref">contributing code FAQ</span></a> for ideas here.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Advice for new contributors</a><ul>
+<li><a class="reference internal" href="#first-steps">First steps</a></li>
+<li><a class="reference internal" href="#guidelines">Guidelines</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Contributing to Django</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="bugs-and-features.html"
+                          title="next chapter">Reporting bugs and requesting features</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/internals/contributing/new-contributors.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="index.html" title="Contributing to Django">previous</a>
+     |
+    <a href="../index.html" title="Django internals" accesskey="U">up</a>
+   |
+    <a href="bugs-and-features.html" title="Reporting bugs and requesting features">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

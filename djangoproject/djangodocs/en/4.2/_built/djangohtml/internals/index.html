@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Django internals &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Contributing to Django" href="contributing/index.html" />
+    <link rel="prev" title="Archive of security issues" href="../releases/security.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="../releases/security.html" title="Archive of security issues">previous</a>
+     |
+    <a title="Django 5.0.dev20230612063128 documentation" href="../index.html" accesskey="U">up</a>
+   |
+    <a href="contributing/index.html" title="Contributing to Django">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="internals-index">
+            
+  <div class="section" id="s-django-internals">
+<span id="django-internals"></span><h1>Django internals<a class="headerlink" href="#django-internals" title="Permalink to this headline">¶</a></h1>
+<p>Documentation for people hacking on Django itself. This is the place to go if
+you’d like to help improve Django or learn about how Django is managed.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing/index.html">Contributing to Django</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing/index.html#work-on-the-django-framework">Work on the Django framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing/index.html#join-the-django-community">Join the Django community ❤️</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mailing-lists.html">Mailing lists and Forum</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mailing-lists.html#django-forum">Django Forum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mailing-lists.html#django-users"><code class="docutils literal notranslate"><span class="pre">django-users</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mailing-lists.html#django-developers"><code class="docutils literal notranslate"><span class="pre">django-developers</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mailing-lists.html#django-announce"><code class="docutils literal notranslate"><span class="pre">django-announce</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mailing-lists.html#django-updates"><code class="docutils literal notranslate"><span class="pre">django-updates</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="organization.html">Organization of the Django Project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="organization.html#principles">Principles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="organization.html#mergers">Mergers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="organization.html#releasers">Releasers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="organization.html#steering-council">Steering council</a></li>
+<li class="toctree-l2"><a class="reference internal" href="organization.html#changing-the-organization">Changing the organization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Django’s security policies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="security.html#reporting-security-issues">Reporting security issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html#supported-versions">Supported versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html#how-django-discloses-security-issues">How Django discloses security issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html#who-receives-advance-notification">Who receives advance notification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html#requesting-notifications">Requesting notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="release-process.html">Django’s release process</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="release-process.html#official-releases">Official releases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-process.html#release-cadence">Release cadence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-process.html#deprecation-policy">Deprecation policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-process.html#supported-versions">Supported versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release-process.html#release-process">Release process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deprecation.html">Django Deprecation Timeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-6-0">6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-5-1">5.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-5-0">5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-4-1">4.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-4-0">4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-3-1">3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-3-0">3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-2-1">2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-2-0">2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-1-10">1.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-1-9">1.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-1-8">1.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-1-7">1.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-1-6">1.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-1-5">1.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-1-4">1.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deprecation.html#deprecation-removed-in-1-3">1.3</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git.html">The Django source code repository</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git.html#high-level-overview">High-level overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git.html#the-main-branch">The main branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git.html#stable-branches">Stable branches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git.html#id1">Tags</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howto-release-django.html">How is Django Formed?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howto-release-django.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto-release-django.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto-release-django.html#pre-release-tasks">Pre-release tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto-release-django.html#preparing-for-release">Preparing for release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto-release-django.html#actually-rolling-the-release">Actually rolling the release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto-release-django.html#making-the-release-s-available-to-the-public">Making the release(s) available to the public</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto-release-django.html#post-release">Post-release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto-release-django.html#new-stable-branch-tasks">New stable branch tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howto-release-django.html#notes-on-setting-the-version-tuple">Notes on setting the VERSION tuple</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../releases/security.html"
+                          title="previous chapter">Archive of security issues</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="contributing/index.html"
+                          title="next chapter">Contributing to Django</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/internals/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="../releases/security.html" title="Archive of security issues">previous</a>
+     |
+    <a title="Django 5.0.dev20230612063128 documentation" href="../index.html" accesskey="U">up</a>
+   |
+    <a href="contributing/index.html" title="Contributing to Django">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

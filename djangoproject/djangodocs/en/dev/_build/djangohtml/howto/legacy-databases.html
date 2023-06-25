@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to integrate Django with a legacy database &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to configure and use logging" href="logging.html" />
+    <link rel="prev" title="How to provide initial data for models" href="initial-data.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="initial-data.html" title="How to provide initial data for models">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="logging.html" title="How to configure and use logging">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="howto-legacy-databases">
+            
+  <div class="section" id="s-how-to-integrate-django-with-a-legacy-database">
+<span id="how-to-integrate-django-with-a-legacy-database"></span><h1>How to integrate Django with a legacy database<a class="headerlink" href="#how-to-integrate-django-with-a-legacy-database" title="Permalink to this headline">¶</a></h1>
+<p>While Django is best suited for developing new applications, it’s quite
+possible to integrate it into legacy databases. Django includes a couple of
+utilities to automate as much of this process as possible.</p>
+<p>This document assumes you know the Django basics, as covered in the
+<a class="reference internal" href="../intro/tutorial01.html"><span class="doc">tutorial</span></a>.</p>
+<p>Once you’ve got Django set up, you’ll follow this general process to integrate
+with an existing database.</p>
+<div class="section" id="s-give-django-your-database-parameters">
+<span id="give-django-your-database-parameters"></span><h2>Give Django your database parameters<a class="headerlink" href="#give-django-your-database-parameters" title="Permalink to this headline">¶</a></h2>
+<p>You’ll need to tell Django what your database connection parameters are, and
+what the name of the database is. Do that by editing the <a class="reference internal" href="../ref/settings.html#std-setting-DATABASES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DATABASES</span></code></a>
+setting and assigning values to the following keys for the <code class="docutils literal notranslate"><span class="pre">'default'</span></code>
+connection:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../ref/settings.html#std-setting-NAME"><code class="xref std std-setting docutils literal notranslate"><span class="pre">NAME</span></code></a></li>
+<li><a class="reference internal" href="../ref/settings.html#std-setting-DATABASE-ENGINE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">ENGINE</span></code></a></li>
+<li><a class="reference internal" href="../ref/settings.html#std-setting-USER"><code class="xref std std-setting docutils literal notranslate"><span class="pre">USER</span></code></a></li>
+<li><a class="reference internal" href="../ref/settings.html#std-setting-PASSWORD"><code class="xref std std-setting docutils literal notranslate"><span class="pre">PASSWORD</span></code></a></li>
+<li><a class="reference internal" href="../ref/settings.html#std-setting-HOST"><code class="xref std std-setting docutils literal notranslate"><span class="pre">HOST</span></code></a></li>
+<li><a class="reference internal" href="../ref/settings.html#std-setting-PORT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">PORT</span></code></a></li>
+</ul>
+</div>
+<div class="section" id="s-auto-generate-the-models">
+<span id="auto-generate-the-models"></span><h2>Auto-generate the models<a class="headerlink" href="#auto-generate-the-models" title="Permalink to this headline">¶</a></h2>
+<p>Django comes with a utility called <a class="reference internal" href="../ref/django-admin.html#django-admin-inspectdb"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">inspectdb</span></code></a> that can create models
+by introspecting an existing database. You can view the output by running this
+command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ python manage.py inspectdb
+</pre></div>
+</div>
+<p>Save this as a file by using standard Unix output redirection:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ python manage.py inspectdb &gt; models.py
+</pre></div>
+</div>
+<p>This feature is meant as a shortcut, not as definitive model generation. See the
+<a class="reference internal" href="../ref/django-admin.html#django-admin-inspectdb"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">documentation</span> <span class="pre">of</span> <span class="pre">inspectdb</span></code></a> for more information.</p>
+<p>Once you’ve cleaned up your models, name the file <code class="docutils literal notranslate"><span class="pre">models.py</span></code> and put it in
+the Python package that holds your app. Then add the app to your
+<a class="reference internal" href="../ref/settings.html#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a> setting.</p>
+<p>By default, <a class="reference internal" href="../ref/django-admin.html#django-admin-inspectdb"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">inspectdb</span></code></a> creates unmanaged models. That is,
+<code class="docutils literal notranslate"><span class="pre">managed</span> <span class="pre">=</span> <span class="pre">False</span></code> in the model’s <code class="docutils literal notranslate"><span class="pre">Meta</span></code> class tells Django not to manage
+each table’s creation, modification, and deletion:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Person</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">first_name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">managed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">db_table</span> <span class="o">=</span> <span class="s2">&quot;CENSUS_PERSONS&quot;</span>
+</pre></div>
+</div>
+<p>If you do want to allow Django to manage the table’s lifecycle, you’ll need to
+change the <a class="reference internal" href="../ref/models/options.html#django.db.models.Options.managed" title="django.db.models.Options.managed"><code class="xref py py-attr docutils literal notranslate"><span class="pre">managed</span></code></a> option above to <code class="docutils literal notranslate"><span class="pre">True</span></code>
+(or remove it because <code class="docutils literal notranslate"><span class="pre">True</span></code> is its default value).</p>
+</div>
+<div class="section" id="s-install-the-core-django-tables">
+<span id="install-the-core-django-tables"></span><h2>Install the core Django tables<a class="headerlink" href="#install-the-core-django-tables" title="Permalink to this headline">¶</a></h2>
+<p>Next, run the <a class="reference internal" href="../ref/django-admin.html#django-admin-migrate"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">migrate</span></code></a> command to install any extra needed database
+records such as admin permissions and content types:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ python manage.py migrate
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-test-and-tweak">
+<span id="test-and-tweak"></span><h2>Test and tweak<a class="headerlink" href="#test-and-tweak" title="Permalink to this headline">¶</a></h2>
+<p>Those are the basic steps – from here you’ll want to tweak the models Django
+generated until they work the way you’d like. Try accessing your data via the
+Django database API, and try editing objects via Django’s admin site, and edit
+the models file accordingly.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">How to integrate Django with a legacy database</a><ul>
+<li><a class="reference internal" href="#give-django-your-database-parameters">Give Django your database parameters</a></li>
+<li><a class="reference internal" href="#auto-generate-the-models">Auto-generate the models</a></li>
+<li><a class="reference internal" href="#install-the-core-django-tables">Install the core Django tables</a></li>
+<li><a class="reference internal" href="#test-and-tweak">Test and tweak</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="initial-data.html"
+                          title="previous chapter">How to provide initial data for models</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="logging.html"
+                          title="next chapter">How to configure and use logging</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/howto/legacy-databases.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="initial-data.html" title="How to provide initial data for models">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="logging.html" title="How to configure and use logging">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

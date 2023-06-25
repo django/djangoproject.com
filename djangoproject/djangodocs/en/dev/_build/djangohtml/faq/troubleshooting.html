@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Troubleshooting &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API Reference" href="../ref/index.html" />
+    <link rel="prev" title="FAQ: Contributing code" href="contributing.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="contributing.html" title="FAQ: Contributing code">previous</a>
+     |
+    <a href="index.html" title="Django FAQ" accesskey="U">up</a>
+   |
+    <a href="../ref/index.html" title="API Reference">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="faq-troubleshooting">
+            
+  <div class="section" id="s-troubleshooting">
+<span id="troubleshooting"></span><h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h1>
+<p>This page contains some advice about errors and problems commonly encountered
+during the development of Django applications.</p>
+<div class="section" id="s-problems-running-django-admin">
+<span id="s-troubleshooting-django-admin"></span><span id="problems-running-django-admin"></span><span id="troubleshooting-django-admin"></span><h2>Problems running <code class="docutils literal notranslate"><span class="pre">django-admin</span></code><a class="headerlink" href="#problems-running-django-admin" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-command-not-found-django-admin">
+<span id="command-not-found-django-admin"></span><h3><code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">not</span> <span class="pre">found:</span> <span class="pre">django-admin</span></code><a class="headerlink" href="#command-not-found-django-admin" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../ref/django-admin.html"><span class="doc">django-admin</span></a> should be on your system path if you
+installed Django via <code class="docutils literal notranslate"><span class="pre">pip</span></code>. If it’s not in your path, ensure you have your
+virtual environment activated and you can try running the equivalent command
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">django</span></code>.</p>
+</div>
+<div class="section" id="s-macos-permissions">
+<span id="macos-permissions"></span><h3>macOS permissions<a class="headerlink" href="#macos-permissions" title="Permalink to this headline">¶</a></h3>
+<p>If you’re using macOS, you may see the message “permission denied” when
+you try to run <code class="docutils literal notranslate"><span class="pre">django-admin</span></code>. This is because, on Unix-based systems like
+macOS, a file must be marked as “executable” before it can be run as a program.
+To do this, open Terminal.app and navigate (using the <code class="docutils literal notranslate"><span class="pre">cd</span></code> command) to the
+directory where <a class="reference internal" href="../ref/django-admin.html"><span class="doc">django-admin</span></a> is installed, then
+run the command <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">django-admin</span></code>.</p>
+</div>
+</div>
+<div class="section" id="s-miscellaneous">
+<span id="miscellaneous"></span><h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="s-i-m-getting-a-unicodedecodeerror-what-am-i-doing-wrong">
+<span id="i-m-getting-a-unicodedecodeerror-what-am-i-doing-wrong"></span><h3>I’m getting a <code class="docutils literal notranslate"><span class="pre">UnicodeDecodeError</span></code>. What am I doing wrong?<a class="headerlink" href="#i-m-getting-a-unicodedecodeerror-what-am-i-doing-wrong" title="Permalink to this headline">¶</a></h3>
+<p>This class of errors happen when a bytestring containing non-ASCII sequences is
+transformed into a Unicode string and the specified encoding is incorrect. The
+output generally looks like this:</p>
+<div class="highlight-pytb notranslate"><div class="highlight"><pre><span></span><span class="x">UnicodeDecodeError: &#39;ascii&#39; codec can&#39;t decode byte 0x?? in position ?:</span>
+<span class="x">ordinal not in range(128)</span>
+</pre></div>
+</div>
+<p>The resolution mostly depends on the context, however here are two common
+pitfalls producing this error:</p>
+<ul class="simple">
+<li>Your system locale may be a default ASCII locale, like the “C” locale on
+UNIX-like systems (can be checked by the <code class="docutils literal notranslate"><span class="pre">locale</span></code> command). If it’s the
+case, please refer to your system documentation to learn how you can change
+this to a UTF-8 locale.</li>
+</ul>
+<p>Related resources:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../ref/unicode.html"><span class="doc">Unicode in Django</span></a></li>
+<li><a class="reference external" href="https://wiki.python.org/moin/UnicodeDecodeError">https://wiki.python.org/moin/UnicodeDecodeError</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Troubleshooting</a><ul>
+<li><a class="reference internal" href="#problems-running-django-admin">Problems running <code class="docutils literal notranslate"><span class="pre">django-admin</span></code></a><ul>
+<li><a class="reference internal" href="#command-not-found-django-admin"><code class="docutils literal notranslate"><span class="pre">command</span> <span class="pre">not</span> <span class="pre">found:</span> <span class="pre">django-admin</span></code></a></li>
+<li><a class="reference internal" href="#macos-permissions">macOS permissions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>
+<li><a class="reference internal" href="#i-m-getting-a-unicodedecodeerror-what-am-i-doing-wrong">I’m getting a <code class="docutils literal notranslate"><span class="pre">UnicodeDecodeError</span></code>. What am I doing wrong?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="contributing.html"
+                          title="previous chapter">FAQ: Contributing code</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../ref/index.html"
+                          title="next chapter">API Reference</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/faq/troubleshooting.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="contributing.html" title="FAQ: Contributing code">previous</a>
+     |
+    <a href="index.html" title="Django FAQ" accesskey="U">up</a>
+   |
+    <a href="../ref/index.html" title="API Reference">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

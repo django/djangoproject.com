@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Django’s security policies &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Django’s release process" href="release-process.html" />
+    <link rel="prev" title="Organization of the Django Project" href="organization.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="organization.html" title="Organization of the Django Project">previous</a>
+     |
+    <a href="index.html" title="Django internals" accesskey="U">up</a>
+   |
+    <a href="release-process.html" title="Django’s release process">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="internals-security">
+            
+  <div class="section" id="s-django-s-security-policies">
+<span id="django-s-security-policies"></span><h1>Django’s security policies<a class="headerlink" href="#django-s-security-policies" title="Permalink to this headline">¶</a></h1>
+<p>Django’s development team is strongly committed to responsible
+reporting and disclosure of security-related issues. As such, we’ve
+adopted and follow a set of policies which conform to that ideal and
+are geared toward allowing us to deliver timely security updates to
+the official distribution of Django, as well as to third-party
+distributions.</p>
+<div class="section" id="s-reporting-security-issues">
+<span id="s-id1"></span><span id="reporting-security-issues"></span><span id="id1"></span><h2>Reporting security issues<a class="headerlink" href="#reporting-security-issues" title="Permalink to this headline">¶</a></h2>
+<p><strong>Short version: please report security issues by emailing
+security&#64;djangoproject.com</strong>.</p>
+<p>Most normal bugs in Django are reported to <a class="reference external" href="https://code.djangoproject.com/query">our public Trac instance</a>, but
+due to the sensitive nature of security issues, we ask that they <strong>not</strong> be
+publicly reported in this fashion.</p>
+<p>Instead, if you believe you’ve found something in Django which has security
+implications, please send a description of the issue via email to
+<code class="docutils literal notranslate"><span class="pre">security&#64;djangoproject.com</span></code>. Mail sent to that address reaches the <a class="reference external" href="https://www.djangoproject.com/foundation/teams/#security-team">security
+team</a>.</p>
+<p>Once you’ve submitted an issue via email, you should receive an acknowledgment
+from a member of the security team within 48 hours, and depending on the
+action to be taken, you may receive further followup emails.</p>
+<div class="admonition-sending-encrypted-reports admonition">
+<p class="first admonition-title">Sending encrypted reports</p>
+<p class="last">If you want to send an encrypted email (<em>optional</em>), the public key ID for
+<code class="docutils literal notranslate"><span class="pre">security&#64;djangoproject.com</span></code> is <code class="docutils literal notranslate"><span class="pre">0xfcb84b8d1d17f80b</span></code>, and this public
+key is available from most commonly-used keyservers.</p>
+</div>
+</div>
+<div class="section" id="s-supported-versions">
+<span id="s-security-support"></span><span id="supported-versions"></span><span id="security-support"></span><h2>Supported versions<a class="headerlink" href="#supported-versions" title="Permalink to this headline">¶</a></h2>
+<p>At any given time, the Django team provides official security support
+for several versions of Django:</p>
+<ul class="simple">
+<li>The <a class="reference external" href="https://github.com/django/django/">main development branch</a>, hosted on GitHub, which will become the
+next major release of Django, receives security support. Security issues that
+only affect the main development branch and not any stable released versions
+are fixed in public without going through the <a class="reference internal" href="#security-disclosure"><span class="std std-ref">disclosure process</span></a>.</li>
+<li>The two most recent Django release series receive security
+support. For example, during the development cycle leading to the
+release of Django 1.5, support will be provided for Django 1.4 and
+Django 1.3. Upon the release of Django 1.5, Django 1.3’s security
+support will end.</li>
+<li><a class="reference internal" href="release-process.html#term-Long-term-support-release"><span class="xref std std-term">Long-term support release</span></a>s will receive security updates for a
+specified period.</li>
+</ul>
+<p>When new releases are issued for security reasons, the accompanying
+notice will include a list of affected versions. This list is
+comprised solely of <em>supported</em> versions of Django: older versions may
+also be affected, but we do not investigate to determine that, and
+will not issue patches or new releases for those versions.</p>
+</div>
+<div class="section" id="s-how-django-discloses-security-issues">
+<span id="s-security-disclosure"></span><span id="how-django-discloses-security-issues"></span><span id="security-disclosure"></span><h2>How Django discloses security issues<a class="headerlink" href="#how-django-discloses-security-issues" title="Permalink to this headline">¶</a></h2>
+<p>Our process for taking a security issue from private discussion to
+public disclosure involves multiple steps.</p>
+<p>Approximately one week before public disclosure, we send two notifications:</p>
+<p>First, we notify <a class="reference internal" href="mailing-lists.html#django-announce-mailing-list"><span class="std std-ref">django-announce</span></a> of the date and approximate time of the
+upcoming security release, as well as the severity of the issues. This is to
+aid organizations that need to ensure they have staff available to handle
+triaging our announcement and upgrade Django as needed. Severity levels are:</p>
+<p><strong>High</strong>:</p>
+<ul class="simple">
+<li>Remote code execution</li>
+<li>SQL injection</li>
+</ul>
+<p><strong>Moderate</strong>:</p>
+<ul class="simple">
+<li>Cross site scripting (XSS)</li>
+<li>Cross site request forgery (CSRF)</li>
+<li>Denial-of-service attacks</li>
+<li>Broken authentication</li>
+</ul>
+<p><strong>Low</strong>:</p>
+<ul class="simple">
+<li>Sensitive data exposure</li>
+<li>Broken session management</li>
+<li>Unvalidated redirects/forwards</li>
+<li>Issues requiring an uncommon configuration option</li>
+</ul>
+<p>Second, we notify a list of <a class="reference internal" href="#security-notifications"><span class="std std-ref">people and organizations</span></a>, primarily composed of operating-system vendors and
+other distributors of Django. This email is signed with the PGP key of someone
+from <a class="reference external" href="https://www.djangoproject.com/foundation/teams/#releasers-team">Django’s release team</a> and consists of:</p>
+<ul class="simple">
+<li>A full description of the issue and the affected versions of Django.</li>
+<li>The steps we will be taking to remedy the issue.</li>
+<li>The patch(es), if any, that will be applied to Django.</li>
+<li>The date on which the Django team will apply these patches, issue
+new releases and publicly disclose the issue.</li>
+</ul>
+<p>On the day of disclosure, we will take the following steps:</p>
+<ol class="arabic simple">
+<li>Apply the relevant patch(es) to Django’s codebase.</li>
+<li>Issue the relevant release(s), by placing new packages on the <a class="reference external" href="https://pypi.org/project/Django/">Python
+Package Index</a> and on the <a class="reference external" href="https://www.djangoproject.com/download/">djangoproject.com website</a>, and tagging the new release(s)
+in Django’s git repository.</li>
+<li>Post a public entry on <a class="reference external" href="https://www.djangoproject.com/weblog/">the official Django development blog</a>,
+describing the issue and its resolution in detail, pointing to the
+relevant patches and new releases, and crediting the reporter of
+the issue (if the reporter wishes to be publicly identified).</li>
+<li>Post a notice to the <a class="reference internal" href="mailing-lists.html#django-announce-mailing-list"><span class="std std-ref">django-announce</span></a> and <a class="reference external" href="mailto:oss-security&#37;&#52;&#48;lists&#46;openwall&#46;com">oss-security<span>&#64;</span>lists<span>&#46;</span>openwall<span>&#46;</span>com</a>
+mailing lists that links to the blog post.</li>
+</ol>
+<p>If a reported issue is believed to be particularly time-sensitive –
+due to a known exploit in the wild, for example – the time between
+advance notification and public disclosure may be shortened
+considerably.</p>
+<p>Additionally, if we have reason to believe that an issue reported to
+us affects other frameworks or tools in the Python/web ecosystem, we
+may privately contact and discuss those issues with the appropriate
+maintainers, and coordinate our own disclosure and resolution with
+theirs.</p>
+<p>The Django team also maintains an <a class="reference internal" href="../releases/security.html"><span class="doc">archive of security issues
+disclosed in Django</span></a>.</p>
+</div>
+<div class="section" id="s-who-receives-advance-notification">
+<span id="s-security-notifications"></span><span id="who-receives-advance-notification"></span><span id="security-notifications"></span><h2>Who receives advance notification<a class="headerlink" href="#who-receives-advance-notification" title="Permalink to this headline">¶</a></h2>
+<p>The full list of people and organizations who receive advance
+notification of security issues is not and will not be made public.</p>
+<p>We also aim to keep this list as small as effectively possible, in
+order to better manage the flow of confidential information prior to
+disclosure. As such, our notification list is <em>not</em> simply a list of
+users of Django, and being a user of Django is not sufficient reason
+to be placed on the notification list.</p>
+<p>In broad terms, recipients of security notifications fall into three
+groups:</p>
+<ol class="arabic simple">
+<li>Operating-system vendors and other distributors of Django who
+provide a suitably-generic (i.e., <em>not</em> an individual’s personal
+email address) contact address for reporting issues with their
+Django package, or for general security reporting. In either case,
+such addresses <strong>must not</strong> forward to public mailing lists or bug
+trackers. Addresses which forward to the private email of an
+individual maintainer or security-response contact are acceptable,
+although private security trackers or security-response groups are
+strongly preferred.</li>
+<li>On a case-by-case basis, individual package maintainers who have
+demonstrated a commitment to responding to and responsibly acting
+on these notifications.</li>
+<li>On a case-by-case basis, other entities who, in the judgment of the
+Django development team, need to be made aware of a pending
+security issue. Typically, membership in this group will consist of
+some of the largest and/or most likely to be severely impacted
+known users or distributors of Django, and will require a
+demonstrated ability to responsibly receive, keep confidential and
+act on these notifications.</li>
+</ol>
+<div class="admonition-security-audit-and-scanning-entities admonition">
+<p class="first admonition-title">Security audit and scanning entities</p>
+<p class="last">As a policy, we do not add these types of entities to the notification
+list.</p>
+</div>
+</div>
+<div class="section" id="s-requesting-notifications">
+<span id="requesting-notifications"></span><h2>Requesting notifications<a class="headerlink" href="#requesting-notifications" title="Permalink to this headline">¶</a></h2>
+<p>If you believe that you, or an organization you are authorized to
+represent, fall into one of the groups listed above, you can ask to be
+added to Django’s notification list by emailing
+<code class="docutils literal notranslate"><span class="pre">security&#64;djangoproject.com</span></code>. Please use the subject line “Security
+notification request”.</p>
+<p>Your request <strong>must</strong> include the following information:</p>
+<ul class="simple">
+<li>Your full, real name and the name of the organization you represent,
+if applicable, as well as your role within that organization.</li>
+<li>A detailed explanation of how you or your organization fit at least
+one set of criteria listed above.</li>
+<li>A detailed explanation of why you are requesting security notifications.
+Again, please keep in mind that this is <em>not</em> simply a list for users of
+Django, and the overwhelming majority of users should subscribe to
+<a class="reference internal" href="mailing-lists.html#django-announce-mailing-list"><span class="std std-ref">django-announce</span></a> to receive advanced notice of when a security release will
+happen, without the details of the issues, rather than request detailed
+notifications.</li>
+<li>The email address you would like to have added to our notification
+list.</li>
+<li>An explanation of who will be receiving/reviewing mail sent to that
+address, as well as information regarding any automated actions that
+will be taken (i.e., filing of a confidential issue in a bug
+tracker).</li>
+<li>For individuals, the ID of a public key associated with your address
+which can be used to verify email received from you and encrypt
+email sent to you, as needed.</li>
+</ul>
+<p>Once submitted, your request will be considered by the Django
+development team; you will receive a reply notifying you of the result
+of your request within 30 days.</p>
+<p>Please also bear in mind that for any individual or organization,
+receiving security notifications is a privilege granted at the sole
+discretion of the Django development team, and that this privilege can
+be revoked at any time, with or without explanation.</p>
+<div class="admonition-provide-all-required-information admonition">
+<p class="first admonition-title">Provide all required information</p>
+<p class="last">A failure to provide the required information in your initial contact
+will count against you when making the decision on whether or not to
+approve your request.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Django’s security policies</a><ul>
+<li><a class="reference internal" href="#reporting-security-issues">Reporting security issues</a></li>
+<li><a class="reference internal" href="#supported-versions">Supported versions</a></li>
+<li><a class="reference internal" href="#how-django-discloses-security-issues">How Django discloses security issues</a></li>
+<li><a class="reference internal" href="#who-receives-advance-notification">Who receives advance notification</a></li>
+<li><a class="reference internal" href="#requesting-notifications">Requesting notifications</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="organization.html"
+                          title="previous chapter">Organization of the Django Project</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="release-process.html"
+                          title="next chapter">Django’s release process</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/internals/security.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="organization.html" title="Organization of the Django Project">previous</a>
+     |
+    <a href="index.html" title="Django internals" accesskey="U">up</a>
+   |
+    <a href="release-process.html" title="Django’s release process">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

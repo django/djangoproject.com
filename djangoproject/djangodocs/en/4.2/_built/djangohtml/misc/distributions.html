@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Third-party distributions of Django &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Glossary" href="../glossary.html" />
+    <link rel="prev" title="Design philosophies" href="design-philosophies.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="design-philosophies.html" title="Design philosophies">previous</a>
+     |
+    <a href="index.html" title="Meta-documentation and miscellany" accesskey="U">up</a>
+   |
+    <a href="../glossary.html" title="Glossary">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="misc-distributions">
+            
+  <div class="section" id="s-third-party-distributions-of-django">
+<span id="third-party-distributions-of-django"></span><h1>Third-party distributions of Django<a class="headerlink" href="#third-party-distributions-of-django" title="Permalink to this headline">¶</a></h1>
+<p>Many third-party distributors are now providing versions of Django integrated
+with their package-management systems. These can make installation and upgrading
+much easier for users of Django since the integration includes the ability to
+automatically install dependencies (like database adapters) that Django
+requires.</p>
+<p>Typically, these packages are based on the latest stable release of Django, so
+if you want to use the development version of Django you’ll need to follow the
+instructions for <a class="reference internal" href="../topics/install.html#installing-development-version"><span class="std std-ref">installing the development version</span></a> from our Git repository.</p>
+<p>If you’re using Linux or a Unix installation, such as OpenSolaris,
+check with your distributor to see if they already package Django. If
+you’re using a Linux distro and don’t know how to find out if a package
+is available, then now is a good time to learn.  The Django Wiki contains
+a list of <a class="reference external" href="https://code.djangoproject.com/wiki/Distributions">Third Party Distributions</a> to help you out.</p>
+<div class="section" id="s-for-distributors">
+<span id="for-distributors"></span><h2>For distributors<a class="headerlink" href="#for-distributors" title="Permalink to this headline">¶</a></h2>
+<p>If you’d like to package Django for distribution, we’d be happy to help out!
+Please join the <a class="reference internal" href="../internals/mailing-lists.html#django-developers-mailing-list"><span class="std std-ref">django-developers</span></a> mailing list and introduce yourself.</p>
+<p>We also encourage all distributors to subscribe to the <a class="reference internal" href="../internals/mailing-lists.html#django-announce-mailing-list"><span class="std std-ref">django-announce</span></a> mailing
+list, which is a (very) low-traffic list for announcing new releases of Django
+and important bugfixes.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Third-party distributions of Django</a><ul>
+<li><a class="reference internal" href="#for-distributors">For distributors</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="design-philosophies.html"
+                          title="previous chapter">Design philosophies</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="../glossary.html"
+                          title="next chapter">Glossary</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/misc/distributions.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="design-philosophies.html" title="Design philosophies">previous</a>
+     |
+    <a href="index.html" title="Meta-documentation and miscellany" accesskey="U">up</a>
+   |
+    <a href="../glossary.html" title="Glossary">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

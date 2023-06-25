@@ -1,0 +1,1121 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Django documentation contents &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/default.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Django documentation" href="index.html" />
+
+
+
+ 
+<script src="templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="index.html">Home</a>  |
+        <a title="Table of contents" href="#">Table of contents</a>  |
+        <a title="Global index" href="genindex.html">Index</a>  |
+        <a title="Module index" href="py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    <a title="Django 5.0.dev20230612063128 documentation" href="index.html" accesskey="U">up</a>
+   |
+    <a href="index.html" title="Django documentation">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="contents">
+            
+  <div class="section" id="s-django-documentation-contents">
+<span id="django-documentation-contents"></span><h1>Django documentation contents<a class="headerlink" href="#django-documentation-contents" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro/overview.html">Django at a glance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/overview.html#design-your-model">Design your model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/overview.html#install-it">Install it</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/overview.html#enjoy-the-free-api">Enjoy the free API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/overview.html#a-dynamic-admin-interface-it-s-not-just-scaffolding-it-s-the-whole-house">A dynamic admin interface: it’s not just scaffolding – it’s the whole house</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/overview.html#design-your-urls">Design your URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/overview.html#write-your-views">Write your views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/overview.html#design-your-templates">Design your templates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/overview.html#this-is-just-the-surface">This is just the surface</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro/install.html">Quick install guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/install.html#install-python">Install Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/install.html#set-up-a-database">Set up a database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/install.html#install-django">Install Django</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/install.html#verifying">Verifying</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/install.html#that-s-it">That’s it!</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro/tutorial01.html">Writing your first Django app, part 1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial01.html#creating-a-project">Creating a project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial01.html#the-development-server">The development server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial01.html#creating-the-polls-app">Creating the Polls app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial01.html#write-your-first-view">Write your first view</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro/tutorial02.html">Writing your first Django app, part 2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial02.html#database-setup">Database setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial02.html#creating-models">Creating models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial02.html#activating-models">Activating models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial02.html#playing-with-the-api">Playing with the API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial02.html#introducing-the-django-admin">Introducing the Django Admin</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro/tutorial03.html">Writing your first Django app, part 3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial03.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial03.html#writing-more-views">Writing more views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial03.html#write-views-that-actually-do-something">Write views that actually do something</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial03.html#raising-a-404-error">Raising a 404 error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial03.html#use-the-template-system">Use the template system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial03.html#removing-hardcoded-urls-in-templates">Removing hardcoded URLs in templates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial03.html#namespacing-url-names">Namespacing URL names</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro/tutorial04.html">Writing your first Django app, part 4</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial04.html#write-a-minimal-form">Write a minimal form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial04.html#use-generic-views-less-code-is-better">Use generic views: Less code is better</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro/tutorial05.html">Writing your first Django app, part 5</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial05.html#introducing-automated-testing">Introducing automated testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial05.html#basic-testing-strategies">Basic testing strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial05.html#writing-our-first-test">Writing our first test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial05.html#test-a-view">Test a view</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial05.html#when-testing-more-is-better">When testing, more is better</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial05.html#further-testing">Further testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial05.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro/tutorial06.html">Writing your first Django app, part 6</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial06.html#customize-your-app-s-look-and-feel">Customize your <em>app’s</em> look and feel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial06.html#adding-a-background-image">Adding a background-image</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro/tutorial07.html">Writing your first Django app, part 7</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial07.html#customize-the-admin-form">Customize the admin form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial07.html#adding-related-objects">Adding related objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial07.html#customize-the-admin-change-list">Customize the admin change list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial07.html#customize-the-admin-look-and-feel">Customize the admin look and feel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial07.html#customize-the-admin-index-page">Customize the admin index page</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro/tutorial08.html">Writing your first Django app, part 8</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial08.html#installing-django-debug-toolbar">Installing Django Debug Toolbar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial08.html#getting-help-from-others">Getting help from others</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial08.html#installing-other-third-party-packages">Installing other third-party packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/tutorial08.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro/reusable-apps.html">Advanced tutorial: How to write reusable apps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/reusable-apps.html#reusability-matters">Reusability matters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/reusable-apps.html#your-project-and-your-reusable-app">Your project and your reusable app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/reusable-apps.html#installing-some-prerequisites">Installing some prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/reusable-apps.html#packaging-your-app">Packaging your app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/reusable-apps.html#using-your-own-package">Using your own package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/reusable-apps.html#publishing-your-app">Publishing your app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/reusable-apps.html#installing-python-packages-with-a-virtual-environment">Installing Python packages with a virtual environment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro/whatsnext.html">What to read next</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/whatsnext.html#finding-documentation">Finding documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/whatsnext.html#how-the-documentation-is-organized">How the documentation is organized</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/whatsnext.html#how-documentation-is-updated">How documentation is updated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/whatsnext.html#where-to-get-it">Where to get it</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/whatsnext.html#differences-between-versions">Differences between versions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="intro/contributing.html">Writing your first patch for Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#code-of-conduct">Code of Conduct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#installing-git">Installing Git</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#getting-a-copy-of-django-s-development-version">Getting a copy of Django’s development version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#running-django-s-test-suite-for-the-first-time">Running Django’s test suite for the first time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#working-on-a-feature">Working on a feature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#creating-a-branch-for-your-patch">Creating a branch for your patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#writing-some-tests-for-your-ticket">Writing some tests for your ticket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#writing-the-code-for-your-ticket">Writing the code for your ticket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#running-django-s-test-suite-for-the-second-time">Running Django’s test suite for the second time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#writing-documentation">Writing Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#previewing-your-changes">Previewing your changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#committing-the-changes-in-the-patch">Committing the changes in the patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#pushing-the-commit-and-making-a-pull-request">Pushing the commit and making a pull request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="intro/contributing.html#next-steps">Next steps</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="topics/index.html">Using Django</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="topics/install.html">How to install Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/install.html#install-python">Install Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/install.html#install-apache-and-mod-wsgi">Install Apache and <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/install.html#get-your-database-running">Get your database running</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/install.html#install-the-django-code">Install the Django code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/db/index.html">Models and databases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/queries.html">Making queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/aggregation.html">Aggregation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/search.html">Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/managers.html">Managers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/sql.html">Performing raw SQL queries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/transactions.html">Database transactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/multi-db.html">Multiple databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/tablespaces.html">Tablespaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/optimization.html">Database access optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/instrumentation.html">Database instrumentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/fixtures.html">Fixtures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/db/examples/index.html">Examples of model relationship API usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/http/index.html">Handling HTTP requests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/http/urls.html">URL dispatcher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/http/views.html">Writing views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/http/decorators.html">View decorators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/http/file-uploads.html">File Uploads</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/http/shortcuts.html">Django shortcut functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/http/generic-views.html">Generic views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/http/middleware.html">Middleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/http/sessions.html">How to use sessions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/forms/index.html">Working with forms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/forms/index.html#html-forms">HTML forms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/forms/index.html#django-s-role-in-forms">Django’s role in forms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/forms/index.html#forms-in-django">Forms in Django</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/forms/index.html#building-a-form">Building a form</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/forms/index.html#more-about-django-form-classes">More about Django <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code> classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/forms/index.html#working-with-form-templates">Working with form templates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/forms/index.html#further-topics">Further topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/templates.html">Templates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/templates.html#the-django-template-language">The Django template language</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/templates.html#support-for-template-engines">Support for template engines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/class-based-views/index.html">Class-based views</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/class-based-views/intro.html">Introduction to class-based views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/class-based-views/generic-display.html">Built-in class-based generic views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/class-based-views/generic-editing.html">Form handling with class-based views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/class-based-views/mixins.html">Using mixins with class-based views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/class-based-views/index.html#basic-examples">Basic examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/class-based-views/index.html#usage-in-your-urlconf">Usage in your URLconf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/class-based-views/index.html#subclassing-generic-views">Subclassing generic views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/class-based-views/index.html#asynchronous-class-based-views">Asynchronous class-based views</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/migrations.html">Migrations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#the-commands">The Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#backend-support">Backend Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#workflow">Workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#transactions">Transactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#dependencies">Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#migration-files">Migration files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#adding-migrations-to-apps">Adding migrations to apps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#reversing-migrations">Reversing migrations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#historical-models">Historical models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#considerations-when-removing-model-fields">Considerations when removing model fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#data-migrations">Data Migrations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#squashing-migrations">Squashing migrations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#serializing-values">Serializing values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/migrations.html#supporting-multiple-django-versions">Supporting multiple Django versions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/files.html">Managing files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/files.html#using-files-in-models">Using files in models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/files.html#the-file-object">The <code class="docutils literal notranslate"><span class="pre">File</span></code> object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/files.html#file-storage">File storage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/testing/index.html">Testing in Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/testing/overview.html">Writing and running tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/testing/tools.html">Testing tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/testing/advanced.html">Advanced testing topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/auth/index.html">User authentication in Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/auth/index.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/auth/index.html#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/auth/index.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/cache.html">Django’s cache framework</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/cache.html#setting-up-the-cache">Setting up the cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/cache.html#the-per-site-cache">The per-site cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/cache.html#the-per-view-cache">The per-view cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/cache.html#template-fragment-caching">Template fragment caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/cache.html#the-low-level-cache-api">The low-level cache API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/cache.html#asynchronous-support">Asynchronous support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/cache.html#downstream-caches">Downstream caches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/cache.html#using-vary-headers">Using <code class="docutils literal notranslate"><span class="pre">Vary</span></code> headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/cache.html#controlling-cache-using-other-headers">Controlling cache: Using other headers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/cache.html#order-of-middleware">Order of <code class="docutils literal notranslate"><span class="pre">MIDDLEWARE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/conditional-view-processing.html">Conditional View Processing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/conditional-view-processing.html#the-condition-decorator">The <code class="docutils literal notranslate"><span class="pre">condition</span></code> decorator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/conditional-view-processing.html#shortcuts-for-only-computing-one-value">Shortcuts for only computing one value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/conditional-view-processing.html#using-the-decorators-with-other-http-methods">Using the decorators with other HTTP methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/conditional-view-processing.html#comparison-with-middleware-conditional-processing">Comparison with middleware conditional processing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/signing.html">Cryptographic signing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/signing.html#protecting-secret-key-and-secret-key-fallbacks">Protecting <code class="docutils literal notranslate"><span class="pre">SECRET_KEY</span></code> and <code class="docutils literal notranslate"><span class="pre">SECRET_KEY_FALLBACKS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/signing.html#using-the-low-level-api">Using the low-level API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/email.html">Sending email</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/email.html#quick-example">Quick example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/email.html#send-mail"><code class="docutils literal notranslate"><span class="pre">send_mail()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/email.html#send-mass-mail"><code class="docutils literal notranslate"><span class="pre">send_mass_mail()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/email.html#mail-admins"><code class="docutils literal notranslate"><span class="pre">mail_admins()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/email.html#mail-managers"><code class="docutils literal notranslate"><span class="pre">mail_managers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/email.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/email.html#preventing-header-injection">Preventing header injection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/email.html#the-emailmessage-class">The <code class="docutils literal notranslate"><span class="pre">EmailMessage</span></code> class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/email.html#email-backends">Email backends</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/email.html#configuring-email-for-development">Configuring email for development</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/i18n/index.html">Internationalization and localization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/i18n/index.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/i18n/index.html#definitions">Definitions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/logging.html">Logging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/logging.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/logging.html#security-implications">Security implications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/logging.html#configuring-logging">Configuring logging</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/pagination.html">Pagination</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/pagination.html#the-paginator-class">The <code class="docutils literal notranslate"><span class="pre">Paginator</span></code> class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/pagination.html#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/pagination.html#paginating-a-listview">Paginating a <code class="docutils literal notranslate"><span class="pre">ListView</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/pagination.html#using-paginator-in-a-view-function">Using <code class="docutils literal notranslate"><span class="pre">Paginator</span></code> in a view function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/security.html">Security in Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/security.html#cross-site-scripting-xss-protection">Cross site scripting (XSS) protection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/security.html#cross-site-request-forgery-csrf-protection">Cross site request forgery (CSRF) protection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/security.html#sql-injection-protection">SQL injection protection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/security.html#clickjacking-protection">Clickjacking protection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/security.html#ssl-https">SSL/HTTPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/security.html#host-header-validation">Host header validation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/security.html#referrer-policy">Referrer policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/security.html#cross-origin-opener-policy">Cross-origin opener policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/security.html#session-security">Session security</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/security.html#user-uploaded-content">User-uploaded content</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/security.html#additional-security-topics">Additional security topics</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/performance.html">Performance and optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/performance.html#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/performance.html#general-approaches">General approaches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/performance.html#caching">Caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/performance.html#understanding-laziness">Understanding laziness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/performance.html#databases">Databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/performance.html#http-performance">HTTP performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/performance.html#template-performance">Template performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/performance.html#using-different-versions-of-available-software">Using different versions of available software</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/serialization.html">Serializing Django objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/serialization.html#serializing-data">Serializing data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/serialization.html#deserializing-data">Deserializing data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/serialization.html#serialization-formats">Serialization formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/serialization.html#natural-keys">Natural keys</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/settings.html">Django settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/settings.html#the-basics">The basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/settings.html#designating-the-settings">Designating the settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/settings.html#default-settings">Default settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/settings.html#using-settings-in-python-code">Using settings in Python code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/settings.html#altering-settings-at-runtime">Altering settings at runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/settings.html#security">Security</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/settings.html#available-settings">Available settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/settings.html#creating-your-own-settings">Creating your own settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/settings.html#using-settings-without-setting-django-settings-module">Using settings without setting <code class="xref std std-envvar docutils literal notranslate"><span class="pre">DJANGO_SETTINGS_MODULE</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/signals.html">Signals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/signals.html#listening-to-signals">Listening to signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/signals.html#defining-and-sending-signals">Defining and sending signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/signals.html#disconnecting-signals">Disconnecting signals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/checks.html">System check framework</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/checks.html#writing-your-own-checks">Writing your own checks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/external-packages.html">External packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/external-packages.html#localflavor">Localflavor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/external-packages.html#comments">Comments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/external-packages.html#formtools">Formtools</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topics/async.html">Asynchronous support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="topics/async.html#async-views">Async views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/async.html#async-safety">Async safety</a></li>
+<li class="toctree-l3"><a class="reference internal" href="topics/async.html#async-adapter-functions">Async adapter functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howto/index.html">“How-to” guides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howto/auth-remote-user.html">How to authenticate using <code class="docutils literal notranslate"><span class="pre">REMOTE_USER</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/auth-remote-user.html#configuration">Configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/auth-remote-user.html#using-remote-user-on-login-pages-only">Using <code class="docutils literal notranslate"><span class="pre">REMOTE_USER</span></code> on login pages only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/csrf.html">How to use Django’s CSRF protection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/csrf.html#using-csrf-protection-with-ajax">Using CSRF protection with AJAX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/csrf.html#using-csrf-protection-in-jinja2-templates">Using CSRF protection in Jinja2 templates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/csrf.html#using-the-decorator-method">Using the decorator method</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/csrf.html#handling-rejected-requests">Handling rejected requests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/csrf.html#using-csrf-protection-with-caching">Using CSRF protection with caching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/csrf.html#testing-and-csrf-protection">Testing and CSRF protection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/csrf.html#edge-cases">Edge cases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/csrf.html#csrf-protection-in-reusable-applications">CSRF protection in reusable applications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/custom-management-commands.html">How to create custom <code class="docutils literal notranslate"><span class="pre">django-admin</span></code> commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-management-commands.html#accepting-optional-arguments">Accepting optional arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-management-commands.html#management-commands-and-locales">Management commands and locales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-management-commands.html#testing">Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-management-commands.html#overriding-commands">Overriding commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-management-commands.html#command-objects">Command objects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/custom-model-fields.html">How to create custom model fields</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-model-fields.html#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-model-fields.html#background-theory">Background theory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-model-fields.html#writing-a-field-subclass">Writing a field subclass</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-model-fields.html#writing-a-filefield-subclass">Writing a <code class="docutils literal notranslate"><span class="pre">FileField</span></code> subclass</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/custom-lookups.html">How to write custom lookups</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-lookups.html#a-lookup-example">A lookup example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-lookups.html#a-transformer-example">A transformer example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-lookups.html#writing-an-efficient-abs-lt-lookup">Writing an efficient <code class="docutils literal notranslate"><span class="pre">abs__lt</span></code> lookup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-lookups.html#a-bilateral-transformer-example">A bilateral transformer example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-lookups.html#writing-alternative-implementations-for-existing-lookups">Writing alternative implementations for existing lookups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-lookups.html#how-django-determines-the-lookups-and-transforms-which-are-used">How Django determines the lookups and transforms which are used</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/custom-template-backend.html">How to implement a custom template backend</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-template-backend.html#custom-backends">Custom backends</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-template-backend.html#debug-integration-for-custom-engines">Debug integration for custom engines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/custom-template-tags.html">How to create custom template tags and filters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-template-tags.html#code-layout">Code layout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-template-tags.html#writing-custom-template-filters">Writing custom template filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-template-tags.html#writing-custom-template-tags">Writing custom template tags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/custom-file-storage.html">How to write a custom storage class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/custom-file-storage.html#use-your-custom-storage-engine">Use your custom storage engine</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/deployment/index.html">How to deploy Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/deployment/wsgi/index.html">How to deploy with WSGI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/deployment/asgi/index.html">How to deploy with ASGI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/deployment/checklist.html">Deployment checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/upgrade-version.html">How to upgrade Django to a newer version</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/upgrade-version.html#required-reading">Required Reading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/upgrade-version.html#dependencies">Dependencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/upgrade-version.html#resolving-deprecation-warnings">Resolving deprecation warnings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/upgrade-version.html#installation">Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/upgrade-version.html#testing">Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/upgrade-version.html#deployment">Deployment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/error-reporting.html">How to manage error reporting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/error-reporting.html#email-reports">Email reports</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/error-reporting.html#filtering-error-reports">Filtering error reports</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/initial-data.html">How to provide initial data for models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/initial-data.html#provide-initial-data-with-migrations">Provide initial data with migrations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/initial-data.html#provide-data-with-fixtures">Provide data with fixtures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/legacy-databases.html">How to integrate Django with a legacy database</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/legacy-databases.html#give-django-your-database-parameters">Give Django your database parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/legacy-databases.html#auto-generate-the-models">Auto-generate the models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/legacy-databases.html#install-the-core-django-tables">Install the core Django tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/legacy-databases.html#test-and-tweak">Test and tweak</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/logging.html">How to configure and use logging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/logging.html#make-a-basic-logging-call">Make a basic logging call</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/logging.html#customize-logging-configuration">Customize logging configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/outputting-csv.html">How to create CSV output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/outputting-csv.html#using-the-python-csv-library">Using the Python CSV library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/outputting-csv.html#using-the-template-system">Using the template system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/outputting-csv.html#other-text-based-formats">Other text-based formats</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/outputting-pdf.html">How to create PDF files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/outputting-pdf.html#install-reportlab">Install ReportLab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/outputting-pdf.html#write-your-view">Write your view</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/outputting-pdf.html#other-formats">Other formats</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/overriding-templates.html">How to override templates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/overriding-templates.html#overriding-from-the-project-s-templates-directory">Overriding from the project’s templates directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/overriding-templates.html#overriding-from-an-app-s-template-directory">Overriding from an app’s template directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/overriding-templates.html#extending-an-overridden-template">Extending an overridden template</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/static-files/index.html">How to manage static files (e.g. images, JavaScript, CSS)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/static-files/index.html#configuring-static-files">Configuring static files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/static-files/index.html#serving-static-files-during-development">Serving static files during development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/static-files/index.html#serving-files-uploaded-by-a-user-during-development">Serving files uploaded by a user during development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/static-files/index.html#testing">Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/static-files/index.html#deployment">Deployment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/static-files/index.html#learn-more">Learn more</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/static-files/deployment.html">How to deploy static files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/static-files/deployment.html#serving-static-files-in-production">Serving static files in production</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/static-files/deployment.html#learn-more">Learn more</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/windows.html">How to install Django on Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/windows.html#install-python">Install Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/windows.html#about-pip">About <code class="docutils literal notranslate"><span class="pre">pip</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/windows.html#setting-up-a-virtual-environment">Setting up a virtual environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/windows.html#install-django">Install Django</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/windows.html#colored-terminal-output">Colored terminal output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/windows.html#common-pitfalls">Common pitfalls</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howto/writing-migrations.html">How to create database migrations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howto/writing-migrations.html#data-migrations-and-multiple-databases">Data migrations and multiple databases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/writing-migrations.html#migrations-that-add-unique-fields">Migrations that add unique fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/writing-migrations.html#controlling-the-order-of-migrations">Controlling the order of migrations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/writing-migrations.html#migrating-data-between-third-party-apps">Migrating data between third-party apps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/writing-migrations.html#changing-a-manytomanyfield-to-use-a-through-model">Changing a <code class="docutils literal notranslate"><span class="pre">ManyToManyField</span></code> to use a <code class="docutils literal notranslate"><span class="pre">through</span></code> model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="howto/writing-migrations.html#changing-an-unmanaged-model-to-managed">Changing an unmanaged model to managed</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq/index.html">Django FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="faq/general.html">FAQ: General</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#why-does-this-project-exist">Why does this project exist?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#what-does-django-mean-and-how-do-you-pronounce-it">What does “Django” mean, and how do you pronounce it?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#is-django-stable">Is Django stable?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#does-django-scale">Does Django scale?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#who-s-behind-this">Who’s behind this?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#how-is-django-licensed">How is Django licensed?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#why-does-django-include-python-s-license-file">Why does Django include Python’s license file?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#which-sites-use-django">Which sites use Django?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names">Django appears to be a MVC framework, but you call the Controller the “view”, and the View the “template”. How come you don’t use the standard names?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#framework-x-does-feature-y-why-doesn-t-django">&lt;Framework X&gt; does &lt;feature Y&gt; – why doesn’t Django?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#why-did-you-write-all-of-django-from-scratch-instead-of-using-other-python-libraries">Why did you write all of Django from scratch, instead of using other Python libraries?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#is-django-a-content-management-system-cms">Is Django a content-management-system (CMS)?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#how-can-i-download-the-django-documentation-to-read-it-offline">How can I download the Django documentation to read it offline?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/general.html#how-do-i-cite-django">How do I cite Django?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq/install.html">FAQ: Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq/install.html#how-do-i-get-started">How do I get started?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/install.html#what-are-django-s-prerequisites">What are Django’s prerequisites?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/install.html#what-python-version-can-i-use-with-django">What Python version can I use with Django?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/install.html#what-python-version-should-i-use-with-django">What Python version should I use with Django?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/install.html#should-i-use-the-stable-version-or-development-version">Should I use the stable version or development version?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq/usage.html">FAQ: Using Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq/usage.html#why-do-i-get-an-error-about-importing-django-settings-module">Why do I get an error about importing <code class="xref std std-envvar docutils literal notranslate"><span class="pre">DJANGO_SETTINGS_MODULE</span></code>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/usage.html#i-can-t-stand-your-template-language-do-i-have-to-use-it">I can’t stand your template language. Do I have to use it?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/usage.html#do-i-have-to-use-your-model-database-layer">Do I have to use your model/database layer?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/usage.html#how-do-i-use-image-and-file-fields">How do I use image and file fields?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/usage.html#how-do-i-make-a-variable-available-to-all-my-templates">How do I make a variable available to all my templates?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq/help.html">FAQ: Getting Help</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq/help.html#how-do-i-do-x-why-doesn-t-y-work-where-can-i-go-to-get-help">How do I do X? Why doesn’t Y work? Where can I go to get help?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/help.html#why-hasn-t-my-message-appeared-on-django-users">Why hasn’t my message appeared on <em>django-users</em>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/help.html#nobody-answered-my-question-what-should-i-do">Nobody answered my question! What should I do?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/help.html#i-think-i-ve-found-a-bug-what-should-i-do">I think I’ve found a bug! What should I do?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/help.html#i-think-i-ve-found-a-security-problem-what-should-i-do">I think I’ve found a security problem! What should I do?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq/models.html">FAQ: Databases and models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq/models.html#how-can-i-see-the-raw-sql-queries-django-is-running">How can I see the raw SQL queries Django is running?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/models.html#can-i-use-django-with-a-preexisting-database">Can I use Django with a preexisting database?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/models.html#if-i-make-changes-to-a-model-how-do-i-update-the-database">If I make changes to a model, how do I update the database?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/models.html#do-django-models-support-multiple-column-primary-keys">Do Django models support multiple-column primary keys?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/models.html#does-django-support-nosql-databases">Does Django support NoSQL databases?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/models.html#how-do-i-add-database-specific-options-to-my-create-table-statements-such-as-specifying-myisam-as-the-table-type">How do I add database-specific options to my CREATE TABLE statements, such as specifying MyISAM as the table type?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq/admin.html">FAQ: The admin</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq/admin.html#i-can-t-log-in-when-i-enter-a-valid-username-and-password-it-just-brings-up-the-login-page-again-with-no-error-messages">I can’t log in. When I enter a valid username and password, it just brings up the login page again, with no error messages.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/admin.html#i-can-t-log-in-when-i-enter-a-valid-username-and-password-it-brings-up-the-login-page-again-with-a-please-enter-a-correct-username-and-password-error">I can’t log in. When I enter a valid username and password, it brings up the login page again, with a “Please enter a correct username and password” error.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/admin.html#how-do-i-automatically-set-a-field-s-value-to-the-user-who-last-edited-the-object-in-the-admin">How do I automatically set a field’s value to the user who last edited the object in the admin?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/admin.html#how-do-i-limit-admin-access-so-that-objects-can-only-be-edited-by-the-users-who-created-them">How do I limit admin access so that objects can only be edited by the users who created them?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/admin.html#my-admin-site-css-and-images-showed-up-fine-using-the-development-server-but-they-re-not-displaying-when-using-mod-wsgi">My admin-site CSS and images showed up fine using the development server, but they’re not displaying when using mod_wsgi.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/admin.html#my-list-filter-contains-a-manytomanyfield-but-the-filter-doesn-t-display">My “list_filter” contains a ManyToManyField, but the filter doesn’t display.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/admin.html#some-objects-aren-t-appearing-in-the-admin">Some objects aren’t appearing in the admin.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/admin.html#how-can-i-customize-the-functionality-of-the-admin-interface">How can I customize the functionality of the admin interface?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/admin.html#the-dynamically-generated-admin-site-is-ugly-how-can-i-change-it">The dynamically-generated admin site is ugly! How can I change it?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/admin.html#what-browsers-are-supported-for-using-the-admin">What browsers are supported for using the admin?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq/contributing.html">FAQ: Contributing code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq/contributing.html#how-can-i-get-started-contributing-code-to-django">How can I get started contributing code to Django?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/contributing.html#i-submitted-a-bug-fix-in-the-ticket-system-several-weeks-ago-why-are-you-ignoring-my-patch">I submitted a bug fix in the ticket system several weeks ago. Why are you ignoring my patch?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/contributing.html#when-and-how-might-i-remind-the-team-of-a-patch-i-care-about">When and how might I remind the team of a patch I care about?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/contributing.html#but-i-ve-reminded-you-several-times-and-you-keep-ignoring-my-patch">But I’ve reminded you several times and you keep ignoring my patch!</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/contributing.html#i-m-sure-my-ticket-is-absolutely-100-perfect-can-i-mark-it-as-ready-for-checkin-myself">I’m sure my ticket is absolutely 100% perfect, can I mark it as “Ready For Checkin” myself?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="faq/troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="faq/troubleshooting.html#problems-running-django-admin">Problems running <code class="docutils literal notranslate"><span class="pre">django-admin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="faq/troubleshooting.html#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ref/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ref/applications.html">Applications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/applications.html#projects-and-applications">Projects and applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/applications.html#configuring-applications">Configuring applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/applications.html#application-configuration">Application configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/applications.html#application-registry">Application registry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/applications.html#initialization-process">Initialization process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/checks.html">System check framework</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/checks.html#api-reference">API reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/checks.html#builtin-tags">Builtin tags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/checks.html#core-system-checks">Core system checks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/checks.html#contrib-app-checks"><code class="docutils literal notranslate"><span class="pre">contrib</span></code> app checks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/class-based-views/index.html">Built-in class-based views API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/class-based-views/base.html">Base views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/class-based-views/generic-display.html">Generic display views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/class-based-views/generic-editing.html">Generic editing views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/class-based-views/generic-date-based.html">Generic date views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/class-based-views/mixins.html">Class-based views mixins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/class-based-views/flattened-index.html">Class-based generic views - flattened index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/class-based-views/index.html#specification">Specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/class-based-views/index.html#base-vs-generic-views">Base vs Generic views</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/clickjacking.html">Clickjacking Protection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/clickjacking.html#an-example-of-clickjacking">An example of clickjacking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/clickjacking.html#preventing-clickjacking">Preventing clickjacking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/clickjacking.html#how-to-use-it">How to use it</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/clickjacking.html#limitations">Limitations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/contrib/index.html"><code class="docutils literal notranslate"><span class="pre">contrib</span></code> packages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/admin/index.html">The Django admin site</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/auth.html"><code class="docutils literal notranslate"><span class="pre">django.contrib.auth</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/contenttypes.html">The contenttypes framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/flatpages.html">The flatpages app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/gis/index.html">GeoDjango</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/humanize.html"><code class="docutils literal notranslate"><span class="pre">django.contrib.humanize</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/messages.html">The messages framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/postgres/index.html"><code class="docutils literal notranslate"><span class="pre">django.contrib.postgres</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/redirects.html">The redirects app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/sitemaps.html">The sitemap framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/sites.html">The “sites” framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/staticfiles.html">The <code class="docutils literal notranslate"><span class="pre">staticfiles</span></code> app</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/syndication.html">The syndication feed framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#admin"><code class="docutils literal notranslate"><span class="pre">admin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#auth"><code class="docutils literal notranslate"><span class="pre">auth</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#contenttypes"><code class="docutils literal notranslate"><span class="pre">contenttypes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#flatpages"><code class="docutils literal notranslate"><span class="pre">flatpages</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#gis"><code class="docutils literal notranslate"><span class="pre">gis</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#humanize"><code class="docutils literal notranslate"><span class="pre">humanize</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#messages"><code class="docutils literal notranslate"><span class="pre">messages</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#postgres"><code class="docutils literal notranslate"><span class="pre">postgres</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#redirects"><code class="docutils literal notranslate"><span class="pre">redirects</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#sessions"><code class="docutils literal notranslate"><span class="pre">sessions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#sites"><code class="docutils literal notranslate"><span class="pre">sites</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#sitemaps"><code class="docutils literal notranslate"><span class="pre">sitemaps</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#syndication"><code class="docutils literal notranslate"><span class="pre">syndication</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/contrib/index.html#other-add-ons">Other add-ons</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/csrf.html">Cross Site Request Forgery protection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/csrf.html#how-it-works">How it works</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/csrf.html#limitations">Limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/csrf.html#module-django.views.decorators.csrf">Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/csrf.html#settings">Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/csrf.html#frequently-asked-questions">Frequently Asked Questions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/databases.html">Databases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/databases.html#general-notes">General notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/databases.html#postgresql-notes">PostgreSQL notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/databases.html#mariadb-notes">MariaDB notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/databases.html#mysql-notes">MySQL notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/databases.html#sqlite-notes">SQLite notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/databases.html#oracle-notes">Oracle notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/databases.html#subclassing-the-built-in-database-backends">Subclassing the built-in database backends</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/databases.html#using-a-3rd-party-database-backend">Using a 3rd-party database backend</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/django-admin.html"><code class="docutils literal notranslate"><span class="pre">django-admin</span></code> and <code class="docutils literal notranslate"><span class="pre">manage.py</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/django-admin.html#usage">Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/django-admin.html#available-commands">Available commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/django-admin.html#commands-provided-by-applications">Commands provided by applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/django-admin.html#default-options">Default options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/django-admin.html#extra-niceties">Extra niceties</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/django-admin.html#running-management-commands-from-your-code">Running management commands from your code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/django-admin.html#output-redirection">Output redirection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/exceptions.html">Django Exceptions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/exceptions.html#module-django.core.exceptions">Django Core Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/exceptions.html#url-resolver-exceptions">URL Resolver exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/exceptions.html#database-exceptions">Database Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/exceptions.html#http-exceptions">HTTP Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/exceptions.html#sessions-exceptions">Sessions Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/exceptions.html#transaction-exceptions">Transaction Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/exceptions.html#testing-framework-exceptions">Testing Framework Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/exceptions.html#python-exceptions">Python Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/files/index.html">File handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/files/file.html">The <code class="docutils literal notranslate"><span class="pre">File</span></code> object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/files/storage.html">File storage API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/files/uploads.html">Uploaded Files and Upload Handlers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/forms/index.html">Forms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/forms/api.html">The Forms API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/forms/fields.html">Form fields</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/forms/models.html">Model Form Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/forms/formsets.html">Formset Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/forms/renderers.html">The form rendering API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/forms/widgets.html">Widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/forms/validation.html">Form and field validation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/logging.html">Logging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/logging.html#django-s-default-logging-configuration">Django’s default logging configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/logging.html#django-logging-extensions">Django logging extensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/middleware.html">Middleware</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/middleware.html#available-middleware">Available middleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/middleware.html#middleware-ordering">Middleware ordering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/migration-operations.html">Migration Operations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/migration-operations.html#schema-operations">Schema Operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/migration-operations.html#special-operations">Special Operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/migration-operations.html#writing-your-own">Writing your own</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/models/index.html">Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/fields.html">Model field reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/fields.html#field-attribute-reference">Field attribute reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/indexes.html">Model index reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/constraints.html">Constraints reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/meta.html">Model <code class="docutils literal notranslate"><span class="pre">_meta</span></code> API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/relations.html">Related objects reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/class.html">Model class reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/options.html">Model <code class="docutils literal notranslate"><span class="pre">Meta</span></code> options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/instances.html">Model instance reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/querysets.html"><code class="docutils literal notranslate"><span class="pre">QuerySet</span></code> API reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/lookups.html">Lookup API reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/expressions.html">Query Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/conditional-expressions.html">Conditional Expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/models/database-functions.html">Database Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/paginator.html">Paginator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/paginator.html#paginator-class"><code class="docutils literal notranslate"><span class="pre">Paginator</span></code> class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/paginator.html#page-class"><code class="docutils literal notranslate"><span class="pre">Page</span></code> class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/paginator.html#exceptions">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/request-response.html">Request and response objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/request-response.html#quick-overview">Quick overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/request-response.html#httprequest-objects"><code class="docutils literal notranslate"><span class="pre">HttpRequest</span></code> objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/request-response.html#querydict-objects"><code class="docutils literal notranslate"><span class="pre">QueryDict</span></code> objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/request-response.html#httpresponse-objects"><code class="docutils literal notranslate"><span class="pre">HttpResponse</span></code> objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/request-response.html#jsonresponse-objects"><code class="docutils literal notranslate"><span class="pre">JsonResponse</span></code> objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/request-response.html#streaminghttpresponse-objects"><code class="docutils literal notranslate"><span class="pre">StreamingHttpResponse</span></code> objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/request-response.html#fileresponse-objects"><code class="docutils literal notranslate"><span class="pre">FileResponse</span></code> objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/request-response.html#httpresponsebase-class"><code class="docutils literal notranslate"><span class="pre">HttpResponseBase</span></code> class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/schema-editor.html"><code class="docutils literal notranslate"><span class="pre">SchemaEditor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/schema-editor.html#methods">Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/schema-editor.html#attributes">Attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/settings.html">Settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/settings.html#core-settings">Core Settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/settings.html#auth">Auth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/settings.html#messages">Messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/settings.html#sessions">Sessions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/settings.html#sites">Sites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/settings.html#static-files">Static Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/settings.html#core-settings-topical-index">Core Settings Topical Index</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/signals.html">Signals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/signals.html#module-django.db.models.signals">Model signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/signals.html#management-signals">Management signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/signals.html#module-django.core.signals">Request/response signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/signals.html#module-django.test.signals">Test signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/signals.html#module-django.db.backends">Database Wrappers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/templates/index.html">Templates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/templates/language.html">The Django template language</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/templates/builtins.html">Built-in template tags and filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/templates/api.html">The Django template language: for Python programmers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/template-response.html"><code class="docutils literal notranslate"><span class="pre">TemplateResponse</span></code> and <code class="docutils literal notranslate"><span class="pre">SimpleTemplateResponse</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/template-response.html#simpletemplateresponse-objects"><code class="docutils literal notranslate"><span class="pre">SimpleTemplateResponse</span></code> objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/template-response.html#templateresponse-objects"><code class="docutils literal notranslate"><span class="pre">TemplateResponse</span></code> objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/template-response.html#the-rendering-process">The rendering process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/template-response.html#using-templateresponse-and-simpletemplateresponse">Using <code class="docutils literal notranslate"><span class="pre">TemplateResponse</span></code> and <code class="docutils literal notranslate"><span class="pre">SimpleTemplateResponse</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/unicode.html">Unicode data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/unicode.html#creating-the-database">Creating the database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/unicode.html#general-string-handling">General string handling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/unicode.html#models">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/unicode.html#templates">Templates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/unicode.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/unicode.html#form-submission">Form submission</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/urlresolvers.html"><code class="docutils literal notranslate"><span class="pre">django.urls</span></code> utility functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/urlresolvers.html#reverse"><code class="docutils literal notranslate"><span class="pre">reverse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/urlresolvers.html#reverse-lazy"><code class="docutils literal notranslate"><span class="pre">reverse_lazy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/urlresolvers.html#resolve"><code class="docutils literal notranslate"><span class="pre">resolve()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/urlresolvers.html#get-script-prefix"><code class="docutils literal notranslate"><span class="pre">get_script_prefix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/urls.html"><code class="docutils literal notranslate"><span class="pre">django.urls</span></code> functions for use in URLconfs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/urls.html#path"><code class="docutils literal notranslate"><span class="pre">path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/urls.html#re-path"><code class="docutils literal notranslate"><span class="pre">re_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/urls.html#include"><code class="docutils literal notranslate"><span class="pre">include()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/urls.html#register-converter"><code class="docutils literal notranslate"><span class="pre">register_converter()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/urls.html#module-django.conf.urls"><code class="docutils literal notranslate"><span class="pre">django.conf.urls</span></code> functions for use in URLconfs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/urls.html#static"><code class="docutils literal notranslate"><span class="pre">static()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/urls.html#handler400"><code class="docutils literal notranslate"><span class="pre">handler400</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/urls.html#handler403"><code class="docutils literal notranslate"><span class="pre">handler403</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/urls.html#handler404"><code class="docutils literal notranslate"><span class="pre">handler404</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/urls.html#handler500"><code class="docutils literal notranslate"><span class="pre">handler500</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/utils.html">Django Utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.cache"><code class="docutils literal notranslate"><span class="pre">django.utils.cache</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.dateparse"><code class="docutils literal notranslate"><span class="pre">django.utils.dateparse</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.decorators"><code class="docutils literal notranslate"><span class="pre">django.utils.decorators</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.encoding"><code class="docutils literal notranslate"><span class="pre">django.utils.encoding</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.feedgenerator"><code class="docutils literal notranslate"><span class="pre">django.utils.feedgenerator</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.functional"><code class="docutils literal notranslate"><span class="pre">django.utils.functional</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.html"><code class="docutils literal notranslate"><span class="pre">django.utils.html</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.http"><code class="docutils literal notranslate"><span class="pre">django.utils.http</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.module_loading"><code class="docutils literal notranslate"><span class="pre">django.utils.module_loading</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.safestring"><code class="docutils literal notranslate"><span class="pre">django.utils.safestring</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.text"><code class="docutils literal notranslate"><span class="pre">django.utils.text</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.timezone"><code class="docutils literal notranslate"><span class="pre">django.utils.timezone</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/utils.html#module-django.utils.translation"><code class="docutils literal notranslate"><span class="pre">django.utils.translation</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/validators.html">Validators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/validators.html#writing-validators">Writing validators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/validators.html#how-validators-are-run">How validators are run</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/validators.html#built-in-validators">Built-in validators</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ref/views.html">Built-in Views</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ref/views.html#serving-files-in-development">Serving files in development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ref/views.html#error-views">Error views</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="misc/index.html">Meta-documentation and miscellany</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="misc/api-stability.html">API stability</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="misc/api-stability.html#what-stable-means">What “stable” means</a></li>
+<li class="toctree-l3"><a class="reference internal" href="misc/api-stability.html#stable-apis">Stable APIs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="misc/api-stability.html#exceptions">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="misc/design-philosophies.html">Design philosophies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="misc/design-philosophies.html#overall">Overall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="misc/design-philosophies.html#models">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="misc/design-philosophies.html#database-api">Database API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="misc/design-philosophies.html#url-design">URL design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="misc/design-philosophies.html#template-system">Template system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="misc/design-philosophies.html#views">Views</a></li>
+<li class="toctree-l3"><a class="reference internal" href="misc/design-philosophies.html#cache-framework">Cache Framework</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="misc/distributions.html">Third-party distributions of Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="misc/distributions.html#for-distributors">For distributors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases/index.html">Release notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="releases/index.html#final-releases">Final releases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#release">5.0 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id1">4.2 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id2">4.1 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id3">4.0 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id4">3.2 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id5">3.1 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id6">3.0 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id7">2.2 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id8">2.1 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id9">2.0 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id10">1.11 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id11">1.10 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id12">1.9 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id13">1.8 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id14">1.7 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id15">1.6 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id16">1.5 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id17">1.4 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id18">1.3 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id19">1.2 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id20">1.1 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#id21">1.0 release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="releases/index.html#pre-1-0-releases">Pre-1.0 releases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="releases/index.html#security-releases">Security releases</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="internals/index.html">Django internals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="internals/contributing/index.html">Contributing to Django</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="internals/contributing/index.html#work-on-the-django-framework">Work on the Django framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/contributing/index.html#join-the-django-community">Join the Django community ❤️</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internals/mailing-lists.html">Mailing lists and Forum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="internals/mailing-lists.html#django-forum">Django Forum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/mailing-lists.html#django-users"><code class="docutils literal notranslate"><span class="pre">django-users</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/mailing-lists.html#django-developers"><code class="docutils literal notranslate"><span class="pre">django-developers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/mailing-lists.html#django-announce"><code class="docutils literal notranslate"><span class="pre">django-announce</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/mailing-lists.html#django-updates"><code class="docutils literal notranslate"><span class="pre">django-updates</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internals/organization.html">Organization of the Django Project</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="internals/organization.html#principles">Principles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/organization.html#mergers">Mergers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/organization.html#releasers">Releasers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/organization.html#steering-council">Steering council</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/organization.html#changing-the-organization">Changing the organization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internals/security.html">Django’s security policies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="internals/security.html#reporting-security-issues">Reporting security issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/security.html#supported-versions">Supported versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/security.html#how-django-discloses-security-issues">How Django discloses security issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/security.html#who-receives-advance-notification">Who receives advance notification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/security.html#requesting-notifications">Requesting notifications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internals/release-process.html">Django’s release process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="internals/release-process.html#official-releases">Official releases</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/release-process.html#release-cadence">Release cadence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/release-process.html#deprecation-policy">Deprecation policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/release-process.html#supported-versions">Supported versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/release-process.html#release-process">Release process</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internals/deprecation.html">Django Deprecation Timeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-6-0">6.0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-5-1">5.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-5-0">5.0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-4-1">4.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-4-0">4.0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-3-1">3.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-3-0">3.0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-2-1">2.1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-2-0">2.0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-1-10">1.10</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-1-9">1.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-1-8">1.8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-1-7">1.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-1-6">1.6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-1-5">1.5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-1-4">1.4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/deprecation.html#deprecation-removed-in-1-3">1.3</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internals/git.html">The Django source code repository</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="internals/git.html#high-level-overview">High-level overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/git.html#the-main-branch">The main branch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/git.html#stable-branches">Stable branches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/git.html#id1">Tags</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internals/howto-release-django.html">How is Django Formed?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="internals/howto-release-django.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/howto-release-django.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/howto-release-django.html#pre-release-tasks">Pre-release tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/howto-release-django.html#preparing-for-release">Preparing for release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/howto-release-django.html#actually-rolling-the-release">Actually rolling the release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/howto-release-django.html#making-the-release-s-available-to-the-public">Making the release(s) available to the public</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/howto-release-django.html#post-release">Post-release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/howto-release-django.html#new-stable-branch-tasks">New stable branch tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="internals/howto-release-django.html#notes-on-setting-the-version-tuple">Notes on setting the VERSION tuple</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="s-indices-glossary-and-tables">
+<span id="indices-glossary-and-tables"></span><h2>Indices, glossary and tables<a class="headerlink" href="#indices-glossary-and-tables" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="glossary.html"><span class="doc">Glossary</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Django documentation contents</a><ul>
+<li><a class="reference internal" href="#indices-glossary-and-tables">Indices, glossary and tables</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="next chapter">Django documentation</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/contents.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    <a title="Django 5.0.dev20230612063128 documentation" href="index.html" accesskey="U">up</a>
+   |
+    <a href="index.html" title="Django documentation">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

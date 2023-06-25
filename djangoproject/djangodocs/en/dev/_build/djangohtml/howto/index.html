@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>“How-to” guides &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to authenticate using REMOTE_USER" href="auth-remote-user.html" />
+    <link rel="prev" title="Asynchronous support" href="../topics/async.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="../topics/async.html" title="Asynchronous support">previous</a>
+     |
+    <a title="Django 5.0.dev20230612063128 documentation" href="../index.html" accesskey="U">up</a>
+   |
+    <a href="auth-remote-user.html" title="How to authenticate using &lt;code class=&#34;docutils literal notranslate&#34;&gt;&lt;span class=&#34;pre&#34;&gt;REMOTE_USER&lt;/span&gt;&lt;/code&gt;">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="howto-index">
+            
+  <div class="section" id="s-how-to-guides">
+<span id="how-to-guides"></span><h1>“How-to” guides<a class="headerlink" href="#how-to-guides" title="Permalink to this headline">¶</a></h1>
+<p>Here you’ll find short answers to “How do I….?” types of questions. These
+how-to guides don’t cover topics in depth – you’ll find that material in the
+<a class="reference internal" href="../topics/index.html"><span class="doc">Using Django</span></a> and the <a class="reference internal" href="../ref/index.html"><span class="doc">API Reference</span></a>. However, these guides will help
+you quickly accomplish common tasks.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="auth-remote-user.html">How to authenticate using <code class="docutils literal notranslate"><span class="pre">REMOTE_USER</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="csrf.html">How to use Django’s CSRF protection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom-management-commands.html">How to create custom <code class="docutils literal notranslate"><span class="pre">django-admin</span></code> commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom-model-fields.html">How to create custom model fields</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom-lookups.html">How to write custom lookups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom-template-backend.html">How to implement a custom template backend</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom-template-tags.html">How to create custom template tags and filters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom-file-storage.html">How to write a custom storage class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/index.html">How to deploy Django</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrade-version.html">How to upgrade Django to a newer version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="error-reporting.html">How to manage error reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="initial-data.html">How to provide initial data for models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="legacy-databases.html">How to integrate Django with a legacy database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">How to configure and use logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputting-csv.html">How to create CSV output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="outputting-pdf.html">How to create PDF files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overriding-templates.html">How to override templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="static-files/index.html">How to manage static files (e.g. images, JavaScript, CSS)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="static-files/deployment.html">How to deploy static files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="windows.html">How to install Django on Windows</a></li>
+<li class="toctree-l1"><a class="reference internal" href="writing-migrations.html">How to create database migrations</a></li>
+</ul>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <a class="reference external" href="https://www.djangoproject.com/community/">Django community aggregator</a>, where we aggregate content from the
+global Django community. Many writers in the aggregator write this sort of
+how-to material.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../topics/async.html"
+                          title="previous chapter">Asynchronous support</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="auth-remote-user.html"
+                          title="next chapter">How to authenticate using <code class="docutils literal notranslate"><span class="pre">REMOTE_USER</span></code></a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/howto/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="../topics/async.html" title="Asynchronous support">previous</a>
+     |
+    <a title="Django 5.0.dev20230612063128 documentation" href="../index.html" accesskey="U">up</a>
+   |
+    <a href="auth-remote-user.html" title="How to authenticate using &lt;code class=&#34;docutils literal notranslate&#34;&gt;&lt;span class=&#34;pre&#34;&gt;REMOTE_USER&lt;/span&gt;&lt;/code&gt;">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

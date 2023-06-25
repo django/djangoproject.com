@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to deploy Django &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/default.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="How to deploy with WSGI" href="wsgi/index.html" />
+    <link rel="prev" title="How to write a custom storage class" href="../custom-file-storage.html" />
+
+
+
+ 
+<script src="../../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../../index.html">Home</a>  |
+        <a title="Table of contents" href="../../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../../genindex.html">Index</a>  |
+        <a title="Module index" href="../../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="../custom-file-storage.html" title="How to write a custom storage class">previous</a>
+     |
+    <a href="../index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="wsgi/index.html" title="How to deploy with WSGI">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="howto-deployment-index">
+            
+  <div class="section" id="s-how-to-deploy-django">
+<span id="how-to-deploy-django"></span><h1>How to deploy Django<a class="headerlink" href="#how-to-deploy-django" title="Permalink to this headline">¶</a></h1>
+<p>Django is full of shortcuts to make web developers’ lives easier, but all
+those tools are of no use if you can’t easily deploy your sites. Since Django’s
+inception, ease of deployment has been a major goal.</p>
+<p>There are many options for deploying your Django application, based on your
+architecture or your particular business needs, but that discussion is outside
+the scope of what Django can give you as guidance.</p>
+<p>Django, being a web framework, needs a web server in order to operate. And
+since most web servers don’t natively speak Python, we need an interface to
+make that communication happen.</p>
+<p>Django currently supports two interfaces: WSGI and ASGI.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://wsgi.readthedocs.io/en/latest/">WSGI</a> is the main Python standard for communicating between web servers and
+applications, but it only supports synchronous code.</li>
+<li><a class="reference external" href="https://asgi.readthedocs.io/en/latest/">ASGI</a> is the new, asynchronous-friendly standard that will allow your
+Django site to use asynchronous Python features, and asynchronous Django
+features as they are developed.</li>
+</ul>
+<p>You should also consider how you will handle <a class="reference internal" href="../static-files/deployment.html"><span class="doc">static files</span></a> for your application, and how to handle
+<a class="reference internal" href="../error-reporting.html"><span class="doc">error reporting</span></a>.</p>
+<p>Finally, before you deploy your application to production, you should run
+through our <a class="reference internal" href="checklist.html"><span class="doc">deployment checklist</span></a> to ensure that your
+configurations are suitable.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="wsgi/index.html">How to deploy with WSGI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wsgi/gunicorn.html">How to use Django with Gunicorn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi/uwsgi.html">How to use Django with uWSGI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi/modwsgi.html">How to use Django with Apache and <code class="docutils literal notranslate"><span class="pre">mod_wsgi</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi/apache-auth.html">How to authenticate against Django’s user database from Apache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi/index.html#the-application-object">The <code class="docutils literal notranslate"><span class="pre">application</span></code> object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi/index.html#configuring-the-settings-module">Configuring the settings module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wsgi/index.html#applying-wsgi-middleware">Applying WSGI middleware</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="asgi/index.html">How to deploy with ASGI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="asgi/daphne.html">How to use Django with Daphne</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asgi/hypercorn.html">How to use Django with Hypercorn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asgi/uvicorn.html">How to use Django with Uvicorn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asgi/index.html#the-application-object">The <code class="docutils literal notranslate"><span class="pre">application</span></code> object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asgi/index.html#configuring-the-settings-module">Configuring the settings module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="asgi/index.html#applying-asgi-middleware">Applying ASGI middleware</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="checklist.html">Deployment checklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html#run-manage-py-check-deploy">Run <code class="docutils literal notranslate"><span class="pre">manage.py</span> <span class="pre">check</span> <span class="pre">--deploy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html#critical-settings">Critical settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html#environment-specific-settings">Environment-specific settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html#https">HTTPS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html#performance-optimizations">Performance optimizations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="checklist.html#error-reporting">Error reporting</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../custom-file-storage.html"
+                          title="previous chapter">How to write a custom storage class</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="wsgi/index.html"
+                          title="next chapter">How to deploy with WSGI</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/howto/deployment/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="../custom-file-storage.html" title="How to write a custom storage class">previous</a>
+     |
+    <a href="../index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="wsgi/index.html" title="How to deploy with WSGI">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

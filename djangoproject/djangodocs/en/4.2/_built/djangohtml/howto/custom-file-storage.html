@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to write a custom storage class &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to deploy Django" href="deployment/index.html" />
+    <link rel="prev" title="How to create custom template tags and filters" href="custom-template-tags.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="custom-template-tags.html" title="How to create custom template tags and filters">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="deployment/index.html" title="How to deploy Django">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="howto-custom-file-storage">
+            
+  <div class="section" id="s-how-to-write-a-custom-storage-class">
+<span id="how-to-write-a-custom-storage-class"></span><h1>How to write a custom storage class<a class="headerlink" href="#how-to-write-a-custom-storage-class" title="Permalink to this headline">¶</a></h1>
+<p>If you need to provide custom file storage – a common example is storing files
+on some remote system – you can do so by defining a custom storage class.
+You’ll need to follow these steps:</p>
+<ol class="arabic">
+<li><p class="first">Your custom storage system must be a subclass of
+<code class="docutils literal notranslate"><span class="pre">django.core.files.storage.Storage</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.core.files.storage</span> <span class="kn">import</span> <span class="n">Storage</span>
+
+
+<span class="k">class</span> <span class="nc">MyStorage</span><span class="p">(</span><span class="n">Storage</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Django must be able to instantiate your storage system without any arguments.
+This means that any settings should be taken from <code class="docutils literal notranslate"><span class="pre">django.conf.settings</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.core.files.storage</span> <span class="kn">import</span> <span class="n">Storage</span>
+
+
+<span class="k">class</span> <span class="nc">MyStorage</span><span class="p">(</span><span class="n">Storage</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">option</span><span class="p">:</span>
+            <span class="n">option</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">CUSTOM_STORAGE_OPTIONS</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Your storage class must implement the <a class="reference internal" href="#django.core.files.storage._open" title="django.core.files.storage._open"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_open()</span></code></a> and <a class="reference internal" href="#django.core.files.storage._save" title="django.core.files.storage._save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_save()</span></code></a>
+methods, along with any other methods appropriate to your storage class. See
+below for more on these methods.</p>
+<p>In addition, if your class provides local file storage, it must override
+the <code class="docutils literal notranslate"><span class="pre">path()</span></code> method.</p>
+</li>
+<li><p class="first">Your storage class must be <a class="reference internal" href="../topics/migrations.html#custom-deconstruct-method"><span class="std std-ref">deconstructible</span></a>
+so it can be serialized when it’s used on a field in a migration. As long
+as your field has arguments that are themselves
+<a class="reference internal" href="../topics/migrations.html#migration-serializing"><span class="std std-ref">serializable</span></a>, you can use the
+<code class="docutils literal notranslate"><span class="pre">django.utils.deconstruct.deconstructible</span></code> class decorator for this
+(that’s what Django uses on FileSystemStorage).</p>
+</li>
+</ol>
+<p>By default, the following methods raise <code class="docutils literal notranslate"><span class="pre">NotImplementedError</span></code> and will
+typically have to be overridden:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../ref/files/storage.html#django.core.files.storage.Storage.delete" title="django.core.files.storage.Storage.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Storage.delete()</span></code></a></li>
+<li><a class="reference internal" href="../ref/files/storage.html#django.core.files.storage.Storage.exists" title="django.core.files.storage.Storage.exists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Storage.exists()</span></code></a></li>
+<li><a class="reference internal" href="../ref/files/storage.html#django.core.files.storage.Storage.listdir" title="django.core.files.storage.Storage.listdir"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Storage.listdir()</span></code></a></li>
+<li><a class="reference internal" href="../ref/files/storage.html#django.core.files.storage.Storage.size" title="django.core.files.storage.Storage.size"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Storage.size()</span></code></a></li>
+<li><a class="reference internal" href="../ref/files/storage.html#django.core.files.storage.Storage.url" title="django.core.files.storage.Storage.url"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Storage.url()</span></code></a></li>
+</ul>
+<p>Note however that not all these methods are required and may be deliberately
+omitted. As it happens, it is possible to leave each method unimplemented and
+still have a working Storage.</p>
+<p>By way of example, if listing the contents of certain storage backends turns
+out to be expensive, you might decide not to implement <code class="docutils literal notranslate"><span class="pre">Storage.listdir()</span></code>.</p>
+<p>Another example would be a backend that only handles writing to files. In this
+case, you would not need to implement any of the above methods.</p>
+<p>Ultimately, which of these methods are implemented is up to you. Leaving some
+methods unimplemented will result in a partial (possibly broken) interface.</p>
+<p>You’ll also usually want to use hooks specifically designed for custom storage
+objects. These are:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.files.storage._open">
+<code class="sig-name descname"><span class="pre">_open</span></code>(<em><span class="n"><span class="pre">name</span></span></em>, <em><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rb'</span></span></em>)<a class="headerlink" href="#django.core.files.storage._open" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p><strong>Required</strong>.</p>
+<p>Called by <code class="docutils literal notranslate"><span class="pre">Storage.open()</span></code>, this is the actual mechanism the storage class
+uses to open the file. This must return a <code class="docutils literal notranslate"><span class="pre">File</span></code> object, though in most cases,
+you’ll want to return some subclass here that implements logic specific to the
+backend storage system.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.files.storage._save">
+<code class="sig-name descname"><span class="pre">_save</span></code>(<em><span class="n"><span class="pre">name</span></span></em>, <em><span class="n"><span class="pre">content</span></span></em>)<a class="headerlink" href="#django.core.files.storage._save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Called by <code class="docutils literal notranslate"><span class="pre">Storage.save()</span></code>. The <code class="docutils literal notranslate"><span class="pre">name</span></code> will already have gone through
+<code class="docutils literal notranslate"><span class="pre">get_valid_name()</span></code> and <code class="docutils literal notranslate"><span class="pre">get_available_name()</span></code>, and the <code class="docutils literal notranslate"><span class="pre">content</span></code> will be a
+<code class="docutils literal notranslate"><span class="pre">File</span></code> object itself.</p>
+<p>Should return the actual name of name of the file saved (usually the <code class="docutils literal notranslate"><span class="pre">name</span></code>
+passed in, but if the storage needs to change the file name return the new name
+instead).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.files.storage.get_valid_name">
+<code class="sig-name descname"><span class="pre">get_valid_name</span></code>(<em><span class="n"><span class="pre">name</span></span></em>)<a class="headerlink" href="#django.core.files.storage.get_valid_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns a filename suitable for use with the underlying storage system. The
+<code class="docutils literal notranslate"><span class="pre">name</span></code> argument passed to this method is either the original filename sent to
+the server or, if <code class="docutils literal notranslate"><span class="pre">upload_to</span></code> is a callable, the filename returned by that
+method after any path information is removed. Override this to customize how
+non-standard characters are converted to safe filenames.</p>
+<p>The code provided on <code class="docutils literal notranslate"><span class="pre">Storage</span></code> retains only alpha-numeric characters, periods
+and underscores from the original filename, removing everything else.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.files.storage.get_alternative_name">
+<code class="sig-name descname"><span class="pre">get_alternative_name</span></code>(<em><span class="n"><span class="pre">file_root</span></span></em>, <em><span class="n"><span class="pre">file_ext</span></span></em>)<a class="headerlink" href="#django.core.files.storage.get_alternative_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns an alternative filename based on the <code class="docutils literal notranslate"><span class="pre">file_root</span></code> and <code class="docutils literal notranslate"><span class="pre">file_ext</span></code>
+parameters. By default, an underscore plus a random 7 character alphanumeric
+string is appended to the filename before the extension.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="django.core.files.storage.get_available_name">
+<code class="sig-name descname"><span class="pre">get_available_name</span></code>(<em><span class="n"><span class="pre">name</span></span></em>, <em><span class="n"><span class="pre">max_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>)<a class="headerlink" href="#django.core.files.storage.get_available_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Returns a filename that is available in the storage mechanism, possibly taking
+the provided filename into account. The <code class="docutils literal notranslate"><span class="pre">name</span></code> argument passed to this method
+will have already cleaned to a filename valid for the storage system, according
+to the <code class="docutils literal notranslate"><span class="pre">get_valid_name()</span></code> method described above.</p>
+<p>The length of the filename will not exceed <code class="docutils literal notranslate"><span class="pre">max_length</span></code>, if provided. If a
+free unique filename cannot be found, a <a class="reference internal" href="../ref/exceptions.html#django.core.exceptions.SuspiciousOperation" title="django.core.exceptions.SuspiciousOperation"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SuspiciousFileOperation</span></code></a> exception is raised.</p>
+<p>If a file with <code class="docutils literal notranslate"><span class="pre">name</span></code> already exists, <code class="docutils literal notranslate"><span class="pre">get_alternative_name()</span></code> is called to
+obtain an alternative name.</p>
+<div class="section" id="s-use-your-custom-storage-engine">
+<span id="s-using-custom-storage-engine"></span><span id="use-your-custom-storage-engine"></span><span id="using-custom-storage-engine"></span><h2>Use your custom storage engine<a class="headerlink" href="#use-your-custom-storage-engine" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<span class="title">New in Django 4.2.</span> </div>
+<p>The first step to using your custom storage with Django is to tell Django about
+the file storage backend you’ll be using. This is done using the
+<a class="reference internal" href="../ref/settings.html#std-setting-STORAGES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STORAGES</span></code></a> setting. This setting maps storage aliases, which are a way
+to refer to a specific storage throughout Django, to a dictionary of settings
+for that specific storage backend. The settings in the inner dictionaries are
+described fully in the <a class="reference internal" href="../ref/settings.html#std-setting-STORAGES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">STORAGES</span></code></a> documentation.</p>
+<p>Storages are then accessed by alias from from the
+<a class="reference internal" href="../ref/files/storage.html#django.core.files.storage.storages" title="django.core.files.storage.storages"><code class="xref py py-data docutils literal notranslate"><span class="pre">django.core.files.storage.storages</span></code></a> dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.core.files.storage</span> <span class="kn">import</span> <span class="n">storages</span>
+
+<span class="n">example_storage</span> <span class="o">=</span> <span class="n">storages</span><span class="p">[</span><span class="s2">&quot;example&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">How to write a custom storage class</a><ul>
+<li><a class="reference internal" href="#use-your-custom-storage-engine">Use your custom storage engine</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="custom-template-tags.html"
+                          title="previous chapter">How to create custom template tags and filters</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="deployment/index.html"
+                          title="next chapter">How to deploy Django</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/howto/custom-file-storage.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="custom-template-tags.html" title="How to create custom template tags and filters">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="deployment/index.html" title="How to deploy Django">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

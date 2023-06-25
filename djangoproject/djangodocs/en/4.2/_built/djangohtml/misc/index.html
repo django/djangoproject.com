@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meta-documentation and miscellany &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API stability" href="api-stability.html" />
+    <link rel="prev" title="Built-in Views" href="../ref/views.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="../ref/views.html" title="Built-in Views">previous</a>
+     |
+    <a title="Django 5.0.dev20230612063128 documentation" href="../index.html" accesskey="U">up</a>
+   |
+    <a href="api-stability.html" title="API stability">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="misc-index">
+            
+  <div class="section" id="s-meta-documentation-and-miscellany">
+<span id="meta-documentation-and-miscellany"></span><h1>Meta-documentation and miscellany<a class="headerlink" href="#meta-documentation-and-miscellany" title="Permalink to this headline">¶</a></h1>
+<p>Documentation that we can’t find a more organized place for. Like that drawer in
+your kitchen with the scissors, batteries, duct tape, and other junk.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api-stability.html">API stability</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-stability.html#what-stable-means">What “stable” means</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-stability.html#stable-apis">Stable APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-stability.html#exceptions">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="design-philosophies.html">Design philosophies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="design-philosophies.html#overall">Overall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design-philosophies.html#models">Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design-philosophies.html#database-api">Database API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design-philosophies.html#url-design">URL design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design-philosophies.html#template-system">Template system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design-philosophies.html#views">Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="design-philosophies.html#cache-framework">Cache Framework</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="distributions.html">Third-party distributions of Django</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="distributions.html#for-distributors">For distributors</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../ref/views.html"
+                          title="previous chapter">Built-in Views</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="api-stability.html"
+                          title="next chapter">API stability</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/misc/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="../ref/views.html" title="Built-in Views">previous</a>
+     |
+    <a title="Django 5.0.dev20230612063128 documentation" href="../index.html" accesskey="U">up</a>
+   |
+    <a href="api-stability.html" title="API stability">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

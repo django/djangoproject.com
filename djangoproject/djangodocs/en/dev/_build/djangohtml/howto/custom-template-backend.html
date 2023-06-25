@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How to implement a custom template backend &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How to create custom template tags and filters" href="custom-template-tags.html" />
+    <link rel="prev" title="How to write custom lookups" href="custom-lookups.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="custom-lookups.html" title="How to write custom lookups">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="custom-template-tags.html" title="How to create custom template tags and filters">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="howto-custom-template-backend">
+            
+  <div class="section" id="s-how-to-implement-a-custom-template-backend">
+<span id="how-to-implement-a-custom-template-backend"></span><h1>How to implement a custom template backend<a class="headerlink" href="#how-to-implement-a-custom-template-backend" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="s-custom-backends">
+<span id="custom-backends"></span><h2>Custom backends<a class="headerlink" href="#custom-backends" title="Permalink to this headline">¶</a></h2>
+<p>Here’s how to implement a custom template backend in order to use another
+template system. A template backend is a class that inherits
+<code class="docutils literal notranslate"><span class="pre">django.template.backends.base.BaseEngine</span></code>. It must implement
+<code class="docutils literal notranslate"><span class="pre">get_template()</span></code> and optionally <code class="docutils literal notranslate"><span class="pre">from_string()</span></code>. Here’s an example for a
+fictional <code class="docutils literal notranslate"><span class="pre">foobar</span></code> template library:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">TemplateDoesNotExist</span><span class="p">,</span> <span class="n">TemplateSyntaxError</span>
+<span class="kn">from</span> <span class="nn">django.template.backends.base</span> <span class="kn">import</span> <span class="n">BaseEngine</span>
+<span class="kn">from</span> <span class="nn">django.template.backends.utils</span> <span class="kn">import</span> <span class="n">csrf_input_lazy</span><span class="p">,</span> <span class="n">csrf_token_lazy</span>
+
+<span class="kn">import</span> <span class="nn">foobar</span>
+
+
+<span class="k">class</span> <span class="nc">FooBar</span><span class="p">(</span><span class="n">BaseEngine</span><span class="p">):</span>
+    <span class="c1"># Name of the subdirectory containing the templates for this engine</span>
+    <span class="c1"># inside an installed application.</span>
+    <span class="n">app_dirname</span> <span class="o">=</span> <span class="s2">&quot;foobar&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;OPTIONS&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">foobar</span><span class="o">.</span><span class="n">Engine</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">from_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template_code</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Template</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="n">template_code</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">foobar</span><span class="o">.</span><span class="n">TemplateCompilationFailed</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TemplateSyntaxError</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template_name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Template</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="n">template_name</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">foobar</span><span class="o">.</span><span class="n">TemplateNotFound</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TemplateDoesNotExist</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">foobar</span><span class="o">.</span><span class="n">TemplateCompilationFailed</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">TemplateSyntaxError</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Template</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">template</span>
+
+    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">request</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;request&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">request</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;csrf_input&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">csrf_input_lazy</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+            <span class="n">context</span><span class="p">[</span><span class="s2">&quot;csrf_token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">csrf_token_lazy</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://github.com/django/deps/blob/main/final/0182-multiple-template-engines.rst">DEP 182</a> for more information.</p>
+</div>
+<div class="section" id="s-debug-integration-for-custom-engines">
+<span id="s-template-debug-integration"></span><span id="debug-integration-for-custom-engines"></span><span id="template-debug-integration"></span><h2>Debug integration for custom engines<a class="headerlink" href="#debug-integration-for-custom-engines" title="Permalink to this headline">¶</a></h2>
+<p>The Django debug page has hooks to provide detailed information when a template
+error arises. Custom template engines can use these hooks to enhance the
+traceback information that appears to users. The following hooks are available:</p>
+<div class="section" id="s-template-postmortem">
+<span id="s-id1"></span><span id="template-postmortem"></span><span id="id1"></span><h3>Template postmortem<a class="headerlink" href="#template-postmortem" title="Permalink to this headline">¶</a></h3>
+<p>The postmortem appears when <a class="reference internal" href="../topics/templates.html#django.template.TemplateDoesNotExist" title="django.template.TemplateDoesNotExist"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TemplateDoesNotExist</span></code></a> is
+raised. It lists the template engines and loaders that were used when trying to
+find a given template. For example, if two Django engines are configured, the
+postmortem will appear like:</p>
+<img alt="../_images/postmortem.png" src="../_images/postmortem.png" />
+<p>Custom engines can populate the postmortem by passing the <code class="docutils literal notranslate"><span class="pre">backend</span></code> and
+<code class="docutils literal notranslate"><span class="pre">tried</span></code> arguments when raising <a class="reference internal" href="../topics/templates.html#django.template.TemplateDoesNotExist" title="django.template.TemplateDoesNotExist"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TemplateDoesNotExist</span></code></a>.
+Backends that use the postmortem <a class="reference internal" href="#template-origin-api"><span class="std std-ref">should specify an origin</span></a> on the template object.</p>
+</div>
+<div class="section" id="s-contextual-line-information">
+<span id="contextual-line-information"></span><h3>Contextual line information<a class="headerlink" href="#contextual-line-information" title="Permalink to this headline">¶</a></h3>
+<p>If an error happens during template parsing or rendering, Django can display
+the line the error happened on. For example:</p>
+<img alt="../_images/template-lines.png" src="../_images/template-lines.png" />
+<p>Custom engines can populate this information by setting a <code class="docutils literal notranslate"><span class="pre">template_debug</span></code>
+attribute on exceptions raised during parsing and rendering. This attribute is
+a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> with the following values:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">'name'</span></code>: The name of the template in which the exception occurred.</li>
+<li><code class="docutils literal notranslate"><span class="pre">'message'</span></code>: The exception message.</li>
+<li><code class="docutils literal notranslate"><span class="pre">'source_lines'</span></code>: The lines before, after, and including the line the
+exception occurred on. This is for context, so it shouldn’t contain more than
+20 lines or so.</li>
+<li><code class="docutils literal notranslate"><span class="pre">'line'</span></code>: The line number on which the exception occurred.</li>
+<li><code class="docutils literal notranslate"><span class="pre">'before'</span></code>: The content on the error line before the token that raised the
+error.</li>
+<li><code class="docutils literal notranslate"><span class="pre">'during'</span></code>: The token that raised the error.</li>
+<li><code class="docutils literal notranslate"><span class="pre">'after'</span></code>: The content on the error line after the token that raised the
+error.</li>
+<li><code class="docutils literal notranslate"><span class="pre">'total'</span></code>: The number of lines in <code class="docutils literal notranslate"><span class="pre">source_lines</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">'top'</span></code>: The line number where <code class="docutils literal notranslate"><span class="pre">source_lines</span></code> starts.</li>
+<li><code class="docutils literal notranslate"><span class="pre">'bottom'</span></code>: The line number where <code class="docutils literal notranslate"><span class="pre">source_lines</span></code> ends.</li>
+</ul>
+<p>Given the above template error, <code class="docutils literal notranslate"><span class="pre">template_debug</span></code> would look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/template.html&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid block tag: &#39;syntax&#39;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source_lines&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;some</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;lines</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;before</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;Hello {</span><span class="si">% s</span><span class="s2">yntax error %} {{ world }}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;some</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;lines</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;after</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;line&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">&quot;before&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello &quot;</span><span class="p">,</span>
+    <span class="s2">&quot;during&quot;</span><span class="p">:</span> <span class="s2">&quot;{</span><span class="si">% s</span><span class="s2">yntax error %}&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;after&quot;</span><span class="p">:</span> <span class="s2">&quot; {{ world }}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="s2">&quot;bottom&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="s2">&quot;top&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-origin-api-and-3rd-party-integration">
+<span id="s-template-origin-api"></span><span id="origin-api-and-3rd-party-integration"></span><span id="template-origin-api"></span><h3>Origin API and 3rd-party integration<a class="headerlink" href="#origin-api-and-3rd-party-integration" title="Permalink to this headline">¶</a></h3>
+<p>Django templates have an <a class="reference internal" href="../ref/templates/api.html#django.template.base.Origin" title="django.template.base.Origin"><code class="xref py py-class docutils literal notranslate"><span class="pre">Origin</span></code></a> object available
+through the <code class="docutils literal notranslate"><span class="pre">template.origin</span></code> attribute. This enables debug information to be
+displayed in the <a class="reference internal" href="#template-postmortem"><span class="std std-ref">template postmortem</span></a>, as well as
+in 3rd-party libraries, like the <a class="reference external" href="https://github.com/jazzband/django-debug-toolbar/">Django Debug Toolbar</a>.</p>
+<p>Custom engines can provide their own <code class="docutils literal notranslate"><span class="pre">template.origin</span></code> information by
+creating an object that specifies the following attributes:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">'name'</span></code>: The full path to the template.</li>
+<li><code class="docutils literal notranslate"><span class="pre">'template_name'</span></code>: The relative path to the template as passed into the
+template loading methods.</li>
+<li><code class="docutils literal notranslate"><span class="pre">'loader_name'</span></code>: An optional string identifying the function or class used
+to load the template, e.g. <code class="docutils literal notranslate"><span class="pre">django.template.loaders.filesystem.Loader</span></code>.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">How to implement a custom template backend</a><ul>
+<li><a class="reference internal" href="#custom-backends">Custom backends</a></li>
+<li><a class="reference internal" href="#debug-integration-for-custom-engines">Debug integration for custom engines</a><ul>
+<li><a class="reference internal" href="#template-postmortem">Template postmortem</a></li>
+<li><a class="reference internal" href="#contextual-line-information">Contextual line information</a></li>
+<li><a class="reference internal" href="#origin-api-and-3rd-party-integration">Origin API and 3rd-party integration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="custom-lookups.html"
+                          title="previous chapter">How to write custom lookups</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="custom-template-tags.html"
+                          title="next chapter">How to create custom template tags and filters</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/howto/custom-template-backend.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="custom-lookups.html" title="How to write custom lookups">previous</a>
+     |
+    <a href="index.html" title="“How-to” guides" accesskey="U">up</a>
+   |
+    <a href="custom-template-tags.html" title="How to create custom template tags and filters">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

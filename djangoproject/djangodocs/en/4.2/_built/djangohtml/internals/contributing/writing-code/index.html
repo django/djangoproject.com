@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Writing code &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/default.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Coding style" href="coding-style.html" />
+    <link rel="prev" title="Triaging tickets" href="../triaging-tickets.html" />
+
+
+
+ 
+<script src="../../../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../../../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../../../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../../../index.html">Home</a>  |
+        <a title="Table of contents" href="../../../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../../../genindex.html">Index</a>  |
+        <a title="Module index" href="../../../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="../triaging-tickets.html" title="Triaging tickets">previous</a>
+     |
+    <a href="../../index.html" title="Django internals" accesskey="U">up</a>
+   |
+    <a href="coding-style.html" title="Coding style">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="internals-contributing-writing-code-index">
+            
+  <div class="section" id="s-writing-code">
+<span id="writing-code"></span><h1>Writing code<a class="headerlink" href="#writing-code" title="Permalink to this headline">¶</a></h1>
+<p>So you’d like to write some code to improve Django? Awesome! There are several
+ways you can help Django’s development:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../bugs-and-features.html"><span class="doc">Report bugs</span></a> in our <a class="reference external" href="https://code.djangoproject.com/">ticket tracker</a>.</li>
+<li>Join the <a class="reference internal" href="../../mailing-lists.html#django-developers-mailing-list"><span class="std std-ref">django-developers</span></a> mailing list and share your ideas for how to
+improve Django. We’re always open to suggestions. You can also interact on
+the <a class="reference external" href="https://forum.djangoproject.com/">Django forum</a> and the <a class="reference external" href="https://web.libera.chat/#django-dev">#django-dev IRC channel</a>.</li>
+<li><a class="reference internal" href="submitting-patches.html"><span class="doc">Submit patches</span></a> for new and/or fixed behavior. If
+you’re looking for a way to get started contributing to Django read the
+<a class="reference internal" href="../../../intro/contributing.html"><span class="doc">Writing your first patch for Django</span></a> tutorial and have a look at the <a class="reference external" href="https://code.djangoproject.com/query?status=!closed&amp;easy=1">easy pickings</a>
+tickets. The <a class="reference internal" href="submitting-patches.html#patch-review-checklist"><span class="std std-ref">Patch review checklist</span></a> will also be helpful.</li>
+<li><a class="reference internal" href="../writing-documentation.html"><span class="doc">Improve the documentation</span></a> or <a class="reference internal" href="unit-tests.html"><span class="doc">write
+unit tests</span></a>.</li>
+<li><a class="reference internal" href="../triaging-tickets.html"><span class="doc">Triage tickets and review patches</span></a> created by
+other users.</li>
+<li>Read the <a class="reference internal" href="../new-contributors.html"><span class="doc">Advice for new contributors</span></a> to help you get orientated in the
+development process.</li>
+</ul>
+<p>Browse the following sections to find out how to give your code patches the
+best chances to be included in Django core:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="coding-style.html">Coding style</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unit-tests.html">Unit tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="submitting-patches.html">Submitting patches</a></li>
+<li class="toctree-l1"><a class="reference internal" href="working-with-git.html">Working with Git and GitHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="javascript.html">JavaScript</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="../triaging-tickets.html"
+                          title="previous chapter">Triaging tickets</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="coding-style.html"
+                          title="next chapter">Coding style</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/internals/contributing/writing-code/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="../triaging-tickets.html" title="Triaging tickets">previous</a>
+     |
+    <a href="../../index.html" title="Django internals" accesskey="U">up</a>
+   |
+    <a href="coding-style.html" title="Coding style">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

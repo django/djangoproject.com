@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ: Databases and models &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="FAQ: The admin" href="admin.html" />
+    <link rel="prev" title="FAQ: Getting Help" href="help.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="help.html" title="FAQ: Getting Help">previous</a>
+     |
+    <a href="index.html" title="Django FAQ" accesskey="U">up</a>
+   |
+    <a href="admin.html" title="FAQ: The admin">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="faq-models">
+            
+  <div class="section" id="s-faq-databases-and-models">
+<span id="faq-databases-and-models"></span><h1>FAQ: Databases and models<a class="headerlink" href="#faq-databases-and-models" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="s-how-can-i-see-the-raw-sql-queries-django-is-running">
+<span id="s-faq-see-raw-sql-queries"></span><span id="how-can-i-see-the-raw-sql-queries-django-is-running"></span><span id="faq-see-raw-sql-queries"></span><h2>How can I see the raw SQL queries Django is running?<a class="headerlink" href="#how-can-i-see-the-raw-sql-queries-django-is-running" title="Permalink to this headline">¶</a></h2>
+<p>Make sure your Django <a class="reference internal" href="../ref/settings.html#std-setting-DEBUG"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DEBUG</span></code></a> setting is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.
+Then do this:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">connection</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">connection</span><span class="o">.</span><span class="n">queries</span>
+<span class="go">[{&#39;sql&#39;: &#39;SELECT polls_polls.id, polls_polls.question, polls_polls.pub_date FROM polls_polls&#39;,</span>
+<span class="go">&#39;time&#39;: &#39;0.002&#39;}]</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">connection.queries</span></code> is only available if <a class="reference internal" href="../ref/settings.html#std-setting-DEBUG"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DEBUG</span></code></a> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.
+It’s a list of dictionaries in order of query execution. Each dictionary has
+the following:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">sql</span></code> - The raw SQL statement</li>
+<li><code class="docutils literal notranslate"><span class="pre">time</span></code> - How long the statement took to execute, in seconds.</li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">connection.queries</span></code> includes all SQL statements – INSERTs, UPDATES,
+SELECTs, etc. Each time your app hits the database, the query will be recorded.</p>
+<p>If you are using <a class="reference internal" href="../topics/db/multi-db.html"><span class="doc">multiple databases</span></a>, you can use the
+same interface on each member of the <code class="docutils literal notranslate"><span class="pre">connections</span></code> dictionary:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">connections</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">connections</span><span class="p">[</span><span class="s2">&quot;my_db_alias&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">queries</span>
+</pre></div>
+</div>
+<p>If you need to clear the query list manually at any point in your functions,
+call <code class="docutils literal notranslate"><span class="pre">reset_queries()</span></code>, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">reset_queries</span>
+
+<span class="n">reset_queries</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-can-i-use-django-with-a-preexisting-database">
+<span id="can-i-use-django-with-a-preexisting-database"></span><h2>Can I use Django with a preexisting database?<a class="headerlink" href="#can-i-use-django-with-a-preexisting-database" title="Permalink to this headline">¶</a></h2>
+<p>Yes. See <a class="reference internal" href="../howto/legacy-databases.html"><span class="doc">Integrating with a legacy database</span></a>.</p>
+</div>
+<div class="section" id="s-if-i-make-changes-to-a-model-how-do-i-update-the-database">
+<span id="if-i-make-changes-to-a-model-how-do-i-update-the-database"></span><h2>If I make changes to a model, how do I update the database?<a class="headerlink" href="#if-i-make-changes-to-a-model-how-do-i-update-the-database" title="Permalink to this headline">¶</a></h2>
+<p>Take a look at Django’s support for <a class="reference internal" href="../topics/migrations.html#module-django.db.migrations" title="django.db.migrations: Schema migration support for Django models"><code class="xref py py-mod docutils literal notranslate"><span class="pre">schema</span> <span class="pre">migrations</span></code></a>.</p>
+<p>If you don’t mind clearing data, your project’s <code class="docutils literal notranslate"><span class="pre">manage.py</span></code> utility has a
+<a class="reference internal" href="../ref/django-admin.html#django-admin-flush"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">flush</span></code></a> option to reset the database to the state it was in
+immediately after <a class="reference internal" href="../ref/django-admin.html#django-admin-migrate"><code class="xref std std-djadmin docutils literal notranslate"><span class="pre">migrate</span></code></a> was executed.</p>
+</div>
+<div class="section" id="s-do-django-models-support-multiple-column-primary-keys">
+<span id="do-django-models-support-multiple-column-primary-keys"></span><h2>Do Django models support multiple-column primary keys?<a class="headerlink" href="#do-django-models-support-multiple-column-primary-keys" title="Permalink to this headline">¶</a></h2>
+<p>No. Only single-column primary keys are supported.</p>
+<p>But this isn’t an issue in practice, because there’s nothing stopping you from
+adding other constraints (using the <code class="docutils literal notranslate"><span class="pre">unique_together</span></code> model option or
+creating the constraint directly in your database), and enforcing the
+uniqueness at that level. Single-column primary keys are needed for things such
+as the admin interface to work; e.g., you need a single value to specify
+an object to edit or delete.</p>
+</div>
+<div class="section" id="s-does-django-support-nosql-databases">
+<span id="does-django-support-nosql-databases"></span><h2>Does Django support NoSQL databases?<a class="headerlink" href="#does-django-support-nosql-databases" title="Permalink to this headline">¶</a></h2>
+<p>NoSQL databases are not officially supported by Django itself. There are,
+however, a number of side projects and forks which allow NoSQL functionality in
+Django.</p>
+<p>You can take a look on <a class="reference external" href="https://code.djangoproject.com/wiki/NoSqlSupport">the wiki page</a> which discusses some projects.</p>
+</div>
+<div class="section" id="s-how-do-i-add-database-specific-options-to-my-create-table-statements-such-as-specifying-myisam-as-the-table-type">
+<span id="how-do-i-add-database-specific-options-to-my-create-table-statements-such-as-specifying-myisam-as-the-table-type"></span><h2>How do I add database-specific options to my CREATE TABLE statements, such as specifying MyISAM as the table type?<a class="headerlink" href="#how-do-i-add-database-specific-options-to-my-create-table-statements-such-as-specifying-myisam-as-the-table-type" title="Permalink to this headline">¶</a></h2>
+<p>We try to avoid adding special cases in the Django code to accommodate all the
+database-specific options such as table type, etc. If you’d like to use any of
+these options, create a migration with a
+<a class="reference internal" href="../ref/migration-operations.html#django.db.migrations.operations.RunSQL" title="django.db.migrations.operations.RunSQL"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunSQL</span></code></a> operation that contains
+<code class="docutils literal notranslate"><span class="pre">ALTER</span> <span class="pre">TABLE</span></code> statements that do what you want to do.</p>
+<p>For example, if you’re using MySQL and want your tables to use the MyISAM table
+type, use the following SQL:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">myapp_mytable</span><span class="w"> </span><span class="n">ENGINE</span><span class="o">=</span><span class="n">MyISAM</span><span class="p">;</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">FAQ: Databases and models</a><ul>
+<li><a class="reference internal" href="#how-can-i-see-the-raw-sql-queries-django-is-running">How can I see the raw SQL queries Django is running?</a></li>
+<li><a class="reference internal" href="#can-i-use-django-with-a-preexisting-database">Can I use Django with a preexisting database?</a></li>
+<li><a class="reference internal" href="#if-i-make-changes-to-a-model-how-do-i-update-the-database">If I make changes to a model, how do I update the database?</a></li>
+<li><a class="reference internal" href="#do-django-models-support-multiple-column-primary-keys">Do Django models support multiple-column primary keys?</a></li>
+<li><a class="reference internal" href="#does-django-support-nosql-databases">Does Django support NoSQL databases?</a></li>
+<li><a class="reference internal" href="#how-do-i-add-database-specific-options-to-my-create-table-statements-such-as-specifying-myisam-as-the-table-type">How do I add database-specific options to my CREATE TABLE statements, such as specifying MyISAM as the table type?</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="help.html"
+                          title="previous chapter">FAQ: Getting Help</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="admin.html"
+                          title="next chapter">FAQ: The admin</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/faq/models.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="help.html" title="FAQ: Getting Help">previous</a>
+     |
+    <a href="index.html" title="Django FAQ" accesskey="U">up</a>
+   |
+    <a href="admin.html" title="FAQ: The admin">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

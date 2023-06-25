@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quick install guide &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Writing your first Django app, part 1" href="tutorial01.html" />
+    <link rel="prev" title="Django at a glance" href="overview.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="overview.html" title="Django at a glance">previous</a>
+     |
+    <a href="index.html" title="Getting started" accesskey="U">up</a>
+   |
+    <a href="tutorial01.html" title="Writing your first Django app, part 1">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="intro-install">
+            
+  <div class="section" id="s-quick-install-guide">
+<span id="quick-install-guide"></span><h1>Quick install guide<a class="headerlink" href="#quick-install-guide" title="Permalink to this headline">¶</a></h1>
+<p>Before you can use Django, you’ll need to get it installed. We have a
+<a class="reference internal" href="../topics/install.html"><span class="doc">complete installation guide</span></a> that covers all the
+possibilities; this guide will guide you to a minimal installation that’ll work
+while you walk through the introduction.</p>
+<div class="section" id="s-install-python">
+<span id="install-python"></span><h2>Install Python<a class="headerlink" href="#install-python" title="Permalink to this headline">¶</a></h2>
+<p>Being a Python web framework, Django requires Python. See
+<a class="reference internal" href="../faq/install.html#faq-python-version-support"><span class="std std-ref">What Python version can I use with Django?</span></a> for details. Python includes a lightweight
+database called <a class="reference external" href="https://www.sqlite.org/">SQLite</a> so you won’t need to set up a database just yet.</p>
+<p>Get the latest version of Python at <a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a> or with
+your operating system’s package manager.</p>
+<p>You can verify that Python is installed by typing <code class="docutils literal notranslate"><span class="pre">python</span></code> from your shell;
+you should see something like:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="go">Python 3.x.y</span>
+<span class="go">[GCC 4.x] on linux</span>
+<span class="go">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-set-up-a-database">
+<span id="set-up-a-database"></span><h2>Set up a database<a class="headerlink" href="#set-up-a-database" title="Permalink to this headline">¶</a></h2>
+<p>This step is only necessary if you’d like to work with a “large” database engine
+like PostgreSQL, MariaDB, MySQL, or Oracle. To install such a database, consult
+the <a class="reference internal" href="../topics/install.html#database-installation"><span class="std std-ref">database installation information</span></a>.</p>
+</div>
+<div class="section" id="s-install-django">
+<span id="install-django"></span><h2>Install Django<a class="headerlink" href="#install-django" title="Permalink to this headline">¶</a></h2>
+<p>You’ve got three options to install Django:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../topics/install.html#installing-official-release"><span class="std std-ref">Install an official release</span></a>. This
+is the best approach for most users.</li>
+<li>Install a version of Django <a class="reference internal" href="../topics/install.html#installing-distribution-package"><span class="std std-ref">provided by your operating system
+distribution</span></a>.</li>
+<li><a class="reference internal" href="../topics/install.html#installing-development-version"><span class="std std-ref">Install the latest development version</span></a>. This option is for enthusiasts who want
+the latest-and-greatest features and aren’t afraid of running brand new code.
+You might encounter new bugs in the development version, but reporting them
+helps the development of Django. Also, releases of third-party packages are
+less likely to be compatible with the development version than with the
+latest stable release.</li>
+</ul>
+<div class="admonition-always-refer-to-the-documentation-that-corresponds-to-the-version-of-django-you-re-using admonition">
+<p class="first admonition-title">Always refer to the documentation that corresponds to the
+version of Django you’re using!</p>
+<p class="last">If you do either of the first two steps, keep an eye out for parts of the
+documentation marked <strong>new in development version</strong>. That phrase flags
+features that are only available in development versions of Django, and
+they likely won’t work with an official release.</p>
+</div>
+</div>
+<div class="section" id="s-verifying">
+<span id="verifying"></span><h2>Verifying<a class="headerlink" href="#verifying" title="Permalink to this headline">¶</a></h2>
+<p>To verify that Django can be seen by Python, type <code class="docutils literal notranslate"><span class="pre">python</span></code> from your shell.
+Then at the Python prompt, try to import Django:</p>
+<pre class="literal-block">
+&gt;&gt;&gt; import django
+&gt;&gt;&gt; print(django.get_version())
+5.0
+</pre>
+<p>You may have another version of Django installed.</p>
+</div>
+<div class="section" id="s-that-s-it">
+<span id="that-s-it"></span><h2>That’s it!<a class="headerlink" href="#that-s-it" title="Permalink to this headline">¶</a></h2>
+<p>That’s it – you can now <a class="reference internal" href="tutorial01.html"><span class="doc">move onto the tutorial</span></a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Quick install guide</a><ul>
+<li><a class="reference internal" href="#install-python">Install Python</a></li>
+<li><a class="reference internal" href="#set-up-a-database">Set up a database</a></li>
+<li><a class="reference internal" href="#install-django">Install Django</a></li>
+<li><a class="reference internal" href="#verifying">Verifying</a></li>
+<li><a class="reference internal" href="#that-s-it">That’s it!</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="overview.html"
+                          title="previous chapter">Django at a glance</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="tutorial01.html"
+                          title="next chapter">Writing your first Django app, part 1</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/intro/install.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="overview.html" title="Django at a glance">previous</a>
+     |
+    <a href="index.html" title="Getting started" accesskey="U">up</a>
+   |
+    <a href="tutorial01.html" title="Writing your first Django app, part 1">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

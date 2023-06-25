@@ -1,0 +1,590 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Writing your first Django app, part 3 &#8212; Django 5.0.dev20230612063128 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/default.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Writing your first Django app, part 4" href="tutorial04.html" />
+    <link rel="prev" title="Writing your first Django app, part 2" href="tutorial02.html" />
+
+
+
+ 
+<script src="../templatebuiltins.js"></script>
+<script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+       return;
+    }
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "../ref/templates/builtins.html";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        }
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+             }
+        });
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+             }
+        });
+    });
+})(jQuery);</script>
+
+  </head><body>
+
+    <div class="document">
+  <div id="custom-doc" class="yui-t6">
+    <div id="hd">
+      <h1><a href="../index.html">Django 5.0.dev20230612063128 documentation</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="../index.html">Home</a>  |
+        <a title="Table of contents" href="../contents.html">Table of contents</a>  |
+        <a title="Global index" href="../genindex.html">Index</a>  |
+        <a title="Module index" href="../py-modindex.html">Modules</a>
+      </div>
+      <div class="nav">
+    &laquo; <a href="tutorial02.html" title="Writing your first Django app, part 2">previous</a>
+     |
+    <a href="index.html" title="Getting started" accesskey="U">up</a>
+   |
+    <a href="tutorial04.html" title="Writing your first Django app, part 4">next</a> &raquo;</div>
+    </div>
+
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="intro-tutorial03">
+            
+  <div class="section" id="s-writing-your-first-django-app-part-3">
+<span id="writing-your-first-django-app-part-3"></span><h1>Writing your first Django app, part 3<a class="headerlink" href="#writing-your-first-django-app-part-3" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial begins where <a class="reference internal" href="tutorial02.html"><span class="doc">Tutorial 2</span></a> left off. We’re
+continuing the web-poll application and will focus on creating the public
+interface – “views.”</p>
+<div class="admonition-where-to-get-help admonition">
+<p class="first admonition-title">Where to get help:</p>
+<p class="last">If you’re having trouble going through this tutorial, please head over to
+the <a class="reference internal" href="../faq/help.html"><span class="doc">Getting Help</span></a> section of the FAQ.</p>
+</div>
+<div class="section" id="s-overview">
+<span id="overview"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>A view is a “type” of web page in your Django application that generally serves
+a specific function and has a specific template. For example, in a blog
+application, you might have the following views:</p>
+<ul class="simple">
+<li>Blog homepage – displays the latest few entries.</li>
+<li>Entry “detail” page – permalink page for a single entry.</li>
+<li>Year-based archive page – displays all months with entries in the
+given year.</li>
+<li>Month-based archive page – displays all days with entries in the
+given month.</li>
+<li>Day-based archive page – displays all entries in the given day.</li>
+<li>Comment action – handles posting comments to a given entry.</li>
+</ul>
+<p>In our poll application, we’ll have the following four views:</p>
+<ul class="simple">
+<li>Question “index” page – displays the latest few questions.</li>
+<li>Question “detail” page – displays a question text, with no results but
+with a form to vote.</li>
+<li>Question “results” page – displays results for a particular question.</li>
+<li>Vote action – handles voting for a particular choice in a particular
+question.</li>
+</ul>
+<p>In Django, web pages and other content are delivered by views. Each view is
+represented by a Python function (or method, in the case of class-based views).
+Django will choose a view by examining the URL that’s requested (to be precise,
+the part of the URL after the domain name).</p>
+<p>Now in your time on the web you may have come across such beauties as
+<code class="docutils literal notranslate"><span class="pre">ME2/Sites/dirmod.htm?sid=&amp;type=gen&amp;mod=Core+Pages&amp;gid=A6CD4967199A42D9B65B1B</span></code>.
+You will be pleased to know that Django allows us much more elegant
+<em>URL patterns</em> than that.</p>
+<p>A URL pattern is the general form of a URL - for example:
+<code class="docutils literal notranslate"><span class="pre">/newsarchive/&lt;year&gt;/&lt;month&gt;/</span></code>.</p>
+<p>To get from a URL to a view, Django uses what are known as ‘URLconfs’. A
+URLconf maps URL patterns to views.</p>
+<p>This tutorial provides basic instruction in the use of URLconfs, and you can
+refer to <a class="reference internal" href="../topics/http/urls.html"><span class="doc">URL dispatcher</span></a> for more information.</p>
+</div>
+<div class="section" id="s-writing-more-views">
+<span id="writing-more-views"></span><h2>Writing more views<a class="headerlink" href="#writing-more-views" title="Permalink to this headline">¶</a></h2>
+<p>Now let’s add a few more views to <code class="docutils literal notranslate"><span class="pre">polls/views.py</span></code>. These views are
+slightly different, because they take an argument:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/views.py</span></code></span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">detail</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">question_id</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;You&#39;re looking at question </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">question_id</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">results</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">question_id</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="s2">&quot;You&#39;re looking at the results of question </span><span class="si">%s</span><span class="s2">.&quot;</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">response</span> <span class="o">%</span> <span class="n">question_id</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">vote</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">question_id</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;You&#39;re voting on question </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">question_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Wire these new views into the <code class="docutils literal notranslate"><span class="pre">polls.urls</span></code> module by adding the following
+<a class="reference internal" href="../ref/urls.html#django.urls.path" title="django.urls.path"><code class="xref py py-func docutils literal notranslate"><span class="pre">path()</span></code></a> calls:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/urls.py</span></code></span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># ex: /polls/</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">),</span>
+    <span class="c1"># ex: /polls/5/</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;&lt;int:question_id&gt;/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">detail</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;detail&quot;</span><span class="p">),</span>
+    <span class="c1"># ex: /polls/5/results/</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;&lt;int:question_id&gt;/results/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">results</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;results&quot;</span><span class="p">),</span>
+    <span class="c1"># ex: /polls/5/vote/</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;&lt;int:question_id&gt;/vote/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">vote</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;vote&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>Take a look in your browser, at “/polls/34/”. It’ll run the <code class="docutils literal notranslate"><span class="pre">detail()</span></code>
+method and display whatever ID you provide in the URL. Try
+“/polls/34/results/” and “/polls/34/vote/” too – these will display the
+placeholder results and voting pages.</p>
+<p>When somebody requests a page from your website – say, “/polls/34/”, Django
+will load the <code class="docutils literal notranslate"><span class="pre">mysite.urls</span></code> Python module because it’s pointed to by the
+<a class="reference internal" href="../ref/settings.html#std-setting-ROOT_URLCONF"><code class="xref std std-setting docutils literal notranslate"><span class="pre">ROOT_URLCONF</span></code></a> setting. It finds the variable named <code class="docutils literal notranslate"><span class="pre">urlpatterns</span></code>
+and traverses the patterns in order. After finding the match at <code class="docutils literal notranslate"><span class="pre">'polls/'</span></code>,
+it strips off the matching text (<code class="docutils literal notranslate"><span class="pre">&quot;polls/&quot;</span></code>) and sends the remaining text –
+<code class="docutils literal notranslate"><span class="pre">&quot;34/&quot;</span></code> – to the ‘polls.urls’ URLconf for further processing. There it
+matches <code class="docutils literal notranslate"><span class="pre">'&lt;int:question_id&gt;/'</span></code>, resulting in a call to the <code class="docutils literal notranslate"><span class="pre">detail()</span></code> view
+like so:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="go">detail(request=&lt;HttpRequest object&gt;, question_id=34)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">question_id=34</span></code> part comes from <code class="docutils literal notranslate"><span class="pre">&lt;int:question_id&gt;</span></code>. Using angle
+brackets “captures” part of the URL and sends it as a keyword argument to the
+view function. The <code class="docutils literal notranslate"><span class="pre">question_id</span></code> part of the string defines the name that
+will be used to identify the matched pattern, and the <code class="docutils literal notranslate"><span class="pre">int</span></code> part is a
+converter that determines what patterns should match this part of the URL path.
+The colon (<code class="docutils literal notranslate"><span class="pre">:</span></code>) separates the converter and pattern name.</p>
+</div>
+<div class="section" id="s-write-views-that-actually-do-something">
+<span id="write-views-that-actually-do-something"></span><h2>Write views that actually do something<a class="headerlink" href="#write-views-that-actually-do-something" title="Permalink to this headline">¶</a></h2>
+<p>Each view is responsible for doing one of two things: returning an
+<a class="reference internal" href="../ref/request-response.html#django.http.HttpResponse" title="django.http.HttpResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponse</span></code></a> object containing the content for the
+requested page, or raising an exception such as <a class="reference internal" href="../topics/http/views.html#django.http.Http404" title="django.http.Http404"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Http404</span></code></a>. The
+rest is up to you.</p>
+<p>Your view can read records from a database, or not. It can use a template
+system such as Django’s – or a third-party Python template system – or not.
+It can generate a PDF file, output XML, create a ZIP file on the fly, anything
+you want, using whatever Python libraries you want.</p>
+<p>All Django wants is that <a class="reference internal" href="../ref/request-response.html#django.http.HttpResponse" title="django.http.HttpResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponse</span></code></a>. Or an exception.</p>
+<p>Because it’s convenient, let’s use Django’s own database API, which we covered
+in <a class="reference internal" href="tutorial02.html"><span class="doc">Tutorial 2</span></a>. Here’s one stab at a new <code class="docutils literal notranslate"><span class="pre">index()</span></code>
+view, which displays the latest 5 poll questions in the system, separated by
+commas, according to publication date:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/views.py</span></code></span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Question</span>
+
+
+<span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">latest_question_list</span> <span class="o">=</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;-pub_date&quot;</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">q</span><span class="o">.</span><span class="n">question_text</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">latest_question_list</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+
+<span class="c1"># Leave the rest of the views (detail, results, vote) unchanged</span>
+</pre></div>
+</div>
+</div>
+<p>There’s a problem here, though: the page’s design is hard-coded in the view. If
+you want to change the way the page looks, you’ll have to edit this Python code.
+So let’s use Django’s template system to separate the design from Python by
+creating a template that the view can use.</p>
+<p>First, create a directory called <code class="docutils literal notranslate"><span class="pre">templates</span></code> in your <code class="docutils literal notranslate"><span class="pre">polls</span></code> directory.
+Django will look for templates in there.</p>
+<p>Your project’s <a class="reference internal" href="../ref/settings.html#std-setting-TEMPLATES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">TEMPLATES</span></code></a> setting describes how Django will load and
+render templates. The default settings file configures a <code class="docutils literal notranslate"><span class="pre">DjangoTemplates</span></code>
+backend whose <a class="reference internal" href="../ref/settings.html#std-setting-TEMPLATES-APP_DIRS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">APP_DIRS</span></code></a> option is set to
+<code class="docutils literal notranslate"><span class="pre">True</span></code>. By convention <code class="docutils literal notranslate"><span class="pre">DjangoTemplates</span></code> looks for a “templates”
+subdirectory in each of the <a class="reference internal" href="../ref/settings.html#std-setting-INSTALLED_APPS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code></a>.</p>
+<p>Within the <code class="docutils literal notranslate"><span class="pre">templates</span></code> directory you have just created, create another
+directory called <code class="docutils literal notranslate"><span class="pre">polls</span></code>, and within that create a file called
+<code class="docutils literal notranslate"><span class="pre">index.html</span></code>. In other words, your template should be at
+<code class="docutils literal notranslate"><span class="pre">polls/templates/polls/index.html</span></code>. Because of how the <code class="docutils literal notranslate"><span class="pre">app_directories</span></code>
+template loader works as described above, you can refer to this template within
+Django as <code class="docutils literal notranslate"><span class="pre">polls/index.html</span></code>.</p>
+<div class="admonition-template-namespacing admonition">
+<p class="first admonition-title">Template namespacing</p>
+<p class="last">Now we <em>might</em> be able to get away with putting our templates directly in
+<code class="docutils literal notranslate"><span class="pre">polls/templates</span></code> (rather than creating another <code class="docutils literal notranslate"><span class="pre">polls</span></code> subdirectory),
+but it would actually be a bad idea. Django will choose the first template
+it finds whose name matches, and if you had a template with the same name
+in a <em>different</em> application, Django would be unable to distinguish between
+them. We need to be able to point Django at the right one, and the best
+way to ensure this is by <em>namespacing</em> them. That is, by putting those
+templates inside <em>another</em> directory named for the application itself.</p>
+</div>
+<p>Put the following code in that template:</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/templates/polls/index.html</span></code></span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">latest_question_list</span> <span class="cp">%}</span>
+    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="cp">{%</span> <span class="k">for</span> <span class="nv">question</span> <span class="k">in</span> <span class="nv">latest_question_list</span> <span class="cp">%}</span>
+        <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/polls/</span><span class="cp">{{</span> <span class="nv">question.id</span> <span class="cp">}}</span><span class="s">/&quot;</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">question.question_text</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+    <span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+    <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="cp">{%</span> <span class="k">else</span> <span class="cp">%}</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>No polls are available.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To make the tutorial shorter, all template examples use incomplete HTML. In
+your own projects you should use <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML/Getting_started#anatomy_of_an_html_document">complete HTML documents</a>.</p>
+</div>
+<p>Now let’s update our <code class="docutils literal notranslate"><span class="pre">index</span></code> view in <code class="docutils literal notranslate"><span class="pre">polls/views.py</span></code> to use the template:</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/views.py</span></code></span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">loader</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Question</span>
+
+
+<span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">latest_question_list</span> <span class="o">=</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;-pub_date&quot;</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">get_template</span><span class="p">(</span><span class="s2">&quot;polls/index.html&quot;</span><span class="p">)</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;latest_question_list&quot;</span><span class="p">:</span> <span class="n">latest_question_list</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">request</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>That code loads the template called  <code class="docutils literal notranslate"><span class="pre">polls/index.html</span></code> and passes it a
+context. The context is a dictionary mapping template variable names to Python
+objects.</p>
+<p>Load the page by pointing your browser at “/polls/”, and you should see a
+bulleted-list containing the “What’s up” question from <a class="reference internal" href="tutorial02.html"><span class="doc">Tutorial 2</span></a>. The link points to the question’s detail page.</p>
+<div class="section" id="s-a-shortcut-render">
+<span id="a-shortcut-render"></span><h3>A shortcut: <a class="reference internal" href="../topics/http/shortcuts.html#django.shortcuts.render" title="django.shortcuts.render"><code class="xref py py-func docutils literal notranslate"><span class="pre">render()</span></code></a><a class="headerlink" href="#a-shortcut-render" title="Permalink to this headline">¶</a></h3>
+<p>It’s a very common idiom to load a template, fill a context and return an
+<a class="reference internal" href="../ref/request-response.html#django.http.HttpResponse" title="django.http.HttpResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponse</span></code></a> object with the result of the rendered
+template. Django provides a shortcut. Here’s the full <code class="docutils literal notranslate"><span class="pre">index()</span></code> view,
+rewritten:</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/views.py</span></code></span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Question</span>
+
+
+<span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">latest_question_list</span> <span class="o">=</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s2">&quot;-pub_date&quot;</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;latest_question_list&quot;</span><span class="p">:</span> <span class="n">latest_question_list</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;polls/index.html&quot;</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Note that once we’ve done this in all these views, we no longer need to import
+<a class="reference internal" href="../topics/templates.html#module-django.template.loader" title="django.template.loader"><code class="xref py py-mod docutils literal notranslate"><span class="pre">loader</span></code></a> and <a class="reference internal" href="../ref/request-response.html#django.http.HttpResponse" title="django.http.HttpResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponse</span></code></a> (you’ll
+want to keep <code class="docutils literal notranslate"><span class="pre">HttpResponse</span></code> if you still have the stub methods for <code class="docutils literal notranslate"><span class="pre">detail</span></code>,
+<code class="docutils literal notranslate"><span class="pre">results</span></code>, and <code class="docutils literal notranslate"><span class="pre">vote</span></code>).</p>
+<p>The <a class="reference internal" href="../topics/http/shortcuts.html#django.shortcuts.render" title="django.shortcuts.render"><code class="xref py py-func docutils literal notranslate"><span class="pre">render()</span></code></a> function takes the request object as its
+first argument, a template name as its second argument and a dictionary as its
+optional third argument. It returns an <a class="reference internal" href="../ref/request-response.html#django.http.HttpResponse" title="django.http.HttpResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpResponse</span></code></a>
+object of the given template rendered with the given context.</p>
+</div>
+</div>
+<div class="section" id="s-raising-a-404-error">
+<span id="raising-a-404-error"></span><h2>Raising a 404 error<a class="headerlink" href="#raising-a-404-error" title="Permalink to this headline">¶</a></h2>
+<p>Now, let’s tackle the question detail view – the page that displays the question text
+for a given poll. Here’s the view:</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/views.py</span></code></span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">Http404</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Question</span>
+
+
+<span class="c1"># ...</span>
+<span class="k">def</span> <span class="nf">detail</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">question_id</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">question_id</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">Question</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">Http404</span><span class="p">(</span><span class="s2">&quot;Question does not exist&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;polls/detail.html&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<p>The new concept here: The view raises the <a class="reference internal" href="../topics/http/views.html#django.http.Http404" title="django.http.Http404"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Http404</span></code></a> exception
+if a question with the requested ID doesn’t exist.</p>
+<p>We’ll discuss what you could put in that <code class="docutils literal notranslate"><span class="pre">polls/detail.html</span></code> template a bit
+later, but if you’d like to quickly get the above example working, a file
+containing just:</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/templates/polls/detail.html</span></code></span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="cp">{{</span> <span class="nv">question</span> <span class="cp">}}</span>
+</pre></div>
+</div>
+</div>
+<p>will get you started for now.</p>
+<div class="section" id="s-a-shortcut-get-object-or-404">
+<span id="a-shortcut-get-object-or-404"></span><h3>A shortcut: <a class="reference internal" href="../topics/http/shortcuts.html#django.shortcuts.get_object_or_404" title="django.shortcuts.get_object_or_404"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_object_or_404()</span></code></a><a class="headerlink" href="#a-shortcut-get-object-or-404" title="Permalink to this headline">¶</a></h3>
+<p>It’s a very common idiom to use <a class="reference internal" href="../ref/models/querysets.html#django.db.models.query.QuerySet.get" title="django.db.models.query.QuerySet.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a>
+and raise <a class="reference internal" href="../topics/http/views.html#django.http.Http404" title="django.http.Http404"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Http404</span></code></a> if the object doesn’t exist. Django
+provides a shortcut. Here’s the <code class="docutils literal notranslate"><span class="pre">detail()</span></code> view, rewritten:</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/views.py</span></code></span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">get_object_or_404</span><span class="p">,</span> <span class="n">render</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Question</span>
+
+
+<span class="c1"># ...</span>
+<span class="k">def</span> <span class="nf">detail</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">question_id</span><span class="p">):</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Question</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">question_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s2">&quot;polls/detail.html&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<p>The <a class="reference internal" href="../topics/http/shortcuts.html#django.shortcuts.get_object_or_404" title="django.shortcuts.get_object_or_404"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_object_or_404()</span></code></a> function takes a Django model
+as its first argument and an arbitrary number of keyword arguments, which it
+passes to the <a class="reference internal" href="../ref/models/querysets.html#django.db.models.query.QuerySet.get" title="django.db.models.query.QuerySet.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a> function of the
+model’s manager. It raises <a class="reference internal" href="../topics/http/views.html#django.http.Http404" title="django.http.Http404"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Http404</span></code></a> if the object doesn’t
+exist.</p>
+<div class="admonition-philosophy admonition">
+<p class="first admonition-title">Philosophy</p>
+<p>Why do we use a helper function <a class="reference internal" href="../topics/http/shortcuts.html#django.shortcuts.get_object_or_404" title="django.shortcuts.get_object_or_404"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_object_or_404()</span></code></a>
+instead of automatically catching the
+<a class="reference internal" href="../ref/exceptions.html#django.core.exceptions.ObjectDoesNotExist" title="django.core.exceptions.ObjectDoesNotExist"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></a> exceptions at a higher
+level, or having the model API raise <a class="reference internal" href="../topics/http/views.html#django.http.Http404" title="django.http.Http404"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Http404</span></code></a> instead of
+<a class="reference internal" href="../ref/exceptions.html#django.core.exceptions.ObjectDoesNotExist" title="django.core.exceptions.ObjectDoesNotExist"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></a>?</p>
+<p class="last">Because that would couple the model layer to the view layer. One of the
+foremost design goals of Django is to maintain loose coupling. Some
+controlled coupling is introduced in the <a class="reference internal" href="../topics/http/shortcuts.html#module-django.shortcuts" title="django.shortcuts: Convenience shortcuts that span multiple levels of Django's MVC stack."><code class="xref py py-mod docutils literal notranslate"><span class="pre">django.shortcuts</span></code></a> module.</p>
+</div>
+<p>There’s also a <a class="reference internal" href="../topics/http/shortcuts.html#django.shortcuts.get_list_or_404" title="django.shortcuts.get_list_or_404"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_list_or_404()</span></code></a> function, which works
+just as <a class="reference internal" href="../topics/http/shortcuts.html#django.shortcuts.get_object_or_404" title="django.shortcuts.get_object_or_404"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_object_or_404()</span></code></a> – except using
+<a class="reference internal" href="../ref/models/querysets.html#django.db.models.query.QuerySet.filter" title="django.db.models.query.QuerySet.filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">filter()</span></code></a> instead of
+<a class="reference internal" href="../ref/models/querysets.html#django.db.models.query.QuerySet.get" title="django.db.models.query.QuerySet.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a>. It raises
+<a class="reference internal" href="../topics/http/views.html#django.http.Http404" title="django.http.Http404"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Http404</span></code></a> if the list is empty.</p>
+</div>
+</div>
+<div class="section" id="s-use-the-template-system">
+<span id="use-the-template-system"></span><h2>Use the template system<a class="headerlink" href="#use-the-template-system" title="Permalink to this headline">¶</a></h2>
+<p>Back to the <code class="docutils literal notranslate"><span class="pre">detail()</span></code> view for our poll application. Given the context
+variable <code class="docutils literal notranslate"><span class="pre">question</span></code>, here’s what the <code class="docutils literal notranslate"><span class="pre">polls/detail.html</span></code> template might look
+like:</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/templates/polls/detail.html</span></code></span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">question.question_text</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+<span class="cp">{%</span> <span class="k">for</span> <span class="nv">choice</span> <span class="k">in</span> <span class="nv">question.choice_set.all</span> <span class="cp">%}</span>
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">choice.choice_text</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>The template system uses dot-lookup syntax to access variable attributes. In
+the example of <code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">question.question_text</span> <span class="pre">}}</span></code>, first Django does a dictionary lookup
+on the object <code class="docutils literal notranslate"><span class="pre">question</span></code>. Failing that, it tries an attribute lookup – which
+works, in this case. If attribute lookup had failed, it would’ve tried a
+list-index lookup.</p>
+<p>Method-calling happens in the <a class="reference internal" href="../ref/templates/builtins.html#std-templatetag-for"><code class="xref std std-ttag docutils literal notranslate"><span class="pre">{%</span> <span class="pre">for</span> <span class="pre">%}</span></code></a> loop:
+<code class="docutils literal notranslate"><span class="pre">question.choice_set.all</span></code> is interpreted as the Python code
+<code class="docutils literal notranslate"><span class="pre">question.choice_set.all()</span></code>, which returns an iterable of <code class="docutils literal notranslate"><span class="pre">Choice</span></code> objects and is
+suitable for use in the <a class="reference internal" href="../ref/templates/builtins.html#std-templatetag-for"><code class="xref std std-ttag docutils literal notranslate"><span class="pre">{%</span> <span class="pre">for</span> <span class="pre">%}</span></code></a> tag.</p>
+<p>See the <a class="reference internal" href="../topics/templates.html"><span class="doc">template guide</span></a> for more about templates.</p>
+</div>
+<div class="section" id="s-removing-hardcoded-urls-in-templates">
+<span id="removing-hardcoded-urls-in-templates"></span><h2>Removing hardcoded URLs in templates<a class="headerlink" href="#removing-hardcoded-urls-in-templates" title="Permalink to this headline">¶</a></h2>
+<p>Remember, when we wrote the link to a question in the <code class="docutils literal notranslate"><span class="pre">polls/index.html</span></code>
+template, the link was partially hardcoded like this:</p>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/polls/</span><span class="cp">{{</span> <span class="nv">question.id</span> <span class="cp">}}</span><span class="s">/&quot;</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">question.question_text</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The problem with this hardcoded, tightly-coupled approach is that it becomes
+challenging to change URLs on projects with a lot of templates. However, since
+you defined the name argument in the <a class="reference internal" href="../ref/urls.html#django.urls.path" title="django.urls.path"><code class="xref py py-func docutils literal notranslate"><span class="pre">path()</span></code></a> functions in
+the <code class="docutils literal notranslate"><span class="pre">polls.urls</span></code> module, you can remove a reliance on specific URL paths
+defined in your url configurations by using the <code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">url</span> <span class="pre">%}</span></code> template tag:</p>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{%</span> <span class="k">url</span> <span class="s1">&#39;detail&#39;</span> <span class="nv">question.id</span> <span class="cp">%}</span><span class="s">&quot;</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">question.question_text</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The way this works is by looking up the URL definition as specified in the
+<code class="docutils literal notranslate"><span class="pre">polls.urls</span></code> module. You can see exactly where the URL name of ‘detail’ is
+defined below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="c1"># the &#39;name&#39; value as called by the {% url %} template tag</span>
+<span class="n">path</span><span class="p">(</span><span class="s2">&quot;&lt;int:question_id&gt;/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">detail</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;detail&quot;</span><span class="p">),</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>If you want to change the URL of the polls detail view to something else,
+perhaps to something like <code class="docutils literal notranslate"><span class="pre">polls/specifics/12/</span></code> instead of doing it in the
+template (or templates) you would change it in <code class="docutils literal notranslate"><span class="pre">polls/urls.py</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="c1"># added the word &#39;specifics&#39;</span>
+<span class="n">path</span><span class="p">(</span><span class="s2">&quot;specifics/&lt;int:question_id&gt;/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">detail</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;detail&quot;</span><span class="p">),</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-namespacing-url-names">
+<span id="namespacing-url-names"></span><h2>Namespacing URL names<a class="headerlink" href="#namespacing-url-names" title="Permalink to this headline">¶</a></h2>
+<p>The tutorial project has just one app, <code class="docutils literal notranslate"><span class="pre">polls</span></code>. In real Django projects,
+there might be five, ten, twenty apps or more. How does Django differentiate
+the URL names between them? For example, the <code class="docutils literal notranslate"><span class="pre">polls</span></code> app has a <code class="docutils literal notranslate"><span class="pre">detail</span></code>
+view, and so might an app on the same project that is for a blog. How does one
+make it so that Django knows which app view to create for a url when using the
+<code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">url</span> <span class="pre">%}</span></code> template tag?</p>
+<p>The answer is to add namespaces to your  URLconf. In the <code class="docutils literal notranslate"><span class="pre">polls/urls.py</span></code>
+file, go ahead and add an <code class="docutils literal notranslate"><span class="pre">app_name</span></code> to set the application namespace:</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/urls.py</span></code></span><a class="headerlink" href="#id12" title="Permalink to this code">¶</a></div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">app_name</span> <span class="o">=</span> <span class="s2">&quot;polls&quot;</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;&lt;int:question_id&gt;/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">detail</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;detail&quot;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;&lt;int:question_id&gt;/results/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">results</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;results&quot;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;&lt;int:question_id&gt;/vote/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">vote</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;vote&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>Now change your <code class="docutils literal notranslate"><span class="pre">polls/index.html</span></code> template from:</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/templates/polls/index.html</span></code></span><a class="headerlink" href="#id13" title="Permalink to this code">¶</a></div>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{%</span> <span class="k">url</span> <span class="s1">&#39;detail&#39;</span> <span class="nv">question.id</span> <span class="cp">%}</span><span class="s">&quot;</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">question.question_text</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>to point at the namespaced detail view:</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">polls/templates/polls/index.html</span></code></span><a class="headerlink" href="#id14" title="Permalink to this code">¶</a></div>
+<div class="highlight-html+django notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;</span><span class="cp">{%</span> <span class="k">url</span> <span class="s1">&#39;polls:detail&#39;</span> <span class="nv">question.id</span> <span class="cp">%}</span><span class="s">&quot;</span><span class="p">&gt;</span><span class="cp">{{</span> <span class="nv">question.question_text</span> <span class="cp">}}</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>When you’re comfortable with writing views, read <a class="reference internal" href="tutorial04.html"><span class="doc">part 4 of this tutorial</span></a> to learn the basics about form processing and generic
+views.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      
+        
+          <div class="yui-b" id="sidebar">
+            
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../contents.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Writing your first Django app, part 3</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#writing-more-views">Writing more views</a></li>
+<li><a class="reference internal" href="#write-views-that-actually-do-something">Write views that actually do something</a><ul>
+<li><a class="reference internal" href="#a-shortcut-render">A shortcut: <code class="xref py py-func docutils literal notranslate"><span class="pre">render()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#raising-a-404-error">Raising a 404 error</a><ul>
+<li><a class="reference internal" href="#a-shortcut-get-object-or-404">A shortcut: <code class="xref py py-func docutils literal notranslate"><span class="pre">get_object_or_404()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#use-the-template-system">Use the template system</a></li>
+<li><a class="reference internal" href="#removing-hardcoded-urls-in-templates">Removing hardcoded URLs in templates</a></li>
+<li><a class="reference internal" href="#namespacing-url-names">Namespacing URL names</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="tutorial02.html"
+                          title="previous chapter">Writing your first Django app, part 2</a></p>
+  </div>
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="tutorial04.html"
+                          title="next chapter">Writing your first Django app, part 4</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/intro/tutorial03.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+              <h3>Last update:</h3>
+              <p class="topless">Jun 13, 2023</p>
+          </div>
+        
+      
+    </div>
+
+    <div id="ft">
+      <div class="nav">
+    &laquo; <a href="tutorial02.html" title="Writing your first Django app, part 2">previous</a>
+     |
+    <a href="index.html" title="Getting started" accesskey="U">up</a>
+   |
+    <a href="tutorial04.html" title="Writing your first Django app, part 4">next</a> &raquo;</div>
+    </div>
+  </div>
+
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>
