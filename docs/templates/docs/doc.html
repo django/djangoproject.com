@@ -130,104 +130,240 @@
 
 {% block content-related %}
   <h1 class="visuallyhidden">{% trans "Additional Information" %}</h1>
-  <div class="my-wrap-parent">
-    <div class="my-wrap" style="
-      
-    ">
-      <div class="my" style="
-      /* padding: 0px;
-      margin-right: 13px;
-      height: 100vh;
-      overflow-y: scroll;
-      width: 30rem; */
-      ">
-        <div role="complementary" style="
-        /* position: fixed;
-        width: 90%; */
-        ">
+  <div class="my-wrap-parent" style="z-index:-1">
+    <div class="my-wrap">
+        <div
+          role="complementary"
+          style="
+    width: 90%;
+    margin:0"
+        >
+          <h2>Contents</h2>
 
-          {% donation_snippet %}
+          <ul>
+            <li>
+              <a class="reference internal" href="#"
+                >Django documentation</a
+              >
+              <ul>
+                <li>
+                  <a class="reference internal" href="#first-steps"
+                    >First steps</a
+                  >
+                </li>
+                <li>
+                  <a class="reference internal" href="#getting-help"
+                    >Getting help</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="reference internal"
+                    href="#how-the-documentation-is-organized"
+                    >How the documentation is organized</a
+                  >
+                </li>
+                <li>
+                  <a class="reference internal" href="#the-model-layer"
+                    >The model layer</a
+                  >
+                </li>
+                <li>
+                  <a class="reference internal" href="#the-view-layer"
+                    >The view layer</a
+                  >
+                </li>
+                <li>
+                  <a class="reference internal" href="#the-template-layer"
+                    >The template layer</a
+                  >
+                </li>
+                <li>
+                  <a class="reference internal" href="#forms">Forms</a>
+                </li>
+                <li>
+                  <a
+                    class="reference internal"
+                    href="#the-development-process"
+                    >The development process</a
+                  >
+                </li>
+                <li>
+                  <a class="reference internal" href="#the-admin"
+                    >The admin</a
+                  >
+                </li>
+                <li>
+                  <a class="reference internal" href="#security"
+                    >Security</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="reference internal"
+                    href="#internationalization-and-localization"
+                    >Internationalization and localization</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="reference internal"
+                    href="#performance-and-optimization"
+                    >Performance and optimization</a
+                  >
+                </li>
+                <li>
+                  <a class="reference internal" href="#geographic-framework"
+                    >Geographic framework</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="reference internal"
+                    href="#common-web-application-tools"
+                    >Common web application tools</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="reference internal"
+                    href="#other-core-functionalities"
+                    >Other core functionalities</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="reference internal"
+                    href="#the-django-open-source-project"
+                    >The Django open-source project</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
 
-          {% block toc-wrapper %}
-            <h2>{% trans "Contents" %}</h2>
-            {% block toc %}
-              {{ doc.toc|safe }}
-            {% endblock toc %}
-          {% endblock toc-wrapper %}
+          <h2>Browse</h2>
+          <ul>
+            <li>
+              Prev: <a href="contents/">Django documentation contents</a>
+            </li>
 
-          {% block browse-wrapper %}
-            <h2>{% trans "Browse" %}</h2>
-            <ul>
-              {% block browse %}
-                {% if doc.prev %}
-                  <li>{% trans "Prev:" %} <a href="{{ doc.prev.link }}">{{ doc.prev.title|safe }}</a></li>
-                {% endif %}
-                {% if doc.next %}
-                  <li>{% trans "Next:" %} <a href="{{ doc.next.link }}">{{ doc.next.title|safe }}</a></li>
-                {% endif %}
-                <li><a href="{% url 'document-detail' lang=lang version=version url="contents" host 'docs' %}">{% trans "Table of contents" %}</a></li>
-                {% for doc, title, accesskey, shorttitle in env.rellinks %}
-                  <li><a href="{% url 'document-detail' lang=lang version=version url=doc host 'docs' %}">{{ title }}</a></li>
-                {% endfor %}
-              {% endblock browse %}
-            </ul>
-          {% endblock browse-wrapper %}
+            <li>Next: <a href="intro/">Getting started</a></li>
 
-          {% block breadcrumbs-wrapper %}
-            <h2>{% trans "You are here:" %}</h2>
-            <ul>
-              <li>
-                <a href="{% url 'document-index' lang=lang version=version host 'docs' %}">{% blocktrans %}Django {{ version }} documentation{% endblocktrans %}</a>
-                {% for p in doc.parents %}
-                  <ul><li><a href="{{ p.link }}">{{ p.title|safe }}</a>
-                {% endfor %}
-                <ul><li>{% block current-page-title %}{{ doc.title|safe }}{% endblock current-page-title %}</li></ul>
-                {% for p in doc.parents %}</li></ul>{% endfor %}
-              </li>
-            </ul>
-          {% endblock breadcrumbs-wrapper %}
+            <li>
+              <a
+                href="http://docs.djangoproject.localhost:8000/en/4.2/contents/"
+                >Table of contents</a
+              >
+            </li>
 
-          {% block help-wrapper %}
-            <h2 id="getting-help-sidebar">{% trans "Getting help" %}</h2>
-            <dl class="list-links">
-              <dt><a href="{% url 'document-detail' lang=lang version=version url="faq" host 'docs' %}">{% trans "FAQ" %}</a></dt>
-              <dd>{% blocktrans %}Try the FAQ — it's got answers to many common questions.{% endblocktrans %}</dd>
+            <li>
+              <a
+                href="http://docs.djangoproject.localhost:8000/en/4.2/genindex/"
+                >General Index</a
+              >
+            </li>
 
-              <dt><a href="/en/stable/genindex/">{% trans "Index" %}</a>, <a href="/en/stable/py-modindex/">{% trans "Module Index" %}</a>, or <a href="/en/stable/contents/">{% trans "Table of Contents" %}</a></dt>
-              <dd>{% blocktrans %}Handy when looking for specific information.{% endblocktrans %}</dd>
+            <li>
+              <a
+                href="http://docs.djangoproject.localhost:8000/en/4.2/py-modindex/"
+                >Python Module Index</a
+              >
+            </li>
+          </ul>
 
-              <dt><a href="https://groups.google.com/group/django-users/">{% trans "django-users mailing list" %}</a></dt>
-              <dd>{% blocktrans %}Search for information in the archives of the django-users mailing list, or post a question.{% endblocktrans %}</dd>
+          <h2>You are here:</h2>
+          <ul>
+            <li>
+              <a href="http://docs.djangoproject.localhost:8000/en/4.2/"
+                >Django 4.2 documentation</a
+              >
 
-              <dt><a href="irc://irc.libera.chat/django">{% trans "#django IRC channel" %}</a></dt>
-              <dd>{% blocktrans %}Ask a question in the #django IRC channel, or search the IRC logs to see if it’s been asked before.{% endblocktrans %}</dd>
+              <ul>
+                <li>Django documentation</li>
+              </ul>
+            </li>
+          </ul>
 
-              <dt><a href="https://discord.gg/xcRH6mN4fa">{% trans "Django Discord Server" %}</a></dt>
-              <dd>{% blocktrans %}Join the Django Discord Community.{% endblocktrans %}</dd>
+          <h2 id="getting-help-sidebar">Getting help</h2>
+          <dl class="list-links">
+            <dt>
+              <a href="http://docs.djangoproject.localhost:8000/en/4.2/faq/"
+                >FAQ</a
+              >
+            </dt>
+            <dd>
+              Try the FAQ — it's got answers to many common questions.
+            </dd>
 
-              <dt><a href="https://forum.djangoproject.com/">{% trans "Official Django Forum" %}</a></dt>
-              <dd>{% blocktrans %}Join the community on the Django Forum.{% endblocktrans %}</dd>
+            <dt>
+              <a href="/en/stable/genindex/">Index</a>,
+              <a href="/en/stable/py-modindex/">Module Index</a>, or
+              <a href="/en/stable/contents/">Table of Contents</a>
+            </dt>
+            <dd>Handy when looking for specific information.</dd>
 
-              <dt><a href="https://code.djangoproject.com/">{% trans "Ticket tracker" %}</a></dt>
-              <dd>{% blocktrans %}Report bugs with Django or Django documentation in our ticket tracker.{% endblocktrans %}</dd>
-            </dl>
-          {% endblock help-wrapper %}
+            <dt>
+              <a href="https://groups.google.com/group/django-users/"
+                >django-users mailing list</a
+              >
+            </dt>
+            <dd>
+              Search for information in the archives of the django-users
+              mailing list, or post a question.
+            </dd>
 
-          {% block links-wrapper %}
-            <h2>{% trans "Download:" %}</h2>
-            <p>
-              {% if version == "dev" %}{% trans "Offline (development version):" %}
-              {% else %}{% blocktrans %}Offline (Django {{ version }}):{% endblocktrans %}{% endif %}
-              <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> |
-              <a href="https://media.readthedocs.org/pdf/django/{{ rtd_version }}/django.pdf">PDF</a> |
-              <a href="https://media.readthedocs.org/epub/django/{{ rtd_version }}/django.epub">ePub</a>
-              <br>
-              <span class="quiet">
-                {% blocktrans %}Provided by <a href="https://readthedocs.org/">Read the Docs</a>.{% endblocktrans %}
-              </span>
-            </p>
-          {% endblock links-wrapper %}
-        </div>
+            <dt>
+              <a href="irc://irc.libera.chat/django">#django IRC channel</a>
+            </dt>
+            <dd>
+              Ask a question in the #django IRC channel, or search the IRC
+              logs to see if it’s been asked before.
+            </dd>
+
+            <dt>
+              <a href="https://discord.gg/xcRH6mN4fa"
+                >Django Discord Server</a
+              >
+            </dt>
+            <dd>Join the Django Discord Community.</dd>
+
+            <dt>
+              <a href="https://forum.djangoproject.com/"
+                >Official Django Forum</a
+              >
+            </dt>
+            <dd>Join the community on the Django Forum.</dd>
+
+            <dt>
+              <a href="https://code.djangoproject.com/">Ticket tracker</a>
+            </dt>
+            <dd>
+              Report bugs with Django or Django documentation in our ticket
+              tracker.
+            </dd>
+          </dl>
+
+          <h2>Download:</h2>
+          <p>
+            Offline (Django 4.2):
+            <a href="/m/docs/django-docs-4.2-en.zip">HTML</a> |
+            <a
+              href="https://media.readthedocs.org/pdf/django/4.2.x/django.pdf"
+              >PDF</a
+            >
+            |
+            <a
+              href="https://media.readthedocs.org/epub/django/4.2.x/django.epub"
+              >ePub</a
+            >
+            <br />
+            <span class="quiet">
+              Provided by
+              <a href="https://readthedocs.org/">Read the Docs</a>.
+            </span>
+          </p>
+        <!-- </div> -->
       </div>
     </div>
   </div>

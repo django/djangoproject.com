@@ -1403,26 +1403,11 @@
       <h1 class="visuallyhidden">Additional Information</h1>
       <div class="my-wrap-parent" style="z-index:-1">
         <div class="my-wrap">
-
-          <!-- <div
-            class="my"
-            style="
-              padding: 0px;
-      margin-right: 13px;
-      height: 100vh;
-      overflow-y: scroll;
-      width: 34%;
-            "
-          > -->
           <script>
 
             function isInViewport(element) {
                 const rect = element.getBoundingClientRect();
                 return (
-                    // rect.top >= 0 &&
-                    // rect.left >= 0 &&
-                    // rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                    // rect.right <= (window.innerWidth || document.documentElement.clientWidth)
                     rect.top >= 0
                 );
             }
@@ -1431,7 +1416,6 @@
 
             window.addEventListener("scroll", function(){
             let el = document.querySelector(".my-wrap");
-            // if(window.scrollY>200)
             if(isInViewport(copyBanner) == true)
             {   
                 console.log("visible")
@@ -1440,19 +1424,15 @@
                 el.style.paddingRight="5%"
 
                 if(window.matchMedia("(max-width: 1536px)").matches === true){
-                  // alert(125)
                   console.log(125)
                   el.style.left="64%"
                 }else if(window.matchMedia("(max-wdith: 1745px)").matches === true){
-                  // alert(110)
                   console.log(110)
                   el.style.left="62%"
                 }else if(window.matchMedia("(max-width: 1920px)").matches === true){
-                  // alert(100)
                   console.log(100)
                   el.style.left="61%" 
                 }else if(window.matchMedia("(max-width: 2133px)").matches === true){
-                  // alert(90)
                   console.log(90)
                   el.style.left="60%" 
                 }else{
@@ -1467,19 +1447,19 @@
                 el.style.paddingRight="5%"
                 
                 if(window.matchMedia("(max-width: 1536px)").matches === true){
-                  // alert(125)
+                  
                   console.log(125)
                   el.style.left="64%"
                 }else if(window.matchMedia("(max-wdith: 1745px)").matches === true){
-                  // alert(110)
+                  
                   console.log(110)
                   el.style.left="62%"
                 }else if(window.matchMedia("(max-width: 1920px)").matches === true){
-                  // alert(100)
+                  
                   console.log(100)
                   el.style.left="61%" 
                 }else if(window.matchMedia("(max-width: 2133px)").matches === true){
-                  // alert(90)
+                
                   console.log(90)
                   el.style.left="60%" 
                 }else{
