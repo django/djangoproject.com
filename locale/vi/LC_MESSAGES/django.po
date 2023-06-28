@@ -1,0 +1,187 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-11 20:38-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: blog/models.py:42
+msgid ""
+"Tick to make this entry live (see also the publication date). Note that "
+"administrators (like yourself) are allowed to preview inactive entries "
+"whereas the general public aren't."
+msgstr "Chọn để đăng bài viết này (xem thêm ngày xuất bản)."
+"Lưu ý rằng các quản trị viên (như bạn) được phép xem trước các bài viết "
+"chưa được đăng, trong khi công chúng thì không."
+
+#: blog/models.py:49 blog/models.py:139
+msgid "Publication date"
+msgstr "Ngày xuất bản"
+
+#: blog/models.py:51
+msgid ""
+"For an entry to be published, it must be active and its publication date "
+"must be in the past."
+msgstr "Để đăng bài viết, nó phải được kích hoạt và ngày xuất bản phải là "
+"ngày trong quá khứ."
+
+#: blog/models.py:132
+msgid ""
+"Tick to make this event live (see also the publication date). Note that "
+"administrators (like yourself) are allowed to preview inactive events "
+"whereas the general public aren't."
+msgstr "Chọn để đăng sự kiện này (xem thêm ngày xuất bản)."
+"Lưu ý rằng các quản trị viên (như bạn) được phép xem trước các sự kiện "
+"chưa được đăng, trong khi công chúng thì không."
+
+#: blog/models.py:141
+msgid ""
+"For an event to be published, it must be active and its publication date "
+"must be in the past."
+msgstr ""
+
+#: djangoproject/templates/members/corporate_members_join_thanks.html:5
+msgid "Corporate membership application submitted."
+msgstr ""
+
+#: djangoproject/templates/members/corporate_members_join_thanks.html:7
+msgid ""
+"\n"
+"      Thanks! Your application is being reviewed, and we'll follow up a\n"
+"      response from the board after our next monthly meeting.\n"
+"    "
+msgstr ""
+"\n"
+"      Cảm ơn! Đơn đăng ký của bạn đang được xem xét, và chúng tôi sẽ tiếp "
+"tục\n"
+"      phản hồi từ ban quản trị sau cuộc họp hàng tháng tiếp theo của chúng "
+"tôi.\n"
+"    "
+
+#: djangoproject/templates/members/corporatemember_form.html:5
+msgid "Become a DSF corporate member"
+msgstr ""
+
+#: djangoproject/templates/members/corporatemember_form.html:7
+msgid ""
+"\n"
+"      Provide us with a few details and we'll start onboarding your\n"
+"      organization!\n"
+"    "
+msgstr ""
+"\n"
+"      Cung cấp cho chúng tôi một số chi tiết và chúng tôi sẽ bắt đầu quá "
+"trình\n"
+"      đưa tổ chức của bạn vào hệ thống!\n"
+"    "
+
+#: djangoproject/templates/members/corporatemember_list.html:5
+msgid "Corporate members"
+msgstr "Các thành viên doanh nghiệp"
+
+#: djangoproject/templates/members/corporatemember_list.html:7
+msgid ""
+"\n"
+"      The following organizations are corporate members of the Django "
+"Software\n"
+"      Foundation. If you are interested in becoming a corporate member of "
+"the\n"
+"      DSF, you can find out more on our <a href=\"/foundation/corporate-"
+"membership/\">\n"
+"      corporate membership page</a>.\n"
+"    "
+msgstr ""
+"\n"
+"      Các tổ chức sau đây là thành viên doanh nghiệp của Django Software\n"
+"      Foundation. Nếu bạn quan tâm đến việc trở thành thành viên doanh "
+"nghiệp của\n"
+"      DSF, bạn có thể tìm hiểu thêm trên trang <a href=\"/foundation/"
+"corporate-\n"
+"      membership/\">thành viên doanh nghiệp</a> của chúng tôi.\n"
+"    "
+
+#: djangoproject/templates/members/individualmember_list.html:5
+msgid "Individual members"
+msgstr "Các thành viên cá nhân"
+
+#: djangoproject/templates/members/individualmember_list.html:7
+msgid ""
+"\n"
+"      The following are Individual Members of the Django Software "
+"Foundation. Individual Members\n"
+"      are appointed by the DSF in recognition of their service to the Django "
+"community. If you\n"
+"      know someone who you think should be considered for Individual "
+"Membership, please\n"
+"    "
+msgstr ""
+"\n"
+"      Các thành viên cá nhân của Django Software Foundation. Các thành "
+"viên cá nhân\n"
+"      được bổ nhiệm bởi DSF để công nhận những đóng góp của họ cho cộng "
+"đồng Django. Nếu bạn\n"
+"      biết ai đó mà bạn nghĩ họ nên được xem xét để trở thành thành viên "
+"cá nhân, vui lòng\n"
+"    "
+
+
+#: djangoproject/templates/members/individualmember_list.html:12
+msgid "fill out this form"
+msgstr "điền vào mẫu này"
+
+#: djangoproject/templates/members/individualmember_list.html:21
+msgid "Former members"
+msgstr "Các thành viên cũ"
+
+#: djangoproject/templates/members/individualmember_list.html:22
+msgid "The following are former Individual Members of the DSF."
+msgstr "Các thành viên cá nhân của DSF đã từng là thành viên của DSF."
+
+#: djangoproject/templates/registration/password_reset_email.html:2
+#, python-format
+msgid ""
+"You're receiving this e-mail because you requested a password reset\n"
+"for your user account at %(site_name)s"
+msgstr "Bạn đang nhận được email này vì bạn đã yêu cầu đặt lại mật khẩu\n"
+"cho tài khoản của bạn tại %(site_name)s"
+
+#: djangoproject/templates/registration/password_reset_email.html:5
+msgid "Please go to the following page and choose a new password:"
+msgstr "Vui lòng truy cập vào trang sau và chọn mật khẩu mới:"
+
+#: djangoproject/templates/registration/password_reset_email.html:9
+msgid "Your username, in case you've forgotten:"
+msgstr "Tên đăng nhập của bạn, trong trường hợp bạn đã quên:"
+
+#: djangoproject/templates/registration/password_reset_email.html:11
+msgid "Thanks for using our site!"
+msgstr "Cảm ơn bạn đã sử dụng trang web của chúng tôi!"
+
+#: djangoproject/templates/registration/password_reset_email.html:13
+#, python-format
+msgid "The %(site_name)s team"
+msgstr "Nhóm %(site_name)s"
+
+#: fundraising/apps.py:9
+msgid "Fundraising"
+msgstr "Quyên góp"
+
+#: releases/templatetags/release_notes.py:20
+#, python-format
+msgid "%(version)s release notes"
+msgstr "Ghi chú phát hành %(version)s"
+
+#: releases/templatetags/release_notes.py:22
+msgid "Online documentation"
+msgstr "Tài liệu trực tuyến"

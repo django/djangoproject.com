@@ -2,6 +2,8 @@
 # This file is distributed under the same license as the djangoproject.com
 # source files.
 #
+# Translators:
+# Dung Phan Xuan <dungphanxuan999@gmail.com>, 2023
 #, fuzzy
 msgid ""
 msgstr ""
@@ -24,209 +26,215 @@ msgstr "Tài liệu"
 #: docs/forms.py:4
 #, python-format
 msgid "Search %s documentation"
-msgstr ""
+msgstr "Tìm kiếm tài liệu %s"
 
 #: docs/forms.py:8 docs/templates/docs/search_form.html:9
 msgid "Search"
-msgstr ""
+msgstr "Tìm kiếm"
 
 #: docs/templates/base_docs.html:6
 msgid "Django Documentation"
-msgstr ""
+msgstr "Tài liệu Django"
 
 #: docs/templates/docs/doc.html:4 docs/templates/docs/doc.html:33
 msgid "Django documentation"
-msgstr ""
+msgstr "Tài liệu Django"
 
 #: docs/templates/docs/doc.html:40
 msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases. For older releases, use the "
 "version selector floating in the bottom right corner of this page."
-msgstr ""
+msgstr "Tài liệu này dành cho phiên bản phát triển của Django, "
+"có thể khác rất nhiều so với các phiên bản trước. "
+"Để xem tài liệu cho các phiên bản cũ hơn, hãy sử dụng bộ chọn phiên bản ở góc dưới bên phải của trang này."
 
 #: docs/templates/docs/doc.html:45
 msgid ""
 "This document is for an insecure version of Django that is no longer "
 "supported. Please upgrade to a newer release!"
-msgstr ""
+msgstr "Tài liệu này dành cho phiên bản không an toàn của Django, "
+"không còn được hỗ trợ. Hãy nâng cấp lên phiên bản mới hơn!"
 
 #: docs/templates/docs/doc.html:66
 msgid "Click on the links on the left to switch to another language."
-msgstr ""
+msgstr "Click vào các liên kết bên trái để chuyển sang ngôn ngữ khác."
 
 #: docs/templates/docs/doc.html:67
 msgid "Language:"
-msgstr ""
+msgstr "Ngôn ngữ:"
 
 #: docs/templates/docs/doc.html:86
 msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases."
-msgstr ""
+msgstr "Tài liệu này dành cho phiên bản phát triển của Django, "
+"có thể khác rất nhiều so với các phiên bản trước."
 
 #: docs/templates/docs/doc.html:88
 #, python-format
 msgid "This document describes Django %(version)s."
-msgstr ""
+msgstr "Tài liệu này mô tả Django %(version)s."
 
 #: docs/templates/docs/doc.html:90
 msgid "Click on the links on the left to see other versions."
-msgstr ""
+msgstr "Click vào các liên kết bên trái để xem các phiên bản khác."
 
 #: docs/templates/docs/doc.html:93
 msgid "Documentation version:"
-msgstr ""
+msgstr "Phiên bản tài liệu:"
 
 #: docs/templates/docs/doc.html:121
 msgid "Additional Information"
-msgstr ""
+msgstr "Thông tin bổ sung"
 
 #: docs/templates/docs/doc.html:130
 msgid "Contents"
-msgstr ""
+msgstr "Nội dung"
 
 #: docs/templates/docs/doc.html:137
 msgid "Browse"
-msgstr ""
+msgstr "Duyệt"
 
 #: docs/templates/docs/doc.html:141
 msgid "Prev:"
-msgstr ""
+msgstr "Trước:"
 
 #: docs/templates/docs/doc.html:144
 msgid "Next:"
-msgstr ""
+msgstr "Sau:"
 
 #: docs/templates/docs/doc.html:146
 msgid "Table of contents"
-msgstr ""
+msgstr "Mục lục"
 
 #: docs/templates/docs/doc.html:155
 msgid "You are here:"
-msgstr ""
+msgstr "bạn đang ở đây:"
 
 #: docs/templates/docs/doc.html:158
 #, python-format
 msgid "Django %(version)s documentation"
-msgstr ""
+msgstr "Tài liệu Django %(version)s"
 
 #: docs/templates/docs/doc.html:169
 msgid "Getting help"
-msgstr ""
+msgstr "Nhận trợ giúp"
 
 #: docs/templates/docs/doc.html:172
 msgid "Try the FAQ — it's got answers to many common questions."
-msgstr ""
+msgstr "Thử xem FAQ — nó có câu trả lời cho nhiều câu hỏi thường gặp."
 
 #: docs/templates/docs/doc.html:174
 msgid "Index"
-msgstr ""
+msgstr "Chỉ mục"
 
 #: docs/templates/docs/doc.html:174 docs/templates/docs/py-modindex.html:6
 #: docs/templates/docs/py-modindex.html:9
 msgid "Module Index"
-msgstr ""
+msgstr "chỉ mục module"
 
 #: docs/templates/docs/doc.html:174
 msgid "Table of Contents"
-msgstr ""
+msgstr "Mục lục"
 
 #: docs/templates/docs/doc.html:175
 msgid "Handy when looking for specific information."
-msgstr ""
+msgstr "Hữu ích khi tìm kiếm thông tin cụ thể."
 
 #: docs/templates/docs/doc.html:178
 msgid ""
 "Search for information in the archives of the django-users mailing list, or "
 "post a question."
-msgstr ""
+msgstr "Tìm kiếm thông tin trong các lưu trữ của danh sách thư django-users, hoặc "
+"đặt một câu hỏi."
+
 
 #: docs/templates/docs/doc.html:181
 msgid ""
 "Ask a question in the #django IRC channel, or search the IRC logs to see if "
 "it’s been asked before."
-msgstr ""
+msgstr "Đặt một câu hỏi trong kênh #django IRC, hoặc tìm kiếm các nhật ký IRC để xem nó đã được hỏi trước đó."
 
 #: docs/templates/docs/doc.html:184
 msgid "Report bugs with Django or Django documentation in our ticket tracker."
-msgstr ""
+msgstr "Báo cáo lỗi với Django hoặc tài liệu Django trong trình theo dõi ticket của chúng tôi."
 
 #: docs/templates/docs/doc.html:189
 msgid "Download:"
-msgstr ""
+msgstr "Tải về:"
 
 #: docs/templates/docs/doc.html:191
 msgid "Offline (development version):"
-msgstr ""
+msgstr "Offline (phiên bản phát triển):"
 
 #: docs/templates/docs/doc.html:192
 #, python-format
 msgid "Offline (Django %(version)s):"
-msgstr ""
+msgstr "Offline (Django %(version)s):"
 
 #: docs/templates/docs/doc.html:198
 msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
-msgstr ""
+msgstr "Cung cấp bởi <a href=\"https://readthedocs.org/\">Read the Docs</a>."
 
 #: docs/templates/docs/genindex.html:4
 msgid "General Index | Django Documentation"
-msgstr ""
+msgstr "Chỉ mục chung | Tài liệu Django"
 
 #: docs/templates/docs/genindex.html:6 docs/templates/docs/genindex.html:9
 msgid "General Index"
-msgstr ""
+msgstr "Chỉ mục chung"
 
 #: docs/templates/docs/genindex.html:39
 msgid "[Link]"
-msgstr ""
+msgstr "[Liên kết]"
 
 #: docs/templates/docs/py-modindex.html:4
 msgid "Module Index | Django Documentation"
-msgstr ""
+msgstr "Chỉ mục module | Tài liệu Django"
 
 #: docs/templates/docs/search_results.html:4
 msgid "Search | Django documentation"
-msgstr ""
+msgstr "Tìm kiếm | Tài liệu Django"
 
 #: docs/templates/docs/search_results.html:16
 #, python-format
 msgid "Only 1 result for <em>%(query)s</em> in the development version"
-msgid_plural ""
+msgid_plural "Có %(num_results)s kết quả cho <em>%(query)s</em> trong phiên bản phát triển"
 "%(num_results)s results for <em>%(query)s</em> in the development version"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Có %(num_results)s kết quả cho <em>%(query)s</em> trong phiên bản phát triển"
+msgstr[1] "Có %(num_results)s kết quả cho <em>%(query)s</em> trong phiên bản phát triển"
 
 #: docs/templates/docs/search_results.html:22
 #, python-format
 msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
-msgid_plural ""
+msgid_plural "Chỉ có %(num_results)s kết quả cho <em>%(query)s</em> trong phiên bản %(version)s"
 "%(num_results)s results for <em>%(query)s</em> in version %(version)s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Chỉ có %(num_results)s kết quả cho <em>%(query)s</em> trong phiên bản %(version)s"
+msgstr[1] "Có %(num_results)s kết quả cho <em>%(query)s</em> trong phiên bản %(version)s"
 
 #: docs/templates/docs/search_results.html:30
 msgid "No search query given"
-msgstr ""
+msgstr "Không có truy vấn tìm kiếm được cung cấp"
 
 #: docs/templates/docs/search_results.html:62
 msgid "Previous"
-msgstr ""
+msgstr "Trước"
 
 #: docs/templates/docs/search_results.html:66
 #, python-format
 msgid "Page %(page_number)s of %(num_pages)s"
-msgstr ""
+msgstr "Trang %(page_number)s của %(num_pages)s"
 
 #: docs/templates/docs/search_results.html:73
 msgid "Next"
-msgstr ""
+msgstr "Sau"
 
 #: docs/views.py:189
 msgid "Page is not 'last', nor can it be converted to an int."
-msgstr ""
+msgstr "Trang không phải là 'cuối cùng', cũng không thể chuyển đổi thành một số nguyên."
 
 #: docs/views.py:195
 #, python-format
 msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr ""
+msgstr "Trang không hợp lệ (%(page_number)s): %(message)s"
