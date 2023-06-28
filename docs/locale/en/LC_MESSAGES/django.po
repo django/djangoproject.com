@@ -19,7 +19,7 @@ msgstr ""
 
 #: docs/apps.py:7 docs/templates/base_docs.html:9
 msgid "Documentation"
-msgstr "Tài liệu"
+msgstr ""
 
 #: docs/forms.py:4
 #, python-format
