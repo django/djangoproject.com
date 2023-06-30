@@ -119,6 +119,7 @@ h1 {
 	}
 
 	[role="main"] & {
+	main & {
 		@include font-size(32);
 		margin: 40px 0px 30px;
 		color: var(--body-fg);
@@ -155,7 +156,7 @@ h2 {
 		}
 	}
 
-	[role="main"] & {
+	main & {
 		margin-top: 40px;
 		margin-bottom: 15px;
 	}
@@ -232,7 +233,7 @@ a:focus {
 p {
 
 	//increase top margin if first item in container
-	[role="main"]>&:first-child {
+	main>&:first-child {
 		margin-top: 30px;
 	}
 }
@@ -270,7 +271,7 @@ blockquote {
 //------------------- Layout
 
 
-[role="main"] {
+main {
 	//Main column. Left aligned by default. See /styleguide for explanation.
 	background: var(--white-color);
 	padding: 1px 10px 40px;
