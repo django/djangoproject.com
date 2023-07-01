@@ -66,12 +66,9 @@ def document(request, lang, version, url):
         rtd_version = version + ".x"
 
     template_names = [
-        # "docs/%s.html"
-        # % str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), ""),
-        "docs/test.html",
-        # "docs/%s.html"
-        # % str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), ""),
-        # "docs/doc.html",
+        "docs/%s.html"
+        % str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), ""),
+        "docs/doc.html",
     ]
 
     def load_json_file(path):
