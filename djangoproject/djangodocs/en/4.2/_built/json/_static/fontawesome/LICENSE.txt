@@ -24,7 +24,7 @@ attribution, so you shouldn't need to do anything additional when using these
 files normally.
 
 We've kept attribution comments terse, so we ask that you do not actively work
-to remove them from files, especially code. They're a great way for folks to 
+to remove them from files, especially code. They're a great way for folks to
 learn about Font Awesome.
 
 # Brand Icons
