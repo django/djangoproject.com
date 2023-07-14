@@ -8,6 +8,13 @@ from .models import BoardMember, Meeting, Office, Term
 
 
 class MeetingTestCase(TestCase):
+    def test_meeting_initial(self):
+        user = User.objects.create_superuser("admin", "admin@example.com", "password")
+        self.client.force_login(user)
+        response = self.client.get(reverse("admin:foundation_meeting_add"))
+        self.assertContains(response, "DSF Board monthly meeting")
+        self.assertContains(response, "dsf-board-monthly-meeting")
+
     def test_meeting_minutes_feed(self):
         """
         Make sure that the meeting minutes RSS feed works
