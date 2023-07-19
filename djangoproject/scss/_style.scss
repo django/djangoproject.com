@@ -3432,11 +3432,6 @@ form .footnote {
 			margin-bottom: 5px;
 		}
 
-		.no-logo-hero {
-			min-height: 60px;
-			margin-right: 24px;
-		}
-
 		div {
 			float: left;
 			text-align: center;
@@ -3446,6 +3441,12 @@ form .footnote {
 				max-width: 90%;
 				max-height: 170px;
 			}
+		}
+
+		.no-logo-hero {
+			min-height: 60px;
+			margin-right: 24px;
+			width: auto;
 		}
 	}
 
