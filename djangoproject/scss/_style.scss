@@ -436,12 +436,21 @@ blockquote {
 	@include respond-min(768px) {
 		margin: 0 auto;
 		max-width: 1400px;
-		padding: 0 (32/768) * 100%;
+		padding: 0 calc(32 / 768 * 100%);
 	}
 
 	&.sidebar-right {
 		.mdzr-boxshadow & {
 			box-shadow: -1200px 0 0 0px var(--white-color);
+		}
+
+		div[role="main"],
+		div[role="complementary"] {
+			max-height: 100vh;
+			overflow-y: scroll;
+		}
+		& ::-webkit-scrollbar {
+			width: 0;
 		}
 	}
 }
