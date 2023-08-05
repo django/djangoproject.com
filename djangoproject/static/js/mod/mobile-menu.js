@@ -12,7 +12,7 @@ define([
         init: function(){
             var self = this;
             self.menu.addClass('nav-menu-on');
-            self.button = $('<div class="menu-button"><i class="icon icon-reorder"></i><span>Menu</span></div>');
+            self.button = $('<div class="menu-button"><button class="icon icon-reorder" style="background-color: transparent; color: white; border: none;"></button><span>Menu</span></div>');
             self.button.insertBefore(self.menuBtn);
             self.button.on( 'click', function(){
                 self.menu.toggleClass('active');
