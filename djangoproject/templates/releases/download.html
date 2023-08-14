@@ -22,8 +22,8 @@
     <a href="https://github.com/django/django/blob/main/LICENSE">BSD license</a>.
     We recommend using the latest version of Python 3. The last version to
     support Python 2.7 is Django 1.11 LTS. See <a href="
-    {% url 'document-detail' lang='en' version='dev' url='faq/install' host 'docs' %}#what-python-version-can-i-use-with-django">
-    the FAQ</a> for the Python versions supported by each version of Django.
+                                                        {% url 'document-detail' lang='en' version='dev' url='faq/install' host 'docs' %}#what-python-version-can-i-use-with-django">
+      the FAQ</a> for the Python versions supported by each version of Django.
     Here’s how to get it:</p>
 
   <h2>Option {% cycle '1' '2' '3' as options %}: Get the latest official version</h2>
@@ -33,18 +33,18 @@
   <pre class="literal-block"><code>pip install Django=={{ current.version }}</code></pre>
 
   {% if preview %}
-      {% with preview.version|slice:":3" as major_version %}
+    {% with preview.version|slice:":3" as major_version %}
       <h2>Option {% cycle options %}: Get the {{ preview.get_status_display }} for {{ major_version }}</h2>
       <p>As part of the
         <a href="https://code.djangoproject.com/wiki/Version{{ major_version }}Roadmap">
-        Django {{ major_version }} development process</a>, Django
+          Django {{ major_version }} development process</a>, Django
         {{ preview.version }} is available. This release is only for users who
         want to try the new version and help identify remaining bugs before the
         {{ major_version }} release. Please read the
         {% release_notes preview.version show_version=True %} before using this package.
-      <p>Install the {{ preview.get_status_display }} with <a href="https://pip.pypa.io/">pip</a>:</p>
+        <p>Install the {{ preview.get_status_display }} with <a href="https://pip.pypa.io/">pip</a>:</p>
       <pre class="literal-block"><code>pip install --pre django</code></pre>
-      {% endwith %}
+    {% endwith %}
   {% endif %}
 
   <h2>Option {% cycle options %}: Get the latest development version</h2>
@@ -83,16 +83,16 @@
       <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
     </tr>
     <tr>
-      <td>4.1</td>
-      <td>{% get_latest_micro_release '4.1' %}</td>
-      <td>April 2023</td>
+      <td>4.2 LTS</td>
+      <td>{% get_latest_micro_release '4.2' %}</td>
       <td>December 2023</td>
+      <td>April 2026</td>
     </tr>
     <tr>
-      <td>4.0</td>
-      <td>{% get_latest_micro_release '4.0' %}</td>
-      <td>August 3, 2022</td>
-      <td>April 2023</td>
+      <td>4.1</td>
+      <td>{% get_latest_micro_release '4.1' %}</td>
+      <td>April 5, 2023</td>
+      <td>December 2023</td>
     </tr>
     <tr>
       <td>3.2 LTS</td>
@@ -112,6 +112,12 @@
       <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
     </tr>
     <tr>
+      <td>6.0</td>
+      <td>December 2025</td>
+      <td>August 2026</td>
+      <td>April 2027</td>
+    </tr>
+    <tr>
       <td>5.2 LTS</td>
       <td>April 2025</td>
       <td>December 2025</td>
@@ -129,12 +135,6 @@
       <td>August 2024</td>
       <td>April 2025</td>
     </tr>
-    <tr>
-      <td>4.2 LTS</td>
-      <td>April 2023</td>
-      <td>December 2023</td>
-      <td>April 2026</td>
-    </tr>
   </table>
 
   <h2 id="unsupported-versions">Unsupported previous releases</h2>
@@ -146,6 +146,12 @@
       <th>Latest Release</th>
       <th>End of mainstream support<sup><a href="#ft1">1</a></sup></th>
       <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
+    </tr>
+    <tr>
+      <td>4.0</td>
+      <td>{% get_latest_micro_release '4.0' %}</td>
+      <td>August 3, 2022</td>
+      <td>April 1, 2023</td>
     </tr>
     <tr>
       <td>3.1</td>
@@ -235,7 +241,7 @@
 
   <p style="max-width: 720px;">
     <sup id="ft1">[1] Security fixes, data loss bugs, crashing bugs, major functionality
-    bugs in newly-introduced features, and regressions from older versions of Django.</sup><br>
+      bugs in newly-introduced features, and regressions from older versions of Django.</sup><br>
     <sup id="ft2">[2] Security fixes and data loss bugs.</sup><br>
     <sup id="ft3">[3] Last version to support Python 2.7.</sup>
   </p>
@@ -244,8 +250,31 @@
 
 {% block content-related %}
 
-<h1 class="visuallyhidden">Additional information</h1>
-<div role="complementary">
+  <h1 class="visuallyhidden">Additional information</h1>
+  <div role="complementary">
+
+    {% if corporate_members %}
+      <div class="corporate-members">
+        <h2>Diamond and Platinum Members</h2>
+        {% for obj in corporate_members %}
+          <div class="clearfix">
+            <div class="member-logo">
+              <a href="{{ obj.url }}" title="{{ obj.display_name }}">
+                <img src="{{ obj.thumbnail.url }}" alt="{{ obj.display_name }}" />
+              </a>
+            </div>
+            <div class="small-cta">
+              <ul class="list-links-small">
+                <li><strong>{{ obj.display_name }}</strong></li>
+                <li><a href="{{ obj.url }}" title="{{ obj.display_name }}">
+                  {{ obj.notes }}
+                </a></li>
+              </ul>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
 
     {% donation_snippet %}
 
@@ -260,13 +289,13 @@
       </li>
 
       {% if preview %}
-      <li>Preview release:
-        <a href="{% url 'download-redirect' preview.version 'tarball' %}">
-          Django-{{ preview.version }}.tar.gz</a><br>
+        <li>Preview release:
+          <a href="{% url 'download-redirect' preview.version 'tarball' %}">
+            Django-{{ preview.version }}.tar.gz</a><br>
           Checksums: <a href="{% url 'download-redirect' preview.version 'checksum' %}">
             Django-{{ preview.version }}.checksum.txt</a><br>
           Release notes: {% release_notes preview.version %}
-      </li>
+        </li>
       {% endif %}
     </ul>
 
@@ -287,8 +316,8 @@
         <li>Django {{ lts.version }} (LTS):
           <a href="{% url 'download-redirect' lts.version 'tarball' %}">
             Django-{{ lts.version }}.tar.gz</a><br>
-        Checksums: <a href="{% url 'download-redirect' lts.version 'checksum' %}">
-          Django-{{ lts.version }}.checksum.txt</a><br>
+          Checksums: <a href="{% url 'download-redirect' lts.version 'checksum' %}">
+            Django-{{ lts.version }}.checksum.txt</a><br>
           Release notes: {% release_notes lts.version %}
         </li>
       {% endif %}
@@ -297,11 +326,11 @@
     <h2>Unsupported previous releases (no longer receive security updates or bug fixes)</h2>
     <ul>
       {% for release in unsupported %}
-      <li>Django {{ release.version }}:
-        <a href="{% url 'download-redirect' release.version 'tarball' %}">
-          Django-{{ release.version }}.tar.gz</a><br>
-        Checksums: <a href="{% url 'download-redirect' release.version 'checksum' %}">
-          Django-{{ release.version }}.checksum.txt</a></li>
+        <li>Django {{ release.version }}:
+          <a href="{% url 'download-redirect' release.version 'tarball' %}">
+            Django-{{ release.version }}.tar.gz</a><br>
+          Checksums: <a href="{% url 'download-redirect' release.version 'checksum' %}">
+            Django-{{ release.version }}.checksum.txt</a></li>
       {% endfor %}
     </ul>
 

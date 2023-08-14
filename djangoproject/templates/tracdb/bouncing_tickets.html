@@ -6,27 +6,27 @@
 
 {% block content %}
 
-<h1>Bouncing Tickets</h1>
+  <h1>Bouncing Tickets</h1>
 
-<h2 class="deck">Tickets that have been repeatedly reopened.</h2>
+  <h2 class="deck">Tickets that have been repeatedly reopened.</h2>
 
-<table width="90%" class="docutils">
-  <thead>
-    <tr>
-      <th>Ticket</th>
-      <th>Times reopened</th>
-      <th>Last reopened</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for t in tickets %}
-    <tr>
-      <td><a href="https://code.djangoproject.com/ticket/{{ t.id }}">#{{ t.id }}: {{ t.summary|truncatewords:10 }}</a></td>
-      <td>{{ t.times_reopened }}</td>
-      <td>{{ t.last_reopen_time|date:"F j, Y" }}</td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+  <table width="90%" class="docutils">
+    <thead>
+      <tr>
+        <th>Ticket</th>
+        <th>Times reopened</th>
+        <th>Last reopened</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in tickets %}
+        <tr>
+          <td><a href="https://code.djangoproject.com/ticket/{{ t.id }}">#{{ t.id }}: {{ t.summary|truncatewords:10 }}</a></td>
+          <td>{{ t.times_reopened }}</td>
+          <td>{{ t.last_reopen_time|date:"F j, Y" }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
 {% endblock %}

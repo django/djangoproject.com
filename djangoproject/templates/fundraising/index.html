@@ -8,15 +8,15 @@
 {% block og_description %}Support Django development by donating to the Django Software Foundation{% endblock %}
 
 {% block header %}
-<h1 class="visuallyhidden">Support Django</h1>
-<p><em>Support Django development</em> by donating to the <em>Django Software Foundation</em>.</p>
+  <h1 class="visuallyhidden">Support Django</h1>
+  <p><em>Support Django development</em> by donating to the <em>Django Software Foundation</em>.</p>
 {% endblock %}
 
 {% block messages %}
 
   {% if messages %}
     {% for message in messages %}
-    <h1>{{ message }}</h1>
+      <h1>{{ message }}</h1>
     {% endfor %}
     <hr>
   {% endif %}
@@ -25,142 +25,142 @@
 
 {% block content %}
 
-<h1>Support the Django Software Foundation!</h1>
+  <h1>Support the Django Software Foundation!</h1>
 
-{% donation_form_with_heart %}
+  {% donation_form_with_heart %}
 
-<h1>Other ways to give</h1>
-<ul>
-  <li><a href="https://django.threadless.com/" target="_blank">Official merchandise store</a> -
-    Buy official t-shirts, accessories, and more to support Django.</li>
-  <li><a href="https://github.com/sponsors/django" target="_blank">Sponsor Django via GitHub Sponsors</a>.</li>
-  <li><a href="/foundation/donate/#benevity-giving">Benevity Workplace Giving
-    Program</a> - If your employer participates, you can make donations to the
-    DSF via payroll deduction.</li>
-</ul>
+  <h1>Other ways to give</h1>
+  <ul>
+    <li><a href="https://django.threadless.com/" target="_blank">Official merchandise store</a> -
+      Buy official t-shirts, accessories, and more to support Django.</li>
+    <li><a href="https://github.com/sponsors/django" target="_blank">Sponsor Django via GitHub Sponsors</a>.</li>
+    <li><a href="/foundation/donate/#benevity-giving">Benevity Workplace Giving
+      Program</a> - If your employer participates, you can make donations to the
+      DSF via payroll deduction.</li>
+  </ul>
 
-<h2 id="why-give">Why give to the Django Software Foundation?</h2>
+  <h2 id="why-give">Why give to the Django Software Foundation?</h2>
 
-<p>Our main focus is direct support of Django's developers. This means:</p>
-<ul>
-<li>Organizing and funding development sprints so that Django's developers can
-meet in person.</li>
-<li>Helping key developers attend these sprints and other community events by
-covering travel expenses to official Django events.</li>
-<li>Providing financial assistance to community development and outreach
-projects such as <a href="#django-girls">Django Girls</a>.</li>
-<li>Providing financial assistance to individuals so they can attend major
-conferences and events.</li>
-<li>Funding the <a href="#fellowship-program">Django Fellowship program</a>,
-which provides full-time staff to perform community management tasks in the
-Django community.</li>
-</ul>
+  <p>Our main focus is direct support of Django's developers. This means:</p>
+  <ul>
+    <li>Organizing and funding development sprints so that Django's developers can
+      meet in person.</li>
+    <li>Helping key developers attend these sprints and other community events by
+      covering travel expenses to official Django events.</li>
+    <li>Providing financial assistance to community development and outreach
+      projects such as <a href="#django-girls">Django Girls</a>.</li>
+    <li>Providing financial assistance to individuals so they can attend major
+      conferences and events.</li>
+    <li>Funding the <a href="#fellowship-program">Django Fellowship program</a>,
+      which provides full-time staff to perform community management tasks in the
+      Django community.</li>
+  </ul>
 
-<p>Still curious? See our <a href="/foundation/donate/">Frequently Asked Questions</a>
-about donations.</p>
+  <p>Still curious? See our <a href="/foundation/donate/">Frequently Asked Questions</a>
+    about donations.</p>
 
-<h2 id="fellowship-program">Django Fellowship Program</h2>
+  <h2 id="fellowship-program">Django Fellowship Program</h2>
 
-<p>The biggest expense of the <abbr title="Django Software Foundation">DSF</abbr>
-  is the Django Fellowship program. It's a project where
-  <a href="#who-are-the-django-fellows">paid contractors</a> are engaged to
-  manage some of the administrative and community management tasks of the
-  Django project to support rapid development of Django itself.</p>
+  <p>The biggest expense of the <abbr title="Django Software Foundation">DSF</abbr>
+    is the Django Fellowship program. It's a project where
+    <a href="#who-are-the-django-fellows">paid contractors</a> are engaged to
+    manage some of the administrative and community management tasks of the
+    Django project to support rapid development of Django itself.</p>
 
-<p><strong>The Django Fellowship program has a major positive impact on how
-  Django is developed and maintained.</strong>
-  The Django Fellows triage 10-15 new tickets each week and review and merge
-  around fifteen non-trivial patches a week from the community. Release
-  blocking and severe bugs aren't postponed indefinitely. Major releases happen
-  according to an 8 month schedule and bug fix releases occur monthly.</p>
+  <p><strong>The Django Fellowship program has a major positive impact on how
+    Django is developed and maintained.</strong>
+    The Django Fellows triage 10-15 new tickets each week and review and merge
+    around fifteen non-trivial patches a week from the community. Release
+    blocking and severe bugs aren't postponed indefinitely. Major releases happen
+    according to an 8 month schedule and bug fix releases occur monthly.</p>
 
-<p>For more details, you can read retrospectives for the
-  <a href="/weblog/2015/jan/21/django-fellowship-retrospective/"> first three
-  months of the program</a>,
-  <a href="/weblog/2015/dec/17/fellowship-2015-retrospective/">2015</a>, and
-  <a href="/weblog/2016/dec/28/fellowship-2016-retrospective/">2016</a>.
-</p>
+  <p>For more details, you can read retrospectives for the
+    <a href="/weblog/2015/jan/21/django-fellowship-retrospective/"> first three
+      months of the program</a>,
+    <a href="/weblog/2015/dec/17/fellowship-2015-retrospective/">2015</a>, and
+    <a href="/weblog/2016/dec/28/fellowship-2016-retrospective/">2016</a>.
+  </p>
 
-<p>The Django Fellows are a resource to help review patches and contributions
-   from the community, and the community loves that:</p>
+  <p>The Django Fellows are a resource to help review patches and contributions
+    from the community, and the community loves that:</p>
 
-   {% if testimonial %}
-   <blockquote>
-     {{ testimonial.body|linebreaks }}
-     <em>{{ testimonial.author }}</em>
-   </blockquote>
-   {% endif %}
+  {% if testimonial %}
+    <blockquote>
+      {{ testimonial.body|linebreaks }}
+      <em>{{ testimonial.author }}</em>
+    </blockquote>
+  {% endif %}
 
-<p><strong>If you use Django on a daily basis and care about the development of Django
-   itself, you should donate today</strong> (may be <a href="/foundation/donate/#tax-deductible">tax deductible</a>).
-   Only with your support can we make sure that the web framework you base your work on
-   can grow to be even better in the coming years.</p>
+  <p><strong>If you use Django on a daily basis and care about the development of Django
+    itself, you should donate today</strong> (may be <a href="/foundation/donate/#tax-deductible">tax deductible</a>).
+    Only with your support can we make sure that the web framework you base your work on
+    can grow to be even better in the coming years.</p>
 
-<h2 id="django-girls">Django Girls Outreach</h2>
+  <h2 id="django-girls">Django Girls Outreach</h2>
 
-<p>Supporting <a href="https://djangogirls.org/">Django Girls workshops</a> is
-a significant priority for the Django Software Foundation. Django Girls
-workshops are organized by volunteers and are provided as free events for women
-who want to learn to code. The workshop serves as an introduction to Python and
-Django, where attendees learn usable skills to build their first web app.</p>
+  <p>Supporting <a href="https://djangogirls.org/">Django Girls workshops</a> is
+    a significant priority for the Django Software Foundation. Django Girls
+    workshops are organized by volunteers and are provided as free events for women
+    who want to learn to code. The workshop serves as an introduction to Python and
+    Django, where attendees learn usable skills to build their first web app.</p>
 
-<p>Django Girls workshop attendees go on to organize their own workshops, lead
-in their community, and secure full-time jobs as developers. Read their stories
-in the “Your Django Story” series on the <a href="http://blog.djangogirls.org/">
-Django Girls blog</a>.</p>
+  <p>Django Girls workshop attendees go on to organize their own workshops, lead
+    in their community, and secure full-time jobs as developers. Read their stories
+    in the “Your Django Story” series on the <a href="http://blog.djangogirls.org/">
+      Django Girls blog</a>.</p>
 
-<p>In 2015, the Django Software Foundation contributed $5,400 to eighteen
-Django Girls workshops around the world. Here's what some of the organizers had
-to say about the impact:</p>
+  <p>In 2015, the Django Software Foundation contributed $5,400 to eighteen
+    Django Girls workshops around the world. Here's what some of the organizers had
+    to say about the impact:</p>
 
-<blockquote>
-<p>Sponsorship from the DSF allowed us to have on-site child care for our Django
-Girls Portland workshop. We hosted 2 young children and an infant, and provided
-them with healthy snacks, games, sidewalk chalk, finger paint, and emoji
-stickers. Without our nanny, 3 of our attendees wouldn't have been able to come
-to the workshop. Finger paint photo is
-<a href="http://blog.djangogirls.org/post/124680859493/django-girls-portland-a-retrospective">
-on the blog</a>!</p>
-<em>Lacey - Portland, Oregon, US</em>
-</blockquote>
+  <blockquote>
+    <p>Sponsorship from the DSF allowed us to have on-site child care for our Django
+      Girls Portland workshop. We hosted 2 young children and an infant, and provided
+      them with healthy snacks, games, sidewalk chalk, finger paint, and emoji
+      stickers. Without our nanny, 3 of our attendees wouldn't have been able to come
+      to the workshop. Finger paint photo is
+      <a href="http://blog.djangogirls.org/post/124680859493/django-girls-portland-a-retrospective">
+        on the blog</a>!</p>
+    <em>Lacey - Portland, Oregon, US</em>
+  </blockquote>
 
-<blockquote>
-<p>The DSF supported <a href="https://djangogirls.org/warsaw/">Django Girls
-Poland</a> four times this year and the impact was enormous! In Poland, diversity
-awareness is not a very common topic. When we approached different local
-companies about our workshops they usually didn't get what we were actually
-doing and why it is important. If not for the DSF, we probably would not have
-been able to hold our workshops at all. Our first workshops were the only until
-now workshops that were 100% female - female only coaches and female only
-attendees. Thanks to you, we were able to focus on gathering female mentors
-instead of searching for sponsors!</p>
-<em>Ania - Wrocław, Poland</em>
-</blockquote>
+  <blockquote>
+    <p>The DSF supported <a href="https://djangogirls.org/warsaw/">Django Girls
+      Poland</a> four times this year and the impact was enormous! In Poland, diversity
+      awareness is not a very common topic. When we approached different local
+      companies about our workshops they usually didn't get what we were actually
+      doing and why it is important. If not for the DSF, we probably would not have
+      been able to hold our workshops at all. Our first workshops were the only until
+      now workshops that were 100% female - female only coaches and female only
+      attendees. Thanks to you, we were able to focus on gathering female mentors
+      instead of searching for sponsors!</p>
+    <em>Ania - Wrocław, Poland</em>
+  </blockquote>
 
-<blockquote>
-<p><a href="https://pyfound.blogspot.kr/2015/10/django-girls-seoul-great-success.html">
-Django Girls Seoul</a> had 425 applicants from 11 different countries ages
-ranging from 16 to 50 years old. After acceptances, we had about 105 people to
-feed and caffeinate! Thanks to Django's sponsorship we could get all of our
-participants coffee for the day. It really made a huge difference because we
-all know how a cup of coffee can change the atmosphere and mood! We were so
-grateful to the sponsorship we received from abroad. We tried to get sponsorship
-from a lot of Korean companies but the same generosity doesn't translate well
-into a Korean Business culture, I guess. This made us even more thankful for
-our friends at the DSF!</p>
-<em>Rachell - Seoul, South Korea</em>
-</blockquote>
+  <blockquote>
+    <p><a href="https://pyfound.blogspot.kr/2015/10/django-girls-seoul-great-success.html">
+      Django Girls Seoul</a> had 425 applicants from 11 different countries ages
+      ranging from 16 to 50 years old. After acceptances, we had about 105 people to
+      feed and caffeinate! Thanks to Django's sponsorship we could get all of our
+      participants coffee for the day. It really made a huge difference because we
+      all know how a cup of coffee can change the atmosphere and mood! We were so
+      grateful to the sponsorship we received from abroad. We tried to get sponsorship
+      from a lot of Korean companies but the same generosity doesn't translate well
+      into a Korean Business culture, I guess. This made us even more thankful for
+      our friends at the DSF!</p>
+    <em>Rachell - Seoul, South Korea</em>
+  </blockquote>
 
-<hr style="margin: 40px 0" />
+  <hr style="margin: 40px 0" />
 
-<div class="heroes-section">
-  <h1 id="dsf-supporters">DSF Supporters</h1>
-  <p>Our donors make our work possible! We are incredibly grateful for the
-  financial support from the following individuals and organizations in our
-  community.</p>
+  <div class="heroes-section">
+    <h1 id="dsf-supporters">DSF Supporters</h1>
+    <p>Our donors make our work possible! We are incredibly grateful for the
+      financial support from the following individuals and organizations in our
+      community.</p>
 
-  {% display_django_heroes %}
-</div>
+    {% display_django_heroes %}
+  </div>
 {% endblock %}
 
 {% block content-extra %}
@@ -181,23 +181,30 @@ our friends at the DSF!</p>
 
       <p>There are currently two Django Fellows:</p>
 
-      <p><strong><a href="https://github.com/carltongibson">Carlton Gibson</a>
-        (2018-present)</strong> - a longtime Django user, core contributor to
-        Django REST Framework, maintainer of Django Filter and Django Crispy
-        Forms, and a contributor to many other packages in the Django ecosystem.
-        Carlton <a href="https://www.djangoproject.com/weblog/2018/jan/12/dsf-welcomes-carlton-gibson-its-newest-fellow/">
-        began as a part-time Fellow in January 2018</a>.</p>
+      <p><strong><a href="https://github.com/nessita">Natalia Bidart</a>
+        (2023-present)</strong> - a seasoned Django user with extensive
+        experience in architecting, building, and maintaining scalable web
+        services, as well as leading new feature design and development.
+        Natalia
+        <a href="https://www.djangoproject.com/weblog/2023/mar/31/welcome-our-new-fellow-natalia-bidart/">
+          began as a part-time Fellow in April 2023</a>.</p>
       <p><strong><a href="https://github.com/felixxm">Mariusz Felisiak</a>
         (2019-present)</strong> - a member of the Django team since 2017,
         focusing on the ORM and Oracle back-end, along with triaging tickets,
         reviewing pull requests, and backporting changes. He has contributed to
         more than a dozen open-source projects. Mariusz
         <a href="https://www.djangoproject.com/weblog/2019/jan/29/dsf-welcomes-mariusz-felisiak-its-newest-fellow/">
-        began as a full-time Fellow in April 2019</a>.
+          began as a full-time Fellow in April 2019</a>.
       </p>
 
       <p>Former Django Fellows:</p>
 
+      <p><strong><a href="https://github.com/carltongibson">Carlton Gibson</a>
+        (2018-2023)</strong> - a longtime Django user, core contributor to
+        Django REST Framework, maintainer of Django Filter and Django Crispy
+        Forms, and a contributor to many other packages in the Django ecosystem.
+        Carlton began as a part-time Fellow in January 2018.
+        In 2023 Carlton retired after five years of service.</p>
       <p><strong><a href="https://github.com/timgraham">Tim Graham</a> (2014-
         2019)</strong> - the inaugural Django Fellow, a member of the Django
         team since 2010, and a longtime major contributor and reviewer. In 2018

@@ -10,52 +10,46 @@
 {% block header %}
   <h1 class="visuallyhidden">Community</h1>
   <p>Building the <em>Django</em> Community{% if community_stats %}
-  {% if community_stats.age %} for <em>{{ community_stats.age }}</em>{% endif %}{% endif %}. Come join us!</p>
+    {% if community_stats.age %} for <em>{{ community_stats.age }}</em>{% endif %}{% endif %}. Come join us!</p>
 {% endblock %}
 
 {% block content-related %}
-<h1 class="visuallyhidden">Additional Information</h1>
-<div role="complementary">
-  {% donation_snippet %}
+  <h1 class="visuallyhidden">Additional Information</h1>
+  <div role="complementary">
+    {% donation_snippet %}
 
-  <h2>Get Involved</h2>
-  <dl class="list-links">
-    <dt><a href="https://code.djangoproject.com/">Ticket system</a></dt>
-    <dd>report bugs and make feature requests</dd>
-    <dt><a href="https://dashboard.djangoproject.com/">Development dashboard</a></dt>
-    <dd>see what's currently being worked on</dd>
-  </dl>
-  <h2>Get Help</h2>
-  <dl class="list-links">
-    <dt><a href="{% url 'document-detail' lang='en' version='stable' url='faq' host 'docs' %}">Check our FAQ first.</a></dt>
-    <dd>Try the FAQ — it's got answers to many common questions.</dd>
-    <dt><a href="irc://irc.libera.chat/django">#django IRC channel</a></dt>
-    <dd>chat with other Django users</dd>
-    <dt><a href="https://discord.gg/xcRH6mN4fa" target="_blank">Django Discord Server</a></dt>
-    <dd>Join the Django Discord Community</dd>
-    <dt><a href="https://forum.djangoproject.com/" target="_blank">Official Django Forum</a></dt>
-    <dd>Join the community on the Django Forum.</dd>
-  </dl>
+    <h2>More Help</h2>
+    <dl class="list-links">
+      <dt><a href="{% url 'document-detail' lang='en' version='stable' url='faq' host 'docs' %}">Frequently Asked Questions</a></dt>
+      <dd>The FAQ answers many common questions</dd>
+      <dt><a href="https://www.reddit.com/r/django/" rel="nofollow">r/Django Subreddit</a></dt>
+      <dd>News and links on Reddit</dd>
+      <dt><a href="https://stackoverflow.com/questions/tagged/django" rel="nofollow">StackOverflow</a></dt>
+      <dd>Search community answers</dd>
+      <dt><a href="irc://irc.libera.chat/django">#django IRC Channel</a></dt>
+      <dd>Chat with other Django users like it's 1999</dd>
+    </dl>
 
-  <h2>Tell the World</h2>
-  <dl class="list-links">
-    <dt><a href="https://www.djangopackages.com/">Django-based packages</a></dt>
-    <dd>find Django based projects and packages</dd>
-    <dt><a href="https://www.djangosites.org/">Django-powered sites</a></dt>
-    <dd>add your site to the list</dd>
-    <dt><a href="/community/badges/">Django badges</a></dt>
-    <dd>show your support (or wish longingly)</dd>
-    <dt><a href="/community/logos/">Django logos </a></dt>
-    <dd>download official logos</dd>
-    <dt><a href="/community/desktops/">Django wallpaper</a></dt>
-    <dd>cover your desktop</dd>
-  </dl>
-  <h2>Improve Django</h2>
-  <dl class="list-links">
-    <dt><a href="https://groups.google.com/group/django-updates">django-updates mailing list</a></dt>
-    <dd>get updated for each code and ticket change (for the super-obsessed)</dd>
-    <dt><a href="https://code.djangoproject.com/wiki">Django wiki</a></dt>
-    <dd>contribute tips and documentation</dd>
-  </dl>
-</div>
+    <h2>Dive In</h2>
+    <dl class="list-links">
+      <dt><a href="https://code.djangoproject.com/">Ticket System</a></dt>
+      <dd>View and update bug reports</dd>
+      <dt><a href="https://dashboard.djangoproject.com/">Development Dashboard</a></dt>
+      <dd>Statistics about Django development</dd>
+      <dt><a href="https://groups.google.com/group/django-updates">django-updates Mailing List</a></dt>
+      <dd>Get updated for each code and ticket change</dd>
+    </dl>
+
+    <h2>More Links</h2>
+    <dl class="list-links">
+      <dt><a href="https://www.djangopackages.com/" rel="nofollow">Django Packages</a></dt>
+      <dd>Find third-party packages to supercharge your project</dd>
+      <dt><a href="https://www.djangosites.org/" rel="nofollow">Django-powered Sites</a></dt>
+      <dd>Add your site to the list</dd>
+      <dt><a href="/community/badges/">Django Badges</a></dt>
+      <dd>Show your support (or wish longingly)</dd>
+      <dt><a href="/community/logos/">Django Logos</a></dt>
+      <dd>Download official logos</dd>
+    </dl>
+  </div>
 {% endblock %}

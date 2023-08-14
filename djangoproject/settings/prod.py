@@ -90,3 +90,5 @@ if "sentry_dsn" in SECRETS and not DEBUG:
 if "recaptcha_public_key" in SECRETS:
     RECAPTCHA_PUBLIC_KEY = SECRETS.get("recaptcha_public_key")
     RECAPTCHA_PRIVATE_KEY = SECRETS.get("recaptcha_private_key")
+
+RECAPTCHA_REQUIRED_SCORE = 0.9

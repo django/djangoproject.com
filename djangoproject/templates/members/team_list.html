@@ -1,23 +1,28 @@
 {% extends "base_foundation.html" %}
 
-{% block og_title %}Log in{% endblock %}
-{% block og_description %}Log in to your account{% endblock %}
+{% block og_title %}Meet the Teams | Django Software Foundation{% endblock %}
+{% block og_description %}{% spaceless %}
+  Get to know the teams behind the Django Software Foundation,
+  including the Steering Council and various committees. Learn about
+  their roles and responsibilities in advancing the development and
+  adoption of the Django web framework.
+{% endspaceless %}{% endblock %}
 
 {% block content %}
 
-<h2>Teams</h2>
-<p>Teams indicate who is actively contributing in certain areas.</p>
+  <h2>Teams</h2>
+  <p>Teams indicate who is actively contributing in certain areas.</p>
 
-{% for team in teams %}
-<div class="section">
-<h3 id="{{ team.slug }}-team">{{ team.name }}</h3>
-<p>{{ team.description|safe }}</p>
-<ul>
-{% for member in team.members.all %}
-  <li>{{ member.name }}</li>
-{% endfor %}
-</ul>
-</div>
-{% endfor %}
+  {% for team in teams %}
+    <div class="section">
+      <h3 id="{{ team.slug }}-team">{{ team.name }}<a class="plink" href="#{{ team.slug }}-team">¶</a></h3>
+      <p>{{ team.description|safe }}</p>
+      <ul>
+        {% for member in team.members.all %}
+          <li>{{ member.name }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
 
 {% endblock %}

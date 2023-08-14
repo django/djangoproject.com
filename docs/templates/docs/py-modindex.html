@@ -6,29 +6,29 @@
 {% block current-page-title %}{% trans "Module Index" %}{% endblock %}
 
 {% block body %}
-<h1>{% trans "Module Index" %}</h1>
+    <h1>{% trans "Module Index" %}</h1>
 
-<ul class="jump_links">
+    <ul class="jump_links">
+        {% for letter, objects in doc.content %}
+            <a href="#{{ letter }}"><strong>{{ letter }}</strong></a>{% if not forloop.last %} | {% endif %}
+        {% endfor %}
+    </ul>
+
     {% for letter, objects in doc.content %}
-    <a href="#{{ letter }}"><strong>{{ letter }}</strong></a>{% if not forloop.last %} | {% endif %}
-    {% endfor %}
-</ul>
+        <h3><a name="{{ letter }}">{{ letter|upper }}</a></h3>
+        <ul>
+            {% for module_name, subtype, docname, path, platforms, qualifier, synopsis in objects %}
+                {% if docname %}
+                    <li>
+                        <a href="../{{ docname }}"><tt class="literal xref">{{ module_name }}</tt></a>
+                        {% if synopsis %}
+                            <span class="synopsis"><br />{{ synopsis }}</span>
+                        {% endif %}
+                    </li>
+                {% endif %}
 
-{% for letter, objects in doc.content %}
-<h3><a name="{{ letter }}">{{ letter|upper }}</a></h3>
-<ul>
-    {% for module_name, subtype, docname, path, platforms, qualifier, synopsis in objects %}
-    {% if docname %}
-    <li>
-        <a href="../{{ docname }}"><tt class="literal xref">{{ module_name }}</tt></a>
-        {% if synopsis %}
-        <span class="synopsis"><br />{{ synopsis }}</span>
-        {% endif %}
-    </li>
-    {% endif %}
-
+            {% endfor %}
+        </ul>
     {% endfor %}
-</ul>
-{% endfor %}
 
 {% endblock %}

@@ -3,6 +3,7 @@ html[data-theme="light"],
 :root {
     --body-fg: #{$text};
     --body-bg: #{$white};
+    --logo-bg: #{$white};
 
     --menu: #{$white};
 
@@ -31,6 +32,8 @@ html[data-theme="light"],
     --console-tabs-border: #{$orange};
 
     --warning: #{$warning-yellow};
+    --warning-admonition-icon: #{$warning-icon};
+    --warning-admonition-bg: #{$warning-yellow};
     --warning-text: #{$text};
     --warning-link-block: #{$red-medium};
     --warning-dark: #{$warning-dark-yellow};
@@ -59,6 +62,7 @@ html[data-theme="light"],
     html:not([data-theme="light"]) {
         --body-fg: #C1CAD2;
         --body-bg: #{$black};
+        --logo-bg: #{$logo-bg-dark};
 
         --text-l10: #{$green-light};
         --text-l20: #{$green-very-light};
@@ -80,10 +84,10 @@ html[data-theme="light"],
         --console-tabs-color: #{$dark-orange};
         --console-tabs-border: #{$dark-orange};
 
-
-        --warning-text: #{$black-light-5};
+        --warning-admonition-icon: #{$warning-icon};
+        --warning-admonition-bg: transparent;
+        --warning-text: #{$white};
         --warning-link-block: #{$red};
-
 
         --hairline-color: #{$gray-line};
         --dark-hairline-color: #{gray-medium-l10};
@@ -140,11 +144,19 @@ html[data-theme="light"],
     body [role="contentinfo"] {
         background: darken($green, 10%);
     }
+
+    body .admonition.warning {
+        .admonition-title::before {
+            opacity: 1;
+        }
+    }
+
 }
 
 html[data-theme="dark"] {
     --body-fg: #C1CAD2;
     --body-bg: #{$black};
+    --logo-bg: #{$logo-bg-dark};
 
     --text-l10: #{$green-light};
     --text-l20: #{$green-very-light};
@@ -165,6 +177,11 @@ html[data-theme="dark"] {
 
     --console-tabs-color: #{$dark-orange};
     --console-tabs-border: #{$dark-orange};
+
+    --warning-admonition-icon: #{$warning-icon};
+    --warning-admonition-bg: transparent;
+    --warning-text: #{$white};
+    --warning-link-block: #{$red};
 
     --hairline-color: #{$gray-line};
     --dark-hairline-color: #{gray-medium-l10};
@@ -221,6 +238,11 @@ html[data-theme="dark"] {
         }
     }
 
+    .admonition.warning {
+        .admonition-title::before {
+            opacity: 1;
+        }
+    }
 
     [role="contentinfo"] {
         background: darken($green, 10%);
@@ -325,5 +347,11 @@ html[data-theme="light"] .theme-toggle .theme-label-when-light {
 [role="banner"] .nav-menu-on li:last-child {
     @include respond-max(768px) {
         display: none;
+    }
+}
+
+html[data-theme="light"] .admonition {
+    .admonition-title::before {
+        opacity: 0.5;
     }
 }

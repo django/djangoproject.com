@@ -1,88 +1,78 @@
 {% load humanize %}
 <div class="heroes">
   {% if corporate_members.diamond %}
-  <h3>Diamond Corporate Members (${{ corporate_membership_amounts.diamond|intcomma }}+)</h3>
-  <p>Our diamond <a href="/foundation/corporate-membership/">corporate
-    members</a> include mega corporations and foundations.</p>
-  <div>
-  {% for obj in corporate_members.diamond %}
-    {% include "fundraising/includes/_hero_with_logo.html" %}
-  {% endfor %}
-  </div>
+    <h3>Diamond Corporate Members (${{ corporate_membership_amounts.diamond|intcomma }}+)</h3>
+    <div>
+      {% for obj in corporate_members.diamond %}
+        {% include "fundraising/includes/_hero_with_logo.html" %}
+      {% endfor %}
+    </div>
   {% endif %}
 
   {% if corporate_members.platinum %}
-  <h3>Platinum Corporate Members (${{ corporate_membership_amounts.platinum|intcomma }}+)</h3>
-  <p>Our platinum <a href="/foundation/corporate-membership/">corporate
-    members</a> include organizations of ~500 people.</p>
-  <div>
-  {% for obj in corporate_members.platinum %}
-    {% include "fundraising/includes/_hero_with_logo.html" %}
-  {% endfor %}
-  </div>
+    <h3>Platinum Corporate Members (${{ corporate_membership_amounts.platinum|intcomma }}+)</h3>
+    <div>
+      {% for obj in corporate_members.platinum %}
+        {% include "fundraising/includes/_hero_with_logo.html" %}
+      {% endfor %}
+    </div>
   {% endif %}
 
   {% if corporate_members.gold %}
-  <h3>Gold Corporate Members (${{ corporate_membership_amounts.gold|intcomma }}+)</h3>
-  <p>Our gold <a href="/foundation/corporate-membership/">corporate
-    members</a> include organizations of ~200 people.</p>
-  <div>
-  {% for obj in corporate_members.gold %}
-    {% include "fundraising/includes/_hero_with_logo.html" %}
-  {% endfor %}
-  </div>
+    <h3>Gold Corporate Members (${{ corporate_membership_amounts.gold|intcomma }}+)</h3>
+    <div>
+      {% for obj in corporate_members.gold %}
+        {% include "fundraising/includes/_hero_with_logo.html" %}
+      {% endfor %}
+    </div>
   {% endif %}
 
   {% if corporate_members.silver %}
-  <h3>Silver Corporate Members (${{ corporate_membership_amounts.silver|intcomma }}+)</h3>
-  <p>Our silver <a href="/foundation/corporate-membership/">corporate
-    members</a> include organizations of ~50 people.</p>
-  <div>
-  {% for obj in corporate_members.silver %}
-    {% include "fundraising/includes/_hero_with_logo.html" %}
-  {% endfor %}
-  </div>
+    <h3>Silver Corporate Members (${{ corporate_membership_amounts.silver|intcomma }}+)</h3>
+    <div>
+      {% for obj in corporate_members.silver %}
+        {% include "fundraising/includes/_hero_with_logo.html" %}
+      {% endfor %}
+    </div>
   {% endif %}
 
   {% if corporate_members.bronze %}
-  <h3>Bronze Corporate Members (${{ corporate_membership_amounts.bronze|intcomma }}+)</h3>
-  <p>Our bronze <a href="/foundation/corporate-membership/">corporate
-    members</a> include organizations of ~10 people.</p>
-  <div>
-  {% for obj in corporate_members.bronze %}
-    {% include "fundraising/includes/_hero_with_logo.html" %}
-  {% endfor %}
-  </div>
+    <h3>Bronze Corporate Members (${{ corporate_membership_amounts.bronze|intcomma }}+)</h3>
+    <div>
+      {% for obj in corporate_members.bronze %}
+        {% include "fundraising/includes/_hero_with_logo.html" %}
+      {% endfor %}
+    </div>
   {% endif %}
 
   <h3><a id="in-kind-donors" href="#in-kind-donors">In-kind donors</a></h3>
   <p>These donors help with significant non-cash contributions.</p>
   <div>
-  {% with show_description=True %}
-  {% for obj in inkind_donors %}
-    {% include "fundraising/includes/_hero_with_logo.html" %}
-  {% endfor %}
-  {% endwith %}
+    {% with show_description=True %}
+      {% for obj in inkind_donors %}
+        {% include "fundraising/includes/_hero_with_logo.html" %}
+      {% endfor %}
+    {% endwith %}
   </div>
 
   <h3>Leaders (${{ display_logo_amount|intcomma }}+)</h3>
   <p>Leadership-level donors contribute ${{ display_logo_amount|intcomma }} or
     more in a calendar year.</p>
   <div>
-  {% for obj in leaders %}
-    {% include "fundraising/includes/_hero_with_logo.html" %}
-  {% endfor %}
+    {% for obj in leaders %}
+      {% include "fundraising/includes/_hero_with_logo.html" %}
+    {% endfor %}
   </div>
 
   <h3>Heroes</h3>
   <p>Our donor roll for all donations made in the last {{ display_donor_days }} days.</p>
   <div>
-  {% for donor in heroes %}
-    <div class="no-logo-hero">
-      {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
-        <span>{{ donor.name_with_fallback }}</span>
-      {% endspaceless %}{% if donor.url %}</a>{% endif %}
-    </div>
-  {% endfor %}
+    {% for donor in heroes %}
+      <div class="no-logo-hero">
+        {% if donor.url %}<a href="{{ donor.url }}" rel="nofollow">{% endif %}{% spaceless %}
+          <span>{{ donor.name_with_fallback }}</span>
+        {% endspaceless %}{% if donor.url %}</a>{% endif %}
+      </div>
+    {% endfor %}
   </div>
 </div>

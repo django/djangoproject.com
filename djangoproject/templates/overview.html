@@ -13,44 +13,44 @@
   <h1>Why Django?</h1>
 
   <p>With Django, you can take web applications from concept to launch in a matter of hours. Django takes care of much of the hassle of web development, so you can focus
-     on writing your app without needing to reinvent the wheel. It’s free and open source.</p>
+    on writing your app without needing to reinvent the wheel. It’s free and open source.</p>
 
-<dl class="list-features">
-  <dt><i class="icon icon-bolt"></i> Ridiculously fast.</dt>
-  <dd>
-    <p>Django was designed to help developers take applications from concept to completion as quickly as possible.</p>
-    <a class="link-readmore" href="{% url 'start' %}">See how fast you can start building</a>
-  </dd>
+  <dl class="list-features">
+    <dt><i class="icon icon-bolt"></i> Ridiculously fast.</dt>
+    <dd>
+      <p>Django was designed to help developers take applications from concept to completion as quickly as possible.</p>
+      <a class="link-readmore" href="{% url 'start' %}">See how fast you can start building</a>
+    </dd>
 
-  <dt class="even"><i class="icon icon-briefcase"></i> Fully loaded.</dt>
-  <dd class="even">
-    <p>Django includes dozens of extras you can use to handle common web development tasks. Django takes care of user authentication, content administration, site maps, RSS feeds, and many more tasks — right out of the box.</p>
-    <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='intro/overview' host 'docs' %}">See what’s included</a>
-  </dd>
+    <dt class="even"><i class="icon icon-briefcase"></i> Fully loaded.</dt>
+    <dd class="even">
+      <p>Django includes dozens of extras you can use to handle common web development tasks. Django takes care of user authentication, content administration, site maps, RSS feeds, and many more tasks — right out of the box.</p>
+      <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='intro/overview' host 'docs' %}">See what’s included</a>
+    </dd>
 
-  <dt><i class="icon icon-lock"></i> Reassuringly secure.</dt>
-  <dd>
-    <p>Django takes security seriously and helps developers avoid many common security mistakes, such as SQL injection, cross-site scripting, cross-site request forgery and clickjacking. Its user authentication system provides a secure way to manage user accounts and passwords.</p>
-    <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/security' host 'docs' %}">Read our security overview</a>
-  </dd>
+    <dt><i class="icon icon-lock"></i> Reassuringly secure.</dt>
+    <dd>
+      <p>Django takes security seriously and helps developers avoid many common security mistakes, such as SQL injection, cross-site scripting, cross-site request forgery and clickjacking. Its user authentication system provides a secure way to manage user accounts and passwords.</p>
+      <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/security' host 'docs' %}">Read our security overview</a>
+    </dd>
 
-  <dt class="even"><i class="icon icon-dashboard"></i> Exceedingly scalable.</dt>
-  <dd class="even">
-    <p>Some of the busiest sites on the planet use Django’s ability to quickly and flexibly scale to meet the heaviest traffic demands.</p>
-    <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='faq/general' host 'docs' %}#does-django-scale">Learn more about scaling Django applications</a>
-  </dd>
+    <dt class="even"><i class="icon icon-dashboard"></i> Exceedingly scalable.</dt>
+    <dd class="even">
+      <p>Some of the busiest sites on the planet use Django’s ability to quickly and flexibly scale to meet the heaviest traffic demands.</p>
+      <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='faq/general' host 'docs' %}#does-django-scale">Learn more about scaling Django applications</a>
+    </dd>
 
-  <dt><i class="icon icon-cogs"></i> Incredibly versatile.</dt>
-  <dd>
-    <p>Companies, organizations and governments have used Django to build all sorts of things — from content management systems to social networks to scientific computing platforms.</p>
+    <dt><i class="icon icon-cogs"></i> Incredibly versatile.</dt>
+    <dd>
+      <p>Companies, organizations and governments have used Django to build all sorts of things — from content management systems to social networks to scientific computing platforms.</p>
     {% comment %}{# I'm hiding this link until we enable case studies #}<a class="link-readmore" href="#">Call To Action Relating to Feature</a>{% endcomment %}
-  </dd>
+    </dd>
 
-</dl>
+  </dl>
 
-<div class="section">
-  <a href="{% url 'start' %}" class="cta">Get started <em>with Django</em></a>
-</div>
+  <div class="section">
+    <a href="{% url 'start' %}" class="cta">Get started <em>with Django</em></a>
+  </div>
 {% endblock %}
 
 {% block content-related %}
@@ -91,21 +91,21 @@
 
 {% block content-extra %}
 
-<div class="layout-tertiary">
-  <div class="container">
-    <h2>Sites Using Django</h2>
+  <div class="layout-tertiary">
+    <div class="container">
+      <h2>Sites Using Django</h2>
     {# Remove the sites that are used in case studies once they are there #}
-    <ul class="list-link-soup">
-      <li><a href="https://disqus.com/">Disqus</a></li>
-      <li><a href="https://www.instagram.com/">Instagram</a></li>
-      <li><a href="https://www.knightfoundation.org/">Knight Foundation</a></li>
-      <li><a href="https://www.macfound.org/">MacArthur Foundation</a></li>
-      <li><a href="https://www.mozilla.org/">Mozilla</a></li>
-      <li><a href="http://www.nationalgeographic.com/">National Geographic</a></li>
-      <li><a href="https://okfn.org/">Open Knowledge Foundation</a></li>
-      <li><a href="https://www.pinterest.com/">Pinterest</a></li>
-      <li><a href="https://www.openstack.org/">Open Stack</a></li>
-    </ul>
+      <ul class="list-link-soup">
+        <li><a href="https://disqus.com/">Disqus</a></li>
+        <li><a href="https://www.instagram.com/">Instagram</a></li>
+        <li><a href="https://www.knightfoundation.org/">Knight Foundation</a></li>
+        <li><a href="https://www.macfound.org/">MacArthur Foundation</a></li>
+        <li><a href="https://www.mozilla.org/">Mozilla</a></li>
+        <li><a href="http://www.nationalgeographic.com/">National Geographic</a></li>
+        <li><a href="https://okfn.org/">Open Knowledge Foundation</a></li>
+        <li><a href="https://www.pinterest.com/">Pinterest</a></li>
+        <li><a href="https://www.openstack.org/">Open Stack</a></li>
+      </ul>
+    </div>
   </div>
-</div>
 {% endblock %}

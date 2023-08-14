@@ -3,14 +3,18 @@
 {% block og_title %}Meeting minutes archive{% endblock %}
 {% block og_description %}View meeting minutes{% endblock %}
 
+{% block head_extra %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url 'foundation-minutes-feed' %}" />
+{% endblock %}
+
 {% block content %}
-<h1>Meeting minutes archive</h1>
+  <h1>Meeting minutes archive</h1>
 
-<p>Select a year to view meeting minutes:</p>
+  <p>Select a year to view meeting minutes:</p>
 
-<ul>
-  {% for year in date_list %}
-  <li><a href="{% url 'foundation_meeting_archive_year' year=year.year %}">{{ year.year }}</a></li>
-  {% endfor %}
-</ul>
+  <ul>
+    {% for year in date_list %}
+      <li><a href="{% url 'foundation_meeting_archive_year' year=year.year %}">{{ year.year }}</a></li>
+    {% endfor %}
+  </ul>
 {% endblock %}

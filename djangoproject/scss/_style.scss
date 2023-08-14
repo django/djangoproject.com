@@ -48,7 +48,8 @@ a {
     }
 }
 
-::selection { // Text Selection Colors
+::selection {
+    // Text Selection Colors
     background: var(--secondary-accent);
 }
 
@@ -57,7 +58,8 @@ a {
 }
 
 ol li,
-ul li { //list style
+ul li {
+    //list style
     margin-top: 10px;
 }
 
@@ -2282,17 +2284,18 @@ dt {
     }
 
     &.warning {
-        background-color: var(--warning);
+        background-color: var(--warning-admonition-bg);
         border-color: var(--warning-dark);
         color: var(--warning-text);
 
         .admonition-title::before {
-            color: #E9BD46;
+            // color: #E9BD46;
+            color: var(--warning-admonition-icon);
             content: $fa-var-exclamation-triangle;
         }
 
         code {
-            color: var(--warning-text);
+            color: var(--primary);
         }
     }
 
@@ -2377,7 +2380,8 @@ dt {
 
 #doc-versions,
 #doc-languages,
-#faq-link {
+#faq-link,
+#backtotop-link {
     margin: 0;
     padding-top: 0.25em;
     padding-bottom: 0.25em;
@@ -2427,6 +2431,11 @@ dt {
                 color: var(--secondary);
                 border: 1px solid $green-light;
             }
+        }
+
+        a.icon-chevron-up-align {
+            // Should be removed when icon-chevron-up image have the same black space on both sides.
+            padding-right: 11px;
         }
     }
 
@@ -2676,6 +2685,13 @@ table.docutils th {
 
             &:visited {
                 color: var(--link-color);
+            }
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: var(--search-link-hover);
+                text-decoration: none;
             }
 
             &:hover,
@@ -3060,7 +3076,8 @@ form.donate {
 
     input[type=text] {
         padding-left: 20px;
-        padding-right: 9px; /* Magic value to right-align the button inside the input */
+        padding-right: 9px;
+        /* Magic value to right-align the button inside the input */
     }
 }
 
@@ -3395,7 +3412,10 @@ form .footnote {
         }
 
         .hero {
-            width: calc(100% / 3);
+            width: 30%;
+            background-color: var(--logo-bg);
+            border-radius: 10px;
+            margin: 5px;
             position: relative;
             height: auto;
 
@@ -3419,19 +3439,21 @@ form .footnote {
             margin-bottom: 5px;
         }
 
-        .no-logo-hero {
-            min-height: 60px;
-            margin-right: 24px;
-        }
-
         div {
             float: left;
             text-align: center;
+            width: 100%;
 
             img {
                 max-width: 90%;
                 max-height: 170px;
             }
+        }
+
+        .no-logo-hero {
+            min-height: 60px;
+            margin-right: 24px;
+            width: auto;
         }
     }
 
@@ -3502,6 +3524,33 @@ ul.corporate-members li {
     max-height: 150px;
     max-width: 150px;
     padding: 0 0 10px 10px;
+}
+
+/* Corporate membership download page, this mimics .fundraising-sidebar */
+
+.corporate-members {
+    .member-logo {
+        margin-top: 20px;
+        width: 20%;
+        float: left;
+        margin-bottom: 20px;
+
+        img {
+            width: 100%;
+            max-width: 75px;
+        }
+    }
+
+    .small-cta {
+        width: 70%;
+        float: left;
+        vertical-align: top;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 20px;
+    }
+
+    clear: both;
 }
 
 /* Messages */
@@ -3600,5 +3649,47 @@ ul.corporate-members li {
     @include respond-min(768px) {
         display: flex;
         justify-content: space-between;
+    }
+
+    @include respond-max(1200px) {
+        .community-title {
+            text-align: center;
+        }
+
+        .community-cta-wrapper {
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+    }
+
+    .community-cta-wrapper {
+        display: flex;
+        gap: 6rem;
+        flex-wrap: wrap;
+        align-content: center;
+    }
+
+    .community-cta-a {
+        display: inline-block;
+        width: 300px;
+        height: 300px;
+    }
+
+    .community-cta {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: var(--secondary-accent);
+        border-radius: 20px;
+    }
+
+    .community-cta svg {
+        color: var(--body-fg);
     }
 }

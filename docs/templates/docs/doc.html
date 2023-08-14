@@ -23,8 +23,8 @@
       {% url 'document-index' lang=available_lang version=version host 'docs' as alternate_url %}
     {% endif %}
     <link rel="alternate"
-       hreflang="{{ available_lang }}"
-       href="{{ alternate_url }}">
+          hreflang="{{ available_lang }}"
+          href="{{ alternate_url }}">
   {% endfor %}
 
   <link rel="search"
@@ -34,184 +34,189 @@
 {% endblock link_rel_tags %}
 
 {% block body_extra %}
-{% if release.is_dev %}
-{% if "internals" not in docurl %}{# The dev version is canonical for internals/. #}
-<div id="dev-warning" class="doc-floating-warning">
-  {% trans "This document is for Django's development version, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
-</div>
-{% endif %}
-{% elif release.is_preview %}
-<div id="dev-warning" class="doc-floating-warning">
-  {% trans "This document is for a preview release of Django, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
-</div>
-{% elif not release.is_supported %}
-<div id="outdated-warning" class="doc-floating-warning">
-  {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
-</div>
-{% endif %}
+  {% if release.is_dev %}
+    {% if "internals" not in docurl %}{# The dev version is canonical for internals/. #}
+      <div id="dev-warning" class="doc-floating-warning">
+        {% trans "This document is for Django's development version, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
+      </div>
+    {% endif %}
+  {% elif release.is_preview %}
+    <div id="dev-warning" class="doc-floating-warning">
+      {% trans "This document is for a preview release of Django, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
+    </div>
+  {% elif not release.is_supported %}
+    <div id="outdated-warning" class="doc-floating-warning">
+      {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
+    </div>
+  {% endif %}
 {% endblock body_extra %}
 
 {% block content %}
-<div id="version-switcher">
-  <ul id="faq-link">
-    <li class="current-link">
-      <a href="{% url 'document-detail' lang=lang version=version url='faq/help' host 'docs' %}">
-        <span>{% trans "Getting Help" %}</span>
-      </a>
-    </li>
-  </ul>
-  <ul id="doc-languages" class="language-switcher doc-switcher">
-  {% for available_lang in available_languages %}
-  {% if lang != available_lang %}
-  <li class="other">
-    {% if docurl %}
-      {% url 'document-detail' lang=available_lang version=version url=docurl host 'docs' as other_url %}
-    {% else %}
-      {% url 'document-index' lang=available_lang version=version host 'docs' as other_url %}
-    {% endif %}
-    <a href="{{ other_url }}{% if searchparams %}search/?{{ searchparams }}{% endif %}">{{ available_lang }}</a>
-  </li>
-  {% endif %}
-  {% endfor %}
-    <li class="current"
-        title="{% blocktrans %}Click on the links on the left to switch to another language.{% endblocktrans %}">
-      <span>{% trans "Language:" %} <strong>{{ lang }}</strong></span>
-    </li>
-  </ul>
+  <div id="version-switcher">
+    <ul id="faq-link">
+      <li class="current-link">
+        <a href="{% url 'document-detail' lang=lang version=version url='faq/help' host 'docs' %}">
+          <span>{% trans "Getting Help" %}</span>
+        </a>
+      </li>
+    </ul>
+    <ul id="doc-languages" class="language-switcher doc-switcher">
+      {% for available_lang in available_languages %}
+        {% if lang != available_lang %}
+          <li class="other">
+            {% if docurl %}
+              {% url 'document-detail' lang=available_lang version=version url=docurl host 'docs' as other_url %}
+            {% else %}
+              {% url 'document-index' lang=available_lang version=version host 'docs' as other_url %}
+            {% endif %}
+            <a href="{{ other_url }}{% if searchparams %}search/?{{ searchparams }}{% endif %}">{{ available_lang }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+      <li class="current"
+          title="{% blocktrans %}Click on the links on the left to switch to another language.{% endblocktrans %}">
+        <span>{% trans "Language:" %} <strong>{{ lang }}</strong></span>
+      </li>
+    </ul>
 
-  {% get_all_doc_versions docurl as other_versions %}
-  <ul id="doc-versions" class="version-switcher doc-switcher">
-    {% for other_version in other_versions %}
-    {% if version != other_version %}
-    <li class="other">
-      {% if docurl %}
-        {% url 'document-detail' lang=lang version=other_version url=docurl host 'docs' as other_url %}
-      {% else %}
-        {% url 'document-index' lang=lang version=other_version host 'docs' as other_url %}
+    {% get_all_doc_versions docurl as other_versions %}
+    <ul id="doc-versions" class="version-switcher doc-switcher">
+      {% for other_version in other_versions %}
+        {% if version != other_version %}
+          <li class="other">
+            {% if docurl %}
+              {% url 'document-detail' lang=lang version=other_version url=docurl host 'docs' as other_url %}
+            {% else %}
+              {% url 'document-index' lang=lang version=other_version host 'docs' as other_url %}
+            {% endif %}
+            <a href="{{ other_url }}{% if searchparams %}search/?{{ searchparams }}{% endif %}">{{ other_version }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+      <li class="current{% if release.is_dev %} dev{% endif %}"
+          title="{% if release.is_dev %}{% blocktrans trimmed %}
+                   This document is for Django's development version, which can be significantly different from previous releases.
+                 {% endblocktrans %}{% else %}{% blocktrans trimmed %}
+                   This document describes Django {{ version }}.
+                 {% endblocktrans %}{% endif %} {% blocktrans trimmed %}
+                   Click on the links on the left to see other versions.
+                 {% endblocktrans %}">
+        <span>{% trans "Documentation version:" %}
+          <strong>{% if release.is_dev %}development{% else %}{{ version }}{% endif %}</strong>
+        </span>
+      </li>
+    </ul>
+    <ul id="backtotop-link">
+      <li class="current-link">
+        <a href="#top" aria-label="Back to top" class="icon-chevron-up-align"><i class="icon icon-chevron-up"></i></a>
+      </li>
+    </ul>
+  </div>
+
+  {% block body %}
+    <div id="docs-content">
+      {{ doc.body|safe }}
+    </div>
+  {% endblock body %}
+
+  {% if doc.prev or doc.next %}
+    <div class="browse-horizontal">
+      {% if doc.prev %}
+        <div class="left"><a href="{{ doc.prev.link }}"><i class="icon icon-chevron-left"></i> {{ doc.prev.title|safe }}</a></div>
       {% endif %}
-      <a href="{{ other_url }}{% if searchparams %}search/?{{ searchparams }}{% endif %}">{{ other_version }}</a>
-    </li>
-    {% endif %}
-    {% endfor %}
-    <li class="current{% if release.is_dev %} dev{% endif %}"
-        title="{% if release.is_dev %}{% blocktrans trimmed %}
-      This document is for Django's development version, which can be significantly different from previous releases.
-    {% endblocktrans %}{% else %}{% blocktrans trimmed %}
-      This document describes Django {{ version }}.
-    {% endblocktrans %}{% endif %} {% blocktrans trimmed %}
-      Click on the links on the left to see other versions.
-    {% endblocktrans %}">
-       <span>{% trans "Documentation version:" %}
-         <strong>{% if release.is_dev %}development{% else %}{{ version }}{% endif %}</strong>
-       </span>
-    </li>
-  </ul>
-</div>
-
-{% block body %}
-<div id="docs-content">
-{{ doc.body|safe }}
-</div>
-{% endblock body %}
-
-{% if doc.prev or doc.next %}
-<div class="browse-horizontal">
-  {% if doc.prev %}
-  <div class="left"><a href="{{ doc.prev.link }}"><i class="icon icon-chevron-left"></i> {{ doc.prev.title|safe }}</a></div>
+      {% if doc.next %}
+        <div class="right"><a href="{{ doc.next.link }}">{{ doc.next.title|safe }} <i class="icon icon-chevron-right"></i></a></div>
+      {% endif %}
+    </div>
   {% endif %}
-  {% if doc.next %}
-  <div class="right"><a href="{{ doc.next.link }}">{{ doc.next.title|safe }} <i class="icon icon-chevron-right"></i></a></div>
-  {% endif %}
-</div>
-{% endif %}
 
 {% endblock content %}
 
 
 {% block content-related %}
-<h1 class="visuallyhidden">{% trans "Additional Information" %}</h1>
-<div role="complementary">
+  <h1 class="visuallyhidden">{% trans "Additional Information" %}</h1>
+  <div role="complementary">
 
-  {% donation_snippet %}
+    {% donation_snippet %}
 
-  {% block toc-wrapper %}
-    <h2>{% trans "Contents" %}</h2>
-    {% block toc %}
-    {{ doc.toc|safe }}
-    {% endblock toc %}
-  {% endblock toc-wrapper %}
+    {% block toc-wrapper %}
+      <h2>{% trans "Contents" %}</h2>
+      {% block toc %}
+        {{ doc.toc|safe }}
+      {% endblock toc %}
+    {% endblock toc-wrapper %}
 
-  {% block browse-wrapper %}
-  <h2>{% trans "Browse" %}</h2>
-  <ul>
-    {% block browse %}
-    {% if doc.prev %}
-    <li>{% trans "Prev:" %} <a href="{{ doc.prev.link }}">{{ doc.prev.title|safe }}</a></li>
-    {% endif %}
-    {% if doc.next %}
-    <li>{% trans "Next:" %} <a href="{{ doc.next.link }}">{{ doc.next.title|safe }}</a></li>
-    {% endif %}
-    <li><a href="{% url 'document-detail' lang=lang version=version url="contents" host 'docs' %}">{% trans "Table of contents" %}</a></li>
-    {% for doc, title, accesskey, shorttitle in env.rellinks %}
-    <li><a href="{% url 'document-detail' lang=lang version=version url=doc host 'docs' %}">{{ title }}</a></li>
-    {% endfor %}
-    {% endblock browse %}
-  </ul>
-  {% endblock browse-wrapper %}
+    {% block browse-wrapper %}
+      <h2>{% trans "Browse" %}</h2>
+      <ul>
+        {% block browse %}
+          {% if doc.prev %}
+            <li>{% trans "Prev:" %} <a href="{{ doc.prev.link }}">{{ doc.prev.title|safe }}</a></li>
+          {% endif %}
+          {% if doc.next %}
+            <li>{% trans "Next:" %} <a href="{{ doc.next.link }}">{{ doc.next.title|safe }}</a></li>
+          {% endif %}
+          <li><a href="{% url 'document-detail' lang=lang version=version url="contents" host 'docs' %}">{% trans "Table of contents" %}</a></li>
+          {% for doc, title, accesskey, shorttitle in env.rellinks %}
+            <li><a href="{% url 'document-detail' lang=lang version=version url=doc host 'docs' %}">{{ title }}</a></li>
+          {% endfor %}
+        {% endblock browse %}
+      </ul>
+    {% endblock browse-wrapper %}
 
-  {% block breadcrumbs-wrapper %}
-  <h2>{% trans "You are here:" %}</h2>
-  <ul>
-    <li>
-      <a href="{% url 'document-index' lang=lang version=version host 'docs' %}">{% blocktrans %}Django {{ version }} documentation{% endblocktrans %}</a>
-      {% for p in doc.parents %}
-      <ul><li><a href="{{ p.link }}">{{ p.title|safe }}</a>
-      {% endfor %}
-      <ul><li>{% block current-page-title %}{{ doc.title|safe }}{% endblock current-page-title %}</li></ul>
-      {% for p in doc.parents %}</li></ul>{% endfor %}
-    </li>
-  </ul>
-  {% endblock breadcrumbs-wrapper %}
+    {% block breadcrumbs-wrapper %}
+      <h2>{% trans "You are here:" %}</h2>
+      <ul>
+        <li>
+          <a href="{% url 'document-index' lang=lang version=version host 'docs' %}">{% blocktrans %}Django {{ version }} documentation{% endblocktrans %}</a>
+          {% for p in doc.parents %}
+            <ul><li><a href="{{ p.link }}">{{ p.title|safe }}</a>
+          {% endfor %}
+          <ul><li>{% block current-page-title %}{{ doc.title|safe }}{% endblock current-page-title %}</li></ul>
+          {% for p in doc.parents %}</li></ul>{% endfor %}
+        </li>
+      </ul>
+    {% endblock breadcrumbs-wrapper %}
 
-  {% block help-wrapper %}
-  <h2 id="getting-help-sidebar">{% trans "Getting help" %}</h2>
-  <dl class="list-links">
-    <dt><a href="{% url 'document-detail' lang=lang version=version url="faq" host 'docs' %}">{% trans "FAQ" %}</a></dt>
-    <dd>{% blocktrans %}Try the FAQ — it's got answers to many common questions.{% endblocktrans %}</dd>
+    {% block help-wrapper %}
+      <h2 id="getting-help-sidebar">{% trans "Getting help" %}</h2>
+      <dl class="list-links">
+        <dt><a href="{% url 'document-detail' lang=lang version=version url="faq" host 'docs' %}">{% trans "FAQ" %}</a></dt>
+        <dd>{% blocktrans %}Try the FAQ — it's got answers to many common questions.{% endblocktrans %}</dd>
 
-    <dt><a href="/en/stable/genindex/">{% trans "Index" %}</a>, <a href="/en/stable/py-modindex/">{% trans "Module Index" %}</a>, or <a href="/en/stable/contents/">{% trans "Table of Contents" %}</a></dt>
-    <dd>{% blocktrans %}Handy when looking for specific information.{% endblocktrans %}</dd>
+        <dt><a href="/en/stable/genindex/">{% trans "Index" %}</a>, <a href="/en/stable/py-modindex/">{% trans "Module Index" %}</a>, or <a href="/en/stable/contents/">{% trans "Table of Contents" %}</a></dt>
+        <dd>{% blocktrans %}Handy when looking for specific information.{% endblocktrans %}</dd>
 
-    <dt><a href="https://groups.google.com/group/django-users/">{% trans "django-users mailing list" %}</a></dt>
-    <dd>{% blocktrans %}Search for information in the archives of the django-users mailing list, or post a question.{% endblocktrans %}</dd>
+        <dt><a href="https://groups.google.com/group/django-users/">{% trans "django-users mailing list" %}</a></dt>
+        <dd>{% blocktrans %}Search for information in the archives of the django-users mailing list, or post a question.{% endblocktrans %}</dd>
 
-    <dt><a href="irc://irc.libera.chat/django">{% trans "#django IRC channel" %}</a></dt>
-    <dd>{% blocktrans %}Ask a question in the #django IRC channel, or search the IRC logs to see if it’s been asked before.{% endblocktrans %}</dd>
+        <dt><a href="irc://irc.libera.chat/django">{% trans "#django IRC channel" %}</a></dt>
+        <dd>{% blocktrans %}Ask a question in the #django IRC channel, or search the IRC logs to see if it’s been asked before.{% endblocktrans %}</dd>
 
-    <dt><a href="https://discord.gg/xcRH6mN4fa">{% trans "Django Discord Server" %}</a></dt>
-    <dd>{% blocktrans %}Join the Django Discord Community.{% endblocktrans %}</dd>
+        <dt><a href="https://discord.gg/xcRH6mN4fa">{% trans "Django Discord Server" %}</a></dt>
+        <dd>{% blocktrans %}Join the Django Discord Community.{% endblocktrans %}</dd>
 
-    <dt><a href="https://forum.djangoproject.com/">{% trans "Official Django Forum" %}</a></dt>
-    <dd>{% blocktrans %}Join the community on the Django Forum.{% endblocktrans %}</dd>
+        <dt><a href="https://forum.djangoproject.com/">{% trans "Official Django Forum" %}</a></dt>
+        <dd>{% blocktrans %}Join the community on the Django Forum.{% endblocktrans %}</dd>
 
-    <dt><a href="https://code.djangoproject.com/">{% trans "Ticket tracker" %}</a></dt>
-    <dd>{% blocktrans %}Report bugs with Django or Django documentation in our ticket tracker.{% endblocktrans %}</dd>
-  </dl>
-  {% endblock help-wrapper %}
+        <dt><a href="https://code.djangoproject.com/">{% trans "Ticket tracker" %}</a></dt>
+        <dd>{% blocktrans %}Report bugs with Django or Django documentation in our ticket tracker.{% endblocktrans %}</dd>
+      </dl>
+    {% endblock help-wrapper %}
 
-  {% block links-wrapper %}
-  <h2>{% trans "Download:" %}</h2>
-  <p>
-    {% if version == "dev" %}{% trans "Offline (development version):" %}
-    {% else %}{% blocktrans %}Offline (Django {{ version }}):{% endblocktrans %}{% endif %}
-    <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> |
-    <a href="https://media.readthedocs.org/pdf/django/{{ rtd_version }}/django.pdf">PDF</a> |
-    <a href="https://media.readthedocs.org/epub/django/{{ rtd_version }}/django.epub">ePub</a>
-    <br>
-    <span class="quiet">
-      {% blocktrans %}Provided by <a href="https://readthedocs.org/">Read the Docs</a>.{% endblocktrans %}
-    </span>
-  </p>
-  {% endblock links-wrapper %}
-</div>
+    {% block links-wrapper %}
+      <h2>{% trans "Download:" %}</h2>
+      <p>
+        {% if version == "dev" %}{% trans "Offline (development version):" %}
+        {% else %}{% blocktrans %}Offline (Django {{ version }}):{% endblocktrans %}{% endif %}
+        <a href="{{ MEDIA_URL }}docs/django-docs-{{ version }}-{{ lang }}.zip">HTML</a> |
+        <a href="https://media.readthedocs.org/pdf/django/{{ rtd_version }}/django.pdf">PDF</a> |
+        <a href="https://media.readthedocs.org/epub/django/{{ rtd_version }}/django.epub">ePub</a>
+        <br>
+        <span class="quiet">
+          {% blocktrans %}Provided by <a href="https://readthedocs.org/">Read the Docs</a>.{% endblocktrans %}
+        </span>
+      </p>
+    {% endblock links-wrapper %}
+  </div>
 {% endblock content-related %}

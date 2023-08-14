@@ -5,7 +5,7 @@
 
   {% if messages %}
     {% for message in messages %}
-    <p>{{ message }}</p>
+      <p>{{ message }}</p>
     {% endfor %}
     <hr>
   {% endif %}
@@ -14,69 +14,69 @@
 
 {% block content %}
 
-<h1>Manage your donations to the Django Software Foundation</h1>
-<p>Your support is <strong>invaluable</strong> to continue the rapid development
-  of Django and helps the <strong>Django Fellowship</strong> program in particular.
-  Thank you!</p>
+  <h1>Manage your donations to the Django Software Foundation</h1>
+  <p>Your support is <strong>invaluable</strong> to continue the rapid development
+    of Django and helps the <strong>Django Fellowship</strong> program in particular.
+    Thank you!</p>
 
-<form enctype="multipart/form-data" action="" method="post" class="form-input django-hero-form"
-    data-stripe-key="{{ stripe_publishable_key }}" data-stripe-icon="{% static 'img/dj-stripe-icon.jpg' %}"
-    data-update-card-url="{% url 'fundraising:update-card' %}">
-  <h2>Manage your participation in the fundraising campaigns</h2>
-  <p>Information entered below will be visible on all of your donations to the Django Project.</p>
-  {% csrf_token %}
-  {% include 'fundraising/includes/_form.html' with form=hero_form %}
-  <p class="submit">
-    <input type="submit" class="cta" value="Save &rarr;">
-  </p>
-  {# Always include to avoid "Management form has been tampered with" if no recurring donations exist #}
-  {{ modify_donations_formset.management_form }}
-  {% if recurring_donations %}
-    <hr />
-    <h2>Modify your recurring donations</h2>
-    <p>Update the time interval or amount of your recurring donation here:</p>
-    {% for form in modify_donations_formset %}
-      {% include 'fundraising/includes/_form.html' %}
-      <div class="change-card-container">
-        <input type="button" value="Change card details" class="change-card cta outline inline"
-            data-donation-id="{{ form.instance.id }}" data-donor-email="{{ hero.email }}">
-        <span class="change-card-result"></span>
-      </div>
-    {% endfor %}
+  <form enctype="multipart/form-data" action="" method="post" class="form-input django-hero-form"
+        data-stripe-key="{{ stripe_publishable_key }}" data-stripe-icon="{% static 'img/dj-stripe-icon.jpg' %}"
+        data-update-card-url="{% url 'fundraising:update-card' %}">
+    <h2>Manage your participation in the fundraising campaigns</h2>
+    <p>Information entered below will be visible on all of your donations to the Django Project.</p>
+    {% csrf_token %}
+    {% include 'fundraising/includes/_form.html' with form=hero_form %}
     <p class="submit">
       <input type="submit" class="cta" value="Save &rarr;">
     </p>
-</form>
-    <hr />
-    <h2>Cancel your recurring donations</h2>
-    <p>You can cancel your recurring donation to the Django Software Foundation anytime.</p>
-    <ul>
-    {% for donation in recurring_donations %}
-      <li>
-        Your {{ donation.interval }} recurring donation of ${{ donation.subscription_amount }}.
-        <form method="POST" action="{% url 'fundraising:cancel-donation' hero.pk %}">
-          {% csrf_token %}
-          <input name="donation" type="hidden" value="{{ donation.pk }}">
-          <input type="submit" value="cancel this donation">
-        </form>
-      </li>
-    {% endfor %}
-    </ul>
-  {% else %}
-</form>
-  {% endif %}
-  {% if past_payments %}
-  <hr />
-    <h2>Your past donations</h2>
-    <ul>
-    {% for payment in past_payments %}
-      <li>
-        ${{ payment.amount }} on {{ payment.date|date:"N jS, Y \a\t P" }}
-        ({{ payment.donation.get_interval_display }})
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %}
+  {# Always include to avoid "Management form has been tampered with" if no recurring donations exist #}
+    {{ modify_donations_formset.management_form }}
+    {% if recurring_donations %}
+      <hr />
+      <h2>Modify your recurring donations</h2>
+      <p>Update the time interval or amount of your recurring donation here:</p>
+      {% for form in modify_donations_formset %}
+        {% include 'fundraising/includes/_form.html' %}
+        <div class="change-card-container">
+          <input type="button" value="Change card details" class="change-card cta outline inline"
+                 data-donation-id="{{ form.instance.id }}" data-donor-email="{{ hero.email }}">
+          <span class="change-card-result"></span>
+        </div>
+      {% endfor %}
+      <p class="submit">
+        <input type="submit" class="cta" value="Save &rarr;">
+      </p>
+      </form>
+      <hr />
+      <h2>Cancel your recurring donations</h2>
+      <p>You can cancel your recurring donation to the Django Software Foundation anytime.</p>
+      <ul>
+        {% for donation in recurring_donations %}
+          <li>
+            Your {{ donation.interval }} recurring donation of ${{ donation.subscription_amount }}.
+            <form method="POST" action="{% url 'fundraising:cancel-donation' hero.pk %}">
+              {% csrf_token %}
+              <input name="donation" type="hidden" value="{{ donation.pk }}">
+              <input type="submit" value="cancel this donation">
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      </form>
+    {% endif %}
+    {% if past_payments %}
+      <hr />
+      <h2>Your past donations</h2>
+      <ul>
+        {% for payment in past_payments %}
+          <li>
+            ${{ payment.amount }} on {{ payment.date|date:"N jS, Y \a\t P" }}
+            ({{ payment.donation.get_interval_display }})
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
 {% endblock %}
 
 {% block content-extra %}{% endblock %}

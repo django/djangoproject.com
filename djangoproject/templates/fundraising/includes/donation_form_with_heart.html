@@ -1,59 +1,63 @@
 {% load static fundraising_extras humanize %}
 
 {% with goal_percent=donated_amount|as_percentage:goal_amount %}
-<div class="fundraising-index" id="donate">
+  <div class="fundraising-index" id="donate">
 
-  <div class="fundraising-heart" data-percent="{{ goal_percent }}">
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 503 431">
-      <switch>
-        <g>
-          <g transform="translate(4, 2)" id="pixels">
-            <path d="M 71 0 L 213 0 L 213 71 L 284 71 L 284 0 L 426 0 L 426 71 L 497 71 L 497 213 L 426 213 L 426 284 L 355 284 L 355 355 L 284 355 L 284 426 L 213 426 L 213 355 L 142 355 L 142 284 L 71 284 L 71 213 L 0 213 L 0 71 L 71 71 L 71 0" fill="#f8f8f8" stroke="#c0c0c0" stroke-width="1" />
+    <div class="fundraising-heart" data-percent="{{ goal_percent }}">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 503 431">
+        <switch>
+          <g>
+            <g transform="translate(4, 2)" id="pixels">
+              <path d="M 71 0 L 213 0 L 213 71 L 284 71 L 284 0 L 426 0 L 426 71 L 497 71 L 497 213 L 426 213 L 426 284 L 355 284 L 355 355 L 284 355 L 284 426 L 213 426 L 213 355 L 142 355 L 142 284 L 71 284 L 71 213 L 0 213 L 0 71 L 71 71 L 71 0" fill="#f8f8f8" stroke="#c0c0c0" stroke-width="1" />
+            </g>
+            <text x="50%" y="43%" alignment-baseline="middle" text-anchor="middle">{{ goal_percent|floatformat:'0' }}%</text>
           </g>
-          <text x="50%" y="43%" alignment-baseline="middle" text-anchor="middle">{{ goal_percent|floatformat:'0' }}%</text>
-        </g>
-        <foreignObject>
-          <img src="{% static 'img/fundraising-heart.svg' %}" />
-        </foreignObject>
-      </switch>
-    </svg>
-  </div>
-
-  <div class="description">
-    <ul>
-      <li><strong>{{ goal_percent }}% funded</strong></li>
-      <li><strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ goal_amount|intcomma }} goal for
-        {{ goal_start_date|date:"Y" }}</li>
-      <li><strong>{{ total_donors }} donor{{ total_donors|pluralize:",s" }}</strong></li>
-    </ul>
-
-    <div class="donate">
-      <form
-            method="post"
-            class="stripe-donation"
-            action-for-donation-session="{% url "fundraising:donation-session" %}"
-            data-stripe-key="{{ stripe_publishable_key }}"
-            data-stripe-icon="{% static 'img/dj-stripe-icon.jpg' %}"
-            data-is-logged-in="{{ user.is_authenticated }}"
-            data-login-url="{% url 'login' %}">
-          {% csrf_token %}
-        <h3>Help us make it happen:</h3>
-        {{ form.interval }}
-        {{ form.amount }}
-        <div class="custom-donation">
-          <span class="prefix">US $ (integer only)</span>
-        </div>
-        {{ form.captcha }}
-        <input id="donate-button" type="submit" value="Donate monthly" class="cta" />
-      </form>
+          <foreignObject>
+            <img src="{% static 'img/fundraising-heart.svg' %}" />
+          </foreignObject>
+        </switch>
+      </svg>
     </div>
+
+    <div class="description">
+      <ul>
+        <li><strong>{{ goal_percent }}% funded</strong></li>
+        <li><strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ goal_amount|intcomma }} goal for
+          {{ goal_start_date|date:"Y" }}</li>
+        <li>
+          Companies able to make a <strong>larger donation</strong>
+          ($2,000+/year) are invited to apply to be Corporate Members
+          <a href="{% url 'members:corporate-members-join' %}">here</a>.
+        </li>
+      </ul>
+
+      <div class="donate">
+        <form
+          method="post"
+          class="stripe-donation"
+          action-for-donation-session="{% url "fundraising:donation-session" %}"
+          data-stripe-key="{{ stripe_publishable_key }}"
+          data-stripe-icon="{% static 'img/dj-stripe-icon.jpg' %}"
+          data-is-logged-in="{{ user.is_authenticated }}"
+          data-login-url="{% url 'login' %}">
+          {% csrf_token %}
+          <h3>Help us make it happen:</h3>
+          {{ form.interval }}
+          {{ form.amount }}
+          <div class="custom-donation">
+            <span class="prefix">US $ (integer only)</span>
+          </div>
+          {{ form.captcha }}
+          <input id="donate-button" type="submit" value="Donate monthly" class="cta" />
+        </form>
+      </div>
+    </div>
+    <div class="cls"></div>
+    <p class="footnote">
+      Your logo will be visible below if you contribute at least
+      US&nbsp;${{ display_logo_amount|intcomma }}.<br>
+    </p>
   </div>
-  <div class="cls"></div>
-  <p class="footnote">
-    Your logo will be visible below if you contribute at least
-    US&nbsp;${{ display_logo_amount|intcomma }}.<br>
-  </p>
-</div>
 {% endwith %}
 
 <hr style="margin: 40px 0" />

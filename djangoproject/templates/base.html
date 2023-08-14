@@ -20,21 +20,21 @@
     <meta name="theme-color" content="#0C4B33">
 
     {% block og_tags %}
-    <meta property="og:title" content="{% block og_title %}Django{% endblock %}" />
-    <meta property="og:description" content="{% block og_description %}{% spaceless %}
-      The web framework for perfectionists with deadlines.
-    {% endspaceless %}{% endblock %}" />
-    <meta property="og:image" content="{% block og_image %}{% static "img/logos/django-logo-negative.png" %}{% endblock %}" />
-    <meta property="og:image:alt" content="{% block og_image_alt %}Django logo{% endblock %}" />
-    <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}" />
-    <meta property="og:image:height" content="{% block og_image_height %}546{% endblock %}" />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
-    <meta property="og:site_name" content="Django Project" />
+      <meta property="og:title" content="{% block og_title %}Django{% endblock %}" />
+      <meta property="og:description" content="{% block og_description %}{% spaceless %}
+                                                 The web framework for perfectionists with deadlines.
+                                               {% endspaceless %}{% endblock %}" />
+      <meta property="og:image" content="{% block og_image %}{% static "img/logos/django-logo-negative.png" %}{% endblock %}" />
+      <meta property="og:image:alt" content="{% block og_image_alt %}Django logo{% endblock %}" />
+      <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}" />
+      <meta property="og:image:height" content="{% block og_image_height %}546{% endblock %}" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+      <meta property="og:site_name" content="Django Project" />
 
-    <meta property="twitter:creator" content="djangoproject" />
-    <meta property="twitter:site" content="djangoproject" />
-    <meta property="twitter:card" content="{% block twitter_card %}summary{% endblock %}">
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="{% block twitter_card %}summary{% endblock %}">
     {% endblock og_tags %}
 
     <title>{% block title %}The web framework for perfectionists with deadlines{% endblock %} | Django</title>
@@ -42,18 +42,18 @@
     <link rel="stylesheet" href="{% static "css/output.css" %}" >
     <script src="{% static "js/lib/webfontloader/webfontloader.js" %}"></script>
     <script>
-    WebFont.load({
-      custom: {
-        families: ['FontAwesome', 'Fira+Mono'],
-      },
-      google: {
-        families: ['Roboto:400italic,700italic,300,700,400:latin'
-        ]
-      },
-      classes: false,
-      events: false,
-      timeout: 1000
-    });
+      WebFont.load({
+        custom: {
+          families: ['FontAwesome', 'Fira+Mono'],
+        },
+        google: {
+          families: ['Roboto:400italic,700italic,300,700,400:latin'
+          ]
+        },
+        classes: false,
+        events: false,
+        timeout: 1000
+      });
     </script>
     <script src="{% static "js/lib/modernizr.js" %}"></script>
     <script src="{% static "js/mod/switch-dark-mode.js" %}"></script>
@@ -117,40 +117,40 @@
 
     {# Require JS #}
     <script>
-    function extless(input) {
+      function extless(input) {
         return input.replace(/(.*)\.[^.]+$/, '$1');
-    }
-    var require = {
+      }
+      var require = {
         shim: {
-            'jquery': [],
-            'jquery.inview': ["jquery"],
-            'jquery.payment': ["jquery"],
-            'jquery.flot': ["jquery"],
-            'jquery.unveil': ["jquery"],
-            'stripe': {
-              exports: 'Stripe'
-            }
+          'jquery': [],
+          'jquery.inview': ["jquery"],
+          'jquery.payment': ["jquery"],
+          'jquery.flot': ["jquery"],
+          'jquery.unveil': ["jquery"],
+          'stripe': {
+            exports: 'Stripe'
+          }
         },
         paths: {
-            "jquery": extless("{% static 'js/lib/jquery/dist/jquery.min.js' %}"),
-            "jquery.inview": extless("{% static 'js/lib/jquery.inview/jquery.inview.min.js' %}"),
-            "jquery.payment": extless("{% static 'js/lib/jquery.payment/lib/jquery.payment.js' %}"),
-            "jquery.unveil": extless("{% static 'js/lib/unveil/jquery.unveil.min.js' %}"),
-            "jquery.flot": extless("{% static 'js/lib/jquery-flot/jquery.flot.min.js' %}"),
-            "clipboard": extless("{% static 'js/lib/clipboard/dist/clipboard.min.js' %}"),
-            "mod/floating-warning": extless("{% static 'js/mod/floating-warning.js' %}"),
-            "mod/list-collapsing": extless("{% static 'js/mod/list-collapsing.js' %}"),
-            "mod/list-feature": extless("{% static 'js/mod/list-feature.js' %}"),
-            "mod/mobile-menu": extless("{% static 'js/mod/mobile-menu.js' %}"),
-            "mod/version-switcher": extless("{% static 'js/mod/version-switcher.js' %}"),
-            "mod/search-key": extless("{% static 'js/mod/search-key.js' %}"),
-            "mod/stripe-change-card": extless("{% static 'js/mod/stripe-change-card.js' %}"),
-            "mod/switch-dark-mode": extless("{% static 'js/mod/switch-dark-mode.js' %}"),
-            "mod/console-tabs": extless("{% static 'js/mod/console-tabs.js' %}"),
-            "stripe-checkout": "https://checkout.stripe.com/checkout",
-            "stripe": "https://js.stripe.com/v3/?" // ? needed due to require.js
+          "jquery": extless("{% static 'js/lib/jquery/dist/jquery.min.js' %}"),
+          "jquery.inview": extless("{% static 'js/lib/jquery.inview/jquery.inview.min.js' %}"),
+          "jquery.payment": extless("{% static 'js/lib/jquery.payment/lib/jquery.payment.js' %}"),
+          "jquery.unveil": extless("{% static 'js/lib/unveil/jquery.unveil.min.js' %}"),
+          "jquery.flot": extless("{% static 'js/lib/jquery-flot/jquery.flot.min.js' %}"),
+          "clipboard": extless("{% static 'js/lib/clipboard/dist/clipboard.min.js' %}"),
+          "mod/floating-warning": extless("{% static 'js/mod/floating-warning.js' %}"),
+          "mod/list-collapsing": extless("{% static 'js/mod/list-collapsing.js' %}"),
+          "mod/list-feature": extless("{% static 'js/mod/list-feature.js' %}"),
+          "mod/mobile-menu": extless("{% static 'js/mod/mobile-menu.js' %}"),
+          "mod/version-switcher": extless("{% static 'js/mod/version-switcher.js' %}"),
+          "mod/search-key": extless("{% static 'js/mod/search-key.js' %}"),
+          "mod/stripe-change-card": extless("{% static 'js/mod/stripe-change-card.js' %}"),
+          "mod/switch-dark-mode": extless("{% static 'js/mod/switch-dark-mode.js' %}"),
+          "mod/console-tabs": extless("{% static 'js/mod/console-tabs.js' %}"),
+          "stripe-checkout": "https://checkout.stripe.com/checkout",
+          "stripe": "https://js.stripe.com/v3/?" // ? needed due to require.js
         }
-    };
+      };
     </script>
     <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>
     {% block body_extra %}{% endblock body_extra %}

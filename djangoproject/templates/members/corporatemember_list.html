@@ -11,63 +11,53 @@
       The following organizations are corporate members of the Django Software
       Foundation. If you are interested in becoming a corporate member of the
       DSF, you can find out more on our <a href="/foundation/corporate-membership/">
-      corporate membership page</a>.
+        corporate membership page</a>.
     {% endblocktrans %}
   </p>
 
-{% if members.diamond %}
-<h3>Diamond Corporate Members (${{ corporate_membership_amounts.diamond|intcomma }}+)</h3>
-<p>Our diamond <a href="/foundation/corporate-membership/">corporate
-  members</a> include mega corporations and foundations.</p>
-<ul class="corporate-members">
-{% for obj in members.diamond %}
-{% include "members/includes/_member_with_logo.html" %}
-{% endfor %}
-</ul>
-{% endif %}
+  {% if members.diamond %}
+    <h3>Diamond Corporate Members (${{ corporate_membership_amounts.diamond|intcomma }}+)</h3>
+    <ul class="corporate-members">
+      {% for obj in members.diamond %}
+        {% include "members/includes/_member_with_logo.html" %}
+      {% endfor %}
+    </ul>
+  {% endif %}
 
-{% if members.platinum %}
-<h3>Platinum Corporate Members (${{ corporate_membership_amounts.platinum|intcomma }}+)</h3>
-<p>Our platinum <a href="/foundation/corporate-membership/">corporate
-   members</a> include organizations of ~500 people.</p>
-<ul class="corporate-members">
-{% for obj in members.platinum %}
-{% include "members/includes/_member_with_logo.html" %}
-{% endfor %}
-</ul>
-{% endif %}
+  {% if members.platinum %}
+    <h3>Platinum Corporate Members (${{ corporate_membership_amounts.platinum|intcomma }}+)</h3>
+    <ul class="corporate-members">
+      {% for obj in members.platinum %}
+        {% include "members/includes/_member_with_logo.html" %}
+      {% endfor %}
+    </ul>
+  {% endif %}
 
-{% if members.gold %}
-<h3>Gold Corporate Members (${{ corporate_membership_amounts.gold|intcomma }}+)</h3>
-<p>Our gold <a href="/foundation/corporate-membership/">corporate
-members</a> include organizations of ~200 people.</p>
-<ul class="corporate-members">
-{% for obj in members.gold %}
-{% include "members/includes/_member_with_logo.html" %}
-{% endfor %}
-</ul>
-{% endif %}
+  {% if members.gold %}
+    <h3>Gold Corporate Members (${{ corporate_membership_amounts.gold|intcomma }}+)</h3>
+    <ul class="corporate-members">
+      {% for obj in members.gold %}
+        {% include "members/includes/_member_with_logo.html" %}
+      {% endfor %}
+    </ul>
+  {% endif %}
 
-{% if members.silver %}
-<h3>Silver Corporate Members (${{ corporate_membership_amounts.silver|intcomma }}+)</h3>
-<p>Our silver <a href="/foundation/corporate-membership/">corporate
-members</a> include organizations of ~50 people.</p>
-<ul class="corporate-members">
-{% for obj in members.silver %}
-{% include "members/includes/_member_with_logo.html" %}
-{% endfor %}
-</ul>
-{% endif %}
+  {% if members.silver %}
+    <h3>Silver Corporate Members (${{ corporate_membership_amounts.silver|intcomma }}+)</h3>
+    <ul class="corporate-members">
+      {% for obj in members.silver %}
+        {% include "members/includes/_member_with_logo.html" %}
+      {% endfor %}
+    </ul>
+  {% endif %}
 
-{% if members.bronze %}
-<h3>Bronze Corporate Members (${{ corporate_membership_amounts.bronze|intcomma }}+)</h3>
-<p>Our bronze <a href="/foundation/corporate-membership/">corporate
-members</a> include organizations of ~10 people.</p>
-<ul class="corporate-members">
-{% for obj in members.bronze %}
-{% include "members/includes/_member_with_logo.html" %}
-{% endfor %}
-</ul>
-{% endif %}
+  {% if members.bronze %}
+    <h3>Bronze Corporate Members (${{ corporate_membership_amounts.bronze|intcomma }}+)</h3>
+    <ul class="corporate-members">
+      {% for obj in members.bronze %}
+        {% include "members/includes/_member_with_logo.html" %}
+      {% endfor %}
+    </ul>
+  {% endif %}
 
 {% endblock %}
