@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.text import slugify
 
 from . import models
 
@@ -84,6 +85,13 @@ class MeetingAdmin(admin.ModelAdmin):
     list_display = ("title", "date")
     list_filter = ("date",)
     prepopulated_fields = {"slug": ("title",)}
+
+    def get_changeform_initial_data(self, request):
+        title = "DSF Board monthly meeting"
+        return {
+            "title": title,
+            "slug": slugify(title),
+        }
 
 
 class CoreAwardAdmin(admin.ModelAdmin):
