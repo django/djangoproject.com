@@ -119,6 +119,7 @@ h1 {
     }
 
     [role="main"] & {
+    main & {
         @include font-size(32);
         margin: 40px 0px 30px;
         color: var(--body-fg);
@@ -155,7 +156,7 @@ h2 {
         }
     }
 
-    [role="main"] & {
+    main & {
         margin-top: 40px;
         margin-bottom: 15px;
     }
@@ -232,7 +233,7 @@ a:focus {
 p {
 
     //increase top margin if first item in container
-    [role="main"]>&:first-child {
+    main>&:first-child {
         margin-top: 30px;
     }
 }
@@ -270,7 +271,7 @@ blockquote {
 //------------------- Layout
 
 
-[role="main"] {
+main {
     //Main column. Left aligned by default. See /styleguide for explanation.
     background: var(--white-color);
     padding: 1px 10px 40px;
@@ -3691,5 +3692,20 @@ ul.corporate-members li {
 
     .community-cta svg {
         color: var(--body-fg);
+    }
+}
+
+.skip-link {
+    position: absolute;
+    top: -5em;
+    z-index: 1;
+    background: var(--body-bg);
+    color: var(--link-color);
+    border: 0.5em solid var(--primary);
+    padding: 0.5em 2em;
+    transition: top 0.5s ease-out;
+
+    &:focus {
+        top: 0;
     }
 }
