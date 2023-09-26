@@ -24,6 +24,7 @@ RUN apt-get update \
 COPY ./requirements ./requirements
 RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends \
+        g++ \
         gcc \
         libc6-dev \
         libpq-dev \
