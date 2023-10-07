@@ -50,11 +50,11 @@ a {
 
 ::selection {
     // Text Selection Colors
-    background: var(--secondary-accent);
+    background-color: var(--selection);
 }
 
 ::-moz-selection {
-    background: var(--secondary-accent);
+    background-color: var(--selection);
 }
 
 ol li,
