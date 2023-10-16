@@ -69,7 +69,13 @@
         {% block header %}{% endblock %}
       </div>
     </div>
-    <div id="billboard">{% block billboard %}{% endblock %}</div>
+    <div id="billboard">{% block billboard %}
+      <div class="banner">
+        <p>Please take a few minutes to complete the <b>Django Developers Survey 2023</b>.
+          <br>Your feedback will help guide future efforts.
+        </p>
+      </div>
+      {% endblock %}</div>
 
     <div class="container {% block layout_class %}{% endblock %}">
       <div role="main">
