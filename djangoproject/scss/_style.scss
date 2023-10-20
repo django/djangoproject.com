@@ -526,7 +526,7 @@ blockquote {
     .menu-button {
         @include font-size(20);
         background: $green-dark;
-        border-radius: 23px;
+        border: 0;
         color: var(--menu);
         cursor: pointer;
         display: block;
