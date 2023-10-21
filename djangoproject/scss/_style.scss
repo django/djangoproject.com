@@ -2517,6 +2517,7 @@ dt {
         // for docs links. if we keep text-decoration, then underscores in function names become invisible.
         color: var(--error-dark);
         text-decoration: none;
+        overflow-wrap: break-word;
         border-bottom: 1px dotted var(--text-light);
 
         &:visited {
