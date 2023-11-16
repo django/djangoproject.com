@@ -3191,10 +3191,6 @@ ul.corporate-members li {
 }
 
 .code-block-caption, .snippet {
-    &:hover .headerlink {
-        opacity: 1;
-    }
-
     .btn-clipboard {
         float: right;
         cursor: pointer;
