@@ -1,17 +1,17 @@
 {% extends "base_community.html" %}
 
 {% block content %}
-<h1>Community</h1>
+  <h1>Community</h1>
 
-<h2 class="deck">Really delete {{ feed }}?</h2>
+  <h2 class="deck">Really delete {{ feed }}?</h2>
 
-<p>
-  All items in the aggregator will be deleted, too. Because Jacob's
-  lazy, there's no "undo"!
-</p>
+  <p>
+    All items in the aggregator will be deleted, too. Because Jacob's
+    lazy, there's no "undo"!
+  </p>
 
-<form class="wide" action="." method="post">
-  {% csrf_token %}
-  <p class="submit"><input class="cta" type="submit" value="Yes, delete the feed."></p>
-</form>
+  <form class="wide" action="." method="post">
+    {% csrf_token %}
+    <p class="submit"><input class="cta" type="submit" value="Yes, delete the feed."></p>
+  </form>
 {% endblock %}

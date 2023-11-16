@@ -1,7 +1,7 @@
 // Require.js Module Loader - http://requirejs.org
 define(function() {
     var mods = [
-        'mod/mobile-menu' // require mobile menu automatically
+        'mod/mobile-menu', // require mobile menu automatically
     ];
 
     //detect Class function
@@ -47,6 +47,10 @@ define(function() {
         mods.push('mod/version-switcher');
     }
 
+    if (hasClass('doc-switcher')) {
+        mods.push('mod/doc-switcher');
+    }
+
     if (hasClass('doc-floating-warning')) {
         mods.push('mod/floating-warning');
     }
@@ -78,8 +82,8 @@ define(function() {
         mods.push('mod/search-key');
     }
 
-    if (hasClass('stripe-custom-checkout')) {
-        mods.push('mod/stripe-custom-checkout');
+    if (hasClass('stripe-donation')) {
+        mods.push('mod/stripe-donation');
     }
 
     if (hasClass('django-hero-form')) {

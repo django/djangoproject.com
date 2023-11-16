@@ -16,18 +16,17 @@ from .forms import FeedModelForm
 
 
 class AggregatorTests(TestCase):
-
     @requests_mock.mock()
     def setUp(self, mocker):
-        mocker.register_uri('POST', settings.PUSH_HUB, status_code=202)
+        mocker.register_uri("POST", settings.PUSH_HUB, status_code=202)
         # document release necessary to fetch main page
         release, _ = Release.objects.get_or_create(
             version="1.4",
         )
         DocumentRelease.objects.update_or_create(
             release=release,
-            lang='en',
-            defaults={'is_default': True},
+            lang="en",
+            defaults={"is_default": True},
         )
 
         # Set up users who will get emailed
@@ -53,6 +52,13 @@ class AggregatorTests(TestCase):
             approval_status=models.APPROVED_FEED,
             feed_type=self.feed_type,
         )
+        self.approved_feed_long_url, _ = models.Feed.objects.get_or_create(
+            title="Approved long URL",
+            feed_url="www.reddit.com/rss/",
+            public_url="https://www.reddit.com/r/django/?param=" + "x" * 511,
+            approval_status=models.APPROVED_FEED,
+            feed_type=self.feed_type,
+        )
         self.denied_feed, _ = models.Feed.objects.get_or_create(
             title="Denied",
             feed_url="bar.com/rss/",
@@ -68,7 +74,12 @@ class AggregatorTests(TestCase):
             feed_type=self.feed_type,
         )
 
-        for feed in [self.approved_feed, self.denied_feed, self.pending_feed]:
+        for feed in [
+            self.approved_feed,
+            self.approved_feed_long_url,
+            self.denied_feed,
+            self.pending_feed,
+        ]:
             models.FeedItem.objects.get_or_create(
                 feed=feed,
                 title="%s Item" % feed.title,
@@ -77,19 +88,34 @@ class AggregatorTests(TestCase):
                 guid=feed.title,
             )
 
+    def test_community_index_number_of_queries(self):
+        """Intended to prevent an n+1 issue on the community index view"""
+        url = reverse("community-index")
+        with self.assertNumQueries(4):
+            self.client.get(url)
+
     def test_feed_list_only_approved_and_active(self):
-        url = reverse('community-feed-list', kwargs={'feed_type_slug': self.feed_type.slug})
+        url = reverse(
+            "community-feed-list", kwargs={"feed_type_slug": self.feed_type.slug}
+        )
         response = self.client.get(url)
-        for item in response.context['object_list']:
+        for item in response.context["object_list"]:
             self.assertEqual(models.APPROVED_FEED, item.feed.approval_status)
+
+    def test_feed_list_number_of_queries(self):
+        url = reverse(
+            "community-feed-list", kwargs={"feed_type_slug": self.feed_type.slug}
+        )
+        with self.assertNumQueries(5):
+            self.client.get(url)
 
     def test_management_command_sends_no_email_with_no_pending_feeds(self):
         self.pending_feed.delete()
-        call_command('send_pending_approval_email', verbosity=0)
+        call_command("send_pending_approval_email", verbosity=0)
         self.assertEqual(0, len(mail.outbox))
 
     def test_management_command_sends_email_with_pending_feeds(self):
-        call_command('send_pending_approval_email', verbosity=0)
+        call_command("send_pending_approval_email", verbosity=0)
 
         self.assertEqual(1, len(mail.outbox))
         self.assertEqual(mail.outbox[0].to, [self.user.email])
@@ -97,15 +123,19 @@ class AggregatorTests(TestCase):
 
 class TestForms(SimpleTestCase):
     def test_rejects_stackoverflow_questions(self):
-        form = FeedModelForm({
-            'title': 'Asynchronous processing of file upload in Django',
-            'feed_url': 'http://stackoverflow.com/questions/11752148/',
-            'public_url': 'http://stackoverflow.com/questions/11752148/',
-        })
+        form = FeedModelForm(
+            {
+                "title": "Asynchronous processing of file upload in Django",
+                "feed_url": "http://stackoverflow.com/questions/11752148/",
+                "public_url": "http://stackoverflow.com/questions/11752148/",
+            }
+        )
         self.assertEqual(
             form.errors,
-            {'feed_url': [
-                "Stack Overflow questions tagged with 'django' will appear "
-                "here automatically."
-            ]}
+            {
+                "feed_url": [
+                    "Stack Overflow questions tagged with 'django' will appear "
+                    "here automatically."
+                ]
+            },
         )

@@ -1,7 +1,7 @@
 from django.core.cache import cache
 from django.utils import crypto
 
-GENERATION_KEY_NAME = 'metric:generation'
+GENERATION_KEY_NAME = "metric:generation"
 
 
 def generation_key(timeout=60 * 60 * 24 * 365):

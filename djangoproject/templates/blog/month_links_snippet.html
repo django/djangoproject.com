@@ -1,7 +1,7 @@
-  {% load i18n %}
-  {% regroup dates by year as dates_by_year %}
+{% load i18n %}
+{% regroup dates by year as dates_by_year %}
 
-  <ul class="list-collapsing active">
+<ul class="list-collapsing active">
   {% for month in dates_by_year %}
     <li id="year{{ month.grouper }}"{% if forloop.first %} class="active"{% endif %}>
       <h2><a href="{% url 'weblog:archive-year' month.grouper %}">{{ month.grouper }}</a> <i class="collapsing-icon icon icon-plus"></i></h2>
@@ -15,4 +15,4 @@
       </div>
     </li>
   {% endfor %}
-  </ul>
+</ul>

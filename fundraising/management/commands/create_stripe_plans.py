@@ -13,7 +13,7 @@ class Command(BaseCommand):
             print("Monthly plan exists, not creating!")
         except stripe.error.InvalidRequestError:
             name = "Monthly donation"
-            logger.info("Creating plan: {0}".format(name))
+            logger.info(f"Creating plan: {name}")
             stripe.Plan.create(
                 id="monthly",
                 amount=100,
@@ -27,7 +27,7 @@ class Command(BaseCommand):
             print("Quarterly plan exists, not creating!")
         except stripe.error.InvalidRequestError:
             name = "Quarterly donation"
-            logger.info("Creating plan: {0}".format(name))
+            logger.info(f"Creating plan: {name}")
             stripe.Plan.create(
                 id="quarterly",
                 amount=100,
@@ -42,7 +42,7 @@ class Command(BaseCommand):
             print("Yearly plan exists, not creating!")
         except stripe.error.InvalidRequestError:
             name = "Yearly donation"
-            logger.info("Creating plan: {0}".format(name))
+            logger.info(f"Creating plan: {name}")
             stripe.Plan.create(
                 id="yearly",
                 amount=100,

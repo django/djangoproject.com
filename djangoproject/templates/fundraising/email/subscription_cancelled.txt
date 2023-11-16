@@ -5,7 +5,7 @@ Foundation has been cancelled. No further payments will be made.
 
 If you didn't intend to do this, please go back to the fundraising page and
 recreate your payment subscription:
-{% url 'fundraising:donate' %}
+{% url 'fundraising:index' %}
 
 Thanks very much for your support.
 

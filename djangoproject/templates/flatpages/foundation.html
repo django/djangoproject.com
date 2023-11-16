@@ -1,8 +1,10 @@
 {% extends "base_foundation.html" %}
 
+{% block og_title %}{{ flatpage.title }}{% endblock %}
+
 {% block title %}{{ flatpage.title }}{% endblock %}
 
 {% block content %}
-<h1>{{ flatpage.title }}</h1>
-{{ flatpage.content }}
+    <h1>{{ flatpage.title }}</h1>
+    {{ flatpage.content }}
 {% endblock %}

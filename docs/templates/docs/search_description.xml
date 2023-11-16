@@ -1,4 +1,4 @@
-{% load i18n staticfiles %}<?xml version="1.0" encoding="UTF-8"?>
+{% load i18n static %}<?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
                        xmlns:moz="http://www.mozilla.org/2006/browser/search/">
   <ShortName>{% blocktrans with version=release.human_version %}Django {{ version }} documentation{% endblocktrans %}</ShortName>

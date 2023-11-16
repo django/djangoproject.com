@@ -6,7 +6,7 @@ from .models import Entry
 class WeblogEntryFeed(Feed):
     title = "The Django weblog"
     link = "https://www.djangoproject.com/weblog/"
-    description = "Latest news about Django, the Python Web framework."
+    description = "Latest news about Django, the Python web framework."
 
     def items(self):
         return Entry.objects.published()[:10]

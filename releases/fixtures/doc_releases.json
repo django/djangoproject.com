@@ -93,5 +93,89 @@
     "iteration": 0,
     "is_lts": true
   }
+},
+{
+  "model": "releases.release",
+  "pk": "3.0",
+  "fields": {
+    "date": "2019-12-02",
+    "eol_date": null,
+    "major": 3,
+    "minor": 0,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": false
+  }
+},
+{
+  "model": "releases.release",
+  "pk": "3.1",
+  "fields": {
+    "date": "2020-08-04",
+    "eol_date": null,
+    "major": 3,
+    "minor": 1,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": false
+  }
+},
+{
+  "model": "releases.release",
+  "pk": "3.2",
+  "fields": {
+    "date": "2021-04-06",
+    "eol_date": null,
+    "major": 3,
+    "minor": 2,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": true
+  }
+},
+{
+  "model": "releases.release",
+  "pk": "4.0",
+  "fields": {
+    "date": "2021-12-07",
+    "eol_date": null,
+    "major": 4,
+    "minor": 0,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": false
+  }
+},
+{
+  "model": "releases.release",
+  "pk": "4.1",
+  "fields": {
+    "date": "2022-08-03",
+    "eol_date": null,
+    "major": 4,
+    "minor": 1,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": false
+  }
+},
+{
+  "model": "releases.release",
+  "pk": "4.2",
+  "fields": {
+    "date": "2023-04-03",
+    "eol_date": null,
+    "major": 4,
+    "minor": 2,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": true
+  }
 }
 ]

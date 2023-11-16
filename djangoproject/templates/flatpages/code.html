@@ -1,7 +1,9 @@
 {% extends "base_code.html" %}
 
-{% block content %}
-<h1>{{ flatpage.title }}</h1>
+{% block og_title %}{{ flatpage.title }}{% endblock %}
 
-{{ flatpage.content }}
+{% block content %}
+    <h1>{{ flatpage.title }}</h1>
+
+    {{ flatpage.content }}
 {% endblock %}

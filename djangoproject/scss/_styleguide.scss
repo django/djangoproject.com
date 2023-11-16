@@ -4,16 +4,17 @@
 
     .example {
         padding: 0 20px 20px;
-        border: 1px solid $gray-line;
+        border: 1px solid var(--hairline-color);
         border-radius: 4px;
         margin-top: 20px;
         margin-bottom: 64px;
+
         &:before {
             content: "Example";
             font-size: 16px;
             font-weight: 700;
             display: block;
-            color: $gray-line;
+            color: var(--hairline-color);
             @include sans-serif;
             text-align: left;
             padding: 10px 0;
@@ -31,7 +32,7 @@
         display: block;
         height: 400px;
         cursor: zoom-in;
-        border: 1px solid $gray-line;
+        border: 1px solid var(--hairline-color);
         overflow: hidden;
 
         iframe {
@@ -54,6 +55,7 @@
         list-style: none;
         @include clearfix;
         margin: 30px 0;
+
         li {
             width: 30%;
             height: 30px;
@@ -66,44 +68,49 @@
 
             // Primary
             &.text {
-                background: $text;
+                background: var(--body-fg);
             }
+
             &.green-dark {
                 background: $green-dark;
             }
+
             &.green {
-                background: $green;
+                background: var(--secondary);
             }
+
             &.green-light {
                 background: $green-light;
             }
+
             &.white {
-                background: $white;
-                border: 1px solid $gray-line;
+                background: var(--body-bg);
+                border: 1px solid var(--hairline-color);
             }
+
             &.red-dark {
-                background: $red-dark;
+                background: var(--error-dark);
             }
 
             // Secondary
             &.text-light {
-                background: $text-light;
+                background: var(--text-light);
             }
 
             &.green-medium-dark {
-                background: $green-medium-dark;
+                background: var(--primary-accent);
             }
 
             &.green-medium {
-                background: $green-medium;
+                background: var(--primary);
             }
 
             &.green-very-light {
-                background: $green-very-light;
+                background: var(--secondary-accent);
             }
 
             &.gray-line {
-                background: $gray-line;
+                background: var(--hairline-color);
             }
 
             &.red {
@@ -119,7 +126,7 @@
 
     #icons .icon {
         @include font-size(32);
-        color: $green;
+        color: var(--secondary);
         padding: 0 .2em;
     }
 

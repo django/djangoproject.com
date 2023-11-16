@@ -15,8 +15,8 @@ CSS rendered with Libsass 0.7.0
 body {
     @include serif;
     @include font-size(18);
-    background: #f8f8f8;
-    color: $text;
+    background: var(--sidebar-bg);
+    color: var(--body-fg);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -31,31 +31,38 @@ body {
         min-width: 768px;
     }
 }
+
 a {
-    color: $text;
+    color: var(--link-color);
     text-decoration: underline;
     -webkit-tap-highlight-color: transparent;
 
     &:visited {
-        color: lighten($text, 10%);
+        color: var(--text-l10);
     }
 
     &:active,
     &:focus,
     &:hover {
-        color: lighten($text, 20%);
+        color: var(--text-l20);
     }
 }
 
-::selection { // Text Selection Colors
-    background: $green-very-light;
+::selection {
+    // Text Selection Colors
+    background-color: var(--selection);
 }
+
 ::-moz-selection {
-    background: $green-very-light;
+    background-color: var(--selection);
 }
-ol li, ul li { //list style
+
+ol li,
+ul li {
+    //list style
     margin-top: 10px;
 }
+
 dl {
     margin: 20px 0 10px;
 
@@ -67,6 +74,7 @@ dl {
     dd {
         margin: 0.2em 0 1.2em;
         padding: 0;
+
         &:last-of-type {
             margin-bottom: 0;
         }
@@ -78,6 +86,7 @@ dl {
         }
     }
 }
+
 h1,
 h2,
 h3,
@@ -94,35 +103,39 @@ h6 {
 
 
 }
+
 h1 {
     @include font-size(28);
-    color: #fff;
+    color: var(--white-color);
     letter-spacing: -1px;
     line-height: 1.1;
+
     @include respond-min(768px) {
         @include font-size(32);
     }
 
     .layout-secondary & {
-        color: $text;
+        color: var(--body-fg);
     }
 
     [role="main"] & {
         @include font-size(32);
         margin: 40px 0px 30px;
-        color: $text;
+        color: var(--body-fg);
     }
 
     [role="complementary"] & {
         @include font-size(28);
     }
 }
+
 h2 {
     @include font-size(24);
+
     [role="complementary"] &,
     .layout-secondary & {
         @include font-size(20);
-        border-bottom: 1px solid $gray-line;
+        border-bottom: 1px solid var(--hairline-color);
         font-weight: 400;
         padding-bottom: 15px;
         margin-top: 30px;
@@ -147,10 +160,11 @@ h2 {
         margin-bottom: 15px;
     }
 }
+
 h3 {
     @include font-size(20);
     font-weight: 700;
-    color: $text;
+    color: var(--body-fg);
     line-height: 1.2;
     margin: 35px 0 20px;
 
@@ -169,13 +183,21 @@ h3 {
 
     [role="complementary"] & {
         @include font-size(18);
-        border-bottom: 1px solid $gray-line;
+        border-bottom: 1px solid var(--hairline-color);
     }
 }
 
 h4 {
     @include font-size(16);
-    color: $text;
+    color: var(--body-fg);
+    line-height: 1.2;
+    margin: 35px 0 20px;
+    font-weight: 700;
+}
+
+h5 {
+    @include font-size(14);
+    color: var(--body-fg);
     line-height: 1.2;
     margin: 35px 0 20px;
     font-weight: 700;
@@ -187,7 +209,7 @@ kbd,
 pre,
 samp {
     @include monospace;
-    color: $green-dark;
+    color: var(--code-fg);
     font-size: 1em;
 }
 
@@ -199,15 +221,18 @@ span.pre {
     @include monospace;
 }
 
-a:hover, a:active, a:focus {
+a:hover,
+a:active,
+a:focus {
     tt {
-        color: lighten($text, 20%);
+        color: var(--text-l20);
     }
 }
 
 p {
+
     //increase top margin if first item in container
-    [role="main"] > &:first-child {
+    [role="main"]>&:first-child {
         margin-top: 30px;
     }
 }
@@ -218,9 +243,9 @@ ul {
 
 // TODO: most of this is copy/pasted from .admonition. We should factor out the common bits
 blockquote {
-    background: $white;
+    background: var(--body-bg);
     padding: 15px 20px 15px 70px;
-    border: 1px solid $green-very-light;
+    border: 1px solid var(--secondary-accent);
     border-radius: 4px;
     margin: 25px 0;
     position: relative;
@@ -228,6 +253,7 @@ blockquote {
     p:first-child {
         margin-top: 0;
     }
+
     &::before {
         @include fa-icon();
         position: absolute;
@@ -246,8 +272,9 @@ blockquote {
 
 [role="main"] {
     //Main column. Left aligned by default. See /styleguide for explanation.
-    background: #fff;
+    background: var(--white-color);
     padding: 1px 10px 40px;
+
     @include respond-min(768px) {
         min-height: 800px;
         border: 1px solid #ddd;
@@ -257,9 +284,10 @@ blockquote {
         padding-left: 3%;
         padding-right: 3%;
         width: 60%;
+
         .mdzr-boxshadow & {
             border: none;
-            box-shadow: 0px 0px 0 0 #fff, 0px 0px 0 0 #fff, 460px 0 0 0 #fff, 1000px 0 0 0 #fff, 0px 600px 0 0px #fff, 460px 600px 0 0px #fff;
+            box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), 460px 0 0 0 var(--white-color), 1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), 460px 600px 0 0px var(--white-color);
             padding-left: 4%;
             padding-right: 0;
             width: 63%;
@@ -267,9 +295,10 @@ blockquote {
 
         .sidebar-right & {
             float: left;
+
             .mdzr-boxshadow & {
                 border: none;
-                box-shadow: 0px 0px 0 0 #fff, 0px 0px 0 0 #fff, -460px 0 0 0 #fff, -1000px 0 0 0 #fff, 0px 600px 0 0px #fff, -460px 600px 0 0px #fff;
+                box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), -460px 0 0 0 var(--white-color), -1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), -460px 600px 0 0px var(--white-color);
                 padding-left: 0;
                 width: 62%;
                 padding-right: 4%;
@@ -294,11 +323,13 @@ blockquote {
 
     .section {
         padding-bottom: 40px;
-        border-bottom: 1px solid $gray-line;
+        border-bottom: 1px solid var(--hairline-color);
+
         &:last-of-type {
             padding-bottom: 0;
             border-bottom: 0;
         }
+
         dd {
             &.last-child {
                 padding-bottom: 0;
@@ -308,14 +339,16 @@ blockquote {
 }
 
 .full-width {
+
     // Single column, full width layout. See /styleguide for explanation.
     &.container {
         width: 100%;
         padding: 0;
         max-width: none;
         border-bottom: 1px solid #ddd;
-        background: #fff;
+        background: var(--white-color);
     }
+
     // High-level class denoting full-width layout
     @include clearfix;
 
@@ -329,6 +362,7 @@ blockquote {
     //Sidebar in column layouts, gray section in fullwidth layout
     padding: 0 10px 20px;
     @include font-size(14);
+
     @include respond-min(768px) {
         float: right;
         margin: 20px 0;
@@ -354,11 +388,12 @@ blockquote {
             li {
                 border-top: 0;
             }
+
             h2 {
                 padding: 10px 40px 10px 0;
                 font-size: 18px;
                 border-bottom: 0;
-                color: $green-medium;
+                color: var(--primary);
 
                 .collapsing-icon {
                     font-size: 10px;
@@ -384,16 +419,19 @@ blockquote {
     // Secondary (gray) content area on full-width pages
     padding: 20px 10px 50px;
 }
+
 .layout-tertiary {
     // Tertiary (white) content area on full-width pages
-    background: #fff;
+    background: var(--white-color);
     border-top: 1px solid #ddd;
     padding: 20px 10px 50px;
+
     .mdzr-boxshadow & {
         border: none;
         @include secondary-shadow-bottom;
     }
 }
+
 .container {
     @include respond-min(768px) {
         margin: 0 auto;
@@ -403,17 +441,20 @@ blockquote {
 
     &.sidebar-right {
         .mdzr-boxshadow & {
-            box-shadow: -1200px 0 0 0px #fff;
+            box-shadow: -1200px 0 0 0px var(--white-color);
         }
     }
 }
+
 .container--flex {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
 .container--flex--wrap--mobile {
     flex-wrap: wrap;
+
     @include respond-min(768px) {
         flex-wrap: no-wrap;
     }
@@ -440,7 +481,7 @@ blockquote {
 
     .meta {
         @include font-size(13);
-        color: $green-medium;
+        color: var(--primary);
         font-weight: 700;
         width: auto;
         float: left;
@@ -461,7 +502,7 @@ blockquote {
         @include font-size(40);
         @include sans-serif;
         background: url(../img/logo-django.png) 0 0 no-repeat;
-        color: #FFF;
+        color: var(--white-color);
         display: block;
         float: left;
         font-weight: 700;
@@ -472,7 +513,8 @@ blockquote {
         width: 104px;
         height: 36px;
 
-        .mdzr-svg & { // deliver svg logo if applicable
+        .mdzr-svg & {
+            // deliver svg logo if applicable
             background: url(../img/logo-django.svg) center center no-repeat;
         }
 
@@ -484,8 +526,8 @@ blockquote {
     .menu-button {
         @include font-size(20);
         background: $green-dark;
-        border-radius: 23px;
-        color: #fff;
+        border: 0;
+        color: var(--menu);
         cursor: pointer;
         display: block;
         float: right;
@@ -501,7 +543,7 @@ blockquote {
         }
 
         &:active {
-            color: $green-medium;
+            color: var(--primary);
         }
 
         span {
@@ -529,7 +571,7 @@ blockquote {
         }
 
         &.active {
-            max-height: 500px;
+            max-height: 580px;
         }
     }
 
@@ -571,18 +613,34 @@ blockquote {
             }
 
             &.active a {
-                color: $green-medium;
+                color: var(--primary);
             }
         }
 
         a {
-            color: #fff;
+            color: var(--menu);
             display: block;
             padding: 20px 0px;
             text-decoration: none;
 
-            &:active, &:hover {
-                color: $green-very-light;
+            &:active,
+            &:hover {
+                color: var(--secondary-accent);
+            }
+
+            @include respond-min(768px) {
+                padding: 20px 10px;
+            }
+        }
+
+        span {
+            display: inline-block;
+            padding: 20px 10px;
+            color: var(--white-color);
+
+            &:active,
+            &:hover {
+                color: var(--secondary-accent);
             }
 
             @include respond-min(768px) {
@@ -599,6 +657,7 @@ blockquote {
         }
     }
 }
+
 .header {
     // dark green bar containing the page title
     @include sans-serif;
@@ -614,7 +673,7 @@ blockquote {
     p {
         @include serif;
         @include font-size(18);
-        color: #fff;
+        color: var(--white-color);
         left: -9999px;
         line-height: 1.5;
         padding: 0 0 10px;
@@ -627,9 +686,43 @@ blockquote {
         }
     }
 }
+
+/* banner for billboard */
+#billboard {
+    background-color: $green-medium;
+
+    * {
+        color: $black;
+    }
+
+    .banner {
+        text-align: center;
+        padding: 1em 3em;
+        max-width: 60em;
+        margin: 0 auto;
+        p {
+            @include sans-serif;
+            font-size: 3.2rem;
+            font-weight: 300;
+            margin: 0.35em 0 0.35em;
+            line-height: 1.3;
+            padding: 1px 0 6px;
+        }
+    }
+
+
+    a, h1 a {
+        color: $black;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
 .copy-banner {
     // Large green callout at the top of the page
-    background: $green-medium;
+    background: var(--primary);
     padding: 1px 10px;
 
     @include respond-min(768px) {
@@ -640,7 +733,7 @@ blockquote {
     h1 {
         @include sans-serif;
         @include font-size(24);
-        color: $green-very-light;
+        color: var(--secondary-accent);
         font-weight: 300;
         line-height: 1.3;
         padding: 1px 0 6px;
@@ -648,96 +741,110 @@ blockquote {
 
         em {
             font-style: normal;
-            color: white;
+            color: var(--menu);
         }
 
         @include respond-min(768px) {
             @include font-size(32);
 
             margin: .35em 0 .35em;
-            color: $green-very-light;
+            color: var(--secondary-accent);
             padding: 1px 0 6px;
 
         }
 
         a {
             font-weight: 300;
-            color: $green-very-light;
+            color: var(--secondary-accent);
         }
 
-        a.cta, .cta {
+        a.cta,
+        .cta {
             margin: 0;
             @include font-size(18);
         }
     }
 
-    a.cta, .cta {
+    a.cta,
+    .cta {
         margin: 15px 0;
         padding: 0.4em 1.5em 0.5em;
-        background: $green-medium-dark;
+        background: var(--primary-light);
+
         &:hover {
             background: lighten($green-medium-dark, 4%);
         }
 
         background: none;
-        border: 1px solid $green-very-light;
-        color: $green-very-light;
+        border: 1px solid var(--secondary-accent);
+        color: var(--cta-color-accent);
         font-weight: 400;
+
         em {
-            color: white;
+            color: var(--white-color);
         }
+
         &:hover {
-            background: $white;
-            color: $green;
-            border-color: $white;
+            background: var(--body-bg);
+            color: var(--secondary);
+            border-color: var(--body-bg);
+
             em {
-                color: $green;
+                color: var(--secondary);
             }
         }
 
         &.white {
-            background: $white;
-            color: $green;
+            background: var(--body-bg);
+            color: var(--secondary);
             font-weight: 700;
             border: 0;
+
             &:hover {
-                background: #fff;
+                background: var(--white-color);
             }
         }
     }
 
     .homepage & {
         padding: 50px 0;
-        background: white;
+        background: var(--white-color);
         text-align: center;
-        border-bottom: 1px solid $gray-line;
+        border-bottom: 1px solid var(--hairline-color);
+
         p {
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
             margin: 1em auto .5em;
-            color: $text;
+            color: var(--body-fg);
             @include font-size(36);
+
             &.small {
-                color: $text-light;
+                color: var(--text-light);
                 margin: 2em auto 1em;
                 @include font-size(14);
             }
+
             em {
-                color: $text;
+                color: var(--body-fg);
             }
         }
-        a.cta, .cta {
+
+        a.cta,
+        .cta {
             display: inline-block;
             padding: 1em 50px 1.1em;
             margin-bottom: 40px;
-            background: $green-medium;
-            color: white;
+            background: var(--primary);
+            color: var(--white-color);
             border: 0;
             font-weight: 700;
+
             &:hover {
                 background: lighten($green-medium, 4%);
             }
+
             &:active {
                 background: darken($green-medium, 2%);
             }
@@ -748,33 +855,40 @@ blockquote {
             margin: 0 auto;
             list-style: none;
             padding: 0 0 0 30px;
+
             li {
                 width: 144px;
                 display: inline-block;
                 text-indent: -1000px;
                 overflow: hidden;
                 margin: 0;
+
                 a {
                     display: block;
                     height: 46px;
                     background-position: center;
                     background-repeat: no-repeat;
+
                     &.company-mozilla {
                         @include svg-image(company-mozilla);
                         background-position: center 7px;
                     }
+
                     &.company-pinterest {
                         @include svg-image(company-pinterest);
                         background-position: center 7px;
                     }
+
                     &.company-theguardian {
                         @include svg-image(company-theguardian);
                         background-position: center 14px;
                     }
+
                     &.company-instagram {
                         @include svg-image(company-instagram);
                         background-position: center 10px;
                     }
+
                     &.company-rdio {
                         @include svg-image(company-rdio);
                         background-position: 15px 6px;
@@ -788,12 +902,13 @@ blockquote {
 [role="alert"] {
     //Announcement banner above the footer.
     clear: both;
-    background: $white;
+    background: var(--body-bg);
     position: relative;
     box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.05);
 
     a {
         @include link-green;
+
         &.link-readmore {
             margin: 0;
         }
@@ -803,18 +918,21 @@ blockquote {
         margin: 0 10px;
         padding: 25px 0;
         @include clearfix;
+
         dt {
             i.icon {
-                color: $green;
+                color: var(--secondary);
                 margin-right: 8px;
             }
         }
+
         dd {
             float: left;
             width: 60%;
             margin-top: 0;
             @include sans-serif;
         }
+
         .link-readmore {
             margin-left: 10px;
         }
@@ -826,6 +944,7 @@ blockquote {
             width: 31%;
             padding-right: 2%;
         }
+
         dl {
             margin: 0;
         }
@@ -838,7 +957,7 @@ blockquote {
     @include clearfix;
     @include sans-serif;
     position: relative;
-    background: $green-medium;
+    background: var(--primary);
     clear: both;
     margin-top: 0px;
 
@@ -860,17 +979,19 @@ blockquote {
                     border-top: 0;
                 }
             }
+
             @include respond-min(768px) {
                 float: left;
                 margin-bottom: -999px;
                 padding: 0 3% 999px 0;
-                width: 30%;
+                width: 23%;
             }
 
             &:first-child {
                 margin-left: 0;
                 padding-left: 0;
             }
+
             &.last-child {
                 margin-right: 0;
                 padding-right: 0;
@@ -881,11 +1002,12 @@ blockquote {
 
     h2 {
         @include font-size(16);
-        border-top: 1px solid $gray-line;
-        color: #fff;
+        border-top: 1px solid var(--hairline-color);
+        color: var(--menu);
         font-weight: 700;
         margin-top: 20px;
         padding: 30px 0 10px;
+
         @include respond-min(768px) {
             border: none;
             margin-top: 0;
@@ -905,7 +1027,7 @@ blockquote {
         }
 
         a {
-            color: $white;
+            color: var(--menu);
             text-decoration: none;
 
             &:hover,
@@ -920,7 +1042,7 @@ blockquote {
         background: $green-dark;
         margin-top: 20px;
         padding: 10px 0 30px;
-        color: $green-medium-dark;
+        color: var(--primary-accent);
 
         .footer-logo {
             float: left;
@@ -930,6 +1052,7 @@ blockquote {
         .logo {
             margin-right: 0;
             margin-top: 28px;
+
             .mdzr-svg & {
                 background-position: left center;
                 margin-right: 0;
@@ -951,6 +1074,7 @@ blockquote {
         text-decoration: none;
         text-indent: 100%;
         width: 142px;
+
         @include respond-min(768px) {
             float: left;
             margin: 20px 90px 0 0;
@@ -965,9 +1089,10 @@ blockquote {
 
     .thanks {
         @include font-size(12);
-        color: $green-medium-dark;
+        color: var(--primary-accent);
         margin: 0;
         padding: 0;
+
         @include respond-min(768px) {
             border: none;
         }
@@ -978,6 +1103,7 @@ blockquote {
             padding: 17px 10px 11px;
             display: block;
             clear: both;
+
             @include respond-min(768px) {
                 background: none;
                 float: left;
@@ -987,9 +1113,11 @@ blockquote {
 
                 &.design {
 
-                    span.ampersand, a {
+                    span.ampersand,
+                    a {
                         display: inline-block;
                         vertical-align: top;
+
                         &.threespot {
                             clear: both;
                         }
@@ -1017,32 +1145,35 @@ blockquote {
             white-space: nowrap;
         }
 
-        a {
+        a.in-kind-donors {
+            @include font-size(20);
+            color: var(--primary-accent);
+        }
+
+        a.threespot,
+        a.andrevv {
             display: block;
             height: 33px;
             overflow: hidden;
             text-indent: -200px;
             width: 94px;
+
             @include respond-min(768px) {
                 clear: both;
                 margin-top: 5px;
             }
 
-            &.rackspace {
-                background: url(../img/logo-rackspace.png) no-repeat left center;
-                .mdzr-svg & {
-                    background: url(../img/logo-rackspace.svg) no-repeat left center;
-                }
-            }
-
             &.threespot {
                 background: url(../img/logo-threespot.png) no-repeat left center;
+
                 .mdzr-svg & {
                     background: url(../img/logo-threespot.svg) no-repeat left center;
                 }
             }
+
             &.andrevv {
                 background: url(../img/logo-andrevv.png) no-repeat left center;
+
                 .mdzr-svg & {
                     background: url(../img/logo-andrevv.svg) no-repeat left center;
                 }
@@ -1055,6 +1186,7 @@ blockquote {
         @include font-size(12);
         clear: both;
         margin: 20px 0 0 10px;
+
         @include respond-min(768px) {
             max-width: 80%;
             padding-top: 30px;
@@ -1062,7 +1194,7 @@ blockquote {
         }
 
         a {
-            color: $green-medium-dark;
+            color: var(--primary-accent);
         }
     }
 }
@@ -1080,20 +1212,23 @@ blockquote {
     padding: 10px 0;
     text-align: center;
     text-transform: uppercase;
+
     @include respond-min(768px) {
         display: none;
     }
 }
-.cta, a.cta {
+
+.cta,
+a.cta {
     // Call To Action buttons
     @include sans-serif;
     font-weight: 700;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background: $green-medium;
+    background: var(--primary);
     border: none;
     border-radius: 5px;
-    color: #fff;
+    color: var(--white-color);
     display: block;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -1101,17 +1236,19 @@ blockquote {
     padding: 1em 1.5em;
     text-align: center;
     text-decoration: none;
+
     @include respond-min(768px) {
         margin: 20px auto;
         max-width: 400px;
     }
 
     em {
-        color: $green-very-light;
+        color: var(--cta-color-accent);
         font-style: normal;
     }
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         background: lighten($green-medium, 4%);
     }
 
@@ -1122,9 +1259,10 @@ blockquote {
     [role="complementary"] & {
         @include font-size(16);
 
-        + .link-readmore {
+        +.link-readmore {
             display: block;
             text-align: center;
+
             @include respond-min(768px) {
                 margin-top: -10px;
             }
@@ -1135,8 +1273,8 @@ blockquote {
     &.outline {
         // Outline button for less-dominant CTA
         background: none;
-        border: 1px solid $gray-line;
-        color: $gray-medium;
+        border: 1px solid var(--hairline-color);
+        color: var(--dark-hairline-color);
         font-weight: 400;
 
         &.inline {
@@ -1149,25 +1287,30 @@ blockquote {
         }
 
         &:hover {
-            border-color: $green;
-            color: $green;
+            border-color: var(--secondary);
+            color: var(--secondary);
+
             em {
-                color: $green;
+                color: var(--secondary);
             }
         }
+
         &:active {
-            border-color: $green-medium;
-            color: $green-medium;
+            border-color: var(--primary);
+            color: var(--primary);
+
             em {
-                color: $green-medium;
+                color: var(--primary);
             }
         }
     }
 }
+
 .link-green {
     // class render of the link-green mixin
     @include link-green;
 }
+
 .link-readmore {
     // Read More links. Should exist outside of <p> tag, and include the '&rsaquo;' arrow after the text.
     @include link-green;
@@ -1175,19 +1318,23 @@ blockquote {
     @include font-size(14);
     display: inline-block;
     margin: 10px 0;
+
     &:after {
         content: " ›";
         font-size: 1.2em;
     }
+
     &.back-link {
         &:after {
             content: "";
         }
+
         &:before {
             content: "‹ ";
             font-size: 1.2em;
         }
     }
+
     font-weight: 700;
     text-transform: uppercase;
 
@@ -1195,6 +1342,7 @@ blockquote {
         @include font-size(12);
     }
 }
+
 .meta {
     // Re-usable meta class for alternate-style content.
     @include sans-serif;
@@ -1207,6 +1355,7 @@ blockquote {
         @include link-green;
     }
 }
+
 .layout-2col {
     //two column layout module
     margin: 20px 0;
@@ -1214,29 +1363,36 @@ blockquote {
     @include respond-min(768px) {
         @include clearfix;
         margin: 0;
+
         .col {
             float: left;
             width: 46%;
             margin: 0 4%;
+
             &:first-child {
                 margin-left: 0;
             }
+
             &.last-child {
                 margin-right: 0;
             }
         }
+
         .one-third {
             width: 29%;
         }
+
         .two-third {
             width: 62%;
         }
     }
 }
+
 .blue {
     // overide blue color class
-    color: $green;
+    color: var(--secondary);
 }
+
 .label {
     // Label style associated with forms and other global elements.
     @include sans-serif;
@@ -1266,6 +1422,7 @@ blockquote {
         }
     }
 }
+
 .callout-right {
     @include respond-min(768px) {
         float: right;
@@ -1282,6 +1439,7 @@ blockquote {
         max-width: 100%;
     }
 }
+
 .callout-left {
     @include respond-min(768px) {
         float: left;
@@ -1300,8 +1458,9 @@ blockquote {
 }
 
 .codedump {
-    background: #f8f8f8;
-    border: 1px solid $gray-line;
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border: 1px solid var(--hairline-color);
     padding: 10px;
     border-radius: 4px;
     @include sans-serif;
@@ -1319,7 +1478,7 @@ blockquote {
 
     li {
         @include font-size(18);
-        border-top: 1px solid $gray-line;
+        border-top: 1px solid var(--hairline-color);
         display: block;
         line-height: 1.3;
         margin: 0;
@@ -1360,6 +1519,7 @@ blockquote {
         @include link-green;
     }
 }
+
 .list-tags {
     // Tag list style with blue block links. (See sidebar-news.html include.)
     @include sans-serif;
@@ -1376,7 +1536,7 @@ blockquote {
 
     a {
         background: $green-light;
-        color: $white;
+        color: var(--body-bg);
         display: inline-block;
         line-height: 1.2;
         margin: 0;
@@ -1386,11 +1546,12 @@ blockquote {
         &:hover,
         &:active,
         &:focus {
-            background-color: $green-medium;
-            color: #fff;
+            background-color: var(--primary);
+            color: var(--white-color);
         }
     }
 }
+
 .list-news {
     // News article listing style. (See News & Events Page.)
     list-style: none;
@@ -1403,7 +1564,7 @@ blockquote {
     }
 
     li {
-        border-top: 1px solid $gray-line;
+        border-top: 1px solid var(--hairline-color);
         margin-top: 35px;
         padding-top: 10px;
 
@@ -1415,19 +1576,21 @@ blockquote {
 
         &.unpublished,
         &.unpublished * {
-            color: $gray-medium;
+            color: var(--dark-hairline-color);
         }
     }
 
     .meta {
         margin-top: 10px;
-        color: $gray-medium;
+        color: var(--dark-hairline-color);
+
         a:link {
-            color: $text-light;
+            color: var(--text-light);
             text-decoration: underline;
         }
     }
 }
+
 .list-case-study {
     // Three column list for Case Studies that switches to one column on mobile. (See Overview page.)
     @include clearfix;
@@ -1441,15 +1604,17 @@ blockquote {
     }
 
     li {
-        border-top: 1px solid $gray-line;
+        border-top: 1px solid var(--hairline-color);
         margin-top: 20px;
         padding-top: 20px;
+
         @include respond-min(1024px) {
             border: none;
             float: left;
             padding-right: 5%;
             padding-top: 0;
             width: 28%;
+
             &:nth-child(3) {
                 &:after {
                     clear: both;
@@ -1461,13 +1626,14 @@ blockquote {
         }
     }
 
-    li > a {
+    li>a {
         @include sans-serif;
         @include link-green;
         @include font-size(12);
         font-weight: 700;
         margin-top: 10px;
         text-transform: uppercase;
+
         &:after {
             content: " ›";
             font-size: 1.2em;
@@ -1495,6 +1661,7 @@ blockquote {
             background: url(../img/logo-knight.svg) no-repeat bottom left;
         }
     }
+
     [title="Mozilla"] {
         background: url(../img/logo-mozilla.png) no-repeat bottom left;
         height: 32px;
@@ -1504,6 +1671,7 @@ blockquote {
             background: url(../img/logo-mozilla.svg) no-repeat bottom left;
         }
     }
+
     [title="Disqus"] {
         background: url(../img/logo-disqus.png) no-repeat bottom left;
         height: 28px;
@@ -1520,10 +1688,12 @@ blockquote {
             margin-top: 0;
             margin-bottom: 30px;
             width: auto;
+
             p {
                 @include font-size(18);
                 margin-right: 40px;
             }
+
             h3 {
                 margin-top: 20px;
             }
@@ -1543,7 +1713,7 @@ blockquote {
     @include sans-serif;
     @include clearfix;
     @include font-size(16);
-    border-top: 1px solid $gray-line;
+    border-top: 1px solid var(--hairline-color);
     list-style: none;
     margin: 20px 0 0;
     padding: 20px 0 10px;
@@ -1552,6 +1722,7 @@ blockquote {
         float: left;
         margin: 10px 5% 0 0;
         width: 45%;
+
         @include respond-min(768px) {
             margin-right: 3%;
             width: 30%;
@@ -1570,7 +1741,7 @@ blockquote {
 }
 
 
-h2 + .list-link-soup {
+h2+.list-link-soup {
     border-top: 0;
 }
 
@@ -1582,23 +1753,25 @@ h2 + .list-link-soup {
 
     dt {
         @include font-size(24);
-        border-top: 1px solid $gray-line;
+        border-top: 1px solid var(--hairline-color);
         padding-top: 25px;
     }
 
     i {
-        color: $white;
+        color: var(--body-bg);
         margin-right: 10px;
         width: 40px;
         height: 40px;
         border-radius: 25px;
-        background: $green;
+        background: var(--secondary);
         line-height: 1.68em;
         display: inline-block;
         text-align: center;
+
         &.icon-briefcase {
             line-height: 1.7em;
         }
+
         &.icon-dashboard {
             line-height: 1.5em;
         }
@@ -1650,9 +1823,9 @@ h2 + .list-link-soup {
 
             // Border Radius Enabled
             .mdzr-borderradius & {
-                background: $green-medium;
+                background: var(--primary);
                 border-radius: 100px;
-                color: #fff;
+                color: var(--white-color);
             }
 
             // SVG Enabled
@@ -1662,15 +1835,19 @@ h2 + .list-link-soup {
                 &.icon-bolt {
                     background-position: -150px -269px;
                 }
+
                 &.icon-briefcase {
                     background-position: -354px -7px;
                 }
+
                 &.icon-lock {
                     background-position: -36px -96px;
                 }
+
                 &.icon-dashboard {
                     background-position: -270px -9px;
                 }
+
                 &.icon-cogs {
                     background-position: -334px -12px;
                 }
@@ -1691,30 +1868,39 @@ h2 + .list-link-soup {
 
                 &.icon-bolt {
                     background-position: 40px -369px;
+
                     &.inview {
                         background-position: -150px -269px;
                     }
                 }
+
                 &.icon-briefcase {
                     background-position: -494px 207px;
+
                     &.inview {
                         background-position: -354px -7px;
                     }
                 }
+
                 &.icon-lock {
                     background-position: 144px -206px;
+
                     &.inview {
                         background-position: -36px -96px;
                     }
                 }
+
                 &.icon-dashboard {
                     background-position: -360px 201px;
+
                     &.inview {
                         background-position: -270px -9px;
                     }
                 }
+
                 &.icon-cogs {
                     background-position: -500px -180px;
+
                     &.inview {
                         background-position: -334px -12px;
                     }
@@ -1745,30 +1931,30 @@ h2 + .list-link-soup {
         }
 
         i {
-                color: $white;
-                margin-right: 10px;
-                width: 40px;
-                height: 40px;
-                top: 10px;
-                border-radius: 20px;
-                background: $green;
-                display: inline-block;
-                text-align: center;
-                @include font-size(24);
+            color: var(--body-bg);
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+            top: 10px;
+            border-radius: 20px;
+            background: var(--secondary);
+            display: inline-block;
+            text-align: center;
+            @include font-size(24);
 
-                .mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
-                    -webkit-transition: all 0.3s ease-out;
-                    transition: all 0.3s ease-out;
+            .mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
+                -webkit-transition: all 0.3s ease-out;
+                transition: all 0.3s ease-out;
 
-                    -webkit-transform: rotate(0.5turn);
-                    transform: rotate(0.5turn);
+                -webkit-transform: rotate(0.5turn);
+                transform: rotate(0.5turn);
 
-                    &.inview {
-                        -webkit-transform: rotate(0turn);
-                        transform: rotate(0turn);
-                    }
+                &.inview {
+                    -webkit-transform: rotate(0turn);
+                    transform: rotate(0turn);
                 }
             }
+        }
 
         @include respond-min(768px) {
 
@@ -1782,6 +1968,7 @@ h2 + .list-link-soup {
             dd {
                 padding: 0 60px 20px 110px;
                 min-height: 0;
+
                 p {
                     margin-top: 0;
                     @include font-size(18);
@@ -1809,7 +1996,7 @@ h2 + .list-link-soup {
             margin: 40px 0 20px;
         }
 
-        + .form-controls.label {
+        +.form-controls.label {
             margin: 50px 0 0;
             text-align: right;
         }
@@ -1823,7 +2010,7 @@ h2 + .list-link-soup {
 
 .list-collapsing {
     // reusable accordion style collapsing list, as seen on the Get Started Page. 'Expand/Collapse All' toggle is generated by the javascript. H2 is used for label, and 'collapsing-content' class is used to identify all content that should expand and collapse onclick.
-    border-bottom: 1px solid $gray-line;
+    border-bottom: 1px solid var(--hairline-color);
     list-style: none;
     margin: 30px 0;
     padding: 0;
@@ -1831,8 +2018,8 @@ h2 + .list-link-soup {
 
     &.active {
 
-        > li {
-            border-top: 1px solid $gray-line;
+        >li {
+            border-top: 1px solid var(--hairline-color);
             margin: 0;
             padding: 0;
 
@@ -1857,7 +2044,7 @@ h2 + .list-link-soup {
             &:hover,
             &:focus,
             &:active {
-                color: lighten($text, 20%);
+                color: var(--text-l20);
                 outline: none;
             }
 
@@ -1865,6 +2052,7 @@ h2 + .list-link-soup {
                 position: absolute;
                 right: 0;
                 top: 24px;
+
                 &:before {
                     content: "\f067";
                 }
@@ -1874,7 +2062,7 @@ h2 + .list-link-soup {
                 // H2 class for using icons as 'bullets' much like the layout of a list. When the line breaks, the text won't fold under the icon. See the community page for an example.
                 padding-left: 1.5em;
 
-                > i:first-child {
+                >i:first-child {
                     position: absolute;
                     top: 24px;
                     left: 0;
@@ -1889,6 +2077,7 @@ h2 + .list-link-soup {
             -webkit-transition: all 0.5s ease-out;
             transition: all 0.5s ease-out;
         }
+
         li.active .collapsing-content {
             max-height: 1000px;
             overflow: auto;
@@ -1903,9 +2092,10 @@ h2 + .list-link-soup {
     padding: 0;
 
     li {
-        border-top: 1px solid $gray-line;
+        border-top: 1px solid var(--hairline-color);
         margin-top: 20px;
         padding-top: 40px;
+
         @include respond-min(768px) {
             @include clearfix;
             margin-top: 20px;
@@ -1924,7 +2114,7 @@ h2 + .list-link-soup {
         &:hover,
         &:active,
         &:focus {
-            color: $text-light;
+            color: var(--text-light);
         }
 
         &.link-readmore {
@@ -1946,7 +2136,10 @@ h2 + .list-link-soup {
             max-height: 200px;
         }
 
-        h2, h3, h4, p {
+        h2,
+        h3,
+        h4,
+        p {
             padding-left: 240px;
         }
 
@@ -1965,7 +2158,10 @@ h2 + .list-link-soup {
             margin: 0 20px 10px 0;
         }
 
-        h2, h3, h4, p {
+        h2,
+        h3,
+        h4,
+        p {
             padding-left: 0px;
             border: 0;
         }
@@ -1984,7 +2180,8 @@ h2 + .list-link-soup {
 
 //-------------------Documentation styles
 
-#s-django-documentation, #s-feed {
+#s-django-documentation,
+#s-feed {
     @include sans-serif;
 }
 
@@ -2000,31 +2197,36 @@ h2 + .list-link-soup {
         text-decoration: none;
     }
 
-    > li > ul > li {
+    >li>ul>li {
         margin-top: 12px;
+
         &:first-child {
             margin-top: 6px;
         }
     }
 
-    > li > a { //top level
+    >li>a {
+        //top level
         text-transform: uppercase;
         font-weight: 700;
         @include link-green;
     }
 
-    > li > ul { //second level
+    >li>ul {
+        //second level
         list-style: none;
         @include font-size(12);
         padding: 5px 0 0 10px;
-        > li > a {
+
+        >li>a {
             font-weight: 700;
             text-transform: uppercase;
             @include link-green;
         }
     }
 
-    > li > ul > li  ul { //third level & down
+    >li>ul>li ul {
+        //third level & down
         @include font-size(14);
         padding: 0 0 0 20px;
 
@@ -2041,7 +2243,7 @@ h2 + .list-link-soup {
 
 .headerlink {
     // Permalink styles for sections in docs
-    padding-left: 10px;
+    margin-left: 10px;
     font-size: 0.8em;
     position: relative;
     top: -0.17em;
@@ -2049,64 +2251,87 @@ h2 + .list-link-soup {
     text-decoration: none;
     -webkit-transition: opacity 200ms ease-in-out;
     transition: opacity 200ms ease-in-out;
+
+    &:focus {
+        opacity: 1;
+    }
 }
 
 //Notes, help blocks, and annotation sections
 .note,
 .admonition,
 .help-block {
-        background: $white;
-        padding: 15px 20px 15px 70px;
-        border: 1px solid $green-very-light;
-        border-radius: 4px;
-        margin: 25px 0;
-        position: relative;
+    background: var(--body-bg);
+    padding: 15px 20px 15px 70px;
+    border: 1px solid var(--secondary-accent);
+    border-radius: 4px;
+    margin: 25px 0;
+    position: relative;
 
-        h1,h2,h3,h4 {
-            margin-top: 20px;
+    h1,
+    h2,
+    h3,
+    h4 {
+        margin-top: 20px;
+    }
+
+    p {
+        margin: 0.8em 0;
+    }
+
+    .first {
+        margin-top: 0;
+    }
+
+    // Add an icon on the left of the box
+    .admonition-title {
+        font-weight: bold;
+
+        &::before {
+            @include fa-icon();
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            width: 34px;
+            text-align: center;
+            content: $fa-var-file-text-o; // default icon
+            opacity: 0.5;
         }
-        p {
-            margin: 0.8em 0;
+    }
+
+    &.warning {
+        background-color: var(--warning-admonition-bg);
+        border-color: var(--warning-dark);
+        color: var(--warning-text);
+
+        .admonition-title::before {
+            // color: #E9BD46;
+            color: var(--warning-admonition-icon);
+            content: $fa-var-exclamation-triangle;
         }
-        .first {
-            margin-top: 0;
+
+        code {
+            color: var(--primary);
         }
-        // Add an icon on the left of the box
-        .admonition-title {
-            font-weight: bold;
-            &::before {
-                @include fa-icon();
-                position: absolute;
-                top: 20px;
-                left: 20px;
-                font-size: 30px;
-                width: 34px;
-                text-align: center;
-                content: $fa-var-file-text-o; // default icon
-                opacity: 0.5;
-            }
+    }
+
+    &.admonition-philosophy {
+        .admonition-title::before {
+            content: $fa-var-lightbulb-o;
         }
-        &.warning {
-            background-color: $warning-yellow;
-            border-color: $warning-dark-yellow;
-            .admonition-title::before {
-                color: #E9BD46;
-                content: $fa-var-exclamation-triangle;
-            }
+    }
+
+    &.admonition-behind-the-scenes {
+        .admonition-title::before {
+            content: $fa-var-cogs;
         }
-        &.admonition-philosophy {
-            .admonition-title::before {
-                content: $fa-var-lightbulb-o;
-            }
-        }
-        &.admonition-behind-the-scenes {
-            .admonition-title::before {
-                content: $fa-var-cogs;
-            }
-        }
-        .last, .highlight {
-            margin-bottom: 0px;
-        }
+    }
+
+    .last,
+    .highlight {
+        margin-bottom: 0px;
+    }
 }
 
 
@@ -2118,13 +2343,14 @@ h2 + .list-link-soup {
     @include clearfix;
     font-weight: 700;
 
-    border-top: 1px solid $gray-line;
-    border-bottom: 1px solid $gray-line;
+    border-top: 1px solid var(--hairline-color);
+    border-bottom: 1px solid var(--hairline-color);
     padding: 20px 0;
     margin-top: 2em;
 
     .left {
         float: left;
+
         .icon {
             margin-right: 4px;
             @include font-size(12);
@@ -2133,6 +2359,7 @@ h2 + .list-link-soup {
 
     .right {
         float: right;
+
         .icon {
             margin-left: 4px;
             @include font-size(12);
@@ -2168,47 +2395,72 @@ h2 + .list-link-soup {
     }
 }
 
-#doc-versions, #doc-languages, #faq-link {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+#doc-versions,
+#doc-languages,
+#faq-link,
+#backtotop-link {
+    margin: 0;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+
+    &.open {
+        li {
+            display: inline-block;
+
+            &.current {
+                border: 1px solid $green-light;
+            }
+        }
+    }
 
     li {
         display: none;
         margin: 0 3px;
         @include sans-serif;
-        color: $text;
+        color: var(--body-fg);
         @include font-size(12);
         pointer-events: auto;
 
         &.current {
             display: inline-block;
-            background: $white;
+            background: var(--body-bg);
             padding: 8px 15px;
-            border: 1px solid $gray-line;
+            border: 1px solid var(--hairline-color);
             border-radius: 4px;
+            cursor: pointer;
         }
+
         &.current-link {
             display: inline-block;
         }
 
         a {
             display: inline-block;
-            background: $white;
-            color: $green-medium;
+            background: var(--body-bg);
+            color: var(--primary);
             text-decoration: none;
             font-weight: 700;
             padding: 8px 15px;
-            border: 1px solid $gray-line;
+            border: 1px solid var(--hairline-color);
             border-radius: 4px;
+
             &:hover {
-                color: $green;
+                color: var(--secondary);
                 border: 1px solid $green-light;
             }
         }
+
+        a.icon-chevron-up-align {
+            // Should be removed when icon-chevron-up image have the same black space on both sides.
+            padding-right: 11px;
+        }
     }
 
-    &:hover, .hover-on {
+    &:hover {
         pointer-events: auto;
+        padding: 2em 0;
+        margin: -1.75em 0;
+
         li {
             display: inline-block;
         }
@@ -2216,7 +2468,8 @@ h2 + .list-link-soup {
 
 }
 
-#dev-warning, #outdated-warning {
+#dev-warning,
+#outdated-warning {
     position: absolute;
     top: 0;
     width: 100%;
@@ -2230,7 +2483,8 @@ h2 + .list-link-soup {
     @include sans-serif;
     font-size: 14px;
     text-align: center;
-    background-color: #ffe761;
+    background-color: $warning-bg;
+    color: $text;
 
     @include respond-min(768px) {
         position: fixed;
@@ -2239,15 +2493,20 @@ h2 + .list-link-soup {
 }
 
 #outdated-warning {
-    background-color: $red-light;
-    color: $red-dark;
+    background-color: var(--error-light);
+    color: $black-light-5;
 }
 
 #docs-content {
 
     // Decrease vertical spacing in docs for less scrolling
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         margin: 0.6em 0;
         line-height: 1.1em;
     }
@@ -2265,44 +2524,61 @@ h2 + .list-link-soup {
     @include font-size(14);
     line-height: 1.5em;
 
+    .warning {
+        a.reference {
+            color: var(--warning-link-block);
+        }
+    }
+
     a.reference {
         // for docs links. if we keep text-decoration, then underscores in function names become invisible.
-        color: $red-dark;
+        color: var(--error-dark);
         text-decoration: none;
-        border-bottom: 1px dotted $text-light;
+        overflow-wrap: break-word;
+        border-bottom: 1px dotted var(--text-light);
 
         &:visited {
-            border-color: lighten($red-dark, 10%);
+            border-color: var(--error-dark-l10);
         }
 
         &:active,
         &:focus,
         &:hover {
-            background: $white;
-            color: $red;
+            background: var(--body-bg);
+            color: var(--error-dark-l10);
         }
 
         em {
             font-style: normal;
         }
     }
+
     code.literal {
         font-weight: 700;
     }
+
+    .code-block-caption {
+        code.literal {
+            font-weight: 400;
+        }
+    }
 }
 
-.versionadded, .versionchanged, .versionmodified {
+.versionadded,
+.versionchanged,
+.versionmodified {
     @include sans-serif;
     font-weight: bold;
     margin-bottom: 20px;
 
     padding: 10px 13px;
-    border: 1px solid $green-very-light;
+    border: 1px solid var(--secondary-accent);
     border-radius: 4px;
 
     p {
         font-weight: normal;
         margin-top: 0.3em;
+
         &:last-child {
             margin-bottom: 0;
         }
@@ -2312,7 +2588,9 @@ h2 + .list-link-soup {
 .deprecated {
     @extend .versionchanged;
 
-    .versionadded, .versionchanged, .versionmodified {
+    .versionadded,
+    .versionchanged,
+    .versionmodified {
         border: none;
         padding: 0;
         margin-bottom: 0;
@@ -2322,6 +2600,7 @@ h2 + .list-link-soup {
     p {
         font-weight: normal;
         margin-top: 0;
+
         &:last-child {
             margin-bottom: 0;
         }
@@ -2330,18 +2609,27 @@ h2 + .list-link-soup {
 
 }
 
-dl.function, dl.class, dl.method, dl.classmethod, dl.staticmethod, dl.attribute, dl.exception {
+dl.function,
+dl.class,
+dl.method,
+dl.classmethod,
+dl.staticmethod,
+dl.attribute,
+dl.exception,
+dl.data {
     dt {
         font-weight: 700;
     }
+
     dd {
         padding-left: 1.4em;
     }
 }
 
 
-table.docutils td, table.docutils th {
-    border-bottom: 1px solid $gray-line;
+table.docutils td,
+table.docutils th {
+    border-bottom: 1px solid var(--hairline-color);
 }
 
 .list-links {
@@ -2363,6 +2651,7 @@ table.docutils td, table.docutils th {
         &:first-child {
             margin-top: 0;
         }
+
         font-weight: 400;
     }
 
@@ -2379,7 +2668,7 @@ table.docutils td, table.docutils th {
         dt,
         li {
             @include font-size(16);
-            border-top: 1px solid $gray-line;
+            border-top: 1px solid var(--hairline-color);
             margin-top: 0;
             padding-top: 20px;
 
@@ -2399,7 +2688,7 @@ table.docutils td, table.docutils th {
         }
     }
 
-    + h2 {
+    +h2 {
         margin-top: 34px;
     }
 }
@@ -2407,18 +2696,45 @@ table.docutils td, table.docutils th {
 .search-links {
     @extend .list-links;
 
+    a {
+        mark {
+            color: var(--search-mark-text);
+            text-decoration: none;
+
+            &:visited {
+                color: var(--link-color);
+            }
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: var(--search-link-hover);
+                text-decoration: none;
+            }
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: var(--search-link-hover);
+                text-decoration: none;
+            }
+
+            background-color: var(--secondary-accent);
+        }
+    }
+
     em {
         font-weight: 700;
-        color: $text;
+        color: var(--body-fg);
     }
 
     span.meta {
         margin-top: 0;
         margin-bottom: 10px;
-        color: $gray-medium;
+        color: var(--dark-hairline-color);
 
         a {
-            color: $text-light;
+            color: var(--text-light);
 
             &:visited {
                 color: darken($text-light, 10%);
@@ -2437,12 +2753,17 @@ table.docutils td, table.docutils th {
     }
 
     span.arrow {
-        color: $text;
+        color: var(--body-fg);
         font-weight: 700;
     }
 
     dd {
         margin-bottom: 30px;
+
+        mark {
+            background-color: var(--secondary-accent);
+            color: var(--search-mark-text);
+        }
     }
 }
 
@@ -2450,13 +2771,14 @@ table.docutils td, table.docutils th {
     //List style used to display links, with optional icons. See Homepage sidebar
     padding-left: 0;
     list-style: none;
+
     a {
         @include link-green;
         text-decoration: none;
     }
 
-    li > a,
-    dt > a {
+    li>a,
+    dt>a {
         &:before {
             font-family: FontAwesome;
             font-weight: normal;
@@ -2472,15 +2794,16 @@ table.docutils td, table.docutils th {
     }
 
     dd {
-        color: $text-light;
+        color: var(--text-light);
         padding-top: 2px;
     }
 
     // Add document icon before list item link
     &.docs-list {
         list-style: none;
-        li > a,
-        dt > a {
+
+        li>a,
+        dt>a {
             &:before {
                 content: "\f0f6";
             }
@@ -2494,14 +2817,15 @@ table.docutils td, table.docutils th {
     // Add news icon before list item link
     &.news-list {
         list-style: none;
-        li > a,
-        dt > a {
+
+        li>a,
+        dt>a {
             &:before {
                 content: "\f0a1";
             }
         }
 
-        dt.event > a {
+        dt.event>a {
             &:before {
                 content: "\f133";
             }
@@ -2515,8 +2839,9 @@ table.docutils td, table.docutils th {
     // Add link icon before list item link
     &.resource-list {
         list-style: none;
-        li > a,
-        dt > a {
+
+        li>a,
+        dt>a {
             &:before {
                 content: "\f0c1";
             }
@@ -2530,8 +2855,9 @@ table.docutils td, table.docutils th {
     // Add rss icon before list item link
     &.rss-list {
         list-style: none;
-        li > a,
-        dt > a {
+
+        li>a,
+        dt>a {
             &:before {
                 content: "\f09e";
             }
@@ -2547,6 +2873,7 @@ table.docutils td, table.docutils th {
 form {
     @include sans-serif;
     @include font-size(16);
+
     // Global input styles
     input[type="search"],
     input[type="text"],
@@ -2559,8 +2886,9 @@ form {
         @include font-size(16);
         -webkit-appearance: none;
         -moz-appearance: none;
-        background: #fff;
-        border: 1px solid $gray-line;
+        background: var(--white-color);
+        border: 1px solid var(--hairline-color);
+        color: var(--body-fg);
         border-radius: 4px;
         cursor: auto;
         display: block;
@@ -2584,7 +2912,27 @@ form {
         &:active,
         &:focus {
             outline: none;
-            border-color: $green;
+            border-color: var(--secondary);
+        }
+
+        &::-webkit-input-placeholder {
+            color: var(--body-fg);
+        }
+
+        &:-ms-input-placeholder {
+            color: var(--body-fg);
+        }
+
+        &::-moz-placeholder {
+            color: var(--body-fg);
+        }
+
+        &:-moz-placeholder {
+            color: var(--body-fg);
+        }
+
+        &::placeholder {
+            color: var(--body-fg);
         }
     }
 
@@ -2598,8 +2946,9 @@ form {
     }
 
     select {
-        border: 1px solid $gray-line;
-        background: white;
+        border: 1px solid var(--hairline-color);
+        background: var(--white-color);
+        color: var(--body-fg);
         height: 46px;
         padding: 0 10px;
         border-radius: 4px;
@@ -2616,21 +2965,23 @@ form {
         -webkit-appearance: none;
         appearance: none;
 
-        background: $green;
+        background: var(--secondary);
         border-radius: 4px;
-        color: white;
+        color: var(--white-color);
         border: 0;
         height: 46px;
         padding: 0 15px;
         @include sans-serif;
         @include font-size(16);
+
         &:hover {
-            background: $green-medium;
+            background: var(--primary);
         }
     }
 }
 
 .form-general {
+
     // Multi-input forms with seperate submit button. For use in Login and Register forms, or other general form uses.
     fieldset {
         max-width: 700px;
@@ -2661,7 +3012,7 @@ form {
     button {
         background: none;
         border: none;
-        color: $green-medium;
+        color: var(--primary);
         height: 40px;
         padding: 0;
         position: absolute;
@@ -2690,53 +3041,64 @@ form {
     [role="complementary"] & {
         min-height: 30px;
         margin: 20px 0 30px;
+
         input[type="search"],
         input[type="text"],
         input[type="email"] {
             height: 20px;
             @include font-size(14);
         }
+
         button {
             height: 30px;
             width: 30px;
             top: 3px;
+
             @include respond-min(768px) {
                 right: 0;
             }
+
             i {
                 @include font-size(20);
             }
         }
     }
+
     &.search {
         @include respond-min(768px) {
             flex: 0 0 40%;
             margin: 10px 0;
         }
+
         flex: 0 0 100%;
         margin: 0 0 10px 0;
+
         button {
             top: 19%;
         }
     }
-} 
+}
 
 
 
 form.donate {
     max-width: 150px;
+
     label {
         position: absolute;
         left: 0px;
-        color: $green-medium-dark;
+        color: var(--primary-accent);
         padding-top: 0.3em;
         padding-left: 0.5em;
     }
+
     input[type=text] {
         padding-left: 20px;
-        padding-right: 9px; /* Magic value to right-align the button inside the input */
+        padding-right: 9px;
+        /* Magic value to right-align the button inside the input */
     }
 }
+
 div[role=main] {
     form.donate {
         label {
@@ -2745,22 +3107,19 @@ div[role=main] {
     }
 }
 
-::-webkit-input-placeholder,
-:-moz-placeholder,
-::-moz-placeholder,
-:-ms-input-placeholder {
-    color: $gray-medium;
-}
 
 .form-email {
+
     // Email submission forms on Community page.
     h3 {
         @include font-size(18);
         margin: 10px 0;
     }
+
     .meta {
         margin: 0;
     }
+
     form {
         margin: 10px 0 30px;
     }
@@ -2771,7 +3130,7 @@ div[role=main] {
     // Pagination style for use with the News & Events pages.
     @include sans-serif;
     @include font-size(14);
-    border-top: 1px solid $gray-line;
+    border-top: 1px solid var(--hairline-color);
     font-weight: 700;
     line-height: 31px;
     list-style: none;
@@ -2779,21 +3138,23 @@ div[role=main] {
     padding: 30px 0 0;
     text-align: center;
 
-    li{
+    li {
         display: inline-block;
     }
+
     a {
         border: none;
-        color: $text-light;
+        color: var(--text-light);
         height: auto;
         width: auto;
         margin: 0 5px;
         border-radius: 15px;
         display: block;
         text-decoration: none;
+
         @include device-min(320px) {
-            background: $text-light;
-            color: #fff;
+            background: var(--text-light);
+            color: var(--white-color);
             height: 30px;
             margin: 0 2px;
             width: 30px;
@@ -2802,6 +3163,7 @@ div[role=main] {
         &.previous,
         &.next {
             @include font-size(16);
+
             @include device-min(320px) {
                 border-radius: 20px;
                 height: 40px;
@@ -2809,15 +3171,19 @@ div[role=main] {
                 width: 40px;
             }
         }
+
         &.previous {
             margin-right: 10px;
+
             @include respond-min(768px) {
                 margin-right: 70px;
             }
         }
+
         &.next {
             margin-left: 10px;
             text-indent: 1px;
+
             @include respond-min(768px) {
                 margin-left: 70px;
             }
@@ -2828,17 +3194,18 @@ div[role=main] {
         &:active,
         &.active {
             background: none;
-            color: $green;
+            color: var(--secondary);
+
             @include device-min(320px) {
-                background: $green;
-                color: white;
+                background: var(--secondary);
+                color: var(--white-color);
             }
         }
 
         .mdzr-no-borderradius & {
             display: inline;
             background: none;
-            color: $text-light;
+            color: var(--text-light);
             height: auto;
             width: auto;
             margin: 0 5px !important;
@@ -2848,7 +3215,7 @@ div[role=main] {
             &:focus,
             &.active {
                 background: none;
-                color: $green;
+                color: var(--secondary);
             }
         }
     }
@@ -2856,7 +3223,7 @@ div[role=main] {
 
 hr {
     border: 0;
-    border-top: 1px solid $gray-line;
+    border-top: 1px solid var(--hairline-color);
 }
 
 // em {
@@ -2872,8 +3239,8 @@ hr {
     letter-spacing: 0px;
     position: relative;
     bottom: 0.3em;
-    color: $white;
-    background-color: $green;
+    color: var(--body-bg);
+    background-color: var(--secondary);
 }
 
 .user-info {
@@ -2887,33 +3254,48 @@ hr {
 .visuallyhidden {
     @include visuallyhidden;
 }
-.clearfix, .group-container {
+
+.clearfix,
+.group-container {
     @include clearfix;
 }
 
 /// Fundraising page
 @keyframes pixel-pulse {
-    0%, 100% { opacity: 0.10; }
-    50% { opacity: 0.25; }
+
+    0%,
+    100% {
+        opacity: 0.10;
+    }
+
+    50% {
+        opacity: 0.25;
+    }
 }
+
 .fundraising-index {
     margin-top: 50px;
 
     .fundraising-heart {
         width: 100%;
         float: none;
-        img, svg {
+
+        img,
+        svg {
             width: 100%;
             height: auto;
         }
+
         rect {
             -webkit-transition: opacity 250ms ease-out;
             transition: opacity 250ms ease-out;
+
             &.faded {
                 opacity: 0.05;
                 animation: pixel-pulse 3s infinite;
             }
         }
+
         text {
             @include font-size(120);
             fill: rgba(50, 50, 50, 0.3);
@@ -2925,11 +3307,13 @@ hr {
             user-select: none;
             cursor: default;
         }
+
         @include respond-min(768px) {
             width: 55%;
             float: left;
         }
     }
+
     .description {
         margin-left: 5%;
         width: 100%;
@@ -2958,24 +3342,30 @@ hr {
                 width: 100%;
             }
         }
+
         .cta {
             margin: 10px 0;
+
             & .disabled {
                 opacity: 0.5;
             }
         }
+
         .custom-donation {
             display: none;
         }
+
         .prefix {
             float: left;
             @include font-size(19);
             margin: 8px 9px 0 3px;
         }
-        input[type="text"]{
+
+        input[type="text"] {
             width: 70%;
         }
     }
+
     .cls {
         clear: both;
     }
@@ -2993,6 +3383,7 @@ hr {
             max-width: 64px;
         }
     }
+
     .small-cta {
         width: 70%;
         float: left;
@@ -3001,24 +3392,28 @@ hr {
         margin-right: 5%;
         margin-bottom: 20px;
     }
+
     clear: both;
 }
 
 .footnote {
-    color: $gray-medium;
+    color: var(--dark-hairline-color);
     @include font-size(14);
     margin-top: 20px;
     text-align: center;
+
     /* The IDs in documentation footnotes should stay as table cells */
     .label {
         display: table-cell;
         padding-right: 1em;
     }
 }
+
 form .footnote {
     margin-top: 10px;
     text-align: left;
 }
+
 .footnote.docutils {
     text-align: left;
 }
@@ -3033,48 +3428,65 @@ form .footnote {
             clear: both;
             text-align: center;
         }
+
         .hero {
-            width: calc(100% / 3);
+            width: 30%;
+            background-color: var(--logo-bg);
+            border-radius: 10px;
+            margin: 5px;
             position: relative;
             height: auto;
+
             div {
                 width: 100%;
             }
         }
+
         .hero-logo {
             height: 170px;
             line-height: 170px;
+
             img {
                 vertical-align: middle;
             }
         }
+
         .hero-name {
             min-height: 87px;
             vertical-align: top;
             margin-bottom: 5px;
         }
-        .no-logo-hero {
-            min-height: 60px;
-            margin-right: 24px;
-        }
+
         div {
             float: left;
             text-align: center;
+            width: 100%;
+
             img {
                 max-width: 90%;
                 max-height: 170px;
             }
         }
+
+        .no-logo-hero {
+            min-height: 60px;
+            margin-right: 24px;
+            width: auto;
+        }
     }
+
     .pagination {
         clear: both;
     }
 }
 
 .manage-donations-form {
-    select, input[type="number"] {
+
+    select,
+    input[type="number"] {
         width: 300px;
     }
+
     input[type="number"] {
         padding: 7px 10px;
         width: 278px;
@@ -3085,30 +3497,38 @@ form .footnote {
     .form-control {
         margin: 1em 0;
     }
+
     ul {
         list-style: none;
         display: inline-block;
         margin: 0;
         padding: 0;
     }
+
     li {
         display: inline-block;
         margin-left: 1em;
     }
 }
 
-table.django-supported-versions {
+table.django-supported-versions,
+table.django-unsupported-versions {
     border: 1px solid black;
     text-align: center;
-    tr {
-        background-color: $green-very-light;
-        th, td {
-            padding: 5px;
-        }
+    color: var(--table-color);
+
+    th,
+    td {
+        padding: 5px;
     }
-    tr.unsupported {
-        background-color: $red-light;
-    }
+}
+
+table.django-supported-versions tr {
+    background-color: var(--secondary-accent);
+}
+
+table.django-unsupported-versions tr {
+    background-color: var(--error-light);
 }
 
 /* Corporate membership list page */
@@ -3124,6 +3544,33 @@ ul.corporate-members li {
     padding: 0 0 10px 10px;
 }
 
+/* Corporate membership download page, this mimics .fundraising-sidebar */
+
+.corporate-members {
+    .member-logo {
+        margin-top: 20px;
+        width: 20%;
+        float: left;
+        margin-bottom: 20px;
+
+        img {
+            width: 100%;
+            max-width: 75px;
+        }
+    }
+
+    .small-cta {
+        width: 70%;
+        float: left;
+        vertical-align: top;
+        margin-left: 5%;
+        margin-right: 5%;
+        margin-bottom: 20px;
+    }
+
+    clear: both;
+}
+
 /* Messages */
 
 .messages {
@@ -3133,7 +3580,7 @@ ul.corporate-members li {
 
     li {
         padding: 15px;
-        background-color: lighten($green-very-light, 10);
+        background-color: var(--secondary-accent-l10);
         color: $green-dark;
         border: 1px solid $green-dark;
         border-radius: 4px;
@@ -3155,26 +3602,29 @@ ul.corporate-members li {
         }
 
         &.success {
-            background-color: lighten($green-very-light, 5);
+            background-color: var(--secondary-accent-l5);
             content: $fa-var-check-circle;
+
             &::before {
                 content: $fa-var-check-circle;
             }
         }
 
         &.warning {
-            background-color: $warning-yellow;
-            border-color: darken($warning-dark-yellow, 50);
+            background-color: var(--warning);
+            border-color: var(--warning-dark-d50);
+
             &::before {
-                color: darken($warning-dark-yellow, 50);
+                color: var(--warning-dark-d50);
                 content: $fa-var-exclamation-triangle;
             }
         }
 
         &.error {
-            background-color: lighten($red-light, 10);
-            color: $red-dark;
-            border-color: $red-dark;
+            background-color: var(--error-light-l10);
+            color: var(--error-dark);
+            border-color: var(--error-dark);
+
             &::before {
                 content: $fa-var-times-circle;
             }
@@ -3190,7 +3640,8 @@ ul.corporate-members li {
     }
 }
 
-.code-block-caption, .snippet {
+.code-block-caption,
+.snippet {
     .btn-clipboard {
         float: right;
         cursor: pointer;
@@ -3200,9 +3651,63 @@ ul.corporate-members li {
         i:hover {
             color: lighten($green-dark, 20);
         }
+
         .clipboard-success {
             font-size: 80%;
             margin-right: 10px;
         }
+    }
+
+    .caption-text::selection {
+        background: $green-light;
+    }
+}
+
+.column-container {
+    @include respond-min(768px) {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    @include respond-max(1200px) {
+        .community-title {
+            text-align: center;
+        }
+
+        .community-cta-wrapper {
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+    }
+
+    .community-cta-wrapper {
+        display: flex;
+        gap: 6rem;
+        flex-wrap: wrap;
+        align-content: center;
+    }
+
+    .community-cta-a {
+        display: inline-block;
+        width: 300px;
+        height: 300px;
+    }
+
+    .community-cta {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: var(--secondary-accent);
+        border-radius: 20px;
+    }
+
+    .community-cta svg {
+        color: var(--body-fg);
     }
 }

@@ -1,45 +1,70 @@
-
 <div role="contentinfo">
   <div class="subfooter">
     <div class="container">
       <h1 class="visuallyhidden">Django Links</h1>
+      <div class="column-container">
+        <div class="col-learn-more">
+          <h2>Learn More</h2>
+          <ul>
+            <li><a href="{% url 'overview' %}">About Django</a></li>
+            {% comment %}<li><a href="{% url 'case_study_index' %}">Case Studies</a></li>{% endcomment %}
+            <li><a href="{% url 'start' %}">Getting Started with Django</a></li>
+            <li><a href="{% url 'document-detail' lang='en' version='dev' url="internals/organization" host 'docs' %}">Team
+              Organization</a></li>
+            <li><a href="{% url 'homepage' %}foundation/">Django Software Foundation</a></li>
+            <li><a href="{% url 'code_of_conduct' %}">Code of Conduct</a></li>
+            <li><a href="{% url 'diversity' %}">Diversity Statement</a></li>
+          </ul>
+        </div>
 
-      <div class="col learn">
-        <h2>Learn More</h2>
-        <ul>
-          <li><a href="{% url 'overview' %}">About Django</a></li>
-          {% comment %}<li><a href="{% url 'case_study_index' %}">Case Studies</a></li>{% endcomment %}
-          <li><a href="{% url 'start' %}">Getting Started with Django</a></li>
-          <li><a href="{% url 'document-detail' lang='en' version='dev' url="internals/organization" host 'docs'%}">Team Organization</a></li>
-          <li><a href="{% url 'homepage' %}foundation/">Django Software Foundation</a></li>
-          <li><a href="{% url 'code_of_conduct' %}">Code of Conduct</a></li>
-          <li><a href="{% url 'diversity' %}">Diversity Statement</a></li>
-        </ul>
+        <div class="col-get-involved">
+          <h2>Get Involved</h2>
+          <ul>
+            <li><a href="{% url 'community-index' %}">Join a Group</a></li>
+            <li><a href="{% url 'document-detail' lang='en' version='dev' url="internals/contributing" host 'docs' %}">Contribute
+              to Django</a></li>
+            <li><a
+              href="{% url 'document-detail' lang='en' version='dev' url="internals/contributing/bugs-and-features" host 'docs' %}">Submit
+              a Bug</a></li>
+            <li><a
+              href="{% url 'document-detail' lang='en' version='dev' url="internals/security" host 'docs' %}#reporting-security-issues">Report
+              a Security Issue</a></li>
+          </ul>
+        </div>
+
+        <div class="col-get-help">
+          <h2>Get Help</h2>
+          <ul>
+            <li><a href="{% url 'document-detail' lang='en' version='stable' url='faq' host 'docs' %}">Getting Help FAQ</a>
+            </li>
+            <li><a href="irc://irc.libera.chat/django">#django IRC channel</a></li>
+            <li><a href="https://discord.gg/xcRH6mN4fa" target="_blank">Django Discord</a></li>
+            <li><a href="https://forum.djangoproject.com/" target="_blank">Official Django Forum</a></li>
+          </ul>
+        </div>
+
+        <div class="col-follow-us">
+          <h2>Follow Us</h2>
+          <ul>
+            <li><a href="https://github.com/django">GitHub</a></li>
+            <li><a href="https://twitter.com/djangoproject">Twitter</a></li>
+            <li><a href="https://fosstodon.org/@django" rel="me">Fediverse (Mastodon)</a></li>
+            <li><a href="{% url 'weblog-feed' %}">News RSS</a></li>
+            <li><a href="https://groups.google.com/forum/#!forum/django-users">Django Users Mailing List</a></li>
+          </ul>
+        </div>
+
+        <div class="col-support-us">
+          <h2>Support Us</h2>
+          <ul>
+            <li><a href="{% url "fundraising:index" %}">Sponsor Django</a></li>
+            <li><a href="https://django.threadless.com/" target="_blank">Official merchandise store</a></li>
+            <li><a href="/foundation/donate/#benevity-giving">Benevity Workplace Giving Program</a></li>
+          </ul>
+        </div>
       </div>
-
-      <div class="col involved">
-        <h2>Get Involved</h2>
-        <ul>
-          <li><a href="{% url 'community-index' %}">Join a Group</a></li>
-          <li><a href="{% url 'document-detail' lang='en' version='dev' url="internals/contributing" host 'docs' %}">Contribute to Django</a></li>
-          <li><a href="{% url 'document-detail' lang='en' version='dev' url="internals/contributing/bugs-and-features" host 'docs' %}">Submit a Bug</a></li>
-          <li><a href="{% url 'document-detail' lang='en' version='dev' url="internals/security" host 'docs' %}#reporting-security-issues">Report a Security Issue</a></li>
-        </ul>
-      </div>
-
-      <div class="col follow last-child">
-        <h2>Follow Us</h2>
-        <ul>
-          <li><a href="https://github.com/django">GitHub</a></li>
-          <li><a href="https://twitter.com/djangoproject">Twitter</a></li>
-          <li><a href="{% url 'weblog-feed' %}">News RSS</a></li>
-          <li><a href="https://groups.google.com/forum/#!forum/django-users">Django Users Mailing List</a></li>
-        </ul>
-      </div>
-
     </div>
   </div>
-
   <div class="footer">
     <div class="container">
       <div class="footer-logo">
@@ -47,15 +72,17 @@
       </div>
       <ul class="thanks">
         <li>
-          <span>Hosting by</span> <a class="rackspace" href="https://www.rackspace.com">Rackspace</a>
+          <span>Hosting by</span> <a class="in-kind-donors" href="{% url 'fundraising:index' %}#in-kind-donors">In-kind
+            donors</a>
         </li>
-        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a> <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/"></a></li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+          <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
       </ul>
       <p class="copyright">&copy; 2005-{% now "Y" %}
         <a href="{% url 'homepage' %}foundation/"> Django Software
-        Foundation</a> and individual contributors. Django is a
+          Foundation</a> and individual contributors. Django is a
         <a href="{% url 'homepage' %}trademarks/">registered
-        trademark</a> of the Django Software Foundation.
+          trademark</a> of the Django Software Foundation.
       </p>
     </div>
   </div>

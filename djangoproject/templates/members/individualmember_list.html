@@ -5,12 +5,41 @@
   <h1>{% trans "Individual members" %}</h1>
   <p>
     {% blocktrans %}
-      The following are Individual Members of the Django Software Foundation. Individual Members
-      are appointed by the DSF in recognition of their service to the Django community. If you
-      know someone who you think should be considered for Individual Membership, please
+      Individual Members are appointed by the DSF in recognition of their service to the Django community.
+
+      Service to the Django community takes many forms. Here are some non-exhaustive examples of the categories of work that might qualify as service:
+
+      <ul>
+        <li>Code contributions on Django projects or major third-party packages in the Django ecosystem</li>
+        <li>Reviewing pull requests or triaging Django project tickets</li>
+        <li>Documentation, tutorials or blog posts related to Django</li>
+        <li>Discussions about Django in community areas such as the django-developers mailing list and Django Forum</li>
+        <li>Attending or organizing Django-related events or user groups</li>
+      </ul>
+
+      If you would like to apply for Individual Membership, please
     {% endblocktrans %}
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5lbWxAO-sylEEjHVKBNIpmHlhdJRf0_LCo8glnLUWd-Q2Sw/viewform?usp=sf_link">{% trans "fill out this form" %}</a>.
   </p>
+
+  <p>
+    {% blocktrans %}
+      You can also nominate others if you know someone who should be considered. If you are unsure if you meet the criteria, but you would like to be a member, please apply. If you're not accepted, you will receive a response with information about how you can successfully apply in the future.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans %}
+      As a member of the DSF, you will be recognized for your contributions to the community. Your name will appear below and you'll be added to the DSF Members Mailing list. You will also be eligible to vote for the DSF Board and Steering Council.
+    {% endblocktrans %}
+  </p>
+
+  <p>
+    {% blocktrans %}
+      The following are Individual Members of the Django Software Foundation.
+    {% endblocktrans %}
+  </p>
+
   <ul>
     {% for member in members %}
       <li>{{ member.name }}</li>

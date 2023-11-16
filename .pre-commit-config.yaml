@@ -1,0 +1,49 @@
+exclude: '(\/migrations\/|^djangoproject\/static\/.*$)'
+default_language_version:
+    python: python3
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: "v4.4.0"
+      hooks:
+          - id: debug-statements
+          - id: detect-private-key
+          - id: end-of-file-fixer
+            exclude_types: [json, sql]
+          - id: file-contents-sorter
+            files: ^(requirements/\w*.txt)$
+            args: ["--ignore-case", "--unique"]
+          - id: fix-encoding-pragma
+            args: ["--remove"]
+          - id: trailing-whitespace
+    - repo: https://github.com/asottile/pyupgrade
+      rev: "v3.4.0"
+      hooks:
+          - id: pyupgrade
+            args: [--py38-plus]
+    - repo: https://github.com/adamchainz/django-upgrade
+      rev: "1.13.0"
+      hooks:
+          - id: django-upgrade
+            args: [--target-version, "3.2"]
+    - repo: https://github.com/psf/black
+      rev: 23.3.0
+      hooks:
+          - id: black
+    - repo: https://github.com/pre-commit/mirrors-prettier
+      rev: "v3.0.0-alpha.9-for-vscode"
+      hooks:
+          - id: prettier
+            exclude_types: [html, json, scss]
+    - repo: https://github.com/pycqa/isort
+      rev: "5.12.0"
+      hooks:
+          - id: isort
+    - repo: https://github.com/pycqa/flake8
+      rev: "6.0.0"
+      hooks:
+          - id: flake8
+    - repo: https://github.com/rtts/djhtml
+      rev: "3.0.6"
+      hooks:
+          - id: djhtml
+            files: .*/templates/.*\.html$

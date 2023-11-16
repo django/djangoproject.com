@@ -5,17 +5,18 @@ from django.utils.functional import cached_property
 from django.utils.http import is_same_domain
 
 
-class CORSMiddleware(object):
+class CORSMiddleware:
     """
     Set the CORS 'Access-Control-Allow-Origin' header to allow the debug
     toolbar to work on the docs domain.
     """
+
     def __init__(self, get_response):
         self.get_response = get_response
 
     def __call__(self, request):
         response = self.get_response(request)
-        response['Access-Control-Allow-Origin'] = '*'
+        response["Access-Control-Allow-Origin"] = "*"
         return response
 
 
@@ -27,7 +28,7 @@ class ExcludeHostsLocaleMiddleware(LocaleMiddleware):
 
     @cached_property
     def _excluded_hosts(self):
-        return frozenset(getattr(settings, 'LOCALE_MIDDLEWARE_EXCLUDED_HOSTS', []))
+        return frozenset(getattr(settings, "LOCALE_MIDDLEWARE_EXCLUDED_HOSTS", []))
 
     def _is_host_included(self, host):
         """
@@ -37,7 +38,9 @@ class ExcludeHostsLocaleMiddleware(LocaleMiddleware):
         class from settings.MIDDLEWARE.
         """
         domain, _ = split_domain_port(host)
-        return not any(is_same_domain(domain, pattern) for pattern in self._excluded_hosts)
+        return not any(
+            is_same_domain(domain, pattern) for pattern in self._excluded_hosts
+        )
 
     def process_request(self, request):
         if self._is_host_included(request.get_host()):

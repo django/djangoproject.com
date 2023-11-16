@@ -1,5 +1,8 @@
 from django.views.generic.dates import (
-    ArchiveIndexView, DateDetailView, DayArchiveView, MonthArchiveView,
+    ArchiveIndexView,
+    DateDetailView,
+    DayArchiveView,
+    MonthArchiveView,
     YearArchiveView,
 )
 
@@ -7,8 +10,7 @@ from .models import Entry, Event
 
 
 class BlogViewMixin:
-
-    date_field = 'pub_date'
+    date_field = "pub_date"
     paginate_by = 10
 
     def get_allow_future(self):
@@ -27,7 +29,7 @@ class BlogViewMixin:
         if not self.request.user.is_staff:
             events_queryset = events_queryset.published()
 
-        context['events'] = events_queryset[:3]
+        context["events"] = events_queryset[:3]
 
         return context
 

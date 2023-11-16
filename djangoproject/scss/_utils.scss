@@ -1,23 +1,47 @@
 // Colors
 
 $gray-medium: #859D94;
+$gray-medium-l10: lighten($gray-medium, 10);
+$gray-dark: #343940;
 $text: #0C3C26;
+$text-l10: lighten($text, 10);
+$text-l20: lighten($text, 20);
 $text-light: #798780;
+$text-light-l20: lighten($text-light, 20);
+$text-light-l30: lighten($text-light, 30);
+$text-light-d10: darken($text-light, 10);
+$text-light-d20: darken($text-light, 20);
 $gray-line: #CFE3DC;
 $green-very-light: #C9F0DD;
+$green-very-light-l5: lighten($green-very-light, 5);
+$green-very-light-l10: lighten($green-very-light, 10);
 $green-light: #93D7B7;
 $green-medium: #44B78B;
 $green-medium-dark: #2B8C67;
 $green: #20AA76;
+$green-l6: lighten($green, 6);
 $green-dark: #0C4B33;
 $green-dark-text: #3C8866;
 $white: #F1FFF7;
+$white-dark: #F8F8F8;
+$warning-bg: #ffe761;
+$warning-icon: #E9BD46;
 $warning-yellow: #FFFDF1;
 $warning-dark-yellow: #F5F1C7;
+$warning-dark-yellow-d50: darken($warning-dark-yellow, 50);
+$orange: #ab5603;
+$dark-orange: #f87c04;
 $red: #BA2121;
 $red-light: #FFBABA;
+$red-light-l10: lighten($red-light, 10);
+$red-medium: #E46767;
 $red-dark: #6A0E0E;
+$red-dark-l10: lighten($red-dark, 10);
+$black: #0e1117;
+$black-light-5: lighten($black, 5);
 $font-path: "../fonts/fira-mono";
+$logo-bg-dark: #272c27;
+
 
 // @font-face declarations
 
@@ -25,8 +49,8 @@ $font-path: "../fonts/fira-mono";
     font-family: 'Fira Mono';
     src: url('#{$font-path}/FiraMono-Regular.eot');
     src: url('#{$font-path}/FiraMono-Regular.eot') format('embedded-opentype'),
-         url('#{$font-path}/FiraMono-Regular.woff') format('woff'),
-         url('#{$font-path}/FiraMono-Regular.ttf') format('truetype');
+    url('#{$font-path}/FiraMono-Regular.woff') format('woff'),
+    url('#{$font-path}/FiraMono-Regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
@@ -35,8 +59,8 @@ $font-path: "../fonts/fira-mono";
     font-family: 'Fira Mono';
     src: url('#{$font-path}/FiraMono-Bold.eot');
     src: url('#{$font-path}/FiraMono-Bold.eot') format('embedded-opentype'),
-         url('#{$font-path}/FiraMono-Bold.woff') format('woff'),
-         url('#{$font-path}/FiraMono-Bold.ttf') format('truetype');
+    url('#{$font-path}/FiraMono-Bold.woff') format('woff'),
+    url('#{$font-path}/FiraMono-Bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
@@ -44,6 +68,12 @@ $font-path: "../fonts/fira-mono";
 // Media Queries Mixin (http://jakearchibald.github.com/sass-ie/)
 @mixin respond-min($width) {
     @media screen and (min-width: $width) {
+        @content;
+    }
+}
+
+@mixin respond-max($width) {
+    @media screen and (max-width: $width) {
         @content;
     }
 }
@@ -56,8 +86,8 @@ $font-path: "../fonts/fira-mono";
 
 // Retina media query mixin
 @mixin retina-display {
-    @media only screen and
-    (-webkit-min-device-pixel-ratio: 2),
+
+    @media only screen and (-webkit-min-device-pixel-ratio: 2),
     (min-resolution: 192dpi) {
         @content;
     }
@@ -67,20 +97,24 @@ $font-path: "../fonts/fira-mono";
 @mixin serif {
     font-family: Palatino, "Palatino Linotype", "Book Antiqua", "Hoefler Text", Georgia, "Lucida Bright", Cambria, Times, "Times New Roman", serif;
 }
+
 @mixin sans-serif {
     font-family: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
 }
+
 @mixin monospace {
     font-family: "Fira Mono", Consolas, Menlo, Monaco, "Courier New", Courier, monospace;
-    font-variant-ligatures: no-common-ligatures;  // disables the common ligatures only
-    text-rendering: optimizeSpeed;  // for Safari 7.x
+    font-variant-ligatures: no-common-ligatures; // disables the common ligatures only
+    text-rendering: optimizeSpeed; // for Safari 7.x
+    overflow-wrap: break-word;
 }
 
 // Font Sizing Mixin (http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/)
 html {
     font-size: 62.5%;
 }
-@mixin font-size ( $size: 16 ) {
+
+@mixin font-size ($size: 16) {
     font-size: $size + px;
     font-size: $size/10 + rem;
 }
@@ -96,31 +130,37 @@ html {
     position: absolute;
     width: 1px;
 }
+
 @mixin clearfix {
+
     &:before,
     &:after {
         content: "";
         display: table;
     }
+
     &:after {
         clear: both;
     }
 }
 
-@mixin svg-image ( $name ) {
-    background-image: url('../img/'+$name+'.png');
+@mixin svg-image ($name ) {
+    background-image: url('../img/' +$name+'.png');
+
     .mdzr-svg & {
-        background-image: url('../img/'+$name+'.svg');
+        background-image: url('../img/' +$name+'.svg');
     }
 }
 
 // Green Link Mixin
 @mixin link-green {
-    color: $green;
+    color: var(--link-color);
     text-decoration: none;
+
     &:visited {
-        color: $green;
+        color: var(--link-color);
     }
+
     &:hover,
     &:active,
     &:focus {
@@ -132,19 +172,19 @@ html {
 
 // Secondary content box-shadow:
 @mixin secondary-shadow-top {
-    -moz-box-shadow: 0 4px 8px rgba(12,60,38,0.07);
-    -webkit-box-shadow: 0 4px 8px rgba(12,60,38,0.07);
-    box-shadow: 0 4px 8px rgba(12,60,38,0.07);
+    -moz-box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
+    -webkit-box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
+    box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
 }
 
 @mixin secondary-shadow-bottom {
-    -moz-box-shadow: 0 -4px 8px rgba(12,60,38,0.07);
-    -webkit-box-shadow: 0 -4px 8px rgba(12,60,38,0.07);
-    box-shadow: 0 -4px 8px rgba(12,60,38,0.07);
+    -moz-box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
+    -webkit-box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
+    box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
 }
 
 @mixin framed-image {
     padding: 20px;
-    border: 1px solid $gray-line;
+    border: 1px solid var(--hairline-color);
     border-radius: 4px;
 }

@@ -6,20 +6,22 @@
         box-sizing: border-box;
     }
 
-    > input {
+    >input {
+
         &.c-tab-unix,
         &.c-tab-win {
             display: none;
         }
-        &:checked + label {
-            color: #555;
+
+        &:checked+label {
+            color: var(--console-tabs-color);
             border: 1px solid #ddd;
-            border-top: 2px solid #ab5603;
-            border-bottom: 1px solid #fff;
+            border-top: 2px solid var(--console-tabs-border);
+            border-bottom: 1px solid var(--white-color);
         }
     }
 
-    > label {
+    >label {
         display: inline-block;
         padding: 4px 8px;
         font-weight: normal;
@@ -29,7 +31,7 @@
         font-family: fontawesome;
     }
 
-    > section {
+    >section {
         display: none;
         text-align: left;
 
@@ -38,8 +40,8 @@
         }
     }
 
-    > .c-tab-unix:checked ~ .c-content-unix,
-    > .c-tab-win:checked  ~ .c-content-win {
+    >.c-tab-unix:checked~.c-content-unix,
+    >.c-tab-win:checked~.c-content-win {
         display: block;
     }
 }

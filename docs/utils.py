@@ -2,11 +2,11 @@ from django.conf import settings
 from django.http import Http404
 
 
-def get_doc_root(lang, version, subroot='json'):
+def get_doc_root(lang, version, subroot="json"):
     return settings.DOCS_BUILD_ROOT.joinpath(lang, version, "_built", subroot)
 
 
-def get_doc_root_or_404(lang, version, subroot='json'):
+def get_doc_root_or_404(lang, version, subroot="json"):
     docroot = get_doc_root(lang, version, subroot)
     if not docroot.exists():
         raise Http404(str(docroot))
@@ -15,7 +15,10 @@ def get_doc_root_or_404(lang, version, subroot='json'):
 
 def get_doc_path(docroot, subpath):
     # First look for <bits>/index.fjson, then for <bits>.fjson
-    bits = subpath.strip('/').split('/') + ['index.fjson']
+    try:
+        bits = subpath.strip("/").split("/") + ["index.fjson"]
+    except AttributeError:
+        bits = []
     doc = docroot.joinpath(*bits)
     try:
         if doc.exists():
@@ -23,7 +26,7 @@ def get_doc_path(docroot, subpath):
     except NotADirectoryError:
         pass  # we get here if doc + subpath (without /index.fjson) is a file
 
-    bits = bits[:-2] + ['%s.fjson' % bits[-2]]
+    bits = bits[:-2] + ["%s.fjson" % bits[-2]]
     doc = docroot.joinpath(*bits)
     if doc.exists():
         return doc

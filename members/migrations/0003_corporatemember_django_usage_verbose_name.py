@@ -8,13 +8,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0002_corporatemember_django_usage'),
+        ("members", "0002_corporatemember_django_usage"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='corporatemember',
-            name='django_usage',
-            field=models.TextField(blank=True, help_text='Not displayed publicly.'),
+            model_name="corporatemember",
+            name="django_usage",
+            field=models.TextField(blank=True, help_text="Not displayed publicly."),
         ),
     ]

@@ -4,6 +4,7 @@ define([
 
     var MobileMenuExport = function(menu) {
         this.menu = $(menu); //menu container
+        this.menuBtn = $('.mobile-toggle'); // toggle dark mode icon
         this.init();
     };
 
@@ -11,8 +12,8 @@ define([
         init: function(){
             var self = this;
             self.menu.addClass('nav-menu-on');
-            self.button = $('<div class="menu-button"><i class="icon icon-reorder"></i><span>Menu</span></div>');
-            self.button.insertBefore(self.menu);
+            self.button = $('<button class="menu-button"><i class="icon icon-reorder"></i><span>Menu</span></button>');
+            self.button.insertBefore(self.menuBtn);
             self.button.on( 'click', function(){
                 self.menu.toggleClass('active');
                 self.button.toggleClass('active');

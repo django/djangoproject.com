@@ -17,26 +17,46 @@
     <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
     <meta name="msapplication-TileColor" content="#113228">
     <meta name="msapplication-TileImage" content="{% static "img/icon-tile.png" %}">
+    <meta name="theme-color" content="#0C4B33">
 
-    <title>{% block title %}The Web framework for perfectionists with deadlines{% endblock %} | Django</title>
+    {% block og_tags %}
+      <meta property="og:title" content="{% block og_title %}Django{% endblock %}" />
+      <meta property="og:description" content="{% block og_description %}{% spaceless %}
+                                                 The web framework for perfectionists with deadlines.
+                                               {% endspaceless %}{% endblock %}" />
+      <meta property="og:image" content="{% block og_image %}{% static "img/logos/django-logo-negative.png" %}{% endblock %}" />
+      <meta property="og:image:alt" content="{% block og_image_alt %}Django logo{% endblock %}" />
+      <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}" />
+      <meta property="og:image:height" content="{% block og_image_height %}546{% endblock %}" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="{% block twitter_card %}summary{% endblock %}">
+    {% endblock og_tags %}
+
+    <title>{% block title %}The web framework for perfectionists with deadlines{% endblock %} | Django</title>
 
     <link rel="stylesheet" href="{% static "css/output.css" %}" >
     <script src="{% static "js/lib/webfontloader/webfontloader.js" %}"></script>
     <script>
-    WebFont.load({
-      custom: {
-        families: ['FontAwesome', 'Fira+Mono'],
-      },
-      google: {
-        families: ['Roboto:400italic,700italic,300,700,400:latin'
-        ]
-      },
-      classes: false,
-      events: false,
-      timeout: 1000
-    });
+      WebFont.load({
+        custom: {
+          families: ['FontAwesome', 'Fira+Mono'],
+        },
+        google: {
+          families: ['Roboto:400italic,700italic,300,700,400:latin'
+          ]
+        },
+        classes: false,
+        events: false,
+        timeout: 1000
+      });
     </script>
     <script src="{% static "js/lib/modernizr.js" %}"></script>
+    <script src="{% static "js/mod/switch-dark-mode.js" %}"></script>
     {% block head_extra %}{% endblock head_extra %}
   </head>
 
@@ -49,6 +69,21 @@
         {% block header %}{% endblock %}
       </div>
     </div>
+
+    {% comment %}
+    Replace the div#billboard below with banner using the skeleton here to
+    add a site banner for surveys/promotions/etc
+
+    <div id="billboard">{% block billboard %}
+      <div class="banner">
+        <p> Banner content goes here </p>
+      </div>
+        {% endblock %}
+    </div>
+    The CSS targets the `#billboard` selector and expects nested `div and `p` elements.
+    elements.
+    {% endcomment %}
+
     <div id="billboard">{% block billboard %}{% endblock %}</div>
 
     <div class="container {% block layout_class %}{% endblock %}">
@@ -83,49 +118,56 @@
     {% block alert %}
     {% endblock %}
 
+    <!-- SVGs -->
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <symbol viewBox="0 0 24 24" id="icon-auto"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z"/></symbol>
+      <symbol viewBox="0 0 24 24" id="icon-moon"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/></symbol>
+      <symbol viewBox="0 0 24 24" id="icon-sun"><path d="M0 0h24v24H0z" fill="currentColor"/><path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z"/></symbol>
+    </svg>
+    <!-- END SVGs -->
+
     {% block footer %}
       {% include "includes/footer.html" %}
     {% endblock %}
 
     {# Require JS #}
     <script>
-    function extless(input) {
+      function extless(input) {
         return input.replace(/(.*)\.[^.]+$/, '$1');
-    }
-    var require = {
+      }
+      var require = {
         shim: {
-            'jquery': [],
-            'jquery.inview': ["jquery"],
-            'jquery.payment': ["jquery"],
-            'jquery.flot': ["jquery"],
-            'jquery.unveil': ["jquery"],
-            'stripe': {
-              exports: 'Stripe'
-            }
+          'jquery': [],
+          'jquery.inview': ["jquery"],
+          'jquery.payment': ["jquery"],
+          'jquery.flot': ["jquery"],
+          'jquery.unveil': ["jquery"],
+          'stripe': {
+            exports: 'Stripe'
+          }
         },
         paths: {
-            "jquery": extless("{% static 'js/lib/jquery/dist/jquery.min.js' %}"),
-            "jquery.inview": extless("{% static 'js/lib/jquery.inview/jquery.inview.min.js' %}"),
-            "jquery.payment": extless("{% static 'js/lib/jquery.payment/lib/jquery.payment.js' %}"),
-            "jquery.unveil": extless("{% static 'js/lib/unveil/jquery.unveil.min.js' %}"),
-            "jquery.flot": extless("{% static 'js/lib/jquery-flot/jquery.flot.min.js' %}"),
-            "clipboard": extless("{% static 'js/lib/clipboard/dist/clipboard.min.js' %}"),
-            "mod/floating-warning": extless("{% static 'js/mod/floating-warning.js' %}"),
-            "mod/list-collapsing": extless("{% static 'js/mod/list-collapsing.js' %}"),
-            "mod/list-feature": extless("{% static 'js/mod/list-feature.js' %}"),
-            "mod/mobile-menu": extless("{% static 'js/mod/mobile-menu.js' %}"),
-            "mod/version-switcher": extless("{% static 'js/mod/version-switcher.js' %}"),
-            "mod/search-key": extless("{% static 'js/mod/search-key.js' %}"),
-            "mod/stripe-custom-checkout": extless("{% static 'js/mod/stripe-custom-checkout.js' %}"),
-            "mod/stripe-change-card": extless("{% static 'js/mod/stripe-change-card.js' %}"),
-            "mod/console-tabs": extless("{% static 'js/mod/console-tabs.js' %}"),
-            "stripe-checkout": "https://checkout.stripe.com/checkout",
-            "stripe": "https://js.stripe.com/v2/?"  // ? needed due to require.js
+          "jquery": extless("{% static 'js/lib/jquery/dist/jquery.min.js' %}"),
+          "jquery.inview": extless("{% static 'js/lib/jquery.inview/jquery.inview.min.js' %}"),
+          "jquery.payment": extless("{% static 'js/lib/jquery.payment/lib/jquery.payment.js' %}"),
+          "jquery.unveil": extless("{% static 'js/lib/unveil/jquery.unveil.min.js' %}"),
+          "jquery.flot": extless("{% static 'js/lib/jquery-flot/jquery.flot.min.js' %}"),
+          "clipboard": extless("{% static 'js/lib/clipboard/dist/clipboard.min.js' %}"),
+          "mod/floating-warning": extless("{% static 'js/mod/floating-warning.js' %}"),
+          "mod/list-collapsing": extless("{% static 'js/mod/list-collapsing.js' %}"),
+          "mod/list-feature": extless("{% static 'js/mod/list-feature.js' %}"),
+          "mod/mobile-menu": extless("{% static 'js/mod/mobile-menu.js' %}"),
+          "mod/version-switcher": extless("{% static 'js/mod/version-switcher.js' %}"),
+          "mod/search-key": extless("{% static 'js/mod/search-key.js' %}"),
+          "mod/stripe-change-card": extless("{% static 'js/mod/stripe-change-card.js' %}"),
+          "mod/switch-dark-mode": extless("{% static 'js/mod/switch-dark-mode.js' %}"),
+          "mod/console-tabs": extless("{% static 'js/mod/console-tabs.js' %}"),
+          "stripe-checkout": "https://checkout.stripe.com/checkout",
+          "stripe": "https://js.stripe.com/v3/?" // ? needed due to require.js
         }
-    };
+      };
     </script>
     <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>
     {% block body_extra %}{% endblock body_extra %}
-
   </body>
 </html>
