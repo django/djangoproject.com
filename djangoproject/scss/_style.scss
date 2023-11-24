@@ -2243,7 +2243,6 @@ h2+.list-link-soup {
 
 .headerlink {
     // Permalink styles for sections in docs
-    opacity: 0;
     margin-left: 10px;
     font-size: 0.8em;
     position: relative;
@@ -2255,21 +2254,6 @@ h2+.list-link-soup {
 
     &:focus {
         opacity: 1;
-    }
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-dl,
-dt {
-    &:hover {
-        >.headerlink {
-            opacity: 1;
-        }
     }
 }
 
