@@ -78,11 +78,13 @@
 		}
 	}
 
-	function setCookie(cname, cvalue, domain, exdays) {
+	function setCookie(cname, cvalue, domain) {
 		const d = new Date();
-		d.setTime(d.getTime() + (exdays*24*60*60*1000));
+		d.setTime(d.getTime() + (365*24*60*60*1000)); // 1 year
 		let expires = "expires="+ d.toUTCString();
-		document.cookie = `${cname}=${cvalue}; Domain=${domain}; ${expires};path=/`;
+        // change the SameSite attribute if it's on development or production
+        sameSiteAttribute = domain == 'localhost' ? 'SameSite=Lax;' : `Domain=${domain}; SameSite=None; Secure;`
+		document.cookie = `${cname}=${cvalue}; ${sameSiteAttribute} ${expires}; path=/;`;
 	}
 
 	function getCookie(cname) {
