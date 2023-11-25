@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.list import ListView
 
 from .forms import FeedModelForm
-from .models import APPROVED_FEED, Feed, FeedItem, FeedType
+from .models import APPROVED_FEED, Feed, FeedItem, FeedType, LocalDjangoCommunity
 
 
 def index(request):
@@ -108,3 +108,16 @@ def delete_feed(request, feed_id):
         feed.delete()
         return redirect("community-my-feeds")
     return render(request, "aggregator/delete-confirm.html", {"feed": feed})
+
+
+class LocalDjangoCommunitiesListView(ListView):
+    """
+    Shows a list of community meetups
+    """
+
+    model = LocalDjangoCommunity
+    context_object_name = "django_communities"
+    template_name = "aggregator/local-django-community.html"
+
+    def get_queryset(self):
+        return self.model.objects.all().order_by("continent").values()

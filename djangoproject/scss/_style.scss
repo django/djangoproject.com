@@ -3685,11 +3685,11 @@ ul.corporate-members li {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: var(--secondary-accent);
+        background: var(--community-img-bg);
         border-radius: 20px;
     }
 
-    .community-cta svg {
-        color: var(--body-fg);
+    .community-cta svg, h3 {
+        color: var(--community-img-fg);
     }
 }
