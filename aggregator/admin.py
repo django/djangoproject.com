@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from .models import APPROVED_FEED, DENIED_FEED, Feed, FeedItem, FeedType
+from .models import (
+    APPROVED_FEED,
+    DENIED_FEED,
+    Feed,
+    FeedItem,
+    FeedType,
+    LocalDjangoCommunity,
+)
 
 
 @admin.action(description="Mark selected feeds as approved.")
@@ -40,4 +47,11 @@ admin.site.register(
 admin.site.register(
     FeedType,
     prepopulated_fields={"slug": ("name",)},
+)
+
+admin.site.register(
+    LocalDjangoCommunity,
+    prepopulated_fields={"slug": ("name",)},
+    list_filter=["name", "city", "country", "is_active"],
+    search_fields=["name", "city", "country"],
 )
