@@ -8,7 +8,7 @@
 
   <h2>Local Django Communities</h2>
 
-  <h3>Table of contents<a class="plink" href="#table-of-contents">¶</a></h3>
+  {% if grouped_django_communities %}<h3>Table of contents<a class="plink" href="#table-of-contents"> ¶</a></h3>{% endif %}
   <ul>
     {% for local_django_community in grouped_django_communities %}
       <li><a href="#{{ local_django_community.grouper.title }}-meetups">{{ local_django_community.grouper.title }}</a></li>
@@ -18,11 +18,11 @@
 
   {% for local_django_community in grouped_django_communities %}
     <div class="section">
-      <h2>{{ local_django_community.grouper.title }}<a class="plink" href="#{{ local_django_community.grouper.title }}-meetups">¶</a></h2>
-      <ul style="list-style-type:none;">
+      <h2>{{ local_django_community.grouper.title }} <a class="plink" href="#{{ local_django_community.grouper.title | lower }}-meetups">¶</a></h2>
+      <ul>
         {% for django_community in local_django_community.list %}
           <li>
-            <h3 id="{{ django_community.slug }}-team">{{ django_community.name }}<a class="plink" href="#{{ django_community.slug }}-meetup">¶</a></h3>
+            <h3 id="{{ django_community.slug }}-team">{{ django_community.name }} <a class="plink" href="#{{ django_community.slug }}-meetup">¶</a></h3>
             <p class="meta">{{ django_community.city }}, {{ django_community.country }} &nbsp;
               {% if django_community.is_active %}
                 Active
@@ -43,6 +43,8 @@
         {% endfor %}
       </ul>
     </div>
+  {% empty %}
+  Local Django communities are coming soon. Please check back later.
 
   {% endfor %}
 {##}
