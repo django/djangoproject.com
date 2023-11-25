@@ -347,7 +347,7 @@ html[data-theme="light"] .theme-toggle .theme-label-when-light {
     }
 }
 
-[role="banner"] .nav-menu-on li:last-child {
+[role="banner"] [role="navigation"] li:last-child {
     @include respond-max(768px) {
         display: none;
     }

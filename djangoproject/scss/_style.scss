@@ -497,7 +497,6 @@ blockquote {
 
     }
 
-
     .logo {
         @include font-size(40);
         @include sans-serif;
@@ -546,43 +545,26 @@ blockquote {
             color: var(--primary);
         }
 
-        span {
-            @include visuallyhidden;
-        }
-
         &.active {
             opacity: 0.5;
         }
     }
 
-    .nav-menu-on {
-        max-height: 0;
+    [role="navigation"] {
+        width: 100%;
+        background: $green-dark;
+        transition: max-height 0.3s ease-out;
+        max-height: 0; // hide mobile menu by default
         overflow: hidden;
-
-        -webkit-transition: all 0.3s ease-out;
-        transition: all 0.3s ease-out;
-
-        @include respond-min(768px) {
-            // turn off animations if on a desktop width
-            max-height: none;
-
-            -webkit-transition: none;
-            transition: none;
-        }
 
         &.active {
             max-height: 580px;
         }
-    }
-
-    [role="navigation"] {
-        background: $green-dark;
-
-        width: 100%;
 
         @include respond-min(768px) {
             width: auto;
             float: right;
+            max-height: none; // always show menu on a desktop width
         }
 
         ul {
