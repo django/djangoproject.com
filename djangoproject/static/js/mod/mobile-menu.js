@@ -4,19 +4,16 @@ define([
 
     var MobileMenuExport = function(menu) {
         this.menu = $(menu); //menu container
-        this.menuBtn = $('.mobile-toggle'); // toggle dark mode icon
+        this.toggleMenuBtn = $('.menu-button')
         this.init();
     };
 
     MobileMenuExport.prototype = {
         init: function(){
             var self = this;
-            self.menu.addClass('nav-menu-on');
-            self.button = $('<button class="menu-button"><i class="icon icon-reorder"></i><span>Menu</span></button>');
-            self.button.insertBefore(self.menuBtn);
-            self.button.on( 'click', function(){
+            self.toggleMenuBtn.on( 'click', function(){
                 self.menu.toggleClass('active');
-                self.button.toggleClass('active');
+                self.toggleMenuBtn.toggleClass('active');
             });
         }
     };
