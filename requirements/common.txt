@@ -2,7 +2,7 @@ Babel==2.10.1
 django-contact-form==1.9
 django-countries==7.5.1
 django-hosts==5.1
-django-money==2.1.1
+django-money==3.1
 django-push==1.1
 django-read-only==1.12.0
 django-recaptcha==3.0.0
