@@ -1,5 +1,5 @@
-from contact_form.views import ContactFormView
 from django.urls import reverse
+from django_contact_form.views import ContactFormView
 
 from .forms import FoundationContactForm
 
