@@ -1,5 +1,4 @@
 from datetime import timedelta
-from test.support import captured_stderr
 
 from django.test import TestCase
 from django.urls import reverse
@@ -64,15 +63,14 @@ class EntryTestCase(DateTimeMixin, TestCase):
         """
         Make sure docutils' file inclusion directives are disabled by default.
         """
-        with captured_stderr() as self.docutils_stderr:
-            entry = Entry.objects.create(
-                pub_date=self.now,
-                is_active=True,
-                headline="active",
-                content_format="reST",
-                body=".. raw:: html\n    :file: somefile\n",
-                slug="a",
-            )
+        entry = Entry.objects.create(
+            pub_date=self.now,
+            is_active=True,
+            headline="active",
+            content_format="reST",
+            body=".. raw:: html\n    :file: somefile\n",
+            slug="a",
+        )
         self.assertIn("<p>&quot;raw&quot; directive disabled.</p>", entry.body_html)
         self.assertIn(".. raw:: html\n    :file: somefile", entry.body_html)
 
