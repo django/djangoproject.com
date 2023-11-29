@@ -14,7 +14,7 @@ DATABASES = {
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 SILENCED_SYSTEM_CHECKS = SILENCED_SYSTEM_CHECKS + [
-    "captcha.recaptcha_test_key_error"  # Default test keys for development.
+    "django_recaptcha.recaptcha_test_key_error"  # Default test keys for development.
 ]
 
 ALLOWED_HOSTS = [".localhost", "127.0.0.1", "www.127.0.0.1"]
