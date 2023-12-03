@@ -194,7 +194,7 @@ Styles
 ------
 
 CSS is written in `Scss <http://sass-lang.com/>`_ and compiled via
-`Libsass <http://libsass.org/>`_.
+`Libsass <https://sass-lang.com/libsass/>`_.
 
 Run the following to compile the Scss files to CSS::
 

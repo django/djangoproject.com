@@ -69,15 +69,23 @@
         {% block header %}{% endblock %}
       </div>
     </div>
+
+    {% comment %}
+    Replace the div#billboard below with banner using the skeleton here to
+    add a site banner for surveys/promotions/etc
+
     <div id="billboard">{% block billboard %}
-      <div class="copy-banner" style="background: #44B78B;text-align:center;padding: 1em 3em;">
-        <div class="container">
-          <h1>Please take a few minutes to complete the
-            <a href="https://surveys.jetbrains.com/s3/django-developers-survey-2023" style="font-weight: bold;">Django Developers Survey 2023</a>.<br>Your feedback will help guide future efforts.
-          </h1>
-        </div>
+      <div class="banner">
+        <p> Banner content goes here </p>
       </div>
-    {% endblock %}</div>
+        {% endblock %}
+    </div>
+    The CSS targets the `#billboard` selector and expects nested `div and `p` elements.
+    elements.
+    {% endcomment %}
+
+    <div id="billboard">{% block billboard %}{% endblock %}</div>
+
     <div class="container {% block layout_class %}{% endblock %}">
       <div role="main">
 

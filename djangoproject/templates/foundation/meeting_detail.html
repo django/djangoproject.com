@@ -39,7 +39,7 @@
     {{ meeting.treasurer_report_html|safe }}
   {% endif %}
 
-  {% if meeting.grants_approved %}
+  {% if meeting.grants_approved.all %}
     <h2>Grants approved </h2>
 
     <ul>
@@ -59,7 +59,7 @@
     </ul>
   {% endif %}
 
-  {% if meeting.corporate_members_approved %}
+  {% if meeting.corporate_members_approved.all %}
     <h2>Corporate members approved</h2>
 
     <ul>

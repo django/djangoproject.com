@@ -57,6 +57,9 @@ html[data-theme="light"],
     --search-mark-text: #{$green-dark};
 
     --selection: #{$green-very-light};
+
+    --community-img-bg: #{$green-very-light};
+    --community-img-fg: #{$green-dark};
 }
 
 @media (prefers-color-scheme: dark) {
@@ -105,6 +108,9 @@ html[data-theme="light"],
         --search-mark-text: #{$black-light-5};
 
         --selection: #{$green-medium};
+
+        --community-img-bg: #{$green-dark};
+        --community-img-fg: #{$white};
     }
 
     body .homepage {
@@ -200,6 +206,9 @@ html[data-theme="dark"] {
     --search-mark-text: #{$black-light-5};
 
     --selection: #{$green-dark};
+
+    --community-img-bg: #{$green-dark};
+    --community-img-fg: #{$white};
 
     .img-release {
         filter: invert(1);
@@ -347,7 +356,7 @@ html[data-theme="light"] .theme-toggle .theme-label-when-light {
     }
 }
 
-[role="banner"] .nav-menu-on li:last-child {
+[role="banner"] [role="navigation"] li:last-child {
     @include respond-max(768px) {
         display: none;
     }

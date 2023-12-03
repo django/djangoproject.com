@@ -497,7 +497,6 @@ blockquote {
 
     }
 
-
     .logo {
         @include font-size(40);
         @include sans-serif;
@@ -526,7 +525,7 @@ blockquote {
     .menu-button {
         @include font-size(20);
         background: $green-dark;
-        border-radius: 23px;
+        border: 0;
         color: var(--menu);
         cursor: pointer;
         display: block;
@@ -546,43 +545,26 @@ blockquote {
             color: var(--primary);
         }
 
-        span {
-            @include visuallyhidden;
-        }
-
         &.active {
             opacity: 0.5;
         }
     }
 
-    .nav-menu-on {
-        max-height: 0;
+    [role="navigation"] {
+        width: 100%;
+        background: $green-dark;
+        transition: max-height 0.3s ease-out;
+        max-height: 0; // hide mobile menu by default
         overflow: hidden;
-
-        -webkit-transition: all 0.3s ease-out;
-        transition: all 0.3s ease-out;
-
-        @include respond-min(768px) {
-            // turn off animations if on a desktop width
-            max-height: none;
-
-            -webkit-transition: none;
-            transition: none;
-        }
 
         &.active {
             max-height: 580px;
         }
-    }
-
-    [role="navigation"] {
-        background: $green-dark;
-
-        width: 100%;
 
         @include respond-min(768px) {
             width: auto;
             float: right;
+            max-height: none; // always show menu on a desktop width
         }
 
         ul {
@@ -683,6 +665,39 @@ blockquote {
 
         @include respond-min(768px) {
             position: static;
+        }
+    }
+}
+
+/* banner for billboard */
+#billboard {
+    background-color: $green-medium;
+
+    * {
+        color: $black;
+    }
+
+    .banner {
+        text-align: center;
+        padding: 1em 3em;
+        max-width: 60em;
+        margin: 0 auto;
+        p {
+            @include sans-serif;
+            font-size: 3.2rem;
+            font-weight: 300;
+            margin: 0.35em 0 0.35em;
+            line-height: 1.3;
+            padding: 1px 0 6px;
+        }
+    }
+
+
+    a, h1 a {
+        color: $black;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
         }
     }
 }
@@ -2210,7 +2225,6 @@ h2+.list-link-soup {
 
 .headerlink {
     // Permalink styles for sections in docs
-    opacity: 0;
     margin-left: 10px;
     font-size: 0.8em;
     position: relative;
@@ -2222,21 +2236,6 @@ h2+.list-link-soup {
 
     &:focus {
         opacity: 1;
-    }
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-dl,
-dt {
-    &:hover {
-        >.headerlink {
-            opacity: 1;
-        }
     }
 }
 
@@ -2517,6 +2516,7 @@ dt {
         // for docs links. if we keep text-decoration, then underscores in function names become invisible.
         color: var(--error-dark);
         text-decoration: none;
+        overflow-wrap: break-word;
         border-bottom: 1px dotted var(--text-light);
 
         &:visited {
@@ -3685,11 +3685,11 @@ ul.corporate-members li {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: var(--secondary-accent);
+        background: var(--community-img-bg);
         border-radius: 20px;
     }
 
-    .community-cta svg {
-        color: var(--body-fg);
+    .community-cta svg, h3 {
+        color: var(--community-img-fg);
     }
 }

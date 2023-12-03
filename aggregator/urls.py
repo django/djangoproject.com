@@ -4,6 +4,11 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="community-index"),
+    path(
+        "local/",
+        views.LocalDjangoCommunitiesListView.as_view(),
+        name="local-django-communities",
+    ),
     path("mine/", views.my_feeds, name="community-my-feeds"),
     path("<feed_type_slug>/", views.FeedListView.as_view(), name="community-feed-list"),
     path("add/<feed_type_slug>/", views.add_feed, name="community-add-feed"),
