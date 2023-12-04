@@ -155,7 +155,7 @@
   "pk": "4.1",
   "fields": {
     "date": "2022-08-03",
-    "eol_date": null,
+    "eol_date": "2023-12-01",
     "major": 4,
     "minor": 1,
     "micro": 0,
@@ -176,6 +176,20 @@
     "status": "f",
     "iteration": 0,
     "is_lts": true
+  }
+},
+{
+  "model": "releases.release",
+  "pk": "5.0",
+  "fields": {
+    "date": "2023-12-04",
+    "eol_date": null,
+    "major": 5,
+    "minor": 0,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": false
   }
 }
 ]
