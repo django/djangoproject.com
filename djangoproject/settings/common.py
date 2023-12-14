@@ -70,7 +70,7 @@ INSTALLED_APPS = [
     "svntogit",
     "tracdb",
     "fundraising",
-    "django_recaptcha",
+    "captcha",
     "registration",
     "django_hosts",
     "sorl.thumbnail",
