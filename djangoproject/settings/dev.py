@@ -63,4 +63,4 @@ if DEBUG:
             "djangoproject.middleware.CORSMiddleware",
         )
 
-SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
+SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
