@@ -2,13 +2,36 @@
 
 {% block title %}Page not found{% endblock %}
 
-{% block header %}<h1>404</h1>{% endblock %}
+{% block header %}
+  <div style="font-size: 6rem; color: #2dba4e;">404</div>
+{% endblock %}
 
 {% block content %}
+  <div style="max-width: 600px; margin: 0 auto; color: #2b3137;">
     <h2>Page not found</h2>
 
-    <p>Looks like you followed a bad link. If you think it's our fault, please <a href="https://code.djangoproject.com/">let us know</a>.</p>
+    <p>Looks like you followed a bad link. If you believe it's an issue on our end, please <a href="https://code.djangoproject.com/">let us know</a>.</p>
 
-    <p>Here's a link to the <a href="{% url 'homepage' %}">homepage</a>. You know, just in case.</p>
+    <p>Meanwhile, you can try searching for what you're looking for:</p>
 
+    <!-- GitHub-style search bar -->
+    <div style="margin-top: 20px; margin-bottom: 30px;">
+      <form action="{% url 'search' %}" method="get" style="display: flex;">
+        <input type="text" id="search" name="q" style="flex-grow: 1; padding: 8px; border: 1px solid #2b3137;" placeholder="Search...">
+        <button type="submit" style="padding: 8px; background-color: #2dba4e; color: #fff; border: none;">Search</button>
+      </form>
+    </div>
+
+    {% if request.GET.q %}
+      <!-- Display search results -->
+      <h3 style="color: #2dba4e;">Search Results for "{{ request.GET.q }}"</h3>
+      <ul style="list-style: none; padding: 0;">
+        {% for result in search_results %}
+          <li style="margin-bottom: 10px;">
+            <a href="{{ result.url }}" style="color: #2dba4e; text-decoration: none; font-weight: bold;">{{ result.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
 {% endblock %}
