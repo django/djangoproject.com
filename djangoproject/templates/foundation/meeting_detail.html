@@ -75,7 +75,7 @@
     {% for business in ongoing_business %}
       <h3>{{ business.title }}</h2>
 
-      {{ business.body|safe }}
+      {{ business.body_html|safe }}
     {% endfor %}
   {% endif %}
 
