@@ -46,7 +46,7 @@ def get_all_doc_versions(context, url=None):
 
     # Save the versions into the context
     versions = sorted(get_version_tuple(x) for x in versions if x != "dev")
-    return [str(x) for x in versions] + ["dev"]
+    return [".".join([str(part) for part in x]) for x in versions] + ["dev"]
 
 
 class PygmentsNode(template.Node):

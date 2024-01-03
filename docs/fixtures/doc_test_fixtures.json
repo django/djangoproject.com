@@ -65,6 +65,19 @@
   }
 },
 {
+  "model": "releases.release",
+  "pk": "1.11",
+  "fields": {
+    "major": 1,
+    "is_lts": true,
+    "date": "2017-04-04",
+    "iteration": 0,
+    "micro": 0,
+    "minor": 11,
+    "status": "f"
+  }
+},
+{
   "fields": {
     "lang": "en",
     "is_default": false,
@@ -153,5 +166,23 @@
   },
   "model": "docs.documentrelease",
   "pk": 14
+},
+{
+  "fields": {
+    "lang": "en",
+    "is_default": true,
+    "release": "1.11"
+  },
+  "model": "docs.documentrelease",
+  "pk": 15
+},
+{
+  "fields": {
+    "lang": "fr",
+    "is_default": false,
+    "release": "1.11"
+  },
+  "model": "docs.documentrelease",
+  "pk": 16
 }
 ]
