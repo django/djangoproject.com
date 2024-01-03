@@ -1,11 +1,12 @@
 import datetime
-from distutils.version import LooseVersion
 
 from django.conf import settings
 from django.core.cache import cache
 from django.db import models
 from django.utils.functional import cached_property
 from django.utils.version import get_complete_version, get_main_version
+
+from .utils import get_loose_version_tuple
 
 
 # A version of django.utils.version.get_version() which maps "rc" to "rc"
@@ -198,7 +199,7 @@ class Release(models.Model):
     def version_tuple(self):
         """Return a tuple in the format of django.VERSION."""
         version = self.version.replace("-", "").replace("_", "")
-        version = LooseVersion(version).version
+        version = list(get_loose_version_tuple(version))
         if len(version) == 2:
             version.append(0)
         if not isinstance(version[2], int):
