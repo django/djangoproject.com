@@ -1,0 +1,2 @@
+# .gitattributes
+*.sh text eol=lf
