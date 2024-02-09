@@ -4,7 +4,7 @@
 {% block og_description %}Meeting minutes for {{ meeting }}{% endblock %}
 
 {% block content %}
-  {% load foundation %}
+  {% load djmoney %}
 
   <h1>{{ meeting }}</h1>
 
@@ -32,7 +32,7 @@
 
   <h3>Balance</h3>
 
-  <p>{{ meeting.treasurer_balance|currency }}</p>
+  <p>{{ meeting.treasurer_balance.currency.code }} {% money_localize meeting.treasurer_balance %}</p>
 
   {% if meeting.treasurer_report %}
     <h3>Treasurer&#8217;s report</h3>
@@ -44,7 +44,7 @@
 
     <ul>
       {% for grant in meeting.grants_approved.all %}
-        <li>{{ grant.entity }}: {{ grant.amount|currency }}</li>
+        <li>{{ grant.entity }}: {{ grant.amount.currency.code }} {% money_localize grant.amount %}</li>
       {% endfor %}
     </ul>
   {% endif %}
@@ -75,7 +75,7 @@
     {% for business in ongoing_business %}
       <h3>{{ business.title }}</h2>
 
-      {{ business.body|safe }}
+      {{ business.body_html|safe }}
     {% endfor %}
   {% endif %}
 

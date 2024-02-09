@@ -30,7 +30,10 @@
   <p>The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}. Read the
     {% release_notes current.version show_version=True %}, then install it with
     <a href="https://pip.pypa.io/en/latest/">pip</a>:</p>
-  <pre class="literal-block"><code>pip install Django=={{ current.version }}</code></pre>
+  <p>Linux / macOS:</p>
+  <pre class="literal-block"><code>python -m pip install Django=={{ current.version }}</code></pre>
+  <p>Windows:</p>
+  <pre class="literal-block"><code>py -m pip install Django=={{ current.version }}</code></pre>
 
   {% if preview %}
     {% with preview.version|slice:":3" as major_version %}
@@ -83,16 +86,16 @@
       <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
     </tr>
     <tr>
-      <td>4.2 LTS</td>
-      <td>{% get_latest_micro_release '4.2' %}</td>
-      <td>December 2023</td>
-      <td>April 2026</td>
+      <td>5.0</td>
+      <td>{% get_latest_micro_release '5.0' %}</td>
+      <td>August 2024</td>
+      <td>April 2025</td>
     </tr>
     <tr>
-      <td>4.1</td>
-      <td>{% get_latest_micro_release '4.1' %}</td>
-      <td>April 5, 2023</td>
-      <td>December 2023</td>
+      <td>4.2 LTS</td>
+      <td>{% get_latest_micro_release '4.2' %}</td>
+      <td>December 4, 2023</td>
+      <td>April 2026</td>
     </tr>
     <tr>
       <td>3.2 LTS</td>
@@ -112,6 +115,12 @@
       <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
     </tr>
     <tr>
+      <td>6.1</td>
+      <td>August 2026</td>
+      <td>April 2027</td>
+      <td>December 2027</td>
+    </tr>
+    <tr>
       <td>6.0</td>
       <td>December 2025</td>
       <td>August 2026</td>
@@ -129,12 +138,6 @@
       <td>April 2025</td>
       <td>December 2025</td>
     </tr>
-    <tr>
-      <td>5.0</td>
-      <td>December 2023</td>
-      <td>August 2024</td>
-      <td>April 2025</td>
-    </tr>
   </table>
 
   <h2 id="unsupported-versions">Unsupported previous releases</h2>
@@ -146,6 +149,12 @@
       <th>Latest Release</th>
       <th>End of mainstream support<sup><a href="#ft1">1</a></sup></th>
       <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
+    </tr>
+    <tr>
+      <td>4.1</td>
+      <td>{% get_latest_micro_release '4.1' %}</td>
+      <td>April 5, 2023</td>
+      <td>December 1, 2023</td>
     </tr>
     <tr>
       <td>4.0</td>

@@ -2608,6 +2608,19 @@ dl.data {
     }
 }
 
+.table-wrapper {
+    // This class is used to avoid the table exceeds the size of the content
+    // and add a scrollbar to see the rest of the content in mobile
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    overflow: auto;
+    white-space: normal;
+}
+
+table.foundation td {
+    border-bottom: 1px solid var(--hairline-color);
+    padding: 0 5px;
+}
 
 table.docutils td,
 table.docutils th {
