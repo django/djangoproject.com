@@ -668,6 +668,15 @@ ALTER TABLE ONLY public.ticket ALTER COLUMN id SET DEFAULT nextval('public.ticke
 -- Data for Name: enum; Type: TABLE DATA; Schema: public; Owner: code.djangoproject
 --
 
+COPY public.enum (type, name, value, description) FROM stdin;
+resolution	fixed	1	\N
+resolution	invalid	2	\N
+resolution	wontfix	3	\N
+resolution	duplicate	4	\N
+resolution	worksforme	5	\N
+resolution	needsinfo	6	\N
+\.
+
 
 
 --
