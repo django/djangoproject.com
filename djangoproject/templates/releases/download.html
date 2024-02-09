@@ -30,7 +30,10 @@
   <p>The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}. Read the
     {% release_notes current.version show_version=True %}, then install it with
     <a href="https://pip.pypa.io/en/latest/">pip</a>:</p>
-  <pre class="literal-block"><code>pip install Django=={{ current.version }}</code></pre>
+  <p>Linux / macOS:</p>
+  <pre class="literal-block"><code>python -m pip install Django=={{ current.version }}</code></pre>
+  <p>Windows:</p>
+  <pre class="literal-block"><code>py -m pip install Django=={{ current.version }}</code></pre>
 
   {% if preview %}
     {% with preview.version|slice:":3" as major_version %}
