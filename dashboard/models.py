@@ -1,7 +1,6 @@
 import ast
 import calendar
 import datetime
-import xmlrpc.client
 
 import requests
 from django.conf import settings
@@ -9,6 +8,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelatio
 from django.contrib.contenttypes.models import ContentType
 from django.db import connections, models
 from django_hosts.resolvers import reverse
+
+from tracdb.models import Ticket
 
 METRIC_PERIOD_INSTANT = "instant"
 METRIC_PERIOD_DAILY = "daily"
@@ -124,8 +125,8 @@ class TracTicketMetric(Metric):
     query = models.TextField()
 
     def fetch(self):
-        s = xmlrpc.client.ServerProxy(settings.TRAC_RPC_URL)
-        return len(s.ticket.query(self.query + "&max=0"))
+        queryset = Ticket.objects.from_querystring(self.query)
+        return queryset.count()
 
     def link(self):
         return f"{settings.TRAC_URL}query?{self.query}&desc=1&order=changetime"
