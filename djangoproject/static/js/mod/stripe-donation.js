@@ -37,6 +37,12 @@ define([
         })
     };
 
+    // django-recaptcha==4.0.0 adds a `submit` event listener to the form that ends up calling
+    // form.sumit(), therefore bypassing our own event listener.
+    // As a workaround, we remove their event listener and replace it with our own
+    if (window.recaptchaFormSubmit !== undefined) {
+        $donationForm[0].removeEventListener("submit", window.recaptchaFormSubmit);
+    }
     $donationForm.on('submit', function (e) {
         e.preventDefault();
         // validate token on form submit
