@@ -9,6 +9,7 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from django.urls import reverse
 from django_hosts.resolvers import reverse as django_hosts_reverse
+from django_recaptcha.client import RecaptchaResponse
 
 from ..models import DjangoHero, Donation
 
@@ -59,8 +60,10 @@ class TestCampaign(TestCase):
         self.assertFalse(content["success"])
 
     @patch("stripe.checkout.Session.create")
-    def test_submitting_donation_form_valid(self, session_create):
+    @patch("django_recaptcha.fields.client.submit")
+    def test_submitting_donation_form_valid(self, client_submit, session_create):
         session_create.return_value = {"id": "TEST_ID"}
+        client_submit.return_value = RecaptchaResponse(is_valid=True, action="form")
         response = self.client.post(
             reverse("fundraising:donation-session"),
             {
