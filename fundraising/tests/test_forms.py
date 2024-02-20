@@ -1,10 +1,15 @@
+from unittest.mock import patch
+
 from django.test import TestCase
+from django_recaptcha.client import RecaptchaResponse
 
 from ..forms import PaymentForm
 
 
 class TestPaymentForm(TestCase):
-    def test_basics(self):
+    @patch("django_recaptcha.fields.client.submit")
+    def test_basics(self, client_submit):
+        client_submit.return_value = RecaptchaResponse(is_valid=True, action="form")
         form = PaymentForm(
             data={
                 "amount": 100,
@@ -12,9 +17,11 @@ class TestPaymentForm(TestCase):
                 "captcha": "TESTING",
             }
         )
-        self.assertTrue(form.is_valid())
+        self.assertTrue(form.is_valid(), form.errors)
 
-    def test_max_value_validation(self):
+    @patch("django_recaptcha.fields.client.submit")
+    def test_max_value_validation(self, client_submit):
+        client_submit.return_value = RecaptchaResponse(is_valid=True, action="form")
         """
         Reject unrealistic values greater than $1,000,000.
         """
