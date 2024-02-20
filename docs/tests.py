@@ -231,6 +231,7 @@ def band_listing(request):
                     <span class="k">def</span><span class="nf">band_listing</span>
                     <span class="p">(</span><span class="n">request</span>
                     <span class="p">):</span>
+                    <span class="w">    </span>
                     <span class="sd">&quot;&quot;&quot;A view of all bands.&quot;&quot;&quot;</span>
                     <span class="n">bands</span> <span class="o">=</span>
                     <span class="n">models</span><span class="o">.</span>
