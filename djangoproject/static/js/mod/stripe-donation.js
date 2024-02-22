@@ -3,13 +3,10 @@ define([
     'stripe'
 ], function($) {
     var $donationForm = $('.stripe-donation');
-    var $submitButton = $donationForm.find('.cta');
 
-    $donationForm.on('submit', function (e) {
-        e.preventDefault();
+    function postToStripe(recaptchaToken) {
         var interval = $donationForm.find('[name=interval]').val();
         var amount = $donationForm.find('[name=amount]').val();
-        var recaptchaToken = document.getElementById('id_captcha').value;
         var csrfToken = $donationForm.find('[name=csrfmiddlewaretoken]').val();
         var data = {
             'interval': interval,
@@ -38,6 +35,22 @@ define([
                 }
             }
         })
+    };
+
+    // django-recaptcha==4.0.0 adds a `submit` event listener to the form that ends up calling
+    // form.sumit(), therefore bypassing our own event listener.
+    // As a workaround, we remove their event listener and replace it with our own
+    if (window.recaptchaFormSubmit !== undefined) {
+        $donationForm[0].removeEventListener("submit", window.recaptchaFormSubmit);
+    }
+    $donationForm.on('submit', function (e) {
+        e.preventDefault();
+        // validate token on form submit
+        let public_key = document.getElementById("id_captcha").getAttribute('data-sitekey');
+        grecaptcha.execute(public_key, {action: 'form'}).then(function(token) {
+            console.log("reCAPTCHA validated. Posting to stripe...");
+            postToStripe(token);
+        });
     });
 
 });
