@@ -28,7 +28,7 @@ class EntryTestCase(DateTimeMixin, TestCase):
             pub_date=self.now, is_active=True, headline="active", slug="b"
         )
 
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             Entry.objects.published(),
             ["active"],
             transform=lambda entry: entry.headline,
@@ -54,7 +54,7 @@ class EntryTestCase(DateTimeMixin, TestCase):
             pub_date=self.tomorrow, is_active=True, headline="future active", slug="d"
         )
 
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             Entry.objects.published(),
             ["past active"],
             transform=lambda entry: entry.headline,
@@ -85,10 +85,10 @@ class EventTestCase(DateTimeMixin, TestCase):
         Event.objects.create(date=self.yesterday, pub_date=self.now, headline="past")
         Event.objects.create(date=self.tomorrow, pub_date=self.now, headline="future")
 
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             Event.objects.future(), ["future"], transform=lambda event: event.headline
         )
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             Event.objects.past(), ["past"], transform=lambda event: event.headline
         )
 
@@ -98,10 +98,10 @@ class EventTestCase(DateTimeMixin, TestCase):
         """
         Event.objects.create(date=self.now, pub_date=self.now, headline="today")
 
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             Event.objects.future(), ["today"], transform=lambda event: event.headline
         )
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             Event.objects.past(), ["today"], transform=lambda event: event.headline
         )
 
@@ -121,10 +121,10 @@ class EventTestCase(DateTimeMixin, TestCase):
             date=self.tomorrow + D, pub_date=self.tomorrow + D, headline="d"
         )
 
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             Event.objects.future(), ["c", "d"], transform=lambda event: event.headline
         )
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             Event.objects.past(), ["b", "a"], transform=lambda event: event.headline
         )
 
@@ -141,7 +141,7 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         )
         response = self.client.get(reverse("weblog:index"))
         self.assertEqual(response.status_code, 200)
-        self.assertQuerysetEqual(response.context["events"], [])
+        self.assertQuerySetEqual(response.context["events"], [])
 
 
 class SitemapTests(DateTimeMixin, TestCase):

@@ -1,9 +1,12 @@
+from django.conf import settings
 from django.contrib.sitemaps import Sitemap
 
 from .models import Document
 
 
 class DocsSitemap(Sitemap):
+    protocol = settings.HOST_SCHEME.lower()
+
     def __init__(self, lang):
         self.lang = lang
 

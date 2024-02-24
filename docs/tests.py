@@ -302,7 +302,7 @@ class UpdateDocTests(TestCase):
                 }
             ]
         )
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             self.release.documents.all(),
             ["This is the title"],
             transform=attrgetter("title"),
@@ -318,7 +318,7 @@ class UpdateDocTests(TestCase):
                 }
             ]
         )
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             self.release.documents.all(),
             ["Title & title"],
             transform=attrgetter("title"),
@@ -332,7 +332,7 @@ class UpdateDocTests(TestCase):
                 {"current_page_name": "foo/3"},
             ]
         )
-        self.assertQuerysetEqual(self.release.documents.all(), [])
+        self.assertQuerySetEqual(self.release.documents.all(), [])
 
     def test_excluded_documents(self):
         """
