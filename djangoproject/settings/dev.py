@@ -14,11 +14,11 @@ THUMBNAIL_DEBUG = DEBUG
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
         "LOCATION": "trololololol",
     },
     "docs-pages": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
         "LOCATION": "docs-pages",
     },
 }

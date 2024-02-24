@@ -170,7 +170,7 @@
 {
   "fields": {
     "lang": "en",
-    "is_default": true,
+    "is_default": false,
     "release": "1.11"
   },
   "model": "docs.documentrelease",
