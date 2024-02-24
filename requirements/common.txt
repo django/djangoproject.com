@@ -3,11 +3,11 @@ django-contact-form==2.1
 django-countries==7.5.1
 django-hosts==5.1
 django-money==3.1
-django-push==1.1
+django-push @ git+https://github.com/brutasse/django-push.git@22fda99641cfbd2f3075a723d92652a8e38220a5
 django-read-only==1.12.0
 django-recaptcha==4.0.0
 django-registration-redux==2.13
-Django==3.2.25
+Django==4.2.13
 docutils==0.17.1
 feedparser==6.0.8
 Jinja2==3.1.4
