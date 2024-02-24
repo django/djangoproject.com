@@ -317,7 +317,7 @@ def sitemap_index(request, sitemaps):
         sitemap_url = reverse(
             "document-sitemap", host="docs", kwargs={"section": section}
         )
-        sites.append(sitemap_url)
+        sites.append({"location": sitemap_url})
     return TemplateResponse(
         request,
         "sitemap_index.xml",
