@@ -51,7 +51,11 @@ MIDDLEWARE = (
 
 SESSION_COOKIE_SECURE = True
 
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+    },
+}
 
 STATIC_ROOT = str(DATA_DIR.joinpath("static"))
 

@@ -36,14 +36,14 @@ class TicketTestCase(TracDBCreateDatabaseMixin, TestCase):
         """
         A wrapper around assertQuerysetEqual with some useful defaults
         """
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             queryset, expected, transform=transform, ordered=ordered
         )
 
     def test_ticket_table_exist_in_testdb(self):
         self._create_ticket(summary="test", custom={"x": "y"})
         self.assertTicketsEqual(Ticket.objects.all(), ["test"])
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             TicketCustom.objects.all(),
             [("x", "y")],
             transform=attrgetter("name", "value"),
@@ -54,7 +54,7 @@ class TicketTestCase(TracDBCreateDatabaseMixin, TestCase):
         self._create_ticket(summary="test1", custom={"x": "A", "y": "B"})
         self._create_ticket(summary="test2", custom={"z": "C"})
 
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             Ticket.objects.with_custom().order_by("summary"),
             [
                 ("test1", {"x": "A", "y": "B"}),
