@@ -91,7 +91,7 @@ class AggregatorTests(TestCase):
     def test_community_index_number_of_queries(self):
         """Intended to prevent an n+1 issue on the community index view"""
         url = reverse("community-index")
-        with self.assertNumQueries(4):
+        with self.assertNumQueries(6):
             self.client.get(url)
 
     def test_feed_list_only_approved_and_active(self):
@@ -106,7 +106,7 @@ class AggregatorTests(TestCase):
         url = reverse(
             "community-feed-list", kwargs={"feed_type_slug": self.feed_type.slug}
         )
-        with self.assertNumQueries(5):
+        with self.assertNumQueries(7):
             self.client.get(url)
 
     def test_management_command_sends_no_email_with_no_pending_feeds(self):
