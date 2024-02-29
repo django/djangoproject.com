@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.sitemaps import Sitemap
 
 from .models import Entry
@@ -6,6 +7,7 @@ from .models import Entry
 class WeblogSitemap(Sitemap):
     changefreq = "never"
     priority = 0.4
+    protocol = settings.HOST_SCHEME.lower()
 
     def items(self):
         return Entry.objects.published()
