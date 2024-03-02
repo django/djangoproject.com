@@ -2444,7 +2444,9 @@ h2+.list-link-soup {
         margin: -1.75em 0;
 
         li {
-            display: inline-block;
+            @include respond-min(1200px) {
+                display: inline-block;
+            }
         }
     }
 
