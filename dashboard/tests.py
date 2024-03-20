@@ -8,6 +8,9 @@ from django.http import Http404
 from django.test import RequestFactory, TestCase
 from django_hosts.resolvers import reverse
 
+from tracdb.models import Ticket
+from tracdb.testutils import TracDBCreateDatabaseMixin
+
 from .models import (
     METRIC_PERIOD_DAILY,
     METRIC_PERIOD_WEEKLY,
@@ -74,17 +77,21 @@ class MetricMixin:
         self.assertTrue(url_path in self.instance.get_absolute_url())
 
 
-class TracTicketMetricTestCase(TestCase, MetricMixin):
-    fixtures = ["dashboard_test_data"]
+class TracTicketMetricTestCase(TracDBCreateDatabaseMixin, TestCase):
+    databases = {"default", "trac"}
 
-    def setUp(self):
-        super().setUp()
-        self.instance = TracTicketMetric.objects.last()
+    def test_fetch(self):
+        Ticket.objects.create(status="new", priority="high")
+        Ticket.objects.create(status="new", priority="low")
+        Ticket.objects.create(status="closed", priority="high")
+        Ticket.objects.create(status="closed", priority="low")
+        metric = TracTicketMetric.objects.create(
+            slug="test-tracticketmetric",
+            name="test tracticketmetric",
+            query="status=!closed&priority=high",
+        )
 
-    @mock.patch("xmlrpc.client.ServerProxy")
-    def test_fetch(self, mock_server_proxy):
-        self.instance.fetch()
-        self.assertTrue(mock_server_proxy.client.query.assert_called_with)
+        self.assertEqual(metric.fetch(), 1)
 
 
 class GithubItemCountMetricTestCase(TestCase, MetricMixin):
