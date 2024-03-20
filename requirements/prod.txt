@@ -2,5 +2,5 @@
 django-pylibmc==0.6.1
 django-redis-cache==3.0.1
 pylibmc==1.6.1
-redis==3.5.3
+redis==4.4.4
 sentry-sdk==1.14.0
