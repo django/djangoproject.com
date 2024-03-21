@@ -349,7 +349,6 @@ html[data-theme="light"] .theme-toggle .theme-label-when-light {
     line-height: 45px;
     text-align: center;
     margin: 4px 10px;
-    float: right;
 
     @include respond-min(768px) {
         display: none;

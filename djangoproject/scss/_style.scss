@@ -445,7 +445,10 @@ blockquote {
         }
     }
 }
-
+.right-action-icons{
+    float: right;
+    display: flex;
+}
 .container--flex {
     display: flex;
     align-items: center;
@@ -529,7 +532,6 @@ blockquote {
         color: var(--menu);
         cursor: pointer;
         display: block;
-        float: right;
         height: 45px;
         line-height: 48px;
         margin: 4px 10px;
