@@ -136,6 +136,9 @@ LOGGING = {
 }
 
 LOGIN_REDIRECT_URL = "edit_profile"
+LOGIN_URL = "login"
+LOGOUT_URL = "logout"
+LOGOUT_REDIRECT_URL = "login"
 
 MEDIA_URL = "/m/"
 
@@ -155,6 +158,7 @@ MIDDLEWARE = [
     "django.contrib.flatpages.middleware.FlatpageFallbackMiddleware",
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
     "django_hosts.middleware.HostsResponseMiddleware",
+    "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
 
 PASSWORD_HASHERS = [
@@ -213,6 +217,7 @@ TEMPLATES = [
                 "releases.context_processors.django_version",
                 "aggregator.context_processors.community_stats",
                 "django.template.context_processors.request",
+                "social_django.context_processor.backends",
             ],
         },
     },
@@ -303,3 +308,8 @@ TRAC_RPC_URL = "https://code.djangoproject.com/rpc"
 TRAC_URL = "https://code.djangoproject.com/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+AUTHENTICATION_BACKENDS = [
+    "social_core.backends.github.GithubOAuth2",
+    "django.contib.auth.backends.ModelBackend",
+]
