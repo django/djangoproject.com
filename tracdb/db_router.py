@@ -5,6 +5,7 @@ queries against the "trac" DB alias.
 It's very simplistic, leaving off allow_relation and allow_migrate since all
 the Trac apps are unmanaged.
 """
+
 THIS_APP = "tracdb"
 
 
