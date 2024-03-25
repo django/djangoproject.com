@@ -1,6 +1,7 @@
 """
 Legacy URLs for documentation pages.
 """
+
 from functools import partial
 
 from django.urls import path

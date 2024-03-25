@@ -35,16 +35,16 @@ class CorporateMemberSignUpForm(forms.ModelForm):
         self.fields["billing_name"].widget.attrs[
             "placeholder"
         ] = "Billing name (If different from above name)."
-        self.fields[
-            "billing_name"
-        ].help_text = "For example, this might be your full registered company name."
+        self.fields["billing_name"].help_text = (
+            "For example, this might be your full registered company name."
+        )
         self.fields["display_name"].widget.attrs[
             "placeholder"
         ] = "Your organization's name as you'd like it to appear on our website."
         self.fields["address"].widget.attrs["placeholder"] = "Mailing address"
-        self.fields[
-            "address"
-        ].help_text = "We can send the invoice by email, but we need a contact address."
+        self.fields["address"].help_text = (
+            "We can send the invoice by email, but we need a contact address."
+        )
         self.fields["description"].widget.attrs["placeholder"] = (
             "A short paragraph that describes your organization and its "
             "activities, written as if the DSF were describing your company "
@@ -104,10 +104,12 @@ class CorporateMemberSignUpForm(forms.ModelForm):
             "Thanks for %s a corporate member of the Django Software Foundation! %s"
             % (
                 "renewing as" if is_renewing else "applying to be",
-                "Your renewal is received, and we'll follow up with an invoice soon."
-                if is_renewing
-                else "Your application is being reviewed, and we'll follow up a "
-                "response from the board after our next monthly meeting.",
+                (
+                    "Your renewal is received, and we'll follow up with an invoice soon."
+                    if is_renewing
+                    else "Your application is being reviewed, and we'll follow up a "
+                    "response from the board after our next monthly meeting."
+                ),
             ),
             settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
             [
