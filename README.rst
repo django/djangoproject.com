@@ -40,8 +40,10 @@ Install and run locally from a virtual environment
       "superfeedr_creds": ["any@email.com", "some_string"],
       "db_host": "localhost",
       "db_password": "secret",
+      "db_user": "djangoproject",
       "trac_db_host": "localhost",
-      "trac_db_password": "secret"
+      "trac_db_password": "secret",
+      "trac_db_user": "code.djangoproject"
     }
 
 #. Add ``export DJANGOPROJECT_DATA_DIR=~/.djangoproject`` (without the backticks)
