@@ -2,7 +2,7 @@
 {% load i18n fundraising_extras docs %}
 
 {% block title %}{{ doc.title|striptags|safe }} | {% trans "Django documentation" %}{% endblock %}
-
+{% block og_title %}{{ doc.title|striptags|safe }} | {% trans "Django documentation" %}{% endblock %}
 {% block doc_url %}{% url 'document-index' lang=lang version=version host 'docs' %}{% endblock %}
 
 {% block link_rel_tags %}
