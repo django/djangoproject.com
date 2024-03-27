@@ -9,7 +9,8 @@ from pathlib import Path
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.template import Context, Template
-from django.test import TestCase
+from django.template.loader import render_to_string
+from django.test import RequestFactory, TestCase
 from django.urls import reverse, set_urlconf
 
 from djangoproject.urls import www as www_urls
@@ -592,3 +593,32 @@ class DocumentManagerTest(TestCase):
         self.assertEqual(Document.objects.exclude(search=None).count(), 6)
         self.assertEqual(Document.objects.search_update(), 6)
         self.assertEqual(Document.objects.exclude(search=None).count(), 6)
+
+
+class TemplateTestCase(TestCase):
+    def _assertOGTitleEqual(self, doc, expected):
+        output = render_to_string(
+            "docs/doc.html",
+            {"doc": doc, "lang": "en", "version": "5.0"},
+            request=RequestFactory().get("/"),
+        )
+        self.assertInHTML(f'<meta property="og:title" content="{expected}" />', output)
+
+    def test_opengraph_title(self):
+        doc = Document.objects.create(
+            release=DocumentRelease.objects.create(
+                lang="en",
+                release=Release.objects.create(version="5.0"),
+            ),
+        )
+        doc.body = "test body"  # avoids trying to load the underlying physical file
+
+        for title, expected in [
+            ("test title", "test title"),
+            ("test & title", "test &amp; title"),
+            ('test "title"', "test &quot;title&quot;"),
+            ("test <strong>title</strong>", "test title"),
+        ]:
+            doc.title = title
+            with self.subTest(title=title):
+                self._assertOGTitleEqual(doc, f"{expected} | Django documentation")
