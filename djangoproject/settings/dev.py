@@ -14,11 +14,11 @@ THUMBNAIL_DEBUG = DEBUG
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
         "LOCATION": "trololololol",
     },
     "docs-pages": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
         "LOCATION": "docs-pages",
     },
 }
@@ -63,4 +63,4 @@ if DEBUG:
             "djangoproject.middleware.CORSMiddleware",
         )
 
-SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
+SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]

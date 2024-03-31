@@ -1,8 +1,8 @@
 import stripe
-from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV3
 from django import forms
 from django.utils.safestring import mark_safe
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV3
 
 from .models import INTERVAL_CHOICES, LEADERSHIP_LEVEL_AMOUNT, DjangoHero, Donation
 
@@ -134,7 +134,7 @@ class DonateForm(forms.Form):
 
     amount = forms.ChoiceField(choices=AMOUNT_CHOICES)
     interval = forms.ChoiceField(choices=INTERVAL_CHOICES)
-    captcha = ReCaptchaField(widget=ReCaptchaV3)
+    captcha = ReCaptchaField(widget=ReCaptchaV3(action="form"))
 
 
 class DonationForm(forms.ModelForm):
@@ -176,7 +176,8 @@ class PaymentForm(forms.Form):
     `amount` can be any integer, so a ChoiceField is not appropriate.
     """
 
-    captcha = ReCaptchaField(widget=ReCaptchaV3)
+    # NOTE: `action` needs to match the one used in stripe-donation.js
+    captcha = ReCaptchaField(widget=ReCaptchaV3(action="form"))
     amount = forms.IntegerField(
         required=True,
         min_value=1,  # Minimum payment from Stripe API
