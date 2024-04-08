@@ -83,7 +83,7 @@ if "sentry_dsn" in SECRETS and not DEBUG:
             RedisIntegration(),
         ],
         traces_sample_rate=0.1,
-        profiles_sample_rate=0.1,
+        profiles_sample_rate=1.0,
     )
 
 # RECAPTCHA KEYS
