@@ -126,6 +126,7 @@ class FeedItem(models.Model):
 
     class Meta:
         ordering = ("-date_modified",)
+        indexes = (models.Index(fields=["-date_modified"]),)
 
     def __str__(self):
         return self.title
