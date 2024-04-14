@@ -86,7 +86,7 @@ Install and run locally from a virtual environment
 #. For docs (next step requires ``gettext``)::
 
     python -m manage loaddata doc_releases
-    python -m manage update_docs_and_index
+    python -m manage update_docs --update-index
 
 #. For dashboard:
 
@@ -253,10 +253,10 @@ library from ``bower.json``, you will need to commit the changes in
 Documentation search
 --------------------
 
-When running ``python -m manage update_docs_and_index`` to build all documents it will also
-automatically index every document it builds in the search engine as well.
-In case you've already built the documents and would like to reindex the
-search index, run the command::
+When running ``python -m manage update_docs --update-index`` to build all
+documents it will also automatically index every document it builds in the
+search engine as well. In case you've already built the documents and would like
+to reindex the search index, run the command::
 
     python -m manage update_index
 
