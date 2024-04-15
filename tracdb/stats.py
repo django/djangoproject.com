@@ -1,6 +1,7 @@
 """
 Various queries for grabbing interesting user stats from Trac.
 """
+
 import operator
 from collections import OrderedDict
 
