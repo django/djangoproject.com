@@ -2,6 +2,7 @@
 Update and build the documentation into files for display with the djangodocs
 app.
 """
+
 import json
 import os
 import shutil
