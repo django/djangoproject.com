@@ -482,22 +482,24 @@ blockquote {
     z-index: 0;
 
     .container {
+        display: flex;
+        flex-direction: row;
         @include respond-min(768px) {
             position: relative;
         }
     }
+
+    .mobile-toggle {margin-left: auto}
 
     .meta {
         @include font-size(13);
         color: var(--primary);
         font-weight: 700;
         width: auto;
-        float: left;
         margin: 8px 0 0 10px;
         display: none;
 
         @include respond-min(1150px) {
-            float: left;
             width: 200px;
             display: block;
         }
@@ -511,7 +513,6 @@ blockquote {
         background: url(../img/logo-django.png) 0 0 no-repeat;
         color: var(--white-color);
         display: block;
-        float: left;
         font-weight: 700;
         margin: 10px;
         overflow: hidden;
@@ -537,7 +538,6 @@ blockquote {
         color: var(--menu);
         cursor: pointer;
         display: block;
-        float: right;
         height: 45px;
         line-height: 48px;
         margin: 4px 10px;
@@ -571,7 +571,6 @@ blockquote {
 
         @include respond-min(768px) {
             width: auto;
-            float: right;
             max-height: none; // always show menu on a desktop width
         }
 
