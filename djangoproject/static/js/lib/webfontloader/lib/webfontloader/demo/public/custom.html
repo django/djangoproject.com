@@ -52,7 +52,7 @@
       var output = document.getElementById('events');
       if (output) {
         var e = document.createElement('li');
-        e.innerHTML = message;
+        e.innerText = message;
         output.appendChild(e);
       }
       if (window.console && window.console.log) {
