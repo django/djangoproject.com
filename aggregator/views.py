@@ -1,9 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
+from django.views.generic import CreateView
 from django.views.generic.list import ListView
 
-from .forms import FeedModelForm
+from .forms import FeedModelForm, LocalDjangoCommunityModelForm
 from .models import APPROVED_FEED, Feed, FeedItem, FeedType, LocalDjangoCommunity
 
 
@@ -120,4 +122,26 @@ class LocalDjangoCommunitiesListView(ListView):
     template_name = "aggregator/local-django-community.html"
 
     def get_queryset(self):
+        return self.model.objects.filter(approval_status=APPROVED_FEED).order_by("continent")
+
+
+class LocalDjangoCommunitiesAddView(CreateView):
+    """
+    Shows a list of community meetups
+    """
+
+    model = LocalDjangoCommunity
+    form_class = LocalDjangoCommunityModelForm
+    context_object_name = "django_communities"
+    template_name = "aggregator/edit-local-django-community.html"
+
+    def get_success_url(self):
+        return reverse("local-django-communities")
+
+    def get_queryset(self):
         return self.model.objects.all().order_by("continent").values()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["adding"] = True
+        return context

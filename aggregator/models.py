@@ -2,6 +2,8 @@ import datetime
 import logging
 
 import feedparser
+import requests
+from bs4 import BeautifulSoup
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -218,6 +220,9 @@ class LocalDjangoCommunity(models.Model):
     )
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    approval_status = models.CharField(
+        max_length=1, choices=STATUS_CHOICES, default=PENDING_FEED
+    )
 
     class Meta:
         constraints = [
@@ -230,6 +235,16 @@ class LocalDjangoCommunity(models.Model):
                 name="website_url_and_or_event_site_url",
             ),
         ]
+
+    @property
+    def og_image(self):
+        source = requests.get(self.website_url).text
+        soup = BeautifulSoup(source, "html.parser")
+        og_image = soup.find("meta", property="og-image")
+        if not og_image:
+            return None
+
+        return og_image.get("content")
 
     def clean(self):
         if not self.website_url and not self.event_site_url:

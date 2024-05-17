@@ -20,3 +20,4 @@ requests==2.31.0
 sorl-thumbnail==12.10.0
 Sphinx==4.5.0
 stripe==2.56.0
+beautifulsoup4==4.4.0

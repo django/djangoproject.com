@@ -21,7 +21,8 @@
       <h2>{{ local_django_community.grouper.title }} <a class="plink" href="#{{ local_django_community.grouper.title | lower }}-meetups">¶</a></h2>
       <ul>
         {% for django_community in local_django_community.list %}
-          <li>
+          <ul>
+            <img src={{ django_community.og_image }} />
             <h3 id="{{ django_community.slug }}-meetup">{{ django_community.name }} <a class="plink" href="#{{ django_community.slug }}-meetup">¶</a></h3>
             <p class="meta">{{ django_community.city }}, {{ django_community.country }} &nbsp;
               {% if django_community.is_active %}
@@ -39,7 +40,7 @@
                 <a href="{{ django_community.event_site_url }}">Event Website</a>
               {% endif %}
             </p>
-          </li>
+          </ul>
         {% endfor %}
       </ul>
     </div>
@@ -47,5 +48,8 @@
     Local Django communities are coming soon. Please check back later.
 
   {% endfor %}
+  
+  <a href="{% url 'local-django-communities-add' %}">Add your local community</a>
+  
 {##}
 {% endblock %}
