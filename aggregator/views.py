@@ -122,7 +122,9 @@ class LocalDjangoCommunitiesListView(ListView):
     template_name = "aggregator/local-django-community.html"
 
     def get_queryset(self):
-        return self.model.objects.filter(approval_status=APPROVED_FEED).order_by("continent")
+        return self.model.objects.filter(approval_status=APPROVED_FEED).order_by(
+            "continent"
+        )
 
 
 class LocalDjangoCommunitiesAddView(CreateView):
