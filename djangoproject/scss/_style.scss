@@ -41,6 +41,10 @@ a {
         color: var(--text-l10);
     }
 
+    &:focus {
+        outline: 2px solid currentColor;
+    }
+
     &:active,
     &:focus,
     &:hover {
@@ -1229,9 +1233,13 @@ a.cta {
         font-style: normal;
     }
 
-    &:hover,
-    &:focus {
+    &:hover{
         background: lighten($green-medium, 4%);
+    }
+
+    &:focus {
+        outline-offset: 2px;
+        outline-color: var(--primary);
     }
 
     &:active {
