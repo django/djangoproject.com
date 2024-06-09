@@ -22,7 +22,6 @@ def user_profile(request, username):
         {
             "user_obj": user,
             "email_hash": hashlib.md5(user.email.encode("ascii", "ignore")).hexdigest(),
-            "user_can_commit": user.has_perm("auth.commit"),
             "stats": get_user_stats(user),
         },
     )
