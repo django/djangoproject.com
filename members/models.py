@@ -42,7 +42,7 @@ class IndividualMember(models.Model):
     reason_for_leaving = models.TextField(
         blank=True,
         help_text=mark_safe(
-            "This reason is publicly displayed on the website. "
+            "⚠️ This reason is publicly displayed on the website. "
             "<strong>Do not include confidential details.</strong>"
         ),
     )
