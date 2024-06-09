@@ -38,7 +38,13 @@ class IndividualMember(models.Model):
     email = models.EmailField(unique=True)
     member_since = models.DateField(default=timezone_today)
     member_until = models.DateField(null=True, blank=True)
-    reason_for_leaving = models.TextField(blank=True)
+    reason_for_leaving = models.TextField(
+        blank=True,
+        help_text=(
+            "This reason is publicly displayed on the website. "
+            "Do not include confidential details."
+        ),
+    )
 
     class Meta:
         ordering = ["name"]
