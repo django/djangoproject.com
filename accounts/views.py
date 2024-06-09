@@ -1,11 +1,8 @@
 import hashlib
-import json
 
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.cache import caches
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from tracdb import stats as trac_stats
@@ -37,44 +34,6 @@ def edit_profile(request):
     return render(request, "accounts/edit_profile.html", {"form": form})
 
 
-def json_user_info(request):
-    """
-    Return info about some users as a JSON object.
-
-    Part of a set of hacks that feed more info into Trac. This takes
-    a list of users as GET['user'] and returns a JSON object::
-
-        {
-            {USERNAME: {"core": false, "cla": true}},
-            {USERNAME: {"core": false, "cla": true}},
-            ...
-        }
-
-    De-duplication on GET['user'] is performed since I don't want to have to
-    think about how best to do it in JavaScript :)
-    """
-    userinfo = {name: get_user_info(name) for name in set(request.GET.getlist("user"))}
-    return JSONResponse(userinfo)
-
-
-def get_user_info(username):
-    c = caches["default"]
-    username = username.encode("ascii", "ignore")
-    key = "trac_user_info:%s" % hashlib.md5(username).hexdigest()
-    info = c.get(key)
-    if info is None:
-        try:
-            u = User.objects.get(username=username)
-        except User.DoesNotExist:
-            info = {"core": False, "cla": False}
-        else:
-            info = {
-                "core": u.has_perm("auth.commit"),
-            }
-        c.set(key, info, 60 * 60)
-    return info
-
-
 def get_user_stats(user):
     c = caches["default"]
     username = user.username.encode("ascii", "ignore")
@@ -89,11 +48,3 @@ def get_user_stats(user):
                 info.pop(k)
         c.set(key, info, 60 * 60)
     return info
-
-
-class JSONResponse(HttpResponse):
-    def __init__(self, obj):
-        super().__init__(
-            json.dumps(obj, indent=(2 if settings.DEBUG else None)),
-            content_type="application/json",
-        )
