@@ -4,6 +4,7 @@ from django.core import signing
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.safestring import mark_safe
 from django.views.generic.dates import timezone_today
 from django_hosts import reverse
 from sorl.thumbnail import ImageField, get_thumbnail
@@ -40,9 +41,9 @@ class IndividualMember(models.Model):
     member_until = models.DateField(null=True, blank=True)
     reason_for_leaving = models.TextField(
         blank=True,
-        help_text=(
+        help_text=mark_safe(
             "This reason is publicly displayed on the website. "
-            "Do not include confidential details."
+            "<strong>Do not include confidential details.</strong>"
         ),
     )
 
