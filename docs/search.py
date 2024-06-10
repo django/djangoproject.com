@@ -1,3 +1,11 @@
+# Django Documentation Search Configuration
+
+# Note: Django documentation supports browser bar integration via OpenSearch.
+# Users can add the Django documentation search directly to their browser's search bar
+# by installing the OpenSearch description provided by the Django project.
+# For more information, refer to the OpenSearch documentation.
+# https://developer.mozilla.org/en-US/docs/Web/OpenSearch
+
 from django.contrib.postgres.search import SearchVector
 from django.db.models import F
 from django.db.models.fields.json import KeyTextTransform
