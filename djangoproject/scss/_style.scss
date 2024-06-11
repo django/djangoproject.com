@@ -52,6 +52,10 @@ a {
     }
 }
 
+button:focus {
+    outline: 2px solid currentColor;
+}
+
 ::selection {
     // Text Selection Colors
     background-color: var(--selection);
