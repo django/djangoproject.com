@@ -590,12 +590,14 @@ blockquote {
             text-transform: uppercase;
             margin: 0 10px;
             border-top: 1px solid lighten($green-dark, 5%);
+            padding: 20px 0px;
 
             @include respond-min(768px) {
                 margin: 0;
                 border: 0;
                 float: left;
                 text-align: left;
+                padding: 20px 10px;
             }
 
             &.active a {
@@ -606,7 +608,6 @@ blockquote {
         a {
             color: var(--menu);
             display: block;
-            padding: 20px 0px;
             text-decoration: none;
 
             &:active,
@@ -615,7 +616,6 @@ blockquote {
             }
 
             @include respond-min(768px) {
-                padding: 20px 10px;
             }
         }
 
