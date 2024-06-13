@@ -618,9 +618,6 @@ blockquote {
             &:hover {
                 color: var(--secondary-accent);
             }
-
-            @include respond-min(768px) {
-            }
         }
 
         span {
@@ -1237,7 +1234,7 @@ a.cta {
         font-style: normal;
     }
 
-    &:hover{
+    &:hover {
         background: lighten($green-medium, 4%);
     }
 
