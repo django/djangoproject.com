@@ -68,7 +68,7 @@ class Command(BaseCommand):
         s = requests.Session()
         # make some allowance for temporary network failures for
         # our .post() request below
-        retry = Retry(total=5, method_whitelist={"POST"}, backoff_factor=0.1)
+        retry = Retry(total=5, allowed_methods={"POST"}, backoff_factor=0.1)
         s.mount(fastly_service_url, HTTPAdapter(max_retries=retry))
         s.headers.update(
             {
