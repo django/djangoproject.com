@@ -280,7 +280,7 @@ class DocumentManager(models.Manager):
                         start_sel="<mark>",
                         stop_sel="</mark>",
                     ),
-                    breadcrumbs=KeyTextTransform("breadcrumbs", "metadata"),
+                    breadcrumbs=models.F("metadata__breadcrumbs"),
                 )
                 .order_by("-rank")
                 .only(
