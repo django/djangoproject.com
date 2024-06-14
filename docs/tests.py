@@ -416,7 +416,10 @@ class DocumentManagerTest(TestCase):
                         '<p>See <a class="reference internal" href="../../../ref/class-based-views/">'
                         '<span class="doc">Built-in class-based views API</span></a>.</p>\n</div>\n'
                     ),
-                    "breadcrumbs": [],
+                    "breadcrumbs": [
+                        {"path": "topics", "title": "Using Django"},
+                        {"path": "topics/http", "title": "Handling HTTP requests"},
+                    ],
                     "parents": "topics http",
                     "slug": "generic-views",
                     "title": "Generic views",
@@ -436,7 +439,9 @@ class DocumentManagerTest(TestCase):
                         '<a class="reference external" href="https://code.djangoproject.com/ticket/13560">bug</a> that\n'
                         "affected datetime form field widgets when localization was enabled.</p>\n</div>\n"
                     ),
-                    "breadcrumbs": [],
+                    "breadcrumbs": [
+                        {"path": "releases", "title": "Release notes"},
+                    ],
                     "parents": "releases",
                     "slug": "1.2.1",
                     "title": "Django 1.2.1 release notes",
@@ -455,7 +460,9 @@ class DocumentManagerTest(TestCase):
                         'where <code class="docutils literal"><span class="pre">utils.http.is_safe_url()</span></code> crashes on bytestring URLs '
                         '(<a class="reference external" href="https://code.djangoproject.com/ticket/26308">#26308</a>).</p>\n</div>\n'
                     ),
-                    "breadcrumbs": [],
+                    "breadcrumbs": [
+                        {"path": "releases", "title": "Release notes"},
+                    ],
                     "parents": "releases",
                     "slug": "1.9.4",
                     "title": "Django 1.9.4 release notes",
@@ -473,7 +480,10 @@ class DocumentManagerTest(TestCase):
                         '<p>Voir <a class="reference internal" href="../../../ref/class-based-views/">'
                         '<span class="doc">API des vues intégrées fondées sur les classes.</span></a>.</p>\n</div>\n'
                     ),
-                    "breadcrumbs": [],
+                    "breadcrumbs": [
+                        {"path": "topics", "title": "Using Django"},
+                        {"path": "topics/http", "title": "Handling HTTP requests"},
+                    ],
                     "parents": "topics http",
                     "slug": "generic-views",
                     "title": "Vues génériques",
@@ -494,7 +504,9 @@ class DocumentManagerTest(TestCase):
                         '<a class="reference external" href="https://code.djangoproject.com/ticket/13560">bug</a> that\n'
                         "affected datetime form field widgets when localization was enabled.</p>\n</div>\n"
                     ),
-                    "breadcrumbs": [],
+                    "breadcrumbs": [
+                        {"path": "releases", "title": "Release notes"},
+                    ],
                     "parents": "releases",
                     "slug": "1.2.1",
                     "title": "Notes de publication de Django 1.2.1",
@@ -514,7 +526,9 @@ class DocumentManagerTest(TestCase):
                         'where <code class="docutils literal"><span class="pre">utils.http.is_safe_url()</span></code> crashes on bytestring URLs '
                         '(<a class="reference external" href="https://code.djangoproject.com/ticket/26308">#26308</a>).</p>\n</div>\n'
                     ),
-                    "breadcrumbs": [],
+                    "breadcrumbs": [
+                        {"path": "releases", "title": "Release notes"},
+                    ],
                     "parents": "releases",
                     "slug": "1.9.4",
                     "title": "Notes de publication de Django 1.9.4",
@@ -577,6 +591,20 @@ class DocumentManagerTest(TestCase):
 
     def test_empty_search(self):
         self.assertSequenceEqual(Document.objects.search("", self.release), [])
+
+    def test_search_breadcrumbs(self):
+        doc = (
+            Document.objects.filter(title="Generic views")
+            .search("generic", self.release)
+            .get()
+        )
+        self.assertEqual(
+            doc.breadcrumbs,
+            [
+                {"path": "topics", "title": "Using Django"},
+                {"path": "topics/http", "title": "Handling HTTP requests"},
+            ],
+        )
 
     def test_search_reset(self):
         self.assertEqual(Document.objects.exclude(search=None).count(), 6)
