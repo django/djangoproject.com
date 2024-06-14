@@ -165,7 +165,7 @@ class RedirectsTests(TestCase):
     def test_internals_team(self):
         response = self.client.get(
             "/en/dev/internals/team/",
-            HTTP_HOST="docs.djangoproject.localhost:8000",
+            headers={"host": "docs.djangoproject.localhost:8000"},
         )
         self.assertRedirects(
             response,
@@ -190,7 +190,7 @@ class SearchFormTestCase(TestCase):
 
     def test_empty_get(self):
         response = self.client.get(
-            "/en/dev/search/", HTTP_HOST="docs.djangoproject.localhost:8000"
+            "/en/dev/search/", headers={"host": "docs.djangoproject.localhost:8000"}
         )
         self.assertEqual(response.status_code, 200)
 
@@ -303,7 +303,7 @@ class UpdateDocTests(TestCase):
                 }
             ]
         )
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             self.release.documents.all(),
             ["This is the title"],
             transform=attrgetter("title"),
@@ -319,7 +319,7 @@ class UpdateDocTests(TestCase):
                 }
             ]
         )
-        self.assertQuerysetEqual(
+        self.assertQuerySetEqual(
             self.release.documents.all(),
             ["Title & title"],
             transform=attrgetter("title"),
@@ -333,7 +333,7 @@ class UpdateDocTests(TestCase):
                 {"current_page_name": "foo/3"},
             ]
         )
-        self.assertQuerysetEqual(self.release.documents.all(), [])
+        self.assertQuerySetEqual(self.release.documents.all(), [])
 
     def test_excluded_documents(self):
         """
@@ -375,7 +375,7 @@ class SitemapTests(TestCase):
 
     def test_sitemap_index(self):
         response = self.client.get(
-            "/sitemap.xml", HTTP_HOST="docs.djangoproject.localhost:8000"
+            "/sitemap.xml", headers={"host": "docs.djangoproject.localhost:8000"}
         )
         self.assertContains(response, "<sitemap>", count=2)
         self.assertContains(
@@ -394,7 +394,7 @@ class SitemapTests(TestCase):
 
     def test_sitemap_404(self):
         response = self.client.get(
-            "/sitemap-xx.xml", HTTP_HOST="docs.djangoproject.localhost:8000"
+            "/sitemap-xx.xml", headers={"host": "docs.djangoproject.localhost:8000"}
         )
         self.assertEqual(response.status_code, 404)
         self.assertEqual(
