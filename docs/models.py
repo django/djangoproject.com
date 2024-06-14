@@ -227,7 +227,7 @@ def document_url(doc):
         return reverse("document-index", host="docs", kwargs=kwargs)
 
 
-class DocumentManager(models.Manager):
+class DocumentQuerySet(models.QuerySet):
     def breadcrumbs(self, document):
         # get an ascending list of parent paths except the root path ('.')
         parent_paths = list(Path(document.path).parents)[:-1]
@@ -252,8 +252,7 @@ class DocumentManager(models.Manager):
             search_rank = SearchRank(models.F("search"), search_query)
             similarity = TrigramSimilarity("title", query_text)
             return (
-                self.get_queryset()
-                .prefetch_related(
+                self.prefetch_related(
                     Prefetch(
                         "release",
                         queryset=DocumentRelease.objects.only("lang", "release"),
@@ -289,7 +288,7 @@ class DocumentManager(models.Manager):
                 )
             )
         else:
-            return self.get_queryset().none()
+            return self.none()
 
     def search_reset(self):
         """Set to null all not null Document's search vector fields."""
@@ -324,7 +323,7 @@ class Document(models.Model):
     search = SearchVectorField(null=True, editable=False)
     config = models.SlugField(default=DEFAULT_TEXT_SEARCH_CONFIG)
 
-    objects = DocumentManager()
+    objects = DocumentQuerySet.as_manager()
 
     class Meta:
         indexes = [
