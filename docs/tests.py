@@ -531,12 +531,6 @@ class DocumentManagerTest(TestCase):
         Document.objects.search_update()
 
     def test_search(self):
-        query_text = "django"
-        document_list = list(
-            Document.objects.search(query_text, self.release).values_list(
-                "rank", "path", "headline", "highlight"
-            )
-        )
         expected_list = [
             (
                 0.96982837,
@@ -558,27 +552,27 @@ class DocumentManagerTest(TestCase):
                 ),
             ),
         ]
-        self.assertSequenceEqual(document_list, expected_list)
+        self.assertQuerySetEqual(
+            Document.objects.search("django", self.release),
+            expected_list,
+            transform=attrgetter("rank", "path", "headline", "highlight"),
+        )
 
     def test_websearch(self):
-        query_text = 'django "release notes" -packaging'
-        document_queryset = Document.objects.search(
-            query_text, self.release
-        ).values_list("title", "rank")
-        document_list = [("Django 1.9.4 release notes", 1.5675676)]
-        self.assertSequenceEqual(list(document_queryset), document_list)
+        self.assertQuerySetEqual(
+            Document.objects.search('django "release notes" -packaging', self.release),
+            [("Django 1.9.4 release notes", 1.5675676)],
+            transform=attrgetter("title", "rank"),
+        )
 
     def test_multilingual_search(self):
-        query_text = "publication"
-        queryset = Document.objects.search(query_text, self.release_fr).values_list(
-            "title", "rank"
-        )
-        self.assertSequenceEqual(
-            queryset,
+        self.assertQuerySetEqual(
+            Document.objects.search("publication", self.release_fr),
             [
                 ("Notes de publication de Django 1.2.1", 1.0693262),
                 ("Notes de publication de Django 1.9.4", 1.0458658),
             ],
+            transform=attrgetter("title", "rank"),
         )
 
     def test_empty_search(self):
