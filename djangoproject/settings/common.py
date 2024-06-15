@@ -34,7 +34,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "djangoproject",
-        "USER": "djangoproject",
+        "USER": SECRETS.get("db_user", "djangoproject"),
         "HOST": SECRETS.get("db_host", ""),
         "PASSWORD": SECRETS.get("db_password", ""),
         "PORT": SECRETS.get("db_port", ""),
@@ -42,7 +42,7 @@ DATABASES = {
     "trac": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "code.djangoproject",
-        "USER": "code.djangoproject",
+        "USER": SECRETS.get("trac_db_user", "code.djangoproject"),
         "HOST": SECRETS.get("trac_db_host", ""),
         "PASSWORD": SECRETS.get("trac_db_password", ""),
         "PORT": SECRETS.get("trac_db_port", ""),
