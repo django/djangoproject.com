@@ -181,7 +181,7 @@ class PaymentForm(forms.Form):
     amount = forms.IntegerField(
         required=True,
         min_value=1,  # Minimum payment from Stripe API
-        max_value=1_000_000,  # Reject clearly unrealistic amounts.
+        max_value=999_999,  # Reject clearly unrealistic amounts.
     )
     interval = forms.ChoiceField(
         required=True,
