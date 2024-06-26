@@ -1,5 +1,5 @@
 Babel==2.10.1
-django-contact-form==2.1
+django-contact-form==5.0.1
 django-countries==7.5.1
 django-hosts==5.1
 django-money==3.1
