@@ -27,7 +27,7 @@ class TestPaymentForm(TestCase):
         """
         form = PaymentForm(
             data={
-                "amount": 1_000_001,
+                "amount": 1_000_000,
                 "interval": "onetime",
                 "captcha": "TESTING",
             }
