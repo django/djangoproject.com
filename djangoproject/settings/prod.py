@@ -20,11 +20,8 @@ CACHES = {
         "OPTIONS": {"tcp_nodelay": True, "ketama": True},
     },
     "docs-pages": {
-        "BACKEND": "redis_cache.RedisCache",
-        "LOCATION": SECRETS.get("redis_host", "localhost:6379"),
-        "OPTIONS": {
-            "DB": 2,
-        },
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": SECRETS.get("redis_host", "redis://localhost:6379/2"),
     },
 }
 
