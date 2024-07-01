@@ -1,12 +1,11 @@
 from http import HTTPStatus
+from io import StringIO
 
+from django.core.management import call_command
 from django.test import TestCase
 from django_hosts.resolvers import reverse
 
 from docs.models import DocumentRelease, Release
-
-from io import StringIO
-from django.core.management import call_command
 
 
 class TemplateViewTests(TestCase):
