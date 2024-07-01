@@ -1,5 +1,7 @@
 from http import HTTPStatus
+from io import StringIO
 
+from django.core.management import call_command
 from django.test import TestCase
 from django_hosts.resolvers import reverse
 
@@ -114,3 +116,17 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
         self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn("Content-Language", resp)
         self.assertIn("Vary", resp)
+
+
+class PendingMigrationsTests(TestCase):
+    def test_no_pending_migrations(self):
+        out = StringIO()
+        try:
+            call_command(
+                "makemigrations",
+                "--check",
+                stdout=out,
+                stderr=StringIO(),
+            )
+        except SystemExit:  # pragma: no cover
+            raise AssertionError("Pending migrations:\n" + out.getvalue()) from None
