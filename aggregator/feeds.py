@@ -6,6 +6,9 @@ from .models import FeedItem, FeedType
 
 
 class BaseCommunityAggregatorFeed(Feed):
+    def items(self):
+        return FeedItem.objects.approved().order_by("-date_modified")
+
     def item_title(self, item):
         return item.title
 
@@ -33,8 +36,8 @@ class CommunityAggregatorFeed(BaseCommunityAggregatorFeed):
         return get_object_or_404(FeedType, slug=slug)
 
     def items(self, obj):
-        qs = FeedItem.objects.filter(feed__feed_type=obj)
-        qs = qs.order_by("-date_modified")
+        qs = super().items()
+        qs = qs.filter(feed__feed_type=obj)
         qs = qs.select_related("feed", "feed__feed_type")
         return qs[:25]
 
@@ -56,5 +59,6 @@ class CommunityAggregatorFirehoseFeed(BaseCommunityAggregatorFeed):
         return reverse("aggregator-firehose-feed", host="www")
 
     def items(self):
-        qs = FeedItem.objects.order_by("-date_modified").select_related("feed")
+        qs = super().items()
+        qs = qs.select_related("feed")
         return qs[:50]
