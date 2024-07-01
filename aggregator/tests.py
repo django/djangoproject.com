@@ -1,4 +1,5 @@
 import datetime
+from operator import attrgetter
 
 import requests_mock
 from django.conf import settings
@@ -11,7 +12,7 @@ from django.urls import reverse
 from docs.models import DocumentRelease
 from releases.models import Release
 
-from . import models
+from . import feeds, models
 from .forms import FeedModelForm
 
 
@@ -119,6 +120,28 @@ class AggregatorTests(TestCase):
 
         self.assertEqual(1, len(mail.outbox))
         self.assertEqual(mail.outbox[0].to, [self.user.email])
+
+    def test_feeditem_approved(self):
+        self.assertQuerySetEqual(
+            models.FeedItem.objects.approved(),
+            ["Approved long URL Item", "Approved Item"],
+            transform=attrgetter("title"),
+        )
+
+    def test_community_feed_has_only_approved(self):
+        feed = feeds.CommunityAggregatorFeed()
+        self.assertQuerySetEqual(
+            feed.items(self.feed_type),
+            ["Approved long URL Item", "Approved Item"],
+            transform=attrgetter("title"),
+        )
+
+    def test_feedtype_items_has_only_approved(self):
+        self.assertQuerySetEqual(
+            self.feed_type.items(),
+            ["Approved long URL Item", "Approved Item"],
+            transform=attrgetter("title"),
+        )
 
 
 class TestForms(SimpleTestCase):

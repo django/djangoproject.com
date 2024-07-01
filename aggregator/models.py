@@ -22,8 +22,10 @@ class FeedType(models.Model):
         return f"{self.name}"
 
     def items(self):
-        return FeedItem.objects.select_related("feed", "feed__feed_type").filter(
-            feed__feed_type=self
+        return (
+            FeedItem.objects.approved()
+            .filter(feed__feed_type=self)
+            .select_related("feed", "feed__feed_type")
         )
 
 
@@ -112,6 +114,9 @@ class FeedItemManager(models.Manager):
             item.save()
 
         return item
+
+    def approved(self):
+        return self.filter(feed__approval_status=APPROVED_FEED)
 
 
 class FeedItem(models.Model):
