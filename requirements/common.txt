@@ -11,7 +11,7 @@ Django==4.2.14
 docutils==0.17.1
 feedparser==6.0.8
 Jinja2==3.1.4
-libsass==0.21.0
+libsass==0.23.0
 Pillow==10.4.0
 psycopg2==2.9.9
 Pygments==2.18.0
