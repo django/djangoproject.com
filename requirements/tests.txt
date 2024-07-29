@@ -1,4 +1,4 @@
 -r dev.txt
-coverage==6.3.2
+coverage==7.6.0
 requests-mock==1.12.1
 tox<5.0.0
