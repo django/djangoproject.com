@@ -1,4 +1,4 @@
-Babel==2.10.1
+Babel==2.15.0
 django-contact-form==5.0.1
 django-countries==7.6.1
 django-hosts==5.1
