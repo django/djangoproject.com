@@ -8,6 +8,7 @@ from django.core import mail
 from django.core.management import call_command
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
+from django.utils.timesince import timesince
 
 from docs.models import DocumentRelease
 from releases.models import Release
@@ -142,6 +143,12 @@ class AggregatorTests(TestCase):
             ["Approved long URL Item", "Approved Item"],
             transform=attrgetter("title"),
         )
+
+    def test_header_text_simplification_shows_only_years(self):
+        django_dob = datetime.datetime(2005, 7, 21)
+        age = timesince(django_dob, depth=1)
+        self.assertIn("years", age)
+        self.assertNotIn("months", age)
 
 
 class TestForms(SimpleTestCase):
