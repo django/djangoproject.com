@@ -28,7 +28,7 @@ labels: "type:community"
   Copy the country here.
 -->
 
-### Url redirection
+### Event or website URL
 
 <!--
   Copy the website url and/or the event site url here.
