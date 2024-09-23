@@ -95,10 +95,16 @@ window.addEventListener('keydown', function (e) {
   e.preventDefault();
 
   const el = document.querySelector('#id_q');
+  const warningBannerHeight = document.querySelector('.doc-floating-warning')?.offsetHeight || 0;
+  const searchFormInputTop = el.getBoundingClientRect().top + window.scrollY;
+  const scrollToPosition = searchFormInputTop - warningBannerHeight;
 
   el.select();
-  el.focus({ preventScroll: true });
-  el.scrollIntoView({ behavior: 'smooth' });
+  el.focus();
+  window.scrollTo({
+    top: scrollToPosition,
+    behavior: 'smooth'
+  });
 });
 
 // Add copy buttons to code snippets
