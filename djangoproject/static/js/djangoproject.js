@@ -97,8 +97,15 @@ window.addEventListener('keydown', function (e) {
   const el = document.querySelector('#id_q');
 
   el.select();
-  el.focus({ preventScroll: true });
-  el.scrollIntoView({ behavior: 'smooth' });
+  el.focus();
+
+  // Scroll to top instead of calculating banner offsets for simpler, more robust behavior
+  // This ensures the search input is always visible regardless of floating elements
+  // https://github.com/django/djangoproject.com/pull/1624#issuecomment-3062351229
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 });
 
 // Add copy buttons to code snippets
