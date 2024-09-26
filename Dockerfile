@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.8-slim-bullseye
+FROM python:3.12-slim-bookworm
 
 # set work directory
 WORKDIR /usr/src/app
@@ -16,7 +16,7 @@ RUN apt-get update \
         make \
         netcat-openbsd \
         npm \
-        postgresql-client-13 \
+        postgresql-client-15 \
         rsync \
     && rm -rf /var/lib/apt/lists/*
 

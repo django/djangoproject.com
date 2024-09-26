@@ -10,6 +10,8 @@ locale/*/LC_MESSAGES/django.mo
 */locale/*/LC_MESSAGES/django.mo
 .sass-cache/
 .coverage
+.direnv
+.envrc
 .tox
 djangoproject/cache
 djangoproject/static/js/lib/jquery-flot/examples
