@@ -1,0 +1,30 @@
+name: Docker test build
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+            - py312
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    build-image:
+        runs-on: ubuntu-latest
+
+        # steps taken (and trimmed) from docker-publish.yml
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Build and push Docker image
+              uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+              with:
+                  context: .
+                  push: false
