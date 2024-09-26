@@ -20,6 +20,8 @@ RUN apt-get update \
         rsync \
     && rm -rf /var/lib/apt/lists/*
 
+ARG REQ_FILE=requirements/prod.txt
+
 # install python dependencies
 COPY ./requirements ./requirements
 RUN apt-get update \
@@ -28,7 +30,9 @@ RUN apt-get update \
         gcc \
         libc6-dev \
         libpq-dev \
-    && python3 -m pip install --no-cache-dir -r requirements/tests.txt \
+        libmemcached-dev \
+        zlib1g-dev \
+    && python3 -m pip install --no-cache-dir -r ${REQ_FILE} \
     && apt-get purge --assume-yes --auto-remove \
         gcc \
         libc6-dev \
@@ -39,11 +43,5 @@ RUN apt-get update \
 COPY ./package.json ./package.json
 RUN npm install
 
-# copy docker-entrypoint.sh
-COPY ./docker-entrypoint.sh ./docker-entrypoint.sh
-
 # copy project
 COPY . .
-
-# run docker-entrypoint.sh
-ENTRYPOINT ["./docker-entrypoint.sh"]

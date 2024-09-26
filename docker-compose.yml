@@ -5,6 +5,9 @@ services:
         build:
             context: ./
             dockerfile: Dockerfile
+            args:
+                - REQ_FILE=requirements/tests.txt
+        entrypoint: docker-entrypoint.localdev.sh
         command: python manage.py runserver 0.0.0.0:8000
         volumes:
             - .:/usr/src/app/
