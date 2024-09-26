@@ -135,7 +135,13 @@ class ApprovedGrant(models.Model):
         currency_choices=[
             (c.code, c.name)
             for i, c in CURRENCIES.items()
-            if c.code in {"USD", "EUR", "AUD", "NGN"}
+            if c.code
+            in {
+                "USD",
+                "EUR",
+                "AUD",
+                "NGN",
+            }  # This set of currencies was extracted from current usage
         ],
     )
     approved_at = models.ForeignKey(
