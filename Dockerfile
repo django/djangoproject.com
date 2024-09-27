@@ -13,11 +13,14 @@ RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends \
         gettext \
         git \
+        libmemcached11 \
+        libpq5 \
         make \
         netcat-openbsd \
         npm \
         postgresql-client-15 \
         rsync \
+        zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
 ARG REQ_FILE=requirements/prod.txt
@@ -37,6 +40,8 @@ RUN apt-get update \
         gcc \
         libc6-dev \
         libpq-dev \
+        libmemcached-dev \
+        zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # install node dependencies
