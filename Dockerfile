@@ -13,7 +13,6 @@ RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends \
         gettext \
         git \
-        libmemcached11 \
         libpq5 \
         make \
         netcat-openbsd \
@@ -33,14 +32,12 @@ RUN apt-get update \
         gcc \
         libc6-dev \
         libpq-dev \
-        libmemcached-dev \
         zlib1g-dev \
     && python3 -m pip install --no-cache-dir -r ${REQ_FILE} \
     && apt-get purge --assume-yes --auto-remove \
         gcc \
         libc6-dev \
         libpq-dev \
-        libmemcached-dev \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
