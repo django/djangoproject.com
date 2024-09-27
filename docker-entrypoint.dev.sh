@@ -8,18 +8,18 @@ done
 
 echo "PostgreSQL started"
 
-python manage.py flush --no-input
+python -m manage flush --no-input
 # PGPASSWORD=djangoproject psql --host db --port 5432 --username=code.djangoproject --dbname=code.djangoproject < tracdb/trac.sql
-python manage.py migrate
+python -m manage migrate
 make compile-scss # must come before collectstatic
-python manage.py collectstatic --no-input --clear
-python manage.py loaddata dev_sites
-python manage.py loaddata doc_releases
+python -m manage collectstatic --no-input --clear
+python -m manage loaddata dev_sites
+python -m manage loaddata doc_releases
 # git config --global url."https://".insteadOf git://
-# python manage.py update_docs
-python manage.py loaddata dashboard_production_metrics
-# python manage.py loaddata dashboard_example_data
-python manage.py update_metrics
-#python manage.py update_index
+# python -m manage update_docs
+python -m manage loaddata dashboard_production_metrics
+# python -m manage loaddata dashboard_example_data
+python -m manage update_metrics
+#python -m manage update_index
 
 exec "$@"

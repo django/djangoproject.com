@@ -1,7 +1,8 @@
 #!/bin/sh
 
-python manage.py migrate
+python -m manage migrate
+python -m manage compilemessages
 make compile-scss # must come before collectstatic
-python manage.py collectstatic --no-input --clear
+python -m manage collectstatic --no-input --clear
 
 exec "$@"
