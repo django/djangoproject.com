@@ -1,15 +1,17 @@
 from .common import *  # noqa
 
+DOMAIN_NAME = os.getenv("DOMAIN_NAME", "djangoproject.com")
+
 ALLOWED_HOSTS = [
-    "www.djangoproject.com",
-    "djangoproject.com",
-    "docs.djangoproject.com",
-    "dashboard.djangoproject.com",
+    f"www.{DOMAIN_NAME}",
+    DOMAIN_NAME,
+    f"docs.{DOMAIN_NAME}",
+    f"dashboard.{DOMAIN_NAME}",
 ] + SECRETS.get("allowed_hosts", [])
 
-LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = ["docs.djangoproject.com"]
+LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = [f"docs.{DOMAIN_NAME}"]
 
-DEBUG = False
+DEBUG = os.getenv("DJANGO_DEBUG", "false").lower() == "true"
 THUMBNAIL_DEBUG = DEBUG
 
 CACHES = {
@@ -41,7 +43,7 @@ LOGGING["loggers"]["django.request"]["handlers"].append("syslog")
 
 MEDIA_ROOT = str(DATA_DIR.joinpath("media"))
 
-MEDIA_URL = "https://media.djangoproject.com/"
+MEDIA_URL = f"https://media.{DOMAIN_NAME}/"
 
 MIDDLEWARE = (
     ["django.middleware.cache.UpdateCacheMiddleware"]
@@ -62,7 +64,7 @@ STORAGES = {
 
 STATIC_ROOT = str(DATA_DIR.joinpath("static"))
 
-STATIC_URL = "https://static.djangoproject.com/"
+STATIC_URL = f"https://static.{DOMAIN_NAME}/"
 
 # Docs settings
 DOCS_BUILD_ROOT = DATA_DIR.joinpath("data", "docbuilds")
@@ -71,7 +73,7 @@ DOCS_BUILD_ROOT = DATA_DIR.joinpath("data", "docbuilds")
 
 HOST_SCHEME = "https"
 
-PARENT_HOST = "djangoproject.com"
+PARENT_HOST = DOMAIN_NAME
 
 # django-push settings
 
