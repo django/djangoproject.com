@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.dateformat import format as date_format
 from djmoney.models.fields import MoneyField
+from djmoney.settings import CURRENCIES
 from docutils.core import publish_parts
 
 from blog.models import BLOG_DOCUTILS_SETTINGS
@@ -131,6 +132,17 @@ class ApprovedGrant(models.Model):
         decimal_places=2,
         default_currency="USD",
         default=Decimal("0.0"),
+        currency_choices=[
+            (c.code, c.name)
+            for i, c in CURRENCIES.items()
+            if c.code
+            in {
+                "USD",
+                "EUR",
+                "AUD",
+                "NGN",
+            }  # This set of currencies was extracted from current usage
+        ],
     )
     approved_at = models.ForeignKey(
         Meeting, related_name="grants_approved", on_delete=models.CASCADE

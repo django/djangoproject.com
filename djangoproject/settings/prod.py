@@ -16,17 +16,13 @@ THUMBNAIL_DEBUG = DEBUG
 
 CACHES = {
     "default": {
-        "BACKEND": "django_pylibmc.memcached.PyLibMCCache",
-        "LOCATION": SECRETS.get("memcached_host", "127.0.0.1:11211"),
-        "BINARY": True,
-        "OPTIONS": {"tcp_nodelay": True, "ketama": True},
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": SECRETS.get("cache_default_url", "redis://localhost:6379"),
     },
+    # We use a separate cache for docs so we can purge it when docs are rebuilt
     "docs-pages": {
-        "BACKEND": "redis_cache.RedisCache",
-        "LOCATION": SECRETS.get("redis_host", "localhost:6379"),
-        "OPTIONS": {
-            "DB": 2,
-        },
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": SECRETS.get("cache_docs_url", "redis://localhost:6379/2"),
     },
 }
 

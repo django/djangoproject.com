@@ -256,6 +256,10 @@ PUSH_HUB = "https://push.superfeedr.com/"
 
 PUSH_CREDENTIALS = "aggregator.utils.push_credentials"
 
+# django-money settings
+
+CURRENCIES = ("USD",)
+
 # SUPERFEEDR_CREDS is a 2 element list in the form of [email,secretkey]
 SUPERFEEDR_CREDS = SECRETS.get("superfeedr_creds")
 
