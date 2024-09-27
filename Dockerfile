@@ -51,4 +51,5 @@ RUN npm install
 # copy project
 COPY . .
 
+# run docker-entrypoint.sh
 ENTRYPOINT ["./docker-entrypoint.prod.sh"]
