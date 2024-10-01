@@ -27,7 +27,7 @@ def bouncing_tickets(request):
 
 
 def ts2dt(ts):
-    epoc = datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)
+    epoc = datetime.datetime(1970, 1, 1, tzinfo=datetime.UTC)
     return epoc + datetime.timedelta(microseconds=ts)
 
 
