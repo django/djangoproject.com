@@ -5,7 +5,6 @@ on:
     push:
         branches:
             - main
-            - py312
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
