@@ -1,3 +1,3 @@
 -r common.txt
-pre-commit~=2.20.0
-watchdog==4.0.2
+pre-commit~=3.7.1
+watchdog==5.0.2
