@@ -17,16 +17,16 @@ jobs:
     build-image:
         runs-on: ubuntu-latest
 
+        strategy:
+            matrix:
+                req_file:
+                    - requirements/prod.txt
+                    - requirements/tests.txt
+
         # steps taken (and trimmed) from docker-publish.yml
         steps:
             - name: Checkout repository
               uses: actions/checkout@v2
-
-            - name: Test docker image build (production)
-              uses: docker/build-push-action@v6
-              with:
-                  context: .
-                  push: false
 
             - name: Test docker image build (local development)
               uses: docker/build-push-action@v6
@@ -34,4 +34,4 @@ jobs:
                   context: .
                   push: false
                   args:
-                      - REQ_FILE=requirements/tests.txt
+                      - REQ_FILE=${{ matrix.req_file }}
