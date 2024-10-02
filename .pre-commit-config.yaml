@@ -15,11 +15,11 @@ repos:
           - id: fix-encoding-pragma
             args: ["--remove"]
           - id: trailing-whitespace
-    - repo: https://github.com/asottile/pyupgrade
-      rev: "v3.17.0"
-      hooks:
-          - id: pyupgrade
-            args: [--py312-plus]
+    # - repo: https://github.com/asottile/pyupgrade
+    #   rev: "v3.17.0"
+    #   hooks:
+    #       - id: pyupgrade
+    #         args: [--py312-plus]
     - repo: https://github.com/adamchainz/django-upgrade
       rev: "1.21.0"
       hooks:
