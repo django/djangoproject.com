@@ -34,5 +34,5 @@ jobs:
               with:
                   context: .
                   push: false
-                  build-args:
-                      - REQ_FILE=${{ matrix.req_file }}
+                  build-args: |
+                      REQ_FILE=${{ matrix.req_file }}
