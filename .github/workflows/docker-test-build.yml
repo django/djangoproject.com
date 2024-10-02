@@ -1,0 +1,37 @@
+name: Docker test build
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    build-image:
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                req_file:
+                    - prod.txt
+                    - tests.txt
+
+        # steps taken (and trimmed) from docker-publish.yml
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Test docker image build (local development)
+              uses: docker/build-push-action@v6
+              with:
+                  context: .
+                  push: false
+                  build-args: |
+                      REQ_FILE=requirements/${{ matrix.req_file }}
