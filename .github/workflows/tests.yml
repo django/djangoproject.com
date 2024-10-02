@@ -12,6 +12,8 @@ jobs:
         runs-on: ubuntu-24.04
         strategy:
             fail-fast: false
+            matrix:
+                python-version: ["3.8", "3.12"]
 
         services:
             postgres:
@@ -31,7 +33,7 @@ jobs:
             - name: Set up Python
               uses: actions/setup-python@v5
               with:
-                  python-version: "3.12"
+                  python-version: "${{ matrix.python-version }}"
             - name: Install dependencies
               run: |
                   python -m pip install --upgrade pip setuptools coveralls "tox<4"
@@ -57,7 +59,8 @@ jobs:
                   echo '"secret_key": "a"}' >> conf/secrets.json
             - name: Run tox
               run: |
-                  python -m tox -e py312-tests
+                  PYYTHON_VERSION=${{ matrix.python-version }}
+                  python -m tox -e py${PYYTHON_VERSION//.}-tests
             - name: Coveralls
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
