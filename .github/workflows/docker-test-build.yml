@@ -22,8 +22,16 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v2
 
-            - name: Build and push Docker image
-              uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+            - name: Test docker image build (production)
+              uses: docker/build-push-action@v6
               with:
                   context: .
                   push: false
+
+            - name: Test docker image build (local development)
+              uses: docker/build-push-action@v6
+              with:
+                  context: .
+                  push: false
+                  args:
+                      - REQ_FILE=requirements/tests.txt
