@@ -5,7 +5,6 @@ on:
     push:
         branches:
             - main
-            - py312 # FIXME: Remove before merging
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}

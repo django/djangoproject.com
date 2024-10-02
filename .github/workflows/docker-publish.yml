@@ -2,7 +2,7 @@ name: Create and publish a Docker image
 
 on:
     push:
-        branches: ["py312"] # FIXME: Change to 'main' before merging
+        branches: ["main"]
 
 env:
     REGISTRY: ghcr.io

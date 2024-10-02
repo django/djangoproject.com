@@ -5,7 +5,6 @@ on:
     push:
         branches:
             - main
-            - py312
     pull_request:
 
 jobs:
