@@ -20,8 +20,8 @@ jobs:
         strategy:
             matrix:
                 req_file:
-                    - requirements/prod.txt
-                    - requirements/tests.txt
+                    - prod.txt
+                    - tests.txt
 
         # steps taken (and trimmed) from docker-publish.yml
         steps:
@@ -34,4 +34,4 @@ jobs:
                   context: .
                   push: false
                   build-args: |
-                      REQ_FILE=${{ matrix.req_file }}
+                      REQ_FILE=requirements/${{ matrix.req_file }}
