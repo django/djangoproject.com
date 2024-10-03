@@ -57,7 +57,7 @@ jobs:
                   echo '"secret_key": "a"}' >> conf/secrets.json
             - name: Run tox
               run: |
-                  python -m tox -e py38-tests
+                  python -m tox
             - name: Coveralls
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
