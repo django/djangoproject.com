@@ -3,6 +3,8 @@ import datetime
 from django import db
 from django.shortcuts import render
 
+from .models import _epoc
+
 
 def bouncing_tickets(request):
     c = db.connections["trac"].cursor()
@@ -27,8 +29,7 @@ def bouncing_tickets(request):
 
 
 def ts2dt(ts):
-    epoc = datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)
-    return epoc + datetime.timedelta(microseconds=ts)
+    return _epoc + datetime.timedelta(microseconds=ts)
 
 
 def dictfetchall(cursor):
