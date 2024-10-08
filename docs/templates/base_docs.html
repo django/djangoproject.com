@@ -10,7 +10,15 @@
 {% endblock %}
 
 {% block header %}
-  <h1><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a></h1>
+  {% comment %}
+    <h1><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a></h1>
+  {% endcomment %}
+  <h1>
+    <a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a> &ndash;
+    <a href="https://www.jetbrains.com/pycharm/promo/support-django/?utm_campaign=pycharm&amp;utm_content=django-fundraiser-24&amp;utm_medium=referral&amp;utm_source=djangoproject.com">
+      Until October 6, 2024, <em>get PyCharm at 30% off</em>.<br>All money goes to the <em>DSF!</em>
+    </a>
+  </h1>
   {% search_form %}
 {% endblock %}
 
