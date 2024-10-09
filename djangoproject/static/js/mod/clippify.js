@@ -1,13 +1,27 @@
 define(['jquery', 'clipboard'], function($, Clipboard) {
-    $('.code-block-caption').each(function() {
-        var header = $(this);
-        var wrapper = header.parent();
-        var code = $('.highlight', wrapper);
+    function addCopyButton(btnParent, code){
         var btn = $('<span class="btn-clipboard" title="Copy this code">');
         btn.append('<i class="icon icon-clipboard">');
-        btn.data('clipboard-text', $.trim(code.text()));
-        header.append(btn);
+        btn.data('clipboard-text', $.trim(code));
+        btnParent.prepend(btn);
+    };
+    $('.code-block-caption').each(function(){
+        var header = $(this);
+        var wrapper = header.parent();
+        var codeBlock = $('pre', wrapper);
+        addCopyButton(header, codeBlock.text())
     });
+    $('.highlight-console, .c-content-win, .highlight-shell, .highlight-doscon').each(function(){
+        var codeBlock = $('pre', this);
+        var clone = $(codeBlock).clone();
+        $('.gp, .go', clone).remove();
+        addCopyButton(codeBlock, clone.text());
+    });
+    $('#download .literal-block').each(function () {
+        var codeBlock = $(this);
+        addCopyButton(codeBlock, codeBlock.text());
+    });
+
     // For Django 2.0 docs and older.
     $('.snippet').each(function() {
         var code = $('.highlight', this);
