@@ -3,7 +3,7 @@ SCSS = djangoproject/scss
 JQUERY_FLOT=djangoproject/static/js/lib/jquery-flot
 APP_LIST ?= accounts aggregator blog contact dashboard djangoproject docs foundation fundraising legacy members releases svntogit tracdb
 
-.PHONY: collectstatics compile-scss compile-scss-debug watch-scss run install test ci
+.PHONY: all ci clean collectstatics compile-scss compile-scss-debug install run test watch-scss
 
 collectstatics: compile-scss
 	python -m manage collectstatic --noinput
