@@ -13,12 +13,10 @@ class ProfileForm(forms.ModelForm):
     """
 
     name = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={"placeholder": _("Name")})
+        required=False, widget=forms.TextInput(attrs={"placeholder": _("Name")})
     )
     email = forms.EmailField(
-        required=False,
-        widget=forms.TextInput(attrs={"placeholder": _("Email")})
+        required=False, widget=forms.TextInput(attrs={"placeholder": _("Email")})
     )
 
     class Meta:
