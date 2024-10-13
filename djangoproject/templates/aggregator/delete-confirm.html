@@ -2,9 +2,9 @@
 {% load i18n %}
 
 {% block content %}
-<h1>{% translate "Community" %}</h1>
+  <h1>{% translate "Community" %}</h1>
 
-<h2 class="deck">{% blocktranslate with feed=feed %}Really delete {{ feed }}?{% endblocktranslate %}</h2>
+  <h2 class="deck">{% blocktranslate with feed=feed %}Really delete {{ feed }}?{% endblocktranslate %}</h2>
 
   <p>
   {% blocktranslate trimmed %}
@@ -12,8 +12,8 @@
   {% endblocktranslate %}
   </p>
 
-<form class="wide" action="." method="post">
-  {% csrf_token %}
-  <p class="submit"><input class="cta" type="submit" value="{% translate "Yes, delete the feed." %}"></p>
-</form>
+  <form class="wide" action="." method="post">
+    {% csrf_token %}
+    <p class="submit"><input class="cta" type="submit" value="{% translate "Yes, delete the feed." %}"></p>
+  </form>
 {% endblock %}

@@ -44,7 +44,9 @@ class FeedModelForm(forms.ModelForm):
         feed_url = self.cleaned_data.get("feed_url")
         if feed_url and "//stackoverflow.com" in feed_url:
             raise forms.ValidationError(
-                _("Stack Overflow questions tagged with 'django' will appear "
-                "here automatically.")
+                _(
+                    "Stack Overflow questions tagged with 'django' will appear "
+                    "here automatically."
+                )
             )
         return feed_url
