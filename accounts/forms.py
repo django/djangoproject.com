@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from .models import Profile
 
@@ -12,10 +13,12 @@ class ProfileForm(forms.ModelForm):
     """
 
     name = forms.CharField(
-        required=False, widget=forms.TextInput(attrs={"placeholder": "Name"})
+        required=False,
+        widget=forms.TextInput(attrs={"placeholder": _("Name")})
     )
     email = forms.EmailField(
-        required=False, widget=forms.TextInput(attrs={"placeholder": "Email"})
+        required=False,
+        widget=forms.TextInput(attrs={"placeholder": _("Email")})
     )
 
     class Meta:
