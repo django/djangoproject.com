@@ -2,29 +2,29 @@
 {% load i18n %}
 
 {% block content %}
-<h1>{% translate "Community" %}</h1>
+  <h1>{% translate "Community" %}</h1>
 
-{% if adding %}
-  <h2 class="deck">{% blocktranslate with type=feed_type %}Add a {{ type }} feed:{% endblocktranslate %}</h2>
-{% else %}
-  <h2 class="deck">{% blocktranslate with feed=feed %}Edit {{ feed }}:{% endblocktranslate %}</h2>
-{% endif %}
-
-<form method="POST" action="" id="add_feed_form" class="wide form-input">
-  {% csrf_token %}
-  {% for field in form %}
-    <p>
-      {% if field.errors %}
-        <p class="errors">{{ field.errors.as_text }}</p>
-      {% endif %}
-      {{ field }}
-    </p>
-  {% endfor %}
   {% if adding %}
-    <p class="submit"><input class="cta" type="submit" value="{% translate "Add Feed" %}"></p>
+    <h2 class="deck">{% blocktranslate with type=feed_type %}Add a {{ type }} feed:{% endblocktranslate %}</h2>
   {% else %}
-    <p class="submit"><input class="cta" type="submit" value="{% translate "Save" %}"></p>
+    <h2 class="deck">{% blocktranslate with feed=feed %}Edit {{ feed }}:{% endblocktranslate %}</h2>
   {% endif %}
-</form>
+
+  <form method="POST" action="" id="add_feed_form" class="wide form-input">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {% if field.errors %}
+          <p class="errors">{{ field.errors.as_text }}</p>
+        {% endif %}
+        {{ field }}
+      </p>
+    {% endfor %}
+    {% if adding %}
+      <p class="submit"><input class="cta" type="submit" value="{% translate "Add Feed" %}"></p>
+    {% else %}
+      <p class="submit"><input class="cta" type="submit" value="{% translate "Save" %}"></p>
+    {% endif %}
+  </form>
 
 {% endblock %}
