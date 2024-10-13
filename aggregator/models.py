@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from django_push.subscriber import signals as push_signals
 from django_push.subscriber.models import Subscription
@@ -34,9 +35,9 @@ DENIED_FEED = "D"
 PENDING_FEED = "P"
 
 STATUS_CHOICES = (
-    (PENDING_FEED, "Pending"),
-    (DENIED_FEED, "Denied"),
-    (APPROVED_FEED, "Approved"),
+    (PENDING_FEED, _("Pending")),
+    (DENIED_FEED, _("Denied")),
+    (APPROVED_FEED, _("Approved")),
 )
 
 
@@ -200,13 +201,13 @@ def feed_updated(sender, notification, **kwargs):
 push_signals.updated.connect(feed_updated)
 
 CONTINENTS = [
-    ("Africa", "Africa"),
-    ("North America", "North America"),
-    ("South America", "South America"),
-    ("Europe", "Europe"),
-    ("Asia", "Asia"),
-    ("Oceania", "Oceania"),
-    ("Antarctica", "Antarctica"),
+    ("Africa", _("Africa")),
+    ("North America", _("North America")),
+    ("South America", _("South America")),
+    ("Europe", _("Europe")),
+    ("Asia", _("Asia")),
+    ("Oceania", _("Oceania")),
+    ("Antarctica", _("Antarctica")),
 ]
 
 
