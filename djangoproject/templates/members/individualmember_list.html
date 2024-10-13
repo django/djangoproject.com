@@ -87,7 +87,7 @@
 
     <ul>
       {% for member in former_members %}
-        <li>{{ member.name }} ({{ member.reason_for_leaving }})</li>
+        <li>{{ member.name }}{% if member.reason_for_leaving %} ({{ member.reason_for_leaving }}){% endif %}</li>
       {% endfor %}
     </ul>
   {% endif %}
