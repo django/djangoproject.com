@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
     path("bouncing/", views.bouncing_tickets, name="bouncing_tickets"),
+    path("api/", views.miniapi, name="miniapi"),
 ]

@@ -157,3 +157,63 @@ class TicketTestCase(TracDBCreateDatabaseMixin, TestCase):
             Ticket.objects.from_querystring("severity=high&stage=unreviewed"),
             ["test1"],
         )
+
+
+class TicketAPITestCase(TracDBCreateDatabaseMixin, TestCase):
+    databases = {"default", "trac"}
+
+    def test_empty_results(self):
+        response = self.client.get("/trac/api/?ids=1")
+        self.assertJSONEqual(response.content, {"tickets": []})
+
+    def test_single_result(self):
+        t = Ticket.objects.create(reporter="test", description="test")
+
+        response = self.client.get(f"/trac/api/?ids={t.id}")
+
+        self.assertJSONEqual(
+            response.content,
+            {
+                "tickets": [
+                    {
+                        "id": t.id,
+                        "reporter": "test",
+                        "description": "test",
+                        "resolution": "",
+                        "status": "",
+                        "changes": [],
+                    }
+                ]
+            },
+        )
+
+    def test_single_result_with_comment(self):
+        t = Ticket.objects.create()
+        t.changes.create(author="test", field="test", _time=1)
+
+        response = self.client.get(f"/trac/api/?ids={t.id}")
+
+        self.assertJSONEqual(
+            response.content,
+            {
+                "tickets": [
+                    {
+                        "id": t.id,
+                        "reporter": "",
+                        "description": "",
+                        "resolution": "",
+                        "status": "",
+                        "changes": [
+                            {
+                                "author": "test",
+                                "field": "test",
+                                "time": "1970-01-01T00:00:00.000001+00:00",
+                            }
+                        ],
+                    }
+                ]
+            },
+        )
+
+    def test_querycount(self):
+        pass  # TODO (make sure there's no N+1 issue)
