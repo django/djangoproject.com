@@ -7,7 +7,7 @@
   {% if adding %}
     <h2 class="deck">{% blocktranslate with type=feed_type %}Add a {{ type }} feed:{% endblocktranslate %}</h2>
   {% else %}
-    <h2 class="deck">{% blocktranslate with feed=feed %}Edit {{ feed }}:{% endblocktranslate %}</h2>
+    <h2 class="deck">{% blocktranslate %}Edit {{ feed }}:{% endblocktranslate %}</h2>
   {% endif %}
 
   <form method="POST" action="" id="add_feed_form" class="wide form-input">
