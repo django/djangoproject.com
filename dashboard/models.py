@@ -53,7 +53,7 @@ class Metric(models.Model):
         abstract = True
 
     def __str__(self):
-        return f"{self.name} ({self.id})"
+        return self.name
 
     def get_absolute_url(self):
         return reverse("metric-detail", args=[self.slug], host="dashboard")
