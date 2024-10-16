@@ -1,27 +1,30 @@
 {% extends "base_community.html" %}
+{% load i18n %}
 
-{% block og_title %}Django Community Diversity Statement{% endblock %}
-{% block og_description %}We welcome you.{% endblock %}
+{% block og_title %}{% translate "Django Community Diversity Statement" %}{% endblock %}
+{% block og_description %}{% translate "We welcome you." %}{% endblock %}
 
 {% block header %}
-  <h1 class="visuallyhidden">Community Diversity Statement</h1>
-  <p>Community Diversity Statement</p>
+  <h1 class="visuallyhidden">{% translate "Community Diversity Statement" %}</h1>
+  <p>{% translate "Community Diversity Statement" %}</p>
 {% endblock %}
 
 {% block content-related %}
   <div role="complementary">
-    <h2>Django Community Diversity Statement</h2>
+    <h2>{% translate "Django Community Diversity Statement" %}</h2>
 
     <ul class="list-links">
-      <li><a href="{% url 'diversity' %}">Diversity Statement</a></li>
-      <li><a href="{% url 'diversity_changes' %}">Changes</a></li>
+      <li><a href="{% url 'diversity' %}">{% translate "Diversity Statement" %}</a></li>
+      <li><a href="{% url 'diversity_changes' %}">{% translate "Changes" %}</a></li>
     </ul>
 
-    <h2>License</h2>
+    <h2>{% translate "License" %}</h2>
     <p>
-      All content on this page is licensed under a
-      <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
-        Attribution </a> license.
+      {% blocktranslate trimmed %}
+        All content on this page is licensed under a
+        <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+          Attribution </a> license.
+      {% endblocktranslate %}
     </p>
     <p>
       <a href="https://creativecommons.org/licenses/by/3.0/">
@@ -31,4 +34,4 @@
   </div>
 {% endblock %}
 
-{% block title %}Django Community Diversity Statement{% endblock %}
+{% block title %}{% translate "Django Community Diversity Statement" %}{% endblock %}

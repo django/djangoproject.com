@@ -1,9 +1,14 @@
 {% extends "registration/base.html" %}
+{% load i18n %}
 
-{% block title %}Registration complete{% endblock %}
+{% block title %}{% translate "Registration complete" %}{% endblock %}
 
 {% block content %}
-    <h1>Check your email</h1>
-    <p>An activation link has been sent to the email address you supplied, along with instructions
-        for activating your account.</p>
+    <h1>{% translate "Check your email" %}</h1>
+    <p>
+        {% blocktranslate trimmed %}
+            An activation link has been sent to the email address you supplied, along with instructions
+            for activating your account.
+        {% endblocktranslate %}
+    </p>
 {% endblock %}

@@ -1,8 +1,14 @@
 {% extends "registration/base.html" %}
+{% load i18n %}
 
-{% block title %}Logged out{% endblock %}
+{% block title %}{% translate "Logged out" %}{% endblock %}
 
 {% block content %}
-    <h1>You've been logged out.</h1>
-    <p>Thanks for stopping by; when you come back, don't forget to <a href="{% url 'login' %}">log in</a> again.</p>
+  <h1>{% translate "You've been logged out." %}</h1>
+  <p>
+    {% url 'login' as login_url %}
+    {% blocktranslate trimmed %}
+      Thanks for stopping by; when you come back, don't forget to <a href="{{ login_url }}">log in</a> again.
+    {% endblocktranslate %}
+  </p>
 {% endblock %}
