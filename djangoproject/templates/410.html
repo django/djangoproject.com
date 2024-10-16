@@ -1,16 +1,26 @@
 {% extends 'base_error.html' %}
+{% load i18n %}
 
-{% block title %}Page removed{% endblock %}
+{% block title %}{% translate "Page removed" %}{% endblock %}
 
 {% block header %}<h1>410</h1>{% endblock %}
 
 {% block content %}
-    <h2>Page removed.</h2>
+  <h2>{% translate "Page removed." %}</h2>
 
-    <p>Sorry, we've removed some of parts of the site that were completely out
-        of date. In most cases, that content has been moved into
-        <a href="{% url 'homepage' host 'docs' %}">the new documentation site</a>.</p>
+  {% url 'homepage' host 'docs' as docs_url %}
+  <p>
+    {% blocktranslate trimmed %}
+      Sorry, we've removed some of parts of the site that were completely out
+      of date. In most cases, that content has been moved into
+      <a href="{{ docs_url }}">the new documentation site</a>.
+    {% endblocktranslate %}</p>
 
-    <p>Here's a link to the <a href="{% url 'homepage' %}">homepage</a>. You know, just in case.</p>
+  {% url 'homepage' as homepage_url %}
+  <p>
+    {% blocktranslate trimmed %}
+      Here's a link to the <a href="{{ homepage_url }}">homepage</a>. You know, just in case.
+    {% endblocktranslate %}
+  </p>
 
 {% endblock %}
