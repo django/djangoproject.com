@@ -1,16 +1,17 @@
 {% extends "base_foundation.html" %}
+{% load i18n %}
 
-{% block og_title %}Meeting minutes archive{% endblock %}
-{% block og_description %}View meeting minutes{% endblock %}
+{% block og_title %}{% translate "Meeting minutes archive" %}{% endblock %}
+{% block og_description %}{% translate "View meeting minutes" %}{% endblock %}
 
 {% block head_extra %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url 'foundation-minutes-feed' %}" />
 {% endblock %}
 
 {% block content %}
-  <h1>Meeting minutes archive</h1>
+  <h1>{% translate "Meeting minutes archive" %}</h1>
 
-  <p>Select a year to view meeting minutes:</p>
+  <p>{% translate "Select a year to view meeting minutes:" %}</p>
 
   <ul>
     {% for year in date_list %}

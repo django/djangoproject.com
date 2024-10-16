@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.text import slugify
+from django.utils.translation import gettext as _
 
 from . import models
 
@@ -87,7 +88,7 @@ class MeetingAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
 
     def get_changeform_initial_data(self, request):
-        title = "DSF Board monthly meeting"
+        title = _("DSF Board monthly meeting")
         return {
             "title": title,
             "slug": slugify(title),
