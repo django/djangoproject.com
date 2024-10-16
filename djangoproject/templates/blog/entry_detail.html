@@ -4,14 +4,14 @@
 {% block title %}{{ object.headline|escape }} | Weblog{% endblock %}
 
 {% block og_title %}{{ object.headline|safe }}{% endblock %}
-{% block og_description %}{% blocktranslate trimmed with author=object.author pub_date=object.pub_date %}
-    Posted by {{ author }} on {{ pub_date|date:"F j, Y" }}
+{% block og_description %}{% blocktranslate trimmed with author=object.author pub_date=object.pub_date|date:"MONTH_DAY_YEAR_FORMAT" %}
+    Posted by {{ author }} on {{ pub_date }}
 {% endblocktranslate %}{% endblock %}
 
 {% block content %}
     <h2>{{ object.headline|safe }}</h2>
 
-    <span class="meta">{% blocktranslate trimmed with author=object.author pub_date=object.pub_date|date:"DATE_FORMAT" %}
+    <span class="meta">{% blocktranslate trimmed with author=object.author pub_date=object.pub_date|date:"MONTH_DAY_YEAR_FORMAT" %}
         Posted by <strong>{{ author }}</strong> on {{ pub_date }} </span>
     {% endblocktranslate %}
         {{ object.body_html|safe }}
