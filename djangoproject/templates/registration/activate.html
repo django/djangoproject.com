@@ -1,12 +1,14 @@
 {% extends "registration/base.html" %}
+{% load humanize i18n %}
 
-{% block title %}Account activation failed{% endblock %}
+{% block title %}{% translate "Account activation failed" %}{% endblock %}
 
 {% block content %}
-  <h1>Account activation failed.</h1>
-  {% load humanize %}
-  <p>Sorry, it didn't work. Either your activation link was incorrect, or
-    the activation key for your account has expired; activation keys are
-    only valid for {{ expiration_days|apnumber }} days after
-    registration.</p>
+  <h1>{% translate "Account activation failed." %}</h1>
+  <p>
+    {% blocktranslate trimmed with days=expiration_days|apnumber %}
+      Sorry, it didn't work. Either your activation link was incorrect, or
+      the activation key for your account has expired; activation keys are
+      only valid for {{ days }} days after registration.
+    {% endblocktranslate %}</p>
 {% endblock %}
