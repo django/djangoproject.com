@@ -98,7 +98,7 @@ define(function() {
         mods.push('mod/messages');
     }
 
-    if (hasClass('code-block-caption') || hasClass('snippet')) {
+    if (hasClass('code-block-caption') || hasClass('snippet') || hasClass('c-content-unix') || hasClass('c-content-win')){
         mods.push('mod/clippify');
     }
 

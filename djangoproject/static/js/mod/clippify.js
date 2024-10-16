@@ -8,6 +8,16 @@ define(['jquery', 'clipboard'], function($, Clipboard) {
         btn.data('clipboard-text', $.trim(code.text()));
         header.append(btn);
     });
+    $('.c-content-win, .c-content-unix').each(function() {
+        var header = $(this);
+        var code = $('.highlight', header);
+        // Check if the icon has already been added
+        var btn = $('<span class="btn-clipboard" title="Copy this code">');
+        btn.append('<i class="icon icon-clipboard">');
+        btn.data('clipboard-text', $.trim(code.clone().find('.gp, .go').remove().end().text()));
+        code.append(btn);
+    });
+    
     // For Django 2.0 docs and older.
     $('.snippet').each(function() {
         var code = $('.highlight', this);
