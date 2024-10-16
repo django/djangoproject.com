@@ -93,6 +93,8 @@ INSTALLED_APPS = [
 
 LANGUAGE_CODE = "en-us"
 
+FORMAT_MODULE_PATH = ["djangoproject.formats"]
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": True,
