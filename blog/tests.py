@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from .models import Entry, Event
+from .models import ContentFormat, Entry, Event
 from .sitemaps import WeblogSitemap
 
 
@@ -75,6 +75,24 @@ class EntryTestCase(DateTimeMixin, TestCase):
             )
         self.assertIn("<p>&quot;raw&quot; directive disabled.</p>", entry.body_html)
         self.assertIn(".. raw:: html\n    :file: somefile", entry.body_html)
+
+    def test_content_format_html(self):
+        entry = Entry.objects.create(
+            pub_date=self.now,
+            slug="a",
+            body="<strong>test</strong>",
+            content_format=ContentFormat.HTML,
+        )
+        self.assertHTMLEqual(entry.body_html, "<strong>test</strong>")
+
+    def test_content_format_reST(self):
+        entry = Entry.objects.create(
+            pub_date=self.now,
+            slug="a",
+            body="**test**",
+            content_format=ContentFormat.REST,
+        )
+        self.assertHTMLEqual(entry.body_html, "<p><strong>test</strong></p>")
 
 
 class EventTestCase(DateTimeMixin, TestCase):
