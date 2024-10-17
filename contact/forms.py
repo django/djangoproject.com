@@ -5,6 +5,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.utils.encoding import force_bytes
+from django.utils.translation import gettext_lazy as _
 from django_contact_form.forms import ContactForm
 from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV3
@@ -17,19 +18,19 @@ class BaseContactForm(ContactForm):
     message_subject = forms.CharField(
         max_length=100,
         widget=forms.TextInput(
-            attrs={"class": "required", "placeholder": "Message subject"}
+            attrs={"class": "required", "placeholder": _("Message subject")}
         ),
-        label="Message subject",
+        label=_("Message subject"),
     )
     email = forms.EmailField(
-        widget=forms.TextInput(attrs={"class": "required", "placeholder": "E-mail"})
+        widget=forms.TextInput(attrs={"class": "required", "placeholder": _("E-mail")})
     )
     name = forms.CharField(
-        widget=forms.TextInput(attrs={"class": "required", "placeholder": "Name"})
+        widget=forms.TextInput(attrs={"class": "required", "placeholder": _("Name")})
     )
     body = forms.CharField(
         widget=forms.Textarea(
-            attrs={"class": "required", "placeholder": "Your message"}
+            attrs={"class": "required", "placeholder": _("Your message")}
         )
     )
     captcha = ReCaptchaField(widget=ReCaptchaV3)
