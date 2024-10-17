@@ -1,11 +1,12 @@
 {% extends 'base_error.html' %}
+{% load i18n %}
 
-{% block title %}Permission denied{% endblock %}
+{% block title %}{% translate "Permission denied" %}{% endblock %}
 
 {% block header %}<h1>403</h1>{% endblock %}
 
 {% block content %}
-    <h2>Permission denied</h2>
+    <h2>{% translate "Permission denied" %}</h2>
 
-    <p>Apologies, but it seems as if you're not allowed to access this page. We honestly hope this is just a mistake.</p>
+    <p>{% translate "Apologies, but it seems as if you're not allowed to access this page. We honestly hope this is just a mistake." %}</p>
 {% endblock %}
