@@ -94,6 +94,35 @@ class EntryTestCase(DateTimeMixin, TestCase):
         )
         self.assertHTMLEqual(entry.body_html, "<p><strong>test</strong></p>")
 
+    def test_content_format_markdown(self):
+        entry = Entry.objects.create(
+            pub_date=self.now,
+            slug="a",
+            body="**test**",
+            content_format=ContentFormat.MARKDOWN,
+        )
+        self.assertHTMLEqual(entry.body_html, "<p><strong>test</strong></p>")
+
+    def test_header_base_level_reST(self):
+        entry = Entry.objects.create(
+            pub_date=self.now,
+            slug="a",
+            body="test\n====",
+            content_format=ContentFormat.REST,
+        )
+        self.assertHTMLEqual(
+            entry.body_html, '<div class="section" id="s-test"><h3>test</h3></div>'
+        )
+
+    def test_header_base_level_markdown(self):
+        entry = Entry.objects.create(
+            pub_date=self.now,
+            slug="a",
+            body="# test",
+            content_format=ContentFormat.MARKDOWN,
+        )
+        self.assertHTMLEqual(entry.body_html, '<h3 id="s-test">test</h3>')
+
 
 class EventTestCase(DateTimeMixin, TestCase):
     def test_manager_past_future(self):
