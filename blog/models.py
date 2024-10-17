@@ -9,6 +9,8 @@ from django.utils.cache import _generate_cache_header_key
 from django.utils.translation import gettext_lazy as _
 from django_hosts.resolvers import reverse
 from docutils.core import publish_parts
+from markdown import markdown
+from markdown.extensions.toc import TocExtension, slugify as _md_title_slugify
 
 BLOG_DOCUTILS_SETTINGS = {
     "doctitle_xform": False,
@@ -18,6 +20,11 @@ BLOG_DOCUTILS_SETTINGS = {
     "file_insertion_enabled": False,
 }
 BLOG_DOCUTILS_SETTINGS.update(getattr(settings, "BLOG_DOCUTILS_SETTINGS", {}))
+
+
+def _md_slugify(value, separator):
+    # matches the `id_prefix` setting of BLOG_DOCUTILS_SETTINGS
+    return "s" + separator + _md_title_slugify(value, separator)
 
 
 class EntryQuerySet(models.QuerySet):
@@ -31,6 +38,7 @@ class EntryQuerySet(models.QuerySet):
 class ContentFormat(models.TextChoices):
     REST = "reST", "reStructuredText"
     HTML = "html", "Raw HTML"
+    MARKDOWN = "md", "Markdown"
 
     @classmethod
     def to_html(cls, fmt, source):
@@ -45,6 +53,15 @@ class ContentFormat(models.TextChoices):
                 writer_name="html",
                 settings_overrides=BLOG_DOCUTILS_SETTINGS,
             )["fragment"]
+        if fmt == cls.MARKDOWN:
+            return markdown(
+                source,
+                output_format="html",
+                extensions=[
+                    # baselevel matches `initial_header_level` from BLOG_DOCUTILS_SETTINGS
+                    TocExtension(baselevel=3, slugify=_md_slugify),
+                ],
+            )
         raise ValueError(f"Unsupported format {fmt}")
 
 
