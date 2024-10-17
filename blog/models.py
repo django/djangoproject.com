@@ -28,10 +28,24 @@ class EntryQuerySet(models.QuerySet):
         return self.filter(is_active=True)
 
 
-CONTENT_FORMAT_CHOICES = (
-    ("reST", "reStructuredText"),
-    ("html", "Raw HTML"),
-)
+class ContentFormat(models.TextChoices):
+    REST = "reST", "reStructuredText"
+    HTML = "html", "Raw HTML"
+
+    @classmethod
+    def to_html(cls, fmt, source):
+        """
+        Convert the given source from the given format to HTML
+        """
+        if not fmt or fmt == cls.HTML:
+            return source
+        if fmt == cls.REST:
+            return publish_parts(
+                source=source,
+                writer_name="html",
+                settings_overrides=BLOG_DOCUTILS_SETTINGS,
+            )["fragment"]
+        raise ValueError(f"Unsupported format {fmt}")
 
 
 class Entry(models.Model):
@@ -52,7 +66,7 @@ class Entry(models.Model):
             "publication date must be in the past."
         ),
     )
-    content_format = models.CharField(choices=CONTENT_FORMAT_CHOICES, max_length=50)
+    content_format = models.CharField(choices=ContentFormat.choices, max_length=50)
     summary = models.TextField()
     summary_html = models.TextField()
     body = models.TextField()
@@ -88,20 +102,8 @@ class Entry(models.Model):
     is_published.boolean = True
 
     def save(self, *args, **kwargs):
-        if self.content_format == "html":
-            self.summary_html = self.summary
-            self.body_html = self.body
-        elif self.content_format == "reST":
-            self.summary_html = publish_parts(
-                source=self.summary,
-                writer_name="html",
-                settings_overrides=BLOG_DOCUTILS_SETTINGS,
-            )["fragment"]
-            self.body_html = publish_parts(
-                source=self.body,
-                writer_name="html",
-                settings_overrides=BLOG_DOCUTILS_SETTINGS,
-            )["fragment"]
+        self.summary_html = ContentFormat.to_html(self.content_format, self.summary)
+        self.body_html = ContentFormat.to_html(self.content_format, self.body)
         super().save(*args, **kwargs)
         self.invalidate_cached_entry()
 
