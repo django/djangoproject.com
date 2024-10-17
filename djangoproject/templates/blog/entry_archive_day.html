@@ -1,12 +1,13 @@
 {% extends "base_weblog.html" %}
+{% load i18n %}
 
-{% block title %}{{ day|date:"F j" }} | Weblog{% endblock %}
+{% block title %}{{ day|date:"MONTH_DAY_FORMAT" }} | {% translate "Weblog" %}{% endblock %}
 
-{% block og_title %}Django news: {{ day|date:"F j" }} archive{% endblock %}
+{% block og_title %}{% blocktranslate %}Django news: {{ day|date:"MONTH_DAY_FORMAT" }} archive{% endblocktranslate %}{% endblock %}
 
 {% block content %}
 
-  <h1>{{ day|date:"F j" }} archive</h1>
+  <h1>{% blocktranslate %}{{ day|date:"MONTH_DAY_FORMAT" }} archive{% endblocktranslate %}</h1>
 
   <ul class="list-news">
 
