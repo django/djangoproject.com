@@ -14,7 +14,7 @@
     {% for item in object_list %}
       <li>
         <h2><a href="{{ item.link }}">{{ item.title }}</a></h2>
-        <span class='meta'>{% blocktranslate trimmed with date_modified=item.date_modified|date:"DATE_FORMAT" time_modified=item.date_modified|date:"g:i A" public_url=item.feed.public_url title=item.feed.title feed_url=item.feed.feed_url %}
+        <span class='meta'>{% blocktranslate trimmed with date_modified=item.date_modified|date:"DATE_FORMAT" time_modified=item.date_modified|date:"TIME_FORMAT" public_url=item.feed.public_url title=item.feed.title feed_url=item.feed.feed_url %}
           Posted on {{ date_modified }} at {{ time_modified }} by <a href="{{ public_url }}">{{ title }}</a> <a class="rss" href="{{ feed_url }}">RSS</a>
         {% endblocktranslate %}</span>
         <div>
