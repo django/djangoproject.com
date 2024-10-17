@@ -78,7 +78,7 @@
               <a href="{% url 'community-feed-list' feedtype.slug %}">{% translate "View more" %}</a>
             {% endif %}
             {% if latest_feeds and feedtype.can_self_add %}
-              {% translate "or" %}
+              {% translate "or" context "view more OR add your feed" %}
             {% endif %}
             {% if feedtype.can_self_add %}
               <a href="{% url 'community-add-feed' feedtype.slug %}">{% translate "Add your feed" %}</a>
