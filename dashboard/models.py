@@ -7,6 +7,7 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import connections, models
+from django.utils.translation import gettext_lazy as _
 from django_hosts.resolvers import reverse
 
 from tracdb.models import Ticket
@@ -15,9 +16,9 @@ METRIC_PERIOD_INSTANT = "instant"
 METRIC_PERIOD_DAILY = "daily"
 METRIC_PERIOD_WEEKLY = "weekly"
 METRIC_PERIOD_CHOICES = (
-    (METRIC_PERIOD_INSTANT, "Instant"),
-    (METRIC_PERIOD_DAILY, "Daily"),
-    (METRIC_PERIOD_WEEKLY, "Weekly"),
+    (METRIC_PERIOD_INSTANT, _("Instant")),
+    (METRIC_PERIOD_DAILY, _("Daily")),
+    (METRIC_PERIOD_WEEKLY, _("Weekly")),
 )
 
 
@@ -26,7 +27,7 @@ class Category(models.Model):
     position = models.PositiveSmallIntegerField(default=1)
 
     class Meta:
-        verbose_name_plural = "categories"
+        verbose_name_plural = _("categories")
 
     def __str__(self):
         return self.name
@@ -94,7 +95,7 @@ class Metric(models.Model):
 
     def _gather_data_periodic(self, since, period):
         """
-        Gather data from "periodic" merics.
+        Gather data from "periodic" metrics.
 
         Period metrics are reset every day/week/month and count up as the period
         goes on. Think "commits today" or "new tickets this week".
@@ -183,25 +184,29 @@ class JenkinsFailuresMetric(Metric):
     """
 
     jenkins_root_url = models.URLField(
-        verbose_name="Jenkins instance root URL",
+        verbose_name=_("Jenkins instance root URL"),
         max_length=1000,
-        help_text="E.g. http://ci.djangoproject.com/",
+        help_text=_("E.g. http://ci.djangoproject.com/"),
     )
     build_name = models.CharField(
         max_length=100,
-        help_text="E.g. Django Python3",
+        help_text=_("E.g. Django Python3"),
     )
     is_success_cnt = models.BooleanField(
         default=False,
-        verbose_name="Should the metric be a value representing success ratio?",
-        help_text="E.g. if there are 50 tests of which 30 are failing the value "
-        "of this metric will be 20 (or 40%.)",
+        verbose_name=_("Should the metric be a value representing success ratio?"),
+        help_text=_(
+            "E.g. if there are 50 tests of which 30 are failing the value "
+            "of this metric will be 20 (or 40%.)"
+        ),
     )
     is_percentage = models.BooleanField(
         default=False,
-        verbose_name="Should the metric be a percentage value?",
-        help_text="E.g. if there are 50 tests of which 30 are failing the value of "
-        "this metric will be 60%.",
+        verbose_name=_("Should the metric be a percentage value?"),
+        help_text=_(
+            "E.g. if there are 50 tests of which 30 are failing the value of "
+            "this metric will be 60%."
+        ),
     )
 
     def urljoin(self, *parts):
