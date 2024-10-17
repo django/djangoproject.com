@@ -1,10 +1,13 @@
 {% extends "base_foundation.html" %}
+{% load i18n %}
 
-{% block og_title %}Meeting minutes archive{% endblock %}
-{% block og_description %}View meeting minutes for {{ day|date:"F j, Y" }}{% endblock %}
+{% block og_title %}{% translate "Meeting minutes archive" %}{% endblock %}
+{% block og_description %}{% blocktranslate trimmed with day=day|date:"DATE_FORMAT" %}
+  View meeting minutes for {{ day }}{% endblocktranslate %}{% endblock %}
 
 {% block content %}
-  <h1>Meeting minutes archive: {{ day|date:"F j, Y" }}</h1>
+  <h1>{% blocktranslate trimmed with day=day|date:"DATE_FORMAT" %}
+    Meeting minutes archive: {{ day }}{% endblocktranslate %}</h1>
 
   <ul>
     {% for meeting in object_list %}

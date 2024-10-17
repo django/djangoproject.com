@@ -1,16 +1,21 @@
 {% extends "base_foundation.html" %}
+{% load i18n %}
 
-{% block og_title %}Meeting minutes: {{ meeting }}{% endblock %}
-{% block og_description %}Meeting minutes for {{ meeting }}{% endblock %}
+{% block og_title %}{% blocktranslate %}Meeting minutes: {{ meeting }}{% endblocktranslate %}{% endblock %}
+{% block og_description %}{% blocktranslate %}Meeting minutes for {{ meeting }}{% endblocktranslate %}{% endblock %}
 
 {% block content %}
   {% load djmoney %}
 
   <h1>{{ meeting }}</h1>
 
-  <p>The meeting was led by {{ meeting.leader.account.get_full_name }}.</p>
+  <p>
+    {% blocktranslate trimmed with name=meeting.leader.account.get_full_name %}
+      The meeting was led by {{ name }}.
+    {% endblocktranslate %}
+  </p>
 
-  <p>Board members in attendance were:</p>
+  <p>{% translate "Board members in attendance were:" %}</p>
 
   <ul>
     {% for attendee in meeting.board_attendees.all %}
@@ -19,7 +24,7 @@
   </ul>
 
   {% if meeting.non_board_attendees.all %}
-    <p>Also in attendance were:</p>
+    <p>{% translate "Also in attendance were:" %}</p>
 
     <ul>
       {% for attendee in meeting.non_board_attendees.all %}
@@ -28,19 +33,19 @@
     </ul>
   {% endif %}
 
-  <h2>Finances</h2>
+  <h2>{% translate "Finances" %}</h2>
 
-  <h3>Balance</h3>
+  <h3>{% translate "Balance" %}</h3>
 
   <p>{{ meeting.treasurer_balance.currency.code }} {% money_localize meeting.treasurer_balance %}</p>
 
   {% if meeting.treasurer_report %}
-    <h3>Treasurer&#8217;s report</h3>
+    <h3>{% translate "Treasurer&#8217;s report" %}</h3>
     {{ meeting.treasurer_report_html|safe }}
   {% endif %}
 
   {% if meeting.grants_approved.all %}
-    <h2>Grants approved </h2>
+    <h2>{% translate "Grants approved" %}</h2>
 
     <ul>
       {% for grant in meeting.grants_approved.all %}
@@ -50,7 +55,7 @@
   {% endif %}
 
   {% if meeting.individual_members_approved.all %}
-    <h2>Individual members approved</h2>
+    <h2>{% translate "Individual members approved" %}</h2>
 
     <ul>
       {% for member in meeting.individual_members_approved.all %}
@@ -60,7 +65,7 @@
   {% endif %}
 
   {% if meeting.corporate_members_approved.all %}
-    <h2>Corporate members approved</h2>
+    <h2>{% translate "Corporate members approved" %}</h2>
 
     <ul>
       {% for member in meeting.corporate_members_approved.all %}
@@ -70,27 +75,27 @@
   {% endif %}
 
   {% if ongoing_business %}
-    <h2>Ongoing business</h2>
+    <h2>{% translate "Ongoing business" %}</h2>
 
     {% for business in ongoing_business %}
-      <h3>{{ business.title }}</h2>
+      <h3>{{ business.title }}</h3>
 
       {{ business.body_html|safe }}
     {% endfor %}
   {% endif %}
 
   {% if new_business %}
-    <h2>New business</h2>
+    <h2>{% translate "New business" %}</h2>
 
     {% for business in new_business %}
-      <h3>{{ business.title }}</h2>
+      <h3>{{ business.title }}</h3>
 
       {{ business.body_html|safe }}
     {% endfor %}
   {% endif %}
 
   {% if meeting.action_items.all %}
-    <h2>Action items</h2>
+    <h2>{% translate "Action items" %}</h2>
 
     <ul>
       {% for action_item in meeting.action_items.all %}
