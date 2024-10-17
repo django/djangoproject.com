@@ -24,7 +24,7 @@
         {% for event in events %}
           <li>
             <a href="{{ event.external_url }}" target="_blank">{{ event.headline }}</a>
-            <span class="meta"><span>{{ event.date|date:"MONTH_DAY_YEAR_FORMAT" }}</span>  |  {{ event.location }}</span>
+            <span class="meta"><span>{{ event.date|date:"DATE_FORMAT" }}</span>  |  {{ event.location }}</span>
             <i class="icon icon-calendar"></i>
           </li>
         {% endfor %}
