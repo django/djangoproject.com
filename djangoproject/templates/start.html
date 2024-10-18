@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
-{% load docs %}
+{% load docs i18n %}
 
 {% block layout_class %}full-width{% endblock %}
-{% block title %}Getting started with Django{% endblock %}
-{% block og_title %}Getting started with Django{% endblock %}
-{% block og_description %}It's quick & easy to get up and running with Django{% endblock %}
+{% block title %}{% translate "Getting started with Django" %}{% endblock %}
+{% block og_title %}{% translate "Getting started with Django" %}{% endblock %}
+{% block og_description %}{% translate "It's quick & easy to get up and running with Django" %}{% endblock %}
 
 {% block header %}
-  <h1 class="visuallyhidden">Get started</h1>
+  <h1 class="visuallyhidden">{% translate "Get started" %}</h1>
   <div class="layout-2col">
     <div class="col two-third">
-      <p>It’s <em>quick &amp; easy</em> to get up and running with <em>Django</em>.</p>
+      <p>{% translate "It’s <em>quick &amp; easy</em> to get up and running with <em>Django</em>." %}</p>
     </div>
     <div class="col one-third last-child">
-      <a href="{% url 'download' %}" class="cta">Download <em>version {{ DJANGO_VERSION }}</em></a>
+      <a href="{% url 'download' %}" class="cta">
+        {% blocktranslate trimmed %}Download <em>version {{ DJANGO_VERSION }}</em>{% endblocktranslate %}
+      </a>
     </div>
   </div>
 {% endblock %}
@@ -21,54 +23,90 @@
 {% block content %}
 
   <div class="section">
-    <h1>Getting started with Django</h1>
+    <h1>{% translate "Getting started with Django" %}</h1>
     {% url 'document-detail' lang='en' version='stable' url='intro/tutorial01' host 'docs' as tutorial1_url %}
     {% url 'homepage' host 'docs' as docs_homepage_url %}
-    <p>Depending how new you are to Django, you can <a href="{{ tutorial1_url }}">try a tutorial</a>, or just <a href="{{ docs_homepage_url }}">dive into the documentation</a>.</p>
+    <p>
+      {% blocktranslate trimmed %}
+        Depending how new you are to Django, you can <a href="{{ tutorial1_url }}">try a tutorial</a>, or just
+        <a href="{{ docs_homepage_url }}">dive into the documentation</a>.
+      {% endblocktranslate %}
+    </p>
 
     <p>
-      Want to learn more about Django? Read the overview to see whether Django is right for your project.
+      {% translate "Want to learn more about Django? Read the overview to see whether Django is right for your project." %}
     </p>
-    <a class="link-readmore" href="{% url 'overview' %}">Django overview</a>
+    <a class="link-readmore" href="{% url 'overview' %}">{% translate "Django overview" %}</a>
   </div>
 
   <div class="section">
-    <h2>Install Django</h2>
-    <p>Before you can use Django, you’ll need to install it. Our complete installation guide covers all the possibilities; this guide will get you to a simple, minimal installation that’ll work while you walk through the introduction.</p>
-    <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='intro/install' host 'docs' %}">Django installation guide</a>
+    <h2>{% translate "Install Django" %}</h2>
+    <p>
+      {% blocktranslate trimmed %}
+        Before you can use Django, you’ll need to install it. Our complete installation guide covers all the
+        possibilities; this guide will get you to a simple, minimal installation that’ll work while you walk through
+        the introduction.
+      {% endblocktranslate %}
+    </p>
+    <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='intro/install' host 'docs' %}">
+      {% translate "Django installation guide" %}
+    </a>
   </div>
 
   <div class="section">
-    <h2>Write your first Django app</h2>
-    <p>Installed Django already? Good. Now <a href="{{ tutorial1_url }}">try this tutorial</a>, which walks you through creating a basic poll application. It’s got two parts:</p>
+    <h2>{% translate "Write your first Django app" %}</h2>
+    <p>
+      {% blocktranslate trimmed %}
+        Installed Django already? Good. Now <a href="{{ tutorial1_url }}">try this tutorial</a>, which walks you through
+        creating a basic poll application. It’s got two parts:
+      {% endblocktranslate %}
+    </p>
     <ol>
-      <li>A public site that lets people view polls and vote in them.</li>
-      <li>An administrative interface that lets you add, change and delete polls.</li>
+      <li>{% translate "A public site that lets people view polls and vote in them." %}</li>
+      <li>{% translate "An administrative interface that lets you add, change and delete polls." %}</li>
     </ol>
-    <a class="link-readmore" href="{{ tutorial1_url }}">Take the tutorial</a>
+    <a class="link-readmore" href="{{ tutorial1_url }}">{% translate "Take the tutorial" %}</a>
   </div>
 
   <div class="section">
-    <h2>Sharpen your skills</h2>
-    <p>The official <a href="{{ docs_homepage_url }}">Django documentation</a> covers everything you need to know about Django (and then some).</p>
-    <a href="{{ docs_homepage_url }}" class="link-readmore">Read the docs</a>
+    <h2>{% translate "Sharpen your skills" %}</h2>
+    <p>
+      {% blocktranslate trimmed %}
+        The official <a href="{{ docs_homepage_url }}">Django documentation</a> covers everything you need to know
+        about Django (and then some).
+      {% endblocktranslate %}
+    </p>
+    <a href="{{ docs_homepage_url }}" class="link-readmore">{% translate "Read the docs" %}</a>
   </div>
 
   <div class="section">
-    <h2><span>Join the community</span></h2>
-    <p>You can help <a href="{% url 'community-index' %}">make us better</a>. Find out about upcoming Django events, learn what’s on other Django developers’ minds, find and post jobs, and more.</p>
-    <a href="{% url 'community-index' %}" class="link-readmore">Join us</a>
-  </div>
+    <h2><span>{% translate "Join the community</span>" %}</h2>
+      <p>
+        {% url 'community-index' as community_index %}
+        {% blocktranslate trimmed %}
+          You can help <a href="{{ community_index }}">make us better</a>. Find out about upcoming Django events, learn
+          what’s on other Django developers’ minds, find and post jobs, and more.
+        {% endblocktranslate %}
+      </p>
+      <a href="{% url 'community-index' %}" class="link-readmore">{% translate "Join us" %}</a>
+    </div>
 
-  <div class="list-collapsing-header">
-    <h2><span>Intro to Django</span></h2>
-  </div>
-  <ul class="list-collapsing">
-    <li>
-      <h2>Object-relational mapper</h2>
-      <div class="collapsing-content">
-        <p>Deﬁne your data models entirely in Python. You get a rich, dynamic database-access API for free — but you can still write SQL if needed.</p>
-        <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/db/models' host 'docs' %}">Read more</a>
+    <div class="list-collapsing-header">
+      <h2><span>{% translate "Intro to Django</span>" %}</h2>
+      </div>
+      <ul class="list-collapsing">
+        <li>
+          <h2>{% translate "Object-relational mapper" %}</h2>
+          <div class="collapsing-content">
+            <p>
+              {% blocktranslate trimmed %}
+                Deﬁne your data models entirely in Python. You get a rich, dynamic database-access API for free — but you can
+                still write SQL if needed.
+              {% endblocktranslate %}
+            </p>
+            <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/db/models' host 'docs' %}">
+              {% translate "Read more" %}
+            </a>
         {# fmt:off #}
         {% pygment 'python' %}
 from django.db import models
@@ -95,14 +133,14 @@ class Member(models.Model):
     )
     band = models.ForeignKey("Band"){% endpygment %}
         {# fmt:on #}
-      </div>
-    </li>
-    <li>
-      <h2>URLs and views</h2>
-      <div class="collapsing-content">
-        <p>A clean, elegant URL scheme is an important detail in a high-quality web application. Django encourages beautiful URL design and doesn’t put any cruft in URLs, like .php or .asp.</p>
-        <p>To design URLs for an application, you create a Python module called a URLconf. Like a table of contents for your app, it contains a simple mapping between URL patterns and your views.</p>
-        <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/http/urls' host 'docs' %}">Read more</a>
+          </div>
+        </li>
+        <li>
+          <h2>{% translate "URLs and views</h2>
+          <div class="collapsing-content">
+            <p>A clean, elegant URL scheme is an important detail in a high-quality web application. Django encourages beautiful URL design and doesn’t put any cruft in URLs, like .php or .asp.</p>
+            <p>To design URLs for an application, you create a Python module called a URLconf. Like a table of contents for your app, it contains a simple mapping between URL patterns and your views.</p>
+            <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/http/urls' host 'docs' %}">Read more</a>
         {# fmt:off #}
         {% pygment 'python' %}
 from django.urls import path
@@ -124,39 +162,51 @@ def band_listing(request):
     bands = Band.objects.all()
     return render(request, "bands/band_listing.html", {"bands": bands}){% endpygment %}
         {# fmt:on #}
-      </div>
-    </li>
-    <li>
-      <h2>Templates</h2>
-      <div class="collapsing-content">
-        <p>Django’s template language is designed to strike a balance between power and ease. It’s designed to feel comfortable and easy-to-learn to those used to working with HTML, like designers and front-end developers. But it is also flexible and highly extensible, allowing developers to augment the template language as needed.</p>
-        <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/templates' host 'docs' %}">Read more</a>
+          </div>
+        </li>
+        <li>
+          <h2>{% translate "Templates" %}</h2>
+          <div class="collapsing-content">
+            <p>
+              {% blocktranslate trimmed %}
+                Django’s template language is designed to strike a balance between power and ease. It’s designed to feel
+                comfortable and easy-to-learn to those used to working with HTML, like designers and front-end developers.
+                But it is also flexible and highly extensible, allowing developers to augment the template language as needed.
+              {% endblocktranslate %}
+            </p>
+            <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/templates' host 'docs' %}">Read more</a>
       {# No need to escape the HTML: pygment takes care of that #}
-        {% pygment 'django' %}
+            {% pygment 'django' %}
 {% verbatim %}
 <html>
   <head>
-    <title>Band Listing</title>
+    <title>{% translate "Band Listing" %}</title>
   </head>
   <body>
-    <h1>All Bands</h1>
+    <h1>{% translate "All Bands" %}</h1>
     <ul>
     {% for band in bands %}
       <li>
         <h2><a href="{{ band.get_absolute_url }}">{{ band.name }}</a></h2>
-        {% if band.can_rock %}<p>This band can rock!</p>{% endif %}
+        {% if band.can_rock %}<p>{% translate "This band can rock!" %}</p>{% endif %}
       </li>
     {% endfor %}
     </ul>
   </body>
 </html>{% endverbatim %}{% endpygment %}
-      </div>
-    </li>
-    <li>
-      <h2>Forms</h2>
-      <div class="collapsing-content">
-        <p>Django provides a powerful form library that handles rendering forms as HTML, validating user-submitted data, and converting that data to native Python types. Django also provides a way to generate forms from your existing models and use those forms to create and update data.</p>
-        <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/forms' host 'docs' %}">Read more</a>
+          </div>
+        </li>
+        <li>
+          <h2>{% translate "Forms" %}</h2>
+          <div class="collapsing-content">
+            <p>
+              {% blocktranslate trimmed %}
+                Django provides a powerful form library that handles rendering forms as HTML, validating user-submitted data,
+                and converting that data to native Python types. Django also provides a way to generate forms from your
+                existing models and use those forms to create and update data.
+              {% endblocktranslate %}
+            </p>
+            <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/forms' host 'docs' %}">Read more</a>
         {# fmt:off #}
         {% pygment 'python' %}
 from django import forms
@@ -168,13 +218,19 @@ class BandContactForm(forms.Form):
     sender = forms.EmailField()
     cc_myself = forms.BooleanField(required=False){% endpygment %}
         {# fmt:on #}
-      </div>
-    </li>
-    <li>
-      <h2>Authentication</h2>
-      <div class="collapsing-content">
-        <p>Django comes with a full-featured and secure authentication system. It handles user accounts, groups, permissions and cookie-based user sessions. This lets you easily build sites that allow users to create accounts and safely log in/out.</p>
-        <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/auth' host 'docs' %}">Read more</a>
+          </div>
+        </li>
+        <li>
+          <h2>{% translate "Authentication" %}</h2>
+          <div class="collapsing-content">
+            <p>
+              {% blocktranslate trimmed %}
+                Django comes with a full-featured and secure authentication system. It handles user accounts, groups,
+                permissions and cookie-based user sessions. This lets you easily build sites that allow users to create
+                accounts and safely log in/out.
+              {% endblocktranslate %}
+            </p>
+            <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/auth' host 'docs' %}">{% translate "Read more" %}</a>
         {# fmt:off #}
         {% pygment 'python' %}
 from django.contrib.auth.decorators import login_required
@@ -186,13 +242,13 @@ def my_protected_view(request):
     """A view that can only be accessed by logged-in users"""
     return render(request, "protected.html", {"current_user": request.user}){% endpygment %}
         {# fmt:on #}
-      </div>
-    </li>
-    <li>
-      <h2>Admin</h2>
-      <div class="collapsing-content">
-        <p>One of the most powerful parts of Django is its automatic admin interface. It reads metadata in your models to provide a powerful and production-ready interface that content producers can immediately use to start managing content on your site. It’s easy to set up and provides many hooks for customization.</p>
-        <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='ref/contrib/admin' host 'docs' %}">Read more</a>
+          </div>
+        </li>
+        <li>
+          <h2>Admin</h2>
+          <div class="collapsing-content">
+            <p>One of the most powerful parts of Django is its automatic admin interface. It reads metadata in your models to provide a powerful and production-ready interface that content producers can immediately use to start managing content on your site. It’s easy to set up and provides many hooks for customization.</p>
+            <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='ref/contrib/admin' host 'docs' %}">Read more</a>
         {# fmt:off #}
         {% pygment 'python' %}
 from bands.models import Band, Member
@@ -208,13 +264,20 @@ class MemberAdmin(admin.ModelAdmin):
     admin.site.register(Band)  # Use the default options
     admin.site.register(Member, MemberAdmin)  # Use the customized options{% endpygment %}
         {# fmt:on #}
-      </div>
-    </li>
-    <li>
-      <h2>Internationalization</h2>
-      <div class="collapsing-content">
-        <p>Django offers full support for translating text into different languages, plus locale-specific formatting of dates, times, numbers, and time zones. It lets developers and template authors specify which parts of their apps should be translated or formatted for local languages and cultures, and it uses these hooks to localize web applications for particular users according to their preferences.</p>
-        <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/i18n' host 'docs' %}">Read more</a>
+          </div>
+        </li>
+        <li>
+          <h2>{% translate "Internationalization" %}</h2>
+          <div class="collapsing-content">
+            <p>
+              {% blocktranslate trimmed %}
+                Django offers full support for translating text into different languages, plus locale-specific formatting
+                of dates, times, numbers, and time zones. It lets developers and template authors specify which parts of
+                their apps should be translated or formatted for local languages and cultures, and it uses these hooks
+                to localize web applications for particular users according to their preferences.
+              {% endblocktranslate %}
+            </p>
+            <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/i18n' host 'docs' %}">{% translate "Read more" %}</a>
         {# fmt:off #}
         {% pygment 'python' %}
 from django.shortcuts import render
@@ -230,51 +293,51 @@ def homepage(request):
     return render(request, "homepage.html", {"message": message}){% endpygment %}
         {# fmt:on #}
       {# No need to escape the HTML: pygment takes care of that #}
-        {% pygment 'django' %}
+            {% pygment 'django' %}
 {% verbatim %}
 {% load i18n %}
 <html>
   <head>
-    <title>{% trans 'Homepage - Hall of Fame' %}</title>
+    <title>{% translate "Homepage - Hall of Fame" %}</title>
   </head>
   <body>
     {# Translated in the view: #}
     <h1>{{ message }}</h1>
     <p>
-      {% blocktrans count member_count=bands.count %}
-      Here is the only band in the hall of fame:
+      {% blocktranslate count member_count=bands.count %}
+        Here is the only band in the hall of fame:
       {% plural %}
-      Here are all the {{ member_count }} bands in the hall of fame:
-      {% endblocktrans %}
+        Here are all the {{ member_count }} bands in the hall of fame:
+      {% endblocktranslate %}
     </p>
     <ul>
     {% for band in bands %}
       <li>
         <h2><a href="{{ band.get_absolute_url }}">{{ band.name }}</a></h2>
-        {% if band.can_rock %}<p>{% trans 'This band can rock!' %}</p>{% endif %}
+        {% if band.can_rock %}<p>{% translate 'This band can rock!' %}</p>{% endif %}
       </li>
     {% endfor %}
     </ul>
   </body>
 </html>{% endverbatim %}{% endpygment %}
-      </div>
-    </li>
-    <li>
-      <h2>Security</h2>
-      <div class="collapsing-content">
-        <p>Django provides multiple protections against:</p>
-        <ul>
-          <li>Clickjacking</li>
-          <li>Cross-site scripting</li>
-          <li>Cross Site Request Forgery (CSRF)</li>
-          <li>SQL injection</li>
-          <li>Remote code execution</li>
-        </ul>
+          </div>
+        </li>
+        <li>
+          <h2>{% translate "Security" %}</h2>
+          <div class="collapsing-content">
+            <p>{% translate "Django provides multiple protections against:" %}</p>
+            <ul>
+              <li>{% translate "Clickjacking" %}</li>
+              <li>{% translate "Cross-site scripting" %}</li>
+              <li>{% translate "Cross Site Request Forgery (CSRF)" %}</li>
+              <li>{% translate "SQL injection" %}</li>
+              <li>{% translate "Remote code execution" %}</li>
+            </ul>
 
-        <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/security' host 'docs' %}">Read more</a>
+            <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='topics/security' host 'docs' %}">{% translate "Read more" %}</a>
 
-      </div>
-    </li>
-  </ul>
+          </div>
+        </li>
+      </ul>
 
 {% endblock %}
