@@ -67,7 +67,7 @@
             {% for item in latest_feeds %}
               <dt><a href="{{ item.link }}">{{ item.title }}</a></dt>
               <dd>
-                {% blocktranslate trimmed with modified_date=item.date_modified|date:"N jS, Y \a\t P" public_url=item.feed.public_url title=item.feed.title %}
+                {% blocktranslate trimmed with modified_date=item.date_modified|date:"DATETIME_FORMAT" public_url=item.feed.public_url title=item.feed.title %}
                   {{ modified_date }} by <a href="{{ public_url }}">{{ title }}</a>
                 {% endblocktranslate %}
               </dd>
