@@ -70,4 +70,4 @@ def _find_metric_or_404(slug):
             return MC.objects.get(slug=slug)
         except MC.DoesNotExist:
             continue
-    raise Http404(_(f"Could not find metric with slug {slug}"))
+    raise Http404(_("Could not find metric with slug %s") % slug)
