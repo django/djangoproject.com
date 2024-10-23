@@ -77,7 +77,7 @@
       <ul>
         {% for payment in past_payments %}
           <li>
-            ${{ payment.amount }} on {{ payment.date|date:"N jS, Y \a\t P" }}
+            ${{ payment.amount }} on {{ payment.date|date:"DATETIME_FORMAT" }}
             ({{ payment.donation.get_interval_display }})
           </li>
         {% endfor %}

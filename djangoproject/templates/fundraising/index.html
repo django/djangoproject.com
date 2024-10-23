@@ -8,8 +8,12 @@
 {% block og_description %}{% translate "Support Django development by donating to the Django Software Foundation" %}{% endblock %}
 
 {% block header %}
-  <h1 class="visuallyhidden">Support Django</h1>
-  <p><em>Support Django development</em> by donating to the <em>Django Software Foundation</em>.</p>
+  <h1 class="visuallyhidden">{% translate "Support Django" %}</h1>
+  <p>
+    {% blocktranslate trimmed %}
+      <em>Support Django development</em> by donating to the <em>Django Software Foundation</em>.
+    {% endblocktranslate %}
+  </p>
 {% endblock %}
 
 {% block messages %}
@@ -163,7 +167,7 @@
     {% blocktranslate trimmed %}
       Django Girls workshop attendees go on to organize their own workshops, lead
       in their community, and secure full-time jobs as developers. Read their stories
-      in the “Your Django Story” series on the <a href="http://blog.djangogirls.org/">
+      in the “Your Django Story” series on the <a href="https://blog.djangogirls.org/">
         Django Girls blog</a>.
     {% endblocktranslate %}
   </p>
@@ -184,7 +188,7 @@
         them with healthy snacks, games, sidewalk chalk, finger paint, and emoji
         stickers. Without our nanny, 3 of our attendees wouldn't have been able to come
         to the workshop. Finger paint photo is
-        <a href="http://blog.djangogirls.org/post/124680859493/django-girls-portland-a-retrospective">
+        <a href="https://blog.djangogirls.org/post/124680859493/django-girls-portland-a-retrospective">
           on the blog</a>!
       {% endblocktranslate %}
     </p>

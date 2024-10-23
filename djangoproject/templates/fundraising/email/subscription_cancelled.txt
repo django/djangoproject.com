@@ -1,13 +1,22 @@
-Hi {{ donation.donor.name_with_fallback }},
+{% load i18n %}
+{% blocktranslate trimmed with name=donation.donor.name_with_fallback %}
+Hi {{ name }},
+{% endblocktranslate %}
 
+{% blocktranslate trimmed %}
 This is to let you know that your recurring payment to the Django Software
 Foundation has been cancelled. No further payments will be made.
+{% endblocktranslate %}
 
+{% blocktranslate trimmed %}
 If you didn't intend to do this, please go back to the fundraising page and
 recreate your payment subscription:
+{% endblocktranslate %}
 {% url 'fundraising:index' %}
 
 Thanks very much for your support.
 
+{% blocktranslate trimmed %}
 Regards,
 Django Software Foundation
+{% endblocktranslate %}
