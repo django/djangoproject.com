@@ -1,270 +1,319 @@
 {% extends "base.html" %}
-{% load fundraising_extras release_notes static %}
+{% load fundraising_extras i18n release_notes static %}
 
 {% block sectionid %}download{% endblock %}
-{% block title %}Download Django{% endblock %}
+{% block title %}{% translate "Download Django" %}{% endblock %}
 {% block layout_class %}sidebar-right{% endblock %}
 
-{% block og_title %}Download Django{% endblock %}
+{% block og_title %}{% translate "Download Django" %}{% endblock %}
 {% block og_image %}{% static "img/release-roadmap.png" %}{% endblock %}
-{% block og_image_alt %}Django's release roadmap{% endblock %}
-{% block og_description %}The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}{% endblock %}
+{% block og_image_alt %}{% translate "Django's release roadmap" %}{% endblock %}
+{% block og_description %}{% blocktranslate trimmed with version=current.version %}The latest official version is {{ version }}{% endblocktranslate %}{% if current.is_lts %} (LTS){% endif %}{% endblock %}
 {% block og_image_width %}1030{% endblock %}
 {% block og_image_height %}480{% endblock %}
 
 {% block header %}
-  <h1>Download</h1>
+  <h1>{% translate "Download" %}</h1>
 {% endblock %}
 
 {% block content %}
-  <h1>How to get Django</h1>
+  <h1>{% translate "How to get Django" %}</h1>
   <p>Django is available open-source under the
     <a href="https://github.com/django/django/blob/main/LICENSE">BSD license</a>.
     We recommend using the latest version of Python 3. The last version to
-    support Python 2.7 is Django 1.11 LTS. See <a href="
-                                                        {% url 'document-detail' lang='en' version='dev' url='faq/install' host 'docs' %}#what-python-version-can-i-use-with-django">
+    support Python 2.7 is Django 1.11 LTS. See <a href="{% url 'document-detail' lang='en' version='dev' url='faq/install' host 'docs' %}#what-python-version-can-i-use-with-django">
       the FAQ</a> for the Python versions supported by each version of Django.
     Here’s how to get it:</p>
 
-  <h2>Option {% cycle '1' '2' '3' as options %}: Get the latest official version</h2>
-  <p>The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}. Read the
-    {% release_notes current.version show_version=True %}, then install it with
-    <a href="https://pip.pypa.io/en/latest/">pip</a>:</p>
+  {% release_notes current.version show_version=True as current_release_version %}
+  <h2>{% translate "Option" %} {% cycle '1' '2' '3' as options %}: {% translate "Get the latest official version" %}</h2>
+  <p>
+    {% blocktranslate trimmed with version=current.version %}
+      The latest official version is {{ current.version }}{% endblocktranslate %}{% if current.is_lts %} (LTS){% endif %}.
+    {% blocktranslate trimmed %}Read the
+      {{ current_release_version }}, then install it with
+      <a href="https://pip.pypa.io/en/latest/">pip</a>:
+    {% endblocktranslate %}
+  </p>
   <p>Linux / macOS:</p>
   <pre class="literal-block"><code>python -m pip install Django=={{ current.version }}</code></pre>
   <p>Windows:</p>
   <pre class="literal-block"><code>py -m pip install Django=={{ current.version }}</code></pre>
 
   {% if preview %}
+    {% release_notes preview.version show_version=True as previous_release %}
     {% with preview.version|slice:":3" as major_version %}
-      <h2>Option {% cycle options %}: Get the {{ preview.get_status_display }} for {{ major_version }}</h2>
-      <p>As part of the
-        <a href="https://code.djangoproject.com/wiki/Version{{ major_version }}Roadmap">
-          Django {{ major_version }} development process</a>, Django
-        {{ preview.version }} is available. This release is only for users who
-        want to try the new version and help identify remaining bugs before the
-        {{ major_version }} release. Please read the
-        {% release_notes preview.version show_version=True %} before using this package.
-        <p>Install the {{ preview.get_status_display }} with <a href="https://pip.pypa.io/">pip</a>:</p>
+      <h2>{% translate "Option" %} {% cycle options %}: Get the {{ preview.get_status_display }} for {{ major_version }}</h2>
+      <p>
+        {% blocktranslate trimmed with preview_version=preview.version preview_status=preview.get_status_display %}
+          As part of the
+          <a href="https://code.djangoproject.com/wiki/Version{{ major_version }}Roadmap">
+            Django {{ major_version }} development process</a>, Django
+          {{ preview_version }} is available. This release is only for users who
+          want to try the new version and help identify remaining bugs before the
+          {{ major_version }} release. Please read the
+          {{ previous_release }} before using this package.
+          <p>Install the {{ preview_status }} with <a href="https://pip.pypa.io/">pip</a>:</p>
+        {% endblocktranslate %}
       <pre class="literal-block"><code>pip install --pre django</code></pre>
     {% endwith %}
   {% endif %}
 
-  <h2>Option {% cycle options %}: Get the latest development version</h2>
-  <p>The latest and greatest Django version is the one that’s in our Git repository (our revision-control system). This is only for experienced users who want to try incoming changes and help identify bugs before an official release. Get it using this shell command, which requires <a href="https://git-scm.com/">Git</a>:</p>
+  <h2>{% translate "Option" %} {% cycle options %}: {% translate "Get the latest development version" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+      The latest and greatest Django version is the one that’s in our Git repository (our revision-control system).
+      This is only for experienced users who want to try incoming changes and help identify bugs before an official
+      release. Get it using this shell command, which requires <a href="https://git-scm.com/">Git</a>:
+    {% endblocktranslate %}
+  </p>
   <p class="literal-block"><code>git clone https://github.com/django/django.git</code></p>
-  <p>You can also download <a href="https://github.com/django/django/archive/main.tar.gz">
-    a gzipped tarball</a> of the development version. This archive is updated
-    every time we commit code.</p>
+  <p>
+    {% blocktranslate trimmed %}
+      You can also download <a href="https://github.com/django/django/archive/main.tar.gz">
+        a gzipped tarball</a> of the development version. This archive is updated
+      every time we commit code.
+    {% endblocktranslate %}
+  </p>
 
-  <h2>After you get it</h2>
-  <p>See the <a href="{% url 'document-detail' lang='en' version='stable' url='intro/install' host 'docs' %}">installation guide</a> for further instructions. Make sure you read the documentation that corresponds to the version of Django you’ve just installed.</p>
-  <p>And be sure to sign up for the <a href="https://groups.google.com/group/django-users">django-users mailing list</a>, where other Django users and the Django developers themselves all hang out to help each other.</p>
+  <h2>{% translate "After you get it" %}</h2>
+  {% url 'document-detail' lang='en' version='stable' url='intro/install' host 'docs' as stable_url %}
+  <p>
+    {% blocktranslate trimmed %}
+      See the <a href="{{ stable_url }}">installation guide</a> for further instructions. Make sure you read the
+      documentation that corresponds to the version of Django you’ve just installed.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+      And be sure to sign up for the <a href="https://groups.google.com/group/django-users">django-users mailing list</a>,
+      where other Django users and the Django developers themselves all hang out to help each other.
+    {% endblocktranslate %}
+  </p>
 
-  <h2 id="supported-versions">Supported Versions</h2>
-  <p><strong>Feature releases</strong> (A.B, A.B+1, etc.) will happen roughly every eight months.
-    These releases will contain new features, improvements to existing features, and such.</p>
-  <p><strong>Patch releases</strong> (A.B.C, etc.) will be issued as needed, to
-    fix bugs and/or security issues. These releases will be 100% compatible with
-    the associated feature release, unless this is impossible for security
-    reasons or to prevent data loss. So the answer to "should I upgrade to the
-    latest patch release?” will always be "yes."</p>
-  <p>Certain feature releases will be designated as <strong>long-term support
-    (LTS) releases</strong>. These releases will get security and data loss
-    fixes applied for a guaranteed period of time, typically three years.</p>
-  <p>See the <a href="https://docs.djangoproject.com/en/dev/internals/release-process/#supported-versions">
-    supported versions policy</a> for detailed guidelines about what fixes will be backported.</p>
+  <h2 id="supported-versions">{% translate "Supported Versions" %}</h2>
+  <p>
+    {% blocktranslate trimmed %}
+      <strong>Feature releases</strong> (A.B, A.B+1, etc.) will happen roughly every eight months.
+      These releases will contain new features, improvements to existing features, and such.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+      <strong>Patch releases</strong> (A.B.C, etc.) will be issued as needed, to
+      fix bugs and/or security issues. These releases will be 100% compatible with
+      the associated feature release, unless this is impossible for security
+      reasons or to prevent data loss. So the answer to "should I upgrade to the
+      latest patch release?” will always be "yes."
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+      Certain feature releases will be designated as <strong>long-term support
+        (LTS) releases</strong>. These releases will get security and data loss
+      fixes applied for a guaranteed period of time, typically three years.
+    {% endblocktranslate %}
+  </p>
+  <p>
+    {% blocktranslate trimmed %}
+      See the <a href="https://docs.djangoproject.com/en/dev/internals/release-process/#supported-versions">
+        supported versions policy</a> for detailed guidelines about what fixes will be backported.
+    {% endblocktranslate %}
+  </p>
 
-  <img src="{% static "img/release-roadmap.png" %}" class='img-release' style="max-width:100%;" alt="Django release roadmap">
+  <img src="{% static "img/release-roadmap.png" %}" class='img-release' style="max-width:100%;" alt="{% translate "Django release roadmap" %}">
   <hr style="margin-bottom: 20px;">
 
   <table class='django-supported-versions'>
     <tr>
-      <th>Release Series</th>
-      <th>Latest Release</th>
-      <th>End of mainstream support<sup><a href="#ft1">1</a></sup></th>
-      <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
+      <th>{% translate "Release Series" %}</th>
+      <th>{% translate "Latest Release" %}</th>
+      <th>{% translate "End of mainstream support" %}<sup><a href="#ft1">1</a></sup></th>
+      <th>{% translate "End of extended support" %}<sup><a href="#ft2">2</a></sup></th>
     </tr>
     <tr>
       <td>5.1</td>
       <td>{% get_latest_micro_release '5.1' %}</td>
-      <td>April 2025</td>
-      <td>December 2025</td>
+      <td>{% translate "April" %} 2025</td>
+      <td>{% translate "December" %} 2025</td>
     </tr>
     <tr>
       <td>5.0</td>
       <td>{% get_latest_micro_release '5.0' %}</td>
-      <td>August 7, 2024</td>
-      <td>April 2025</td>
+      <td>{% translate "August" %} 7, 2024</td>
+      <td>{% translate "April" %} 2025</td>
     </tr>
     <tr>
       <td>4.2 LTS</td>
       <td>{% get_latest_micro_release '4.2' %}</td>
-      <td>December 4, 2023</td>
-      <td>April 2026</td>
+      <td>{% translate "December" %} 4, 2023</td>
+      <td>{% translate "April" %} 2026</td>
     </tr>
   </table>
 
-  <h2 id="future-versions">Future Roadmap</h2>
+  <h2 id="future-versions">{% translate "Future Roadmap" %}</h2>
 
   <table class='django-supported-versions'>
     <tr>
-      <th>Release Series</th>
-      <th>Release Date</th>
-      <th>End of mainstream support<sup><a href="#ft1">1</a></sup></th>
-      <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
+      <th>{% translate "Release Series" %}</th>
+      <th>{% translate "Release Date" %}</th>
+      <th>{% translate "End of mainstream support" %}<sup><a href="#ft1">1</a></sup></th>
+      <th>{% translate "End of extended support" %}<sup><a href="#ft2">2</a></sup></th>
     </tr>
     <tr>
       <td>6.1</td>
-      <td>August 2026</td>
-      <td>April 2027</td>
-      <td>December 2027</td>
+      <td>{% translate "August" %} 2026</td>
+      <td>{% translate "April" %} 2027</td>
+      <td>{% translate "December" %} 2027</td>
     </tr>
     <tr>
       <td>6.0</td>
-      <td>December 2025</td>
-      <td>August 2026</td>
-      <td>April 2027</td>
+      <td>{% translate "December" %} 2025</td>
+      <td>{% translate "August" %} 2026</td>
+      <td>{% translate "April" %} 2027</td>
     </tr>
     <tr>
       <td>5.2 LTS</td>
-      <td>April 2025</td>
-      <td>December 2025</td>
-      <td>April 2028</td>
+      <td>{% translate "April" %} 2025</td>
+      <td>{% translate "December" %} 2025</td>
+      <td>{% translate "April" %} 2028</td>
     </tr>
   </table>
 
-  <h2 id="unsupported-versions">Unsupported previous releases</h2>
-  <p>These release series no longer receive security updates or bug fixes.</p>
+  <h2 id="unsupported-versions">{% translate "Unsupported previous releases" %}</h2>
+  <p>{% translate "These release series no longer receive security updates or bug fixes." %}</p>
 
   <table class='django-unsupported-versions'>
     <tr>
-      <th>Release Series</th>
-      <th>Latest Release</th>
-      <th>End of mainstream support<sup><a href="#ft1">1</a></sup></th>
-      <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
+      <th>{% translate "Release Series" %}</th>
+      <th>{% translate "Latest Release" %}</th>
+      <th>{% translate "End of mainstream support" %}<sup><a href="#ft1">1</a></sup></th>
+      <th>{% translate "End of extended support" %}<sup><a href="#ft2">2</a></sup></th>
     </tr>
     <tr>
       <td>4.1</td>
       <td>{% get_latest_micro_release '4.1' %}</td>
-      <td>April 5, 2023</td>
-      <td>December 1, 2023</td>
+      <td>{% translate "April" %} 5, 2023</td>
+      <td>{% translate "December" %} 1, 2023</td>
     </tr>
     <tr>
       <td>4.0</td>
       <td>{% get_latest_micro_release '4.0' %}</td>
-      <td>August 3, 2022</td>
-      <td>April 1, 2023</td>
+      <td>{% translate "August" %} 3, 2022</td>
+      <td>{% translate "April" %} 1, 2023</td>
     </tr>
     <tr>
       <td>3.2 LTS</td>
       <td>{% get_latest_micro_release '3.2' %}</td>
-      <td>December 7, 2021</td>
-      <td>April 1, 2024</td>
+      <td>{% translate "December" %} 7, 2021</td>
+      <td>{% translate "April" %} 1, 2024</td>
     </tr>
     <tr>
       <td>3.1</td>
       <td>{% get_latest_micro_release '3.1' %}</td>
-      <td>April 6, 2021</td>
-      <td>December 7, 2021</td>
+      <td>{% translate "April" %} 6, 2021</td>
+      <td>{% translate "December" %} 7, 2021</td>
     </tr>
     <tr>
       <td>3.0</td>
       <td>{% get_latest_micro_release '3.0' %}</td>
-      <td>August 3, 2020</td>
-      <td>April 6, 2021</td>
+      <td>{% translate "August" %} 3, 2020</td>
+      <td>{% translate "April" %} 6, 2021</td>
     </tr>
     <tr>
       <td>2.2 LTS</td>
       <td>{% get_latest_micro_release '2.2' %}</td>
-      <td>December 2, 2019</td>
-      <td>April 11, 2022</td>
+      <td>{% translate "December" %} 2, 2019</td>
+      <td>{% translate "April" %} 11, 2022</td>
     </tr>
     <tr>
       <td>2.1</td>
       <td>{% get_latest_micro_release '2.1' %}</td>
-      <td>April 1, 2019</td>
-      <td>December 2, 2019</td>
+      <td>{% translate "April" %} 1, 2019</td>
+      <td>{% translate "December" %} 2, 2019</td>
     </tr>
     <tr>
       <td>2.0</td>
       <td>{% get_latest_micro_release '2.0' %}</td>
-      <td>August 1, 2018</td>
-      <td>April 1, 2019</td>
+      <td>{% translate "August" %} 1, 2018</td>
+      <td>{% translate "April" %} 1, 2019</td>
     </tr>
     <tr>
       <td>1.11 LTS <sup><a href="#ft3">3</a></sup></td>
       <td>{% get_latest_micro_release '1.11' %}</td>
-      <td>December 2, 2017</td>
-      <td>April 1, 2020</td>
+      <td>{% translate "December" %} 2, 2017</td>
+      <td>{% translate "April" %} 1, 2020</td>
     </tr>
     <tr>
       <td>1.10</td>
       <td>{% get_latest_micro_release '1.10' %}</td>
-      <td>April 4, 2017</td>
-      <td>December 2, 2017</td>
+      <td>{% translate "April" %} 4, 2017</td>
+      <td>{% translate "December" %} 2, 2017</td>
     </tr>
     <tr>
       <td>1.9</td>
       <td>{% get_latest_micro_release '1.9' %}</td>
-      <td>August 1, 2016</td>
-      <td>April 4, 2017</td>
+      <td>{% translate "August" %} 1, 2016</td>
+      <td>{% translate "April" %} 4, 2017</td>
     </tr>
     <tr>
       <td>1.8 LTS</td>
       <td>{% get_latest_micro_release '1.8' %}</td>
-      <td>December 1, 2015</td>
-      <td>April 1, 2018</td>
+      <td>{% translate "December" %} 1, 2015</td>
+      <td>{% translate "April" %} 1, 2018</td>
     </tr>
     <tr>
       <td>1.7</td>
       <td>{% get_latest_micro_release '1.7' %}</td>
-      <td>April 1, 2015</td>
-      <td>December 1, 2015</td>
+      <td>{% translate "April" %} 1, 2015</td>
+      <td>{% translate "December" %} 1, 2015</td>
     </tr>
     <tr>
       <td>1.6</td>
       <td>{% get_latest_micro_release '1.6' %}</td>
-      <td>September 2, 2014</td>
-      <td>April 1, 2015</td>
+      <td>{% translate "September" %} 2, 2014</td>
+      <td>{% translate "April" %} 1, 2015</td>
     </tr>
     <tr>
       <td>1.5</td>
       <td>{% get_latest_micro_release '1.5' %}</td>
-      <td>November 6, 2013</td>
-      <td>September 2, 2014</td>
+      <td>{% translate "November" %} 6, 2013</td>
+      <td>{% translate "September" %} 2, 2014</td>
     </tr>
     <tr>
       <td>1.4 LTS</td>
       <td>{% get_latest_micro_release '1.4' %}</td>
-      <td>February 26, 2013</td>
-      <td>October 1, 2015</td>
+      <td>{% translate "February" %} 26, 2013</td>
+      <td>{% translate "October" %} 1, 2015</td>
     </tr>
     <tr>
       <td>1.3</td>
       <td>{% get_latest_micro_release '1.3' %}</td>
-      <td>March 23, 2012</td>
-      <td>February 26, 2013</td>
+      <td>{% translate "March" %} 23, 2012</td>
+      <td>{% translate "February" %} 26, 2013</td>
     </tr>
   </table>
 
   <p style="max-width: 720px;">
-    <sup id="ft1">[1] Security fixes, data loss bugs, crashing bugs, major functionality
-      bugs in newly-introduced features, and regressions from older versions of Django.</sup><br>
-    <sup id="ft2">[2] Security fixes and data loss bugs.</sup><br>
-    <sup id="ft3">[3] Last version to support Python 2.7.</sup>
+    <sup id="ft1">
+      {% blocktranslate trimmed %}
+        [1] Security fixes, data loss bugs, crashing bugs, major functionality
+        bugs in newly-introduced features, and regressions from older versions of Django.{% endblocktranslate %}
+    </sup><br>
+    <sup id="ft2">{% translate "[2] Security fixes and data loss bugs." %}</sup><br>
+    <sup id="ft3">{% translate "[3] Last version to support Python 2.7." %}</sup>
   </p>
 
 {% endblock %}
 
 {% block content-related %}
 
-  <h1 class="visuallyhidden">Additional information</h1>
+  <h1 class="visuallyhidden">{% translate "Additional information" %}</h1>
   <div role="complementary">
 
     {% if corporate_members %}
       <div class="corporate-members">
-        <h2>Diamond and Platinum Members</h2>
+        <h2>{% translate "Diamond and Platinum Members" %}</h2>
         {% for obj in corporate_members %}
           <div class="clearfix">
             <div class="member-logo">
@@ -286,40 +335,49 @@
     {% endif %}
 
     {% donation_snippet %}
-
-    <h2>For the impatient:</h2>
+    {% release_notes current.version as current_release %}
+    <h2>{% translate "For the impatient:" %}</h2>
     <ul>
-      <li>Latest release:
+      <li>{% translate "Latest release:" %}
         <a href="{% url 'download-redirect' current.version 'tarball' %}">
           Django-{{ current.version }}.tar.gz</a><br>
         Checksums: <a href="{% url 'download-redirect' current.version 'checksum' %}">
           Django-{{ current.version }}.checksum.txt</a><br>
-        Release notes: {% release_notes current.version %}
+        {% translate "Release notes:" %} {{ current_release }}
       </li>
 
       {% if preview %}
-        <li>Preview release:
+        <li>{% translate "Preview release:" %}
           <a href="{% url 'download-redirect' preview.version 'tarball' %}">
             Django-{{ preview.version }}.tar.gz</a><br>
           Checksums: <a href="{% url 'download-redirect' preview.version 'checksum' %}">
             Django-{{ preview.version }}.checksum.txt</a><br>
-          Release notes: {% release_notes preview.version %}
+          {% translate "Release notes:" %} {% release_notes preview.version %}
         </li>
       {% endif %}
     </ul>
 
-    <h2>Which version is better?</h2>
-    <p>We improve Django almost every day and are pretty good about keeping the code stable. Thus, using the latest development code is a safe and easy way to get access to new features as they’re added. If you choose to follow the development version, keep in mind that there will occasionally be backwards-incompatible changes. You’ll want to pay close attention to the commits by watching <a href="https://github.com/django/django">Django on GitHub</a> or subscribing to <a href="https://groups.google.com/group/django-updates">django-updates</a>.</p>
+    <h2>{% translate "Which version is better?" %}</h2>
+    <p>
+      {% blocktranslate trimmed %}
+        We improve Django almost every day and are pretty good about keeping the code stable.
+        Thus, using the latest development code is a safe and easy way to get access to new features as they’re added.
+        If you choose to follow the development version, keep in mind that there will occasionally be
+        backwards-incompatible changes. You’ll want to pay close attention to the commits by watching
+        <a href="https://github.com/django/django">Django on GitHub</a> or subscribing to
+        <a href="https://groups.google.com/group/django-updates">django-updates</a>.
+      {% endblocktranslate %}
+    </p>
 
     <p>If you’re just looking for a stable deployment target and don’t mind waiting for the next release, you’ll want to stick with the latest official release (which will always include detailed notes on any changes you’ll need to make while upgrading).</p>
-    <h2>Previous releases</h2>
+    <h2>{% translate "Previous releases" %}</h2>
     <ul>
       <li>Django {{ previous.version }}{% if previous.is_lts %} (LTS){% endif %}:
         <a href="{% url 'download-redirect' previous.version 'tarball' %}">
           Django-{{ previous.version }}.tar.gz</a><br>
         Checksums: <a href="{% url 'download-redirect' previous.version 'checksum' %}">
           Django-{{ previous.version }}.checksum.txt</a><br>
-        Release notes: {% release_notes previous.version %}
+        {% translate "Release notes:" %} {% release_notes previous.version %}
       </li>
       {% if lts %}
         <li>Django {{ lts.version }} (LTS):
@@ -327,12 +385,12 @@
             Django-{{ lts.version }}.tar.gz</a><br>
           Checksums: <a href="{% url 'download-redirect' lts.version 'checksum' %}">
             Django-{{ lts.version }}.checksum.txt</a><br>
-          Release notes: {% release_notes lts.version %}
+          {% translate "Release notes:" %} {% release_notes lts.version %}
         </li>
       {% endif %}
     </ul>
 
-    <h2>Unsupported previous releases (no longer receive security updates or bug fixes)</h2>
+    <h2>{% translate "Unsupported previous releases (no longer receive security updates or bug fixes)" %}</h2>
     <ul>
       {% for release in unsupported %}
         <li>Django {{ release.version }}:

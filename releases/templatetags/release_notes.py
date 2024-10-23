@@ -13,7 +13,7 @@ register = template.Library()
 def release_notes(version, show_version=False):
     version_x_dot_y = ".".join(str(x) for x in get_loose_version_tuple(version)[:2])
     is_pre_release = any(c in version for c in ("a", "b", "c"))
-    # links for prereleases don't have their own release notes
+    # links for pre-releases don't have their own release notes
     display_version = version_x_dot_y if is_pre_release else version
     if show_version:
         anchor_text = _("%(version)s release notes") % {"version": display_version}
