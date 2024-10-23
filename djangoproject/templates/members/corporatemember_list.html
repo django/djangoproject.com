@@ -1,22 +1,22 @@
 {% extends "base_foundation.html" %}
 {% load humanize i18n %}
 
-{% block og_title %}Corporate members{% endblock %}
-{% block og_description %}The following organizations are corporate members of the Django Software Foundation.{% endblock %}
+{% block og_title %}{% translate "Corporate members" %}{% endblock %}
+{% block og_description %}{% translate "The following organizations are corporate members of the Django Software Foundation." %}{% endblock %}
 
 {% block content %}
-  <h1>{% trans "Corporate members" %}</h1>
+  <h1>{% translate "Corporate members" %}</h1>
   <p>
-    {% blocktrans %}
+    {% blocktranslate trimmed %}
       The following organizations are corporate members of the Django Software
       Foundation. If you are interested in becoming a corporate member of the
       DSF, you can find out more on our <a href="/foundation/corporate-membership/">
         corporate membership page</a>.
-    {% endblocktrans %}
+    {% endblocktranslate %}
   </p>
 
   {% if members.diamond %}
-    <h3>Diamond Corporate Members (${{ corporate_membership_amounts.diamond|intcomma }}+)</h3>
+    <h3>{% translate "Diamond Corporate Members" %} (${{ corporate_membership_amounts.diamond|intcomma }}+)</h3>
     <ul class="corporate-members">
       {% for obj in members.diamond %}
         {% include "members/includes/_member_with_logo.html" %}
@@ -25,7 +25,7 @@
   {% endif %}
 
   {% if members.platinum %}
-    <h3>Platinum Corporate Members (${{ corporate_membership_amounts.platinum|intcomma }}+)</h3>
+    <h3>{% translate "Platinum Corporate Members" %} (${{ corporate_membership_amounts.platinum|intcomma }}+)</h3>
     <ul class="corporate-members">
       {% for obj in members.platinum %}
         {% include "members/includes/_member_with_logo.html" %}
@@ -34,7 +34,7 @@
   {% endif %}
 
   {% if members.gold %}
-    <h3>Gold Corporate Members (${{ corporate_membership_amounts.gold|intcomma }}+)</h3>
+    <h3>{% translate "Gold Corporate Members" %} (${{ corporate_membership_amounts.gold|intcomma }}+)</h3>
     <ul class="corporate-members">
       {% for obj in members.gold %}
         {% include "members/includes/_member_with_logo.html" %}
@@ -43,7 +43,7 @@
   {% endif %}
 
   {% if members.silver %}
-    <h3>Silver Corporate Members (${{ corporate_membership_amounts.silver|intcomma }}+)</h3>
+    <h3>{% translate "Silver Corporate Members" %} (${{ corporate_membership_amounts.silver|intcomma }}+)</h3>
     <ul class="corporate-members">
       {% for obj in members.silver %}
         {% include "members/includes/_member_with_logo.html" %}
@@ -52,7 +52,7 @@
   {% endif %}
 
   {% if members.bronze %}
-    <h3>Bronze Corporate Members (${{ corporate_membership_amounts.bronze|intcomma }}+)</h3>
+    <h3>{% translate "Bronze Corporate Members" %} (${{ corporate_membership_amounts.bronze|intcomma }}+)</h3>
     <ul class="corporate-members">
       {% for obj in members.bronze %}
         {% include "members/includes/_member_with_logo.html" %}

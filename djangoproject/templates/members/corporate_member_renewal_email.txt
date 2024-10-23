@@ -1,13 +1,22 @@
+{% load i18n %}
+{% blocktranslate trimmed %}
 Hi {{ contact_name }},
+{% endblocktranslate %}
 
+{% blocktranslate trimmed %}
 The Django Software Foundation membership for {{ member_name }} expires
 {{ expiry_date }}. Would you like to renew your support?
+{% endblocktranslate %}
 
+{% blocktranslate trimmed %}
 Use this link to do so:
 {{ renewal_link }}
 It expires 30 days from today, but just email us if you need one later.
+{% endblocktranslate %}
 
-Thank you for your support!
+{% translate "Thank you for your support!" %}
 
+{% blocktranslate trimmed %}
 p.s. If you decide not to renew, please reply to let us know and we'll mark
 your membership as inactive.
+{% endblocktranslate %}
