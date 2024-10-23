@@ -10,6 +10,7 @@ from django.core.files.storage import FileSystemStorage
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.functional import cached_property
+from django.utils.translation import gettext_lazy as _
 from django.utils.version import get_complete_version, get_main_version
 
 from .utils import get_loose_version_tuple
@@ -161,7 +162,6 @@ def upload_to_checksum(release, filename):
     return f"pgp/Django-{version}.checksum.txt"
 
 
-@total_ordering
 class Release(models.Model):
     DEFAULT_CACHE_KEY = "%s_django_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
     STATUS_CHOICES = (
@@ -187,21 +187,25 @@ class Release(models.Model):
         default=False,
     )
     date = models.DateField(
-        "Release date",
+        _("Release date"),
         null=True,
         blank=True,
         default=datetime.date.today,
-        help_text="Leave blank if the release date isn't known yet, typically "
-        "if you're creating the final release just after the alpha "
-        "because you want to build docs for the upcoming version.",
+        help_text=_(
+            "Leave blank if the release date isn't known yet, typically "
+            "if you're creating the final release just after the alpha "
+            "because you want to build docs for the upcoming version."
+        ),
     )
     eol_date = models.DateField(
-        "End of life date",
+        _("End of life date"),
         null=True,
         blank=True,
-        help_text="Leave blank if the end of life date isn't known yet, "
-        "typically because it depends on the release date of a "
-        "later version.",
+        help_text=_(
+            "Leave blank if the end of life date isn't known yet, "
+            "typically because it depends on the release date of a "
+            "later version."
+        ),
     )
 
     major = models.PositiveSmallIntegerField(editable=False)
@@ -210,8 +214,8 @@ class Release(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, editable=False)
     iteration = models.PositiveSmallIntegerField(editable=False)
     is_lts = models.BooleanField(
-        "Long Term Support",
-        help_text=(
+        _("Long Term Support"),
+        help_text=_(
             'Is this a release for an <abbr title="Long Term Support">LTS</abbr> '
             "Django version (e.g. 5.2a1, 5.2, 5.2.4)?"
         ),
@@ -219,19 +223,19 @@ class Release(models.Model):
     )
     # Artifacts.
     tarball = models.FileField(
-        "Tarball artifact as a .tar.gz file",
+        _("Tarball artifact as a .tar.gz file"),
         storage=get_storage,
         upload_to=upload_to_artifact,
         blank=True,
     )
     wheel = models.FileField(
-        "Wheel artifact as a .whl file",
+        _("Wheel artifact as a .whl file"),
         storage=get_storage,
         upload_to=upload_to_artifact,
         blank=True,
     )
     checksum = models.FileField(
-        "Signed checksum as a .asc file",
+        _("Signed checksum as a .asc file"),
         storage=get_storage,
         upload_to=upload_to_checksum,
         blank=True,
@@ -319,14 +323,14 @@ class Release(models.Model):
     def clean(self):
         if self.is_published and not self.tarball:
             raise ValidationError(
-                {"tarball": "This field is required when the release is active."}
+                {"tarball": _("This field is required when the release is active.")}
             )
 
         if (self.tarball or self.wheel) and not self.checksum:
             raise ValidationError(
                 {
                     "checksum": (
-                        "This field is required when an artifact has been uploaded."
+                        _("This field is required when an artifact has been uploaded.")
                     )
                 }
             )
