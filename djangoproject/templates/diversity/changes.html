@@ -8,7 +8,7 @@
   <h1>{% translate "Django Community Diversity Statement - Changes" %}</h1>
 
   <h2>{% translate "Change control process" %}</h2>
-
+  {% url 'document-detail' lang='en' version='dev' url='internals/contributing/bugs-and-features' host 'docs' as bugs_url %}
   <p>
     {% blocktranslate trimmed %}
       We're (mostly) programmers, so we'll track changes to the diversity statement
@@ -19,7 +19,7 @@
       sent to the DSF, the Django core team, and the Django community for comment.
       We'll hold a comment period of at least one week,  and then each group will vote
       on the change using its normal process (a board for the DSF,
-      <a href="{% url 'document-detail' lang='en' version='dev' url='internals/contributing/bugs-and-features' host 'docs' %}#how-we-make-decisions">
+      <a href="{{ bugs_url }}#how-we-make-decisions">
         a core dev vote</a> for the core team).
       Approved changes will be merged, published, and noted below.
     {% endblocktranslate %}
