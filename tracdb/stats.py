@@ -6,6 +6,7 @@ import operator
 from collections import OrderedDict, namedtuple
 
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 
 from .models import Revision, Ticket, TicketChange
 
@@ -41,7 +42,7 @@ def get_user_stats(username):
     return stats
 
 
-@stat("Commits")
+@stat(_("Commits"))
 def commit_count(username):
     count = Revision.objects.filter(author=username).count()
     # This assumes that the username is their GitHub username, this is very
@@ -50,7 +51,7 @@ def commit_count(username):
     return StatData(count=count, link=link)
 
 
-@stat("Tickets fixed")
+@stat(_("Tickets fixed"))
 def tickets_fixed(username):
     query = f"owner={username}&resolution=fixed"
     count = Ticket.objects.from_querystring(query).count()
@@ -58,7 +59,7 @@ def tickets_fixed(username):
     return StatData(count=count, link=link)
 
 
-@stat("Tickets opened")
+@stat(_("Tickets opened"))
 def tickets_opened(username):
     query = f"reporter={username}"
     count = Ticket.objects.from_querystring(query).count()
@@ -66,7 +67,7 @@ def tickets_opened(username):
     return StatData(count=count, link=link)
 
 
-@stat("New tickets triaged")
+@stat(_("New tickets triaged"))
 def new_tickets_reviewed(username):
     # We don't want to de-dup as for tickets_closed: multiple reviews of the
     # same ticket should "count" as a review.
