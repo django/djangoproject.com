@@ -61,7 +61,12 @@
 
     <dt class="even"><i class="icon icon-dashboard"></i> {% translate "Exceedingly scalable." %}</dt>
     <dd class="even">
-      <p>Some of the busiest sites on the planet use Django’s ability to quickly and flexibly scale to meet the heaviest traffic demands.</p>
+      <p>
+        {% blocktranslate trimmed %}
+          Some of the busiest sites on the planet use Django’s ability to quickly and flexibly scale to meet the
+          heaviest traffic demands.
+        {% endblocktranslate %}
+      </p>
       <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='faq/general' host 'docs' %}#does-django-scale">{% translate "Learn more about scaling Django applications" %}</a>
     </dd>
 
