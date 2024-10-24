@@ -98,7 +98,13 @@ define(function() {
         mods.push('mod/messages');
     }
 
-    if (hasClass('code-block-caption') || hasClass('snippet')) {
+    if (hasClass('code-block-caption') ||
+        hasClass('snippet') ||
+        hasClass('highlight-console') ||
+        hasClass('c-content-win') ||
+        hasClass('highlight-shell') ||
+        hasClass('highlight-doscon') ||
+        hasClass('literal-block')) {
         mods.push('mod/clippify');
     }
 
