@@ -186,6 +186,8 @@ class Command(BaseCommand):
                         builder,
                         "-D",
                         "language=%s" % to_locale(release.lang),
+                        "-j",
+                        "auto",
                         "-Q" if self.verbosity == 0 else "-q",
                         str(source_dir),  # Source file directory
                         str(build_dir),  # Destination directory
