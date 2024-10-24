@@ -9,6 +9,8 @@ from django.utils.cache import _generate_cache_header_key
 from django.utils.translation import gettext_lazy as _
 from django_hosts.resolvers import reverse
 from docutils.core import publish_parts
+from markdown import markdown
+from markdown.extensions.toc import TocExtension, slugify as _md_title_slugify
 
 BLOG_DOCUTILS_SETTINGS = {
     "doctitle_xform": False,
@@ -20,6 +22,11 @@ BLOG_DOCUTILS_SETTINGS = {
 BLOG_DOCUTILS_SETTINGS.update(getattr(settings, "BLOG_DOCUTILS_SETTINGS", {}))
 
 
+def _md_slugify(value, separator):
+    # matches the `id_prefix` setting of BLOG_DOCUTILS_SETTINGS
+    return "s" + separator + _md_title_slugify(value, separator)
+
+
 class EntryQuerySet(models.QuerySet):
     def published(self):
         return self.active().filter(pub_date__lte=timezone.now())
@@ -28,10 +35,34 @@ class EntryQuerySet(models.QuerySet):
         return self.filter(is_active=True)
 
 
-CONTENT_FORMAT_CHOICES = (
-    ("reST", "reStructuredText"),
-    ("html", "Raw HTML"),
-)
+class ContentFormat(models.TextChoices):
+    REST = "reST", "reStructuredText"
+    HTML = "html", "Raw HTML"
+    MARKDOWN = "md", "Markdown"
+
+    @classmethod
+    def to_html(cls, fmt, source):
+        """
+        Convert the given source from the given format to HTML
+        """
+        if not fmt or fmt == cls.HTML:
+            return source
+        if fmt == cls.REST:
+            return publish_parts(
+                source=source,
+                writer_name="html",
+                settings_overrides=BLOG_DOCUTILS_SETTINGS,
+            )["fragment"]
+        if fmt == cls.MARKDOWN:
+            return markdown(
+                source,
+                output_format="html",
+                extensions=[
+                    # baselevel matches `initial_header_level` from BLOG_DOCUTILS_SETTINGS
+                    TocExtension(baselevel=3, slugify=_md_slugify),
+                ],
+            )
+        raise ValueError(f"Unsupported format {fmt}")
 
 
 class Entry(models.Model):
@@ -52,7 +83,7 @@ class Entry(models.Model):
             "publication date must be in the past."
         ),
     )
-    content_format = models.CharField(choices=CONTENT_FORMAT_CHOICES, max_length=50)
+    content_format = models.CharField(choices=ContentFormat.choices, max_length=50)
     summary = models.TextField()
     summary_html = models.TextField()
     body = models.TextField()
@@ -88,20 +119,8 @@ class Entry(models.Model):
     is_published.boolean = True
 
     def save(self, *args, **kwargs):
-        if self.content_format == "html":
-            self.summary_html = self.summary
-            self.body_html = self.body
-        elif self.content_format == "reST":
-            self.summary_html = publish_parts(
-                source=self.summary,
-                writer_name="html",
-                settings_overrides=BLOG_DOCUTILS_SETTINGS,
-            )["fragment"]
-            self.body_html = publish_parts(
-                source=self.body,
-                writer_name="html",
-                settings_overrides=BLOG_DOCUTILS_SETTINGS,
-            )["fragment"]
+        self.summary_html = ContentFormat.to_html(self.content_format, self.summary)
+        self.body_html = ContentFormat.to_html(self.content_format, self.body)
         super().save(*args, **kwargs)
         self.invalidate_cached_entry()
 
