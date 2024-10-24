@@ -245,10 +245,16 @@ def my_protected_view(request):
           </div>
         </li>
         <li>
-          <h2>Admin</h2>
+          <h2>{% translate "Admin" %}</h2>
           <div class="collapsing-content">
-            <p>One of the most powerful parts of Django is its automatic admin interface. It reads metadata in your models to provide a powerful and production-ready interface that content producers can immediately use to start managing content on your site. It’s easy to set up and provides many hooks for customization.</p>
-            <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='ref/contrib/admin' host 'docs' %}">Read more</a>
+            <p>
+              {% blocktranslate trimmed %}
+                One of the most powerful parts of Django is its automatic admin interface. It reads metadata in your
+                models to provide a powerful and production-ready interface that content producers can immediately
+                use to start managing content on your site. It’s easy to set up and provides many hooks for customization.
+              {% endblocktranslate %}
+            </p>
+            <a class="link-readmore" href="{% url 'document-detail' lang='en' version='stable' url='ref/contrib/admin' host 'docs' %}">{% translate "Read more" %}</a>
         {# fmt:off #}
         {% pygment 'python' %}
 from bands.models import Band, Member

@@ -9,19 +9,16 @@
 
 {% block header %}
   <h1 class="visuallyhidden">{% translate "Community" %}</h1>
-  {% spaceless %}
-    <p>
-      {% if community_stats.age %}
-        {% blocktranslate with age=community_stats.age %}
-          Building the <em>Django</em> Community for <em>{{ age }}</em>.
-        {% endblocktranslate %}
-      {% else %}
-        {% translate "Building the <em>Django</em> Community." %}
-      {% endif %}
-      {% translate "Come join us!" %}
-    </p>
-  {% endif %}. {% translate "Come join us!" %}</p>
-{% endspaceless %}
+  <p>
+    {% if community_stats.age %}
+      {% blocktranslate trimmed with age=community_stats.age %}
+        Building the <em>Django</em> Community for <em>{{ age }}</em>.
+      {% endblocktranslate %}
+    {% else %}
+      {% translate "Building the <em>Django</em> Community." %}
+    {% endif %}
+    {% translate "Come join us!" %}
+  </p>
 {% endblock %}
 
 {% block content-related %}
