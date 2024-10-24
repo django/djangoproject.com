@@ -10,9 +10,16 @@
 {% block header %}
   <h1 class="visuallyhidden">{% translate "Community" %}</h1>
   {% spaceless %}
-    <p>{% translate "Building the <em>Django</em> Community" %}
-      {% if community_stats %}
-        {% if community_stats.age %} {% translate "for" context "For an amount of time" %} <em>{{ community_stats.age }}</em>{% endif %}
+    <p>
+      {% if community_stats.age %}
+        {% blocktranslate with age=community_stats.age %}
+        Building the <em>Django</em> Community for <em>{{ age }}</em>.
+        {% endblocktranslate %}
+      {% else %}
+        {% translate "Building the <em>Django</em> Community." %}
+      {% endif %}
+      {% translate "Come join us!" %}
+    </p>
       {% endif %}. {% translate "Come join us!" %}</p>
   {% endspaceless %}
 {% endblock %}
