@@ -1,68 +1,89 @@
 {% extends "registration/base.html" %}
+{% load i18n %}
 
-{% block title %}Sign up{% endblock %}
+{% block title %}{% translate "Sign up" %}{% endblock %}
 
 {% block content %}
-  <h1>Create an account</h1>
+  <h1>{% translate "Create an account" %}</h1>
 
-  <p>Or, <a href="https://code.djangoproject.com/github/login">login with GitHub</a>.</p>
+  <p>
+    {% blocktranslate trimmed %}
+      Or, <a href="https://code.djangoproject.com/github/login">login with GitHub</a>.
+    {% endblocktranslate %}
+  </p>
 
   {% if form.errors %}
-    <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
+    <p class="errors">{% translate "Please correct the errors below:" %} {{ form.non_field_errors }}</p>
   {% endif %}
 
 
   <form method="post" action="" class="form-input">
     {% csrf_token %}
     <div>
-      <label for="id_username">Username:</label>
+      <label for="id_username">{% translate "Username:" %}</label>
       {% if form.username.errors %}
         <p class="errors">{{ form.username.errors.as_text }}</p>
       {% endif %}
       {{ form.username }}
     </div>
     <div>
-      <label for="id_email">Email address:</label>
+      <label for="id_email">{% translate "Email address:" %}</label>
       {% if form.email.errors %}
         <p class="errors">{{ form.email.errors.as_text }}</p>
       {% endif %}
       {{ form.email }}
     </div>
     <div>
-      <label for="id_password1">Password:</label>
+      <label for="id_password1">{% translate "Password:" %}</label>
       {% if form.password1.errors %}
         <p class="errors">{{ form.password1.errors.as_text }}</p>
       {% endif %}
       {{ form.password1 }}
     </div>
     <div>
-      <label for="id_password2">Password (type again to catch typos):</label>
+      <label for="id_password2">{% translate "Password (type again to catch typos):" %}</label>
       {% if form.password2.errors %}
         <p class="errors">{{ form.password2.errors.as_text }}</p>
       {% endif %}
       {{ form.password2 }}
     </div>
     <p class="submit">
-      <input type="submit" class="cta" value="Register">
+      <input type="submit" class="cta" value="{% translate 'Register' %}">
     </p>
   </form>
 
 {% endblock %}
 
 {% block content-related %}
-  <h1 class="visuallyhidden">Help</h1>
+  <h1 class="visuallyhidden">{% translate "Help" %}</h1>
   <div role="complementary">
-    <p>Fill out the form to the right (all fields are required), and your
-      account will be created; you'll be sent an email with instructions on how
-      to finish your registration.</p>
+    <p>
+      {% blocktranslate trimmed %}
+        Fill out the form to the right (all fields are required), and your
+        account will be created; you'll be sent an email with instructions on how
+        to finish your registration.
+      {% endblocktranslate %}
+    </p>
 
-    <p>We'll only use your email to send you signup instructions. We hate spam
-      as much as you do.</p>
+    <p>
+      {% blocktranslate trimmed %}
+        We'll only use your email to send you signup instructions. We hate spam
+        as much as you do.
+      {% endblocktranslate %}
+    </p>
 
-    <p>This account will let you log into the ticket tracker, claim tickets,
-      and be exempt from spam filtering.</p>
+    <p>
+      {% blocktranslate trimmed %}
+        This account will let you log into the ticket tracker, claim tickets,
+        and be exempt from spam filtering.
+      {% endblocktranslate %}
+    </p>
 
-    <p>Your username can only consist of alphanumeric characters and
-      underscores and may be up to 30 characters long.</p>
+    <p>
+      {% blocktranslate trimmed %}
+        Your username can only consist of alphanumeric characters and
+        underscores and may be up to 30 characters long.
+      {% endblocktranslate %}
+    </p>
   </div>
 {% endblock %}
