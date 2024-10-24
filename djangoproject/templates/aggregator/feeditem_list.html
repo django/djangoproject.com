@@ -1,22 +1,26 @@
 {% extends "base_community.html" %}
+{% load i18n %}
 
 {% block content %}
-  <h1>Django community: {{ feed_type.name }}
-    <a class="rss" href="{% url 'aggregator-feed' feed_type.slug %}">RSS</a></h1>
-  <h2 class="deck">
-    This page, updated regularly, aggregates {{ feed_type.name }}
-    from the Django community.
+  {% url 'aggregator-feed' feed_type.slug as feed_url %}
+  <h1>{% blocktranslate trimmed with name=feed_type.name %}Django community: {{ feed_type.name }}
+    <a class="rss" href="{{ feed_url }}">RSS</a>{% endblocktranslate %}</h1>
+  <h2 class="deck">{% blocktranslate trimmed with name=feed_type.name %}
+    This page, updated regularly, aggregates {{ name }}
+    from the Django community.{% endblocktranslate %}
   </h2>
 
   <ul class="list-news">
     {% for item in object_list %}
       <li>
         <h2><a href="{{ item.link }}">{{ item.title }}</a></h2>
-        <span class='meta'>Posted on {{ item.date_modified|date:"F j, Y" }} at {{ item.date_modified|date:"g:i A" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a> <a class="rss" href="{{ item.feed.feed_url }}">RSS</a></span>
+        <span class='meta'>{% blocktranslate trimmed with date_modified=item.date_modified|date:"DATE_FORMAT" time_modified=item.date_modified|date:"TIME_FORMAT" public_url=item.feed.public_url title=item.feed.title feed_url=item.feed.feed_url %}
+          Posted on {{ date_modified }} at {{ time_modified }} by <a href="{{ public_url }}">{{ title }}</a> <a class="rss" href="{{ feed_url }}">RSS</a>
+        {% endblocktranslate %}</span>
         <div>
           {{ item.summary|striptags|truncatewords:"200" }}
         </div>
-        <p class="small"><a class="link-readmore" href="{{ item.link }}">Read this post in context</a></p>
+        <p class="small"><a class="link-readmore" href="{{ item.link }}">{% translate "Read this post in context" %}</a></p>
       </li>
     {% endfor %}
   </ul>
@@ -27,13 +31,13 @@
         {% if page_obj.has_previous %}
           <li><a class="previous" href="?page={{ page_obj.previous_page_number }}">
             <i class="icon icon-chevron-left"></i>
-            <span class="visuallyhidden">Previous</span>
+            <span class="visuallyhidden">{% translate "Previous" context "pagination" %}</span>
           </a></li>
         {% endif %}
         {% if page_obj.has_next %}
           <li><a class="next" href="?page={{ page_obj.next_page_number }}">
             <i class="icon icon-chevron-right"></i>
-            <span class="visuallyhidden">Next</span>
+            <span class="visuallyhidden">{% translate "Next" context "pagination" %}</span>
           </a></li>
         {% endif %}
       </ul>

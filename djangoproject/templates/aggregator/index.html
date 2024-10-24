@@ -1,17 +1,18 @@
 {% extends "base_community.html" %}
+{% load i18n %}
 
 {% block layout_class %}column-container sidebar-right{% endblock %}
 
 {% block content %}
 
-  <h2 class="community-title">Get Help</h2>
+  <h2 class="community-title">{% translate "Get Help" %}</h2>
   <div class="community-cta-wrapper">
     <a href="https://forum.djangoproject.com/" class="community-cta-a">
       <div class="community-cta">
         <div>
           {% include "svg_logos/forum.html" %}
         </div>
-        <h3>Forum - Post a question</h3>
+        <h3>{% translate "Forum - Post a question" %}</h3>
       </div>
     </a>
     <a href="https://discord.gg/xcRH6mN4fa" class="community-cta-a">
@@ -19,19 +20,19 @@
         <div>
           {% include "svg_logos/discord.html" %}
         </div>
-        <h3>Discord - Chat with us</h3>
+        <h3>{% translate "Discord - Chat with us" %}</h3>
       </div>
     </a>
   </div>
 
-  <h2 class="community-title">Get Involved</h2>
+  <h2 class="community-title">{% translate "Get Involved" %}</h2>
   <div class="community-cta-wrapper">
     <a href="https://docs.djangoproject.com/en/dev/internals/contributing/bugs-and-features/#reporting-bugs" class="community-cta-a">
       <div class="community-cta">
         <div>
           {% include "svg_logos/bug.html" %}
         </div>
-        <h3>Report an issue</h3>
+        <h3>{% translate "Report an issue" %}</h3>
       </div>
     </a>
     <a href="https://docs.djangoproject.com/en/dev/internals/contributing/" class="community-cta-a">
@@ -39,7 +40,7 @@
         <div>
           {% include "svg_logos/notepad.html" %}
         </div>
-        <h3>Contribute to Django</h3>
+        <h3>{% translate "Contribute to Django" %}</h3>
       </div>
     </a>
     <a href="/community/local/" class="community-cta-a">
@@ -47,12 +48,12 @@
         <div>
           {% include "svg_logos/world.html" %}
         </div>
-        <h3>Local Django Community</h3>
+        <h3>{% translate "Local Django Community" %}</h3>
       </div>
     </a>
   </div>
 
-  <h2>Django RSS feeds</h2>
+  <h2>{% translate "Django RSS feeds" %}</h2>
   <ul class="list-collapsing">
     {% for feedtype, latest_feeds in feedtype_list %}
       <li id="{{ feedtype.slug }}">
@@ -61,18 +62,22 @@
           <dl class="list-links">
             {% for item in latest_feeds %}
               <dt><a href="{{ item.link }}">{{ item.title }}</a></dt>
-              <dd>{{ item.date_modified|date:"N jS, Y \a\t P" }} by <a href="{{ item.feed.public_url }}">{{ item.feed.title }}</a></dd>
+              <dd>
+                {% blocktranslate trimmed with modified_date=item.date_modified|date:"DATETIME_FORMAT" public_url=item.feed.public_url title=item.feed.title %}
+                  {{ modified_date }} by <a href="{{ public_url }}">{{ title }}</a>
+                {% endblocktranslate %}
+              </dd>
             {% endfor %}
           </dl>
           <p class="meta">
             {% if latest_feeds %}
-              <a href="{% url 'community-feed-list' feedtype.slug %}">View more</a>
+              <a href="{% url 'community-feed-list' feedtype.slug %}">{% translate "View more" %}</a>
             {% endif %}
             {% if latest_feeds and feedtype.can_self_add %}
-              or
+              {% translate "or" context "view more OR add your feed" %}
             {% endif %}
             {% if feedtype.can_self_add %}
-              <a href="{% url 'community-add-feed' feedtype.slug %}">Add your feed</a>
+              <a href="{% url 'community-add-feed' feedtype.slug %}">{% translate "Add your feed" %}</a>
             {% endif %}
           </p>
         </div>
@@ -80,7 +85,7 @@
     {% endfor %}
   </ul>
 
-  <h2>Mailing Lists</h2>
+  <h2>{% translate "Mailing Lists" %}</h2>
   {% include "includes/mailing_lists.html" %}
 
 {% endblock %}
