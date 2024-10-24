@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.db import models
 from django.utils.functional import cached_property
+from django.utils.translation import gettext_lazy as _
 from django.utils.version import get_complete_version, get_main_version
 
 from .utils import get_loose_version_tuple
@@ -15,7 +16,7 @@ from .utils import get_loose_version_tuple
 # about older release candidates. Safe to use Django's copy of get_version()
 # when upgrading this website to use Django 1.10.
 def get_version(version=None):
-    "Return a PEP 386-compliant version number from VERSION."
+    """Return a PEP 386-compliant version number from VERSION."""
     version = get_complete_version(version)
 
     # Now build the two parts of the version number:
@@ -150,21 +151,25 @@ class Release(models.Model):
 
     version = models.CharField(max_length=16, primary_key=True)
     date = models.DateField(
-        "Release date",
+        _("Release date"),
         null=True,
         blank=True,
         default=datetime.date.today,
-        help_text="Leave blank if the release date isn't know yet, typically "
-        "if you're creating the final release just after the alpha "
-        "because you want to build docs for the upcoming version.",
+        help_text=_(
+            "Leave blank if the release date isn't know yet, typically "
+            "if you're creating the final release just after the alpha "
+            "because you want to build docs for the upcoming version."
+        ),
     )
     eol_date = models.DateField(
-        "End of life date",
+        _("End of life date"),
         null=True,
         blank=True,
-        help_text="Leave blank if the end of life date isn't known yet, "
-        "typically because it depends on the release date of a "
-        "later version.",
+        help_text=_(
+            "Leave blank if the end of life date isn't known yet, "
+            "typically because it depends on the release date of a "
+            "later version."
+        ),
     )
 
     major = models.PositiveSmallIntegerField(editable=False)
@@ -173,7 +178,7 @@ class Release(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, editable=False)
     iteration = models.PositiveSmallIntegerField(editable=False)
 
-    is_lts = models.BooleanField("Long term support release", default=False)
+    is_lts = models.BooleanField(_("Long term support release"), default=False)
 
     objects = ReleaseManager()
 
@@ -227,9 +232,9 @@ class Release(models.Model):
             if self.version_tuple[:3] >= (1, 0, 4):
                 pattern = "%(media)spgp/Django-%(version)s.checksum.txt"
             else:
-                raise ValueError("No checksum for this version")
+                raise ValueError(_("No checksum for this version"))
         else:
-            raise ValueError("Unknown file")
+            raise ValueError(_("Unknown file"))
 
         return pattern % {
             "media": settings.MEDIA_URL,
@@ -242,7 +247,7 @@ class Release(models.Model):
 
 def create_releases_up_to_1_5():
     if Release.objects.exists():
-        raise Exception("Releases already exist, aborting.")
+        raise Exception(_("Releases already exist, aborting."))
     versions = [  # extracted from the redirects table
         "0.90",
         "0.91",
