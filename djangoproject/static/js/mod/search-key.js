@@ -17,8 +17,14 @@ define([
 
                 $(window).keydown(function(e) {
                     if ((e.metaKey || e.ctrlKey) && e.key === 'k' && $('input:focus, textarea:focus').length === 0) {
+                        const warning_banner_height = $('#dev-warning').outerHeight() || 0;
+                        const search_form_input_top = search_form_input.offset().top;
+                        const scroll_to_position = search_form_input_top - warning_banner_height;
                         search_form_input.focus().select();
-                        search_form_input[0].scrollIntoView({ behavior: "smooth", block: "start" });
+                        window.scrollTo({
+                            top: scroll_to_position,
+                            behavior: 'smooth'
+                        });
                         return false;
                     }
                 });
