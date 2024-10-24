@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.dateformat import format as date_format
+from django.utils.translation import gettext_lazy as _
 from djmoney.models.fields import MoneyField
 from djmoney.settings import CURRENCIES
 from docutils.core import publish_parts
@@ -61,8 +62,8 @@ class NonBoardAttendee(models.Model):
     role = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name = "Non-board attendee"
-        verbose_name_plural = "Non-board attendees"
+        verbose_name = _("Non-board attendee")
+        verbose_name_plural = _("Non-board attendees")
 
     def __str__(self):
         return f"{self.name} ({self.role})"
@@ -195,8 +196,8 @@ class Business(models.Model):
     ONGOING = "ongoing"
 
     TYPE_CHOICES = (
-        (NEW, "New"),
-        (ONGOING, "Ongoing"),
+        (NEW, _("New")),
+        (ONGOING, _("Ongoing")),
     )
 
     title = models.CharField(max_length=255)
@@ -209,7 +210,7 @@ class Business(models.Model):
 
     class Meta:
         ordering = ("title",)
-        verbose_name_plural = "Business"
+        verbose_name_plural = _("Business")
 
     def __str__(self):
         return self.title
@@ -248,11 +249,11 @@ class CoreAwardCohort(models.Model):
     name = models.CharField(
         max_length=255,
         unique=True,
-        help_text="Name for the group being inducted, e.g. 'Q1 2021'",
+        help_text=_("Name for the group being inducted, e.g. 'Q1 2021'"),
     )
     description = models.TextField(blank=True)
     cohort_date = models.DateField(
-        help_text="Date this cohort was approved by the DSF Board",
+        help_text=_("Date this cohort was approved by the DSF Board"),
     )
 
     def __str__(self):
@@ -268,16 +269,16 @@ class CoreAward(models.Model):
         on_delete=models.CASCADE,
     )
     recipient = models.CharField(
-        help_text="Recipient's name", max_length=1023, unique=True
+        help_text=_("Recipient's name"), max_length=1023, unique=True
     )
     link = models.URLField(
         blank=True,
         null=True,
-        help_text="Optional link for this recipient",
+        help_text=_("Optional link for this recipient"),
     )
     description = models.TextField(
         blank=True,
-        help_text=(
+        help_text=_(
             "Optional one-paragraph description/bio of why this person "
             "received the award"
         ),
