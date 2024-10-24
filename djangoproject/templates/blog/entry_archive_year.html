@@ -1,12 +1,13 @@
 {% extends "base_weblog.html" %}
+{% load i18n %}
 
-{% block title %}{{ year|date:"Y" }} | Weblog{% endblock %}
+{% block title %}{{ year|date:"Y" }} | {% translate "Weblog" %}{% endblock %}
 
-{% block og_title %}Django news: {{ year|date:"Y" }} archive{% endblock %}
+{% block og_title %}{% blocktranslate with year=year|date:"Y" %}Django news: {{ year }} archive{% endblocktranslate %}{% endblock %}
 
 {% block content %}
 
-  <h1>{{ year|date:"Y" }} archive</h1>
+  <h1>{{ year|date:"Y" }} {% translate "archive" %}</h1>
 
   <ul class="list-news">
 

@@ -8,7 +8,7 @@
       <div class="collapsing-content">
         <ul class="list-links-small">
           {% for d in month.list %}
-            <li><a href="{% language "en" %}{% url 'weblog:archive-month' d|date:"Y" d|date:"b" %}{% endlanguage %}">{{ d|date:"F Y" }}</a></li>
+            <li><a href="{% language "en" %}{% url 'weblog:archive-month' d|date:"Y" d|date:"b" %}{% endlanguage %}">{{ d|date:"YEAR_MONTH_FORMAT" }}</a></li>
           {% endfor %}
         </ul>
         <p></p>
