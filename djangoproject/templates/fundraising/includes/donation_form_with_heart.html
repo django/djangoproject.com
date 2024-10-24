@@ -1,4 +1,4 @@
-{% load static fundraising_extras humanize %}
+{% load fundraising_extras humanize i18n static %}
 
 {% with goal_percent=donated_amount|as_percentage:goal_amount %}
   <div class="fundraising-index" id="donate">
@@ -21,13 +21,19 @@
 
     <div class="description">
       <ul>
-        <li><strong>{{ goal_percent }}% funded</strong></li>
-        <li><strong>${{ donated_amount|intcomma }} donated</strong> of US&nbsp;${{ goal_amount|intcomma }} goal for
-          {{ goal_start_date|date:"Y" }}</li>
+        <li><strong>{% blocktranslate trimmed %}{{ goal_percent }}% funded{% endblocktranslate %}</strong></li>
         <li>
-          Companies able to make a <strong>larger donation</strong>
-          ($2,000+/year) are invited to apply to be Corporate Members
-          <a href="{% url 'members:corporate-members-join' %}">here</a>.
+          {% blocktranslate trimmed with amount=donated_amount|intcomma goal=goal_amount|intcomma start_date=goal_start_date|date:"Y" %}
+            <strong>${{ amount }} donated</strong> of US&nbsp;${{ goal }} goal for {{ start_date }}
+          {% endblocktranslate %}
+        </li>
+        <li>
+          {% url 'members:corporate-members-join' as corp_join_url %}
+          {% blocktranslate trimmed %}
+            Companies able to make a <strong>larger donation</strong>
+            ($2,000+/year) are invited to apply to be Corporate Members
+            <a href="{{ corp_join_url }}">here</a>.
+          {% endblocktranslate %}
         </li>
       </ul>
 
@@ -41,21 +47,23 @@
           data-is-logged-in="{{ user.is_authenticated }}"
           data-login-url="{% url 'login' %}">
           {% csrf_token %}
-          <h3>Help us make it happen:</h3>
+          <h3>{% translate "Help us make it happen:" %}</h3>
           {{ form.interval }}
           {{ form.amount }}
           <div class="custom-donation">
-            <span class="prefix">US $ (integer only)</span>
+            <span class="prefix">US $ ({% translate "integer only" context "Donation amount in US dollars" %})</span>
           </div>
           {{ form.captcha }}
-          <input id="donate-button" type="submit" value="Donate monthly" class="cta" />
+          <input id="donate-button" type="submit" value="{% translate "Donate monthly" %}" class="cta" />
         </form>
       </div>
     </div>
     <div class="cls"></div>
     <p class="footnote">
-      Your logo will be visible below if you contribute at least
-      US&nbsp;${{ display_logo_amount|intcomma }}.<br>
+      {% blocktranslate trimmed with amount=display_logo_amount|intcomma %}
+        Your logo will be visible below if you contribute at least
+        US&nbsp;${{ amount }}.<br>
+      {% endblocktranslate %}
     </p>
   </div>
 {% endwith %}

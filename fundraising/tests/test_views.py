@@ -137,7 +137,7 @@ class TestManageDonations(TestCase):
 
     @staticmethod
     def _format_donation_date(value):
-        return date_filter(value, "N jS, Y \\a\\t P")
+        return date_filter(value, "DATETIME_FORMAT")
 
     def test_past_donations(self):
         response = self.client.get(self.url)

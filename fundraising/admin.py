@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.db.models import Sum
+from django.utils.translation import gettext_lazy as _
 from sorl.thumbnail.admin import AdminImageMixin
 
 from .admin_views import download_donor_report
@@ -16,7 +17,7 @@ from .models import (
 class DonatedFilter(admin.DateFieldListFilter):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.title = "donation date"
+        self.title = _("donation date")
 
 
 class DonationInline(admin.TabularInline):

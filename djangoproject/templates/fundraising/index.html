@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
-{% load fundraising_extras humanize static %}
+{% load fundraising_extras humanize i18n static %}
 
-{% block title %}Support Django{% endblock %}
+{% block title %}{% translate "Support Django" %}{% endblock %}
 {% block layout_class %}full-width{% endblock %}
 
-{% block og_title %}Support Django{% endblock %}
-{% block og_description %}Support Django development by donating to the Django Software Foundation{% endblock %}
+{% block og_title %}{% translate "Support Django" %}{% endblock %}
+{% block og_description %}{% translate "Support Django development by donating to the Django Software Foundation" %}{% endblock %}
 
 {% block header %}
-  <h1 class="visuallyhidden">Support Django</h1>
-  <p><em>Support Django development</em> by donating to the <em>Django Software Foundation</em>.</p>
+  <h1 class="visuallyhidden">{% translate "Support Django" %}</h1>
+  <p>
+    {% blocktranslate trimmed %}
+      <em>Support Django development</em> by donating to the <em>Django Software Foundation</em>.
+    {% endblocktranslate %}
+  </p>
 {% endblock %}
 
 {% block messages %}
@@ -25,64 +29,111 @@
 
 {% block content %}
 
-  <h1>Support the Django Software Foundation!</h1>
+  <h1>{% translate "Support the Django Software Foundation!" %}</h1>
 
   {% donation_form_with_heart %}
 
-  <h1>Other ways to give</h1>
+  <h1>{% translate "Other ways to give" %}</h1>
   <ul>
-    <li><a href="https://django.threadless.com/" target="_blank">Official merchandise store</a> -
-      Buy official t-shirts, accessories, and more to support Django.</li>
-    <li><a href="https://github.com/sponsors/django" target="_blank">Sponsor Django via GitHub Sponsors</a>.</li>
-    <li><a href="/foundation/donate/#benevity-giving">Benevity Workplace Giving
-      Program</a> - If your employer participates, you can make donations to the
-      DSF via payroll deduction.</li>
+    <li>
+      {% blocktranslate trimmed %}
+        <a href="https://django.threadless.com/" target="_blank">Official merchandise store</a> -
+        Buy official t-shirts, accessories, and more to support Django.
+      {% endblocktranslate %}
+    </li>
+    <li><a href="https://github.com/sponsors/django" target="_blank">{% translate "Sponsor Django via GitHub Sponsors" %}</a>.</li>
+    <li>
+      {% blocktranslate trimmed %}
+        <a href="/foundation/donate/#benevity-giving">Benevity Workplace Giving
+          Program</a> - If your employer participates, you can make donations to the
+        DSF via payroll deduction.
+      {% endblocktranslate %}
+    </li>
   </ul>
 
-  <h2 id="why-give">Why give to the Django Software Foundation?</h2>
+  <h2 id="why-give">{% translate "Why give to the Django Software Foundation?" %}</h2>
 
-  <p>Our main focus is direct support of Django's developers. This means:</p>
+  <p>{% translate "Our main focus is direct support of Django's developers. This means:" %}</p>
   <ul>
-    <li>Organizing and funding development sprints so that Django's developers can
-      meet in person.</li>
-    <li>Helping key developers attend these sprints and other community events by
-      covering travel expenses to official Django events.</li>
-    <li>Providing financial assistance to community development and outreach
-      projects such as <a href="#django-girls">Django Girls</a>.</li>
-    <li>Providing financial assistance to individuals so they can attend major
-      conferences and events.</li>
-    <li>Funding the <a href="#fellowship-program">Django Fellowship program</a>,
-      which provides full-time staff to perform community management tasks in the
-      Django community.</li>
+    <li>
+      {% blocktranslate trimmed %}
+        Organizing and funding development sprints so that Django's developers can
+        meet in person.
+      {% endblocktranslate %}
+    </li>
+    <li>
+      {% blocktranslate trimmed %}
+        Helping key developers attend these sprints and other community events by
+        covering travel expenses to official Django events.
+      {% endblocktranslate %}
+    </li>
+    <li>
+      {% blocktranslate trimmed %}
+        Providing financial assistance to community development and outreach
+        projects such as <a href="#django-girls">Django Girls</a>.
+      {% endblocktranslate %}
+    </li>
+    <li>
+      {% blocktranslate trimmed %}
+        Providing financial assistance to individuals so they can attend major
+        conferences and events.
+      {% endblocktranslate %}
+    </li>
+    <li>
+      {% blocktranslate trimmed %}
+        Funding the <a href="#fellowship-program">Django Fellowship program</a>,
+        which provides full-time staff to perform community management tasks in the
+        Django community.
+      {% endblocktranslate %}
+    </li>
   </ul>
 
-  <p>Still curious? See our <a href="/foundation/donate/">Frequently Asked Questions</a>
-    about donations.</p>
-
-  <h2 id="fellowship-program">Django Fellowship Program</h2>
-
-  <p>The biggest expense of the <abbr title="Django Software Foundation">DSF</abbr>
-    is the Django Fellowship program. It's a project where
-    <a href="#who-are-the-django-fellows">paid contractors</a> are engaged to
-    manage some of the administrative and community management tasks of the
-    Django project to support rapid development of Django itself.</p>
-
-  <p><strong>The Django Fellowship program has a major positive impact on how
-    Django is developed and maintained.</strong>
-    The Django Fellows triage 10-15 new tickets each week and review and merge
-    around fifteen non-trivial patches a week from the community. Release
-    blocking and severe bugs aren't postponed indefinitely. Major releases happen
-    according to an 8 month schedule and bug fix releases occur monthly.</p>
-
-  <p>For more details, you can read retrospectives for the
-    <a href="/weblog/2015/jan/21/django-fellowship-retrospective/"> first three
-      months of the program</a>,
-    <a href="/weblog/2015/dec/17/fellowship-2015-retrospective/">2015</a>, and
-    <a href="/weblog/2016/dec/28/fellowship-2016-retrospective/">2016</a>.
+  <p>
+    {% blocktranslate trimmed %}
+      Still curious? See our <a href="/foundation/donate/">Frequently Asked Questions</a>
+      about donations.
+    {% endblocktranslate %}
   </p>
 
-  <p>The Django Fellows are a resource to help review patches and contributions
-    from the community, and the community loves that:</p>
+  <h2 id="fellowship-program">{% translate "Django Fellowship Program" %}</h2>
+
+  <p>
+    {% blocktranslate trimmed %}
+      The biggest expense of the <abbr title="Django Software Foundation">DSF</abbr>
+      is the Django Fellowship program. It's a project where
+      <a href="#who-are-the-django-fellows">paid contractors</a> are engaged to
+      manage some of the administrative and community management tasks of the
+      Django project to support rapid development of Django itself.
+    {% endblocktranslate %}
+  </p>
+
+  <p>
+    {% blocktranslate trimmed %}
+      <strong>The Django Fellowship program has a major positive impact on how
+        Django is developed and maintained.</strong>
+      The Django Fellows triage 10-15 new tickets each week and review and merge
+      around fifteen non-trivial patches a week from the community. Release
+      blocking and severe bugs aren't postponed indefinitely. Major releases happen
+      according to an 8 month schedule and bug fix releases occur monthly.
+    {% endblocktranslate %}
+  </p>
+
+  <p>
+    {% blocktranslate trimmed %}
+      For more details, you can read retrospectives for the
+      <a href="/weblog/2015/jan/21/django-fellowship-retrospective/"> first three
+        months of the program</a>,
+      <a href="/weblog/2015/dec/17/fellowship-2015-retrospective/">2015</a>, and
+      <a href="/weblog/2016/dec/28/fellowship-2016-retrospective/">2016</a>.
+    {% endblocktranslate %}
+  </p>
+
+  <p>
+    {% blocktranslate trimmed %}
+      The Django Fellows are a resource to help review patches and contributions
+      from the community, and the community loves that:
+    {% endblocktranslate %}
+  </p>
 
   {% if testimonial %}
     <blockquote>
@@ -91,73 +142,105 @@
     </blockquote>
   {% endif %}
 
-  <p><strong>If you use Django on a daily basis and care about the development of Django
-    itself, you should donate today</strong> (may be <a href="/foundation/donate/#tax-deductible">tax deductible</a>).
-    Only with your support can we make sure that the web framework you base your work on
-    can grow to be even better in the coming years.</p>
+  <p>
+    {% blocktranslate trimmed %}
+      <strong>If you use Django on a daily basis and care about the development of Django
+        itself, you should donate today</strong> (may be <a href="/foundation/donate/#tax-deductible">tax deductible</a>).
+      Only with your support can we make sure that the web framework you base your work on
+      can grow to be even better in the coming years.
+    {% endblocktranslate %}
+  </p>
 
-  <h2 id="django-girls">Django Girls Outreach</h2>
+  <h2 id="django-girls">{% translate "Django Girls Outreach" %}</h2>
 
-  <p>Supporting <a href="https://djangogirls.org/">Django Girls workshops</a> is
-    a significant priority for the Django Software Foundation. Django Girls
-    workshops are organized by volunteers and are provided as free events for women
-    who want to learn to code. The workshop serves as an introduction to Python and
-    Django, where attendees learn usable skills to build their first web app.</p>
+  <p>
+    {% blocktranslate trimmed %}
+      Supporting <a href="https://djangogirls.org/">Django Girls workshops</a> is
+      a significant priority for the Django Software Foundation. Django Girls
+      workshops are organized by volunteers and are provided as free events for women
+      who want to learn to code. The workshop serves as an introduction to Python and
+      Django, where attendees learn usable skills to build their first web app.
+    {% endblocktranslate %}
+  </p>
 
-  <p>Django Girls workshop attendees go on to organize their own workshops, lead
-    in their community, and secure full-time jobs as developers. Read their stories
-    in the “Your Django Story” series on the <a href="http://blog.djangogirls.org/">
-      Django Girls blog</a>.</p>
+  <p>
+    {% blocktranslate trimmed %}
+      Django Girls workshop attendees go on to organize their own workshops, lead
+      in their community, and secure full-time jobs as developers. Read their stories
+      in the “Your Django Story” series on the <a href="https://blog.djangogirls.org/">
+        Django Girls blog</a>.
+    {% endblocktranslate %}
+  </p>
 
-  <p>In 2015, the Django Software Foundation contributed $5,400 to eighteen
-    Django Girls workshops around the world. Here's what some of the organizers had
-    to say about the impact:</p>
+  <p>
+    {% blocktranslate trimmed %}
+      In 2015, the Django Software Foundation contributed $5,400 to eighteen
+      Django Girls workshops around the world. Here's what some of the organizers had
+      to say about the impact:
+    {% endblocktranslate %}
+  </p>
 
   <blockquote>
-    <p>Sponsorship from the DSF allowed us to have on-site child care for our Django
-      Girls Portland workshop. We hosted 2 young children and an infant, and provided
-      them with healthy snacks, games, sidewalk chalk, finger paint, and emoji
-      stickers. Without our nanny, 3 of our attendees wouldn't have been able to come
-      to the workshop. Finger paint photo is
-      <a href="http://blog.djangogirls.org/post/124680859493/django-girls-portland-a-retrospective">
-        on the blog</a>!</p>
-    <em>Lacey - Portland, Oregon, US</em>
+    <p>
+      {% blocktranslate trimmed %}
+        Sponsorship from the DSF allowed us to have on-site child care for our Django
+        Girls Portland workshop. We hosted 2 young children and an infant, and provided
+        them with healthy snacks, games, sidewalk chalk, finger paint, and emoji
+        stickers. Without our nanny, 3 of our attendees wouldn't have been able to come
+        to the workshop. Finger paint photo is
+        <a href="https://blog.djangogirls.org/post/124680859493/django-girls-portland-a-retrospective">
+          on the blog</a>!
+      {% endblocktranslate %}
+    </p>
+    <em>{% translate "Lacey - Portland, Oregon, US" %}</em>
   </blockquote>
 
   <blockquote>
-    <p>The DSF supported <a href="https://djangogirls.org/warsaw/">Django Girls
-      Poland</a> four times this year and the impact was enormous! In Poland, diversity
-      awareness is not a very common topic. When we approached different local
-      companies about our workshops they usually didn't get what we were actually
-      doing and why it is important. If not for the DSF, we probably would not have
-      been able to hold our workshops at all. Our first workshops were the only until
-      now workshops that were 100% female - female only coaches and female only
-      attendees. Thanks to you, we were able to focus on gathering female mentors
-      instead of searching for sponsors!</p>
-    <em>Ania - Wrocław, Poland</em>
+    <p>
+      {% blocktranslate trimmed %}
+        The DSF supported <a href="https://djangogirls.org/warsaw/">Django Girls
+          Poland</a> four times this year and the impact was enormous! In Poland, diversity
+        awareness is not a very common topic. When we approached different local
+        companies about our workshops they usually didn't get what we were actually
+        doing and why it is important. If not for the DSF, we probably would not have
+        been able to hold our workshops at all. Our first workshops were the only until
+        now workshops that were 100% female - female only coaches and female only
+        attendees. Thanks to you, we were able to focus on gathering female mentors
+        instead of searching for sponsors!
+      {% endblocktranslate %}
+    </p>
+    <em>{% translate "Ania - Wrocław, Poland" %}</em>
   </blockquote>
 
   <blockquote>
-    <p><a href="https://pyfound.blogspot.kr/2015/10/django-girls-seoul-great-success.html">
-      Django Girls Seoul</a> had 425 applicants from 11 different countries ages
-      ranging from 16 to 50 years old. After acceptances, we had about 105 people to
-      feed and caffeinate! Thanks to Django's sponsorship we could get all of our
-      participants coffee for the day. It really made a huge difference because we
-      all know how a cup of coffee can change the atmosphere and mood! We were so
-      grateful to the sponsorship we received from abroad. We tried to get sponsorship
-      from a lot of Korean companies but the same generosity doesn't translate well
-      into a Korean Business culture, I guess. This made us even more thankful for
-      our friends at the DSF!</p>
-    <em>Rachell - Seoul, South Korea</em>
+    <p>
+      {% blocktranslate trimmed %}
+        <a href="https://pyfound.blogspot.kr/2015/10/django-girls-seoul-great-success.html">
+          Django Girls Seoul</a> had 425 applicants from 11 different countries ages
+        ranging from 16 to 50 years old. After acceptances, we had about 105 people to
+        feed and caffeinate! Thanks to Django's sponsorship we could get all of our
+        participants coffee for the day. It really made a huge difference because we
+        all know how a cup of coffee can change the atmosphere and mood! We were so
+        grateful to the sponsorship we received from abroad. We tried to get sponsorship
+        from a lot of Korean companies but the same generosity doesn't translate well
+        into a Korean Business culture, I guess. This made us even more thankful for
+        our friends at the DSF!
+      {% endblocktranslate %}
+    </p>
+    <em>{% translate "Rachell - Seoul, South Korea" %}</em>
   </blockquote>
 
   <hr style="margin: 40px 0" />
 
   <div class="heroes-section">
-    <h1 id="dsf-supporters">DSF Supporters</h1>
-    <p>Our donors make our work possible! We are incredibly grateful for the
-      financial support from the following individuals and organizations in our
-      community.</p>
+    <h1 id="dsf-supporters">{% translate "DSF Supporters" %}</h1>
+    <p>
+      {% blocktranslate trimmed %}
+        Our donors make our work possible! We are incredibly grateful for the
+        financial support from the following individuals and organizations in our
+        community.
+      {% endblocktranslate %}
+    </p>
 
     {% display_django_heroes %}
   </div>
@@ -166,60 +249,88 @@
 {% block content-extra %}
   <div class="layout-tertiary" id="about">
     <div class="container">
-      <h2>What is the Django Software Foundation?</h2>
-      <p>Development of Django is supported by an independent foundation
-        established as a 501(c)(3) non-profit. Like most open-source foundations,
-        the goal of the <a href="/foundation/">Django Software Foundation</a>
-        is to promote, support, and advance the Django web framework. If you're
-        interested in how the Django Software Foundation supports the Django
-        web framework, we published a
-        <a href="/weblog/2015/jan/08/django-software-foundation-2014/">Summary
-          of 2014. </a>
+      <h2>{% translate "What is the Django Software Foundation?" %}</h2>
+      <p>
+        {% blocktranslate trimmed %}
+          Development of Django is supported by an independent foundation
+          established as a 501(c)(3) non-profit. Like most open-source foundations,
+          the goal of the <a href="/foundation/">Django Software Foundation</a>
+          is to promote, support, and advance the Django web framework. If you're
+          interested in how the Django Software Foundation supports the Django
+          web framework, we published a
+          <a href="/weblog/2015/jan/08/django-software-foundation-2014/">
+            Summary of 2014.
+          </a>
+        {% endblocktranslate %}
       </p>
 
-      <h2 id="who-are-the-django-fellows">Who are the Django Fellows?</h2>
+      <h2 id="who-are-the-django-fellows">{% translate "Who are the Django Fellows?" %}</h2>
 
-      <p>There are currently two Django Fellows:</p>
+      <p>{% translate "There are currently two Django Fellows:" %}</p>
 
-      <p><strong><a href="https://github.com/sarahboyce">Sarah Boyce</a>
-        (2024-present)</strong> - an active community member, co-creator of
-        <a href="https://djangonaut.space">Djangonaut Space</a> and a member of
-        Django's review and triage team since 2023. Sarah
-        <a href="https://www.djangoproject.com/weblog/2024/mar/22/welcome-our-new-fellow-sarah-boyce/">
-          began as a full-time Fellow in April 2024</a>.</p>
+      <p>
+        {% blocktranslate trimmed %}
+          <strong><a href="https://github.com/sarahboyce">Sarah Boyce</a>
+            (2024-present)</strong> - an active community member, co-creator of
+          <a href="https://djangonaut.space">Djangonaut Space</a> and a member of
+          Django's review and triage team since 2023. Sarah
+          <a href="https://www.djangoproject.com/weblog/2024/mar/22/welcome-our-new-fellow-sarah-boyce/">
+            began as a full-time Fellow in April 2024</a>.
+        {% endblocktranslate %}
+      </p>
 
-      <p><strong><a href="https://github.com/nessita">Natalia Bidart</a>
-        (2023-present)</strong> - a seasoned Django user with extensive
-        experience in architecting, building, and maintaining scalable web
-        services, as well as leading new feature design and development.
-        Natalia
-        <a href="https://www.djangoproject.com/weblog/2023/mar/31/welcome-our-new-fellow-natalia-bidart/">
-          began as a part-time Fellow in April 2023</a>.</p>
+      <p>
+        {% blocktranslate trimmed %}
+          <strong><a href="https://github.com/nessita">Natalia Bidart</a>
+            (2023-present)</strong> - a seasoned Django user with extensive
+          experience in architecting, building, and maintaining scalable web
+          services, as well as leading new feature design and development.
+          Natalia
+          <a href="https://www.djangoproject.com/weblog/2023/mar/31/welcome-our-new-fellow-natalia-bidart/">
+            began as a part-time Fellow in April 2023</a>.
+        {% endblocktranslate %}
+      </p>
 
-      <p>Former Django Fellows:</p>
+      <p>{% translate "Former Django Fellows:" %}</p>
 
-      <p><strong><a href="https://github.com/felixxm">Mariusz Felisiak</a>
-        (2019-2024)</strong> - a member of the Django team since 2017,
-        focusing on the ORM and Oracle back-end, along with triaging tickets,
-        reviewing pull requests, and backporting changes. He has contributed to
-        more than a dozen open-source projects. Mariusz began as a full-time
-        Fellow in April 2019. In 2024 Mariusz retired after five years of
-        service.</p>
-      <p><strong><a href="https://github.com/carltongibson">Carlton Gibson</a>
-        (2018-2023)</strong> - a longtime Django user, core contributor to
-        Django REST Framework, maintainer of Django Filter and Django Crispy
-        Forms, and a contributor to many other packages in the Django ecosystem.
-        Carlton began as a part-time Fellow in January 2018.
-        In 2023 Carlton retired after five years of service.</p>
-      <p><strong><a href="https://github.com/timgraham">Tim Graham</a> (2014-
-        2019)</strong> - the inaugural Django Fellow, a member of the Django
-        team since 2010, and a longtime major contributor and reviewer. In 2018
-        Tim transitioned to part-time and in 2019 retired after four years of
-        service.</p>
-      <p><strong><a href="https://github.com/berkerpeksag">Berker Peksağ</a>
-        (2014)</strong> - a core developer on CPython and Gunicorn, Berker
-        worked as Fellow during the 3 month pilot, supporting Tim
-        part-time.</p>
+      <p>
+        {% blocktranslate trimmed %}
+          <strong><a href="https://github.com/felixxm">Mariusz Felisiak</a>
+            (2019-2024)</strong> - a member of the Django team since 2017,
+          focusing on the ORM and Oracle back-end, along with triaging tickets,
+          reviewing pull requests, and backporting changes. He has contributed to
+          more than a dozen open-source projects. Mariusz began as a full-time
+          Fellow in April 2019. In 2024 Mariusz retired after five years of
+          service.
+        {% endblocktranslate %}
+      </p>
+      <p>
+        {% blocktranslate trimmed %}
+          <strong><a href="https://github.com/carltongibson">Carlton Gibson</a>
+            (2018-2023)</strong> - a longtime Django user, core contributor to
+          Django REST Framework, maintainer of Django Filter and Django Crispy
+          Forms, and a contributor to many other packages in the Django ecosystem.
+          Carlton began as a part-time Fellow in January 2018.
+          In 2023 Carlton retired after five years of service.
+        {% endblocktranslate %}
+      </p>
+      <p>
+        {% blocktranslate trimmed %}
+          <strong><a href="https://github.com/timgraham">Tim Graham</a> (2014-
+            2019)</strong> - the inaugural Django Fellow, a member of the Django
+          team since 2010, and a longtime major contributor and reviewer. In 2018
+          Tim transitioned to part-time and in 2019 retired after four years of
+          service.
+        {% endblocktranslate %}
+      </p>
+      <p>
+        {% blocktranslate trimmed %}
+          <strong><a href="https://github.com/berkerpeksag">Berker Peksağ</a>
+            (2014)</strong> - a core developer on CPython and Gunicorn, Berker
+          worked as Fellow during the 3 month pilot, supporting Tim
+          part-time.
+        {% endblocktranslate %}
+      </p>
     </div>
   </div>
 {% endblock %}

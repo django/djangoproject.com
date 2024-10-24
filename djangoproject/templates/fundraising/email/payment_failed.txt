@@ -1,10 +1,21 @@
-Hi {{ donation.donor.name_with_fallback }},
+{% load i18n %}
+{% blocktranslate trimmed with name=donation.donor.name_with_fallback %}
+Hi {{ name }},
+{% endblocktranslate %}
 
-This is to let you know that payment for your recurring donation to the Django Software Foundation has failed. This might be because your payment card has expired.
+{% blocktranslate trimmed %}
+This is to let you know that payment for your recurring donation to the Django Software Foundation has failed.
+This might be because your payment card has expired.
+{% endblocktranslate %}
 
-Please go to {% url 'fundraising:manage-donations' donation.donor.pk %} to add a new card. We won't be able to take any payments in the mean time.
+{% url 'fundraising:manage-donations' donation.donor.pk as manage_url %}
+{% blocktranslate trimmed %}
+Please go to {{ manage_url }} to add a new card. We won't be able to take any payments in the mean time.
+{% endblocktranslate %}
 
-Thanks very much for your support.
+{% translate "Thanks very much for your support." %}
 
+{% blocktranslate trimmed %}
 Regards,
 Django Software Foundation
+{% endblocktranslate %}

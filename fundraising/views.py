@@ -11,6 +11,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -131,7 +132,7 @@ def manage_donations(request, hero):
         if hero_form.is_valid() and modify_donations_formset.is_valid():
             hero_form.save()
             modify_donations_formset.save()
-            messages.success(request, "Your information has been updated.")
+            messages.success(request, _("Your information has been updated."))
     else:
         hero_form = DjangoHeroForm(instance=hero)
         modify_donations_formset = ModifyDonationsFormset(queryset=recurring_donations)
@@ -178,7 +179,7 @@ def cancel_donation(request, hero):
     donation.stripe_subscription_id = ""
     donation.save()
 
-    messages.success(request, "Your donation has been canceled.")
+    messages.success(request, _("Your donation has been canceled."))
     return redirect("fundraising:manage-donations", hero=hero.pk)
 
 
@@ -240,7 +241,7 @@ class WebhookHandler:
             "fundraising/email/subscription_cancelled.txt", {"donation": donation}
         )
         send_mail(
-            "Payment cancelled",
+            _("Payment cancelled"),
             mail_text,
             settings.DEFAULT_FROM_EMAIL,
             [donation.donor.email],
@@ -258,7 +259,7 @@ class WebhookHandler:
             "fundraising/email/payment_failed.txt", {"donation": donation}
         )
         send_mail(
-            "Payment failed",
+            _("Payment failed"),
             mail_text,
             settings.DEFAULT_FROM_EMAIL,
             [donation.donor.email],
@@ -328,7 +329,7 @@ class WebhookHandler:
             "fundraising/email/thank-you.html", {"donation": donation}
         )
         send_mail(
-            "Thank you for your donation to the Django Software Foundation",
+            _("Thank you for your donation to the Django Software Foundation"),
             message,
             settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
             [donation.receipt_email],
