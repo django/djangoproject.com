@@ -7,7 +7,6 @@
     "object": ""
   },
   "livemode": true,
-  "object": "event",
   "pending_webhooks": 1,
   "request": null,
   "type": "invoice.payment_succeeded"

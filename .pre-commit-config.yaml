@@ -1,10 +1,21 @@
-exclude: '(\/migrations\/|^djangoproject\/static\/.*$)'
+exclude: '(^djangoproject\/static\/.*$)'
 default_language_version:
     python: python3
 repos:
     - repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: "v4.6.0"
+      rev: "v5.0.0"
       hooks:
+          - id: check-added-large-files
+            args: ["--maxkb=1024"]
+          - id: check-case-conflict
+          - id: check-docstring-first
+          - id: check-executables-have-shebangs
+          - id: check-json
+          - id: check-merge-conflict
+          - id: check-shebang-scripts-are-executable
+          - id: check-toml
+          - id: check-yaml
+            args: ["--allow-multiple-documents"]
           - id: debug-statements
           - id: detect-private-key
           - id: end-of-file-fixer
@@ -12,27 +23,28 @@ repos:
           - id: file-contents-sorter
             files: ^(requirements/\w*.txt)$
             args: ["--ignore-case", "--unique"]
-          - id: fix-encoding-pragma
-            args: ["--remove"]
+          - id: fix-byte-order-marker
+          - id: mixed-line-ending
           - id: trailing-whitespace
     - repo: https://github.com/asottile/pyupgrade
-      rev: "v3.17.0"
+      rev: "v3.19.0"
       hooks:
           - id: pyupgrade
             # TODO: Update to --py312 when dropping support for
             # Python 3.8
             args: [--py38-plus]
     - repo: https://github.com/adamchainz/django-upgrade
-      rev: "1.21.0"
+      rev: "1.22.1"
       hooks:
           - id: django-upgrade
             args: [--target-version, "4.2"]
     - repo: https://github.com/psf/black
-      rev: 24.8.0
+      rev: 24.10.0
       hooks:
           - id: black
-    - repo: https://github.com/pre-commit/mirrors-prettier
-      rev: "v4.0.0-alpha.8"
+            exclude: '(\/migrations\/)'
+    - repo: https://github.com/rbubley/mirrors-prettier
+      rev: "v3.3.3"
       hooks:
           - id: prettier
             exclude_types: [html, json, scss]
@@ -45,7 +57,15 @@ repos:
       hooks:
           - id: flake8
     - repo: https://github.com/rtts/djhtml
-      rev: "3.0.6"
+      rev: "3.0.7"
       hooks:
           - id: djhtml
             files: .*/templates/.*\.html$
+    - repo: https://github.com/tox-dev/pyproject-fmt
+      rev: "2.4.3"
+      hooks:
+          - id: pyproject-fmt
+    - repo: https://github.com/mrtazz/checkmake.git
+      rev: 0.2.2
+      hooks:
+          - id: checkmake
