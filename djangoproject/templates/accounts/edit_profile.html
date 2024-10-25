@@ -1,14 +1,15 @@
 {% extends "registration/base.html" %}
+{% load i18n %}
 
-{% block title %}Edit your profile{% endblock %}
+{% block title %}{% translate "Edit your profile" %}{% endblock %}
 
 {% block content %}
 
     {% if form.errors %}
-        <p class="errors">Please correct the errors below: {{ form.non_field_errors }}</p>
+        <p class="errors">{% translate "Please correct the errors below:" %} {{ form.non_field_errors }}</p>
     {% endif %}
 
-    <h1>Edit your profile</h1>
+    <h1>{% translate "Edit your profile" %}</h1>
 
     <form method="post" action="" class="form-input">
         {% csrf_token %}
@@ -27,25 +28,27 @@
         </div>
 
         <div class="submit">
-            <input class="cta" type="submit" value="Save"/>
+            <input class="cta" type="submit" value="{% translate "Save" %}"/>
         </div>
     </form>
 {% endblock %}
 
 {% block content-related %}
-    <h1 class="visuallyhidden">Additional Information</h1>
+    <h1 class="visuallyhidden">{% translate "Additional Information" %}</h1>
     <div role="complementary">
-        <h2>Help</h2>
+        <h2>{% translate "Help" %}</h2>
 
-        <p>Use this form to edit your profile.</p>
+        <p>{% translate "Use this form to edit your profile." %}</p>
 
-        <p>Use whatever name you'd like to be identified with on djangoproject.com. If
-            you leave it blank, we'll identify you as <b>{{ user.username }}</b>, your
-            username.</p>
+        <p>{% blocktranslate trimmed with username=user.username %}
+            Use whatever name you'd like to be identified with on djangoproject.com. If
+            you leave it blank, we'll identify you as <b>{{ username }}</b>, your
+            username.{% endblocktranslate %}</p>
 
-        <p>We hate spam as much as you do. We'll only use it to send you password reset
+        <p>{% blocktranslate trimmed %}
+            We hate spam as much as you do. We'll only use it to send you password reset
             emails. We'll also use this email to try to fetch a <a
                 href="https://en.gravatar.com/">Gravatar</a>. You can change the image for this
-            email at <a href="https://en.gravatar.com/">Gravatar</a>.</p>
+            email at <a href="https://en.gravatar.com/">Gravatar</a>.{% endblocktranslate %}</p>
     </div>
 {% endblock %}
