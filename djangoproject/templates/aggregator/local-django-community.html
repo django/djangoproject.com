@@ -1,4 +1,5 @@
 {% extends "base_community.html" %}
+{% load i18n %}
 
 {% block content %}
 
@@ -6,11 +7,11 @@
   {% regroup django_communities|dictsort:"continent" by continent as grouped_django_communities %}
 
 
-  <h2>Local Django Communities</h2>
+  <h2>{% translate "Local Django Communities" %}</h2>
 
-  <p>Something missing? <a href="https://github.com/django/djangoproject.com/issues/new?assignees=&amp;labels=type%3Acommunity&amp;projects=&amp;template=community_request.md">Suggest your community</a>.</p>
+  <p>{% blocktranslate trimmed %}Something missing? <a href="https://github.com/django/djangoproject.com/issues/new?assignees=&amp;labels=type%3Acommunity&amp;projects=&amp;template=community_request.md">Suggest your community{% endblocktranslate %}</a>.</p>
 
-  {% if grouped_django_communities %}<h3 id="table-of-contents">Table of contents<a class="plink" href="#table-of-contents"> ¶</a></h3>{% endif %}
+  {% if grouped_django_communities %}<h3 id="table-of-contents">{% translate "Table of contents" %}<a class="plink" href="#table-of-contents"> ¶</a></h3>{% endif %}
   <ul>
     {% for local_django_community in grouped_django_communities %}
       <li><a href="#{{ local_django_community.grouper.title | lower }}-meetups">{{ local_django_community.grouper.title }}</a></li>
@@ -27,18 +28,18 @@
             <h3 id="{{ django_community.slug }}-meetup">{{ django_community.name }} <a class="plink" href="#{{ django_community.slug }}-meetup">¶</a></h3>
             <p class="meta">{{ django_community.city }}, {{ django_community.country }} &nbsp;
               {% if django_community.is_active %}
-                Active
+                {% translate "Active" %}
               {% else %}
-                Inactive
+                {% translate "Inactive" %}
               {% endif %}
             </p>
             <p>{{ django_community.description|safe }}</p>
             <p>
               {% if django_community.website_url %}
-                <a href="{{ django_community.website_url }}">Community Website</a> &nbsp;
+                <a href="{{ django_community.website_url }}">{% translate "Community Website" %}</a> &nbsp;
               {% endif %}
               {% if django_community.event_site_url %}
-                <a href="{{ django_community.event_site_url }}">Event Website</a>
+                <a href="{{ django_community.event_site_url }}">{% translate "Event Website" %}</a>
               {% endif %}
             </p>
           </li>
@@ -46,7 +47,7 @@
       </ul>
     </div>
   {% empty %}
-    Local Django communities are coming soon. Please check back later.
+    {% translate "Local Django communities are coming soon. Please check back later." %}
 
   {% endfor %}
 {##}
