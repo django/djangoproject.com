@@ -1,4 +1,4 @@
-Babel==2.15.0
+Babel==2.16.0
 django-contact-form==5.1.0
 django-countries==7.6.1
 django-hosts==5.1
@@ -8,7 +8,7 @@ django-read-only==1.16.0
 django-recaptcha==4.0.0
 django-registration-redux==2.13
 Django==4.2.16
-docutils==0.17.1
+docutils==0.20.1
 feedparser==6.0.11
 Jinja2==3.1.4
 libsass==0.23.0
@@ -18,5 +18,5 @@ Pygments==2.18.0
 pykismet3==0.1.1
 requests==2.32.3
 sorl-thumbnail==12.11.0
-Sphinx==4.5.0
+Sphinx==7.1.2
 stripe==3.1.0
