@@ -1,5 +1,6 @@
 import datetime
 import json
+from operator import attrgetter
 from unittest import mock
 
 import requests_mock
@@ -10,6 +11,7 @@ from django_hosts.resolvers import reverse
 
 from tracdb.models import Ticket
 from tracdb.testutils import TracDBCreateDatabaseMixin
+from tracdb.tractime import datetime_to_timestamp
 
 from .models import (
     METRIC_PERIOD_DAILY,
@@ -178,3 +180,115 @@ class UpdateMetricCommandTestCase(TestCase):
         self.assertTrue(mock_reset_generation_key.called)
         data = GithubItemCountMetric.objects.last().data.last()
         self.assertEqual(data.measurement, 10)
+
+
+class FixTracMetricsCommandTestCase(TracDBCreateDatabaseMixin, TestCase):
+    databases = {"default", "trac"}
+
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        def dt(*args, **kwargs):
+            kwargs.setdefault("tzinfo", datetime.UTC)
+            return datetime.datetime(*args, **kwargs)
+
+        def ts(*args, **kwargs):
+            return datetime_to_timestamp(dt(*args, **kwargs))
+
+        for day in range(7):
+            Ticket.objects.create(_time=ts(2024, 1, day + 1))
+
+        cls.metric_today = TracTicketMetric.objects.create(
+            slug="today", query="time=today.."
+        )
+        cls.metric_week = TracTicketMetric.objects.create(
+            slug="week", query="time=thisweek.."
+        )
+
+    def test_command_today(self):
+        datum = self.metric_today.data.create(
+            measurement=0, timestamp="2024-01-01T00:00:00"
+        )
+        management.call_command("fix_trac_metrics", "today", yes=True, verbosity=0)
+        datum.refresh_from_db()
+        self.assertEqual(datum.measurement, 1)
+
+    def test_command_week(self):
+        datum = self.metric_week.data.create(
+            measurement=0, timestamp="2024-01-07T00:00:00"
+        )
+        management.call_command("fix_trac_metrics", "week", yes=True, verbosity=0)
+        datum.refresh_from_db()
+        self.assertEqual(datum.measurement, 7)
+
+    def test_command_safe_by_default(self):
+        datum = self.metric_today.data.create(
+            measurement=0, timestamp="2024-01-01T00:00:00"
+        )
+        management.call_command("fix_trac_metrics", "today", verbosity=0)
+        datum.refresh_from_db()
+        self.assertEqual(datum.measurement, 0)
+
+    def test_multiple_measurements(self):
+        self.metric_today.data.create(measurement=0, timestamp="2024-01-01T00:00:00")
+        self.metric_today.data.create(measurement=0, timestamp="2024-01-02T00:00:00")
+        self.metric_today.data.create(measurement=0, timestamp="2024-01-03T00:00:00")
+        management.call_command("fix_trac_metrics", "today", yes=True, verbosity=0)
+        self.assertQuerySetEqual(
+            self.metric_today.data.order_by("timestamp"),
+            [1, 1, 1],
+            transform=attrgetter("measurement"),
+        )
+
+    def test_option_from_date(self):
+        self.metric_today.data.create(measurement=0, timestamp="2024-01-01T00:00:00")
+        self.metric_today.data.create(measurement=0, timestamp="2024-01-02T00:00:00")
+        self.metric_today.data.create(measurement=0, timestamp="2024-01-03T00:00:00")
+        management.call_command(
+            "fix_trac_metrics",
+            "today",
+            yes=True,
+            from_date=datetime.date(2024, 1, 2),
+            verbosity=0,
+        )
+        self.assertQuerySetEqual(
+            self.metric_today.data.order_by("timestamp"),
+            [0, 1, 1],
+            transform=attrgetter("measurement"),
+        )
+
+    def test_option_to_date(self):
+        self.metric_today.data.create(measurement=0, timestamp="2024-01-01T00:00:00")
+        self.metric_today.data.create(measurement=0, timestamp="2024-01-02T00:00:00")
+        self.metric_today.data.create(measurement=0, timestamp="2024-01-03T00:00:00")
+        management.call_command(
+            "fix_trac_metrics",
+            "today",
+            yes=True,
+            to_date=datetime.date(2024, 1, 2),
+            verbosity=0,
+        )
+        self.assertQuerySetEqual(
+            self.metric_today.data.order_by("timestamp"),
+            [1, 1, 0],
+            transform=attrgetter("measurement"),
+        )
+
+    def test_option_both_to_and_from_date(self):
+        self.metric_today.data.create(measurement=0, timestamp="2024-01-01T00:00:00")
+        self.metric_today.data.create(measurement=0, timestamp="2024-01-02T00:00:00")
+        self.metric_today.data.create(measurement=0, timestamp="2024-01-03T00:00:00")
+        management.call_command(
+            "fix_trac_metrics",
+            "today",
+            yes=True,
+            from_date=datetime.date(2024, 1, 2),
+            to_date=datetime.date(2024, 1, 2),
+            verbosity=0,
+        )
+        self.assertQuerySetEqual(
+            self.metric_today.data.order_by("timestamp"),
+            [0, 1, 0],
+            transform=attrgetter("measurement"),
+        )

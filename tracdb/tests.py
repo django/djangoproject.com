@@ -1,9 +1,17 @@
+from datetime import UTC, date, datetime
 from operator import attrgetter
 
-from django.test import TestCase
+import time_machine
+from django.test import SimpleTestCase, TestCase
 
 from .models import Revision, Ticket, TicketCustom
 from .testutils import TracDBCreateDatabaseMixin
+from .tractime import (
+    datetime_to_timestamp,
+    dayrange,
+    time_property,
+    timestamp_to_datetime,
+)
 
 
 class TestModels(TestCase):
@@ -20,6 +28,9 @@ class TicketTestCase(TracDBCreateDatabaseMixin, TestCase):
         """
         if custom is None:
             custom = {}
+        if "time" in kwargs:
+            assert "_time" not in kwargs
+            kwargs["_time"] = datetime_to_timestamp(kwargs.pop("time"))
 
         ticket = Ticket.objects.create(**kwargs)
         TicketCustom.objects.bulk_create(
@@ -156,4 +167,98 @@ class TicketTestCase(TracDBCreateDatabaseMixin, TestCase):
         self.assertTicketsEqual(
             Ticket.objects.from_querystring("severity=high&stage=unreviewed"),
             ["test1"],
+        )
+
+    @time_machine.travel("2024-10-24T14:30:00+00:00")
+    def test_from_querystring_time_today_same_day(self):
+        self._create_ticket(
+            summary="test",
+            time=datetime.fromisoformat("2024-10-24T10:30:00+00:00"),
+        )
+        self.assertTicketsEqual(
+            Ticket.objects.from_querystring("time=today.."), ["test"]
+        )
+
+    @time_machine.travel("2024-10-24T14:30:00+00:00")
+    def test_from_querystring_time_today_previous_day_less_than_24h(self):
+        self._create_ticket(
+            summary="test",
+            # previous day, but still within 24h
+            time=datetime.fromisoformat("2024-10-23T20:30:00+00:00"),
+        )
+        self.assertTicketsEqual(Ticket.objects.from_querystring("time=today.."), [])
+
+    @time_machine.travel("2024-10-24T14:30:00+00:00")
+    def test_from_querystring_time_today_previous_day_more_than_24h(self):
+        self._create_ticket(
+            summary="test",
+            # previous day, more than 24h ago
+            time=datetime.fromisoformat("2024-10-23T10:30:00+00:00"),
+        )
+        self.assertTicketsEqual(Ticket.objects.from_querystring("time=today.."), [])
+
+    @time_machine.travel("2024-10-24T14:30:00+00:00")
+    def test_from_querystring_time_thisweek(self):
+        self._create_ticket(
+            summary="test",
+            time=datetime.fromisoformat("2024-10-21T10:30:00+00:00"),
+        )
+        self._create_ticket(
+            summary="too old",
+            time=datetime.fromisoformat("2024-10-15T10:30:00+00:00"),
+        )
+        self.assertTicketsEqual(
+            Ticket.objects.from_querystring("time=thisweek.."), ["test"]
+        )
+
+    def test_from_querystring_invalid_time(self):
+        with self.assertRaises(ValueError):
+            Ticket.objects.from_querystring("time=2024-10-24..")
+
+
+class TracTimeTestCase(SimpleTestCase):
+    def test_datetime_to_timestamp(self):
+        testdata = [
+            (datetime(1970, 1, 1, microsecond=1, tzinfo=UTC), 1),
+            (datetime(1970, 1, 1, 0, 0, 1, tzinfo=UTC), 1_000_000),
+            (datetime(1970, 1, 2, tzinfo=UTC), 24 * 3600 * 1_000_000),
+        ]
+        for dt, expected in testdata:
+            with self.subTest(dt=dt):
+                self.assertEqual(datetime_to_timestamp(dt), expected)
+
+    def test_timestamp_to_datetime(self):
+        testdata = [
+            (1, datetime(1970, 1, 1, microsecond=1, tzinfo=UTC)),
+            (1_000_000, datetime(1970, 1, 1, second=1, tzinfo=UTC)),
+            (24 * 3600 * 1_000_000, datetime(1970, 1, 2, tzinfo=UTC)),
+        ]
+        for ts, expected in testdata:
+            with self.subTest(ts=ts):
+                self.assertEqual(timestamp_to_datetime(ts), expected)
+
+    def test_time_property(self):
+        class T:
+            timestamp = 1
+            prop = time_property("timestamp")
+
+        self.assertEqual(T().prop.date(), date(1970, 1, 1))
+
+    def test_dayrange_error_negative_day(self):
+        with self.assertRaises(ValueError):
+            dayrange(date.today(), -1)
+
+    def test_dayrange_error_zero_day(self):
+        with self.assertRaises(ValueError):
+            dayrange(date.today(), 0)
+
+    def test_dayrange_error_datetime(self):
+        with self.assertRaises(TypeError):
+            dayrange(datetime.now(), 1)
+
+    def test_dayrange_1_day(self):
+        offset = 6 * 3600 * 1_000_000  # offset between utc and chicago
+        self.assertEqual(
+            dayrange(date(1970, 1, 1), days=1),
+            (offset, offset + 24 * 3600 * 1_000_000 - 1),
         )
