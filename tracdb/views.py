@@ -1,9 +1,7 @@
-import datetime
-
 from django import db
 from django.shortcuts import render
 
-from .models import _epoc
+from .tractime import timestamp_to_datetime
 
 
 def bouncing_tickets(request):
@@ -17,7 +15,7 @@ def bouncing_tickets(request):
 
     # Fix timestamps. LOLTrac.
     for t in tickets:
-        t["last_reopen_time"] = ts2dt(t["last_reopen_time"])
+        t["last_reopen_time"] = timestamp_to_datetime(t["last_reopen_time"])
 
     return render(
         request,
@@ -26,10 +24,6 @@ def bouncing_tickets(request):
             "tickets": tickets,
         },
     )
-
-
-def ts2dt(ts):
-    return _epoc + datetime.timedelta(microseconds=ts)
 
 
 def dictfetchall(cursor):
