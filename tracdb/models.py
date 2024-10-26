@@ -43,37 +43,14 @@ exhaustive):
 
 """
 
-import datetime
+from datetime import date
 from functools import reduce
 from operator import and_, or_
 from urllib.parse import parse_qs
 
 from django.db import models
 
-_epoc = datetime.datetime(1970, 1, 1, tzinfo=datetime.UTC)
-
-
-class time_property:
-    """
-    Convert Trac timestamps into UTC datetimes.
-
-    See http://trac.edgewall.org/browser//branches/0.12-stable/trac/util/datefmt.py
-    for Trac's version of all this. Mine's something of a simplification.
-
-    Like the rest of this module this is far from perfect -- no setters, for
-    example! That's good enough for now.
-    """
-
-    def __init__(self, fieldname):
-        self.fieldname = fieldname
-
-    def __get__(self, instance, owner):
-        if instance is None:
-            return self
-        timestamp = getattr(instance, self.fieldname)
-        if timestamp is None:
-            return None
-        return _epoc + datetime.timedelta(microseconds=timestamp)
+from .tractime import dayrange, time_property
 
 
 class JSONBObjectAgg(models.Aggregate):
@@ -97,7 +74,17 @@ class TicketQuerySet(models.QuerySet):
         filter_kwargs, exclude_kwargs = {}, {}
 
         for field, (value,) in parsed.items():
-            if field not in model_fields:
+            if field == "time":
+                if value == "today..":
+                    timestamp_range = dayrange(date.today(), 1)
+                elif value == "thisweek..":
+                    timestamp_range = dayrange(date.today(), 7)
+                else:
+                    raise ValueError(f"Unsupported time value {value}")
+
+                filter_kwargs["_time__range"] = timestamp_range
+                continue
+            elif field not in model_fields:
                 custom_lookup_required = True
                 field = f"custom__{field}"
             if value.startswith("!"):
