@@ -3,19 +3,19 @@
 Hi {{ name }},
 {% endblocktranslate %}
 
-{% blocktranslate trimmed %}
+{% blocktranslate %}
 This is to let you know that payment for your recurring donation to the Django Software Foundation has failed.
 This might be because your payment card has expired.
 {% endblocktranslate %}
 
 {% url 'fundraising:manage-donations' donation.donor.pk as manage_url %}
-{% blocktranslate trimmed %}
+{% blocktranslate %}
 Please go to {{ manage_url }} to add a new card. We won't be able to take any payments in the mean time.
 {% endblocktranslate %}
 
 {% translate "Thanks very much for your support." %}
 
-{% blocktranslate trimmed %}
+{% blocktranslate %}
 Regards,
 Django Software Foundation
 {% endblocktranslate %}

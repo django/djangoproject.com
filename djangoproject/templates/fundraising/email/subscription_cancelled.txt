@@ -3,12 +3,12 @@
 Hi {{ name }},
 {% endblocktranslate %}
 
-{% blocktranslate trimmed %}
+{% blocktranslate %}
 This is to let you know that your recurring payment to the Django Software
 Foundation has been cancelled. No further payments will be made.
 {% endblocktranslate %}
 
-{% blocktranslate trimmed %}
+{% blocktranslate %}
 If you didn't intend to do this, please go back to the fundraising page and
 recreate your payment subscription:
 {% endblocktranslate %}
@@ -16,7 +16,7 @@ recreate your payment subscription:
 
 Thanks very much for your support.
 
-{% blocktranslate trimmed %}
+{% blocktranslate %}
 Regards,
 Django Software Foundation
 {% endblocktranslate %}
