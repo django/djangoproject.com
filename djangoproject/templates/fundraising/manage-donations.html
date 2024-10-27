@@ -31,7 +31,7 @@
     {% csrf_token %}
     {% include 'fundraising/includes/_form.html' with form=hero_form %}
     <p class="submit">
-      <input type="submit" class="cta" value="{% translate "Save &rarr;" %}">
+      <input type="submit" class="cta" value="{% translate "Save &rarr;" context "Save personal details about donation" %}">
     </p>
   {# Always include to avoid "Management form has been tampered with" if no recurring donations exist #}
     {{ modify_donations_formset.management_form }}
@@ -48,7 +48,7 @@
         </div>
       {% endfor %}
       <p class="submit">
-        <input type="submit" class="cta" value="{% translate "Save &rarr;" %}">
+        <input type="submit" class="cta" value="{% translate "Save &rarr;" context "Save personal details about donation" %}">
       </p>
       </form>
       <hr />
