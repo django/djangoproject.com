@@ -7,7 +7,7 @@ services:
             dockerfile: Dockerfile
             args:
                 - REQ_FILE=requirements/tests.txt
-        entrypoint: docker-entrypoint.dev.sh
+        entrypoint: ./docker-entrypoint.dev.sh
         command: python manage.py runserver 0.0.0.0:8000
         volumes:
             - .:/usr/src/app/
