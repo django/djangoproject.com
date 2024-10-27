@@ -48,5 +48,5 @@ RUN npm install
 # copy project
 COPY . .
 
-# run docker-entrypoint.sh
-ENTRYPOINT ["./docker-entrypoint.prod.sh"]
+# ENTRYPOINT is specified only in the local docker-compose.yml to avoid
+# accidentally running it in deployed environments.
