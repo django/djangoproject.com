@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     "blog",
     "contact",
     "dashboard",
-    "djangoproject",
     "docs",
     "foundation",
     "legacy",
