@@ -30,9 +30,7 @@ repos:
       rev: "v3.19.0"
       hooks:
           - id: pyupgrade
-            # TODO: Update to --py312 when dropping support for
-            # Python 3.8
-            args: [--py38-plus]
+            args: [--py312]
     - repo: https://github.com/adamchainz/django-upgrade
       rev: "1.22.1"
       hooks:
