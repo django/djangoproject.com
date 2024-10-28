@@ -1,5 +1,5 @@
 {% extends "diversity/base.html" %}
-{% load i18n %}
+{% load date_format i18n %}
 
 {% block title %}{% translate "Django Community Diversity Statement - Changes" %}{% endblock %}
 {% block og_title %}{% translate "Django Community Diversity Statement - Changes" %}{% endblock %}
@@ -40,7 +40,7 @@
   <h2>{% translate "Changelog" %}</h2>
 
   <dl>
-    <dt>{% translate "June" %} 16, 2015</dt>
+    <dt>{% isodate "2015-06-16" %}</dt>
     <dd><a href="https://github.com/django/djangoproject.com/commit/da5f784cf737c6d74c1233c3db3442732fd87d6d">
       {% translate "Initial release" %}</a>.</dd>
   </dl>
