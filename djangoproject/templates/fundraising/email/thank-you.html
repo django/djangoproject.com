@@ -1,19 +1,15 @@
-{% load i18n %}
-{% translate "Hello!" %}
+{% load i18n %}{% spaceless %}{% url 'fundraising:manage-donations' donation.donor.pk as manage_url %}{% blocktranslate with manage_url=manage_url %}
+    Hello!
 
-{% translate "Thank you for making a donation to the Django Software Foundation." %}
+    Thank you for making a donation to the Django Software Foundation.
 
-
-{% blocktranslate %}
     Your support is invaluable to continue the rapid development of Django and helps the Django Fellowship program in particular.
-{% endblocktranslate %}
 
-{% blocktranslate %}
     If you want to change information about your donation, you can do so by accessing the link below:
-{% endblocktranslate %}
-{% url 'fundraising:manage-donations' donation.donor.pk %}
 
-{% blocktranslate %}
+    {{ manage_url }}
+
     Best regards,
     Django Software Foundation
 {% endblocktranslate %}
+{% endspaceless %}

@@ -1,22 +1,16 @@
-{% load i18n %}
-{% blocktranslate trimmed with name=donation.donor.name_with_fallback %}
+{% load i18n %}{% spaceless %}{% url 'fundraising:index' as fundraising_url %}
+{% blocktranslate with name=donation.donor.name_with_fallback url=fundraising_url %}
 Hi {{ name }},
-{% endblocktranslate %}
 
-{% blocktranslate %}
 This is to let you know that your recurring payment to the Django Software
 Foundation has been cancelled. No further payments will be made.
-{% endblocktranslate %}
 
-{% blocktranslate %}
 If you didn't intend to do this, please go back to the fundraising page and
 recreate your payment subscription:
-{% endblocktranslate %}
-{% url 'fundraising:index' %}
-
+{{ fundraising_url }}
 Thanks very much for your support.
 
-{% blocktranslate %}
 Regards,
 Django Software Foundation
 {% endblocktranslate %}
+{% endspaceless %}
