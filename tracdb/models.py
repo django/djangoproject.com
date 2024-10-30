@@ -50,11 +50,7 @@ from urllib.parse import parse_qs
 
 from django.db import models
 
-try:
-    _epoc = datetime.datetime(1970, 1, 1, tzinfo=datetime.UTC)
-except AttributeError:
-    # TODO: Remove when dropping support for Python 3.8
-    _epoc = datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)
+_epoc = datetime.datetime(1970, 1, 1, tzinfo=datetime.UTC)
 
 
 class time_property:
