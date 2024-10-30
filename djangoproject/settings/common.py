@@ -75,7 +75,6 @@ INSTALLED_APPS = [
     "django_hosts",
     "sorl.thumbnail",
     "djmoney",
-    "django_admin_dracula",
     "django.contrib.sites",
     "django.contrib.auth",
     "django.contrib.admin",
