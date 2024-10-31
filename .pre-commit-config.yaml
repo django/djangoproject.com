@@ -60,7 +60,7 @@ repos:
           - id: djhtml
             files: .*/templates/.*\.html$
     - repo: https://github.com/tox-dev/pyproject-fmt
-      rev: "2.4.3"
+      rev: "v2.5.0"
       hooks:
           - id: pyproject-fmt
     - repo: https://github.com/mrtazz/checkmake.git
