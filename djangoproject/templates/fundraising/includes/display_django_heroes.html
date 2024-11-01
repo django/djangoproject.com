@@ -1,7 +1,8 @@
-{% load humanize %}
+{% load humanize i18n %}
 <div class="heroes">
   {% if corporate_members.diamond %}
-    <h3>Diamond Corporate Members (${{ corporate_membership_amounts.diamond|intcomma }}+)</h3>
+    <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.diamond|intcomma %}
+      Diamond Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>
     <div>
       {% for obj in corporate_members.diamond %}
         {% include "fundraising/includes/_hero_with_logo.html" %}
@@ -10,7 +11,8 @@
   {% endif %}
 
   {% if corporate_members.platinum %}
-    <h3>Platinum Corporate Members (${{ corporate_membership_amounts.platinum|intcomma }}+)</h3>
+    <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.platinum|intcomma %}
+      Platinum Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>
     <div>
       {% for obj in corporate_members.platinum %}
         {% include "fundraising/includes/_hero_with_logo.html" %}
@@ -19,7 +21,8 @@
   {% endif %}
 
   {% if corporate_members.gold %}
-    <h3>Gold Corporate Members (${{ corporate_membership_amounts.gold|intcomma }}+)</h3>
+    <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.gold|intcomma %}
+      Gold Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>
     <div>
       {% for obj in corporate_members.gold %}
         {% include "fundraising/includes/_hero_with_logo.html" %}
@@ -28,7 +31,8 @@
   {% endif %}
 
   {% if corporate_members.silver %}
-    <h3>Silver Corporate Members (${{ corporate_membership_amounts.silver|intcomma }}+)</h3>
+    <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.silver|intcomma %}
+      Silver Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>
     <div>
       {% for obj in corporate_members.silver %}
         {% include "fundraising/includes/_hero_with_logo.html" %}
@@ -37,7 +41,8 @@
   {% endif %}
 
   {% if corporate_members.bronze %}
-    <h3>Bronze Corporate Members (${{ corporate_membership_amounts.bronze|intcomma }}+)</h3>
+    <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.bronze|intcomma %}
+      Bronze Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>
     <div>
       {% for obj in corporate_members.bronze %}
         {% include "fundraising/includes/_hero_with_logo.html" %}
@@ -45,8 +50,8 @@
     </div>
   {% endif %}
 
-  <h3><a id="in-kind-donors" href="#in-kind-donors">In-kind donors</a></h3>
-  <p>These donors help with significant non-cash contributions.</p>
+  <h3><a id="in-kind-donors" href="#in-kind-donors">{% translate "In-kind donors" %}</a></h3>
+  <p>{% translate "These donors help with significant non-cash contributions." %}</p>
   <div>
     {% with show_description=True %}
       {% for obj in inkind_donors %}
@@ -55,17 +60,26 @@
     {% endwith %}
   </div>
 
-  <h3>Leaders (${{ display_logo_amount|intcomma }}+)</h3>
-  <p>Leadership-level donors contribute ${{ display_logo_amount|intcomma }} or
-    more in a calendar year.</p>
+  <h3>{% blocktranslate trimmed with amount=display_logo_amount|intcomma %}
+    Leaders (${{ amount }}+){% endblocktranslate %}</h3>
+  <p>
+    {% blocktranslate trimmed with amount=display_logo_amount|intcomma %}
+      Leadership-level donors contribute ${{ amount }} or
+      more in a calendar year.
+    {% endblocktranslate %}
+  </p>
   <div>
     {% for obj in leaders %}
       {% include "fundraising/includes/_hero_with_logo.html" %}
     {% endfor %}
   </div>
 
-  <h3>Heroes</h3>
-  <p>Our donor roll for all donations made in the last {{ display_donor_days }} days.</p>
+  <h3>{% translate "Heroes" %}</h3>
+  <p>
+    {% blocktranslate trimmed %}
+      Our donor roll for all donations made in the last {{ display_donor_days }} days.
+    {% endblocktranslate %}
+  </p>
   <div>
     {% for donor in heroes %}
       <div class="no-logo-hero">

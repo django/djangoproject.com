@@ -1,6 +1,7 @@
 import stripe
 from django import forms
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV3
 
@@ -11,7 +12,7 @@ class DjangoHeroForm(forms.ModelForm):
     hero_type = forms.ChoiceField(
         required=False,
         widget=forms.RadioSelect,
-        label="I am donating as an",
+        label=_("I am donating as an"),
         choices=DjangoHero.HERO_TYPE_CHOICES,
         initial=DjangoHero.HERO_TYPE_CHOICES[0][0],
     )
@@ -20,7 +21,7 @@ class DjangoHeroForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 "class": "required",
-                "placeholder": "Your name or the name of your organization",
+                "placeholder": _("Your name or the name of your organization"),
             },
         ),
     )
@@ -29,7 +30,7 @@ class DjangoHeroForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 "placeholder": (
-                    "Where are you located? " "(optional; will not be displayed)"
+                    _("Where are you located? (optional; will not be displayed)")
                 ),
             },
         ),
@@ -38,27 +39,28 @@ class DjangoHeroForm(forms.ModelForm):
         required=False,
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Which URL should we link your name to?",
+                "placeholder": _("Which URL should we link your name to?"),
             },
         ),
     )
     logo = forms.FileField(
         required=False,
-        help_text=(
+        help_text=_(
             "If you've donated at least US $%d, you can submit your logo and "
-            "we will display it, too." % LEADERSHIP_LEVEL_AMOUNT
-        ),
+            "we will display it, too."
+        )
+        % LEADERSHIP_LEVEL_AMOUNT,
     )
     is_visible = forms.BooleanField(
         required=False,
-        label=(
+        label=_(
             "Yes, display my name, URL, and logo on this site. "
             "It'll be displayed shortly after we verify it."
         ),
     )
     is_subscribed = forms.BooleanField(
         required=False,
-        label=(
+        label=_(
             "Yes, the Django Software Foundation can inform me about "
             "future fundraising campaigns by email."
         ),
@@ -120,16 +122,16 @@ class DonateForm(forms.Form):
     """
 
     AMOUNT_CHOICES = (
-        (25, "US $25"),
-        (50, "US $50"),
-        (100, "US $100"),
-        (250, "US $250"),
-        (500, "US $500"),
-        (750, "US $750"),
-        (1000, "US $1,000"),
-        (1250, "US $1,250"),
-        (2500, "US $2,500"),
-        ("custom", "Other amount"),
+        (25, _("US $25")),
+        (50, _("US $50")),
+        (100, _("US $100")),
+        (250, _("US $250")),
+        (500, _("US $500")),
+        (750, _("US $750")),
+        (1000, _("US $1,000")),
+        (1250, _("US $1,250")),
+        (2500, _("US $2,500")),
+        ("custom", _("Other amount")),
     )
 
     amount = forms.ChoiceField(choices=AMOUNT_CHOICES)
