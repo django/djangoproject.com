@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import crypto, timezone
+from django.utils.translation import gettext_lazy as _
 from django_hosts.resolvers import reverse
 from sorl.thumbnail import ImageField, get_thumbnail
 
@@ -14,10 +15,10 @@ DISPLAY_DONOR_DAYS = 365
 DEFAULT_DONATION_AMOUNT = 50
 LEADERSHIP_LEVEL_AMOUNT = Decimal("1000.00")
 INTERVAL_CHOICES = (
-    ("monthly", "Monthly donation"),
-    ("quarterly", "Quarterly donation"),
-    ("yearly", "Yearly donation"),
-    ("onetime", "One-time donation"),
+    ("monthly", _("Monthly donation")),
+    ("quarterly", _("Quarterly donation")),
+    ("yearly", _("Yearly donation")),
+    ("onetime", _("One-time donation")),
 )
 
 
@@ -64,21 +65,21 @@ class DjangoHero(FundraisingModel):
     name = models.CharField(max_length=100, blank=True)
     location = models.CharField(max_length=255, blank=True)
     HERO_TYPE_CHOICES = (
-        ("individual", "Individual"),
-        ("organization", "Organization"),
+        ("individual", _("Individual")),
+        ("organization", _("Organization")),
     )
     hero_type = models.CharField(max_length=30, choices=HERO_TYPE_CHOICES, blank=True)
     is_visible = models.BooleanField(
         default=False,
-        verbose_name="Agreed to displaying on the fundraising page?",
+        verbose_name=_("Agreed to displaying on the fundraising page?"),
     )
     is_subscribed = models.BooleanField(
         default=False,
-        verbose_name="Agreed to being contacted by DSF?",
+        verbose_name=_("Agreed to being contacted by DSF?"),
     )
     approved = models.BooleanField(
         null=True,
-        verbose_name="Name, URL, and Logo approved?",
+        verbose_name=_("Name, URL, and Logo approved?"),
     )
 
     objects = DjangoHeroManager()
@@ -87,8 +88,8 @@ class DjangoHero(FundraisingModel):
         return self.name if self.name else f"Anonymous #{self.pk}"
 
     class Meta:
-        verbose_name = "Django hero"
-        verbose_name_plural = "Django heroes"
+        verbose_name = _("Django hero")
+        verbose_name_plural = _("Django heroes")
 
     @property
     def display_name(self):
@@ -100,7 +101,7 @@ class DjangoHero(FundraisingModel):
 
     @property
     def name_with_fallback(self):
-        return self.name if self.name else "Anonymous Hero"
+        return self.name if self.name else _("Anonymous Hero")
 
 
 class Donation(FundraisingModel):
@@ -157,8 +158,8 @@ class InKindDonor(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "in-kind hero"
-        verbose_name_plural = "in-kind heroes"
+        verbose_name = _("in-kind hero")
+        verbose_name_plural = _("in-kind heroes")
 
     @property
     def display_name(self):

@@ -1,11 +1,15 @@
-Hello!
+{% load i18n %}{% spaceless %}{% url 'fundraising:manage-donations' donation.donor.pk as manage_url %}{% blocktranslate with manage_url=manage_url %}
+    Hello!
 
-Thank you for making a donation to the Django Software Foundation.
+    Thank you for making a donation to the Django Software Foundation.
 
-Your support is invaluable to continue the rapid development of Django and helps the Django Fellowship program in particular.
+    Your support is invaluable to continue the rapid development of Django and helps the Django Fellowship program in particular.
 
-If you want to change information about your donation, you can do so by accessing the link below:
-{% url 'fundraising:manage-donations' donation.donor.pk %}
+    If you want to change information about your donation, you can do so by accessing the link below:
 
-Best regards,
-Django Software Foundation
+    {{ manage_url }}
+
+    Best regards,
+    Django Software Foundation
+{% endblocktranslate %}
+{% endspaceless %}
