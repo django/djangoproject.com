@@ -2,4 +2,4 @@
 django-debug-toolbar==4.4.6
 isort==5.13.2
 pre-commit~=4.0.1
-watchdog==5.0.3
+watchdog==6.0.0
