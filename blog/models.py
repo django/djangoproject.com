@@ -83,7 +83,7 @@ class Entry(models.Model):
             "publication date must be in the past."
         ),
     )
-    content_format = models.CharField(choices=ContentFormat.choices, max_length=50)
+    content_format = models.CharField(choices=ContentFormat, max_length=50)
     summary = models.TextField()
     summary_html = models.TextField()
     body = models.TextField()
