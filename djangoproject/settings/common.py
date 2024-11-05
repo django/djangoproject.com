@@ -306,3 +306,5 @@ THUMBNAIL_ALTERNATIVE_RESOLUTIONS = [2]
 TRAC_URL = "https://code.djangoproject.com/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+FORMS_URLFIELD_ASSUME_HTTPS = True
