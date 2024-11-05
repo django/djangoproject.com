@@ -298,7 +298,7 @@ class WebhookHandler:
         customer = stripe.Customer.retrieve(
             session.customer, stripe_version="2020-08-27"
         )
-        hero, _ = DjangoHero.objects.get_or_create(
+        hero, _created = DjangoHero.objects.get_or_create(
             stripe_customer_id=customer.id,
             defaults={
                 "email": customer.email,
