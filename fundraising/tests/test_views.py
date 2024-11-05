@@ -1,4 +1,6 @@
 import json
+from datetime import datetime
+from operator import attrgetter
 from unittest.mock import patch
 
 import stripe
@@ -124,14 +126,18 @@ class TestManageDonations(TestCase):
             subscription_amount=5,
         )
         cls.payment1 = cls.donation1.payment_set.create(
-            amount="5", stripe_charge_id="c1"
+            amount="5",
+            stripe_charge_id="c1",
+            date=datetime(2023, 1, 1),
         )
         cls.donation2 = cls.hero.donation_set.create(
             interval="yearly",
             subscription_amount=10,
         )
         cls.payment2 = cls.donation2.payment_set.create(
-            amount="10", stripe_charge_id="c2"
+            amount="10",
+            stripe_charge_id="c2",
+            date=datetime(2024, 1, 1),
         )
         cls.url = reverse("fundraising:manage-donations", kwargs={"hero": cls.hero.id})
 
@@ -163,6 +169,15 @@ class TestManageDonations(TestCase):
         url = reverse("fundraising:manage-donations", kwargs={"hero": hero.id})
         response = self.client.get(url)
         self.assertNotContains(response, self.past_donations_header)
+
+    def test_past_donations_sorted(self):
+        url = reverse("fundraising:manage-donations", kwargs={"hero": self.hero.id})
+        response = self.client.get(url)
+        self.assertQuerySetEqual(
+            response.context["past_payments"],
+            ["c2", "c1"],
+            transform=attrgetter("stripe_charge_id"),
+        )
 
 
 class TestWebhooks(TestCase):
