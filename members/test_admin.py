@@ -61,12 +61,12 @@ class CorporateMemberAdminTests(TestCase):
             StatusFilter(**filter_args).queryset(request=None, queryset=members),
             [self.member],
         )
-        filter_args["params"] = {"status": "inactive"}
+        filter_args["params"] = {"status": ["inactive"]}
         self.assertCountEqual(
             StatusFilter(**filter_args).queryset(None, CorporateMember.objects.all()),
             [self.inactive_member],
         )
-        filter_args["params"] = {"status": "all"}
+        filter_args["params"] = {"status": ["all"]}
         self.assertCountEqual(
             StatusFilter(**filter_args).queryset(None, CorporateMember.objects.all()),
             [self.member, self.inactive_member],
