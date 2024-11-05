@@ -113,8 +113,10 @@ def thank_you(request):
 def manage_donations(request, hero):
     hero = get_object_or_404(DjangoHero, pk=hero)
     recurring_donations = hero.donation_set.exclude(stripe_subscription_id="")
-    past_payments = Payment.objects.filter(donation__donor=hero).select_related(
-        "donation"
+    past_payments = (
+        Payment.objects.filter(donation__donor=hero)
+        .select_related("donation")
+        .order_by("-date")
     )
 
     ModifyDonationsFormset = modelformset_factory(Donation, form=DonationForm, extra=0)
