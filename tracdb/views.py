@@ -1,9 +1,10 @@
 import datetime
 
 from django import db
+from django.http import JsonResponse
 from django.shortcuts import render
 
-from .models import _epoc
+from .models import Ticket, _epoc
 
 
 def bouncing_tickets(request):
@@ -35,3 +36,41 @@ def ts2dt(ts):
 def dictfetchall(cursor):
     desc = cursor.description
     return [dict(zip([col[0] for col in desc], row)) for row in cursor.fetchall()]
+
+
+def miniapi(request):
+    """
+    Return information about the requestest tickets (JSON)
+    """
+    # TODO: max size
+    # TODO: paginate?
+    # TODO: error handling
+    pks = request.GET.get("ids")
+    tickets = (
+        Ticket.objects.filter(pk__in=pks)
+        .only("status", "reporter", "resolution", "description")
+        .prefetch_related("changes")
+    )
+
+    return JsonResponse(
+        {
+            "tickets": [
+                {
+                    "id": ticket.pk,
+                    "status": ticket.status,
+                    "reporter": ticket.reporter,  # TODO: sanitize (emails, ...)
+                    "resolution": ticket.resolution,
+                    "description": ticket.description,
+                    "changes": [
+                        {
+                            "time": change.time.isoformat(),
+                            "author": change.author,  # TODO: sanitize (emails, ...)
+                            "field": change.field,
+                        }
+                        for change in ticket.changes.all()
+                    ],
+                }
+                for ticket in tickets
+            ]
+        }
+    )
