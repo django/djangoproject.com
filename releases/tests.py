@@ -75,7 +75,7 @@ class TestTemplateTags(TestCase):
 
     @override_settings(LANGUAGE_CODE="nn")
     def test_isodate_translated(self):
-        self.assertEqual(isodate("2005-07-21"), "juli 21, 2005")
+        self.assertEqual(isodate("2005-07-21"), "21. juli 2005")
 
 
 class TestReleaseManager(TestCase):
