@@ -274,49 +274,46 @@ class TracTimeTestCase(SimpleTestCase):
 
 
 class TimePropertyTest(SimpleTestCase):
-    test_data = 1234567890
+    test_data = 1_000_000 
 
     def test_milestone_time_property(self):
         obj = Milestone(_due=self.test_data)
-        expected_time = datetime.utcfromtimestamp(self.test_data)
+        expected_time = datetime(1970, 1, 1, 0, 0, 1)
 
         self.assertEqual(obj.due, expected_time)
 
     def test_revision_time_property(self):
         obj = Revision(_time=self.test_data)
-        expected_time = datetime.utcfromtimestamp(self.test_data)
+        expected_time = datetime(1970, 1, 1, 0, 0, 1)
 
         self.assertEqual(obj.time, expected_time)
 
     def test_wiki_time_property(self):
         obj = Wiki(_time=self.test_data)
-        expected_time = datetime.utcfromtimestamp(self.test_data)
+        expected_time = datetime(1970, 1, 1, 0, 0, 1)
 
         self.assertEqual(obj.time, expected_time)
 
     def test_attachment_time_property(self):
         obj = Attachment(_time=self.test_data)
-        expected_time = datetime.utcfromtimestamp(self.test_data)
+        expected_time = datetime(1970, 1, 1, 0, 0, 1)
 
         self.assertEqual(obj.time, expected_time)
 
     def test_ticket_time_property(self):
-
         ticket = Ticket(_time=self.test_data)
-        expected_time = datetime.utcfromtimestamp(self.test_data)
+        expected_time = datetime(1970, 1, 1, 0, 0, 1)
 
         self.assertEqual(ticket.time, expected_time)
 
     def test_ticketchange_time_property(self):
-
         ticket_change = TicketChange(_time=self.test_data)
-        expected_time = datetime.utcfromtimestamp(self.test_data)
+        expected_time = datetime(1970, 1, 1, 0, 0, 1)
 
         self.assertEqual(ticket_change.time, expected_time)
 
     def test_version_time_property(self):
-
         version = Version(_time=self.test_data)
-        expected_time = datetime.utcfromtimestamp(self.test_data)
+        expected_time = datetime(1970, 1, 1, 0, 0, 1)
 
         self.assertEqual(version.time, expected_time)
