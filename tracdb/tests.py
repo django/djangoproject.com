@@ -4,7 +4,7 @@ from operator import attrgetter
 import time_machine
 from django.test import SimpleTestCase, TestCase
 
-from .models import Revision, Ticket, TicketCustom, Wiki, Milestone, Attachment
+from .models import Attachment, Milestone, Revision, Ticket, TicketCustom, Wiki
 from .testutils import TracDBCreateDatabaseMixin
 from .tractime import (
     datetime_to_timestamp,
@@ -263,28 +263,28 @@ class TracTimeTestCase(SimpleTestCase):
             (offset, offset + 24 * 3600 * 1_000_000 - 1),
         )
 
+
 class TimePropertyTest(SimpleTestCase):
     def test_milestone_time_property(self):
         obj = Milestone(_time=1234567890)
         expected_time = datetime.utcfromtimestamp(1234567890)
-        
+
         self.assertEqual(obj.time, expected_time)
 
     def test_revision_time_property(self):
         obj = Revision(_time=9876543210)
         expected_time = datetime.utcfromtimestamp(9876543210)
-        
+
         self.assertEqual(obj.time, expected_time)
 
     def test_wiki_time_property(self):
         obj = Wiki(_time=1112223334)
         expected_time = datetime.utcfromtimestamp(1112223334)
-        
+
         self.assertEqual(obj.time, expected_time)
 
     def test_attachment_time_property(self):
         obj = Attachment(_time=2223334445)
         expected_time = datetime.utcfromtimestamp(2223334445)
-        
-        self.assertEqual(obj.time, expected_time)
 
+        self.assertEqual(obj.time, expected_time)
