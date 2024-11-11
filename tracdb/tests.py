@@ -4,7 +4,7 @@ from operator import attrgetter
 import time_machine
 from django.test import SimpleTestCase, TestCase
 
-from .models import Revision, Ticket, TicketCustom, Wiki, Milestone, Attachment, TicketChange, Version
+from .models import Attachment, Milestone, Revision, Ticket, TicketCustom, Wiki, TicketChange, Version
 from .testutils import TracDBCreateDatabaseMixin
 from .tractime import (
     datetime_to_timestamp,
@@ -262,6 +262,7 @@ class TracTimeTestCase(SimpleTestCase):
             dayrange(date(1970, 1, 1), days=1),
             (offset, offset + 24 * 3600 * 1_000_000 - 1),
         )
+
 
 class TimePropertyTest(SimpleTestCase):
     test_data = 1234567890
