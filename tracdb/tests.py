@@ -277,10 +277,10 @@ class TimePropertyTest(SimpleTestCase):
     test_data = 1234567890
 
     def test_milestone_time_property(self):
-        obj = Milestone(_time=self.test_data)
+        obj = Milestone(_due=self.test_data)
         expected_time = datetime.utcfromtimestamp(self.test_data)
 
-        self.assertEqual(obj.time, expected_time)
+        self.assertEqual(obj.due, expected_time)
 
     def test_revision_time_property(self):
         obj = Revision(_time=self.test_data)
