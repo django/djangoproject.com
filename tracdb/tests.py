@@ -4,7 +4,16 @@ from operator import attrgetter
 import time_machine
 from django.test import SimpleTestCase, TestCase
 
-from .models import Attachment, Milestone, Revision, Ticket, TicketCustom, Wiki, TicketChange, Version
+from .models import (
+    Attachment,
+    Milestone,
+    Revision,
+    Ticket,
+    TicketChange,
+    TicketCustom,
+    Version,
+    Wiki,
+)
 from .testutils import TracDBCreateDatabaseMixin
 from .tractime import (
     datetime_to_timestamp,
@@ -266,28 +275,29 @@ class TracTimeTestCase(SimpleTestCase):
 
 class TimePropertyTest(SimpleTestCase):
     test_data = 1234567890
+
     def test_milestone_time_property(self):
         obj = Milestone(_time=self.test_data)
         expected_time = datetime.utcfromtimestamp(self.test_data)
-        
+
         self.assertEqual(obj.time, expected_time)
 
     def test_revision_time_property(self):
         obj = Revision(_time=self.test_data)
         expected_time = datetime.utcfromtimestamp(self.test_data)
-        
+
         self.assertEqual(obj.time, expected_time)
 
     def test_wiki_time_property(self):
         obj = Wiki(_time=self.test_data)
         expected_time = datetime.utcfromtimestamp(self.test_data)
-        
+
         self.assertEqual(obj.time, expected_time)
 
     def test_attachment_time_property(self):
         obj = Attachment(_time=self.test_data)
         expected_time = datetime.utcfromtimestamp(self.test_data)
-        
+
         self.assertEqual(obj.time, expected_time)
 
     def test_ticket_time_property(self):
@@ -303,11 +313,10 @@ class TimePropertyTest(SimpleTestCase):
         expected_time = datetime.utcfromtimestamp(self.test_data)
 
         self.assertEqual(ticket_change.time, expected_time)
-    
+
     def test_version_time_property(self):
 
         version = Version(_time=self.test_data)
         expected_time = datetime.utcfromtimestamp(self.test_data)
 
         self.assertEqual(version.time, expected_time)
-
