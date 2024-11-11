@@ -240,7 +240,7 @@ class Milestone(models.Model):
     due = time_property("_due")
 
     _completed = models.BigIntegerField(db_column="_completed")
-    completed = time_property("completed")
+    completed = time_property("_completed")
 
     class Meta:
         db_table = "milestone"
