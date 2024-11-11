@@ -274,7 +274,7 @@ class TracTimeTestCase(SimpleTestCase):
 
 
 class TimePropertyTest(SimpleTestCase):
-    test_data = 1_000_000 
+    test_data = 1_000_000
 
     def test_milestone_time_property(self):
         obj = Milestone(_due=self.test_data)
