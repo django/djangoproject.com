@@ -4,7 +4,16 @@ from operator import attrgetter
 import time_machine
 from django.test import SimpleTestCase, TestCase
 
-from .models import Revision, Ticket, TicketCustom
+from .models import (
+    Attachment,
+    Milestone,
+    Revision,
+    Ticket,
+    TicketChange,
+    TicketCustom,
+    Version,
+    Wiki,
+)
 from .testutils import TracDBCreateDatabaseMixin
 from .tractime import (
     datetime_to_timestamp,
@@ -262,3 +271,24 @@ class TracTimeTestCase(SimpleTestCase):
             dayrange(date(1970, 1, 1), days=1),
             (offset, offset + 24 * 3600 * 1_000_000 - 1),
         )
+
+
+class TimePropertyTest(SimpleTestCase):
+    def test_time_property_on_all_fields(self):
+        for model_class, field_name, property_name in [
+            (Ticket, "_time", "time"),
+            (Ticket, "_changetime", "changetime"),
+            (TicketChange, "_time", "time"),
+            (Version, "_time", "time"),
+            (Milestone, "_due", "due"),
+            (Milestone, "_completed", "completed"),
+            (Revision, "_time", "time"),
+            (Wiki, "_time", "time"),
+            (Attachment, "_time", "time"),
+        ]:
+            with self.subTest(model=model_class, field=field_name):
+                obj = model_class(**{field_name: 1_000_000})
+                self.assertEqual(
+                    getattr(obj, property_name),
+                    datetime(1970, 1, 1, 0, 0, 1, tzinfo=UTC),
+                )
