@@ -237,10 +237,10 @@ class Milestone(models.Model):
     description = models.TextField()
 
     _due = models.BigIntegerField(db_column="_due")
-    due = time_property("due")
+    due = time_property("_due")
 
     _completed = models.BigIntegerField(db_column="_completed")
-    completed = time_property("completed")
+    completed = time_property("_completed")
 
     class Meta:
         db_table = "milestone"
@@ -276,7 +276,7 @@ class Revision(models.Model):
     rev = models.TextField(primary_key=True)
 
     _time = models.BigIntegerField(db_column="time")
-    time = time_property("time")
+    time = time_property("_time")
 
     author = models.TextField()
     message = models.TextField()
@@ -297,7 +297,7 @@ class Wiki(models.Model):
     )  # XXX See note at the top about composite pk
     version = models.IntegerField()
     _time = models.BigIntegerField(db_column="time")
-    time = time_property("time")
+    time = time_property("_time")
     author = models.TextField()
     text = models.TextField()
     comment = models.TextField()
@@ -319,7 +319,7 @@ class Attachment(models.Model):
     filename = models.TextField()
     size = models.IntegerField()
     _time = models.BigIntegerField(db_column="time")
-    time = time_property("time")
+    time = time_property("_time")
     description = models.TextField()
     author = models.TextField()
 
