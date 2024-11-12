@@ -274,7 +274,7 @@ class TracTimeTestCase(SimpleTestCase):
 
 
 class TimePropertyTest(SimpleTestCase):
-     def test_time_property_on_all_fields(self):
+    def test_time_property_on_all_fields(self):
         for model_class, field_name, property_name in [
             (Ticket, "_time", "time"),
             (Ticket, "_changetime", "changetime"),
@@ -290,5 +290,5 @@ class TimePropertyTest(SimpleTestCase):
                 obj = model_class(**{field_name: 1_000_000})
                 self.assertEqual(
                     getattr(obj, property_name),
-                    datetime(1970, 1, 1, 0, 0, 1, tzinfo=UTC)
+                    datetime(1970, 1, 1, 0, 0, 1, tzinfo=UTC),
                 )
