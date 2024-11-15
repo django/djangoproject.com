@@ -43,10 +43,14 @@
         </h1>
 
         {% if stats %}
-            <h2>{% translate "Lies, damned lies, and statistics:" %}</h2>
+            <h2>{% translate "Statistics on Django core contributions:" %}</h2>
             <ul>
                 {% for stat, value in stats.items %}
-                    <li>{{ stat }}: {{ value|intcomma }}.</li>
+                    <li>
+                        {% if value.link %}<a href="{{ value.link }}">{{ stat }}: {{ value.count|intcomma }}.</a>
+                        {% else %}{{ stat }}: {{ value.count|intcomma }}.
+                        {% endif %}
+                    </li>
                 {% endfor %}
             </ul>
         {% endif %}

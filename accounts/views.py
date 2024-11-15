@@ -44,7 +44,7 @@ def get_user_stats(user):
         # Hide any stat with a value = 0 so that we don't accidentally insult
         # non-contributors.
         for k, v in list(info.items()):
-            if v == 0:
+            if v.count == 0:
                 info.pop(k)
         c.set(key, info, 60 * 60)
     return info
