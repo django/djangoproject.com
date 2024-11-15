@@ -3,20 +3,27 @@ Various queries for grabbing interesting user stats from Trac.
 """
 
 import operator
-from collections import OrderedDict
+from collections import OrderedDict, namedtuple
 
-import django.db
+from django.conf import settings
 
-from .models import Attachment, Revision, Ticket, TicketChange
+from .models import Revision, Ticket, TicketChange
 
 _statfuncs = []
+
+
+StatData = namedtuple("StatData", ["count", "link"])
+
+
+def get_trac_link(query):
+    return f"{settings.TRAC_URL}query?{query}&desc=1&order=changetime"
 
 
 def stat(title):
     """
     Register a function as a "stat"
 
-    The function should take a username and return a number.
+    The function should take a username and return a StatData object.
     """
 
     def _inner(f):
@@ -36,23 +43,30 @@ def get_user_stats(username):
 
 @stat("Commits")
 def commit_count(username):
-    return Revision.objects.filter(author=username).count()
+    count = Revision.objects.filter(author=username).count()
+    # This assumes that the username is their GitHub username, this is very
+    # often the case. If this is incorrect, the GitHub will show no commits.
+    link = f"https://github.com/django/django/commits/main/?author={username}"
+    return StatData(count=count, link=link)
 
 
-@stat("Tickets closed")
-def tickets_closed(username):
-    # Raw query so that we can do COUNT(DISTINCT ticket).
-    q = """SELECT COUNT(DISTINCT ticket) FROM ticket_change
-           WHERE author = %s AND field = 'status' AND newvalue = 'closed';"""
-    return run_single_value_query(q, username)
+@stat("Tickets fixed")
+def tickets_fixed(username):
+    query = f"owner={username}&resolution=fixed"
+    count = Ticket.objects.from_querystring(query).count()
+    link = get_trac_link(query)
+    return StatData(count=count, link=link)
 
 
 @stat("Tickets opened")
 def tickets_opened(username):
-    return Ticket.objects.filter(reporter=username).count()
+    query = f"reporter={username}"
+    count = Ticket.objects.from_querystring(query).count()
+    link = get_trac_link(query)
+    return StatData(count=count, link=link)
 
 
-@stat("New tickets reviewed")
+@stat("New tickets triaged")
 def new_tickets_reviewed(username):
     # We don't want to de-dup as for tickets_closed: multiple reviews of the
     # same ticket should "count" as a review.
@@ -60,18 +74,4 @@ def new_tickets_reviewed(username):
         author=username, field="stage", oldvalue="Unreviewed"
     )
     qs = qs.exclude(newvalue="Unreviewed")
-    return qs.count()
-
-
-@stat("Patches submitted")
-def patches_submitted(username):
-    return Attachment.objects.filter(author=username).count()
-
-
-def run_single_value_query(query, *params):
-    """
-    Helper: run a query returning a single value (e.g. a COUNT) and return the value.
-    """
-    c = django.db.connections["trac"].cursor()
-    c.execute(query, params)
-    return c.fetchone()[0]
+    return StatData(count=qs.count(), link=None)

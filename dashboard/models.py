@@ -3,7 +3,6 @@ import calendar
 import datetime
 
 import requests
-from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import connections, models
@@ -11,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from django_hosts.resolvers import reverse
 
 from tracdb.models import Ticket
+from tracdb.stats import get_trac_link
 
 METRIC_PERIOD_INSTANT = "instant"
 METRIC_PERIOD_DAILY = "daily"
@@ -130,7 +130,7 @@ class TracTicketMetric(Metric):
         return queryset.count()
 
     def link(self):
-        return f"{settings.TRAC_URL}query?{self.query}&desc=1&order=changetime"
+        return get_trac_link(self.query)
 
 
 class GithubItemCountMetric(Metric):
