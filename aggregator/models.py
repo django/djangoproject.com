@@ -226,6 +226,7 @@ class LocalDjangoCommunity(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        verbose_name_plural = _("Local Django Communities")
         constraints = [
             models.CheckConstraint(
                 check=(
