@@ -1,0 +1,52 @@
+{% extends "base_foundation.html" %}
+
+{% block og_title %}Team History | Django Software Foundation{% endblock %}
+{% block og_description %}{% spaceless %}
+  This is a record of former team members and archived teams within the
+  Django Software Foundation.
+{% endspaceless %}{% endblock %}
+
+{% block content %}
+
+  <h2>Team Archive</h2>
+  <p>This is a record of former team members and archived teams.</p>
+  <p>See the <a href="{% url 'members:teams' %}">Teams</a> page for details on current teams.</p>
+
+  <h3>Former Team Members</h3>
+  {% if teams %}
+    {% for team in teams %}
+      <div class="section">
+        <h4 id="{{ team.slug }}-team">{{ team.name }}<a class="plink" href="#{{ team.slug }}-team">¶</a></h4>
+        <p>{{ team.description|safe }}</p>
+        <ul>
+          {% for member in team.previousteammembership_set.all %}
+            <li>{{ member.member.name }}{% if member.details %} ({{ member.details }}){% endif %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>We have no record of former members at this time.</p>
+  {% endif %}
+
+  <h3>Archived Teams</h3>
+  {% if archived_teams %}
+    {% for team in archived_teams %}
+      <div class="section">
+        <h4 id="{{ team.slug }}-team">{{ team.name }}<a class="plink" href="#{{ team.slug }}-team">¶</a></h4>
+        <p>{{ team.description|safe }}</p>
+        <ul>
+          {% for member in team.members.all %}
+            <li>{{ member.name }}</li>
+          {% endfor %}
+          {% for member in team.previousteammembership_set.all %}
+            <li>{{ member.member.name }}{% if member.details %} ({{ member.details }}){% endif %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>We have no record of archived teams at this time.</p>
+  {% endif %}
+
+{% endblock %}

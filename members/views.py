@@ -1,4 +1,5 @@
 from django.core import signing
+from django.db.models import Count, Prefetch
 from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse
@@ -10,6 +11,7 @@ from .models import (
     CORPORATE_MEMBERSHIP_AMOUNTS,
     CorporateMember,
     IndividualMember,
+    PreviousTeamMembership,
     Team,
 )
 
@@ -99,4 +101,47 @@ class TeamsListView(ListView):
     context_object_name = "teams"
 
     def get_queryset(self):
-        return self.model.objects.prefetch_related("members").order_by("name")
+        return (
+            self.model.objects.filter(archived=False)
+            .prefetch_related("members")
+            .order_by("name")
+        )
+
+
+class TeamsArchiveView(TemplateView):
+    template_name = "members/team_archive.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        previous_team_membership_qs = PreviousTeamMembership.objects.select_related(
+            "member"
+        )
+        archived_teams = (
+            Team.objects.filter(archived=True)
+            .prefetch_related(
+                "members",
+                Prefetch(
+                    "previousteammembership_set",
+                    queryset=previous_team_membership_qs,
+                ),
+            )
+            .order_by("name")
+        )
+
+        # Active teams with former members.
+        teams = (
+            Team.objects.prefetch_related(
+                Prefetch(
+                    "previousteammembership_set",
+                    queryset=previous_team_membership_qs,
+                )
+            )
+            .annotate(former_member_count=Count("former_members", distinct=True))
+            .filter(former_member_count__gt=0, archived=False)
+            .order_by("name")
+        )
+
+        context["teams"] = teams
+        context["archived_teams"] = archived_teams
+        return context

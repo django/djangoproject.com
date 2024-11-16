@@ -5,7 +5,13 @@ from django.templatetags.static import static
 from django.utils.formats import localize
 from django.utils.html import format_html
 
-from members.models import CorporateMember, IndividualMember, Invoice, Team
+from members.models import (
+    CorporateMember,
+    IndividualMember,
+    Invoice,
+    PreviousTeamMembership,
+    Team,
+)
 
 
 @admin.register(IndividualMember)
@@ -106,3 +112,15 @@ class CorporateMemberAdmin(admin.ModelAdmin):
 class TeamAdmin(admin.ModelAdmin):
     filter_horizontal = ["members"]
     prepopulated_fields = {"slug": ("name",)}
+
+
+@admin.register(PreviousTeamMembership)
+class PreviousTeamMembershipAdmin(admin.ModelAdmin):
+    list_display = [
+        "member",
+        "team",
+    ]
+    search_fields = ["member__name", "team__name"]
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related("team", "member")

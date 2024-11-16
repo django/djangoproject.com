@@ -64,8 +64,28 @@ class Team(models.Model):
     description = models.TextField(help_text="HTML, without surrounding <p> tags.")
     members = models.ManyToManyField(IndividualMember)
 
+    archived = models.BooleanField(default=False)
+    former_members = models.ManyToManyField(
+        IndividualMember,
+        through="PreviousTeamMembership",
+        related_name="teams_former_member",
+    )
+
     def __str__(self):
         return self.name
+
+
+class PreviousTeamMembership(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    member = models.ForeignKey(IndividualMember, on_delete=models.CASCADE)
+    details = models.TextField(
+        blank=True,
+        help_text=mark_safe(
+            "Use for details such as term dates. This is publicly displayed "
+            "within brackets next to the members name. "
+            "<strong>Do not include confidential details.</strong>"
+        ),
+    )
 
 
 class CorporateMemberManager(models.Manager):

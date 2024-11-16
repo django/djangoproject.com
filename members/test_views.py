@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from django.test import TestCase
 from django.urls import reverse
 
-from .models import CorporateMember, IndividualMember, Team
+from .models import CorporateMember, IndividualMember, PreviousTeamMembership, Team
 from .utils import get_temporary_image
 
 
@@ -164,3 +164,70 @@ class TeamListViewTests(TestCase):
         )
         self.assertContains(response, "<p>Ops stuff.</p>")
         self.assertContains(response, "<ul><li>DjangoDeveloper</li></ul>", html=True)
+
+    def test_archived_team_excluded(self):
+        Team.objects.create(name="Technical team", archived=True)
+        response = self.client.get(self.url)
+        self.assertNotContains(response, "Technical team")
+
+
+class TeamsArchiveViewTests(TestCase):
+    url = reverse("members:teams-archive")
+
+    def test_no_data(self):
+        response = self.client.get(self.url)
+
+        self.assertContains(response, "<h3>Former Team Members</h3>", html=True)
+        self.assertContains(
+            response, "We have no record of former members at this time."
+        )
+        self.assertContains(response, "<h3>Archived Teams</h3>", html=True)
+        self.assertContains(
+            response, "We have no record of archived teams at this time."
+        )
+
+    def test_former_team_member(self):
+        alice = IndividualMember.objects.create(name="Alice", email="a@example.com")
+        jessica = IndividualMember.objects.create(name="Jessica", email="j@example.com")
+        priya = IndividualMember.objects.create(name="Priya", email="p@example.com")
+        security_team = Team.objects.create(name="Security team")
+        security_team.members.add(alice)
+
+        PreviousTeamMembership.objects.create(
+            team=security_team, member=jessica, details="2010-2011"
+        )
+        PreviousTeamMembership.objects.create(team=security_team, member=priya)
+
+        response = self.client.get(self.url)
+
+        self.assertContains(response, "<h3>Former Team Members</h3>", html=True)
+        self.assertNotContains(
+            response, "We have no record of former members at this time."
+        )
+        self.assertContains(response, "Security team")
+        self.assertNotContains(response, "Alice")
+        self.assertContains(response, "Jessica (2010-2011)")
+        self.assertContains(response, "Priya")
+
+    def test_archived_team(self):
+        alice = IndividualMember.objects.create(name="Alice", email="a@example.com")
+        jessica = IndividualMember.objects.create(name="Jessica", email="j@example.com")
+        priya = IndividualMember.objects.create(name="Priya", email="p@example.com")
+        technical_team = Team.objects.create(name="Technical team", archived=True)
+        technical_team.members.add(alice)
+
+        PreviousTeamMembership.objects.create(
+            team=technical_team, member=jessica, details="2010-2011"
+        )
+        PreviousTeamMembership.objects.create(team=technical_team, member=priya)
+
+        response = self.client.get(self.url)
+
+        self.assertContains(response, "<h3>Archived Teams</h3>", html=True)
+        self.assertNotContains(
+            response, "We have no record of archived teams at this time."
+        )
+        self.assertContains(response, "Technical team")
+        self.assertContains(response, "Alice")
+        self.assertContains(response, "Jessica (2010-2011)")
+        self.assertContains(response, "Priya")
