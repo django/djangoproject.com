@@ -1,1 +1,3 @@
-Activate your djangoproject.com account
+{% load i18n %}
+
+{% translate "Activate your djangoproject.com account" %}
