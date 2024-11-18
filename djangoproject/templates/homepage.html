@@ -112,7 +112,9 @@
 {% block content-related %}
   <div role="complementary">
     <a href="{% url 'download' %}" class="cta">
-      Download <em>latest release:" %} {{ DJANGO_VERSION }}</em>
+      {% blocktranslate trimmed %}
+        Download <em>latest release: {{ DJANGO_VERSION }}</em>
+      {% endblocktranslate %}
     </a>
     <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}" class="link-readmore">{% translate "Django documentation" %}</a>
 
