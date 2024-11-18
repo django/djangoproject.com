@@ -62,10 +62,7 @@ class CorporateMemberRenewView(CorporateMemberSignupMixin, UpdateView):
         try:
             pk = signing.loads(self.kwargs["token"], max_age=2.592e6)
         except signing.BadSignature:
-            raise Http404(
-                _("No %(verbose_name)s found matching the query")
-                % {"verbose_name": self.model._meta.verbose_name}
-            )
+            raise Http404(_("No CorporateMember found matching the query"))
         return self.get_queryset().get(pk=pk)
 
 

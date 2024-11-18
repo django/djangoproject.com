@@ -30,7 +30,7 @@ class StatusFilter(admin.SimpleListFilter):
     Display only active members in the changelist page, by default.
     """
 
-    title = "Status"
+    title = _("Status")
     parameter_name = "status"
 
     def lookups(self, request, model_admin):
@@ -77,9 +77,10 @@ class CorporateMemberAdmin(admin.ModelAdmin):
 
     def renewal_link(self, obj):
         return format_html(
-            '<a href="{}"><img src="{}" alt="renewal link" />',
+            '<a href="{}"><img src="{}" alt="{}" />',
             obj.get_renewal_link(),
             static("admin/img/icon-changelink.svg"),
+            _("renewal link"),
         )
 
     def membership_expires(self, obj):
