@@ -6,6 +6,7 @@ from members.views import (
     CorporateMemberRenewView,
     CorporateMemberSignUpView,
     IndividualMemberListView,
+    TeamsArchiveView,
     TeamsListView,
     corporate_member_list_view,
 )
@@ -46,4 +47,5 @@ urlpatterns = [
         name="corporate-members-badges",
     ),
     path("teams/", TeamsListView.as_view(), name="teams"),
+    path("teams/archive/", TeamsArchiveView.as_view(), name="teams-archive"),
 ]
