@@ -2,12 +2,12 @@
 {% load i18n %}
 
 {% block content %}
-  <h1>{% trans "Become a DSF corporate member" %}</h1>
+  <h1>{% translate "Become a DSF corporate member" %}</h1>
   <p>
-    {% blocktrans %}
+    {% blocktranslate trimmed %}
       Provide us with a few details and we'll start onboarding your
       organization!
-    {% endblocktrans %}
+    {% endblocktranslate %}
   </p>
   <form class="form-input corporate-membership-join-form" method="post" action="."
         enctype="multipart/form-data">
@@ -23,6 +23,6 @@
         {% if field.help_text %}<p class="footnote">{{ field.help_text|safe }}</p>{% endif %}
       </div>
     {% endfor %}
-    <input class="cta" type="submit" value="Send →">
+    <input class="cta" type="submit" value="{% translate "Send →" %}">
   </form>
 {% endblock %}

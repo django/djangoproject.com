@@ -1,14 +1,15 @@
 from django import forms
 from django.conf import settings
 from django.core.mail import send_mail
+from django.utils.translation import gettext_lazy as _
 
 from .models import CorporateMember
 
 
 class CorporateMemberSignUpForm(forms.ModelForm):
     amount = forms.IntegerField(
-        label="Donation amount",
-        help_text="Enter an integer in US$ without the dollar sign.",
+        label=_("Donation amount"),
+        help_text=_("Enter an integer in US$ without the dollar sign."),
     )
 
     def __init__(self, *args, **kwargs):
@@ -32,44 +33,44 @@ class CorporateMemberSignUpForm(forms.ModelForm):
             elif isinstance(field.widget, (forms.FileInput, forms.Select)):
                 self.label_fields.append(name)
 
-        self.fields["billing_name"].widget.attrs[
-            "placeholder"
-        ] = "Billing name (If different from above name)."
-        self.fields["billing_name"].help_text = (
+        self.fields["billing_name"].widget.attrs["placeholder"] = _(
+            "Billing name (If different from above name)."
+        )
+        self.fields["billing_name"].help_text = _(
             "For example, this might be your full registered company name."
         )
-        self.fields["display_name"].widget.attrs[
-            "placeholder"
-        ] = "Your organization's name as you'd like it to appear on our website."
-        self.fields["address"].widget.attrs["placeholder"] = "Mailing address"
-        self.fields["address"].help_text = (
+        self.fields["display_name"].widget.attrs["placeholder"] = _(
+            "Your organization's name as you'd like it to appear on our website."
+        )
+        self.fields["address"].widget.attrs["placeholder"] = _("Mailing address")
+        self.fields["address"].help_text = _(
             "We can send the invoice by email, but we need a contact address."
         )
-        self.fields["description"].widget.attrs["placeholder"] = (
+        self.fields["description"].widget.attrs["placeholder"] = _(
             "A short paragraph that describes your organization and its "
             "activities, written as if the DSF were describing your company "
             "to a third party."
         )
-        self.fields[
-            "description"
-        ].help_text = """We'll use this text on the
+        self.fields["description"].help_text = _(
+            """We'll use this text on the
             <a href="/foundation/corporate-members/">
             corporate membership page</a>; you can use the existing descriptions
             as a guide for flavor we're looking for."""
-        self.fields["django_usage"].widget.attrs[
-            "placeholder"
-        ] = "How does your organization use Django?"
-        self.fields["django_usage"].help_text = (
+        )
+        self.fields["django_usage"].widget.attrs["placeholder"] = _(
+            "How does your organization use Django?"
+        )
+        self.fields["django_usage"].help_text = _(
             "This won't be displayed publicly but helps the DSF Board "
             "to evaluate your application."
         )
-        self.fields[
-            "amount"
-        ].help_text = """Enter an amount above and the appropriate membership level will
+        self.fields["amount"].help_text = _(
+            """Enter an amount above and the appropriate membership level will
             be automatically selected. Or select a membership level below and
             the minimum donation will be entered for you. See
             <a href="/foundation/corporate-membership/#dues">dues</a> for
             details on the levels."""
+        )
 
     class Meta:
         fields = [
@@ -95,22 +96,25 @@ class CorporateMemberSignUpForm(forms.ModelForm):
     def save(self, *args, **kwargs):
         is_renewing = self.is_renewing  # self.is_renewing changes after super()
         instance = super().save(*args, **kwargs)
+        display_name = self.instance.display_name
+        if is_renewing:
+            subject = _("Django Corporate Membership Renewal: %s") % display_name
+            content = _(
+                "Thanks for renewing as a corporate member of the "
+                "Django Software Foundation! "
+                "Your renewal is received, and we'll follow up with an invoice soon."
+            )
+        else:
+            subject = _("Django Corporate Membership Application: %s") % display_name
+            content = _(
+                "Thanks for applying to be a corporate member of the "
+                "Django Software Foundation! "
+                "Your application is being reviewed, and we'll follow up a "
+                "response from the board after our next monthly meeting."
+            )
         send_mail(
-            "Django Corporate Membership %s: %s"
-            % (
-                "Renewal" if is_renewing else "Application",
-                self.instance.display_name,
-            ),
-            "Thanks for %s a corporate member of the Django Software Foundation! %s"
-            % (
-                "renewing as" if is_renewing else "applying to be",
-                (
-                    "Your renewal is received, and we'll follow up with an invoice soon."
-                    if is_renewing
-                    else "Your application is being reviewed, and we'll follow up a "
-                    "response from the board after our next monthly meeting."
-                ),
-            ),
+            subject,
+            content,
             settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
             [
                 settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
