@@ -1,3 +1,5 @@
+{% load i18n %}{% spaceless %}
+{% blocktranslate %}
 Hi {{ contact_name }},
 
 The Django Software Foundation membership for {{ member_name }} expires
@@ -11,3 +13,5 @@ Thank you for your support!
 
 p.s. If you decide not to renew, please reply to let us know and we'll mark
 your membership as inactive.
+{% endblocktranslate %}
+{% endspaceless %}

@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.templatetags.static import static
 from django.utils.formats import localize
 from django.utils.html import format_html
+from django.utils.translation import gettext_lazy as _
 
 from members.models import CorporateMember, IndividualMember, Invoice, Team
 
@@ -29,14 +30,14 @@ class StatusFilter(admin.SimpleListFilter):
     Display only active members in the changelist page, by default.
     """
 
-    title = "Status"
+    title = _("Status")
     parameter_name = "status"
 
     def lookups(self, request, model_admin):
         return (
-            (None, "Active"),
-            ("inactive", "Inactive"),
-            ("all", "All"),
+            (None, _("Active")),
+            ("inactive", _("Inactive")),
+            ("all", _("All")),
         )
 
     def choices(self, cl):
@@ -76,9 +77,10 @@ class CorporateMemberAdmin(admin.ModelAdmin):
 
     def renewal_link(self, obj):
         return format_html(
-            '<a href="{}"><img src="{}" alt="renewal link" />',
+            '<a href="{}"><img src="{}" alt="{}" />',
             obj.get_renewal_link(),
             static("admin/img/icon-changelink.svg"),
+            _("renewal link"),
         )
 
     def membership_expires(self, obj):

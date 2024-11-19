@@ -1,17 +1,20 @@
 {% extends "base_foundation.html" %}
+{% load i18n %}
 
-{% block og_title %}Meet the Teams | Django Software Foundation{% endblock %}
+{% block og_title %}{% translate "Meet the Teams | Django Software Foundation" %}{% endblock %}
 {% block og_description %}{% spaceless %}
-  Get to know the teams behind the Django Software Foundation,
-  including the Steering Council and various committees. Learn about
-  their roles and responsibilities in advancing the development and
-  adoption of the Django web framework.
+  {% blocktranslate trimmed %}
+    Get to know the teams behind the Django Software Foundation,
+    including the Steering Council and various committees. Learn about
+    their roles and responsibilities in advancing the development and
+    adoption of the Django web framework.
+  {% endblocktranslate %}
 {% endspaceless %}{% endblock %}
 
 {% block content %}
 
-  <h2>Teams</h2>
-  <p>Teams indicate who is actively contributing in certain areas.</p>
+  <h2>{% translate "Teams" %}</h2>
+  <p>{% translate "Teams indicate who is actively contributing in certain areas." %}</p>
 
   {% for team in teams %}
     <div class="section">
