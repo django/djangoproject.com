@@ -2,6 +2,7 @@ from django.core import signing
 from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView
 from django.views.generic.dates import timezone_today
 
@@ -61,10 +62,7 @@ class CorporateMemberRenewView(CorporateMemberSignupMixin, UpdateView):
         try:
             pk = signing.loads(self.kwargs["token"], max_age=2.592e6)
         except signing.BadSignature:
-            raise Http404(
-                "No %(verbose_name)s found matching the query"
-                % {"verbose_name": self.model._meta.verbose_name}
-            )
+            raise Http404(_("No CorporateMember found matching the query"))
         return self.get_queryset().get(pk=pk)
 
 

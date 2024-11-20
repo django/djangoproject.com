@@ -57,7 +57,7 @@
       <div class="pagination">
         <ul class="nav-pagination" role="navigation">
           {% if page.has_previous %}
-            <li><a class="previous" href="?q={{ query }}&amp;release={{ release.version }}&amp;page={{ page.previous_page_number }}">
+            <li><a rel="prev" class="previous" href="?q={{ query }}&amp;release={{ release.version }}&amp;page={{ page.previous_page_number }}">
               <i class="icon icon-chevron-left"></i>
               <span class="visuallyhidden">{% trans "Previous" %}</span>
             </a></li>
@@ -68,7 +68,7 @@
             {% endblocktrans %}
           </span>
           {% if page.has_next %}
-            <li><a class="next" href="?q={{ query }}&amp;release={{ release.version }}&amp;page={{ page.next_page_number }}">
+            <li><a rel="next" class="next" href="?q={{ query }}&amp;release={{ release.version }}&amp;page={{ page.next_page_number }}">
               <i class="icon icon-chevron-right"></i>
               <span class="visuallyhidden">{% trans "Next" %}</span>
             </a></li>

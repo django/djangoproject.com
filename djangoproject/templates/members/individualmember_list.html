@@ -2,77 +2,77 @@
 {% load i18n %}
 
 {% block content %}
-  <h1>{% trans "Individual members" %}</h1>
+  <h1>{% translate "Individual members" %}</h1>
   <p>
-    {% blocktrans %}
+    {% blocktranslate trimmed %}
       Individual Members are appointed by the DSF in recognition of their contribution to the DSF's mission of advancing and promoting Django, protecting the framework's long-term viability, and advancing the state of the art in web development.
-    {% endblocktrans %}
+    {% endblocktranslate %}
   </p>
 
   <p>
-    {% blocktrans %}
+    {% blocktranslate trimmed %}
       Contribution to the DSF's mission takes many forms.
       Here are some non-exhaustive examples of the categories of work that might qualify:
-    {% endblocktrans %}
+    {% endblocktranslate %}
   </p>
 
   <ul>
     <li>
-      {% blocktrans %}
+      {% blocktranslate trimmed %}
         Contributing code, documentation, or tests to Django or to major third-party packages in the Django ecosystem.
-      {% endblocktrans %}
+      {% endblocktranslate %}
     </li>
     <li>
-      {% blocktrans %}
+      {% blocktranslate trimmed %}
         Reviewing pull requests or triaging tickets on Django or a third-party app.
-      {% endblocktrans %}
+      {% endblocktranslate %}
     </li>
     <li>
-      {% blocktrans %}
+      {% blocktranslate trimmed %}
         Creating learning resources (blogs, videos, etc.) for people to learn Django.
-      {% endblocktrans %}
+      {% endblocktranslate %}
     </li>
     <li>
-      {% blocktrans %}
+      {% blocktranslate trimmed %}
         Contributing to discussions in community areas such as the <a href="https://forum.djangoproject.com/">Django Forum</a> or <a href="https://discord.com/invite/xcRH6mN4fa">Discord</a>.
-      {% endblocktrans %}
+      {% endblocktranslate %}
     </li>
     <li>
-      {% blocktrans %}
+      {% blocktranslate trimmed %}
         Being part of the organizing team for a Django community event.
-      {% endblocktrans %}
+      {% endblocktranslate %}
     </li>
     <li>
-      {% blocktrans %}
+      {% blocktranslate trimmed %}
         Serving on a <a href="https://github.com/django/dsf-working-groups">DSF Working Group</a>.
-      {% endblocktrans %}
+      {% endblocktranslate %}
     </li>
   </ul>
 
   <p>
-    {% blocktrans %}
+    {% blocktranslate trimmed %}
       For more information about membership, see <a href="faq/">the DSF membership FAQ</a>.
-    {% endblocktrans %}
+    {% endblocktranslate %}
   </p>
 
   <p>
-    {% blocktrans %}
+    {% blocktranslate trimmed %}
       If you would like to apply for Individual Membership, please <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5lbWxAO-sylEEjHVKBNIpmHlhdJRf0_LCo8glnLUWd-Q2Sw/viewform?usp=sf_link">fill out this form</a>.
       If you are unsure if you meet the criteria, but you would like to be a member, please apply anyway!
       You can also nominate others using the same form if you know someone who should be considered.
-    {% endblocktrans %}
+    {% endblocktranslate %}
   </p>
 
   <p>
-    {% blocktrans %}
+    {% blocktranslate trimmed %}
       As a member of the DSF, you will be recognized for your contributions to the community. Your name will appear below and you'll be added to the DSF Members Mailing list. You will also be eligible to vote for the DSF Board and Steering Council.
-    {% endblocktrans %}
+    {% endblocktranslate %}
   </p>
 
   <p>
-    {% blocktrans %}
+    {% blocktranslate trimmed %}
       The following are Individual Members of the Django Software Foundation.
-    {% endblocktrans %}
+    {% endblocktranslate %}
   </p>
 
   <ul>
@@ -82,8 +82,8 @@
   </ul>
 
   {% if former_members %}
-    <h2>{% trans "Former members" %}</h2>
-    <p>{% trans "The following are former Individual Members of the DSF." %}</p>
+    <h2>{% translate "Former members" %}</h2>
+    <p>{% translate "The following are former Individual Members of the DSF." %}</p>
 
     <ul>
       {% for member in former_members %}
