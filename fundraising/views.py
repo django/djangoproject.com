@@ -16,8 +16,10 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+from members.models import CORPORATE_MEMBERSHIP_AMOUNTS
+
 from .forms import DjangoHeroForm, DonationForm, PaymentForm
-from .models import DjangoHero, Donation, Payment, Testimonial
+from .models import INTERVAL_CHOICES, DjangoHero, Donation, Payment, Testimonial
 
 logger = logging.getLogger(__name__)
 
@@ -338,3 +340,114 @@ class WebhookHandler:
         )
 
         return HttpResponse(status=204)
+
+
+def funding_json(request):
+    """
+    Generate a funding.json -- see https://floss.fund/funding-manifest/
+    """
+    funding = {
+        "version": "v1.0.0",
+        "entity": {
+            "type": "organisation",
+            "role": "owner",
+            "name": "Django Software Foundation",
+            "email": "foundation@djangoproject.com",
+            "description": "Development of Django is supported by the Django Software Foundation, a 501(c)(3) non-profit.",
+            "webpageUrl": {
+                "url": "http://djangoproject.com/foundation",
+            },
+        },
+        "projects": [
+            {
+                "guid": "django",
+                "name": "Django",
+                "description": "Django is a Python web framework that makes it possible to build better web apps quickly and with less code",
+                "webpageUrl": {
+                    "url": "http://djangoproject.com/",
+                },
+                "repositoryUrl": {
+                    "url": "http://github.com/django/django",
+                    "wellKnown": "http://github.com/django/django/blob/main/static/.well-known/funding-manifest-urls",
+                },
+                "licenses": ["spdx:BSD-3-Clause"],
+                "tags": ["python", "web", "django"],
+            }
+        ],
+        "funding": {
+            "channels": [
+                {
+                    "guid": "stripe",
+                    "type": "payment-provider",
+                    "address": "https://www.djangoproject.com/fundraising/",
+                    "description": "Pay with your debit/credit card, and set up recurring support.",
+                },
+                {
+                    "guid": "github-sponsors",
+                    "type": "payment-provider",
+                    "address": "https://github.com/sponsors/django",
+                    "description": "Donate via GitHub sponsors",
+                },
+                {
+                    "guid": "bank",
+                    "type": "bank",
+                    "description": "Pay via bank transfer or check - contact foundation@djangoproject.com for details.",
+                },
+            ],
+            "plans": [],
+        },
+    }
+
+    # translate our keys for frequency into the ones understood by funding.json
+    frequency_translation = {
+        "onetime": "one-time",
+        "quarterly": "other",
+    }
+
+    # Pay-what-you-want individual funding levels
+    for frequency, title in INTERVAL_CHOICES:
+        funding["funding"]["plans"].append(
+            {
+                "guid": f"individual-{frequency}",
+                "status": "active",
+                "name": f"Django Hero - {title}",
+                "description": f"Support Django as an individual, - {title.lower()}",
+                "amount": 0,
+                "currency": "USD",
+                "frequency": frequency_translation.get(frequency, frequency),
+                "channels": [c["guid"] for c in funding["funding"]["channels"]],
+            }
+        )
+
+    # "leadership level" donation
+    funding["funding"]["plans"].append(
+        {
+            "guid": "individual-leadership",
+            "status": "active",
+            "name": "Django Hero - Leadership Level",
+            "description": "Django Hero - Leadership Level - Donate $1,000/yr or more",
+            "amount": 1000,
+            "currency": "USD",
+            "frequency": "yearly",
+            "channels": [c["guid"] for c in funding["funding"]["channels"]],
+        }
+    )
+
+    # corporate sponsorships
+    for level, amount in CORPORATE_MEMBERSHIP_AMOUNTS.items():
+        funding["funding"]["plans"].append(
+            {
+                "guid": f"corporate-{level}",
+                "status": "active",
+                "name": f"Corporate Sponsorship - {level.title()}",
+                "description": f"Corporate Sponsoreship - {level.title()}",
+                "amount": amount,
+                "currency": "USD",
+                "frequency": "yearly",
+                "channels": [c["guid"] for c in funding["funding"]["channels"]],
+            }
+        )
+
+    # TODO: it'd be nice to do history. We do have the data, but not in the dp.com app.
+
+    return JsonResponse(funding)
