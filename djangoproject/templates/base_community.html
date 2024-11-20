@@ -1,55 +1,67 @@
 {% extends "base.html" %}
-{% load fundraising_extras %}
+{% load fundraising_extras i18n %}
 
-{% block og_title %}Django Community{% endblock %}
-{% block og_description %}Building the Django Community. Come join us!{% endblock %}
+{% block og_title %}{% translate "Django Community" %}{% endblock %}
+{% block og_description %}{% translate "Building the Django Community. Come join us!" %}{% endblock %}
 
 {% block layout_class %}sidebar-right{% endblock %}
-{% block title %}Django Community{% endblock %}
+{% block title %}{% translate "Django Community" %}{% endblock %}
 
 {% block header %}
-  <h1 class="visuallyhidden">Community</h1>
-  <p>Building the <em>Django</em> Community{% if community_stats %}
-    {% if community_stats.age %} for <em>{{ community_stats.age }}</em>{% endif %}{% endif %}. Come join us!</p>
+  <h1 class="visuallyhidden">{% translate "Community" %}</h1>
+  <p>
+    {% if community_stats.age %}
+      {% blocktranslate trimmed with age=community_stats.age %}
+        Building the <em>Django</em> Community for <em>{{ age }}</em>.
+      {% endblocktranslate %}
+    {% else %}
+      {% translate "Building the <em>Django</em> Community." %}
+    {% endif %}
+    {% translate "Come join us!" %}
+  </p>
 {% endblock %}
 
 {% block content-related %}
-  <h1 class="visuallyhidden">Additional Information</h1>
+  <h1 class="visuallyhidden">{% translate "Additional Information" %}</h1>
   <div role="complementary">
     {% donation_snippet %}
 
-    <h2>More Help</h2>
+    <h2>{% translate "More Help" %}</h2>
     <dl class="list-links">
-      <dt><a href="{% url 'document-detail' lang='en' version='stable' url='faq' host 'docs' %}">Frequently Asked Questions</a></dt>
-      <dd>The FAQ answers many common questions</dd>
+      <dt>
+        <a href="{% url 'document-detail' lang='en' version='stable' url='faq' host 'docs' %}">
+          {% translate "Frequently Asked Questions" %}
+        </a>
+      </dt>
+      <dd>{% translate "The FAQ answers many common questions" %}</dd>
       <dt><a href="https://www.reddit.com/r/django/" rel="nofollow">r/Django Subreddit</a></dt>
-      <dd>News and links on Reddit</dd>
+      <dd>{% translate "News and links on Reddit" %}</dd>
       <dt><a href="https://stackoverflow.com/questions/tagged/django" rel="nofollow">StackOverflow</a></dt>
-      <dd>Search community answers</dd>
-      <dt><a href="irc://irc.libera.chat/django">#django IRC Channel</a></dt>
-      <dd>Chat with other Django users like it's 1999</dd>
+      <dd>{% translate "Search community answers" %}</dd>
+      <dt><a href="irc://irc.libera.chat/django">{% translate "#django IRC Channel" %}</a></dt>
+      <dd>{% translate "Chat with other Django users like it's 1999" %}</dd>
     </dl>
 
-    <h2>Dive In</h2>
+    <h2>{% translate "Dive In" %}</h2>
     <dl class="list-links">
-      <dt><a href="https://code.djangoproject.com/">Ticket System</a></dt>
-      <dd>View and update bug reports</dd>
-      <dt><a href="https://dashboard.djangoproject.com/">Development Dashboard</a></dt>
-      <dd>Statistics about Django development</dd>
-      <dt><a href="https://groups.google.com/group/django-updates">django-updates Mailing List</a></dt>
-      <dd>Get updated for each code and ticket change</dd>
+      <dt><a href="https://code.djangoproject.com/">{% translate "Ticket System" %}</a></dt>
+      <dd>{% translate "View and update bug reports" %}</dd>
+      <dt><a href="https://dashboard.djangoproject.com/">{% translate "Development Dashboard" %}</a></dt>
+      <dd>{% translate "Statistics about Django development" %}</dd>
+      <dt><a href="https://groups.google.com/group/django-updates">{% translate "django-updates Mailing List" %}</a></dt>
+      <dd>{% translate "Get updated for each code and ticket change" %}</dd>
     </dl>
 
-    <h2>More Links</h2>
+    <h2>{% translate "More Links" %}</h2>
     <dl class="list-links">
-      <dt><a href="https://www.djangopackages.com/" rel="nofollow">Django Packages</a></dt>
-      <dd>Find third-party packages to supercharge your project</dd>
-      <dt><a href="https://builtwithdjango.com/projects/" rel="nofollow">Django-powered Sites</a></dt>
-      <dd>Add your site to the list</dd>
-      <dt><a href="/community/badges/">Django Badges</a></dt>
-      <dd>Show your support (or wish longingly)</dd>
-      <dt><a href="/community/logos/">Django Logos</a></dt>
-      <dd>Download official logos</dd>
+      <dt><a href="https://www.djangopackages.com/" rel="nofollow">{% translate "Django Packages" %}</a></dt>
+      <dd>{% translate "Find third-party packages to supercharge your project" %}</dd>
+      <dt><a href="https://builtwithdjango.com/projects/" rel="nofollow">{% translate "Django-powered Sites" %}</a></dt>
+      <dd>{% translate "Add your site to the list" %}</dd>
+      <dt><a href="/community/badges/">{% translate "Django Badges" %}</a></dt>
+      <dd>{% translate "Show your support (or wish longingly)" %}</dd>
+      <dt><a href="/community/logos/">{% translate "Django Logos" %}</a></dt>
+      <dd>{% translate "Download official logos" %}</dd>
     </dl>
   </div>
 {% endblock %}

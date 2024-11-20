@@ -1,14 +1,15 @@
 {% extends "registration/base.html" %}
+{% load i18n %}
 
-{% block title %}Log in{% endblock %}
-{% block og_title %}Log in{% endblock %}
-{% block og_description %}Log in to your account{% endblock %}
+{% block title %}{% translate "Log in" %}{% endblock %}
+{% block og_title %}{% translate "Log in" %}{% endblock %}
+{% block og_description %}{% translate "Log in to your account" %}{% endblock %}
 
 {% block content %}
-    <h1>Log in</h1>
+    <h1>{% translate "Log in" %}</h1>
 
     {% if form.errors %}
-        <p class="error">Please correct the errors below:</p>
+        <p class="error">{% translate "Please correct the errors below:" %}</p>
         {{ form.non_field_errors }}
     {% endif %}
 
@@ -17,32 +18,41 @@
         <input type="hidden" name="next" value="{{ next|default:"/" }}">
 
         <div>
-            <label for="id_username">Username:</label>
+            <label for="id_username">{% translate "Username:" %}</label>
             {% if form.username.errors %}
                 <span class="error">{{ form.username.errors|join:", " }}</span>
             {% endif %}
             {{ form.username }}
         </div>
         <div>
-            <label for="id_password">Password:</label>
+            <label for="id_password">{% translate "Password:" %}</label>
             {% if form.password.errors %}
                 <span class="error">{{ form.password.errors|join:", " }}</span>
             {% endif %}
             {{ form.password }}
         </div>
         <p>
-            <input type="submit" value="Log in" class="cta"/>
+            <input type="submit" value="{% translate 'Log in' %}" class="cta"/>
         </p>
     </form>
 {% endblock %}
 
 {% block content-related %}
-    <h1 class="visuallyhidden">Help</h1>
+    <h1 class="visuallyhidden">{% translate "Help" %}</h1>
     <div role="complementary">
-        <p>If you don't have an account, you can
-            <a href="{% url 'registration_register' %}">sign up</a> for one.</p>
-
-        <p>If you forgot your password, you can
-            <a href="{% url 'auth_password_reset' %}">reset it</a>.</p>
+        {% url 'registration_register' as register_url %}
+        <p>
+            {% blocktranslate trimmed %}
+                If you don't have an account, you can
+                <a href="{{ register_url }}">sign up</a> for one.
+            {% endblocktranslate %}
+        </p>
+        {% url 'auth_password_reset' as reset_url %}
+        <p>
+            {% blocktranslate trimmed %}
+                If you forgot your password, you can
+                <a href="{{ reset_url }}">reset it</a>.
+            {% endblocktranslate %}
+        </p>
     </div>
 {% endblock %}

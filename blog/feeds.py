@@ -1,12 +1,13 @@
 from django.contrib.syndication.views import Feed
+from django.utils.translation import gettext_lazy as _
 
 from .models import Entry
 
 
 class WeblogEntryFeed(Feed):
-    title = "The Django weblog"
+    title = _("The Django weblog")
     link = "https://www.djangoproject.com/weblog/"
-    description = "Latest news about Django, the Python web framework."
+    description = _("Latest news about Django, the Python web framework.")
 
     def items(self):
         return Entry.objects.published()[:10]

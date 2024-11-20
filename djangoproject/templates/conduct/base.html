@@ -1,27 +1,31 @@
 {% extends "base_community.html" %}
+{% load i18n %}
+
 {% block header %}
-  <h1 class="visuallyhidden">Code of Conduct</h1>
-  <p>Code of Conduct</p>
+  <h1 class="visuallyhidden">{% translate "Code of Conduct" %}</h1>
+  <p>{% translate "Code of Conduct" %}</p>
 {% endblock %}
 
 {% block content-related %}
   <div role="complementary">
-    <h2>Django Community Code of Conduct</h2>
+    <h2>{% translate "Django Community Code of Conduct" %}</h2>
 
     <ul class="list-links">
-      <li><a href="{% url 'code_of_conduct' %}">Code of Conduct</a></li>
-      <li><a href="/foundation/committees/#conduct">Committee</a></li>
-      <li><a href="{% url 'conduct_faq' %}">Frequently Asked Questions</a></li>
-      <li><a href="{% url 'conduct_reporting' %}">Reporting Guide</a></li>
-      <li><a href="{% url 'conduct_enforcement' %}">Enforcement Manual</a></li>
-      <li><a href="{% url 'conduct_changes' %}">Changes</a></li>
+      <li><a href="{% url 'code_of_conduct' %}">{% translate "Code of Conduct" %}</a></li>
+      <li><a href="/foundation/committees/#conduct">{% translate "Committee" %}</a></li>
+      <li><a href="{% url 'conduct_faq' %}">{% translate "Frequently Asked Questions" %}</a></li>
+      <li><a href="{% url 'conduct_reporting' %}">{% translate "Reporting Guide" %}</a></li>
+      <li><a href="{% url 'conduct_enforcement' %}">{% translate "Enforcement Manual" %}</a></li>
+      <li><a href="{% url 'conduct_changes' %}">{% translate "Changes" %}</a></li>
     </ul>
 
-    <h2>License</h2>
+    <h2>{% translate "License" %}</h2>
     <p>
-      All content on this page is licensed under a
-      <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
-        Attribution </a> license.
+      {% blocktranslate trimmed %}
+        All content on this page is licensed under a
+        <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+          Attribution </a> license.
+      {% endblocktranslate %}
     </p>
     <p>
       <a href="https://creativecommons.org/licenses/by/3.0/">
@@ -31,4 +35,4 @@
   </div>
 {% endblock %}
 
-{% block title %}Django Code of Conduct{% endblock %}
+{% block title %}{% translate "Django Code of Conduct" %}{% endblock %}
