@@ -353,7 +353,10 @@ def funding_json(request):
             "role": "owner",
             "name": "Django Software Foundation",
             "email": "foundation@djangoproject.com",
-            "description": "Development of Django is supported by the Django Software Foundation, a 501(c)(3) non-profit.",
+            "description": (
+                "Development of Django is supported by the Django Software Foundation, "
+                "a 501(c)(3) non-profit."
+            ),
             "webpageUrl": {
                 "url": "http://djangoproject.com/foundation",
             },
@@ -362,13 +365,19 @@ def funding_json(request):
             {
                 "guid": "django",
                 "name": "Django",
-                "description": "Django is a Python web framework that makes it possible to build better web apps quickly and with less code",
+                "description": (
+                    "Django is a Python web framework that makes it possible to build "
+                    "better web apps quickly and with less code"
+                ),
                 "webpageUrl": {
                     "url": "http://djangoproject.com/",
                 },
                 "repositoryUrl": {
                     "url": "http://github.com/django/django",
-                    "wellKnown": "http://github.com/django/django/blob/main/static/.well-known/funding-manifest-urls",
+                    "wellKnown": (
+                        "http://github.com/django/django/blob/main/static/"
+                        ".well-known/funding-manifest-urls"
+                    ),
                 },
                 "licenses": ["spdx:BSD-3-Clause"],
                 "tags": ["python", "web", "django"],
@@ -380,7 +389,10 @@ def funding_json(request):
                     "guid": "stripe",
                     "type": "payment-provider",
                     "address": "https://www.djangoproject.com/fundraising/",
-                    "description": "Pay with your debit/credit card, and set up recurring support.",
+                    "description": (
+                        "Pay with your debit/credit card, "
+                        "and set up recurring support."
+                    ),
                 },
                 {
                     "guid": "github-sponsors",
@@ -391,7 +403,10 @@ def funding_json(request):
                 {
                     "guid": "bank",
                     "type": "bank",
-                    "description": "Pay via bank transfer or check - contact foundation@djangoproject.com for details.",
+                    "description": (
+                        "Pay via bank transfer or check - "
+                        "contact foundation@djangoproject.com for details."
+                    ),
                 },
             ],
             "plans": [],
