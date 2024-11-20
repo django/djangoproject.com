@@ -29,13 +29,13 @@
     <div class="pagination">
       <ul class="nav-pagination" role="navigation">
         {% if page_obj.has_previous %}
-          <li><a class="previous" href="?page={{ page_obj.previous_page_number }}">
+          <li><a rel="prev" class="previous" href="?page={{ page_obj.previous_page_number }}">
             <i class="icon icon-chevron-left"></i>
             <span class="visuallyhidden">{% translate "Previous" context "pagination" %}</span>
           </a></li>
         {% endif %}
         {% if page_obj.has_next %}
-          <li><a class="next" href="?page={{ page_obj.next_page_number }}">
+          <li><a rel="next" class="next" href="?page={{ page_obj.next_page_number }}">
             <i class="icon icon-chevron-right"></i>
             <span class="visuallyhidden">{% translate "Next" context "pagination" %}</span>
           </a></li>
