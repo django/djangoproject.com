@@ -463,6 +463,4 @@ def funding_json(request):
             }
         )
 
-    # TODO: it'd be nice to do history. We do have the data, but not in the dp.com app.
-
     return JsonResponse(funding)
