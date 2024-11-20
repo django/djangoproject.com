@@ -123,10 +123,10 @@
   {% if doc.prev or doc.next %}
     <div class="browse-horizontal">
       {% if doc.prev %}
-        <div class="left"><a href="{{ doc.prev.link }}"><i class="icon icon-chevron-left"></i> {{ doc.prev.title|safe }}</a></div>
+        <div class="left"><a rel="prev" href="{{ doc.prev.link }}"><i class="icon icon-chevron-left"></i> {{ doc.prev.title|safe }}</a></div>
       {% endif %}
       {% if doc.next %}
-        <div class="right"><a href="{{ doc.next.link }}">{{ doc.next.title|safe }} <i class="icon icon-chevron-right"></i></a></div>
+        <div class="right"><a rel="next" href="{{ doc.next.link }}">{{ doc.next.title|safe }} <i class="icon icon-chevron-right"></i></a></div>
       {% endif %}
     </div>
   {% endif %}
@@ -152,10 +152,10 @@
       <ul>
         {% block browse %}
           {% if doc.prev %}
-            <li>{% trans "Prev:" %} <a href="{{ doc.prev.link }}">{{ doc.prev.title|safe }}</a></li>
+            <li>{% trans "Prev:" %} <a rel="prev" href="{{ doc.prev.link }}">{{ doc.prev.title|safe }}</a></li>
           {% endif %}
           {% if doc.next %}
-            <li>{% trans "Next:" %} <a href="{{ doc.next.link }}">{{ doc.next.title|safe }}</a></li>
+            <li>{% trans "Next:" %} <a rel="next" href="{{ doc.next.link }}">{{ doc.next.title|safe }}</a></li>
           {% endif %}
           <li><a href="{% url 'document-detail' lang=lang version=version url="contents" host 'docs' %}">{% trans "Table of contents" %}</a></li>
           {% for doc, title, accesskey, shorttitle in env.rellinks %}
