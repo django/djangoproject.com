@@ -358,7 +358,7 @@ def funding_json(request):
                 "a 501(c)(3) non-profit."
             ),
             "webpageUrl": {
-                "url": "http://djangoproject.com/foundation",
+                "url": "https://www.djangoproject.com/foundation",
             },
         },
         "projects": [
@@ -370,12 +370,12 @@ def funding_json(request):
                     "better web apps quickly and with less code"
                 ),
                 "webpageUrl": {
-                    "url": "http://djangoproject.com/",
+                    "url": "https://www.djangoproject.com/",
                 },
                 "repositoryUrl": {
-                    "url": "http://github.com/django/django",
+                    "url": "https://github.com/django/django",
                     "wellKnown": (
-                        "http://github.com/django/django/blob/main/static/"
+                        "https://github.com/django/django/blob/main/static/"
                         ".well-known/funding-manifest-urls"
                     ),
                 },
