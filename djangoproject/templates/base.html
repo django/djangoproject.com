@@ -84,7 +84,17 @@
     elements.
     {% endcomment %}
 
-    <div id="billboard">{% block billboard %}{% endblock %}</div>
+    <div id="billboard">
+      {% block billboard %}
+        <div class="banner">
+          <p>
+            Please take a few minutes to complete the
+            <a href="https://jb.gg/asjljo">2024 Django Developers Survey</a>.<br>
+            Your feedback will help guide future efforts.
+          </p>
+        </div>
+      {% endblock %}
+    </div>
 
     <div class="container {% block layout_class %}{% endblock %}">
       <div role="main">
