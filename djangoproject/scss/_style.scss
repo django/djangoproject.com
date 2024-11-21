@@ -696,6 +696,7 @@ blockquote {
 
     a, h1 a {
         color: $black;
+        font-weight: bold;
         text-decoration: none;
         &:hover {
             text-decoration: underline;
