@@ -14,6 +14,7 @@ from django_hosts.resolvers import reverse as django_hosts_reverse
 from django_recaptcha.client import RecaptchaResponse
 
 from ..models import DjangoHero, Donation
+from ..views import WebhookHandler
 
 
 class TestIndex(TestCase):
@@ -253,3 +254,13 @@ class TestWebhooks(TestCase):
         response = self.post_event()
         self.assertEqual(response.status_code, 201)
         self.assertEqual(self.donation.payment_set.count(), 0)
+
+    @patch("stripe.Customer.retrieve")
+    @patch("stripe.PaymentIntent.retrieve")
+    def test_checkout_session_completed(self, payment_intent, customer):
+        customer.return_value = self.stripe_data("customer")
+        payment_intent.return_value = self.stripe_data("payment_intent")
+        event = self.stripe_data("session_completed")
+        WebhookHandler(event).handle()
+        customer.assert_called_once()
+        payment_intent.assert_called_once()

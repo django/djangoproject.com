@@ -1,0 +1,62 @@
+{
+    "account_balance": 0,
+    "address": null,
+    "balance": 0,
+    "cards": {
+      "data": [],
+      "has_more": false,
+      "object": "list",
+      "total_count": 0,
+      "url": "/v1/customers/cus_3MXPY5pvYMWTBf/cards"
+    },
+    "created": 1732222262,
+    "currency": null,
+    "default_card": null,
+    "default_currency": null,
+    "default_source": null,
+    "delinquent": false,
+    "description": null,
+    "discount": null,
+    "email": "customer@email.com",
+    "id": "cus_3MXPY5pvYMWTBf",
+    "invoice_prefix": "17A431B3",
+    "invoice_settings": {
+      "custom_fields": null,
+      "default_payment_method": null,
+      "footer": null,
+      "rendering_options": null
+    },
+    "livemode": false,
+    "metadata": {},
+    "name": null,
+    "next_invoice_sequence": 1,
+    "object": "customer",
+    "phone": null,
+    "preferred_locales": [],
+    "shipping": null,
+    "sources": {
+      "data": [],
+      "has_more": false,
+      "object": "list",
+      "total_count": 0,
+      "url": "/v1/customers/cus_3MXPY5pvYMWTBf/sources"
+    },
+    "subscriptions": {
+      "data": [],
+      "has_more": false,
+      "object": "list",
+      "total_count": 0,
+      "url": "/v1/customers/cus_3MXPY5pvYMWTBf/subscriptions"
+    },
+    "tax_exempt": "none",
+    "tax_ids": {
+      "data": [],
+      "has_more": false,
+      "object": "list",
+      "total_count": 0,
+      "url": "/v1/customers/cus_3MXPY5pvYMWTBf/tax_ids"
+    },
+    "tax_info": null,
+    "tax_info_verification": null,
+    "test_clock": null
+  }
