@@ -174,7 +174,7 @@ class CorporateMembersTestCase(TestCase):
             display_name=f"{level_name} Member",
             url=f"https://{level_name.lower()}.example.com",
             membership_level=level,
-            notes=f"Some notes about this {level_name} member",
+            description=f"Some notes about this {level_name} member",
         )
         # ensure each member is included in `for_public_display`
         member.invoice_set.create(
@@ -195,13 +195,13 @@ class CorporateMembersTestCase(TestCase):
 
         self.assertContains(response, "<h2>Diamond and Platinum Members</h2>")
         member_link = (
-            lambda m: f'<a href="{m.url}" title="{m.display_name}">{m.notes}</a>'
+            lambda m: f'<a href="{m.url}" title="{m.display_name}">{m.description}</a>'
         )
         for member in members:
             if member.membership_level < PLATINUM_MEMBERSHIP:
                 self.assertNotContains(response, member.display_name)
                 self.assertNotContains(response, member.url)
-                self.assertNotContains(response, member.notes)
+                self.assertNotContains(response, member.description)
             else:
                 self.assertContains(response, member_link(member), html=True)
 
@@ -218,4 +218,4 @@ class CorporateMembersTestCase(TestCase):
         for member in members:
             self.assertNotContains(response, member.display_name)
             self.assertNotContains(response, member.url)
-            self.assertNotContains(response, member.notes)
+            self.assertNotContains(response, member.description)
