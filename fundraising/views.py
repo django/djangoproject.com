@@ -15,6 +15,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.db import transaction
 
 from .forms import DjangoHeroForm, DonationForm, PaymentForm
 from .models import DjangoHero, Donation, Payment, Testimonial
@@ -290,10 +291,14 @@ class WebhookHandler:
         else:
             return "monthly"
 
+    @transaction.atomic
     def checkout_session_completed(self):
         """
         > Occurs when a Checkout Session has been successfully completed.
         https://stripe.com/docs/api/events/types#event_types-checkout.session.completed
+        
+        All database operations are now wrapped in a transaction - if any operation fails,
+        all changes will be rolled back to maintain data consistency.
         """
         session = self.event.data.object
         # TODO: remove stripe_version when updating account settings.
