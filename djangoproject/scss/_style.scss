@@ -362,7 +362,7 @@ blockquote {
 
     .mdzr-boxshadow & {
         border: none;
-        @include secondary-shadow-top;
+        box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
     }
 }
 
@@ -436,7 +436,7 @@ blockquote {
 
     .mdzr-boxshadow & {
         border: none;
-        @include secondary-shadow-bottom;
+        box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
     }
 }
 
