@@ -1,5 +1,4 @@
 import decimal
-import json
 import logging
 
 import stripe
@@ -189,16 +188,13 @@ def cancel_donation(request, hero):
 @csrf_exempt
 def receive_webhook(request):
     try:
-        data = json.loads(request.body.decode())
-    except ValueError:
-        return HttpResponse(422)
-
-    # For security, re-request the event object from Stripe.
-    # TODO: Verify shared secret here?
-    try:
-        event = stripe.Event.retrieve(data["id"])
-    except stripe.error.InvalidRequestError:
-        return HttpResponse(422)
+        event = stripe.Webhook.construct_event(
+            request.body,
+            request.headers["stripe-signature"],
+            settings.STRIPE_ENDPOINT_SECRET,
+        )
+    except (KeyError, ValueError, stripe.error.SignatureVerificationError):
+        return HttpResponse(status=422)
 
     return WebhookHandler(event).handle()
 
@@ -214,7 +210,7 @@ class WebhookHandler:
             "customer.subscription.deleted": self.subscription_cancelled,
             "checkout.session.completed": self.checkout_session_completed,
         }
-        handler = handlers.get(self.event.type, lambda: HttpResponse(422))
+        handler = handlers.get(self.event.type, lambda: HttpResponse(status=422))
         if not self.event.data.object:
             return HttpResponse(status=422)
         return handler()
