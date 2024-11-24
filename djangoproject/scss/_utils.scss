@@ -170,15 +170,6 @@ html {
 
 }
 
-// Secondary content box-shadow:
-@mixin secondary-shadow-top {
-    box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
-}
-
-@mixin secondary-shadow-bottom {
-    box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
-}
-
 @mixin framed-image {
     padding: 20px;
     border: 1px solid var(--hairline-color);
