@@ -218,7 +218,8 @@ class WebhookHandler:
         handler = handlers.get(self.event.type, lambda: HttpResponse(422))
         if not self.event.data.object:
             return HttpResponse(status=422)
-        return handler()
+        with transaction.atomic():
+            return handler()
 
     def payment_succeeded(self):
         invoice = self.event.data.object
@@ -291,14 +292,11 @@ class WebhookHandler:
         else:
             return "monthly"
 
-    @transaction.atomic
     def checkout_session_completed(self):
         """
         > Occurs when a Checkout Session has been successfully completed.
         https://stripe.com/docs/api/events/types#event_types-checkout.session.completed
 
-        All database operations are now wrapped in a transaction - if any operation fails,
-        all changes will be rolled back to maintain data consistency.
         """
         session = self.event.data.object
         # TODO: remove stripe_version when updating account settings.
