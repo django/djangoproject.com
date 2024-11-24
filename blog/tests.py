@@ -1,5 +1,6 @@
+from contextlib import redirect_stderr
 from datetime import timedelta
-from test.support import captured_stderr
+from io import StringIO
 
 from django.test import TestCase
 from django.urls import reverse
@@ -64,7 +65,7 @@ class EntryTestCase(DateTimeMixin, TestCase):
         """
         Make sure docutils' file inclusion directives are disabled by default.
         """
-        with captured_stderr() as self.docutils_stderr:
+        with redirect_stderr(StringIO()):
             entry = Entry.objects.create(
                 pub_date=self.now,
                 is_active=True,
