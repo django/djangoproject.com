@@ -21,7 +21,7 @@ class TestWebhooks(TestCase):
             stripe_customer_id="cus_3MXPY5pvYMWTBf",
             stripe_subscription_id="sub_3MXPaZGXvVZSrS",
         )
-        self.url = reverse('fundraising:receive-webhook')
+        self.url = reverse("fundraising:receive-webhook")
 
     def stripe_data(self, filename):
         file_path = settings.BASE_DIR.joinpath(f"fundraising/test_data/{filename}.json")
@@ -79,17 +79,19 @@ class TestWebhooks(TestCase):
         response = self.post_event()
         self.assertEqual(response.status_code, 422)
 
-    @patch('stripe.Event.retrieve')
-    @patch('stripe.Customer.retrieve')
-    @patch('stripe.PaymentIntent.retrieve')
-    def test_checkout_session_completed_atomic(self, mock_payment_intent, mock_customer, mock_event):
+    @patch("stripe.Event.retrieve")
+    @patch("stripe.Customer.retrieve")
+    @patch("stripe.PaymentIntent.retrieve")
+    def test_checkout_session_completed_atomic(
+        self, mock_payment_intent, mock_customer, mock_event
+    ):
         session_data = {
-            'id': 'cs_test_123',
-            'customer': 'cus_123',
-            'amount_total': 5000,  # $50.00
-            'payment_intent': 'pi_123',
-            'mode': 'payment',
-            'subscription': None
+            "id": "cs_test_123",
+            "customer": "cus_123",
+            "amount_total": 5000,  # $50.00
+            "payment_intent": "pi_123",
+            "mode": "payment",
+            "subscription": None,
         }
 
         # Create proper Stripe event structure
@@ -97,46 +99,36 @@ class TestWebhooks(TestCase):
             "type": "checkout.session.completed",
             "data": {
                 "object": stripe_util.convert_to_stripe_object(
-                    session_data,
-                    stripe.api_key,
-                    None
+                    session_data, stripe.api_key, None
                 )
-            }
+            },
         }
         mock_event.return_value = stripe_util.convert_to_stripe_object(
-            event_data,
-            stripe.api_key,
-            None
+            event_data, stripe.api_key, None
         )
 
         mock_customer.return_value = stripe_util.convert_to_stripe_object(
             {
-                'id': 'cus_123',
-                'email': 'donor@example.com',
+                "id": "cus_123",
+                "email": "donor@example.com",
             },
             stripe.api_key,
-            None
+            None,
         )
 
         mock_payment_intent.return_value.charges.data = [
-            stripe_util.convert_to_stripe_object(
-                {'id': 'ch_123'},
-                stripe.api_key,
-                None
-            )
+            stripe_util.convert_to_stripe_object({"id": "ch_123"}, stripe.api_key, None)
         ]
 
         # Mock Donation.objects.create to raise an exception
-        with patch('fundraising.models.Donation.objects.create') as mock_create:
-            mock_create.side_effect = Exception('Database error')
+        with patch("fundraising.models.Donation.objects.create") as mock_create:
+            mock_create.side_effect = Exception("Database error")
 
             response = self.client.post(
-                self.url,
-                data='{"id":"evt_123"}',
-                content_type='application/json'
+                self.url, data='{"id":"evt_123"}', content_type="application/json"
             )
 
             self.assertEqual(response.status_code, 500)
             self.assertEqual(DjangoHero.objects.count(), 1)  # Only the one from setUp
-            self.assertEqual(Donation.objects.count(), 1)    # Only the one from setUp
+            self.assertEqual(Donation.objects.count(), 1)  # Only the one from setUp
             self.assertEqual(Payment.objects.count(), 0)
