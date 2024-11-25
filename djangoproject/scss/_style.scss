@@ -833,53 +833,6 @@ blockquote {
                 background: darken($green-medium, 2%);
             }
         }
-
-        .django-companies {
-            max-width: 750px;
-            margin: 0 auto;
-            list-style: none;
-            padding: 0 0 0 30px;
-
-            li {
-                width: 144px;
-                display: inline-block;
-                text-indent: -1000px;
-                overflow: hidden;
-                margin: 0;
-
-                a {
-                    display: block;
-                    height: 46px;
-                    background-position: center;
-                    background-repeat: no-repeat;
-
-                    &.company-mozilla {
-                        @include svg-image(company-mozilla);
-                        background-position: center 7px;
-                    }
-
-                    &.company-pinterest {
-                        @include svg-image(company-pinterest);
-                        background-position: center 7px;
-                    }
-
-                    &.company-theguardian {
-                        @include svg-image(company-theguardian);
-                        background-position: center 14px;
-                    }
-
-                    &.company-instagram {
-                        @include svg-image(company-instagram);
-                        background-position: center 10px;
-                    }
-
-                    &.company-rdio {
-                        @include svg-image(company-rdio);
-                        background-position: 15px 6px;
-                    }
-                }
-            }
-        }
     }
 }
 
