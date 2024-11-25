@@ -676,6 +676,7 @@ blockquote {
 /* banner for billboard */
 #billboard {
     background-color: $green-medium;
+    border-top: 1px solid $black;
 
     * {
         color: $black;
