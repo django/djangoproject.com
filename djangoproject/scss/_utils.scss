@@ -84,15 +84,6 @@ $logo-bg-dark: #272c27;
     }
 }
 
-// Retina media query mixin
-@mixin retina-display {
-
-    @media only screen and (-webkit-min-device-pixel-ratio: 2),
-    (min-resolution: 192dpi) {
-        @content;
-    }
-}
-
 // Font Family Mixins
 @mixin serif {
     font-family: Palatino, "Palatino Linotype", "Book Antiqua", "Hoefler Text", Georgia, "Lucida Bright", Cambria, Times, "Times New Roman", serif;
