@@ -16,6 +16,8 @@ from django.utils.translation import gettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.db import IntegrityError
+from stripe.error import InvalidRequestError
 
 from .forms import DjangoHeroForm, DonationForm, PaymentForm
 from .models import DjangoHero, Donation, Payment, Testimonial
@@ -192,14 +194,13 @@ def receive_webhook(request):
     try:
         data = json.loads(request.body.decode())
     except ValueError:
-        return HttpResponse(422)
+        return HttpResponse(status=422)
 
     # For security, re-request the event object from Stripe.
-    # TODO: Verify shared secret here?
     try:
         event = stripe.Event.retrieve(data["id"])
     except stripe.error.InvalidRequestError:
-        return HttpResponse(422)
+        return HttpResponse(status=422)
 
     return WebhookHandler(event).handle()
 
@@ -218,8 +219,15 @@ class WebhookHandler:
         handler = handlers.get(self.event.type, lambda: HttpResponse(422))
         if not self.event.data.object:
             return HttpResponse(status=422)
-        with transaction.atomic():
-            return handler()
+        try:
+            with transaction.atomic():
+                return handler()
+        except IntegrityError as e:
+            logger.error(f"Integrity error in webhook handler: {e}")
+            return HttpResponse(status=500)
+        except Exception as e:
+            logger.error(f"Error in webhook handler: {e}")
+            return HttpResponse(status=500)
 
     def payment_succeeded(self):
         invoice = self.event.data.object
@@ -293,51 +301,61 @@ class WebhookHandler:
             return "monthly"
 
     def checkout_session_completed(self):
-        """
-        > Occurs when a Checkout Session has been successfully completed.
-        https://stripe.com/docs/api/events/types#event_types-checkout.session.completed
+        try:
+            """
+            > Occurs when a Checkout Session has been successfully completed.
+            https://stripe.com/docs/api/events/types#event_types-checkout.session.completed
 
-        """
-        session = self.event.data.object
-        # TODO: remove stripe_version when updating account settings.
-        customer = stripe.Customer.retrieve(
-            session.customer, stripe_version="2020-08-27"
-        )
-        hero, _created = DjangoHero.objects.get_or_create(
-            stripe_customer_id=customer.id,
-            defaults={
-                "email": customer.email,
-            },
-        )
-        interval = self.get_donation_interval(session)
-        dollar_amount = decimal.Decimal(session.amount_total / 100).quantize(
-            decimal.Decimal(".01"), rounding=decimal.ROUND_HALF_UP
-        )
-        donation = Donation.objects.create(
-            donor=hero,
-            stripe_customer_id=customer.id,
-            receipt_email=customer.email,
-            subscription_amount=dollar_amount,
-            interval=interval,
-            stripe_subscription_id=session.subscription or "",
-        )
-        if interval == "onetime":
-            payment_intent = stripe.PaymentIntent.retrieve(session.payment_intent)
-            charge = payment_intent.charges.data[0]
-            donation.payment_set.create(
-                amount=dollar_amount,
-                stripe_charge_id=charge.id,
+            """
+            session = self.event.data.object
+            if isinstance(session, dict):
+                session = stripe.util.convert_to_stripe_object(
+                    session, stripe.api_key, None
+                )
+            
+            # TODO: remove stripe_version when updating account settings.
+            customer = stripe.Customer.retrieve(
+                session.get('customer'), stripe_version="2020-08-27"
+            )
+            hero, _created = DjangoHero.objects.get_or_create(
+                stripe_customer_id=customer.id,
+                defaults={
+                    "email": customer.email,
+                },
+            )
+            interval = self.get_donation_interval(session)
+            dollar_amount = decimal.Decimal(session.amount_total / 100).quantize(
+                decimal.Decimal(".01"), rounding=decimal.ROUND_HALF_UP
+            )
+            donation = Donation.objects.create(
+                donor=hero,
+                stripe_customer_id=customer.id,
+                receipt_email=customer.email,
+                subscription_amount=dollar_amount,
+                interval=interval,
+                stripe_subscription_id=session.subscription or "",
+            )
+            if interval == "onetime":
+                payment_intent = stripe.PaymentIntent.retrieve(session.payment_intent)
+                charge = payment_intent.charges.data[0]
+                donation.payment_set.create(
+                    amount=dollar_amount,
+                    stripe_charge_id=charge.id,
+                )
+
+            # Send an email message about managing your donation
+            message = render_to_string(
+                "fundraising/email/thank-you.html", {"donation": donation}
+            )
+            send_mail(
+                _("Thank you for your donation to the Django Software Foundation"),
+                message,
+                settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
+                [donation.receipt_email],
             )
 
-        # Send an email message about managing your donation
-        message = render_to_string(
-            "fundraising/email/thank-you.html", {"donation": donation}
-        )
-        send_mail(
-            _("Thank you for your donation to the Django Software Foundation"),
-            message,
-            settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
-            [donation.receipt_email],
-        )
+            return HttpResponse(status=204)
 
-        return HttpResponse(status=204)
+        except IntegrityError as e:
+            logger.error(f"Integrity error during checkout session: {e}")
+            return HttpResponse(status=500)
