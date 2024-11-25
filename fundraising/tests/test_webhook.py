@@ -7,9 +7,10 @@ from django.core import mail
 from django.test import TestCase
 from django.urls import reverse
 from django_hosts.resolvers import reverse as django_hosts_reverse
+from stripe import util as stripe_util
 
 from ..models import DjangoHero, Donation, Payment
-from stripe import util as stripe_util
+
 
 class TestWebhooks(TestCase):
     def setUp(self):
