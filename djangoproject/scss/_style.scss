@@ -61,10 +61,6 @@ button:focus {
     background-color: var(--selection);
 }
 
-::-moz-selection {
-    background-color: var(--selection);
-}
-
 ol li,
 ul li {
     //list style
@@ -1209,8 +1205,7 @@ a.cta {
     // Call To Action buttons
     @include sans-serif;
     font-weight: 700;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+    appearance: none;
     background: var(--primary);
     border: none;
     border-radius: 5px;
@@ -2464,11 +2459,7 @@ h2+.list-link-soup {
     top: 0;
     width: 100%;
     padding: 8px 20px 8px;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
-    background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
     background-image: linear-gradient(135deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
     @include sans-serif;
     font-size: 14px;
@@ -2887,8 +2878,7 @@ form {
     textarea {
         @include sans-serif;
         @include font-size(16);
-        -webkit-appearance: none;
-        -moz-appearance: none;
+        appearance: none;
         background: var(--white-color);
         border: 1px solid var(--hairline-color);
         color: var(--body-fg);
@@ -2916,22 +2906,6 @@ form {
         &:focus {
             outline: none;
             border-color: var(--secondary);
-        }
-
-        &::-webkit-input-placeholder {
-            color: var(--body-fg);
-        }
-
-        &:-ms-input-placeholder {
-            color: var(--body-fg);
-        }
-
-        &::-moz-placeholder {
-            color: var(--body-fg);
-        }
-
-        &:-moz-placeholder {
-            color: var(--body-fg);
         }
 
         &::placeholder {
@@ -2964,8 +2938,6 @@ form {
     }
 
     button {
-        -moz-appearance: none;
-        -webkit-appearance: none;
         appearance: none;
 
         background: var(--secondary);
@@ -3304,8 +3276,6 @@ hr {
             fill: rgba(50, 50, 50, 0.3);
             stroke: #aaaaaa;
             stroke-width: 2px;
-            -moz-user-select: none;
-            -ms-user-select: none;
             -webkit-user-select: none;
             user-select: none;
             cursor: default;
