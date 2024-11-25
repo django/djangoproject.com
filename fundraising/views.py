@@ -6,7 +6,7 @@ import stripe
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from django.forms.models import modelformset_factory
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -16,7 +16,6 @@ from django.utils.translation import gettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.db import IntegrityError
 from stripe.error import InvalidRequestError
 
 from .forms import DjangoHeroForm, DonationForm, PaymentForm
@@ -312,10 +311,10 @@ class WebhookHandler:
                 session = stripe.util.convert_to_stripe_object(
                     session, stripe.api_key, None
                 )
-            
+
             # TODO: remove stripe_version when updating account settings.
             customer = stripe.Customer.retrieve(
-                session.get('customer'), stripe_version="2020-08-27"
+                session.get("customer"), stripe_version="2020-08-27"
             )
             hero, _created = DjangoHero.objects.get_or_create(
                 stripe_customer_id=customer.id,
