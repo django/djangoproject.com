@@ -281,32 +281,22 @@ blockquote {
 
     @include respond-min(768px) {
         min-height: 800px;
-        border: 1px solid #ddd;
+        border: none;
+        box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), 460px 0 0 0 var(--white-color), 1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), 460px 600px 0 0px var(--white-color);
         float: right;
         margin: 0;
         padding-bottom: 80px;
-        padding-left: 3%;
-        padding-right: 3%;
-        width: 60%;
-
-        .mdzr-boxshadow & {
-            border: none;
-            box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), 460px 0 0 0 var(--white-color), 1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), 460px 600px 0 0px var(--white-color);
-            padding-left: 4%;
-            padding-right: 0;
-            width: 63%;
-        }
+        padding-left: 4%;
+        padding-right: 0;
+        width: 63%;
 
         .sidebar-right & {
+            border: none;
+            box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), -460px 0 0 0 var(--white-color), -1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), -460px 600px 0 0px var(--white-color);
             float: left;
-
-            .mdzr-boxshadow & {
-                border: none;
-                box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), -460px 0 0 0 var(--white-color), -1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), -460px 600px 0 0px var(--white-color);
-                padding-left: 0;
-                width: 62%;
-                padding-right: 4%;
-            }
+            padding-left: 0;
+            width: 62%;
+            padding-right: 4%;
         }
     }
 
@@ -343,23 +333,19 @@ blockquote {
 }
 
 .full-width {
+    border: none;
+    box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
 
     // Single column, full width layout. See /styleguide for explanation.
     &.container {
         width: 100%;
         padding: 0;
         max-width: none;
-        border-bottom: 1px solid #ddd;
         background: var(--white-color);
     }
 
     // High-level class denoting full-width layout
     @include clearfix;
-
-    .mdzr-boxshadow & {
-        border: none;
-        box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
-    }
 }
 
 [role="complementary"] {
@@ -427,13 +413,9 @@ blockquote {
 .layout-tertiary {
     // Tertiary (white) content area on full-width pages
     background: var(--white-color);
-    border-top: 1px solid #ddd;
+    border: none;
+    box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
     padding: 20px 10px 50px;
-
-    .mdzr-boxshadow & {
-        border: none;
-        box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
-    }
 }
 
 .container {
@@ -444,9 +426,7 @@ blockquote {
     }
 
     &.sidebar-right {
-        .mdzr-boxshadow & {
-            box-shadow: -1200px 0 0 0px var(--white-color);
-        }
+        box-shadow: -1200px 0 0 0px var(--white-color);
     }
 }
 
@@ -506,7 +486,7 @@ blockquote {
     .logo {
         @include font-size(40);
         @include sans-serif;
-        background: url(../img/logo-django.png) 0 0 no-repeat;
+        background: url(../img/logo-django.svg) center center no-repeat;
         color: var(--white-color);
         display: block;
         font-weight: 700;
@@ -516,11 +496,6 @@ blockquote {
         text-indent: 100%;
         width: 104px;
         height: 36px;
-
-        .mdzr-svg & {
-            // deliver svg logo if applicable
-            background: url(../img/logo-django.svg) center center no-repeat;
-        }
 
         @include respond-min(768px) {
             margin-left: 0;
@@ -987,40 +962,29 @@ blockquote {
         }
 
         .logo {
+            background-position: left center;
             margin-right: 0;
-            margin-top: 28px;
-
-            .mdzr-svg & {
-                background-position: left center;
-                margin-right: 0;
-                margin-top: 20px;
-            }
+            margin-top: 20px;
         }
     }
 
     .logo {
         @include font-size(40);
         @include sans-serif;
-        background: url(../img/logo-django.png) 0 0 no-repeat;
+        background: url(../img/logo-django.svg) center center no-repeat;
         color: $green-dark;
         display: block;
         font-weight: 700;
-        height: 50px;
+        height: 39px;
         margin: 10px;
         overflow: hidden;
         text-decoration: none;
         text-indent: 100%;
-        width: 142px;
+        width: 109px;
 
         @include respond-min(768px) {
             float: left;
             margin: 20px 90px 0 0;
-        }
-
-        .mdzr-svg & {
-            background: url(../img/logo-django.svg) center center no-repeat;
-            height: 39px;
-            width: 109px;
         }
     }
 
@@ -1101,19 +1065,11 @@ blockquote {
             }
 
             &.threespot {
-                background: url(../img/logo-threespot.png) no-repeat left center;
-
-                .mdzr-svg & {
-                    background: url(../img/logo-threespot.svg) no-repeat left center;
-                }
+                background: url(../img/logo-threespot.svg) no-repeat left center;
             }
 
             &.andrevv {
-                background: url(../img/logo-andrevv.png) no-repeat left center;
-
-                .mdzr-svg & {
-                    background: url(../img/logo-andrevv.svg) no-repeat left center;
-                }
+                background: url(../img/logo-andrevv.svg) no-repeat left center;
             }
         }
     }
@@ -1592,35 +1548,23 @@ a.cta {
 
     // Logo List
     [title="Knight Foundation"] {
-        background: url(../img/logo-knight.png) no-repeat bottom left;
+        background: url(../img/logo-knight.svg) no-repeat bottom left;
         height: 25px;
         padding-top: 7px;
         width: 190px;
-
-        .mdzr-svg & {
-            background: url(../img/logo-knight.svg) no-repeat bottom left;
-        }
     }
 
     [title="Mozilla"] {
-        background: url(../img/logo-mozilla.png) no-repeat bottom left;
+        background: url(../img/logo-mozilla.svg) no-repeat bottom left;
         height: 32px;
         width: 120px;
-
-        .mdzr-svg & {
-            background: url(../img/logo-mozilla.svg) no-repeat bottom left;
-        }
     }
 
     [title="Disqus"] {
-        background: url(../img/logo-disqus.png) no-repeat bottom left;
+        background: url(../img/logo-disqus.svg) no-repeat bottom left;
         height: 28px;
         padding-top: 4px;
         width: 140px;
-
-        .mdzr-svg & {
-            background: url(../img/logo-disqus.svg) no-repeat bottom left;
-        }
     }
 
     &.single-col {
@@ -1752,6 +1696,9 @@ h2+.list-link-soup {
 
         i {
             @include font-size(120);
+            background: url(../img/bg-features.svg) no-repeat center center;
+            border-radius: 100px;
+            color: var(--white-color);
             display: block;
             height: 200px;
             left: 0;
@@ -1761,89 +1708,70 @@ h2+.list-link-soup {
             width: 200px;
             margin-right: 0;
 
-            // Border Radius Enabled
-            .mdzr-borderradius & {
-                background: var(--primary);
-                border-radius: 100px;
-                color: var(--white-color);
+            &.icon-bolt {
+                background-position: -150px -269px;
             }
 
-            // SVG Enabled
-            .mdzr-svg & {
-                background: url(../img/bg-features.svg) no-repeat center center;
-
-                &.icon-bolt {
-                    background-position: -150px -269px;
-                }
-
-                &.icon-briefcase {
-                    background-position: -354px -7px;
-                }
-
-                &.icon-lock {
-                    background-position: -36px -96px;
-                }
-
-                &.icon-dashboard {
-                    background-position: -270px -9px;
-                }
-
-                &.icon-cogs {
-                    background-position: -334px -12px;
-                }
+            &.icon-briefcase {
+                background-position: -354px -7px;
             }
 
-            // Border Radius, SVG, and Animation Enabled
-            .mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
-                -webkit-transition: all 0.3s ease-out;
-                transition: all 0.3s ease-out;
+            &.icon-lock {
+                background-position: -36px -96px;
+            }
 
-                -webkit-transform: rotate(0.5turn);
-                transform: rotate(0.5turn);
+            &.icon-dashboard {
+                background-position: -270px -9px;
+            }
+
+            &.icon-cogs {
+                background-position: -334px -12px;
+            }
+
+            transform: rotate(0.5turn);
+            transition: all 0.3s ease-out;
+
+            &.inview {
+                transform: rotate(0turn);
+            }
+
+            &.icon-bolt {
+                background-position: 40px -369px;
 
                 &.inview {
-                    -webkit-transform: rotate(0turn);
-                    transform: rotate(0turn);
+                    background-position: -150px -269px;
                 }
+            }
 
-                &.icon-bolt {
-                    background-position: 40px -369px;
+            &.icon-briefcase {
+                background-position: -494px 207px;
 
-                    &.inview {
-                        background-position: -150px -269px;
-                    }
+                &.inview {
+                    background-position: -354px -7px;
                 }
+            }
 
-                &.icon-briefcase {
-                    background-position: -494px 207px;
+            &.icon-lock {
+                background-position: 144px -206px;
 
-                    &.inview {
-                        background-position: -354px -7px;
-                    }
+                &.inview {
+                    background-position: -36px -96px;
                 }
+            }
 
-                &.icon-lock {
-                    background-position: 144px -206px;
+            &.icon-dashboard {
+                background-position: -360px 201px;
 
-                    &.inview {
-                        background-position: -36px -96px;
-                    }
+                &.inview {
+                    background-position: -270px -9px;
                 }
+            }
 
-                &.icon-dashboard {
-                    background-position: -360px 201px;
+            &.icon-cogs {
+                background-position: -500px -180px;
 
-                    &.inview {
-                        background-position: -270px -9px;
-                    }
-                }
-
-                &.icon-cogs {
-                    background-position: -500px -180px;
-
-                    &.inview {
-                        background-position: -334px -12px;
-                    }
+                &.inview {
+                    background-position: -334px -12px;
                 }
             }
 
@@ -1880,19 +1808,12 @@ h2+.list-link-soup {
             background: var(--secondary);
             display: inline-block;
             text-align: center;
+            transform: rotate(0.5turn);
+            transition: all 0.3s ease-out;
             @include font-size(24);
 
-            .mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
-                -webkit-transition: all 0.3s ease-out;
-                transition: all 0.3s ease-out;
-
-                -webkit-transform: rotate(0.5turn);
-                transform: rotate(0.5turn);
-
-                &.inview {
-                    -webkit-transform: rotate(0turn);
-                    transform: rotate(0turn);
-                }
+            &.inview {
+                transform: rotate(0turn);
             }
         }
 
@@ -3129,23 +3050,6 @@ div[role=main] {
             @include device-min(320px) {
                 background: var(--secondary);
                 color: var(--white-color);
-            }
-        }
-
-        .mdzr-no-borderradius & {
-            display: inline;
-            background: none;
-            color: var(--text-light);
-            height: auto;
-            width: auto;
-            margin: 0 5px !important;
-
-            &:hover,
-            &:active,
-            &:focus,
-            &.active {
-                background: none;
-                color: var(--secondary);
             }
         }
     }
