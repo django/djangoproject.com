@@ -21,32 +21,61 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
         response = self.client.get(self.user1_url)
         self.assertContains(response, "<h1>user1</h1>", html=True)
 
-    def test_stat_commits(self):
+    def test_stat_commits_no_commits(self):
+        user1_response = self.client.get(self.user1_url)
+        self.assertNotContains(user1_response, "Commits")
+
+    def test_stat_commits_commiter_full_name(self):
+        User.objects.create_user(
+            first_name="James",
+            last_name="Bond",
+            username="007",
+            email="007@mi5.co.uk",
+            password="*****************",
+        )
         Revision.objects.create(
-            author="user1",
+            author="James Bond <007@mi5.co.uk>",
             rev="91c879eda595c12477bbfa6f51115e88b75ddf88",
             _time=1731669560,
         )
         Revision.objects.create(
-            author="user1",
+            author="James Bonderson <someotheremail@email.com>",
             rev="da2432cccae841f0d7629f17a5d79ec47ed7b7cb",
             _time=1731669560,
         )
-        Revision.objects.create(
-            author="user3",
-            rev="63dbe30d3363715deaf280214d75b03f6d65a571",
-            _time=1731669560,
-        )
-
-        user1_response = self.client.get(self.user1_url)
-        user2_response = self.client.get(self.user2_url)
+        user1_response = self.client.get(reverse("user_profile", args=["007"]))
         self.assertContains(
             user1_response,
             '<a href="https://github.com/django/django/commits/main/'
-            '?author=user1">Commits: 2.</a>',
+            '?author=007">Commits: 1.</a>',
             html=True,
         )
-        self.assertNotContains(user2_response, "Commits")
+
+    def test_stat_commits_commiter_username(self):
+        User.objects.create_user(
+            first_name="James",
+            last_name="Bond",
+            username="007",
+            email="007@mi5.co.uk",
+            password="*****************",
+        )
+        Revision.objects.create(
+            author="007 <007@mi5.co.uk>",
+            rev="91c879eda595c12477bbfa6f51115e88b75ddf88",
+            _time=1731669560,
+        )
+        Revision.objects.create(
+            author="Elizabeth Bennet <300792567+pnp@users.noreply.github.com>",
+            rev="63dbe30d3363715deaf280214d75b03f6d65a571",
+            _time=1731669560,
+        )
+        user1_response = self.client.get(reverse("user_profile", args=["007"]))
+        self.assertContains(
+            user1_response,
+            '<a href="https://github.com/django/django/commits/main/'
+            '?author=007">Commits: 1.</a>',
+            html=True,
+        )
 
     def test_stat_tickets(self):
         Ticket.objects.create(status="new", reporter="user1")
