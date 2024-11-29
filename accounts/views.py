@@ -1,5 +1,7 @@
 import hashlib
+from urllib.parse import urlencode
 
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.cache import cache
@@ -7,7 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from tracdb import stats as trac_stats
 
-from .forms import ProfileForm
+from .forms import DeleteProfileForm, ProfileForm
 from .models import Profile
 
 
@@ -32,6 +34,42 @@ def edit_profile(request):
         form.save()
         return redirect("user_profile", request.user.username)
     return render(request, "accounts/edit_profile.html", {"form": form})
+
+
+@login_required
+def delete_profile(request):
+    if request.method == "POST":
+        form = DeleteProfileForm(data=request.POST, user=request.user)
+        if form.is_valid():
+            if form.delete():
+                logout(request)
+                return redirect("delete_profile_success")
+    else:
+        form = DeleteProfileForm(user=request.user)
+
+    context = {
+        "form": form,
+        # Strings are left translated on purpose (ops prefer english :D)
+        "OPS_EMAIL_PRESETS": urlencode(
+            {
+                "subject": "[djangoproject.com] Manual account deletion",
+                "body": (
+                    "Hello lovely Django Ops,\n\n"
+                    "I would like to delete my djangoproject.com user account ("
+                    f"username {request.user.username}) but the system is not letting "
+                    "me do it myself. Could you help me out please?\n\n"
+                    "Thanks in advance,\n"
+                    "You're amazing\n"
+                    f"{request.user.get_full_name() or request.user.username}"
+                ),
+            }
+        ),
+    }
+    return render(request, "accounts/delete_profile.html", context)
+
+
+def delete_profile_success(request):
+    return render(request, "accounts/delete_profile_success.html")
 
 
 def get_user_stats(user):

@@ -1,10 +1,12 @@
 import hashlib
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AnonymousUser, User
 from django.core.cache import cache
 from django.test import TestCase, override_settings
 from django_hosts.resolvers import reverse
 
+from accounts.forms import DeleteProfileForm
+from foundation import models as foundationmodels
 from tracdb.models import Revision, Ticket, TicketChange
 from tracdb.testutils import TracDBCreateDatabaseMixin
 
@@ -189,3 +191,50 @@ class ViewsTests(TestCase):
         """
         for username in ["asdf", "@asdf", "asd-f", "as.df", "as+df"]:
             reverse("user_profile", host="www", args=[username])
+
+
+class UserDeletionTestCase(TestCase):
+    def create_user_and_form(self, bound=True, **userkwargs):
+        userkwargs.setdefault("username", "test")
+        userkwargs.setdefault("email", "test@example.com")
+        userkwargs.setdefault("password", "password")
+
+        formkwargs = {"user": User.objects.create_user(**userkwargs)}
+        if bound:
+            formkwargs["data"] = {}
+
+        return DeleteProfileForm(**formkwargs)
+
+    def test_deletion(self):
+        form = self.create_user_and_form()
+        self.assertFormError(form, None, [])
+        form.delete()
+        self.assertQuerySetEqual(User.objects.all(), [])
+
+    def test_anonymous_user_error(self):
+        self.assertRaises(TypeError, DeleteProfileForm, user=AnonymousUser)
+
+    def test_deletion_staff_forbidden(self):
+        form = self.create_user_and_form(is_staff=True)
+        self.assertFormError(form, None, ["Staff users cannot be deleted"])
+
+    def test_user_with_protected_data(self):
+        form = self.create_user_and_form()
+        form.user.boardmember_set.create(
+            office=foundationmodels.Office.objects.create(name="test"),
+            term=foundationmodels.Term.objects.create(year=2000),
+        )
+        form.delete()
+        self.assertFormError(
+            form, None, ["User has protected data and cannot be deleted"]
+        )
+
+    def test_form_delete_method_requires_valid_form(self):
+        form = self.create_user_and_form(is_staff=True)
+        self.assertRaises(form.InvalidFormError, form.delete)
+
+    def test_view_deletion_also_logs_out(self):
+        user = self.create_user_and_form().user
+        self.client.force_login(user)
+        self.client.post(reverse("delete_profile"))
+        self.assertEqual(self.client.cookies["sessionid"].value, "")

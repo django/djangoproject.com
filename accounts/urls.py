@@ -15,6 +15,16 @@ urlpatterns = [
         account_views.edit_profile,
         name="edit_profile",
     ),
+    path(
+        "delete/",
+        account_views.delete_profile,
+        name="delete_profile",
+    ),
+    path(
+        "delete/success/",
+        account_views.delete_profile_success,
+        name="delete_profile_success",
+    ),
     path("", include("django.contrib.auth.urls")),
     path("", include("registration.backends.default.urls")),
 ]
