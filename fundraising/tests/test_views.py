@@ -1,19 +1,47 @@
 import json
-from datetime import datetime
+import shutil
+import tempfile
+from base64 import b64decode
+from datetime import date, datetime
 from operator import attrgetter
 from unittest.mock import patch
 
 import stripe
 from django.conf import settings
 from django.core import mail
+from django.core.files.base import ContentFile
 from django.template.defaultfilters import date as date_filter
 from django.test import TestCase
-from django.test.utils import override_settings
 from django.urls import reverse
 from django_hosts.resolvers import reverse as django_hosts_reverse
 from django_recaptcha.client import RecaptchaResponse
 
+from members.models import CorporateMember, Invoice
+
 from ..models import DjangoHero, Donation
+
+
+class TemporaryMediaRootMixin:
+    """
+    A TestCase mixin that overrides settings.MEDIA_ROOT for every test on the
+    class to point to a temporary directory that is destroyed when the tests
+    finished.
+    The content of the directory persists between different tests on the class.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.tmpdir = tempfile.mkdtemp(prefix="djangoprojectcom_")
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.tmpdir, ignore_errors=True)
+        super().tearDownClass()
+
+    def run(self, result=None):
+        with self.settings(MEDIA_ROOT=self.tmpdir):
+            return super().run(result)
 
 
 class TestIndex(TestCase):
@@ -22,9 +50,49 @@ class TestIndex(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class TestCampaign(TestCase):
+class TestCampaign(TemporaryMediaRootMixin, TestCase):
     def setUp(self):
         self.index_url = reverse("fundraising:index")
+        self.imagefile = ContentFile(
+            content=b64decode(
+                "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAA"
+                "DUlEQVR42mPk8Tb+DwACgAGLzMGnPAAAAABJRU5ErkJggg=="
+            ),
+            name="logo.png",
+        )
+
+    def test_corporate_member_without_logo(self):
+        member = CorporateMember.objects.create(
+            display_name="Test Member", membership_level=1, logo=None
+        )
+        Invoice.objects.create(amount=100, expiration_date=date.today(), member=member)
+        response = self.client.get(self.index_url)
+
+        self.assertContains(
+            response,
+            '<img src="/s/img/fundraising-heart.svg" alt="Pixelated heart logo">',
+            html=True,
+        )
+
+    def test_corporate_member_with_logo(self):
+        member = CorporateMember.objects.create(
+            display_name="Test Member", membership_level=1, logo=self.imagefile
+        )
+        Invoice.objects.create(amount=100, expiration_date=date.today(), member=member)
+        response = self.client.get(self.index_url)
+
+        self.assertContains(
+            response,
+            """<img
+                src="/m/cache/9b/e7/9be7b86ebc112b001cad84f900bf0bf7.png"
+                srcset="/m/cache/9b/e7/9be7b86ebc112b001cad84f900bf0bf7@2x.png 2x"
+                width="170"
+                height="170"
+                loading="lazy"
+                alt="Logo of company Test Member"
+            >""",
+            html=True,
+        )
 
     def test_anonymous_donor(self):
         hero = DjangoHero.objects.create(
@@ -35,13 +103,12 @@ class TestCampaign(TestCase):
         response = self.client.get(self.index_url)
         self.assertContains(response, "Anonymous Hero")
 
-    @override_settings(MEDIA_ROOT="djangoproject/")
     def test_anonymous_donor_with_logo(self):
         hero = DjangoHero.objects.create(
             is_visible=True,
             approved=True,
             hero_type="individual",
-            logo="static/img/logo-django.png",
+            logo=self.imagefile,
         )
         donation = hero.donation_set.create(subscription_amount="5")
         donation.payment_set.create(amount="5")
