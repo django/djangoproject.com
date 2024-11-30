@@ -40,11 +40,6 @@ define(function() {
         mods.push('mod/fundraising-index');
     }
 
-    //fundraising heroes list
-    if (hasClass('heroes-section')) {
-        mods.push('mod/fundraising-heroes');
-    }
-
     if (hasClass('dashboard-index')) {
         mods.push('dashboard/index');
     }
