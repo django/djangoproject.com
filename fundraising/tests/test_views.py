@@ -14,7 +14,6 @@ from django_hosts.resolvers import reverse as django_hosts_reverse
 from django_recaptcha.client import RecaptchaResponse
 
 from ..models import DjangoHero, Donation
-from ..views import WebhookHandler
 
 
 class TestIndex(TestCase):
@@ -183,7 +182,10 @@ class TestManageDonations(TestCase):
 
 class TestWebhooks(TestCase):
     def setUp(self):
-        self.hero = DjangoHero.objects.create(email="hero@djangoproject.com")
+        self.hero = DjangoHero.objects.create(
+            email="hero@djangoproject.com",
+            stripe_customer_id="cus_3MXPY5pvYMWTBf",
+        )
         self.donation = Donation.objects.create(
             donor=self.hero,
             interval="monthly",
@@ -257,10 +259,17 @@ class TestWebhooks(TestCase):
 
     @patch("stripe.Customer.retrieve")
     @patch("stripe.PaymentIntent.retrieve")
-    def test_checkout_session_completed(self, payment_intent, customer):
+    @patch("stripe.Event.retrieve")
+    def test_checkout_session_completed(self, event, payment_intent, customer):
         customer.return_value = self.stripe_data("customer")
         payment_intent.return_value = self.stripe_data("payment_intent")
-        event = self.stripe_data("session_completed")
-        WebhookHandler(event).handle()
+        event.return_value = self.stripe_data("session_completed")
+        response = self.post_event()
+        self.assertEqual(response.status_code, 204)
         customer.assert_called_once()
         payment_intent.assert_called_once()
+        self.assertEqual(len(mail.outbox), 1)
+        expected_url = django_hosts_reverse(
+            "fundraising:manage-donations", kwargs={"hero": self.hero.id}
+        )
+        self.assertTrue(expected_url in mail.outbox[0].body)

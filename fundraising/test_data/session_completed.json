@@ -28,7 +28,7 @@
               "shipping_address": null,
               "submit": null
             },
-            "customer": null,
+            "customer": "cus_3MXPY5pvYMWTBf",
             "customer_creation": "if_required",
             "customer_details": null,
             "customer_email": null,
