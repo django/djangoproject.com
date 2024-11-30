@@ -265,11 +265,30 @@ class TestWebhooks(TestCase):
         payment_intent.return_value = self.stripe_data("payment_intent")
         event.return_value = self.stripe_data("session_completed")
         response = self.post_event()
+
         self.assertEqual(response.status_code, 204)
         customer.assert_called_once()
         payment_intent.assert_called_once()
+
         self.assertEqual(len(mail.outbox), 1)
         expected_url = django_hosts_reverse(
             "fundraising:manage-donations", kwargs={"hero": self.hero.id}
         )
         self.assertTrue(expected_url in mail.outbox[0].body)
+
+        self.assertEqual(DjangoHero.objects.count(), 1)
+
+    @patch("stripe.Customer.retrieve")
+    @patch("stripe.PaymentIntent.retrieve")
+    @patch("stripe.Event.retrieve")
+    def test_checkout_session_completed_new_hero(self, event, payment_intent, customer):
+        self.hero.stripe_customer_id = ""
+        self.hero.save()
+
+        customer.return_value = self.stripe_data("customer")
+        payment_intent.return_value = self.stripe_data("payment_intent")
+        event.return_value = self.stripe_data("session_completed")
+        response = self.post_event()
+
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(DjangoHero.objects.count(), 2)
