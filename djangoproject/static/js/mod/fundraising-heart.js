@@ -50,9 +50,7 @@ define([
 
     var Heart = function(heart) {
         this.heart = $(heart);
-        if (Modernizr.svg) {
-            this.init();
-        }
+        this.init();
     };
 
     Heart.prototype = {
