@@ -32,7 +32,7 @@ repos:
           - id: pyupgrade
             args: [--py312]
     - repo: https://github.com/adamchainz/django-upgrade
-      rev: "1.22.1"
+      rev: "1.22.2"
       hooks:
           - id: django-upgrade
             args: [--target-version, "5.0"]
@@ -42,7 +42,7 @@ repos:
           - id: black
             exclude: '(\/migrations\/)'
     - repo: https://github.com/rbubley/mirrors-prettier
-      rev: "v3.3.3"
+      rev: "v3.4.1"
       hooks:
           - id: prettier
             exclude_types: [html, json, scss]
