@@ -272,12 +272,14 @@ class DocumentQuerySet(models.QuerySet):
                         search_query,
                         start_sel="<mark>",
                         stop_sel="</mark>",
+                        config=models.F("config"),
                     ),
                     highlight=SearchHeadline(
                         KeyTextTransform("body", "metadata"),
                         search_query,
                         start_sel="<mark>",
                         stop_sel="</mark>",
+                        config=models.F("config"),
                     ),
                     breadcrumbs=models.F("metadata__breadcrumbs"),
                 )

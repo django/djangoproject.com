@@ -8,6 +8,7 @@ from pathlib import Path
 
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.db import connection
 from django.template import Context, Template
 from django.template.loader import render_to_string
 from django.test import RequestFactory, TestCase
@@ -16,7 +17,7 @@ from django.urls import reverse, set_urlconf
 from djangoproject.urls import www as www_urls
 from releases.models import Release
 
-from .models import Document, DocumentRelease
+from .models import DOCUMENT_SEARCH_VECTOR, Document, DocumentRelease
 from .sitemaps import DocsSitemap
 from .templatetags.docs import get_all_doc_versions
 from .utils import get_doc_path
@@ -615,6 +616,31 @@ class DocumentManagerTest(TestCase):
         self.assertEqual(Document.objects.exclude(search=None).count(), 6)
         self.assertEqual(Document.objects.search_update(), 6)
         self.assertEqual(Document.objects.exclude(search=None).count(), 6)
+
+    def test_search_highlight_stemmed(self):
+        # The issue only manifests itself when the defaut search config is not english
+        with connection.cursor() as cursor:
+            cursor.execute("SET default_text_search_config TO 'simple'", [])
+
+        doc = self.release.documents.create(
+            config="english",
+            path="/",
+            title="triaging tickets",
+            metadata={"body": "text containing the word triaging", "breadcrumbs": []},
+        )
+        doc.search = DOCUMENT_SEARCH_VECTOR
+        doc.save(update_fields=["search"])
+
+        self.assertQuerySetEqual(
+            Document.objects.search("triaging", self.release),
+            [
+                (
+                    "<mark>triaging</mark> tickets",
+                    "text containing the word <mark>triaging</mark>",
+                )
+            ],
+            transform=attrgetter("headline", "highlight"),
+        )
 
 
 class TemplateTestCase(TestCase):

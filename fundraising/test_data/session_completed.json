@@ -50,7 +50,7 @@
             "locale": null,
             "metadata": {},
             "mode": "payment",
-            "payment_intent": null,
+            "payment_intent": "pi_2MXkIN4ao19wAZWp0atVBWd2",
             "payment_link": null,
             "payment_method_collection": "always",
             "payment_method_options": {},

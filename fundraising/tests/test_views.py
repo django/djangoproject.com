@@ -180,6 +180,18 @@ class TestManageDonations(TestCase):
         )
 
 
+def _stripe_signature_header(data):
+    """
+    Compute the `stripe-signature` header for the given data dict.
+    """
+    timestamp = int(datetime.now().timestamp())
+    payload = f"{timestamp}.{json.dumps(data)}"
+    signature = stripe.WebhookSignature._compute_signature(
+        payload, settings.STRIPE_ENDPOINT_SECRET
+    )
+    return f"t={timestamp},v1={signature}"
+
+
 class TestWebhooks(TestCase):
     def setUp(self):
         self.hero = DjangoHero.objects.create(
@@ -199,76 +211,83 @@ class TestWebhooks(TestCase):
             data = json.load(f)
             return stripe.util.convert_to_stripe_object(data, stripe.api_key, None)
 
-    def post_event(self):
+    def post_event(self, data):
         return self.client.post(
             reverse("fundraising:receive-webhook"),
-            data='{"id": "evt_12345"}',
+            data=json.dumps(data),
             content_type="application/json",
+            headers={
+                "stripe-signature": _stripe_signature_header(data),
+            },
         )
 
-    @patch("stripe.Event.retrieve")
-    def test_record_payment(self, event):
-        event.return_value = self.stripe_data("invoice_succeeded")
-        response = self.post_event()
+    def test_record_payment(self):
+        response = self.post_event(self.stripe_data("invoice_succeeded"))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(self.donation.payment_set.count(), 1)
         payment = self.donation.payment_set.first()
         self.assertEqual(payment.amount, 10)
 
-    @patch("stripe.Event.retrieve")
-    def test_subscription_cancelled(self, event):
-        event.return_value = self.stripe_data("subscription_cancelled")
-        self.post_event()
+    def test_subscription_cancelled(self):
+        self.post_event(self.stripe_data("subscription_cancelled"))
         donation = Donation.objects.get(id=self.donation.id)
         self.assertEqual(donation.stripe_subscription_id, "")
         self.assertEqual(len(mail.outbox), 1)
         expected_url = django_hosts_reverse("fundraising:index")
         self.assertTrue(expected_url in mail.outbox[0].body)
 
-    @patch("stripe.Event.retrieve")
-    def test_payment_failed(self, event):
-        event.return_value = self.stripe_data("payment_failed")
-        self.post_event()
+    def test_payment_failed(self):
+        self.post_event(self.stripe_data("payment_failed"))
         self.assertEqual(len(mail.outbox), 1)
         expected_url = django_hosts_reverse(
             "fundraising:manage-donations", kwargs={"hero": self.hero.id}
         )
         self.assertTrue(expected_url in mail.outbox[0].body)
 
-    @patch("stripe.Event.retrieve")
-    def test_no_such_event(self, event):
-        event.side_effect = stripe.error.InvalidRequestError(
-            message="No such event: evt_12345", param="id"
-        )
-        response = self.post_event()
-        self.assertTrue(response.status_code, 422)
-
-    @patch("stripe.Event.retrieve")
-    def test_empty_object(self, event):
-        event.return_value = self.stripe_data("empty_payment")
-        response = self.post_event()
+    def test_empty_object(self):
+        response = self.post_event(self.stripe_data("empty_payment"))
         self.assertEqual(response.status_code, 422)
 
-    @patch("stripe.Event.retrieve")
-    def test_zero_invoice_amount(self, event):
+    def test_zero_invoice_amount(self):
         """Zero payment amounts don't need to be created."""
-        event.return_value = self.stripe_data("zero_invoice_amount")
-        response = self.post_event()
+        response = self.post_event(self.stripe_data("zero_invoice_amount"))
         self.assertEqual(response.status_code, 201)
         self.assertEqual(self.donation.payment_set.count(), 0)
 
-    @patch("stripe.Customer.retrieve")
-    @patch("stripe.PaymentIntent.retrieve")
-    @patch("stripe.Event.retrieve")
-    def test_checkout_session_completed(self, event, payment_intent, customer):
-        customer.return_value = self.stripe_data("customer")
-        payment_intent.return_value = self.stripe_data("payment_intent")
-        event.return_value = self.stripe_data("session_completed")
-        response = self.post_event()
+    def test_missing_signature_header(self):
+        response = self.client.post(
+            reverse("fundraising:receive-webhook"),
+            data=json.dumps({}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 422)
 
+    def test_invalid_json(self):
+        response = self.client.post(
+            reverse("fundraising:receive-webhook"),
+            data="<invalid>",
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 422)
+
+    def test_invalid_signature(self):
+        response = self.client.post(
+            reverse("fundraising:receive-webhook"),
+            data=json.dumps({}),
+            content_type="application/json",
+            headers={"stripe-signature": "<invalid>"},
+        )
+        self.assertEqual(response.status_code, 422)
+
+    def test_unknown_event_type(self):
+        data = self.stripe_data("zero_invoice_amount")
+        data["type"] = "unknown"
+        response = self.post_event(data)
+        self.assertEqual(response.status_code, 422)
+
+    def test_checkout_session_completed(self):
+        response = self.post_event(self.stripe_data("session_completed"))
         self.assertEqual(response.status_code, 204)
-        customer.assert_called_once()
-        payment_intent.assert_called_once()
 
         self.assertEqual(len(mail.outbox), 1)
         expected_url = django_hosts_reverse(
@@ -278,17 +297,10 @@ class TestWebhooks(TestCase):
 
         self.assertEqual(DjangoHero.objects.count(), 1)
 
-    @patch("stripe.Customer.retrieve")
-    @patch("stripe.PaymentIntent.retrieve")
-    @patch("stripe.Event.retrieve")
-    def test_checkout_session_completed_new_hero(self, event, payment_intent, customer):
+    def test_checkout_session_completed_new_hero(self):
         self.hero.stripe_customer_id = ""
         self.hero.save()
-
-        customer.return_value = self.stripe_data("customer")
-        payment_intent.return_value = self.stripe_data("payment_intent")
-        event.return_value = self.stripe_data("session_completed")
-        response = self.post_event()
+        response = self.post_event(self.stripe_data("session_completed"))
 
         self.assertEqual(response.status_code, 204)
         self.assertEqual(DjangoHero.objects.count(), 2)

@@ -84,15 +84,6 @@ $logo-bg-dark: #272c27;
     }
 }
 
-// Retina media query mixin
-@mixin retina-display {
-
-    @media only screen and (-webkit-min-device-pixel-ratio: 2),
-    (min-resolution: 192dpi) {
-        @content;
-    }
-}
-
 // Font Family Mixins
 @mixin serif {
     font-family: Palatino, "Palatino Linotype", "Book Antiqua", "Hoefler Text", Georgia, "Lucida Bright", Cambria, Times, "Times New Roman", serif;
@@ -144,14 +135,6 @@ html {
     }
 }
 
-@mixin svg-image ($name ) {
-    background-image: url('../img/' +$name+'.png');
-
-    .mdzr-svg & {
-        background-image: url('../img/' +$name+'.svg');
-    }
-}
-
 // Green Link Mixin
 @mixin link-green {
     color: var(--link-color);
@@ -168,19 +151,6 @@ html {
         text-decoration: none;
     }
 
-}
-
-// Secondary content box-shadow:
-@mixin secondary-shadow-top {
-    -moz-box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
-    -webkit-box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
-    box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
-}
-
-@mixin secondary-shadow-bottom {
-    -moz-box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
-    -webkit-box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
-    box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
 }
 
 @mixin framed-image {
