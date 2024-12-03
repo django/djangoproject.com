@@ -46,24 +46,10 @@ class DjangoHeroForm(forms.ModelForm):
     logo = forms.FileField(
         required=False,
         help_text=_(
-            "If you've donated at least US $%d, you can submit your logo and "
+            "If you've donated at least US $%d in a calendar year, you can submit your logo and "
             "we will display it, too."
         )
         % LEADERSHIP_LEVEL_AMOUNT,
-    )
-    is_visible = forms.BooleanField(
-        required=False,
-        label=_(
-            "Yes, display my name, URL, and logo on this site. "
-            "It'll be displayed shortly after we verify it."
-        ),
-    )
-    is_subscribed = forms.BooleanField(
-        required=False,
-        label=_(
-            "Yes, the Django Software Foundation can inform me about "
-            "future fundraising campaigns by email."
-        ),
     )
 
     class Meta:
