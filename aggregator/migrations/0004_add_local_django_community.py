@@ -29,6 +29,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='localdjangocommunity',
-            constraint=models.CheckConstraint(check=models.Q(models.Q(('event_site_url__isnull', False), ('website_url__isnull', False)), models.Q(('event_site_url__isnull', False), ('website_url__isnull', True)), models.Q(('event_site_url__isnull', True), ('website_url__isnull', False)), _connector='OR'), name='website_url_and_or_event_site_url'),
+            constraint=models.CheckConstraint(condition=models.Q(models.Q(('event_site_url__isnull', False), ('website_url__isnull', False)), models.Q(('event_site_url__isnull', False), ('website_url__isnull', True)), models.Q(('event_site_url__isnull', True), ('website_url__isnull', False)), _connector='OR'), name='website_url_and_or_event_site_url'),
         ),
     ]
