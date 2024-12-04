@@ -370,18 +370,18 @@ Running Locally with Docker
 
 1. Build the images::
 
-    docker-compose build
+    docker compose build
 
 2. Spin up the containers::
 
-    docker-compose up
+    docker compose up
 
 3. View the site at http://localhost:8000/
 
 4. Run the tests::
 
-    docker-compose exec web tox
-    docker-compose exec web python -m manage test
+    docker compose exec web tox
+    docker compose exec web python -m manage test
 
 Pre-commit checks
 -----------------
