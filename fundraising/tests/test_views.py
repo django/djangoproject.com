@@ -45,6 +45,7 @@ class TestCampaign(TestCase):
         )
         donation = hero.donation_set.create(subscription_amount="5")
         donation.payment_set.create(amount="5")
+        self.assertTrue(settings.THUMBNAIL_DEBUG)
         response = self.client.get(self.index_url)
         self.assertContains(response, "Anonymous Hero")
 
