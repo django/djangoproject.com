@@ -3,7 +3,7 @@
 Hi {{ name }},
 
 This is to let you know that payment for your recurring donation to the Django Software Foundation has failed.
-This might be because your payment card has expired or you don't have enough funds
+This might be because your payment card has expired or you don't have enough funds.
 
 Please check your bank balance or go to {{ manage_url }} to add a new card. We will try to take payment again in 3 days.
 
