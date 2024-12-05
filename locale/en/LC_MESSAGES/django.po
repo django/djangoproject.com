@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-11 20:38-0500\n"
+"POT-Creation-Date: 2024-11-19 08:13-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,34 +16,2748 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: blog/models.py:42
+#: accounts/forms.py:16 contact/forms.py:29
+msgid "Name"
+msgstr ""
+
+#: accounts/forms.py:19
+msgid "Email"
+msgstr ""
+
+#: aggregator/feeds.py:46
+#, python-format
+msgid "Django community aggregator: %s"
+msgstr ""
+
+#: aggregator/feeds.py:56
+msgid "Django community aggregator firehose"
+msgstr ""
+
+#: aggregator/feeds.py:57
+msgid "All activity from the Django community aggregator"
+msgstr ""
+
+#: aggregator/forms.py:13
+msgid "Title of the resource / blog"
+msgstr ""
+
+#: aggregator/forms.py:23
+msgid "Link to the RSS/Atom feed. Please only use Django-specific feeds."
+msgstr ""
+
+#: aggregator/forms.py:34
+msgid "Link to main page (i.e. blog homepage)"
+msgstr ""
+
+#: aggregator/forms.py:48
+msgid ""
+"Stack Overflow questions tagged with 'django' will appear here automatically."
+msgstr ""
+
+#: aggregator/models.py:38
+msgid "Pending"
+msgstr ""
+
+#: aggregator/models.py:39
+msgid "Denied"
+msgstr ""
+
+#: aggregator/models.py:40
+msgid "Approved"
+msgstr ""
+
+#: aggregator/models.py:204
+msgid "Africa"
+msgstr ""
+
+#: aggregator/models.py:205
+msgid "North America"
+msgstr ""
+
+#: aggregator/models.py:206
+msgid "South America"
+msgstr ""
+
+#: aggregator/models.py:207
+msgid "Europe"
+msgstr ""
+
+#: aggregator/models.py:208
+msgid "Asia"
+msgstr ""
+
+#: aggregator/models.py:209
+msgid "Oceania"
+msgstr ""
+
+#: aggregator/models.py:210
+msgid "Antarctica"
+msgstr ""
+
+#: aggregator/views.py:75
+msgid ""
+"Your feed has entered moderation. Please allow up to 1 week for processing."
+msgstr ""
+
+#: blog/admin.py:17
+msgid "Psst, we have markdown now 🤫"
+msgstr ""
+
+#: blog/feeds.py:8
+msgid "The Django weblog"
+msgstr ""
+
+#: blog/feeds.py:10
+msgid "Latest news about Django, the Python web framework."
+msgstr ""
+
+#: blog/models.py:73
 msgid ""
 "Tick to make this entry live (see also the publication date). Note that "
 "administrators (like yourself) are allowed to preview inactive entries "
 "whereas the general public aren't."
 msgstr ""
 
-#: blog/models.py:49 blog/models.py:139
+#: blog/models.py:80 blog/models.py:165
 msgid "Publication date"
 msgstr ""
 
-#: blog/models.py:51
+#: blog/models.py:82
 msgid ""
 "For an entry to be published, it must be active and its publication date "
 "must be in the past."
 msgstr ""
 
-#: blog/models.py:132
+#: blog/models.py:158
 msgid ""
 "Tick to make this event live (see also the publication date). Note that "
 "administrators (like yourself) are allowed to preview inactive events "
 "whereas the general public aren't."
 msgstr ""
 
-#: blog/models.py:141
+#: blog/models.py:167
 msgid ""
 "For an event to be published, it must be active and its publication date "
 "must be in the past."
+msgstr ""
+
+#: contact/forms.py:21 contact/forms.py:23
+msgid "Message subject"
+msgstr ""
+
+#: contact/forms.py:26
+msgid "E-mail"
+msgstr ""
+
+#: contact/forms.py:33
+msgid "Your message"
+msgstr ""
+
+#: djangoproject/templates/400.html:4 djangoproject/templates/400.html:9
+msgid "Bad request"
+msgstr ""
+
+#: djangoproject/templates/400.html:11
+msgid "Yikes, this was a bad request. Not sure why, but it sure was bad."
+msgstr ""
+
+#: djangoproject/templates/403.html:4 djangoproject/templates/403.html:9
+msgid "Permission denied"
+msgstr ""
+
+#: djangoproject/templates/403.html:11
+msgid ""
+"Apologies, but it seems as if you're not allowed to access this page. We "
+"honestly hope this is just a mistake."
+msgstr ""
+
+#: djangoproject/templates/404.html:4 djangoproject/templates/404.html:9
+msgid "Page not found"
+msgstr ""
+
+#: djangoproject/templates/404.html:12
+msgid ""
+"Looks like you followed a bad link. If you think it's our fault, please <a "
+"href=\"https://code.djangoproject.com/\">let us know</a>."
+msgstr ""
+
+#: djangoproject/templates/404.html:19 djangoproject/templates/410.html:21
+#, python-format
+msgid ""
+"Here's a link to the <a href=\"%(homepage_url)s\">homepage</a>. You know, "
+"just in case."
+msgstr ""
+
+#: djangoproject/templates/410.html:4
+msgid "Page removed"
+msgstr ""
+
+#: djangoproject/templates/410.html:9
+msgid "Page removed."
+msgstr ""
+
+#: djangoproject/templates/410.html:13
+#, python-format
+msgid ""
+"Sorry, we've removed some of parts of the site that were completely out of "
+"date. In most cases, that content has been moved into <a "
+"href=\"%(docs_url)s\">the new documentation site</a>."
+msgstr ""
+
+#: djangoproject/templates/500.html:4 djangoproject/templates/500.html:9
+msgid "Page unavailable"
+msgstr ""
+
+#: djangoproject/templates/500.html:11
+msgid "We're sorry, but the requested page is currently unavailable."
+msgstr ""
+
+#: djangoproject/templates/500.html:13
+msgid ""
+"We're messing around with things internally, and the server had a bit of a "
+"hiccup."
+msgstr ""
+
+#: djangoproject/templates/500.html:15
+msgid "Please try again later."
+msgstr ""
+
+#: djangoproject/templates/accounts/edit_profile.html:4
+#: djangoproject/templates/accounts/edit_profile.html:12
+msgid "Edit your profile"
+msgstr ""
+
+#: djangoproject/templates/accounts/edit_profile.html:9
+#: djangoproject/templates/registration/login.html:12
+#: djangoproject/templates/registration/registration_form.html:16
+msgid "Please correct the errors below:"
+msgstr ""
+
+#: djangoproject/templates/accounts/edit_profile.html:31
+#: djangoproject/templates/aggregator/edit-feed.html:26
+msgid "Save"
+msgstr ""
+
+#: djangoproject/templates/accounts/edit_profile.html:37
+#: djangoproject/templates/accounts/user_profile.html:7
+#: djangoproject/templates/base_community.html:25
+#: djangoproject/templates/base_weblog.html:17
+msgid "Additional Information"
+msgstr ""
+
+#: djangoproject/templates/accounts/edit_profile.html:39
+#: djangoproject/templates/registration/login.html:41
+#: djangoproject/templates/registration/registration_form.html:58
+msgid "Help"
+msgstr ""
+
+#: djangoproject/templates/accounts/edit_profile.html:41
+msgid "Use this form to edit your profile."
+msgstr ""
+
+#: djangoproject/templates/accounts/edit_profile.html:43
+#, python-format
+msgid ""
+"Use whatever name you'd like to be identified with on djangoproject.com. If "
+"you leave it blank, we'll identify you as <b>%(username)s</b>, your username."
+msgstr ""
+
+#: djangoproject/templates/accounts/edit_profile.html:48
+msgid ""
+"We hate spam as much as you do. We'll only use it to send you password reset "
+"emails. We'll also use this email to try to fetch a <a href=\"https://en."
+"gravatar.com/\">Gravatar</a>. You can change the image for this email at <a "
+"href=\"https://en.gravatar.com/\">Gravatar</a>."
+msgstr ""
+
+#: djangoproject/templates/accounts/user_profile.html:11
+msgid "This is you!"
+msgstr ""
+
+#: djangoproject/templates/accounts/user_profile.html:13
+msgid "Is this you?"
+msgstr ""
+
+#: djangoproject/templates/accounts/user_profile.html:17
+msgid "Need to edit something? Here's how:"
+msgstr ""
+
+#: djangoproject/templates/accounts/user_profile.html:19
+msgid "Edit your name and email here."
+msgstr ""
+
+#: djangoproject/templates/accounts/user_profile.html:20
+msgid ""
+"The image is the <a href=\"https://en.gravatar.com/\">Gravatar</a> linked to "
+"the email address you signed up with. You can change the image over at <a "
+"href=\"https://en.gravatar.com/\">Gravatar</a>. If you see a robot, that's "
+"because you don't have a Gravatar yet. (Robots provided by <a href=\"https://"
+"robohash.org/\">Robohash</a>.)"
+msgstr ""
+
+#: djangoproject/templates/accounts/user_profile.html:27
+msgid ""
+"The rest of the data is read-only for the time being. If you see outrageous "
+"errors, please file an issue on <a href=\"https://github.com/django/code."
+"djangoproject.com/issues/new\" target=\"_blank\">GitHub</a>."
+msgstr ""
+
+#: djangoproject/templates/accounts/user_profile.html:46
+msgid "Statistics on Django core contributions:"
+msgstr ""
+
+#: djangoproject/templates/accounts/user_profile.html:60
+msgid "Community feeds:"
+msgstr ""
+
+#: djangoproject/templates/aggregator/delete-confirm.html:5
+#: djangoproject/templates/aggregator/denied.html:5
+#: djangoproject/templates/aggregator/edit-feed.html:5
+#: djangoproject/templates/aggregator/my-feeds.html:5
+#: djangoproject/templates/base_community.html:11
+msgid "Community"
+msgstr ""
+
+#: djangoproject/templates/aggregator/delete-confirm.html:7
+#, python-format
+msgid "Really delete %(feed)s?"
+msgstr ""
+
+#: djangoproject/templates/aggregator/delete-confirm.html:10
+msgid ""
+"We haven't implemented an undo feature yet, so all items will be deleted "
+"immediately."
+msgstr ""
+
+#: djangoproject/templates/aggregator/delete-confirm.html:17
+msgid "Yes, delete the feed."
+msgstr ""
+
+#: djangoproject/templates/aggregator/denied.html:7
+msgid "Sorry, you can't do that."
+msgstr ""
+
+#: djangoproject/templates/aggregator/edit-feed.html:8
+#, python-format
+msgid "Add a %(type)s feed:"
+msgstr ""
+
+#: djangoproject/templates/aggregator/edit-feed.html:10
+#, python-format
+msgid "Edit %(feed)s:"
+msgstr ""
+
+#: djangoproject/templates/aggregator/edit-feed.html:24
+msgid "Add Feed"
+msgstr ""
+
+#: djangoproject/templates/aggregator/feeditem_list.html:6
+#, python-format
+msgid ""
+"Django community: %(feed_type.name)s <a class=\"rss\" "
+"href=\"%(feed_url)s\">RSS</a>"
+msgstr ""
+
+#: djangoproject/templates/aggregator/feeditem_list.html:8
+#, python-format
+msgid ""
+"This page, updated regularly, aggregates %(name)s from the Django community."
+msgstr ""
+
+#: djangoproject/templates/aggregator/feeditem_list.html:17
+#, python-format
+msgid ""
+"Posted on %(date_modified)s at %(time_modified)s by <a "
+"href=\"%(public_url)s\">%(title)s</a> <a class=\"rss\" "
+"href=\"%(feed_url)s\">RSS</a>"
+msgstr ""
+
+#: djangoproject/templates/aggregator/feeditem_list.html:23
+msgid "Read this post in context"
+msgstr ""
+
+#: djangoproject/templates/aggregator/feeditem_list.html:34
+#: djangoproject/templates/blog/blog_pagination.html:9
+msgctxt "pagination"
+msgid "Previous"
+msgstr ""
+
+#: djangoproject/templates/aggregator/feeditem_list.html:40
+#: djangoproject/templates/blog/blog_pagination.html:20
+msgctxt "pagination"
+msgid "Next"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:8
+#: djangoproject/templates/homepage.html:157
+msgid "Get Help"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:15
+#: djangoproject/templates/homepage.html:56
+msgid "Forum - Post a question"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:23
+#: djangoproject/templates/homepage.html:64
+msgid "Discord - Chat with us"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:28
+msgid "Get Involved"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:35
+msgid "Report an issue"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:43
+msgid "Contribute to Django"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:51
+msgid "Local Django Community"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:56
+msgid "Django RSS feeds"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:66
+#, python-format
+msgid "%(modified_date)s by <a href=\"%(public_url)s\">%(title)s</a>"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:74
+msgid "View more"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:77
+msgctxt "view more OR add your feed"
+msgid "or"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:80
+msgid "Add your feed"
+msgstr ""
+
+#: djangoproject/templates/aggregator/index.html:88
+msgid "Mailing Lists"
+msgstr ""
+
+#: djangoproject/templates/aggregator/local-django-community.html:10
+msgid "Local Django Communities"
+msgstr ""
+
+#: djangoproject/templates/aggregator/local-django-community.html:12
+#, python-format
+msgid ""
+"Something missing? <a href=\"https://github.com/django/djangoproject.com/"
+"issues/new?assignees=&amp;labels=type%%3Acommunity&amp;projects=&amp;"
+"template=community_request.md\">Suggest your community"
+msgstr ""
+
+#: djangoproject/templates/aggregator/local-django-community.html:14
+msgid "Table of contents"
+msgstr ""
+
+#: djangoproject/templates/aggregator/local-django-community.html:31
+msgid "Active"
+msgstr ""
+
+#: djangoproject/templates/aggregator/local-django-community.html:33
+msgid "Inactive"
+msgstr ""
+
+#: djangoproject/templates/aggregator/local-django-community.html:39
+msgid "Community Website"
+msgstr ""
+
+#: djangoproject/templates/aggregator/local-django-community.html:42
+msgid "Event Website"
+msgstr ""
+
+#: djangoproject/templates/aggregator/local-django-community.html:50
+msgid "Local Django communities are coming soon. Please check back later."
+msgstr ""
+
+#: djangoproject/templates/aggregator/my-feeds.html:7
+msgid "Manage your community aggregator feeds:"
+msgstr ""
+
+#: djangoproject/templates/aggregator/my-feeds.html:14
+msgid "Edit"
+msgstr ""
+
+#: djangoproject/templates/aggregator/my-feeds.html:15
+msgid "Delete"
+msgstr ""
+
+#: djangoproject/templates/aggregator/my-feeds.html:18
+msgid "Add a new feed:"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:4
+#: djangoproject/templates/base_community.html:8
+msgid "Django Community"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:5
+msgid "Building the Django Community. Come join us!"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:14
+#, python-format
+msgid "Building the <em>Django</em> Community for <em>%(age)s</em>."
+msgstr ""
+
+#: djangoproject/templates/base_community.html:18
+msgid "Building the <em>Django</em> Community."
+msgstr ""
+
+#: djangoproject/templates/base_community.html:20
+msgid "Come join us!"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:29
+msgid "More Help"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:33
+#: djangoproject/templates/conduct/base.html:16
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:36
+msgid "The FAQ answers many common questions"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:38
+msgid "News and links on Reddit"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:40
+msgid "Search community answers"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:41
+msgid "#django IRC Channel"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:42
+msgid "Chat with other Django users like it's 1999"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:45
+msgid "Dive In"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:47
+msgid "Ticket System"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:48
+msgid "View and update bug reports"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:49
+msgid "Development Dashboard"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:50
+msgid "Statistics about Django development"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:51
+msgid "django-updates Mailing List"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:52
+msgid "Get updated for each code and ticket change"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:55
+msgid "More Links"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:57
+msgid "Django Packages"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:58
+msgid "Find third-party packages to supercharge your project"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:59
+msgid "Django-powered Sites"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:60
+msgid "Add your site to the list"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:61
+msgid "Django Badges"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:62
+msgid "Show your support (or wish longingly)"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:63
+msgid "Django Logos"
+msgstr ""
+
+#: djangoproject/templates/base_community.html:64
+msgid "Download official logos"
+msgstr ""
+
+#: djangoproject/templates/base_weblog.html:4
+#: djangoproject/templates/base_weblog.html:6
+#: djangoproject/templates/base_weblog.html:9
+msgid "News &amp; Events"
+msgstr ""
+
+#: djangoproject/templates/base_weblog.html:22
+msgid "Upcoming Events"
+msgstr ""
+
+#: djangoproject/templates/base_weblog.html:33
+msgid "Want your event listed here?"
+msgstr ""
+
+#: djangoproject/templates/base_weblog.html:48
+msgid "Archives"
+msgstr ""
+
+#: djangoproject/templates/base_weblog.html:51
+msgid "RSS Feeds"
+msgstr ""
+
+#: djangoproject/templates/base_weblog.html:53
+msgid "Latest news entries"
+msgstr ""
+
+#: djangoproject/templates/base_weblog.html:54
+msgid "Recent code changes"
+msgstr ""
+
+#: djangoproject/templates/blog/blog_pagination.html:13
+#, python-format
+msgid "Page %(page_num)s of %(pages)s"
+msgstr ""
+
+#: djangoproject/templates/blog/entry_archive_day.html:4
+#: djangoproject/templates/blog/entry_archive_month.html:4
+#: djangoproject/templates/blog/entry_archive_year.html:4
+msgid "Weblog"
+msgstr ""
+
+#: djangoproject/templates/blog/entry_archive_day.html:6
+#, python-format
+msgid "Django news: %(day|date:\"MONTH_DAY_FORMAT\")s archive"
+msgstr ""
+
+#: djangoproject/templates/blog/entry_archive_day.html:10
+#, python-format
+msgid "%(day|date:\"MONTH_DAY_FORMAT\")s archive"
+msgstr ""
+
+#: djangoproject/templates/blog/entry_archive_month.html:6
+#, python-format
+msgid "Django news: %(month|date:\"YEAR_MONTH_FORMAT\")s archive"
+msgstr ""
+
+#: djangoproject/templates/blog/entry_archive_month.html:10
+#, python-format
+msgid "%(month|date:\"YEAR_MONTH_FORMAT\")s archive"
+msgstr ""
+
+#: djangoproject/templates/blog/entry_archive_year.html:6
+#, python-format
+msgid "Django news: %(year)s archive"
+msgstr ""
+
+#: djangoproject/templates/blog/entry_archive_year.html:10
+msgid "archive"
+msgstr ""
+
+#: djangoproject/templates/blog/entry_detail.html:7
+#, python-format
+msgid "Posted by %(author)s on %(pub_date)s"
+msgstr ""
+
+#: djangoproject/templates/blog/entry_detail.html:14
+#, python-format
+msgid "Posted by <strong>%(author)s</strong> on %(pub_date)s </span>"
+msgstr ""
+
+#: djangoproject/templates/blog/news_summary.html:11
+#, python-format
+msgid "Posted by <strong>%(author)s</strong> on %(pub_date)s"
+msgstr ""
+
+#: djangoproject/templates/blog/news_summary.html:20
+msgctxt "Following article summary"
+msgid "Read more"
+msgstr ""
+
+#: djangoproject/templates/conduct/base.html:5
+#: djangoproject/templates/conduct/base.html:6
+#: djangoproject/templates/conduct/base.html:14
+msgid "Code of Conduct"
+msgstr ""
+
+#: djangoproject/templates/conduct/base.html:11
+msgid "Django Community Code of Conduct"
+msgstr ""
+
+#: djangoproject/templates/conduct/base.html:15
+msgid "Committee"
+msgstr ""
+
+#: djangoproject/templates/conduct/base.html:17
+msgid "Reporting Guide"
+msgstr ""
+
+#: djangoproject/templates/conduct/base.html:18
+msgid "Enforcement Manual"
+msgstr ""
+
+#: djangoproject/templates/conduct/base.html:19
+#: djangoproject/templates/diversity/base.html:18
+msgid "Changes"
+msgstr ""
+
+#: djangoproject/templates/conduct/base.html:22
+#: djangoproject/templates/diversity/base.html:21
+msgid "License"
+msgstr ""
+
+#: djangoproject/templates/conduct/base.html:24
+#: djangoproject/templates/diversity/base.html:23
+msgid ""
+"All content on this page is licensed under a <a href=\"https://"
+"creativecommons.org/licenses/by/3.0/\">Creative Commons Attribution </a> "
+"license."
+msgstr ""
+
+#: djangoproject/templates/conduct/base.html:38
+#: djangoproject/templates/conduct/index.html:4
+#: djangoproject/templates/conduct/index.html:6
+#: djangoproject/templates/conduct/index.html:11
+msgid "Django Code of Conduct"
+msgstr ""
+
+#: djangoproject/templates/conduct/changes.html:4
+#: djangoproject/templates/conduct/changes.html:6
+#: djangoproject/templates/conduct/changes.html:10
+msgid "Django Code of Conduct - Changes"
+msgstr ""
+
+#: djangoproject/templates/conduct/changes.html:7
+msgid "Changes to the Code of Conduct"
+msgstr ""
+
+#: djangoproject/templates/conduct/changes.html:12
+#: djangoproject/templates/diversity/changes.html:10
+msgid "Change control process"
+msgstr ""
+
+#: djangoproject/templates/conduct/changes.html:15
+msgid ""
+"We're (mostly) programmers, so we'll track changes to the code of conduct "
+"and associated documents the same way we track changes to code. All changes "
+"will be proposed via a pull request to the <a href=\"https://github.com/"
+"django/djangoproject.com\">djangoproject.com repository on GitHub</a>. "
+"Changes will be reviewed by the conduct committee first, and then sent to "
+"the DSF and the Django community for comment. We'll hold a comment period of "
+"at least one week, then the DSF board will vote on the change. Approved "
+"changes will be merged, published, and noted below."
+msgstr ""
+
+#: djangoproject/templates/conduct/changes.html:26
+msgid ""
+"This only applies to material changes; changes that don't affect the intent "
+"(typo fixes, re-wordings, etc.) can be made immediately"
+msgstr ""
+
+#: djangoproject/templates/conduct/changes.html:31
+msgid ""
+"A complete list of changes can always be found <a href=\"https://github.com/"
+"django/djangoproject.com/commits/main/templates/conduct\">on GitHub</a>; "
+"major changes and releases are summarized below."
+msgstr ""
+
+#: djangoproject/templates/conduct/changes.html:36
+#: djangoproject/templates/diversity/changes.html:40
+msgid "Changelog"
+msgstr ""
+
+#: djangoproject/templates/conduct/changes.html:41
+msgid ""
+"<a href=\"https://github.com/django/djangoproject.com/"
+"commit/577a02bbe968de79f8e111d6139f0c1299e994e9\"> Revised text</a> to "
+"clarify that behavior outside the community is a contributing factor to "
+"involvement in the Django community; and explicitly provided a non-"
+"exhaustive list of diversity groups we consider included under the policy."
+msgstr ""
+
+#: djangoproject/templates/conduct/changes.html:48
+msgid "Documents approved and officially published."
+msgstr ""
+
+#: djangoproject/templates/conduct/changes.html:52
+msgid ""
+"Added the reporting guide and enforcement manual</a>. Final draft presented "
+"to the board and core membership for vote."
+msgstr ""
+
+#: djangoproject/templates/conduct/changes.html:58
+msgid "Initial \"beta\" release and public call for comments"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:4
+#: djangoproject/templates/conduct/enforcement.html:6
+#: djangoproject/templates/conduct/enforcement.html:10
+msgid "Django Code of Conduct - Enforcement Manual"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:7
+msgid ""
+"This is the enforcement manual followed by Django's Code of Conduct Committee"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:13
+msgid ""
+"This is the enforcement manual followed by Django's Code of Conduct "
+"Committee. It's used when we respond to an issue to make sure we're "
+"consistent and fair. It should be considered an internal document, but we're "
+"publishing it publicly in the interests of transparency."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:20
+msgid "The Code of Conduct Committee"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:23
+msgid ""
+"All responses to reports of conduct violations will be managed by a <a "
+"href=\"/foundation/committees/\">Code of Conduct Committee</a> (\"the "
+"committee\")."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:29
+msgid ""
+"The Django Software Foundation's Board of Directors (\"the board\") will "
+"establish this committee, comprised of at least three members. One member "
+"will be designated chair of the committee and will be responsible for all "
+"reports back to the board. The board will review membership on a regular "
+"basis."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:36
+msgid "How the committee will respond to reports"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:39
+msgid ""
+"When a report is sent to the committee they will immediately reply to the "
+"report to confirm receipt. This reply must be sent within 24 hours, and the "
+"committee should strive to respond much quicker than that."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:47
+#, python-format
+msgid ""
+"See the <a href=\"%(conduct_reporting)s\">reporting guidelines</a> for "
+"details of what reports should contain. If a report doesn't contain enough "
+"information, the committee will obtain all relevant data before acting. The "
+"committee is empowered to act on the DSF's behalf in contacting any "
+"individuals involved to get a more complete account of events."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:55
+msgid ""
+"The committee will then review the incident and determine, to the best of "
+"their ability:"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:57
+msgid "what happened"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:58
+msgid "whether this event constitutes a code of conduct violation"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:59
+msgid "who, if anyone, was the bad actor"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:60
+msgid ""
+"whether this is an ongoing situation, and there is a threat to anyone's "
+"physical safety"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:65
+msgid ""
+"This information will be collected in writing, and whenever possible the "
+"committee's deliberations will be recorded and retained (i.e. IRC "
+"transcripts, email discussions, recorded voice conversations, etc)."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:72
+msgid ""
+"The committee should aim to have a resolution agreed upon within one week. "
+"In the event that a resolution can't be determined in that time, the "
+"committee will respond to the reporter(s) with an update and projected "
+"timeline for resolution."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:78
+msgid "Acting Unilaterally"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:81
+msgid ""
+"If the act is ongoing (such as someone engaging in harassment in #django), "
+"or involves a threat to anyone's safety (e.g. threats of violence), any "
+"committee member may act immediately (before reaching consensus) to end the "
+"situation. In ongoing situations, any member may at their discretion employ "
+"any of the tools available to the committee, including bans and blocks."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:90
+msgid ""
+"If the incident involves physical danger, any member of the committee may -- "
+"and should -- act unilaterally to protect safety. This can include "
+"contacting law enforcement (or other local personnel) and speaking on behalf "
+"of the DSF."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:97
+msgid ""
+"In situations where an individual committee member acts unilaterally, they "
+"must report their actions to the committee for review within 24 hours."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:101
+msgid "Resolutions"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:104
+msgid ""
+"The committee must agree on a resolution by consensus. If the committee "
+"cannot reach consensus and deadlocks for over a week, the committee will "
+"turn the matter over to the board for resolution."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:109
+msgid "Possible responses may include:"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:111
+msgid "Taking no further action (if we determine no violation occurred)."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:113
+msgid ""
+"A private reprimand from the committee to the individual(s) involved. In "
+"this case, a committee member will deliver that reprimand to the "
+"individual(s) over email, cc'ing the committee."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:118
+msgid ""
+"A public reprimand. In this case, a committee member will deliver that "
+"reprimand in the same venue that the violation occurred (i.e. in IRC for an "
+"IRC violation; email for an email violation, etc.). The committee may choose "
+"to publish this message elsewhere for posterity."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:124
+msgid ""
+"An imposed vacation (i.e. asking someone to \"take a week off\" from a "
+"mailing list or IRC). A committee member will communicate this \"vacation\" "
+"to the individual(s). They'll be asked to take this vacation voluntarily, "
+"but if they don't agree then a temporary ban may be imposed to enforce this "
+"vacation."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:130
+msgid ""
+"A permanent or temporary ban from some or all Django spaces (mailing lists, "
+"IRC, etc.). The committee will maintain records of all such bans so that "
+"they may be reviewed in the future, extended to new Django fora, or "
+"otherwise maintained."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:136
+msgid ""
+"A request for a public or private apology. a committee member will deliver "
+"this request. The committee may, if it chooses, attach \"strings\" to this "
+"request: for example, the committee may ask a violator to apologize in order "
+"to retain his or her membership on a mailing list."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:145
+msgid ""
+"Once a resolution is agreed upon, but before it is enacted, the committee "
+"will contact the original reporter and any other affected parties and "
+"explain the proposed resolution. The committee will ask if this resolution "
+"is acceptable, and must note feedback for the record. However, the committee "
+"is not required to act on this feedback."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:154
+msgid ""
+"Finally the committee will make a report for the DSF board. In case the "
+"incident or report involves a current member of the board, the committee "
+"will provide the report only to the other board members."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:161
+msgid ""
+"The committee will never publicly discuss the issue; all public statements "
+"will be made by the DSF board."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:166
+msgid "Conflicts of Interest"
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:169
+#, python-format
+msgid ""
+"In the event of any conflict of interest a committee member must immediately "
+"notify the other members, and recuse themselves if necessary. If a report "
+"concerns a possible violation by a current committee member, this member "
+"should be excluded from the response process. For these cases, anyone can "
+"make a report directly to any of the committee chairs, as documented in the "
+"<a href=\"%(url)s\">reporting guidelines</a>."
+msgstr ""
+
+#: djangoproject/templates/conduct/enforcement.html:181
+msgid ""
+"Editor's note: Writing this document posed a unique challenge. Most similar "
+"guides are written on the assumption of an in-person event. However, the "
+"Django community doesn't exist in one place, and most of the time we're "
+"spread out across the world and interact online. This makes trying to define "
+"and enforce community standards a different type of challenge. This document "
+"is adapted from the <a href=\"http://geekfeminism.wikia.com/wiki/"
+"Conference_anti-harassment/Responding_to_reports\">Ada Initiative template</"
+"a> and the <a href=\"https://us.pycon.org/2013/about/code-of-conduct/"
+"harassment-incidents/\">PyCon 2013 Procedure for Handling Harassment "
+"Incidents</a>, but changed to reflect the nature of our community. It is our "
+"expectation that this will be a living document and change as we grow to "
+"understand how to meet this challenge and best serve our community and "
+"ideals."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:4
+#: djangoproject/templates/conduct/faq.html:6
+#: djangoproject/templates/conduct/faq.html:10
+msgid "Django Code of Conduct - FAQ"
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:7
+msgid ""
+"Common questions and concerns around the Django community's Code of Conduct"
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:13
+#, python-format
+msgid ""
+"This FAQ attempts to address common questions and concerns around the Django "
+"community's <a href=\"%(coc_url)s\">Code of Conduct</a>. If you still have "
+"questions after reading it, please feel free to <a href=\"mailto:"
+"conduct@djangoproject.com\">contact us</a>."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:21
+msgid "Why have you adopted a Code of Conduct?"
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:24
+msgid ""
+"We think the Django community is awesome. If you're familiar with the Django "
+"community, you'll probably notice that the Code basically matches what we "
+"already do. Think of this as documentation: we're taking implicit "
+"expectations about behavior and making them explicit."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:31
+msgid ""
+"We're doing this because the Django community is growing faster than any of "
+"us could have anticipated. This is on balance a very positive thing, but as "
+"we've grown past the point where it's possible to know the whole community "
+"we think it's very important to be clear about our values."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:38
+msgid ""
+"We know that the Django community is open, friendly, and welcoming. We want "
+"to make sure everyone else knows it too."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:42
+msgid "What does it mean to \"adopt\" a Code of Conduct?\" "
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:45
+msgid ""
+"For the most part, we don't think it means large changes. We think that the "
+"text does a really good job describing the way the Django community already "
+"conducts itself. We expect that most people will simply continue to behave "
+"in the awesome way they have for years."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:52
+msgid ""
+"However, we do expect that people will abide by the spirit and words of the "
+"CoC when in \"official\" Django spaces. This code has been adopted by both "
+"the Django core team and by the Django Software Foundation. That means that "
+"it'll apply both in community spaces <em>and</em> at DSF events."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:59
+msgid ""
+"In practice, this means mailing lists (django-users, django-developers, "
+"etc.), the various Django IRC channels (<tt>#django</tt>, <tt>#django-dev</"
+"tt>, etc.), bug tracking and code review tools, and \"official\" Django "
+"events such as sprints. In addition, violations of this code outside these "
+"spaces may affect a person's ability to participate within them."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:66
+msgid "What about events funded by the Django Software Foundation?"
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:68
+#, python-format
+msgid ""
+"This Code of Conduct also covers any events that the DSF funds. However, "
+"events funded by the DSF already <a class=\"plink\" "
+"href=\"%(coc_url)s\">require a code of conduct</a>. Isn't this redundant?"
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:77
+msgid ""
+"This Code of Conduct is all about how we interact as a community. It's about "
+"saying that the Django community will be open, friendly, and welcoming. The "
+"core issue is about ensuring the conversations we have are productive and "
+"inviting for all."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:84
+msgid ""
+"Real-life events, however, require a bit more care. The DSF wants to be sure "
+"that any events it funds have policies and procedures in place for handling "
+"harassment. It's especially important to us that real-life events take steps "
+"to protect the physical and mental security of their participants."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:91
+msgid ""
+"So the DSF will require that any events it funds have some sort of anti- "
+"harassment policy in place. The DSF thinks the <a href=\"http://geekfeminism."
+"wikia.com/wiki/Conference_anti-harassment/Policy\">Ada Initiative's "
+"template</a> is pretty good, but we're open to alternatives."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:97
+msgid "What happens if someone violates the Code of Conduct?"
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:100
+#, python-format
+msgid ""
+"Our intent is that anyone in the community can stand up for this code, and "
+"direct people who're unaware to this document. If that doesn't work, or if "
+"you need more help, you can contact <a href=\"mailto:conduct@djangoproject."
+"com\">conduct@djangoproject.com</a>. For more details please see our <a "
+"href=\"%(reporting_url)s\">Reporting Guidelines</a>"
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:108
+msgid "Why do we need a Code of Conduct? Everyone knows not to be a jerk."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:110
+msgid "Sadly, not everyone knows this."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:113
+msgid ""
+"However, even if everyone was kind, everyone was compassionate, and everyone "
+"was familiar with codes of conduct it would still be incumbent upon our "
+"community to publish our own. Maintaining a code of conduct forces us to "
+"consider and articulate what kind of community we want to be, and serves as "
+"a constant reminder to put our best foot forward. But most importantly, it "
+"serves as a signpost to people looking to join our community that we feel "
+"these values are important."
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:123
+msgid "This is censorship! I have the right to say whatever I want!"
+msgstr ""
+
+#: djangoproject/templates/conduct/faq.html:126
+msgid ""
+"You do -- in <em>your</em> space. If you'd like to hang out in <em>our</em> "
+"spaces (as clarified above), we have some simple guidelines to follow. If "
+"you want to, for example, form a group where Django is discussed using "
+"language inappropriate for general channels then nobody's stopping you. We "
+"respect your right to establish whatever codes of conduct you want in the "
+"spaces that belong to you. Please honor this Code of Conduct in our spaces."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:7
+msgid "Some ground rules for the community"
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:14
+msgid ""
+"Like the technical community as a whole, the Django team and community is "
+"made up of a mixture of professionals and volunteers from all over the "
+"world, working on every aspect of the mission - including mentorship, "
+"teaching, and connecting people."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:22
+msgid ""
+"Diversity is one of our huge strengths, but it can also lead to "
+"communication issues and unhappiness. To that end, we have a few ground "
+"rules that we ask people to adhere to. This code applies equally to "
+"founders, mentors and those seeking help and guidance."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:30
+msgid ""
+"This isn’t an exhaustive list of things that you can’t do. Rather, take it "
+"in the spirit in which it’s intended - a guide to make it easier to enrich "
+"all of us and the technical communities in which we participate."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:37
+msgid ""
+"This code of conduct applies to all spaces managed by the Django project or "
+"Django Software Foundation. This includes IRC, the mailing lists, the issue "
+"tracker, DSF events, and any other forums created by the project team which "
+"the community uses for communication. In addition, violations of this code "
+"outside these spaces may affect a person's ability to participate within "
+"them."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:47
+#, python-format
+msgid ""
+"If you believe someone is violating the code of conduct, we ask that you "
+"report it by emailing <a href=\"mailto:conduct@djangoproject."
+"com\">conduct@djangoproject.com</a>. For more details please see our <a "
+"href=\"%(reporting_url)s\">Reporting Guidelines</a>"
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:56
+msgid "Be friendly and patient."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:59
+msgid ""
+"<strong>Be welcoming.</strong> We strive to be a community that welcomes and "
+"supports people of all backgrounds and identities. This includes, but is not "
+"limited to members of any race, ethnicity, culture, national origin, colour, "
+"immigration status, social and economic class, educational level, sex, "
+"sexual orientation, gender identity and expression, age, size, family "
+"status, political belief, religion, and mental and physical ability."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:69
+msgid ""
+"<strong>Be considerate.</strong> Your work will be used by other people, and "
+"you in turn will depend on the work of others. Any decision you take will "
+"affect users and colleagues, and you should take those consequences into "
+"account when making decisions. Remember that we're a world-wide community, "
+"so you might not be communicating in someone else's primary language."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:78
+msgid ""
+"<strong>Be respectful.</strong> Not all of us will agree all the time, but "
+"disagreement is no excuse for poor behavior and poor manners. We might all "
+"experience some frustration now and then, but we cannot allow that "
+"frustration to turn into a personal attack. It’s important to remember that "
+"a community where people feel uncomfortable or threatened is not a "
+"productive one. Members of the Django community should be respectful when "
+"dealing with other members as well as with people outside the Django "
+"community."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:89
+msgid ""
+"<strong>Be careful in the words that you choose.</strong> We are a community "
+"of professionals, and we conduct ourselves professionally. Be kind to "
+"others. Do not insult or put down other participants. Harassment and other "
+"exclusionary behavior aren't acceptable. This includes, but is not limited "
+"to:"
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:96
+msgid "Violent threats or language directed against another person."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:97
+msgid "Discriminatory jokes and language."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:98
+msgid "Posting sexually explicit or violent material."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:100
+msgid ""
+"Posting (or threatening to post) other people's personally identifying "
+"information (\"doxing\")."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:104
+msgid "Personal insults, especially those using racist or sexist terms."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:105
+msgid "Unwelcome sexual attention."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:106
+msgid "Advocating for, or encouraging, any of the above behavior."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:107
+msgid ""
+"Repeated harassment of others. In general, if someone asks you to stop, then "
+"stop."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:112
+msgid ""
+"<strong>When we disagree, try to understand why.</strong> Disagreements, "
+"both social and technical, happen all the time and Django is no exception. "
+"It is important that we resolve disagreements and differing views "
+"constructively. Remember that we’re different. The strength of Django comes "
+"from its varied community, people from a wide range of backgrounds. "
+"Different people have different perspectives on issues. Being unable to "
+"understand why someone holds a viewpoint doesn’t mean that they’re wrong. "
+"Don’t forget that it is human to err and blaming each other doesn’t get us "
+"anywhere. Instead, focus on helping to resolve issues and learning from "
+"mistakes."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:125
+msgid ""
+"Original text courtesy of the <a href=\"http://web.archive.org/"
+"web/20141109123859/http://speakup.io/coc.html\"> Speak Up! project</a>."
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:132
+#: djangoproject/templates/diversity/index.html:105
+msgid "Questions?"
+msgstr ""
+
+#: djangoproject/templates/conduct/index.html:134
+#, python-format
+msgid ""
+"If you have questions, please see <a href=\"%(faq_url)s\">the FAQ</a>. If "
+"that doesn't answer your questions, feel free to <a href=\"mailto:"
+"conduct@djangoproject.com\">contact us</a>."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:4
+#: djangoproject/templates/conduct/reporting.html:6
+#: djangoproject/templates/conduct/reporting.html:10
+msgid "Django Code of Conduct - Reporting Guide"
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:7
+msgid "A guide to reporting issues in the community"
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:13
+msgid ""
+"If you believe someone is violating the code of conduct we ask that you "
+"report it to the Django Software Foundation by emailing <a href=\"mailto:"
+"conduct@djangoproject.com\">conduct@djangoproject.com</a>. <strong>All "
+"reports will be kept confidential.</strong> In some cases we may determine "
+"that a public statement will need to be made. If that's the case, the "
+"identities of all victims and reporters will remain confidential unless "
+"those individuals instruct us otherwise."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:23
+msgid ""
+"<strong>If you believe anyone is in physical danger, please notify "
+"appropriate law enforcement first.</strong> If you are unsure what law "
+"enforcement agency is appropriate, please include this in your report and we "
+"will attempt to notify them."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:30
+msgid ""
+"If you are unsure whether the incident is a violation, or whether the space "
+"where it happened is covered by this Code of Conduct, we encourage you to "
+"still report it. We would much rather have a few extra reports where we "
+"decide to take no action, rather than miss a report of an actual violation. "
+"We do not look negatively on you if we find the incident is not a violation. "
+"And knowing about incidents that are not violations, or happen outside our "
+"spaces, can also help us to improve the Code of Conduct or the processes "
+"surrounding it."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:39
+msgid "In your report please include:"
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:41
+msgid ""
+"Your contact info (so we can get in touch with you if we need to follow up)"
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:42
+msgid ""
+"Names (real, nicknames, or pseudonyms) of any individuals involved. If there "
+"were other witnesses besides you, please try to include them as well."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:43
+msgid ""
+"When and where the incident occurred. Please be as specific as possible."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:44
+msgid ""
+"Your account of what occurred. If there is a publicly available record (e.g. "
+"a mailing list archive or a public IRC logger) please include a link."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:45
+msgid "Any extra context you believe existed for the incident."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:46
+msgid "If you believe this incident is ongoing."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:47
+msgid "Any other information you believe we should have."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:51
+msgid "What happens after you file a report?"
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:54
+msgid ""
+"You will receive an email from the DSF Code of Conduct Working Group "
+"acknowledging receipt immediately. We promise to acknowledge receipt within "
+"24 hours (and will aim for much quicker than that)."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:59
+msgid ""
+"The working group will immediately meet to review the incident and determine:"
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:61
+msgid "What happened."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:62
+msgid "Whether this event constitutes a code of conduct violation."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:63
+msgid "Who the bad actor was."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:64
+msgid ""
+"Whether this is an ongoing situation, or if there is a threat to anyone's "
+"physical safety."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:69
+msgid ""
+"If this is determined to be an ongoing incident or a threat to physical "
+"safety, the working groups' immediate priority will be to protect everyone "
+"involved. This means we may delay an \"official\" response until we believe "
+"that the situation has ended and that everyone is physically safe."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:76
+msgid ""
+"Once the working group has a complete account of the events they will make a "
+"decision as to how to response. Responses may include:"
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:80
+msgid "Nothing (if we determine no violation occurred)."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:81
+msgid ""
+"A private reprimand from the working group to the individual(s) involved."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:82
+msgid "A public reprimand."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:83
+msgid ""
+"An imposed vacation (i.e. asking someone to \"take a week off\" from a "
+"mailing list or IRC)."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:84
+msgid ""
+"A permanent or temporary ban from some or all Django spaces (mailing lists, "
+"IRC, etc.)"
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:85
+msgid "A request for a public or private apology."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:90
+msgid ""
+"We'll respond within one week to the person who filed the report with either "
+"a resolution or an explanation of why the situation is not yet resolved."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:95
+msgid ""
+"Once we've determined our final action, we'll contact the original reporter "
+"to let them know what action (if any) we'll be taking. We'll take into "
+"account feedback from the reporter on the appropriateness of our response, "
+"but we don't guarantee we'll act on it."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:102
+msgid ""
+"Finally, the Working Group will make a report on the situation to the DSF "
+"board. The board may choose to a public report of the incident."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:106
+msgid ""
+"What if your report concerns a possible violation by a committee member?"
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:109
+msgid ""
+"If your report concerns a current member of the Code of Conduct committee, "
+"you may not feel comfortable sending your report to the committee, as all "
+"members will see the report."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:115
+msgid ""
+"In that case, you can make a report directly to any or all of the current "
+"(vice/co) chairs of the Code of Conduct committee. Their e-mail addresses "
+"are listed on the <a href=\"/foundation/committees/\">Code of Conduct "
+"Committee</a> page. The chairs will follow the usual enforcement process "
+"with the other members, but will exclude the member(s) that the report "
+"concerns from any discussion or decision making."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:124
+msgid ""
+"If your report concerns all current (vice/co) chairs of the committee, "
+"please send your report directly to the DSF board at <a href=\"mailto:"
+"foundation@djangoproject.com\">foundation@djangoproject.com</a> instead."
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:130
+msgid "Reconsideration"
+msgstr ""
+
+#: djangoproject/templates/conduct/reporting.html:133
+msgid ""
+"Any of the parties directly involved or affected can request reconsideration "
+"of the committee’s decision. To make such a request, contact the DSF Board "
+"at <a href=\"mailto:foundation@djangoproject.com\">foundation@djangoproject."
+"com</a> with your request and motivation and the DSF board will review the "
+"case."
+msgstr ""
+
+#: djangoproject/templates/contact/coc.html:4
+#: djangoproject/templates/contact/coc.html:7
+msgid "Django Code of Conduct Feedback"
+msgstr ""
+
+#: djangoproject/templates/contact/coc_form.html:7
+msgid "Your name (optional):"
+msgstr ""
+
+#: djangoproject/templates/contact/coc_form.html:12
+msgid "Your email address (optional):"
+msgstr ""
+
+#: djangoproject/templates/contact/coc_form.html:17
+msgid "Your message:"
+msgstr ""
+
+#: djangoproject/templates/contact/coc_form.html:21
+#: djangoproject/templates/contact/foundation.html:51
+msgid "Send &rarr;"
+msgstr ""
+
+#: djangoproject/templates/contact/foundation.html:4
+#: djangoproject/templates/contact/foundation.html:7
+#: djangoproject/templates/homepage.html:187
+msgid "Contact the Django Software Foundation"
+msgstr ""
+
+#: djangoproject/templates/contact/foundation.html:9
+msgid ""
+"This contact form is for the Django Software Foundation - the legal and "
+"fundraising arm of the Django project."
+msgstr ""
+
+#: djangoproject/templates/contact/foundation.html:15
+msgid ""
+"If you want to report a bug, feature request, or documentation issue in "
+"Django, use the <a href=\"https://code.djangoproject.com\">ticket tracker</"
+"a>."
+msgstr ""
+
+#: djangoproject/templates/contact/foundation.html:21
+msgid ""
+"If you want to report a problem with this website, use the <a href=\"https://"
+"github.com/django/djangoproject.com\">GitHub repo</a>."
+msgstr ""
+
+#: djangoproject/templates/contact/foundation.html:27
+msgid ""
+"If you've got questions about how to use Django, use the <a href=\"https://"
+"groups.google.com/forum/#!forum/django-users\">django-users mailing list</a>."
+msgstr ""
+
+#: djangoproject/templates/contact/sent.html:4
+#: djangoproject/templates/contact/sent.html:7
+msgid "Message sent"
+msgstr ""
+
+#: djangoproject/templates/contact/sent.html:8
+msgid "Your message has been sent; thanks!"
+msgstr ""
+
+#: djangoproject/templates/contact/sent.html:10
+msgid ""
+"Your mail <em>will</em> be read by a real, live human being. We can't "
+"guarantee when or whether you'll get a reply, but your message <em>will</em> "
+"be read, generally within the next couple of days."
+msgstr ""
+
+#: djangoproject/templates/contact/sent.html:17
+msgid ""
+"If you're expecting a reply and don't get one, please feel free to send a "
+"reminder. Please wait a few days, however, unless it's an emergency."
+msgstr ""
+
+#: djangoproject/templates/diversity/base.html:4
+#: djangoproject/templates/diversity/base.html:14
+#: djangoproject/templates/diversity/base.html:37
+#: djangoproject/templates/diversity/index.html:4
+#: djangoproject/templates/diversity/index.html:8
+msgid "Django Community Diversity Statement"
+msgstr ""
+
+#: djangoproject/templates/diversity/base.html:5
+#: djangoproject/templates/diversity/index.html:18
+msgid "We welcome you."
+msgstr ""
+
+#: djangoproject/templates/diversity/base.html:8
+#: djangoproject/templates/diversity/base.html:9
+msgid "Community Diversity Statement"
+msgstr ""
+
+#: djangoproject/templates/diversity/base.html:17
+msgid "Diversity Statement"
+msgstr ""
+
+#: djangoproject/templates/diversity/changes.html:4
+#: djangoproject/templates/diversity/changes.html:5
+#: djangoproject/templates/diversity/changes.html:8
+msgid "Django Community Diversity Statement - Changes"
+msgstr ""
+
+#: djangoproject/templates/diversity/changes.html:13
+msgid ""
+"We're (mostly) programmers, so we'll track changes to the diversity "
+"statement the same way we track changes to code. All changes will be "
+"proposed via a pull request to the <a href=\"https://github.com/django/"
+"djangoproject.com\">djangoproject.com repository on GitHub</a>. Changes will "
+"be reviewed by the membership first, and then sent to the DSF and the Django "
+"community for comment. We'll hold a comment period of at least one week, "
+"then the DSF board will vote on the change. Approved changes will be merged, "
+"published, and noted below."
+msgstr ""
+
+#: djangoproject/templates/diversity/changes.html:26
+msgid ""
+"This only applies to material changes; changes that don't affect the intent "
+"(typo fixes, re-wordings, etc.) can be made immediately."
+msgstr ""
+
+#: djangoproject/templates/diversity/changes.html:33
+msgid ""
+"A complete list of changes can always be found <a href=\"https://github.com/"
+"django/djangoproject.com/commits/main/djangoproject/templates/diversity\">on "
+"GitHub</a>; major changes and releases are summarized below."
+msgstr ""
+
+#: djangoproject/templates/diversity/changes.html:45
+msgid "Initial release"
+msgstr ""
+
+#: djangoproject/templates/diversity/index.html:11
+msgid ""
+"Platitudes are cheap. We've all heard organizations say they're committed to "
+"\"diversity\" and \"tolerance\" without ever getting specific, so here's our "
+"stance on it:"
+msgstr ""
+
+#: djangoproject/templates/diversity/index.html:21
+msgid ""
+"We welcome people of any gender identity or expression, race, skin color, "
+"ethnicity, age, size, nationality, sexual orientation, ability level, "
+"neurotype, religion, elder status, family structure, culture, subculture, "
+"political opinion, education level, identity, and self-identification. We "
+"welcome activists, artists, bloggers, crafters, coders, wannabe-coders, "
+"designers, entrepreneurs, documentation writers, journalists, sysadmins, "
+"teachers, ordinary people, extraordinary people, and everyone in between."
+msgstr ""
+
+#: djangoproject/templates/diversity/index.html:32
+msgid ""
+"We welcome you. You may wear a baby sling, hijab, a kippah, leather, an XXXL "
+"t-shirt, a pentacle, a political badge, a rainbow, a rosary, tattoos, or "
+"something we can only dream of. You may carry a guitar or walking cane or a "
+"15 year old laptop. Conservative or liberal, libertarian or socialist — we "
+"believe it's possible for people of all viewpoints and persuasions to come "
+"together and learn from each other. We believe in the broad spectrum of "
+"individual and collective experience and in the inherent dignity of all "
+"people. We believe that amazing things happen when people from different "
+"worlds and world-views approach each other to create a conversation."
+msgstr ""
+
+#: djangoproject/templates/diversity/index.html:45
+msgid ""
+"We get excited about web development — from professional to amateur, from "
+"giant projects to simple apps, from the coder who's been doing this since "
+"the day Django was conceived in Kansas to the newbie who just started "
+"studying the Django tutorial today."
+msgstr ""
+
+#: djangoproject/templates/diversity/index.html:53
+msgid ""
+"We think accessibility for people with disabilities is a priority, not an "
+"afterthought. We think neurodiversity is a feature, not a bug. We believe in "
+"being inclusive, welcoming, and supportive of anyone who comes to us with "
+"good faith and the desire to build a community."
+msgstr ""
+
+#: djangoproject/templates/diversity/index.html:62
+#, python-format
+msgid ""
+"There are a few diversity initiatives in the Django community, but there can "
+"always be more. We protect our diversity through our <a "
+"href=\"%(coc_url)s\">Code of Conduct</a> and the team that applies it. We "
+"also call on you, as a member of the Django community, to proudly show your "
+"support. Be generous, understanding and respectful to your fellow "
+"Djangonauts. Seek out newcomers and help them feel like they belong. Listen "
+"with empathy when someone has a different perspective. Talk to someone if "
+"you notice that something could be better."
+msgstr ""
+
+#: djangoproject/templates/diversity/index.html:74
+msgid ""
+"We have enough experience to know that we won't get any of this perfect on "
+"the first try. But we have enough hope, energy, and idealism to want to "
+"learn things we don't know now. We may not be able to satisfy everyone, but "
+"we can certainly work to avoid excluding anyone. And we promise that if we "
+"get it wrong, we'll listen carefully and respectfully to you when you point "
+"it out to us, and we'll do our best to make good on our mistakes."
+msgstr ""
+
+#: djangoproject/templates/diversity/index.html:84
+msgid ""
+"We think our technical experience is important, but we think our community "
+"experience is more important. We know what goes wrong when organizations say "
+"one thing and do another, or when they refuse to say anything at all. We "
+"believe that keeping the Django Software Foundation transparent is just as "
+"important as keeping our servers stable."
+msgstr ""
+
+#: djangoproject/templates/diversity/index.html:93
+msgid ""
+"We work with the Django web framework, and we invite everyone to contribute, "
+"to the core Django code, the ecosystem of Django packages, and the community."
+msgstr ""
+
+#: djangoproject/templates/diversity/index.html:98
+msgid "Come build the web with us."
+msgstr ""
+
+#: djangoproject/templates/diversity/index.html:101
+msgid ""
+"Original text courtesy of the <a href=\"https://www.dreamwidth.org/legal/"
+"diversity\">Dreamwidth</a>."
+msgstr ""
+
+#: djangoproject/templates/diversity/index.html:107
+msgid ""
+"If you have questions, feel free to <a href=\"mailto:conduct@djangoproject."
+"com\">contact us</a>."
+msgstr ""
+
+#: djangoproject/templates/donate_thanks.html:4
+#: djangoproject/templates/donate_thanks.html:7
+msgid "Thanks for your support!"
+msgstr ""
+
+#: djangoproject/templates/donate_thanks.html:9
+msgid ""
+"Thank you for supporting Django. If you like, you can use one of the badges "
+"below to show your support and help us bring in other donors."
+msgstr ""
+
+#: djangoproject/templates/donate_thanks.html:14
+msgid ""
+"Copy and paste the source below each image to link to our donation page."
+msgstr ""
+
+#: djangoproject/templates/donate_thanks.html:16
+#: djangoproject/templates/donate_thanks.html:21
+#: djangoproject/templates/donate_thanks.html:28
+#: djangoproject/templates/donate_thanks.html:35
+msgid "I donated to Django"
+msgstr ""
+
+#: djangoproject/templates/donate_thanks.html:24
+msgid "I donated to Django (green)"
+msgstr ""
+
+#: djangoproject/templates/donate_thanks.html:38
+msgid "I donated to Django (grey)"
+msgstr ""
+
+#: djangoproject/templates/foundation/coreawardcohort_list.html:4
+#: djangoproject/templates/foundation/coreawardcohort_list.html:8
+msgid "Django Core Developers"
+msgstr ""
+
+#: djangoproject/templates/foundation/coreawardcohort_list.html:5
+msgid "Former Django Core Team dissolved on March 12, 2020."
+msgstr ""
+
+#: djangoproject/templates/foundation/coreawardcohort_list.html:11
+msgid ""
+"The title &ldquo;Django Core Developer&rdquo; is awarded to individuals who "
+"have made significant contributions, over an extended period of time, to "
+"Django or to major parts of its ecosystem. The title is awarded by the Board "
+"of Directors of the Django Software Foundation. A list of recipients is "
+"below."
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_archive.html:4
+#: djangoproject/templates/foundation/meeting_archive.html:12
+#: djangoproject/templates/foundation/meeting_archive_day.html:4
+#: djangoproject/templates/foundation/meeting_archive_month.html:4
+#: djangoproject/templates/foundation/meeting_archive_year.html:4
+msgid "Meeting minutes archive"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_archive.html:5
+msgid "View meeting minutes"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_archive.html:14
+msgid "Select a year to view meeting minutes:"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_archive_day.html:5
+#, python-format
+msgid "View meeting minutes for %(day)s"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_archive_day.html:9
+#, python-format
+msgid "Meeting minutes archive: %(day)s"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_archive_month.html:5
+#, python-format
+msgid "View meeting minutes for %(month)s"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_archive_month.html:8
+#, python-format
+msgid "Meeting minutes archive: %(month)s"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_archive_year.html:5
+#, python-format
+msgid "View meeting minutes for %(year)s"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_archive_year.html:8
+#, python-format
+msgid "Meeting minutes archive: %(year)s"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:4
+#, python-format
+msgid "Meeting minutes: %(meeting)s"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:5
+#, python-format
+msgid "Meeting minutes for %(meeting)s"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:13
+#, python-format
+msgid "The meeting was led by %(name)s."
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:18
+msgid "Board members in attendance were:"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:27
+msgid "Also in attendance were:"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:36
+msgid "Finances"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:38
+msgid "Balance"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:43
+msgid "Treasurer&#8217;s report"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:48
+msgid "Grants approved"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:58
+msgid "Individual members approved"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:68
+msgid "Corporate members approved"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:78
+msgid "Ongoing business"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:88
+msgid "New business"
+msgstr ""
+
+#: djangoproject/templates/foundation/meeting_detail.html:98
+msgid "Action items"
+msgstr ""
+
+#: djangoproject/templates/fundraising/email/payment_failed.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hi %(name)s,\n"
+"\n"
+"This is to let you know that payment for your recurring donation to the "
+"Django Software Foundation has failed.\n"
+"This might be because your payment card has expired.\n"
+"\n"
+"Please go to %(manage_url)s to add a new card. We won't be able to take any "
+"payments in the mean time.\n"
+"\n"
+"Thanks very much for your support.\n"
+"\n"
+"Regards,\n"
+"Django Software Foundation\n"
+msgstr ""
+
+#: djangoproject/templates/fundraising/email/subscription_cancelled.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hi %(name)s,\n"
+"\n"
+"This is to let you know that your recurring payment to the Django Software\n"
+"Foundation has been cancelled. No further payments will be made.\n"
+"\n"
+"If you didn't intend to do this, please go back to the fundraising page and\n"
+"recreate your payment subscription:\n"
+"%(fundraising_url)s\n"
+"Thanks very much for your support.\n"
+"\n"
+"Regards,\n"
+"Django Software Foundation\n"
+msgstr ""
+
+#: djangoproject/templates/fundraising/email/thank-you.html:1
+#, python-format
+msgid ""
+"\n"
+"    Hello!\n"
+"\n"
+"    Thank you for making a donation to the Django Software Foundation.\n"
+"\n"
+"    Your support is invaluable to continue the rapid development of Django "
+"and helps the Django Fellowship program in particular.\n"
+"\n"
+"    If you want to change information about your donation, you can do so by "
+"accessing the link below:\n"
+"\n"
+"    %(manage_url)s\n"
+"\n"
+"    Best regards,\n"
+"    Django Software Foundation\n"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/display_django_heroes.html:4
+#, python-format
+msgid "Diamond Corporate Members ($%(amount)s+)"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/display_django_heroes.html:14
+#, python-format
+msgid "Platinum Corporate Members ($%(amount)s+)"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/display_django_heroes.html:24
+#, python-format
+msgid "Gold Corporate Members ($%(amount)s+)"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/display_django_heroes.html:34
+#, python-format
+msgid "Silver Corporate Members ($%(amount)s+)"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/display_django_heroes.html:44
+#, python-format
+msgid "Bronze Corporate Members ($%(amount)s+)"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/display_django_heroes.html:53
+msgid "In-kind donors"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/display_django_heroes.html:54
+msgid "These donors help with significant non-cash contributions."
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/display_django_heroes.html:63
+#, python-format
+msgid "Leaders ($%(amount)s+)"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/display_django_heroes.html:66
+#, python-format
+msgid ""
+"Leadership-level donors contribute $%(amount)s or more in a calendar year."
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/display_django_heroes.html:77
+msgid "Heroes"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/display_django_heroes.html:79
+#, python-format
+msgid ""
+"Our donor roll for all donations made in the last %(display_donor_days)s "
+"days."
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/donation_form_with_heart.html:24
+#, python-format
+msgid "%(goal_percent)s%% funded"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/donation_form_with_heart.html:26
+#, python-format
+msgid ""
+"<strong>$%(amount)s donated</strong> of US&nbsp;$%(goal)s goal for "
+"%(start_date)s"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/donation_form_with_heart.html:32
+#, python-format
+msgid ""
+"Companies able to make a <strong>larger donation</strong> ($2,000+/year) are "
+"invited to apply to be Corporate Members <a href=\"%(corp_join_url)s\">here</"
+"a>."
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/donation_form_with_heart.html:50
+msgid "Help us make it happen:"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/donation_form_with_heart.html:54
+msgctxt "Donation amount in US dollars"
+msgid "integer only"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/donation_form_with_heart.html:57
+msgid "Donate monthly"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/donation_form_with_heart.html:63
+#, python-format
+msgid ""
+"Your logo will be visible below if you contribute at least US&nbsp;$"
+"%(amount)s.<br>"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/donation_snippet.html:5
+msgid "Support Django!"
+msgstr ""
+
+#: djangoproject/templates/fundraising/includes/donation_snippet.html:14
+#, python-format
+msgid ""
+"%(name)s donated to the Django Software Foundation to support Django "
+"development. Donate today!"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:4
+#: djangoproject/templates/fundraising/index.html:7
+#: djangoproject/templates/fundraising/index.html:11
+#: djangoproject/templates/homepage.html:182
+msgid "Support Django"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:8
+msgid ""
+"Support Django development by donating to the Django Software Foundation"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:13
+msgid ""
+"<em>Support Django development</em> by donating to the <em>Django Software "
+"Foundation</em>."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:32
+msgid "Support the Django Software Foundation!"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:36
+msgid "Other ways to give"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:39
+msgid ""
+"<a href=\"https://django.threadless.com/\" target=\"_blank\">Official "
+"merchandise store</a> - Buy official t-shirts, accessories, and more to "
+"support Django."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:44
+msgid "Sponsor Django via GitHub Sponsors"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:46
+msgid ""
+"<a href=\"/foundation/donate/#benevity-giving\">Benevity Workplace Giving "
+"Program</a> - If your employer participates, you can make donations to the "
+"DSF via payroll deduction."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:54
+msgid "Why give to the Django Software Foundation?"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:56
+msgid "Our main focus is direct support of Django's developers. This means:"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:59
+msgid ""
+"Organizing and funding development sprints so that Django's developers can "
+"meet in person."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:65
+msgid ""
+"Helping key developers attend these sprints and other community events by "
+"covering travel expenses to official Django events."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:71
+msgid ""
+"Providing financial assistance to community development and outreach "
+"projects such as <a href=\"#django-girls\">Django Girls</a>."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:77
+msgid ""
+"Providing financial assistance to individuals so they can attend major "
+"conferences and events."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:83
+msgid ""
+"Funding the <a href=\"#fellowship-program\">Django Fellowship program</a>, "
+"which provides full-time staff to perform community management tasks in the "
+"Django community."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:92
+msgid ""
+"Still curious? See our <a href=\"/foundation/donate/\">Frequently Asked "
+"Questions</a> about donations."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:98
+msgid "Django Fellowship Program"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:101
+msgid ""
+"The biggest expense of the <abbr title=\"Django Software Foundation\">DSF</"
+"abbr> is the Django Fellowship program. It's a project where <a href=\"#who-"
+"are-the-django-fellows\">paid contractors</a> are engaged to manage some of "
+"the administrative and community management tasks of the Django project to "
+"support rapid development of Django itself."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:111
+msgid ""
+"<strong>The Django Fellowship program has a major positive impact on how "
+"Django is developed and maintained.</strong> The Django Fellows triage 10-15 "
+"new tickets each week and review and merge around fifteen non-trivial "
+"patches a week from the community. Release blocking and severe bugs aren't "
+"postponed indefinitely. Major releases happen according to an 8 month "
+"schedule and bug fix releases occur monthly."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:122
+msgid ""
+"For more details, you can read retrospectives for the <a href=\"/weblog/2015/"
+"jan/21/django-fellowship-retrospective/\"> first three months of the "
+"program</a>, <a href=\"/weblog/2015/dec/17/fellowship-2015-retrospective/"
+"\">2015</a>, and <a href=\"/weblog/2016/dec/28/fellowship-2016-retrospective/"
+"\">2016</a>."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:132
+msgid ""
+"The Django Fellows are a resource to help review patches and contributions "
+"from the community, and the community loves that:"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:146
+msgid ""
+"<strong>If you use Django on a daily basis and care about the development of "
+"Django itself, you should donate today</strong> (may be <a href=\"/"
+"foundation/donate/#tax-deductible\">tax deductible</a>). Only with your "
+"support can we make sure that the web framework you base your work on can "
+"grow to be even better in the coming years."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:154
+msgid "Django Girls Outreach"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:157
+msgid ""
+"Supporting <a href=\"https://djangogirls.org/\">Django Girls workshops</a> "
+"is a significant priority for the Django Software Foundation. Django Girls "
+"workshops are organized by volunteers and are provided as free events for "
+"women who want to learn to code. The workshop serves as an introduction to "
+"Python and Django, where attendees learn usable skills to build their first "
+"web app."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:167
+msgid ""
+"Django Girls workshop attendees go on to organize their own workshops, lead "
+"in their community, and secure full-time jobs as developers. Read their "
+"stories in the “Your Django Story” series on the <a href=\"https://blog."
+"djangogirls.org/\"> Django Girls blog</a>."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:176
+msgid ""
+"In 2015, the Django Software Foundation contributed $5,400 to eighteen "
+"Django Girls workshops around the world. Here's what some of the organizers "
+"had to say about the impact:"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:185
+msgid ""
+"Sponsorship from the DSF allowed us to have on-site child care for our "
+"Django Girls Portland workshop. We hosted 2 young children and an infant, "
+"and provided them with healthy snacks, games, sidewalk chalk, finger paint, "
+"and emoji stickers. Without our nanny, 3 of our attendees wouldn't have been "
+"able to come to the workshop. Finger paint photo is <a href=\"https://blog."
+"djangogirls.org/post/124680859493/django-girls-portland-a-retrospective\"> "
+"on the blog</a>!"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:195
+msgid "Lacey - Portland, Oregon, US"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:200
+#, python-format
+msgid ""
+"The DSF supported <a href=\"https://djangogirls.org/warsaw/\">Django Girls "
+"Poland</a> four times this year and the impact was enormous! In Poland, "
+"diversity awareness is not a very common topic. When we approached different "
+"local companies about our workshops they usually didn't get what we were "
+"actually doing and why it is important. If not for the DSF, we probably "
+"would not have been able to hold our workshops at all. Our first workshops "
+"were the only until now workshops that were 100%% female - female only "
+"coaches and female only attendees. Thanks to you, we were able to focus on "
+"gathering female mentors instead of searching for sponsors!"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:212
+msgid "Ania - Wrocław, Poland"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:217
+msgid ""
+"<a href=\"https://pyfound.blogspot.kr/2015/10/django-girls-seoul-great-"
+"success.html\"> Django Girls Seoul</a> had 425 applicants from 11 different "
+"countries ages ranging from 16 to 50 years old. After acceptances, we had "
+"about 105 people to feed and caffeinate! Thanks to Django's sponsorship we "
+"could get all of our participants coffee for the day. It really made a huge "
+"difference because we all know how a cup of coffee can change the atmosphere "
+"and mood! We were so grateful to the sponsorship we received from abroad. We "
+"tried to get sponsorship from a lot of Korean companies but the same "
+"generosity doesn't translate well into a Korean Business culture, I guess. "
+"This made us even more thankful for our friends at the DSF!"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:230
+msgid "Rachell - Seoul, South Korea"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:236
+msgid "DSF Supporters"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:238
+msgid ""
+"Our donors make our work possible! We are incredibly grateful for the "
+"financial support from the following individuals and organizations in our "
+"community."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:252
+msgid "What is the Django Software Foundation?"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:254
+msgid ""
+"Development of Django is supported by an independent foundation established "
+"as a 501(c)(3) non-profit. Like most open-source foundations, the goal of "
+"the <a href=\"/foundation/\">Django Software Foundation</a> is to promote, "
+"support, and advance the Django web framework. If you're interested in how "
+"the Django Software Foundation supports the Django web framework, we "
+"published a <a href=\"/weblog/2015/jan/08/django-software-foundation-2014/"
+"\"> Summary of 2014. </a>"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:267
+msgid "Who are the Django Fellows?"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:269
+msgid "There are currently two Django Fellows:"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:272
+msgid ""
+"<strong><a href=\"https://github.com/sarahboyce\">Sarah Boyce</a> (2024-"
+"present)</strong> - an active community member, co-creator of <a "
+"href=\"https://djangonaut.space\">Djangonaut Space</a> and a member of "
+"Django's review and triage team since 2023. Sarah <a href=\"https://www."
+"djangoproject.com/weblog/2024/mar/22/welcome-our-new-fellow-sarah-boyce/\"> "
+"began as a full-time Fellow in April 2024</a>."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:283
+msgid ""
+"<strong><a href=\"https://github.com/nessita\">Natalia Bidart</a> (2023-"
+"present)</strong> - a seasoned Django user with extensive experience in "
+"architecting, building, and maintaining scalable web services, as well as "
+"leading new feature design and development. Natalia <a href=\"https://www."
+"djangoproject.com/weblog/2023/mar/31/welcome-our-new-fellow-natalia-bidart/"
+"\"> began as a part-time Fellow in April 2023</a>."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:294
+msgid "Former Django Fellows:"
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:297
+msgid ""
+"<strong><a href=\"https://github.com/felixxm\">Mariusz Felisiak</a> "
+"(2019-2024)</strong> - a member of the Django team since 2017, focusing on "
+"the ORM and Oracle back-end, along with triaging tickets, reviewing pull "
+"requests, and backporting changes. He has contributed to more than a dozen "
+"open-source projects. Mariusz began as a full-time Fellow in April 2019. In "
+"2024 Mariusz retired after five years of service."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:308
+msgid ""
+"<strong><a href=\"https://github.com/carltongibson\">Carlton Gibson</a> "
+"(2018-2023)</strong> - a longtime Django user, core contributor to Django "
+"REST Framework, maintainer of Django Filter and Django Crispy Forms, and a "
+"contributor to many other packages in the Django ecosystem. Carlton began as "
+"a part-time Fellow in January 2018. In 2023 Carlton retired after five years "
+"of service."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:318
+msgid ""
+"<strong><a href=\"https://github.com/timgraham\">Tim Graham</a> (2014- "
+"2019)</strong> - the inaugural Django Fellow, a member of the Django team "
+"since 2010, and a longtime major contributor and reviewer. In 2018 Tim "
+"transitioned to part-time and in 2019 retired after four years of service."
+msgstr ""
+
+#: djangoproject/templates/fundraising/index.html:327
+msgid ""
+"<strong><a href=\"https://github.com/berkerpeksag\">Berker Peksağ</a> "
+"(2014)</strong> - a core developer on CPython and Gunicorn, Berker worked as "
+"Fellow during the 3 month pilot, supporting Tim part-time."
+msgstr ""
+
+#: djangoproject/templates/fundraising/manage-donations.html:17
+msgid "Manage your donations to the Django Software Foundation"
+msgstr ""
+
+#: djangoproject/templates/fundraising/manage-donations.html:19
+msgid ""
+"Your support is <strong>invaluable</strong> to continue the rapid "
+"development of Django and helps the <strong>Django Fellowship</strong> "
+"program in particular. Thank you!"
+msgstr ""
+
+#: djangoproject/templates/fundraising/manage-donations.html:29
+msgid "Manage your participation in the fundraising campaigns"
+msgstr ""
+
+#: djangoproject/templates/fundraising/manage-donations.html:30
+msgid ""
+"Information entered below will be visible on all of your donations to the "
+"Django Project."
+msgstr ""
+
+#: djangoproject/templates/fundraising/manage-donations.html:34
+#: djangoproject/templates/fundraising/manage-donations.html:51
+msgctxt "Save personal details about donation"
+msgid "Save &rarr;"
+msgstr ""
+
+#: djangoproject/templates/fundraising/manage-donations.html:40
+msgid "Modify your recurring donations"
+msgstr ""
+
+#: djangoproject/templates/fundraising/manage-donations.html:41
+msgid "Update the time interval or amount of your recurring donation here:"
+msgstr ""
+
+#: djangoproject/templates/fundraising/manage-donations.html:55
+msgid "Cancel your recurring donations"
+msgstr ""
+
+#: djangoproject/templates/fundraising/manage-donations.html:56
+msgid ""
+"You can cancel your recurring donation to the Django Software Foundation "
+"anytime."
+msgstr ""
+
+#: djangoproject/templates/fundraising/manage-donations.html:60
+#, python-format
+msgid "Your %(interval)s recurring donation of $%(amount)s."
+msgstr ""
+
+#: djangoproject/templates/fundraising/manage-donations.html:66
+msgid "cancel this donation"
+msgstr ""
+
+#: djangoproject/templates/fundraising/manage-donations.html:76
+msgid "Your past donations"
+msgstr ""
+
+#: djangoproject/templates/fundraising/thank-you.html:5
+msgid "Thank you for supporting the Django Project!"
+msgstr ""
+
+#: djangoproject/templates/fundraising/thank-you.html:7
+msgid ""
+"Your support is <strong>invaluable</strong> to continue the rapid "
+"development of Django and helps the <strong>Django Fellowship</strong> "
+"program in particular."
+msgstr ""
+
+#: djangoproject/templates/fundraising/thank-you.html:14
+msgid ""
+"Please help us spread the word and encourage your friends and colleagues to "
+"donate. Thank you!"
+msgstr ""
+
+#: djangoproject/templates/fundraising/thank-you.html:25
+msgid ""
+"You should receive an email shortly, with confirmation of your donation, "
+"details of badges you can display to show you support of Django, managing "
+"your donation,  and how you can have your name or company displayed on the "
+"Fundraising page and in the sidebar on the Django Project website."
+msgstr ""
+
+#: djangoproject/templates/fundraising/thank-you.html:33
+msgid "Welcome aboard! ⛵️"
+msgstr ""
+
+#: djangoproject/templates/fundraising/thank-you.html:38
+msgid ""
+"If you have any <strong>problems</strong> with your donation please email <a "
+"href=\"mailto:donations@djangoproject.com\">donations@djangoproject.com</a> "
+"for help."
+msgstr ""
+
+#: djangoproject/templates/homepage.html:11
+msgid ""
+"Django makes it easier to build better web apps more quickly and with less "
+"code."
+msgstr ""
+
+#: djangoproject/templates/homepage.html:14
+msgid "Get started with Django"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:20
+msgid "Meet Django"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:22
+msgid ""
+"Django is a high-level Python web framework that encourages rapid "
+"development and clean, pragmatic design. Built by experienced developers, it "
+"takes care of much of the hassle of web development, so you can focus on "
+"writing your app without needing to reinvent the wheel. It’s free and open "
+"source."
+msgstr ""
+
+#: djangoproject/templates/homepage.html:29
+#: djangoproject/templates/overview.html:29
+msgid "Ridiculously fast."
+msgstr ""
+
+#: djangoproject/templates/homepage.html:31
+#: djangoproject/templates/overview.html:31
+msgid ""
+"Django was designed to help developers take applications from concept to "
+"completion as quickly as possible."
+msgstr ""
+
+#: djangoproject/templates/homepage.html:34
+#: djangoproject/templates/overview.html:49
+msgid "Reassuringly secure."
+msgstr ""
+
+#: djangoproject/templates/homepage.html:36
+msgid ""
+"Django takes security seriously and helps developers avoid many common "
+"security mistakes."
+msgstr ""
+
+#: djangoproject/templates/homepage.html:39
+#: djangoproject/templates/overview.html:62
+msgid "Exceedingly scalable."
+msgstr ""
+
+#: djangoproject/templates/homepage.html:41
+msgid ""
+"Some of the busiest sites on the web leverage Django’s ability to quickly "
+"and flexibly scale."
+msgstr ""
+
+#: djangoproject/templates/homepage.html:45
+msgid "Learn more about Django"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:49
+msgid "Join the Community"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:105
+msgid "Stay in the loop"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:106
+msgid ""
+"Subscribe to one of our mailing lists to stay up to date with everything in "
+"the Django community:"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:116
+#, python-format
+msgid "Download <em>latest release: %(DJANGO_VERSION)s</em>"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:120
+msgid "Django documentation"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:124
+msgid "Latest news"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:126
+msgid "More news"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:128
+msgid "New to Django?"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:130
+msgid "Installation guide"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:131
+#: djangoproject/templates/start.html:57
+msgid "Write your first Django app"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:133
+#: djangoproject/templates/start.html:5 djangoproject/templates/start.html:6
+#: djangoproject/templates/start.html:26
+msgid "Getting started with Django"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:135
+msgid "The power of Django"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:137
+#: djangoproject/templates/start.html:99
+msgid "Object-relational mapper"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:138
+msgid "Automatic admin interface"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:139
+msgid "Robust template system"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:140
+msgid "Quick internationalization"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:142
+msgid "Explore more features"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:144
+msgid "Get involved"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:146
+msgid "Ticket system"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:148
+msgid "Report bugs and make feature requests"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:150
+msgid "Development dashboard"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:152
+msgid "see what's currently being worked on"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:155
+msgid "Inside the Django community"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:159
+msgid "#django IRC channel"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:161
+msgid "Chat with other Django users"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:164
+msgid "Django Discord Server"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:166
+msgid "Join the Django Discord Community"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:169
+msgid "Official Django Forum"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:171
+msgid "Join the community on the Django Forum."
+msgstr ""
+
+#: djangoproject/templates/homepage.html:175
+msgid "The Django Software Foundation"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:177
+msgid "About the Foundation"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:179
+msgid "Our non-profit supports the project"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:184
+msgid "Your contribution makes Django stronger"
+msgstr ""
+
+#: djangoproject/templates/homepage.html:190
+msgid "More about the DSF"
+msgstr ""
+
+#: djangoproject/templates/includes/toggle_theme.html:4
+msgid "Toggle theme (current theme: auto)"
+msgstr ""
+
+#: djangoproject/templates/includes/toggle_theme.html:5
+msgid "Toggle theme (current theme: light)"
+msgstr ""
+
+#: djangoproject/templates/includes/toggle_theme.html:6
+msgid "Toggle theme (current theme: dark)"
 msgstr ""
 
 #: djangoproject/templates/members/corporate_members_join_thanks.html:5
@@ -70,11 +2784,11 @@ msgid ""
 "    "
 msgstr ""
 
-#: djangoproject/templates/members/corporatemember_list.html:5
+#: djangoproject/templates/members/corporatemember_list.html:8
 msgid "Corporate members"
 msgstr ""
 
-#: djangoproject/templates/members/corporatemember_list.html:7
+#: djangoproject/templates/members/corporatemember_list.html:10
 msgid ""
 "\n"
 "      The following organizations are corporate members of the Django "
@@ -83,7 +2797,7 @@ msgid ""
 "the\n"
 "      DSF, you can find out more on our <a href=\"/foundation/corporate-"
 "membership/\">\n"
-"      corporate membership page</a>.\n"
+"        corporate membership page</a>.\n"
 "    "
 msgstr ""
 
@@ -94,60 +2808,830 @@ msgstr ""
 #: djangoproject/templates/members/individualmember_list.html:7
 msgid ""
 "\n"
-"      The following are Individual Members of the Django Software "
-"Foundation. Individual Members\n"
-"      are appointed by the DSF in recognition of their service to the Django "
-"community. If you\n"
-"      know someone who you think should be considered for Individual "
-"Membership, please\n"
+"      Individual Members are appointed by the DSF in recognition of their "
+"contribution to the DSF's mission of advancing and promoting Django, "
+"protecting the framework's long-term viability, and advancing the state of "
+"the art in web development.\n"
 "    "
 msgstr ""
 
-#: djangoproject/templates/members/individualmember_list.html:12
-msgid "fill out this form"
+#: djangoproject/templates/members/individualmember_list.html:13
+msgid ""
+"\n"
+"      Contribution to the DSF's mission takes many forms.\n"
+"      Here are some non-exhaustive examples of the categories of work that "
+"might qualify:\n"
+"    "
 msgstr ""
 
 #: djangoproject/templates/members/individualmember_list.html:21
+msgid ""
+"\n"
+"        Contributing code, documentation, or tests to Django or to major "
+"third-party packages in the Django ecosystem.\n"
+"      "
+msgstr ""
+
+#: djangoproject/templates/members/individualmember_list.html:26
+msgid ""
+"\n"
+"        Reviewing pull requests or triaging tickets on Django or a third-"
+"party app.\n"
+"      "
+msgstr ""
+
+#: djangoproject/templates/members/individualmember_list.html:31
+msgid ""
+"\n"
+"        Creating learning resources (blogs, videos, etc.) for people to "
+"learn Django.\n"
+"      "
+msgstr ""
+
+#: djangoproject/templates/members/individualmember_list.html:36
+msgid ""
+"\n"
+"        Contributing to discussions in community areas such as the <a "
+"href=\"https://forum.djangoproject.com/\">Django Forum</a> or <a "
+"href=\"https://discord.com/invite/xcRH6mN4fa\">Discord</a>.\n"
+"      "
+msgstr ""
+
+#: djangoproject/templates/members/individualmember_list.html:41
+msgid ""
+"\n"
+"        Being part of the organizing team for a Django community event.\n"
+"      "
+msgstr ""
+
+#: djangoproject/templates/members/individualmember_list.html:46
+msgid ""
+"\n"
+"        Serving on a <a href=\"https://github.com/django/dsf-working-"
+"groups\">DSF Working Group</a>.\n"
+"      "
+msgstr ""
+
+#: djangoproject/templates/members/individualmember_list.html:53
+msgid ""
+"\n"
+"      For more information about membership, see <a href=\"faq/\">the DSF "
+"membership FAQ</a>.\n"
+"    "
+msgstr ""
+
+#: djangoproject/templates/members/individualmember_list.html:59
+msgid ""
+"\n"
+"      If you would like to apply for Individual Membership, please <a "
+"href=\"https://docs.google.com/forms/d/e/1FAIpQLSd5lbWxAO-"
+"sylEEjHVKBNIpmHlhdJRf0_LCo8glnLUWd-Q2Sw/viewform?usp=sf_link\">fill out this "
+"form</a>.\n"
+"      If you are unsure if you meet the criteria, but you would like to be a "
+"member, please apply anyway!\n"
+"      You can also nominate others using the same form if you know someone "
+"who should be considered.\n"
+"    "
+msgstr ""
+
+#: djangoproject/templates/members/individualmember_list.html:67
+msgid ""
+"\n"
+"      As a member of the DSF, you will be recognized for your contributions "
+"to the community. Your name will appear below and you'll be added to the DSF "
+"Members Mailing list. You will also be eligible to vote for the DSF Board "
+"and Steering Council.\n"
+"    "
+msgstr ""
+
+#: djangoproject/templates/members/individualmember_list.html:73
+msgid ""
+"\n"
+"      The following are Individual Members of the Django Software "
+"Foundation.\n"
+"    "
+msgstr ""
+
+#: djangoproject/templates/members/individualmember_list.html:85
 msgid "Former members"
 msgstr ""
 
-#: djangoproject/templates/members/individualmember_list.html:22
+#: djangoproject/templates/members/individualmember_list.html:86
 msgid "The following are former Individual Members of the DSF."
 msgstr ""
 
-#: djangoproject/templates/registration/password_reset_email.html:2
-#, python-format
-msgid ""
-"You're receiving this e-mail because you requested a password reset\n"
-"for your user account at %(site_name)s"
+#: djangoproject/templates/overview.html:4
+#: djangoproject/templates/overview.html:6
+#: djangoproject/templates/start.html:39
+msgid "Django overview"
 msgstr ""
 
-#: djangoproject/templates/registration/password_reset_email.html:5
+#: djangoproject/templates/overview.html:9
+msgid "Django Overview"
+msgstr ""
+
+#: djangoproject/templates/overview.html:11
+msgid ""
+"<em>Django</em> was invented to meet fast-moving <em>newsroom deadlines</"
+"em>, while satisfying the tough requirements of <em>experienced web "
+"developers</em>."
+msgstr ""
+
+#: djangoproject/templates/overview.html:19
+msgid "Why Django?"
+msgstr ""
+
+#: djangoproject/templates/overview.html:22
+msgid ""
+"With Django, you can take web applications from concept to launch in a "
+"matter of hours. Django takes care of much of the hassle of web development, "
+"so you can focus on writing your app without needing to reinvent the wheel. "
+"It’s free and open source."
+msgstr ""
+
+#: djangoproject/templates/overview.html:32
+msgid "See how fast you can start building"
+msgstr ""
+
+#: djangoproject/templates/overview.html:35
+msgid "Fully loaded."
+msgstr ""
+
+#: djangoproject/templates/overview.html:38
+msgid ""
+"Django includes dozens of extras you can use to handle common web "
+"development tasks. Django takes care of user authentication, content "
+"administration, site maps, RSS feeds, and many more tasks — right out of the "
+"box."
+msgstr ""
+
+#: djangoproject/templates/overview.html:45
+msgid "See what’s included"
+msgstr ""
+
+#: djangoproject/templates/overview.html:52
+msgid ""
+"Django takes security seriously and helps developers avoid many common "
+"security mistakes, such as SQL injection, cross-site scripting, cross-site "
+"request forgery and clickjacking. Its user authentication system provides a "
+"secure way to manage user accounts and passwords."
+msgstr ""
+
+#: djangoproject/templates/overview.html:58
+msgid "Read our security overview"
+msgstr ""
+
+#: djangoproject/templates/overview.html:65
+msgid ""
+"Some of the busiest sites on the planet use Django’s ability to quickly and "
+"flexibly scale to meet the heaviest traffic demands."
+msgstr ""
+
+#: djangoproject/templates/overview.html:70
+msgid "Learn more about scaling Django applications"
+msgstr ""
+
+#: djangoproject/templates/overview.html:73
+msgid "Incredibly versatile."
+msgstr ""
+
+#: djangoproject/templates/overview.html:75
+msgid ""
+"Companies, organizations and governments have used Django to build all sorts "
+"of things — from content management systems to social networks to scientific "
+"computing platforms."
+msgstr ""
+
+#: djangoproject/templates/overview.html:83
+msgid "Get started <em>with Django</em>"
+msgstr ""
+
+#: djangoproject/templates/overview.html:127
+msgid "Sites Using Django"
+msgstr ""
+
+#: djangoproject/templates/registration/activate.html:4
+msgid "Account activation failed"
+msgstr ""
+
+#: djangoproject/templates/registration/activate.html:7
+msgid "Account activation failed."
+msgstr ""
+
+#: djangoproject/templates/registration/activate.html:9
+#, python-format
+msgid ""
+"Sorry, it didn't work. Either your activation link was incorrect, or the "
+"activation key for your account has expired; activation keys are only valid "
+"for %(days)s days after registration."
+msgstr ""
+
+#: djangoproject/templates/registration/activation_complete.html:4
+msgid "Account activated"
+msgstr ""
+
+#: djangoproject/templates/registration/activation_complete.html:7
+msgid "Account activated."
+msgstr ""
+
+#: djangoproject/templates/registration/activation_complete.html:10
+#, python-format
+msgid ""
+"Thanks for signing up! Now you can <a href=\"%(login_url)s\">log in</a>."
+msgstr ""
+
+#: djangoproject/templates/registration/activation_email.txt:2
+msgid ""
+"Someone, hopefully you, signed up for a new account at djangoproject.com "
+"using this email address. If it was you, and you'd like to activate and use "
+"your account, click the link below or copy and paste it into your web "
+"browser's address bar:"
+msgstr ""
+
+#: djangoproject/templates/registration/activation_email.txt:9
+#, python-format
+msgid ""
+"If you didn't request this, you don't need to do anything; you won't receive "
+"any more email from us, and the account will expire automatically in "
+"%(num_days)s days."
+msgstr ""
+
+#: djangoproject/templates/registration/activation_email_subject.txt:3
+msgid "Activate your djangoproject.com account"
+msgstr ""
+
+#: djangoproject/templates/registration/base.html:4
+msgid "Accounts"
+msgstr ""
+
+#: djangoproject/templates/registration/logged_out.html:4
+msgid "Logged out"
+msgstr ""
+
+#: djangoproject/templates/registration/logged_out.html:7
+msgid "You've been logged out."
+msgstr ""
+
+#: djangoproject/templates/registration/logged_out.html:10
+#, python-format
+msgid ""
+"Thanks for stopping by; when you come back, don't forget to <a "
+"href=\"%(login_url)s\">log in</a> again."
+msgstr ""
+
+#: djangoproject/templates/registration/login.html:4
+#: djangoproject/templates/registration/login.html:5
+#: djangoproject/templates/registration/login.html:9
+#: djangoproject/templates/registration/login.html:35
+msgid "Log in"
+msgstr ""
+
+#: djangoproject/templates/registration/login.html:6
+msgid "Log in to your account"
+msgstr ""
+
+#: djangoproject/templates/registration/login.html:21
+#: djangoproject/templates/registration/registration_form.html:23
+msgid "Username:"
+msgstr ""
+
+#: djangoproject/templates/registration/login.html:28
+#: djangoproject/templates/registration/registration_form.html:37
+msgid "Password:"
+msgstr ""
+
+#: djangoproject/templates/registration/login.html:45
+#, python-format
+msgid ""
+"If you don't have an account, you can <a href=\"%(register_url)s\">sign up</"
+"a> for one."
+msgstr ""
+
+#: djangoproject/templates/registration/login.html:52
+#, python-format
+msgid ""
+"If you forgot your password, you can <a href=\"%(reset_url)s\">reset it</a>."
+msgstr ""
+
+#: djangoproject/templates/registration/password_reset_email.html:3
+#, python-format
+msgid ""
+"You're receiving this e-mail because you requested a password reset for your "
+"user account at %(site_name)s"
+msgstr ""
+
+#: djangoproject/templates/registration/password_reset_email.html:6
 msgid "Please go to the following page and choose a new password:"
 msgstr ""
 
-#: djangoproject/templates/registration/password_reset_email.html:9
+#: djangoproject/templates/registration/password_reset_email.html:10
 msgid "Your username, in case you've forgotten:"
 msgstr ""
 
-#: djangoproject/templates/registration/password_reset_email.html:11
+#: djangoproject/templates/registration/password_reset_email.html:12
 msgid "Thanks for using our site!"
 msgstr ""
 
-#: djangoproject/templates/registration/password_reset_email.html:13
+#: djangoproject/templates/registration/password_reset_email.html:14
 #, python-format
 msgid "The %(site_name)s team"
+msgstr ""
+
+#: djangoproject/templates/registration/registration_complete.html:4
+msgid "Registration complete"
+msgstr ""
+
+#: djangoproject/templates/registration/registration_complete.html:7
+msgid "Check your email"
+msgstr ""
+
+#: djangoproject/templates/registration/registration_complete.html:9
+msgid ""
+"An activation link has been sent to the email address you supplied, along "
+"with instructions for activating your account."
+msgstr ""
+
+#: djangoproject/templates/registration/registration_form.html:4
+msgid "Sign up"
+msgstr ""
+
+#: djangoproject/templates/registration/registration_form.html:7
+msgid "Create an account"
+msgstr ""
+
+#: djangoproject/templates/registration/registration_form.html:10
+msgid ""
+"Or, <a href=\"https://code.djangoproject.com/github/login\">login with "
+"GitHub</a>."
+msgstr ""
+
+#: djangoproject/templates/registration/registration_form.html:30
+msgid "Email address:"
+msgstr ""
+
+#: djangoproject/templates/registration/registration_form.html:44
+msgid "Password (type again to catch typos):"
+msgstr ""
+
+#: djangoproject/templates/registration/registration_form.html:51
+msgid "Register"
+msgstr ""
+
+#: djangoproject/templates/registration/registration_form.html:61
+msgid ""
+"Fill out the form to the right (all fields are required), and your account "
+"will be created; you'll be sent an email with instructions on how to finish "
+"your registration."
+msgstr ""
+
+#: djangoproject/templates/registration/registration_form.html:69
+msgid ""
+"We'll only use your email to send you signup instructions. We hate spam as "
+"much as you do."
+msgstr ""
+
+#: djangoproject/templates/registration/registration_form.html:76
+msgid ""
+"This account will let you log into the ticket tracker, claim tickets, and be "
+"exempt from spam filtering."
+msgstr ""
+
+#: djangoproject/templates/registration/registration_form.html:83
+msgid ""
+"Your username can only consist of alphanumeric characters and underscores "
+"and may be up to 30 characters long."
+msgstr ""
+
+#: djangoproject/templates/start.html:7
+msgid "It's quick & easy to get up and running with Django"
+msgstr ""
+
+#: djangoproject/templates/start.html:10
+msgid "Get started"
+msgstr ""
+
+#: djangoproject/templates/start.html:13
+msgid ""
+"It’s <em>quick &amp; easy</em> to get up and running with <em>Django</em>."
+msgstr ""
+
+#: djangoproject/templates/start.html:17
+#, python-format
+msgid "Download <em>version %(DJANGO_VERSION)s</em>"
+msgstr ""
+
+#: djangoproject/templates/start.html:30
+#, python-format
+msgid ""
+"Depending how new you are to Django, you can <a "
+"href=\"%(tutorial1_url)s\">try a tutorial</a>, or just <a "
+"href=\"%(docs_homepage_url)s\">dive into the documentation</a>."
+msgstr ""
+
+#: djangoproject/templates/start.html:37
+msgid ""
+"Want to learn more about Django? Read the overview to see whether Django is "
+"right for your project."
+msgstr ""
+
+#: djangoproject/templates/start.html:43
+msgid "Install Django"
+msgstr ""
+
+#: djangoproject/templates/start.html:45
+msgid ""
+"Before you can use Django, you’ll need to install it. Our complete "
+"installation guide covers all the possibilities; this guide will get you to "
+"a simple, minimal installation that’ll work while you walk through the "
+"introduction."
+msgstr ""
+
+#: djangoproject/templates/start.html:52
+msgid "Django installation guide"
+msgstr ""
+
+#: djangoproject/templates/start.html:59
+#, python-format
+msgid ""
+"Installed Django already? Good. Now <a href=\"%(tutorial1_url)s\">try this "
+"tutorial</a>, which walks you through creating a basic poll application. "
+"It’s got two parts:"
+msgstr ""
+
+#: djangoproject/templates/start.html:65
+msgid "A public site that lets people view polls and vote in them."
+msgstr ""
+
+#: djangoproject/templates/start.html:66
+msgid "An administrative interface that lets you add, change and delete polls."
+msgstr ""
+
+#: djangoproject/templates/start.html:68
+msgid "Take the tutorial"
+msgstr ""
+
+#: djangoproject/templates/start.html:72
+msgid "Sharpen your skills"
+msgstr ""
+
+#: djangoproject/templates/start.html:74
+#, python-format
+msgid ""
+"The official <a href=\"%(docs_homepage_url)s\">Django documentation</a> "
+"covers everything you need to know about Django (and then some)."
+msgstr ""
+
+#: djangoproject/templates/start.html:79
+msgid "Read the docs"
+msgstr ""
+
+#: djangoproject/templates/start.html:83
+msgid "Join the community</span>"
+msgstr ""
+
+#: djangoproject/templates/start.html:86
+#, python-format
+msgid ""
+"You can help <a href=\"%(community_index)s\">make us better</a>. Find out "
+"about upcoming Django events, learn what’s on other Django developers’ "
+"minds, find and post jobs, and more."
+msgstr ""
+
+#: djangoproject/templates/start.html:91
+msgid "Join us"
+msgstr ""
+
+#: djangoproject/templates/start.html:95
+msgid "Intro to Django</span>"
+msgstr ""
+
+#: djangoproject/templates/start.html:102
+msgid ""
+"Deﬁne your data models entirely in Python. You get a rich, dynamic database-"
+"access API for free — but you can still write SQL if needed."
+msgstr ""
+
+#: djangoproject/templates/start.html:108
+#: djangoproject/templates/start.html:233
+#: djangoproject/templates/start.html:257
+#: djangoproject/templates/start.html:286
+#: djangoproject/templates/start.html:343
+msgid "Read more"
+msgstr ""
+
+#: djangoproject/templates/start.html:168
+msgid "Templates"
+msgstr ""
+
+#: djangoproject/templates/start.html:171
+msgid ""
+"Django’s template language is designed to strike a balance between power and "
+"ease. It’s designed to feel comfortable and easy-to-learn to those used to "
+"working with HTML, like designers and front-end developers. But it is also "
+"flexible and highly extensible, allowing developers to augment the template "
+"language as needed."
+msgstr ""
+
+#: djangoproject/templates/start.html:200
+msgid "Forms"
+msgstr ""
+
+#: djangoproject/templates/start.html:203
+msgid ""
+"Django provides a powerful form library that handles rendering forms as "
+"HTML, validating user-submitted data, and converting that data to native "
+"Python types. Django also provides a way to generate forms from your "
+"existing models and use those forms to create and update data."
+msgstr ""
+
+#: djangoproject/templates/start.html:224
+msgid "Authentication"
+msgstr ""
+
+#: djangoproject/templates/start.html:227
+msgid ""
+"Django comes with a full-featured and secure authentication system. It "
+"handles user accounts, groups, permissions and cookie-based user sessions. "
+"This lets you easily build sites that allow users to create accounts and "
+"safely log in/out."
+msgstr ""
+
+#: djangoproject/templates/start.html:248
+msgid "Admin"
+msgstr ""
+
+#: djangoproject/templates/start.html:251
+msgid ""
+"One of the most powerful parts of Django is its automatic admin interface. "
+"It reads metadata in your models to provide a powerful and production-ready "
+"interface that content producers can immediately use to start managing "
+"content on your site. It’s easy to set up and provides many hooks for "
+"customization."
+msgstr ""
+
+#: djangoproject/templates/start.html:276
+msgid "Internationalization"
+msgstr ""
+
+#: djangoproject/templates/start.html:279
+msgid ""
+"Django offers full support for translating text into different languages, "
+"plus locale-specific formatting of dates, times, numbers, and time zones. It "
+"lets developers and template authors specify which parts of their apps "
+"should be translated or formatted for local languages and cultures, and it "
+"uses these hooks to localize web applications for particular users according "
+"to their preferences."
+msgstr ""
+
+#: djangoproject/templates/start.html:332
+msgid "Security"
+msgstr ""
+
+#: djangoproject/templates/start.html:334
+msgid "Django provides multiple protections against:"
+msgstr ""
+
+#: djangoproject/templates/start.html:336
+msgid "Clickjacking"
+msgstr ""
+
+#: djangoproject/templates/start.html:337
+msgid "Cross-site scripting"
+msgstr ""
+
+#: djangoproject/templates/start.html:338
+msgid "Cross Site Request Forgery (CSRF)"
+msgstr ""
+
+#: djangoproject/templates/start.html:339
+msgid "SQL injection"
+msgstr ""
+
+#: djangoproject/templates/start.html:340
+msgid "Remote code execution"
+msgstr ""
+
+#: foundation/admin.py:91
+msgid "DSF Board monthly meeting"
+msgstr ""
+
+#: foundation/feeds.py:11
+msgid "The DSF meeting minutes"
+msgstr ""
+
+#: foundation/feeds.py:13
+msgid "The meeting minutes of the Django Software Foundation's board."
+msgstr ""
+
+#: foundation/feeds.py:22
+msgid "DSF Board"
+msgstr ""
+
+#: foundation/models.py:65
+msgid "Non-board attendee"
+msgstr ""
+
+#: foundation/models.py:66
+msgid "Non-board attendees"
+msgstr ""
+
+#: foundation/models.py:199
+msgid "New"
+msgstr ""
+
+#: foundation/models.py:200
+msgid "Ongoing"
+msgstr ""
+
+#: foundation/models.py:213
+msgid "Business"
+msgstr ""
+
+#: foundation/models.py:252
+msgid "Name for the group being inducted, e.g. 'Q1 2021'"
+msgstr ""
+
+#: foundation/models.py:256
+msgid "Date this cohort was approved by the DSF Board"
+msgstr ""
+
+#: foundation/models.py:272
+msgid "Recipient's name"
+msgstr ""
+
+#: foundation/models.py:277
+msgid "Optional link for this recipient"
+msgstr ""
+
+#: foundation/models.py:282
+msgid ""
+"Optional one-paragraph description/bio of why this person received the award"
+msgstr ""
+
+#: fundraising/admin.py:20
+msgid "donation date"
 msgstr ""
 
 #: fundraising/apps.py:9
 msgid "Fundraising"
 msgstr ""
 
-#: releases/templatetags/release_notes.py:20
+#: fundraising/forms.py:15
+msgid "I am donating as an"
+msgstr ""
+
+#: fundraising/forms.py:24
+msgid "Your name or the name of your organization"
+msgstr ""
+
+#: fundraising/forms.py:33
+msgid "Where are you located? (optional; will not be displayed)"
+msgstr ""
+
+#: fundraising/forms.py:42
+msgid "Which URL should we link your name to?"
+msgstr ""
+
+#: fundraising/forms.py:49
+#, python-format
+msgid ""
+"If you've donated at least US $%d, you can submit your logo and we will "
+"display it, too."
+msgstr ""
+
+#: fundraising/forms.py:57
+msgid ""
+"Yes, display my name, URL, and logo on this site. It'll be displayed shortly "
+"after we verify it."
+msgstr ""
+
+#: fundraising/forms.py:64
+msgid ""
+"Yes, the Django Software Foundation can inform me about future fundraising "
+"campaigns by email."
+msgstr ""
+
+#: fundraising/forms.py:125
+msgid "US $25"
+msgstr ""
+
+#: fundraising/forms.py:126
+msgid "US $50"
+msgstr ""
+
+#: fundraising/forms.py:127
+msgid "US $100"
+msgstr ""
+
+#: fundraising/forms.py:128
+msgid "US $250"
+msgstr ""
+
+#: fundraising/forms.py:129
+msgid "US $500"
+msgstr ""
+
+#: fundraising/forms.py:130
+msgid "US $750"
+msgstr ""
+
+#: fundraising/forms.py:131
+msgid "US $1,000"
+msgstr ""
+
+#: fundraising/forms.py:132
+msgid "US $1,250"
+msgstr ""
+
+#: fundraising/forms.py:133
+msgid "US $2,500"
+msgstr ""
+
+#: fundraising/forms.py:134
+msgid "Other amount"
+msgstr ""
+
+#: fundraising/models.py:18
+msgid "Monthly donation"
+msgstr ""
+
+#: fundraising/models.py:19
+msgid "Quarterly donation"
+msgstr ""
+
+#: fundraising/models.py:20
+msgid "Yearly donation"
+msgstr ""
+
+#: fundraising/models.py:21
+msgid "One-time donation"
+msgstr ""
+
+#: fundraising/models.py:68
+msgid "Individual"
+msgstr ""
+
+#: fundraising/models.py:69
+msgid "Organization"
+msgstr ""
+
+#: fundraising/models.py:74
+msgid "Agreed to displaying on the fundraising page?"
+msgstr ""
+
+#: fundraising/models.py:78
+msgid "Agreed to being contacted by DSF?"
+msgstr ""
+
+#: fundraising/models.py:82
+msgid "Name, URL, and Logo approved?"
+msgstr ""
+
+#: fundraising/models.py:91
+msgid "Django hero"
+msgstr ""
+
+#: fundraising/models.py:92
+msgid "Django heroes"
+msgstr ""
+
+#: fundraising/models.py:104
+msgid "Anonymous Hero"
+msgstr ""
+
+#: fundraising/models.py:161
+msgid "in-kind hero"
+msgstr ""
+
+#: fundraising/models.py:162
+msgid "in-kind heroes"
+msgstr ""
+
+#: fundraising/views.py:137
+msgid "Your information has been updated."
+msgstr ""
+
+#: fundraising/views.py:184
+msgid "Your donation has been canceled."
+msgstr ""
+
+#: fundraising/views.py:246
+msgid "Payment cancelled"
+msgstr ""
+
+#: fundraising/views.py:264
+msgid "Payment failed"
+msgstr ""
+
+#: fundraising/views.py:334
+msgid "Thank you for your donation to the Django Software Foundation"
+msgstr ""
+
+#: releases/templatetags/release_notes.py:19
 #, python-format
 msgid "%(version)s release notes"
 msgstr ""
 
-#: releases/templatetags/release_notes.py:22
+#: releases/templatetags/release_notes.py:21
 msgid "Online documentation"
 msgstr ""
