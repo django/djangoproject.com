@@ -148,7 +148,6 @@
         shim: {
           'jquery': [],
           'jquery.inview': ["jquery"],
-          'jquery.payment': ["jquery"],
           'jquery.flot': ["jquery"],
           'stripe': {
             exports: 'Stripe'
@@ -157,7 +156,6 @@
         paths: {
           "jquery": extless("{% static 'js/lib/jquery/dist/jquery.min.js' %}"),
           "jquery.inview": extless("{% static 'js/lib/jquery.inview/jquery.inview.min.js' %}"),
-          "jquery.payment": extless("{% static 'js/lib/jquery.payment/lib/jquery.payment.js' %}"),
           "jquery.flot": extless("{% static 'js/lib/jquery-flot/jquery.flot.min.js' %}"),
           "clipboard": extless("{% static 'js/lib/clipboard/dist/clipboard.min.js' %}"),
           "mod/floating-warning": extless("{% static 'js/mod/floating-warning.js' %}"),
