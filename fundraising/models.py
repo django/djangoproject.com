@@ -7,7 +7,9 @@ from django.dispatch import receiver
 from django.utils import crypto, timezone
 from django.utils.translation import gettext_lazy as _
 from django_hosts.resolvers import reverse
-from sorl.thumbnail import ImageField, get_thumbnail
+from sorl.thumbnail import ImageField
+
+from djangoproject.thumbnails import LogoThumbnailMixin
 
 GOAL_AMOUNT = Decimal("200000.00")
 GOAL_START_DATE = datetime.date(datetime.datetime.today().year, 1, 1)
@@ -56,7 +58,7 @@ class FundraisingModel(models.Model):
         return super().save(*args, **kwargs)
 
 
-class DjangoHero(FundraisingModel):
+class DjangoHero(LogoThumbnailMixin, FundraisingModel):
     email = models.EmailField(blank=True)
     # TODO: Make this unique.
     stripe_customer_id = models.CharField(max_length=100, blank=True)
@@ -94,10 +96,6 @@ class DjangoHero(FundraisingModel):
     @property
     def display_name(self):
         return self.name
-
-    @property
-    def thumbnail(self):
-        return get_thumbnail(self.logo, "170x170", quality=100) if self.logo else None
 
     @property
     def name_with_fallback(self):
@@ -148,7 +146,7 @@ class Testimonial(models.Model):
         return self.author
 
 
-class InKindDonor(models.Model):
+class InKindDonor(LogoThumbnailMixin, models.Model):
     name = models.CharField(max_length=100)
     url = models.URLField(blank=True, verbose_name="URL")
     description = models.TextField()
@@ -164,10 +162,6 @@ class InKindDonor(models.Model):
     @property
     def display_name(self):
         return self.name
-
-    @property
-    def thumbnail(self):
-        return get_thumbnail(self.logo, "170x170", quality=100) if self.logo else None
 
 
 @receiver(post_save, sender=DjangoHero)
