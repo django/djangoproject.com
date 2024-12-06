@@ -273,7 +273,6 @@ STRIPE_SECRET_KEY = SECRETS.get("stripe_secret_key", "sk_test_x6zP4wd7Z5jcvDOJbb
 STRIPE_PUBLISHABLE_KEY = SECRETS.get(
     "stripe_publishable_key", "pk_test_TyB5jcROwK8mlCNrn3dCwW7l"
 )
-STRIPE_ENDPOINT_SECRET = SECRETS.get("stripe_endpoint_secret", "insecure")
 
 # product IDs
 PRODUCTS = {
