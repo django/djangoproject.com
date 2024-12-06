@@ -61,6 +61,8 @@
 
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
 
+    {% block before_header %}{% endblock %}
+
     {% include "includes/header.html" %}
 
     <div class="copy-banner">
@@ -158,7 +160,6 @@
           "jquery.inview": extless("{% static 'js/lib/jquery.inview/jquery.inview.min.js' %}"),
           "jquery.flot": extless("{% static 'js/lib/jquery-flot/jquery.flot.min.js' %}"),
           "clipboard": extless("{% static 'js/lib/clipboard/dist/clipboard.min.js' %}"),
-          "mod/floating-warning": extless("{% static 'js/mod/floating-warning.js' %}"),
           "mod/list-collapsing": extless("{% static 'js/mod/list-collapsing.js' %}"),
           "mod/list-feature": extless("{% static 'js/mod/list-feature.js' %}"),
           "mod/mobile-menu": extless("{% static 'js/mod/mobile-menu.js' %}"),
@@ -173,6 +174,5 @@
       };
     </script>
     <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>
-    {% block body_extra %}{% endblock body_extra %}
   </body>
 </html>

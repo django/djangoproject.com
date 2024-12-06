@@ -2329,9 +2329,8 @@ h2+.list-link-soup {
 
 }
 
-#dev-warning,
-#outdated-warning {
-    position: absolute;
+.doc-floating-warning {
+    position: sticky;
     top: 0;
     width: 100%;
     padding: 8px 20px 8px;
@@ -2340,13 +2339,16 @@ h2+.list-link-soup {
     @include sans-serif;
     font-size: 14px;
     text-align: center;
-    background-color: $warning-bg;
-    color: $text;
+    z-index: 1;
 
     @include respond-min(768px) {
-        position: fixed;
         min-width: 768px;
     }
+}
+
+#dev-warning {
+    background-color: $warning-bg;
+    color: $text;
 }
 
 #outdated-warning {
