@@ -1,0 +1,12 @@
+{% load release_notes %}
+
+<a href="{% url 'download-redirect' release.version 'tarball' %}">
+  {{ release.tarball.name }}
+</a><br />
+{% if release.checksum %}
+  Checksums:
+  <a href="{% url 'download-redirect' release.version 'checksum' %}">
+    {{ release.checksum.name }}
+  </a><br />
+{% endif %}
+Release notes: {% release_notes release.version %}

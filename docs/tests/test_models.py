@@ -90,11 +90,17 @@ class ModelsTests(TestCase):
         """
         today = datetime.date.today()
         day = datetime.timedelta(1)
-        r = Release.objects.create(version="1.8", date=today - 15 * day)
+        r = Release.objects.create(version="1.8", is_active=True, date=today - 15 * day)
         d = DocumentRelease.objects.create(release=r)
         r2 = Release.objects.create(version="1.8.1", date=today - 5 * day)
 
-        # The EOL date of the first release is set automatically.
+        # The EOL date is not set when the next release is not active.
+        r.refresh_from_db()
+        self.assertIsNone(r.eol_date)
+
+        # The EOL date of the first release is set for published and newer releases.
+        r2.is_active = True
+        r2.save()
         r.refresh_from_db()
         self.assertEqual(r.eol_date, r2.date)
 
