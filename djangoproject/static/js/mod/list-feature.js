@@ -1,23 +1,18 @@
-define([
-    'jquery', 'jquery.inview' //required inview plugin
-], function( $ ) {
+define(['jquery'], function ($) {
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (!entry.isIntersecting) {
+                return;
+            }
 
-    var FeatureList = function(list) {
-        this.list = $(list);
-        this.init();
-    };
+            $(entry.target).addClass('inview');
 
-    FeatureList.prototype = {
-        init: function(){
-            this.icons = this.list.find('dt i'); //go get icons
-            this.icons.bind('inview', function(event, isInView, visiblePartX, visiblePartY) {
-                if (isInView && visiblePartY != 'top' && visiblePartY != 'bottom') { // element completely visible
-                    $(this).addClass('inview'); //new class
-                }
-            });
-        }
-    };
+            observer.unobserve(entry.target);
+        });
 
-    // Export a single instance of our module:
-    return new FeatureList('.list-features');
+    }, { threshold: 1.0 });
+
+    $('.list-features').find('i').each(function () {
+        observer.observe(this);
+    });
 });
