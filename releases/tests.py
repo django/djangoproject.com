@@ -1,33 +1,14 @@
 import datetime
 
-from django.contrib.redirects.models import Redirect
-from django.test import TestCase, override_settings
+from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils.safestring import SafeString
 
 from members.models import MEMBERSHIP_LEVELS, PLATINUM_MEMBERSHIP, CorporateMember
 
-from .models import Release, create_releases_up_to_1_5
+from .models import Release, upload_to_checksum, upload_to_tarball
 from .templatetags.date_format import isodate
 from .templatetags.release_notes import get_latest_micro_release, release_notes
-
-
-class LegacyURLsTests(TestCase):
-    fixtures = ["redirects-downloads"]  # provided by the legacy app
-
-    def test_legacy_redirects(self):
-        # Save list of redirects, then wipe them
-        redirects = list(Redirect.objects.values_list("old_path", "new_path"))
-        Redirect.objects.all().delete()
-        # Ensure the releases app faithfully reproduces the redirects
-        create_releases_up_to_1_5()
-        for old_path, new_path in redirects:
-            response = self.client.get(old_path, follow=False)
-            location = response.get("Location", "")
-            if location.startswith("http://testserver"):
-                location = location[17:]
-            self.assertEqual(location, new_path)
-            self.assertEqual(response.status_code, 301)
 
 
 class TestTemplateTags(TestCase):
@@ -155,6 +136,36 @@ class TestReleaseManager(TestCase):
             version="1.9b2", date=datetime.date.today(), eol_date=None
         )
         self.assertEqual(Release.objects.preview().version, "1.9b2")
+
+
+class ReleaseUploadToTestCase(SimpleTestCase):
+    def test_upload_to_tarball(self):
+        for version, expected in [
+            ("5.2", "releases/5.2/django-5.2.tar.gz"),
+            ("5.2.1", "releases/5.2/django-5.2.1.tar.gz"),
+            ("5.2a1", "releases/5.2/django-5.2a1.tar.gz"),
+            ("5.2b2", "releases/5.2/django-5.2b2.tar.gz"),
+        ]:
+            with self.subTest(version=version):
+                self.assertEqual(
+                    # filename should not matter
+                    upload_to_tarball(Release(version=version), filename=None),
+                    expected,
+                )
+
+    def test_upload_to_checksum(self):
+        for version, expected in [
+            ("5.2", "pgp/django-5.2.checksum.txt"),
+            ("5.2.1", "pgp/django-5.2.1.checksum.txt"),
+            ("5.2a1", "pgp/django-5.2a1.checksum.txt"),
+            ("5.2b2", "pgp/django-5.2b2.checksum.txt"),
+        ]:
+            with self.subTest(version=version):
+                self.assertEqual(
+                    # filename should not matter
+                    upload_to_checksum(Release(version=version), filename=None),
+                    expected,
+                )
 
 
 class CorporateMembersTestCase(TestCase):

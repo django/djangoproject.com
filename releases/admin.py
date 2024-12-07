@@ -25,3 +25,9 @@ class ReleaseAdmin(admin.ModelAdmin):
     )
     def show_status(self, obj):
         return obj.get_status_display()
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj=obj, **kwargs)
+        for artefact_field in ["tarball", "wheel", "checksum"]:
+            form.fields[artefact_field].required = True
+        return form
