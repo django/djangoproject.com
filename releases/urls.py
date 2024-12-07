@@ -5,6 +5,6 @@ from .views import index, redirect
 urlpatterns = [
     path("", index, name="download"),
     re_path(
-        "^([0-9a-z_.-]+)/(tarball|checksum|egg)/$", redirect, name="download-redirect"
+        "^([0-9a-z_.-]+)/(tarball|wheel|checksum)/$", redirect, name="download-redirect"
     ),
 ]
