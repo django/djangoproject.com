@@ -1708,26 +1708,6 @@ h2+.list-link-soup {
             width: 200px;
             margin-right: 0;
 
-            &.icon-bolt {
-                background-position: -150px -269px;
-            }
-
-            &.icon-briefcase {
-                background-position: -354px -7px;
-            }
-
-            &.icon-lock {
-                background-position: -36px -96px;
-            }
-
-            &.icon-dashboard {
-                background-position: -270px -9px;
-            }
-
-            &.icon-cogs {
-                background-position: -334px -12px;
-            }
-
             transform: rotate(0.5turn);
             transition: all 0.3s ease-out;
 
@@ -1774,6 +1754,38 @@ h2+.list-link-soup {
                     background-position: -334px -12px;
                 }
             }
+
+            @media (prefers-reduced-motion) {
+                & {
+                    transform: none;
+                    transition: none;
+                }
+
+                &.inview {
+                    transform: none;
+                }
+
+                &.icon-bolt {
+                    background-position: -150px -269px;
+                }
+
+                &.icon-briefcase {
+                    background-position: -354px -7px;
+                }
+
+                &.icon-lock {
+                    background-position: -36px -96px;
+                }
+
+                &.icon-dashboard {
+                    background-position: -270px -9px;
+                }
+
+                &.icon-cogs {
+                    background-position: -334px -12px;
+                }
+            }
+
 
             // Fixing opera svg-border-radius bug
             // http://stackoverflow.com/questions/11114636/opera-border-radius-svg-background-bug
