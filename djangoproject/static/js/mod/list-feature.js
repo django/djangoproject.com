@@ -9,8 +9,7 @@ define(['jquery'], function ($) {
 
             observer.unobserve(entry.target);
         });
-
-    }, { threshold: 1.0 });
+    }, { threshold: 1.0 });  // Trigger when the element is fully visible
 
     $('.list-features i').each(function () {
         observer.observe(this);
