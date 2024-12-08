@@ -40,7 +40,7 @@ def get_user_stats(user):
     key = "user_vital_status:%s" % hashlib.md5(username).hexdigest()
     info = c.get(key)
     if info is None:
-        info = trac_stats.get_user_stats(user.username)
+        info = trac_stats.get_user_stats(user)
         # Hide any stat with a value = 0 so that we don't accidentally insult
         # non-contributors.
         for k, v in list(info.items()):
