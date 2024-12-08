@@ -1,4 +1,4 @@
-define(['jquery', 'clipboard'], function($, Clipboard) {
+define(['jquery'], function($) {
     $('.code-block-caption').each(function() {
         var header = $(this);
         var wrapper = header.parent();
@@ -18,20 +18,20 @@ define(['jquery', 'clipboard'], function($, Clipboard) {
         btn.data('clipboard-text', $.trim(code.text()));
         header.append(btn);
     });
-    var clip = new Clipboard('.btn-clipboard', {
-        'text': function(trigger) {
-            return $(trigger).data('clipboard-text');
+    $('.btn-clipboard').click(function() {
+        var btn = $(this);
+        var text = btn.data('clipboard-text');
+
+        function on_success(el) {
+            var success = $('<span class="clipboard-success">').text('Copied!')
+            success.prependTo(btn).delay(1000).fadeOut();
         }
-    });
-    clip.on('success', function(e) {
-        var success = $('<span class="clipboard-success">').text('Copied!')
-        success.prependTo(e.trigger).delay(1000).fadeOut();
-    });
-    clip.on('error', function(e) {
-        // Safari doesn't support the execCommand (yet) but because clipboardjs
-        // also uses Selection API, we can instruct users to just press the keyboard shortcut
-        // See https://clipboardjs.com/#browser-support
-        var success = $('<span class="clipboard-success">').text('Press ⌘-C to copy');
-        success.prependTo(e.trigger).delay(5000).fadeOut();
+
+        function on_error(el) {
+            var success = $('<span class="clipboard-success">').text('Press ⌘-C to copy');
+            success.prependTo(btn).delay(5000).fadeOut();
+        }
+
+        navigator.clipboard.writeText(text).then(on_success, on_error);
     });
 });
