@@ -28,7 +28,7 @@ define(['jquery'], function($) {
         }
 
         function on_error(el) {
-            var success = $('<span class="clipboard-success">').text('Press ⌘-C to copy');
+            var success = $('<span class="clipboard-success">').text('Could not copy!');
             success.prependTo(btn).delay(5000).fadeOut();
         }
 
