@@ -12,7 +12,7 @@ define(['jquery'], function ($) {
 
     }, { threshold: 1.0 });
 
-    $('.list-features').find('i').each(function () {
+    $('.list-features i').each(function () {
         observer.observe(this);
     });
 });
