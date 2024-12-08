@@ -39,22 +39,17 @@
 
     <title>{% block title %}The web framework for perfectionists with deadlines{% endblock %} | Django</title>
 
+    <link href="{% static "fonts/FiraMono-Regular.woff" %}" as="font" type="font/woff" crossorigin="anonymous" />
+    <link href="{% static "fonts/FiraMono-Bold.woff" %}" as="font" type="font/woff" crossorigin="anonymous" />
+
+    <link href="{% static "fonts/fontawesome-webfont.woff" %}" as="font" type="font/woff" crossorigin="anonymous" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{% static "css/output.css" %}" >
-    <script src="{% static "js/lib/webfontloader/webfontloader.js" %}"></script>
-    <script>
-      WebFont.load({
-        custom: {
-          families: ['FontAwesome', 'Fira+Mono'],
-        },
-        google: {
-          families: ['Roboto:400italic,700italic,300,700,400:latin'
-          ]
-        },
-        classes: false,
-        events: false,
-        timeout: 1000
-      });
-    </script>
+
     <script src="{% static "js/mod/switch-dark-mode.js" %}"></script>
     {% block head_extra %}{% endblock head_extra %}
   </head>

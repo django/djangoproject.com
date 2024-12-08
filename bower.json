@@ -3,7 +3,6 @@
   "private": true,
   "dependencies": {
     "jquery": "<2.0",
-    "webfontloader": "~1.5.10",
     "jquery-flot": "~0.8.3"
   }
 }
