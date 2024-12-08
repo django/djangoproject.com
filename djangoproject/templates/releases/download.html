@@ -291,18 +291,18 @@
     <ul>
       <li>Latest release:
         <a href="{% url 'download-redirect' current.version 'tarball' %}">
-          Django-{{ current.version }}.tar.gz</a><br>
+          {{ current.tarball.name }}</a><br>
         Checksums: <a href="{% url 'download-redirect' current.version 'checksum' %}">
-          Django-{{ current.version }}.checksum.txt</a><br>
+          {{ current.checksum.name }}</a><br>
         Release notes: {% release_notes current.version %}
       </li>
 
       {% if preview %}
         <li>Preview release:
           <a href="{% url 'download-redirect' preview.version 'tarball' %}">
-            Django-{{ preview.version }}.tar.gz</a><br>
+            {{ preview.tarball.name }}</a><br>
           Checksums: <a href="{% url 'download-redirect' preview.version 'checksum' %}">
-            Django-{{ preview.version }}.checksum.txt</a><br>
+            {{ preview.checksum.name }}</a><br>
           Release notes: {% release_notes preview.version %}
         </li>
       {% endif %}
@@ -316,7 +316,7 @@
     <ul>
       <li>Django {{ previous.version }}{% if previous.is_lts %} (LTS){% endif %}:
         <a href="{% url 'download-redirect' previous.version 'tarball' %}">
-          Django-{{ previous.version }}.tar.gz</a><br>
+          {{ previous.tarball.name }}</a><br>
         Checksums: <a href="{% url 'download-redirect' previous.version 'checksum' %}">
           Django-{{ previous.version }}.checksum.txt</a><br>
         Release notes: {% release_notes previous.version %}
@@ -324,7 +324,7 @@
       {% if lts %}
         <li>Django {{ lts.version }} (LTS):
           <a href="{% url 'download-redirect' lts.version 'tarball' %}">
-            Django-{{ lts.version }}.tar.gz</a><br>
+            {{ lts.tarball.name }}</a><br>
           Checksums: <a href="{% url 'download-redirect' lts.version 'checksum' %}">
             Django-{{ lts.version }}.checksum.txt</a><br>
           Release notes: {% release_notes lts.version %}
@@ -337,9 +337,13 @@
       {% for release in unsupported %}
         <li>Django {{ release.version }}:
           <a href="{% url 'download-redirect' release.version 'tarball' %}">
-            Django-{{ release.version }}.tar.gz</a><br>
-          Checksums: <a href="{% url 'download-redirect' release.version 'checksum' %}">
-            Django-{{ release.version }}.checksum.txt</a></li>
+            {{ release.tarball.name }}</a>
+          {% if release.checksum %}
+            <br>
+            Checksums: <a href="{% url 'download-redirect' release.version 'checksum' %}">
+              {{ release.checksum.name }}</a>
+          {% endif %}
+        </li>
       {% endfor %}
     </ul>
 
