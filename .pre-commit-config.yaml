@@ -42,7 +42,7 @@ repos:
           - id: black
             exclude: '(\/migrations\/)'
     - repo: https://github.com/rbubley/mirrors-prettier
-      rev: "v3.4.1"
+      rev: "v3.4.2"
       hooks:
           - id: prettier
             exclude_types: [html, json, scss]
