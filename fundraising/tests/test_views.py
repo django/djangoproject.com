@@ -261,7 +261,10 @@ def _stripe_signature_header(data):
 
 class TestWebhooks(TestCase):
     def setUp(self):
-        self.hero = DjangoHero.objects.create(email="hero@djangoproject.com")
+        self.hero = DjangoHero.objects.create(
+            email="hero@djangoproject.com",
+            stripe_customer_id="cus_3MXPY5pvYMWTBf",
+        )
         self.donation = Donation.objects.create(
             donor=self.hero,
             interval="monthly",
@@ -348,3 +351,23 @@ class TestWebhooks(TestCase):
         data["type"] = "unknown"
         response = self.post_event(data)
         self.assertEqual(response.status_code, 422)
+
+    def test_checkout_session_completed(self):
+        response = self.post_event(self.stripe_data("session_completed"))
+        self.assertEqual(response.status_code, 204)
+
+        self.assertEqual(len(mail.outbox), 1)
+        expected_url = django_hosts_reverse(
+            "fundraising:manage-donations", kwargs={"hero": self.hero.id}
+        )
+        self.assertTrue(expected_url in mail.outbox[0].body)
+
+        self.assertEqual(DjangoHero.objects.count(), 1)
+
+    def test_checkout_session_completed_new_hero(self):
+        self.hero.stripe_customer_id = ""
+        self.hero.save()
+        response = self.post_event(self.stripe_data("session_completed"))
+
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(DjangoHero.objects.count(), 2)
