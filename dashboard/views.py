@@ -1,13 +1,13 @@
 import datetime
-import operator
 
+from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.forms.models import model_to_dict
 from django.http.response import Http404, JsonResponse
 from django.shortcuts import render
 from django.utils.translation import gettext as _
 
-from .models import Metric
+from .models import Datum, Metric
 from .utils import generation_key
 
 
@@ -19,12 +19,27 @@ def index(request):
     if data is None:
         metrics = []
         for MC in Metric.__subclasses__():
-            metrics.extend(MC.objects.filter(show_on_dashboard=True))
-        metrics = sorted(metrics, key=operator.attrgetter("display_position"))
+            metrics.extend(MC.objects.filter(show_on_dashboard=True).select_related('category'))
+
+        content_types = ContentType.objects.get_for_models(*metrics)
+        datum_queryset = Datum.objects.none()
+        for metric, content_type in content_types.items():
+            datum_queryset = datum_queryset.union(
+                Datum.objects.filter(content_type_id=content_type.id, object_id=metric.id)
+                .order_by('-timestamp')[0:1].select_related('content_type')
+            )
+
+        datums = {
+            (datum.object_id, datum.content_type): datum
+            for datum in datum_queryset
+        }
 
         data = []
-        for metric in metrics:
-            data.append({"metric": metric, "latest": metric.data.latest()})
+        for metric, content_type in content_types.items():
+            latest = datums.get((metric.id, content_type))
+            if latest:
+                data.append({"metric": metric, "latest": latest})
+        data = sorted(data, key=lambda elem: elem["metric"].display_position)
         cache.set(key, data, 60 * 60, version=generation)
 
     return render(request, "dashboard/index.html", {"data": data})
