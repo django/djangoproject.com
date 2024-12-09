@@ -44,4 +44,17 @@
     >.c-tab-win:checked~.c-content-win {
         display: block;
     }
+    >.c-content-win, >.c-content-unix .highlight-console{
+        .highlight{
+            display: flex;
+            justify-content: space-between;
+
+            .btn-clipboard{
+                float: right;
+                position: sticky;
+                cursor: pointer;
+                margin: 15px;
+            }
+        }
+    }
 }
