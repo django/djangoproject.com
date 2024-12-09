@@ -19,19 +19,23 @@ def index(request):
     if data is None:
         metrics = []
         for MC in Metric.__subclasses__():
-            metrics.extend(MC.objects.filter(show_on_dashboard=True).select_related('category'))
+            metrics.extend(
+                MC.objects.filter(show_on_dashboard=True).select_related("category")
+            )
 
         content_types = ContentType.objects.get_for_models(*metrics)
         datum_queryset = Datum.objects.none()
         for metric, content_type in content_types.items():
             datum_queryset = datum_queryset.union(
-                Datum.objects.filter(content_type_id=content_type.id, object_id=metric.id)
-                .order_by('-timestamp')[0:1].select_related('content_type')
+                Datum.objects.filter(
+                    content_type_id=content_type.id, object_id=metric.id
+                )
+                .order_by("-timestamp")[0:1]
+                .select_related("content_type")
             )
 
         datums = {
-            (datum.object_id, datum.content_type): datum
-            for datum in datum_queryset
+            (datum.object_id, datum.content_type): datum for datum in datum_queryset
         }
 
         data = []
