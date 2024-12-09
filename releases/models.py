@@ -133,6 +133,17 @@ class ReleaseManager(models.Manager):
         return current_version
 
 
+def upload_to_tarball(release, filename):
+    directory = ".".join(release.version_tuple[:2])
+    version = get_version(release.version_tuple)
+    return f"releases/{directory}/django-{version}.tar.gz"
+
+
+def upload_to_checksum(release, filename):
+    version = get_version(release.version_tuple)
+    return f"pgp/django-{version}.checksum.txt"
+
+
 class Release(models.Model):
     DEFAULT_CACHE_KEY = "%s_django_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
     STATUS_CHOICES = (
@@ -172,6 +183,8 @@ class Release(models.Model):
     micro = models.PositiveSmallIntegerField(editable=False)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, editable=False)
     iteration = models.PositiveSmallIntegerField(editable=False)
+    tarball = models.FileField(upload_to=upload_to_tarball, blank=False)
+    checksum = models.FileField(upload_to=upload_to_checksum, blank=True)
 
     is_lts = models.BooleanField("Long term support release", default=False)
 
@@ -211,33 +224,6 @@ class Release(models.Model):
         if len(version) == 4:
             version.append(0)
         return tuple(version)
-
-    def get_redirect_url(self, kind):
-        directory = "%d.%d" % self.version_tuple[:2]
-        # Django gained PEP 386 numbering in 1.4b1.
-        if self.version_tuple >= (1, 4, 0, "beta", 0):
-            actual_version = get_version(self.version_tuple)
-        else:
-            actual_version = self.version
-
-        if kind == "tarball":
-            pattern = "%(media)sreleases/%(directory)s/Django-%(version)s.tar.gz"
-
-        elif kind == "checksum":
-            if self.version_tuple[:3] >= (1, 0, 4):
-                pattern = "%(media)spgp/Django-%(version)s.checksum.txt"
-            else:
-                raise ValueError("No checksum for this version")
-        else:
-            raise ValueError("Unknown file")
-
-        return pattern % {
-            "media": settings.MEDIA_URL,
-            "directory": directory,
-            "version": actual_version,
-            "major": self.version_tuple[0],
-            "minor": self.version_tuple[1],
-        }
 
 
 def create_releases_up_to_1_5():
