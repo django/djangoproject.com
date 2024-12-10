@@ -29,8 +29,7 @@ def index(request):
             datum_queryset = datum_queryset.union(
                 Datum.objects.filter(
                     content_type_id=content_type.id, object_id=metric.id
-                )
-                .order_by("-timestamp")[0:1]
+                ).order_by("-timestamp")[0:1]
             )
 
         latest_datums = {
