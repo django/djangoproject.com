@@ -31,17 +31,15 @@ def index(request):
                     content_type_id=content_type.id, object_id=metric.id
                 )
                 .order_by("-timestamp")[0:1]
-                .select_related("content_type")
             )
 
-        datums = {
-            (datum.object_id, datum.content_type): datum for datum in datum_queryset
+        latest_datums = {
+            (datum.object_id, datum.content_type_id): datum for datum in datum_queryset
         }
 
         data = []
         for metric, content_type in content_types.items():
-            latest = datums.get((metric.id, content_type))
-            if latest:
+            if latest := latest_datums.get((metric.id, content_type.id)):
                 data.append({"metric": metric, "latest": latest})
         data = sorted(data, key=lambda elem: elem["metric"].display_position)
         cache.set(key, data, 60 * 60, version=generation)
