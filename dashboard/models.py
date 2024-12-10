@@ -1,6 +1,8 @@
 import ast
 import calendar
 import datetime
+import operator
+from functools import reduce
 
 import requests
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
@@ -105,7 +107,6 @@ class Metric(models.Model):
         scale but works for now.
         """
         OFFSET = "2 hours"  # HACK!
-        ctid = ContentType.objects.get_for_model(self).id
 
         c = connections["default"].cursor()
         c.execute(
@@ -117,9 +118,13 @@ class Metric(models.Model):
                        AND object_id = %s
                        AND timestamp >= %s
                      GROUP BY 1;""",
-            [period, OFFSET, ctid, self.id, since],
+            [period, OFFSET, self.content_type.id, self.id, since],
         )
         return [(calendar.timegm(t.timetuple()), float(m)) for (t, m) in c.fetchall()]
+
+    @property
+    def content_type(self):
+        return ContentType.objects.get_for_model(self)
 
 
 class TracTicketMetric(Metric):
@@ -249,6 +254,17 @@ class JenkinsFailuresMetric(Metric):
         return self.urljoin(self.jenkins_root_url, "job", self.build_name)
 
 
+class DatumQuerySet(models.QuerySet):
+    def metrics(self, *metrics):
+        """
+        Return only the data from the given metrics.
+        """
+        if not metrics:
+            return self.none()
+        qobjs = [models.Q(content_type=m.content_type, object_id=m.pk) for m in metrics]
+        return self.filter(reduce(operator.or_, qobjs))
+
+
 class Datum(models.Model):
     metric = GenericForeignKey()
     content_type = models.ForeignKey(
@@ -257,6 +273,8 @@ class Datum(models.Model):
     object_id = models.PositiveIntegerField()
     timestamp = models.DateTimeField(default=datetime.datetime.now)
     measurement = models.BigIntegerField()
+
+    objects = DatumQuerySet.as_manager()
 
     class Meta:
         ordering = ["-timestamp"]

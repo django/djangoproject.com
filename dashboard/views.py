@@ -1,6 +1,6 @@
 import datetime
+import operator
 
-from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.forms.models import model_to_dict
 from django.http.response import Http404, JsonResponse
@@ -22,25 +22,21 @@ def index(request):
             metrics.extend(
                 MC.objects.filter(show_on_dashboard=True).select_related("category")
             )
+        metrics = sorted(metrics, key=operator.attrgetter("display_position"))
 
-        content_types = ContentType.objects.get_for_models(*metrics)
-        datum_queryset = Datum.objects.none()
-        for metric, content_type in content_types.items():
-            datum_queryset = datum_queryset.union(
-                Datum.objects.filter(
-                    content_type_id=content_type.id, object_id=metric.id
-                ).order_by("-timestamp")[0:1]
-            )
-
-        latest_datums = {
-            (datum.object_id, datum.content_type_id): datum for datum in datum_queryset
+        metric_latest_querysets = [
+            Datum.objects.metrics(metric).order_by("-timestamp")[0:1]
+            for metric in metrics
+        ]
+        data_latest = Datum.objects.none().union(*metric_latest_querysets)
+        latest_by_metric = {
+            (datum.content_type_id, datum.object_id): datum for datum in data_latest
         }
 
         data = []
-        for metric, content_type in content_types.items():
-            if latest := latest_datums.get((metric.id, content_type.id)):
-                data.append({"metric": metric, "latest": latest})
-        data = sorted(data, key=lambda elem: elem["metric"].display_position)
+        for metric in metrics:
+            latest = latest_by_metric.get((metric.content_type.pk, metric.pk))
+            data.append({"metric": metric, "latest": latest})
         cache.set(key, data, 60 * 60, version=generation)
 
     return render(request, "dashboard/index.html", {"data": data})
