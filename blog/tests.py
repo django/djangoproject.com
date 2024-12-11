@@ -191,6 +191,28 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertQuerySetEqual(response.context["events"], [])
 
+    def test_no_unpublished_future_events(self):
+        """
+        Make sure there are no unpublished future events in the "upcoming events" sidebar
+        """
+        # We need a published entry on the index page so that it doesn't return a 404
+        Entry.objects.create(pub_date=self.yesterday, is_active=True, slug="a")
+        Event.objects.create(
+            date=self.tomorrow,
+            pub_date=self.yesterday,
+            is_active=False,
+            headline="inactive",
+        )
+        Event.objects.create(
+            date=self.tomorrow,
+            pub_date=self.tomorrow,
+            is_active=True,
+            headline="future publish date",
+        )
+        response = self.client.get(reverse("weblog:index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerySetEqual(response.context["events"], [])
+
 
 class SitemapTests(DateTimeMixin, TestCase):
     def test_sitemap(self):
