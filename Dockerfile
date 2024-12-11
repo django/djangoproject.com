@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.12-slim-bookworm
+FROM python:3.12-slim-bookworm AS djangoproject-www-base
 
 # set work directory
 WORKDIR /usr/src/app
@@ -33,13 +33,10 @@ RUN apt-get update \
         libc6-dev \
         libpq-dev \
         zlib1g-dev \
-    && python3 -m pip install --no-cache-dir -r ${REQ_FILE} \
-    && apt-get purge --assume-yes --auto-remove \
-        gcc \
-        libc6-dev \
-        libpq-dev \
-        zlib1g-dev \
-    && rm -rf /var/lib/apt/lists/*
+    && python3 -m pip install --no-cache-dir -r ${REQ_FILE}
+
+
+FROM djangoproject-www-base AS djangoproject-www-dev
 
 # install node dependencies
 COPY ./package.json ./package.json
@@ -47,6 +44,16 @@ RUN npm install
 
 # copy project
 COPY . .
+
+
+FROM djangoproject-www-dev AS djangoproject-www-prod
+
+RUN apt-get purge --assume-yes --auto-remove \
+        gcc \
+        libc6-dev \
+        libpq-dev \
+        zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # ENTRYPOINT is specified only in the local docker-compose.yml to avoid
 # accidentally running it in deployed environments.
