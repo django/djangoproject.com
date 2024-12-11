@@ -33,10 +33,12 @@ class ViewTests(TestCase):
     def test_index(self):
         for MC in Metric.__subclasses__():
             for metric in MC.objects.filter(show_on_dashboard=True):
+                metric.data.create(measurement=44)
                 metric.data.create(measurement=42)
 
         request = self.factory.get(reverse("dashboard-index", host="dashboard"))
-        response = index(request)
+        with self.assertNumQueries(7):
+            response = index(request)
         self.assertContains(response, "Development dashboard")
         self.assertEqual(response.content.count(b'<div class="metric'), 13)
         self.assertEqual(response.content.count(b"42"), 13)

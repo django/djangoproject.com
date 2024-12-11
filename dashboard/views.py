@@ -7,7 +7,7 @@ from django.http.response import Http404, JsonResponse
 from django.shortcuts import render
 from django.utils.translation import gettext as _
 
-from .models import Metric
+from .models import Datum, Metric
 from .utils import generation_key
 
 
@@ -19,12 +19,23 @@ def index(request):
     if data is None:
         metrics = []
         for MC in Metric.__subclasses__():
-            metrics.extend(MC.objects.filter(show_on_dashboard=True))
+            metrics.extend(
+                MC.objects.filter(show_on_dashboard=True).select_related("category")
+            )
         metrics = sorted(metrics, key=operator.attrgetter("display_position"))
+
+        metric_latest_querysets = [
+            metric.data.order_by("-timestamp")[0:1] for metric in metrics
+        ]
+        data_latest = Datum.objects.none().union(*metric_latest_querysets)
+        latest_by_metric = {
+            (datum.content_type_id, datum.object_id): datum for datum in data_latest
+        }
 
         data = []
         for metric in metrics:
-            data.append({"metric": metric, "latest": metric.data.latest()})
+            latest = latest_by_metric.get((metric.content_type.pk, metric.pk))
+            data.append({"metric": metric, "latest": latest})
         cache.set(key, data, 60 * 60, version=generation)
 
     return render(request, "dashboard/index.html", {"data": data})

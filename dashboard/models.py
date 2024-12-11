@@ -105,7 +105,6 @@ class Metric(models.Model):
         scale but works for now.
         """
         OFFSET = "2 hours"  # HACK!
-        ctid = ContentType.objects.get_for_model(self).id
 
         c = connections["default"].cursor()
         c.execute(
@@ -117,9 +116,13 @@ class Metric(models.Model):
                        AND object_id = %s
                        AND timestamp >= %s
                      GROUP BY 1;""",
-            [period, OFFSET, ctid, self.id, since],
+            [period, OFFSET, self.content_type.id, self.id, since],
         )
         return [(calendar.timegm(t.timetuple()), float(m)) for (t, m) in c.fetchall()]
+
+    @property
+    def content_type(self):
+        return ContentType.objects.get_for_model(self)
 
 
 class TracTicketMetric(Metric):
