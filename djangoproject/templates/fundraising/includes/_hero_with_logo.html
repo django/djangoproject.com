@@ -6,8 +6,8 @@
       <img
         src="{{ obj.thumbnail.url }}"
         srcset="{{ obj.thumbnail.url|resolution:'2x' }} 2x"
-        width="{{ obj.THUMBNAIL_SIZE }}"
-        height="{{ obj.THUMBNAIL_SIZE }}"
+        width="{{ obj.thumbnail.width }}"
+        height="{{ obj.thumbnail.height }}"
         loading="lazy"
         alt="{% blocktranslate trimmed with company_name=obj.display_name %}
                Logo of company {{ company_name }}{% endblocktranslate %}"

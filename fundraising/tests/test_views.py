@@ -1,24 +1,32 @@
 import json
 import shutil
 import tempfile
-from base64 import b64decode
 from datetime import date, datetime
+from io import BytesIO
 from operator import attrgetter
 from unittest.mock import patch
 
 import stripe
 from django.conf import settings
 from django.core import mail
-from django.core.files.base import ContentFile
+from django.core.files.images import ImageFile
 from django.template.defaultfilters import date as date_filter
 from django.test import TestCase
 from django.urls import reverse
 from django_hosts.resolvers import reverse as django_hosts_reverse
 from django_recaptcha.client import RecaptchaResponse
+from PIL import Image
 
 from members.models import CorporateMember, Invoice
 
 from ..models import DjangoHero, Donation
+
+
+def _make_image(name, width=1, height=1, color=(12, 75, 51)):
+    img = Image.new("RGB", (width, height), color=color)
+    out = BytesIO()
+    img.save(out, format=name.split(".")[-1])
+    return ImageFile(out, name=name)
 
 
 class TemporaryMediaRootMixin:
@@ -53,13 +61,6 @@ class TestIndex(TestCase):
 class TestCampaign(TemporaryMediaRootMixin, TestCase):
     def setUp(self):
         self.index_url = reverse("fundraising:index")
-        self.imagefile = ContentFile(
-            content=b64decode(
-                "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAA"
-                "DUlEQVR42mPk8Tb+DwACgAGLzMGnPAAAAABJRU5ErkJggg=="
-            ),
-            name="logo.png",
-        )
 
     def test_corporate_member_without_logo(self):
         member = CorporateMember.objects.create(
@@ -76,7 +77,7 @@ class TestCampaign(TemporaryMediaRootMixin, TestCase):
 
     def test_corporate_member_with_logo(self):
         member = CorporateMember.objects.create(
-            display_name="Test Member", membership_level=1, logo=self.imagefile
+            display_name="Test Member", membership_level=1, logo=_make_image("logo.png")
         )
         Invoice.objects.create(amount=100, expiration_date=date.today(), member=member)
         response = self.client.get(self.index_url)
@@ -88,6 +89,27 @@ class TestCampaign(TemporaryMediaRootMixin, TestCase):
                 srcset="/m/cache/9b/e7/9be7b86ebc112b001cad84f900bf0bf7@2x.png 2x"
                 width="170"
                 height="170"
+                loading="lazy"
+                alt="Logo of company Test Member"
+            >""",
+            html=True,
+        )
+
+    def test_corporate_member_with_non_square_logo(self):
+        logo = _make_image("wide.png", width=10)
+        member = CorporateMember.objects.create(
+            display_name="Test Member", membership_level=1, logo=logo
+        )
+        Invoice.objects.create(amount=100, expiration_date=date.today(), member=member)
+        response = self.client.get(self.index_url)
+
+        self.assertContains(
+            response,
+            """<img
+                src="/m/cache/3a/ea/3aeaccc1f60ee53bf3317aae87c1c6a0.png"
+                srcset="/m/cache/3a/ea/3aeaccc1f60ee53bf3317aae87c1c6a0@2x.png 2x"
+                width="170"
+                height="17"
                 loading="lazy"
                 alt="Logo of company Test Member"
             >""",
@@ -108,7 +130,7 @@ class TestCampaign(TemporaryMediaRootMixin, TestCase):
             is_visible=True,
             approved=True,
             hero_type="individual",
-            logo=self.imagefile,
+            logo=_make_image("anonymous.png"),
         )
         donation = hero.donation_set.create(subscription_amount="5")
         donation.payment_set.create(amount="5")
