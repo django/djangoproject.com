@@ -1,55 +1,21 @@
 import json
-import shutil
-import tempfile
 from datetime import date, datetime
-from io import BytesIO
 from operator import attrgetter
 from unittest.mock import patch
 
 import stripe
 from django.conf import settings
 from django.core import mail
-from django.core.files.images import ImageFile
 from django.template.defaultfilters import date as date_filter
 from django.test import TestCase
 from django.urls import reverse
 from django_hosts.resolvers import reverse as django_hosts_reverse
 from django_recaptcha.client import RecaptchaResponse
-from PIL import Image
 
 from members.models import CorporateMember, Invoice
 
 from ..models import DjangoHero, Donation
-
-
-def _make_image(name, width=1, height=1, color=(12, 75, 51)):
-    img = Image.new("RGB", (width, height), color=color)
-    out = BytesIO()
-    img.save(out, format=name.split(".")[-1])
-    return ImageFile(out, name=name)
-
-
-class TemporaryMediaRootMixin:
-    """
-    A TestCase mixin that overrides settings.MEDIA_ROOT for every test on the
-    class to point to a temporary directory that is destroyed when the tests
-    finished.
-    The content of the directory persists between different tests on the class.
-    """
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.tmpdir = tempfile.mkdtemp(prefix="djangoprojectcom_")
-
-    @classmethod
-    def tearDownClass(cls):
-        shutil.rmtree(cls.tmpdir, ignore_errors=True)
-        super().tearDownClass()
-
-    def run(self, result=None):
-        with self.settings(MEDIA_ROOT=self.tmpdir):
-            return super().run(result)
+from .utils import ImageFileFactory, TemporaryMediaRootMixin
 
 
 class TestIndex(TestCase):
@@ -77,7 +43,9 @@ class TestCampaign(TemporaryMediaRootMixin, TestCase):
 
     def test_corporate_member_with_logo(self):
         member = CorporateMember.objects.create(
-            display_name="Test Member", membership_level=1, logo=_make_image("logo.png")
+            display_name="Test Member",
+            membership_level=1,
+            logo=ImageFileFactory("logo.png"),
         )
         Invoice.objects.create(amount=100, expiration_date=date.today(), member=member)
         response = self.client.get(self.index_url)
@@ -96,7 +64,7 @@ class TestCampaign(TemporaryMediaRootMixin, TestCase):
         )
 
     def test_corporate_member_with_non_square_logo(self):
-        logo = _make_image("wide.png", width=10)
+        logo = ImageFileFactory("wide.png", width=10)
         member = CorporateMember.objects.create(
             display_name="Test Member", membership_level=1, logo=logo
         )
@@ -130,7 +98,7 @@ class TestCampaign(TemporaryMediaRootMixin, TestCase):
             is_visible=True,
             approved=True,
             hero_type="individual",
-            logo=_make_image("anonymous.png"),
+            logo=ImageFileFactory("anonymous.png"),
         )
         donation = hero.donation_set.create(subscription_amount="5")
         donation.payment_set.create(amount="5")
