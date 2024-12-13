@@ -30,3 +30,11 @@ services:
             - POSTGRES_USER=djangoproject
             - POSTGRES_PASSWORD=secret
             - POSTGRES_DB=djangoproject
+    tracdb:
+        image: postgres:14-alpine
+        environment:
+            - POSTGRES_USER=code.djangoproject
+            - POSTGRES_PASSWORD=secret
+            - POSTGRES_DB=code.djangoproject
+        volumes:
+            - ./tracdb/trac.sql:/docker-entrypoint-initdb.d/trac.sql
