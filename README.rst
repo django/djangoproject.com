@@ -372,16 +372,46 @@ Running Locally with Docker
 
     docker compose build
 
-2. Spin up the containers::
+2. Create the file ``data/conf/secrets.json`` with the required configuration::
+
+    {
+      "secret_key": "insecure-local-key",
+      "db_user": "djangoproject",
+      "db_host": "db",
+      "db_password": "secret",
+      "trac_db_user": "code.djangoproject",
+      "trac_db_host": "tracdb",
+      "trac_db_password": "secret",
+      "allowed_hosts": [".localhost", "127.0.0.1", "www.127.0.0.1"],
+      "internal_ips": ["127.0.0.1"]
+    }
+
+3. Spin up the containers::
 
     docker compose up
 
-3. View the site at http://localhost:8000/
+4. View the site at http://localhost:8000/
 
-4. Run the tests::
+5. Run the tests::
 
     docker compose exec web tox
     docker compose exec web python -m manage test
+
+``secrets.json`` file
+---------------------
+
+The secrets file may contain the following fields:
+
+* ``secret_key``: Django's ``SECRET_KEY`` setting.
+* ``db_user``: must match the value of ``POSTGRES_USER`` for the ``db`` service.
+* ``db_host``: must match the name of the ``db`` service.
+* ``db_password``: must match the value of ``POSTGRES_PASSWORD`` for the ``db`` service.
+* ``trac_db_user``: must match the value of ``POSTGRES_USER`` for the ``tracdb`` service.
+* ``trac_db_host``: must match the name of the ``tracdb`` service.
+* ``trac_db_password``: must match the value of ``POSTGRES_PASSWORD`` for the ``tracdb`` service.
+* ``allowed_hosts``: an array that will be appended to Django's ``ALLOWED_HOSTS`` setting.
+* ``internal_ips``: an array of IPs assigned to the ``INTERNAL_IPS`` Django Debug Toolbar setting. Defaults to ``["127.0.0.1"]``.
+* ``parent_host``: the django-hosts ``PARENT_HOST`` setting. Useful if you run docker on a machine other than ``localhost``, but setting it breaks some tests. Defaults to ``djangoproject.localhost:8000``.
 
 Pre-commit checks
 -----------------
