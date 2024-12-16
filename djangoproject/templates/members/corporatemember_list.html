@@ -27,7 +27,7 @@
 
   {% if members.platinum %}
     <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.platinum|intcomma %}
-      Platinum Corporate Members" %} (${{ amount }}+){% endblocktranslate %}</h3>
+      Platinum Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>
     <ul class="corporate-members">
       {% for obj in members.platinum %}
         {% include "members/includes/_member_with_logo.html" %}
@@ -37,7 +37,7 @@
 
   {% if members.gold %}
     <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.gold|intcomma %}
-      Gold Corporate Members" %} (${{ amount }}+){% endblocktranslate %}</h3>
+      Gold Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>
     <ul class="corporate-members">
       {% for obj in members.gold %}
         {% include "members/includes/_member_with_logo.html" %}
@@ -47,7 +47,7 @@
 
   {% if members.silver %}
     <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.silver|intcomma %}
-      Silver Corporate Members" %} (${{ amount }}+){% endblocktranslate %}</h3>
+      Silver Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>
     <ul class="corporate-members">
       {% for obj in members.silver %}
         {% include "members/includes/_member_with_logo.html" %}
@@ -57,7 +57,7 @@
 
   {% if members.bronze %}
     <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.bronze|intcomma %}
-      Bronze Corporate Members" %} (${{ amount }}+){% endblocktranslate %}</h3>
+      Bronze Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>
     <ul class="corporate-members">
       {% for obj in members.bronze %}
         {% include "members/includes/_member_with_logo.html" %}
