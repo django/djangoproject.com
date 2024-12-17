@@ -41,10 +41,6 @@ RUN apt-get update \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# install node dependencies
-COPY ./package.json ./package.json
-RUN npm install
-
 # copy project
 COPY . .
 
