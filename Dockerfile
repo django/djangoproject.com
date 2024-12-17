@@ -16,7 +16,6 @@ RUN apt-get update \
         libpq5 \
         make \
         netcat-openbsd \
-        npm \
         postgresql-client-15 \
         rsync \
         zlib1g \
@@ -40,10 +39,6 @@ RUN apt-get update \
         libpq-dev \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
-
-# install node dependencies
-COPY ./package.json ./package.json
-RUN npm install
 
 # copy project
 COPY . .
