@@ -16,7 +16,6 @@ RUN apt-get update \
         libpq5 \
         make \
         netcat-openbsd \
-        npm \
         postgresql-client-15 \
         rsync \
         zlib1g \

@@ -20,7 +20,6 @@ Install and run locally from a virtual environment
 #. Install dependencies::
 
     python3 -m pip install -r requirements/dev.txt
-    npm install
 
    Alternatively, use the make task::
 

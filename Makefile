@@ -18,7 +18,6 @@ compile-scss-debug:
 
 install:
 	python -m pip install --requirement requirements/dev.txt
-	npm install
 
 isort:
 	python -m isort $(APP_LIST)
