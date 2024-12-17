@@ -14,7 +14,6 @@ locale/*/LC_MESSAGES/django.mo
 .envrc
 .tox
 djangoproject/cache
-djangoproject/static/js/lib/jquery-flot/examples
 djangoproject/static/css/*.map
 djangoproject/static/css/*.css
 node_modules/
