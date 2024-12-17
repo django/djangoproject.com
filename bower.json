@@ -1,8 +1,0 @@
-{
-  "name": "djangoproject",
-  "private": true,
-  "dependencies": {
-    "jquery": "<2.0",
-    "jquery-flot": "~0.8.3"
-  }
-}
