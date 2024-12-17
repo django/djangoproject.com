@@ -20,6 +20,7 @@ Install and run locally from a virtual environment
 #. Install dependencies::
 
     python3 -m pip install -r requirements/dev.txt
+    npm install
 
    Alternatively, use the make task::
 
@@ -233,9 +234,23 @@ Check out the ``Procfile`` file for all the process names.
 JavaScript libraries
 --------------------
 
-This project's JavaScript libraries can be found in
-``djangoproject/static/js/lib/``. If you need to add a library, commit the
-minified version of it to this directory.
+This project uses `Bower <https://bower.io/>`_ to manage JavaScript libraries.
+
+At any time, you can run it to install a new library (e.g., ``jquery-ui``)::
+
+    npm run bower install jquery-ui --save
+
+or check if there are newer versions of the libraries that we use::
+
+    npm run bower ls
+
+If you need to update an existing library, the easiest way is to change the
+version requirement in ``bower.json`` and then to run
+``npm run bower install`` again.
+
+We commit the libraries to the repository, so if you add, update, or remove a
+library from ``bower.json``, you will need to commit the changes in
+``djangoproject/static`` too.
 
 Documentation search
 --------------------
