@@ -40,8 +40,12 @@ def index(request):
 
 def redirect(request, version, kind):
     release = get_object_or_404(Release, version=version)
-    try:
-        redirect_url = release.get_redirect_url(kind)
-    except ValueError:
+
+    if kind == "tarball":
+        redirect_url = release.tarball.url
+    elif kind == "checksum" and release.checksum:
+        redirect_url = release.checksum.url
+    else:
         raise Http404
+
     return HttpResponsePermanentRedirect(redirect_url)
