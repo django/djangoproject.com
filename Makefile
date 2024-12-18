@@ -10,6 +10,9 @@ ci: test
 collectstatics: compile-scss
 	python -m manage collectstatic --noinput
 
+collectstatics-production: compile-scss
+	python -m manage collectstatic --settings=djangoproject.settings.prod --noinput
+
 compile-scss:
 	python -m pysassc $(SCSS)/output.scss $(STATIC)/css/output.css --style=compressed
 
