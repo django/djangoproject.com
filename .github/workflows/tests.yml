@@ -72,6 +72,8 @@ jobs:
                   COVERALLS_SERVICE_NUMBER: "${{ github.workflow }}-${{ github.run_number }}"
               run: coveralls --service=github
             - name: Run collectstatic for production
+              env:
+                  DJANGO_SETTINGS_MODULE: djangoproject.settings.prod
               run: |
                   python -m pip install -r requirements/prod.txt
-                  python -m manage collectstatic --settings=djangoproject.settings.prod
+                  python -m manage collectstatic
