@@ -1,6 +1,9 @@
 # pull official base image
 FROM python:3.12-slim-bookworm
 
+# Overridden in docker-compose.yml to fix tox in Docker
+ARG KEEP_DEPENDENCIES=False
+
 # set work directory
 WORKDIR /usr/src/app
 
@@ -33,11 +36,13 @@ RUN apt-get update \
         libpq-dev \
         zlib1g-dev \
     && python3 -m pip install --no-cache-dir -r ${REQ_FILE} \
-    && apt-get purge --assume-yes --auto-remove \
+    && if [ "${KEEP_DEPENDENCIES}" != "True" ]; then \
+        apt-get purge --assume-yes --auto-remove \
         gcc \
         libc6-dev \
         libpq-dev \
-        zlib1g-dev \
+        zlib1g-dev; \
+    fi \
     && rm -rf /var/lib/apt/lists/*
 
 # copy project
