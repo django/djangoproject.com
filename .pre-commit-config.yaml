@@ -1,4 +1,3 @@
-exclude: '(^djangoproject\/static\/.*$)'
 default_language_version:
     python: python3
 repos:
@@ -46,6 +45,7 @@ repos:
       hooks:
           - id: prettier
             exclude_types: [html, json, scss]
+            exclude: '(^djangoproject\/static\/js\/lib\/.*$)'
     - repo: https://github.com/pycqa/isort
       rev: "5.13.2"
       hooks:
