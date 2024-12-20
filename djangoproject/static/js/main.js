@@ -23,10 +23,6 @@ define(function () {
     mods.push('mod/version-switcher');
   }
 
-  if (hasClass('doc-switcher')) {
-    mods.push('mod/doc-switcher');
-  }
-
   if (hasClass('doc-floating-warning')) {
     mods.push('mod/floating-warning');
   }
