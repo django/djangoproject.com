@@ -1,4 +1,4 @@
-exclude: '(^djangoproject\/static\/.*$)'
+exclude: '^djangoproject\/static\/(css\/|fonts\/|img\/|robots).*$'
 default_language_version:
     python: python3
 repos:
@@ -19,6 +19,7 @@ repos:
           - id: debug-statements
           - id: detect-private-key
           - id: end-of-file-fixer
+            exclude: '(^djangoproject\/static\/js\/lib\/.*$)'
             exclude_types: [json, sql]
           - id: file-contents-sorter
             files: ^(requirements/\w*.txt)$
@@ -46,6 +47,7 @@ repos:
       hooks:
           - id: prettier
             exclude_types: [html, json, scss]
+            exclude: '(^djangoproject\/static\/js\/lib\/.*$)'
     - repo: https://github.com/pycqa/isort
       rev: "5.13.2"
       hooks:
