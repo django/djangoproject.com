@@ -17,10 +17,7 @@ class BlogViewMixin:
         return self.request.user.is_staff
 
     def get_queryset(self):
-        if self.request.user.is_staff:
-            return Entry.objects.all()
-        else:
-            return Entry.objects.published()
+        return Entry.objects.published()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -49,4 +46,10 @@ class BlogDayArchiveView(BlogViewMixin, DayArchiveView):
 
 
 class BlogDateDetailView(BlogViewMixin, DateDetailView):
-    pass
+
+    def get_queryset(self):
+        """Allows staff users to view unpublished entries"""
+        if self.request.user.is_staff:
+            return Entry.objects.all()
+        else:
+            return Entry.objects.published()
