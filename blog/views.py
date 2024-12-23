@@ -53,6 +53,8 @@ class BlogDateDetailView(BlogViewMixin, DateDetailView):
     def get_queryset(self):
         """Allows staff users to view unpublished entries"""
         if self.request.user.is_staff:
+            print("\n\nSTAFF USER\n\n")
             return Entry.objects.all()
         else:
+            print("\n\nNORMAL USER\n\n")
             return Entry.objects.published()
