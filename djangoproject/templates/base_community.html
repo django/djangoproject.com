@@ -2,7 +2,7 @@
 {% load fundraising_extras i18n %}
 
 {% block og_title %}{% translate "Django Community" %}{% endblock %}
-{% block og_description %}{% translate "Building the Django Community. Come join us!" %}{% endblock %}
+{% block og_description %}{% translate "Building the Django Community for {{ community_stats.age }} Come join us!" %}{% endblock %}
 
 {% block layout_class %}sidebar-right{% endblock %}
 {% block title %}{% translate "Django Community" %}{% endblock %}
