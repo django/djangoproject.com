@@ -57,10 +57,6 @@ define(function () {
     mods.push('mod/corporate-member-join');
   }
 
-  if (hasClass('messages')) {
-    mods.push('mod/messages');
-  }
-
   if (hasClass('code-block-caption') || hasClass('snippet')) {
     mods.push('mod/clippify');
   }
