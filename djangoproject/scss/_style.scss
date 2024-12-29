@@ -483,6 +483,10 @@ blockquote {
 
     }
 
+    .meta::selection {
+        color: var(--white-color);
+    }
+
     .logo {
         @include font-size(40);
         @include sans-serif;
