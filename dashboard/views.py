@@ -19,12 +19,13 @@ def index(request):
     if data is None:
         metrics = []
         for MC in Metric.__subclasses__():
-            metrics.extend(MC.objects.filter(show_on_dashboard=True))
+            metrics.extend(MC.objects.filter(show_on_dashboard=True).prefetch_related("data"))
         metrics = sorted(metrics, key=operator.attrgetter("display_position"))
 
         data = []
         for metric in metrics:
-            data.append({"metric": metric, "latest": metric.data.latest()})
+            latest_data = metric.data.latest()
+            data.append({"metric": metric, "latest": latest_data})
         cache.set(key, data, 60 * 60, version=generation)
 
     return render(request, "dashboard/index.html", {"data": data})
