@@ -19,7 +19,9 @@ def index(request):
     if data is None:
         metrics = []
         for MC in Metric.__subclasses__():
-            metrics.extend(MC.objects.filter(show_on_dashboard=True).prefetch_related("data"))
+            metrics.extend(
+                MC.objects.filter(show_on_dashboard=True).prefetch_related("data")
+            )
         metrics = sorted(metrics, key=operator.attrgetter("display_position"))
 
         data = []
