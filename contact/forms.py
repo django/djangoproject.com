@@ -1,15 +1,19 @@
 import logging
+
 import django
 from django import forms
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.utils.encoding import force_bytes
 from django.utils.translation import gettext_lazy as _
-from django_contact_form.forms import AkismetContactForm  # Use AkismetContactForm instead of ContactForm
+from django_contact_form.forms import (  # Use AkismetContactForm instead of ContactForm
+    AkismetContactForm,
+)
 from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV3
 
 logger = logging.getLogger(__name__)
+
 
 class BaseContactForm(AkismetContactForm):  # Inherit from AkismetContactForm
     message_subject = forms.CharField(
@@ -41,6 +45,7 @@ class BaseContactForm(AkismetContactForm):  # Inherit from AkismetContactForm
         return "From: {name} <{email}>\n\n{body}".format(**self.cleaned_data)
 
     # Remove the custom clean_body() method. The spam check is now handled by AkismetContactForm
+
 
 class FoundationContactForm(BaseContactForm):
     recipient_list = ["dsf-board@googlegroups.com"]
