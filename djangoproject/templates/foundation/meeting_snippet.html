@@ -1,0 +1,25 @@
+{% load i18n %}
+<ul class="list-news">
+  {% for m in meetings %}
+    <li>
+      <h4>
+        <a href="{{ m.get_absolute_url }}">{{ m }}</a>
+      </h4>
+      {% with m.business.all as businesses %}
+        {% if businesses %}
+          <div class="meta">
+            <b>{% translate "New and Ongoing business" %}</b>
+            <ul>
+              {% for b in businesses %}
+                <li>{{ b.title }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      {% endwith %}
+      <a class="link-readmore" href="{{ m.get_absolute_url }}">
+        {% translate "Read more" context "Following meeting minutes summary" %}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
