@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load fundraising_extras %}
+{% load fundraising_extras meetings i18n %}
 
 {% block og_title %}Django Software Foundation{% endblock %}
 
@@ -25,5 +25,8 @@
       <li><a href="/foundation/cla/">Contributor license agreements</a></li>
       <li><a href="/foundation/conferences/">Organizing a Django conference</a></li>
     </ul>
+    <h3>{% translate "Latest DSF meeting minutes" %}</h3>
+    {% render_latest_meeting_minute_entries 2 %}
+    <a href="{% url 'foundation_meeting_archive_index' %}" class="link-readmore">{% translate "More meeting minutes" %}</a>
   </div>
 {% endblock %}
