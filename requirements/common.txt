@@ -15,7 +15,7 @@ libsass==0.23.0
 Markdown==3.7
 Pillow==11.0.0
 psycopg[c]==3.2.3
-Pygments==2.18.0
+Pygments==2.19.1
 pykismet3==0.1.1
 requests==2.32.3
 sorl-thumbnail==12.11.0
