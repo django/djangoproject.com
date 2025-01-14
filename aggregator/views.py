@@ -14,7 +14,9 @@ def index(request):
     """
     feeds = []
     for ft in FeedType.objects.all():
-        feeds.append((ft, ft.items()[0:5]))
+        recent_items = ft.items()[0:5]
+        if recent_items:
+            feeds.append((ft, recent_items))
     ctx = {"feedtype_list": feeds}
     return render(request, "aggregator/index.html", ctx)
 
