@@ -7,7 +7,7 @@ django-push @ git+https://github.com/brutasse/django-push.git@22fda99641cfbd2f30
 django-read-only==1.18.0
 django-recaptcha==4.0.0
 django-registration-redux==2.13
-Django==5.0.9
+Django==5.0.11
 docutils==0.21.2
 feedparser==6.0.11
 Jinja2==3.1.5
