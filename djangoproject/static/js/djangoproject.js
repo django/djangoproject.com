@@ -15,10 +15,10 @@ document.querySelectorAll('#doc-versions a').forEach(function (el) {
 // Fade out and remove message elements when close icon is clicked
 document.querySelectorAll('.messages li .close').forEach(function (el) {
   el.addEventListener('click', function (e) {
-    this.parentElement.classList.add('fade-out');
+    this.parentElement.addEventListener('transitionend', function (e) {
+      this.style.display = 'none';
+    });
 
-    setTimeout(function () {
-      el.parentElement.style.display = 'none';
-    }, 400);
+    this.parentElement.classList.add('fade-out');
   });
 });
