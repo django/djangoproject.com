@@ -3416,7 +3416,6 @@ ul.corporate-members li {
         color: $green-dark;
         border: 1px solid $green-dark;
         border-radius: 4px;
-        transition: opacity 400ms;
 
         &::before {
             @include fa-icon();
@@ -3430,6 +3429,7 @@ ul.corporate-members li {
 
         &.fade-out {
             opacity: 0;
+            transition: opacity 400ms;
         }
 
         &.info {
