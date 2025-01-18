@@ -47,14 +47,14 @@ $logo-bg-dark: #272c27;
 
 @font-face {
     font-family: 'Fira Mono';
-    src: url('#{$font-path}/FiraMono-Regular.woff') format('woff');
+    src: url('#{$font-path}/FiraMono-Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Fira Mono';
-    src: url('#{$font-path}/FiraMono-Bold.woff') format('woff');
+    src: url('#{$font-path}/FiraMono-Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
 }
