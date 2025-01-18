@@ -3427,6 +3427,11 @@ ul.corporate-members li {
             margin-right: 10px;
         }
 
+        &.fade-out {
+            opacity: 0;
+            transition: opacity 400ms;
+        }
+
         &.info {
             &::before {
                 content: $fa-var-info-circle;
