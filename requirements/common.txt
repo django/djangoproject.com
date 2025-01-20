@@ -20,5 +20,5 @@ pykismet3==0.1.1
 requests==2.32.3
 sorl-thumbnail==12.11.0
 Sphinx==8.1.3
-stripe==11.4.1
+stripe==3.1.0
 time-machine==2.16.0
