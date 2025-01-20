@@ -14,7 +14,7 @@ Jinja2==3.1.5
 libsass==0.23.0
 Markdown==3.7
 Pillow==11.1.0
-psycopg[c]==3.2.3
+psycopg[c]==3.2.4
 Pygments==2.19.1
 pykismet3==0.1.1
 requests==2.32.3
