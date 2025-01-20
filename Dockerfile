@@ -15,7 +15,6 @@ RUN apt-get update \
         git \
         libpq5 \
         make \
-        postgresql-client-15 \
         rsync \
     && rm -rf /var/lib/apt/lists/*
 
