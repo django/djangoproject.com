@@ -316,10 +316,9 @@ class WebhookHandler:
         )
         if interval == "onetime":
             payment_intent = stripe.PaymentIntent.retrieve(session.payment_intent)
-            charge = payment_intent.charges.data[0]
             donation.payment_set.create(
                 amount=dollar_amount,
-                stripe_charge_id=charge.id,
+                stripe_charge_id=payment_intent.latest_charge,
             )
 
         # Send an email message about managing your donation
