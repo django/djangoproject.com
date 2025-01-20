@@ -29,3 +29,8 @@ services:
             - POSTGRES_USER=djangoproject
             - POSTGRES_PASSWORD=secret
             - POSTGRES_DB=djangoproject
+        healthcheck:
+            test: ["CMD", "pg_isready", "--host", "db", "--port", "5432"]
+            interval: 1s
+            timeout: 10s
+            retries: 10

@@ -1,13 +1,5 @@
 #!/bin/sh
 
-echo "Waiting for postgres..."
-
-while ! pg_isready -h db -p 5432 -q; do
-  sleep 0.1
-done
-
-echo "PostgreSQL started"
-
 python -m manage flush --no-input
 # PGPASSWORD=djangoproject psql --host db --port 5432 --username=code.djangoproject --dbname=code.djangoproject < tracdb/trac.sql
 python -m manage migrate
