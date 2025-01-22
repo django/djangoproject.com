@@ -365,8 +365,8 @@ Running Locally with Docker
 
 4. Run the tests::
 
-    docker compose exec web tox
-    docker compose exec web python -m manage test
+    docker compose run --rm web tox
+    docker compose run --rm web python -m manage test
 
 Pre-commit checks
 -----------------
