@@ -36,6 +36,7 @@ def _replace_primary_key_field_with_autofield(model, schema_editor):
     new `testid` autofield. This makes the models easier to manipulate in the tests.
     """
     old_pk_field = _get_pk_field(model)
+    del old_pk_field.unique
     new_pk_field = deepcopy(old_pk_field)
     new_pk_field.primary_key = False
     schema_editor.alter_field(

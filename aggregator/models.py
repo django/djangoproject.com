@@ -229,7 +229,7 @@ class LocalDjangoCommunity(models.Model):
         verbose_name_plural = _("Local Django Communities")
         constraints = [
             models.CheckConstraint(
-                check=(
+                condition=(
                     models.Q(website_url__isnull=False, event_site_url__isnull=False)
                     | models.Q(website_url__isnull=True, event_site_url__isnull=False)
                     | models.Q(website_url__isnull=False, event_site_url__isnull=True)
