@@ -9,5 +9,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # See git history of this file for why this migration is empty
         migrations.RunPython(migrations.RunPython.noop),
     ]
