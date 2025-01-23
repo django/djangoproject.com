@@ -18,7 +18,7 @@ trim_trailing_whitespace = false
 
 [*.{scss,js}]
 indent_style = space
-indent_size = 4
+indent_size = 2
 
 
 # Customizations for third party libraries
