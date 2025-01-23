@@ -61,9 +61,5 @@ define(function () {
     mods.push('mod/clippify');
   }
 
-  if (hasClass('console-block')) {
-    mods.push('mod/console-tabs');
-  }
-
   require(mods);
 });
