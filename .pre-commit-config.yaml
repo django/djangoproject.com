@@ -36,6 +36,7 @@ repos:
       rev: "1.22.2"
       hooks:
           - id: django-upgrade
+            # TODO: Update to 5.2 when django-upgrade supports it
             args: [--target-version, "5.1"]
     - repo: https://github.com/psf/black
       rev: 24.10.0
