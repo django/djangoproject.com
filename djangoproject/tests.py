@@ -118,6 +118,7 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
         self.assertIn("Vary", resp)
 
 
+# https://adamj.eu/tech/2024/06/23/django-test-pending-migrations/
 class PendingMigrationsTests(TestCase):
     def test_no_pending_migrations(self):
         out = StringIO()

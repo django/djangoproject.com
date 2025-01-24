@@ -31,7 +31,7 @@ migrations-check:
 run:
 	python -m manage runserver 0.0.0.0:8000
 
-test: migrations-check
+test:
 	@python -m coverage run --source=. --module manage test --verbosity 2 $(APP_LIST)
 
 watch-scss:
