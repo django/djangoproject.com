@@ -1,5 +1,8 @@
 from .common import *  # noqa
-from .dev import CACHES  # noqa
+from .dev import (  # noqa
+    CACHES,
+    SILENCED_SYSTEM_CHECKS,
+)
 
 DATABASES = {
     "default": {
@@ -13,10 +16,6 @@ DATABASES = {
 }
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
-
-SILENCED_SYSTEM_CHECKS = SILENCED_SYSTEM_CHECKS + [
-    "django_recaptcha.recaptcha_test_key_error"  # Default test keys for development.
-]
 
 ALLOWED_HOSTS = [".localhost", "127.0.0.1", "www.127.0.0.1"]
 
