@@ -1,7 +1,16 @@
 from .common import *  # noqa
 from .dev import (  # noqa
     CACHES,
+    CSRF_COOKIE_SECURE,
+    DEBUG,
+    DOCS_BUILD_ROOT,
+    EMAIL_BACKEND,
+    MEDIA_ROOT,
+    PUSH_SSL_CALLBACK,
+    SESSION_COOKIE_SECURE,
     SILENCED_SYSTEM_CHECKS,
+    STATIC_ROOT,
+    THUMBNAIL_DEBUG,
 )
 
 DATABASES = {
@@ -21,32 +30,10 @@ ALLOWED_HOSTS = [".localhost", "127.0.0.1", "www.127.0.0.1"]
 
 LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = ["docs.djangoproject.localhost"]
 
-DEBUG = True
-THUMBNAIL_DEBUG = DEBUG
-
-CSRF_COOKIE_SECURE = False
-
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
-MEDIA_ROOT = str(DATA_DIR.joinpath("media_root"))
-
-SESSION_COOKIE_SECURE = False
-
-STATIC_ROOT = str(DATA_DIR.joinpath("static_root"))
-
-# Docs settings
-DOCS_BUILD_ROOT = DATA_DIR.joinpath("djangodocs")
-
 # django-hosts settings
-
 PARENT_HOST = "localhost:8000"
 
-# django-push settings
-
-PUSH_SSL_CALLBACK = False
-
 # Enable optional components
-
 if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
     INTERNAL_IPS = ["127.0.0.1"]
