@@ -49,18 +49,13 @@ PUSH_SSL_CALLBACK = False
 # Enable optional components
 
 if DEBUG:
-    try:
-        import debug_toolbar  # NOQA
-    except ImportError:
-        pass
-    else:
-        INSTALLED_APPS.append("debug_toolbar")
-        INTERNAL_IPS = ["127.0.0.1"]
-        MIDDLEWARE.insert(
-            MIDDLEWARE.index("django.middleware.common.CommonMiddleware") + 1,
-            "debug_toolbar.middleware.DebugToolbarMiddleware",
-        )
-        MIDDLEWARE.insert(
-            MIDDLEWARE.index("debug_toolbar.middleware.DebugToolbarMiddleware") + 1,
-            "djangoproject.middleware.CORSMiddleware",
-        )
+    INSTALLED_APPS.append("debug_toolbar")
+    INTERNAL_IPS = ["127.0.0.1"]
+    MIDDLEWARE.insert(
+        MIDDLEWARE.index("django.middleware.common.CommonMiddleware") + 1,
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    )
+    MIDDLEWARE.insert(
+        MIDDLEWARE.index("debug_toolbar.middleware.DebugToolbarMiddleware") + 1,
+        "djangoproject.middleware.CORSMiddleware",
+    )
