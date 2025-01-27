@@ -1,5 +1,5 @@
 -r common.txt
 django-debug-toolbar==5.0.1
 isort==5.13.2
-pre-commit~=4.0.1
+pre-commit~=4.1.0
 watchdog==6.0.0
