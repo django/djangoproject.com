@@ -9,11 +9,6 @@ define(function () {
     return !!document.getElementsByClassName(className).length; //return a boolean
   }
 
-  //feature list
-  if (hasClass('list-features')) {
-    mods.push('mod/list-feature');
-  }
-
   //collapsing list
   if (hasClass('list-collapsing')) {
     mods.push('mod/list-collapsing');
