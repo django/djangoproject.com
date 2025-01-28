@@ -160,7 +160,7 @@ def update_card(request):
             donation.stripe_customer_id, expand=["subscriptions"]
         )
         subscription = customer.subscriptions.retrieve(donation.stripe_subscription_id)
-        subscription.source = request.POST["stripe_token"]
+        subscription.default_source = request.POST["stripe_token"]
         subscription.save()
     except stripe.error.StripeError as e:
         data = {"success": False, "error": str(e)}
@@ -176,7 +176,9 @@ def cancel_donation(request, hero):
     donations = hero.donation_set.exclude(stripe_subscription_id="")
     donation = get_object_or_404(donations, pk=donation_id)
 
-    customer = stripe.Customer.retrieve(donation.stripe_customer_id)
+    customer = stripe.Customer.retrieve(
+        donation.stripe_customer_id, expand=["subscriptions"]
+    )
     customer.subscriptions.retrieve(donation.stripe_subscription_id).delete()
 
     donation.stripe_subscription_id = ""

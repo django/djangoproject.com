@@ -149,7 +149,7 @@ class TestCampaign(TemporaryMediaRootMixin, TestCase):
         self.assertRedirects(
             response, reverse("fundraising:manage-donations", kwargs={"hero": donor.id})
         )
-        retrieve_customer.assert_called_once_with("54321")
+        retrieve_customer.assert_called_once_with("54321", expand=["subscriptions"])
         donation = Donation.objects.get(id=donation.id)
         self.assertEqual("", donation.stripe_subscription_id)
 
