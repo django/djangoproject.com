@@ -156,7 +156,9 @@ def manage_donations(request, hero):
 def update_card(request):
     donation = get_object_or_404(Donation, id=request.POST["donation_id"])
     try:
-        customer = stripe.Customer.retrieve(donation.stripe_customer_id)
+        customer = stripe.Customer.retrieve(
+            donation.stripe_customer_id, expand=["subscriptions"]
+        )
         subscription = customer.subscriptions.retrieve(donation.stripe_subscription_id)
         subscription.source = request.POST["stripe_token"]
         subscription.save()
