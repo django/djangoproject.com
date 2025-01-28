@@ -1,4 +1,5 @@
 from .common import *  # noqa
+from .dev import CACHES  # noqa
 
 DATABASES = {
     "default": {
@@ -23,17 +24,6 @@ LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = ["docs.djangoproject.localhost"]
 
 DEBUG = True
 THUMBNAIL_DEBUG = DEBUG
-
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "trololololol",
-    },
-    "docs-pages": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "LOCATION": "docs-pages",
-    },
-}
 
 CSRF_COOKIE_SECURE = False
 
