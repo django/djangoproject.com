@@ -3584,8 +3584,8 @@ ul.corporate-members li {
     width: 100%;
   }
   
-  /* Apply left padding only on full-screen (large screens) */
-  @media (min-width: 1200px) { /* Adjust breakpoint as needed */
+/* Apply left padding only on full-screen (large screens) */
+@media (min-width: 1200px) { /* Adjust breakpoint as needed */
     .homepage-container {
       padding-left: 40px; /* Adjust the padding as needed */
     }
