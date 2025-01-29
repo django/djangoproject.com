@@ -398,7 +398,7 @@ blockquote {
 }
 /* Default scrollbar styles */
 [role="complementary"]::-webkit-scrollbar {
-    width: 8px; 
+    width: 8px;
 }
 
 [role="complementary"]::-webkit-scrollbar-track {
@@ -406,12 +406,12 @@ blockquote {
 }
 
 [role="complementary"]::-webkit-scrollbar-button {
-    background-color: transparent; 
+    background-color: transparent;
 }
 
 [role="complementary"]::-webkit-scrollbar-thumb {
-    background: #ccc; 
-    border-radius: 0; 
+    background: #ccc;
+    border-radius: 0;
 }
 
 /* Thumb hover effect */
@@ -3583,11 +3583,10 @@ ul.corporate-members li {
 .homepage-container {
     width: 100%;
   }
-  
+
 /* Apply left padding only on full-screen (large screens) */
 @media (min-width: 1200px) { /* Adjust breakpoint as needed */
     .homepage-container {
       padding-left: 40px; /* Adjust the padding as needed */
     }
   }
-
