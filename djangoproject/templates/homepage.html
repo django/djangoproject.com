@@ -16,6 +16,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="homepage-container">
   <div class="section">
     <h1>{% translate "Meet Django" %}</h1>
     <p>
@@ -99,11 +100,12 @@
     </div>
 
     {% endcomment %}
-
+  </div>
     <!-- END #content-secondary -->
 {% endblock %}
 
 {% block content-related %}
+
   <div role="complementary">
     <a href="{% url 'download' %}" class="cta">
       {% blocktranslate trimmed %}
