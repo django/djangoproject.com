@@ -1,28 +1,50 @@
 from django import template
 from django.utils.safestring import mark_safe
-from django.utils.version import get_version_tuple
+from django.utils.version import get_version_tuple # 
 from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
-
+import difflib
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
+from django.http import Http404
+from django.conf import settings
 from ..forms import DocSearchForm
 from ..models import DocumentRelease
 from ..utils import get_doc_path, get_doc_root
 
 register = template.Library()
 
+# List of existing docs URLs for similarity matching
+EXISTING_DOCS_URLS = [
+    "/en/4.2/ref/databases/",
+    "/en/4.2/ref/models/",
+    "/en/4.2/topics/db/",
+    "/en/4.2/howto/custom-model-fields/",
+    "/en/4.2/ref/settings/",
+    # Add more known URLs as needed
+]
+
+def get_suggestions(broken_url):
+    """Finds close matches for the broken URL using difflib."""
+    return difflib.get_close_matches(broken_url, EXISTING_DOCS_URLS, n=3, cutoff=0.6)
 
 @register.inclusion_tag("docs/search_form.html", takes_context=True)
 def search_form(context):
     request = context["request"]
-    release = DocumentRelease.objects.get_by_version_and_lang(
-        context["version"],
-        context["lang"],
-    )
+    version = context.get("version", context.get("DJANGO_VERSION"))
+    lang = context.get("lang", context.get("LANGUAGE_CODE"))
+
+    release = get_object_or_404(DocumentRelease, version=version, lang=lang)
+    broken_path = request.path.replace(f"/{lang}/{version}/", "", 1)
+    suggestions = get_suggestions(f"/{broken_path}")
+
     return {
         "form": DocSearchForm(request.GET, release=release),
-        "version": context["version"],
-        "lang": context["lang"],
+        "version": version,
+        "lang": lang,
+        "suggestions": suggestions,
+        "broken_path": broken_path,
     }
 
 
