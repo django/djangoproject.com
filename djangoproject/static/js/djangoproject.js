@@ -14,8 +14,8 @@ document.querySelectorAll('#doc-versions a').forEach(function (el) {
 
 // Fade out and remove message elements when close icon is clicked
 document.querySelectorAll('.messages li .close').forEach(function (el) {
-  el.addEventListener('click', function (e) {
-    this.parentElement.addEventListener('transitionend', function (e) {
+  el.addEventListener('click', function () {
+    this.parentElement.addEventListener('transitionend', function () {
       this.style.display = 'none';
     });
 
