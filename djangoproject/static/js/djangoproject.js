@@ -34,3 +34,25 @@ document.querySelectorAll('.console-block label').forEach(function (el) {
     });
   });
 });
+
+// Add animation class to feature icons when they are fully visible
+(function () {
+  const observer = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add('inview');
+
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 1.0 },
+  );
+
+  document.querySelectorAll('.list-features i').forEach(function (el) {
+    observer.observe(el);
+  });
+})();
