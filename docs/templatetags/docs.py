@@ -1,14 +1,16 @@
+import difflib
+
 from django import template
+from django.conf import settings
+from django.http import Http404
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.utils.safestring import mark_safe
-from django.utils.version import get_version_tuple # 
+from django.utils.version import get_version_tuple
 from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
-import difflib
-from django.shortcuts import get_object_or_404
-from django.urls import reverse
-from django.http import Http404
-from django.conf import settings
+
 from ..forms import DocSearchForm
 from ..models import DocumentRelease
 from ..utils import get_doc_path, get_doc_root
@@ -25,9 +27,11 @@ EXISTING_DOCS_URLS = [
     # Add more known URLs as needed
 ]
 
+
 def get_suggestions(broken_url):
     """Finds close matches for the broken URL using difflib."""
     return difflib.get_close_matches(broken_url, EXISTING_DOCS_URLS, n=3, cutoff=0.6)
+
 
 @register.inclusion_tag("docs/search_form.html", takes_context=True)
 def search_form(context):
