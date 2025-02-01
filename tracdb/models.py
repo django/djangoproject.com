@@ -9,6 +9,38 @@ A few notes on tables that're left out and why:
     * All the session and permission tables: they're just not needed.
     * Enum: I don't know what this is or what it's for.
     * NodeChange: Ditto.
+
+These models are far from perfect but are Good Enough(tm) to get some useful data out.
+
+One important mismatch between these models and the Trac database has to do with
+composite primary keys. Trac uses them for several tables, but Django does not support
+them yet (ticket #373).
+
+These are the tables that use them:
+
+    * ticket_custom (model TicketCustom)
+    * ticket_change (model TicketChange)
+    * wiki (model Wiki)
+    * attachment (model Attachment)
+
+To make these work with Django (for some definition of the word "work") we mark only
+one of their field as being the primary key (primary_key=True).
+This is obviously incorrect but — somewhat suprisingly — it doesn't break **everything**
+and the little that does actually work is good enough for what we're trying to do:
+
+    * Model.objects.create(...) correctly creates the object in the db
+    * Most queryset/manager methods work (in particular filter(), exclude(), all()
+      and count())
+
+On the other hand, here's what absolutely DOES NOT work (the list is sadly not
+exhaustive):
+
+    * Updating a model instance with save() will update ALL ROWS that happen to share
+      the value for the field used as the "fake" primary key if they exist (resulting
+      in a DBError)
+    * The admin won't work (the "pk" field shortcut can't be used reliably since it can
+      return multiple rows)
+
 """
 
 from datetime import date
@@ -129,11 +161,11 @@ class Ticket(models.Model):
 
 
 class TicketCustom(models.Model):
-    pk = models.CompositePrimaryKey("ticket", "name")
     ticket = models.ForeignKey(
         Ticket,
         related_name="custom_fields",
         db_column="ticket",
+        primary_key=True,  # XXX See note at the top about composite pk
         on_delete=models.DO_NOTHING,
     )
     name = models.TextField()
@@ -148,11 +180,11 @@ class TicketCustom(models.Model):
 
 
 class TicketChange(models.Model):
-    pk = models.CompositePrimaryKey("ticket", "_time", "field")
     ticket = models.ForeignKey(
         Ticket,
         related_name="changes",
         db_column="ticket",
+        primary_key=True,  # XXX See note at the top about composite pk
         on_delete=models.DO_NOTHING,
     )
     author = models.TextField()
@@ -260,8 +292,9 @@ class Revision(models.Model):
 
 
 class Wiki(models.Model):
-    pk = models.CompositePrimaryKey("name", "version")
-    name = models.TextField()
+    name = models.TextField(
+        primary_key=True
+    )  # XXX See note at the top about composite pk
     version = models.IntegerField()
     _time = models.BigIntegerField(db_column="time")
     time = time_property("_time")
@@ -279,9 +312,10 @@ class Wiki(models.Model):
 
 
 class Attachment(models.Model):
-    pk = models.CompositePrimaryKey("type", "id", "filename")
     type = models.TextField()
-    id = models.TextField()
+    id = models.TextField(
+        primary_key=True
+    )  # XXX See note at the top about composite pk
     filename = models.TextField()
     size = models.IntegerField()
     _time = models.BigIntegerField(db_column="time")
