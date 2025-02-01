@@ -56,3 +56,11 @@ document.querySelectorAll('.console-block label').forEach(function (el) {
     observer.observe(el);
   });
 })();
+
+// Toggle mobile menu on button click
+document.querySelector('.menu-button').addEventListener('click', function () {
+  const menu_el = document.querySelector('#top [role="navigation"]');
+
+  this.classList.toggle('active');
+  menu_el.classList.toggle('active');
+});
