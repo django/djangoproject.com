@@ -1,9 +1,9 @@
 {% extends 'base_error.html' %}
-{% load i18n %}
+{% load i18n docs %}
 
 {% block title %}{% translate "Page not found" %}{% endblock %}
 
-{% block header %}<h1>404</h1>{% endblock %}
+{% block header %}<h1>404</h1> {% search_form %} {% endblock %}
 
 {% block content %}
   <h2>{% translate "Page not found" %}</h2>
