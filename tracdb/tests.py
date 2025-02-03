@@ -88,7 +88,7 @@ class TicketTestCase(TracDBCreateDatabaseMixin, TestCase):
 
         self.assertTicketsEqual(
             Ticket.objects.with_custom().filter(custom__x="A"),
-            [("test")],
+            ["test"],
         )
 
     def test_with_custom_lookup_multiple(self):
@@ -98,7 +98,7 @@ class TicketTestCase(TracDBCreateDatabaseMixin, TestCase):
 
         self.assertTicketsEqual(
             Ticket.objects.with_custom().filter(custom__x="A", custom__y="A"),
-            [("test1")],
+            ["test1"],
         )
 
     def test_from_querystring_model_field(self):
