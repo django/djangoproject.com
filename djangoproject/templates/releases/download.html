@@ -33,13 +33,13 @@
   <p>Linux / macOS:</p>
 
 
-  <div class="snippet"> 
+  <div class="snippet">
     <pre class="literal-block snippet-filename highlight"><code>python -m pip install Django=={{ current.version }}</code></pre>
   </div>
 
-  
+
   <p>Windows:</p>
-  <div class="snippet"> 
+  <div class="snippet">
     <pre class="literal-block snippet-filename highlight"><code>py -m pip install Django=={{ current.version }}</code></pre>
   </div>
 
@@ -54,7 +54,7 @@
         {{ major_version }} release. Please read the
         {% release_notes preview.version show_version=True %} before using this package.
         <p>Install the {{ preview.get_status_display }} with <a href="https://pip.pypa.io/">pip</a>:</p>
-        <div class="snippet"> 
+        <div class="snippet">
           <pre class="literal-block snippet-filename highlight"><code>pip install --pre django</code></pre>
         </div>
     {% endwith %}
@@ -62,10 +62,10 @@
 
   <h2>Option {% cycle options %}: Get the latest development version</h2>
   <p>The latest and greatest Django version is the one that’s in our Git repository (our revision-control system). This is only for experienced users who want to try incoming changes and help identify bugs before an official release. Get it using this shell command, which requires <a href="https://git-scm.com/">Git</a>:</p>
-  <div class="snippet"> 
+  <div class="snippet">
     <p class="literal-block snippet-filename highlight"><code>git clone https://github.com/django/django.git</code></p>
   </div>
-  
+
   <p>You can also download <a href="https://github.com/django/django/archive/main.tar.gz">
     a gzipped tarball</a> of the development version. This archive is updated
     every time we commit code.</p>
