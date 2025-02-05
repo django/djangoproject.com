@@ -1,3 +1,6 @@
+import re
+import unicodedata
+
 from django.conf import settings
 from django.http import Http404
 
@@ -39,3 +42,18 @@ def get_doc_path_or_404(docroot, subpath):
     if doc is None:
         raise Http404(doc)
     return doc
+
+
+def sanitize_for_trigram(text):
+    """
+    Sanitize search query for PostgreSQL Trigram search.
+
+    - Removes parts starting with '-'
+    - Normalizes Unicode characters (NFKD)
+    - Keeps only letters, numbers and spaces
+    - Removes multiple spaces and trims
+    """
+    text = re.sub(r'(\s|^)-[^\s"\']+|(\s|^)-["\'][^"\']+["\']', "", text)
+    text = unicodedata.normalize("NFKD", text)
+    text = re.sub(r"[^\w\s]", "", text, flags=re.UNICODE)
+    return " ".join(text.split())
