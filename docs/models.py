@@ -250,8 +250,7 @@ class DocumentQuerySet(models.QuerySet):
                 query_text, config=models.F("config"), search_type="websearch"
             )
             search_rank = SearchRank(models.F("search"), search_query)
-            similarity = TrigramSimilarity("title", query_text)
-            return (
+            base_qs = (
                 self.prefetch_related(
                     Prefetch(
                         "release",
@@ -261,12 +260,8 @@ class DocumentQuerySet(models.QuerySet):
                         "release__release", queryset=Release.objects.only("version")
                     ),
                 )
-                .filter(
-                    release_id=release.id,
-                    search=search_query,
-                )
+                .filter(release_id=release.id)
                 .annotate(
-                    rank=search_rank + similarity,
                     headline=SearchHeadline(
                         "title",
                         search_query,
@@ -283,12 +278,28 @@ class DocumentQuerySet(models.QuerySet):
                     ),
                     breadcrumbs=models.F("metadata__breadcrumbs"),
                 )
-                .order_by("-rank")
                 .only(
                     "path",
                     "release",
                 )
             )
+            vector_qs = (
+                base_qs.alias(rank=search_rank)
+                .filter(search=search_query)
+                .order_by("-rank")
+            )
+            if not vector_qs:
+                return (
+                    base_qs.alias(
+                        similarity=TrigramSimilarity(
+                            "title", utils.sanitize_for_trigram(query_text)
+                        )
+                    )
+                    .filter(similarity__gt=0.3)
+                    .order_by("-similarity")
+                )
+            else:
+                return vector_qs
         else:
             return self.none()
 

@@ -20,7 +20,7 @@ from releases.models import Release
 from .models import DOCUMENT_SEARCH_VECTOR, Document, DocumentRelease
 from .sitemaps import DocsSitemap
 from .templatetags.docs import get_all_doc_versions
-from .utils import get_doc_path
+from .utils import get_doc_path, sanitize_for_trigram
 
 
 class ModelsTests(TestCase):
@@ -261,6 +261,30 @@ class TestUtils(TestCase):
         # existing file
         path, filename = __file__.rsplit(os.path.sep, 1)
         self.assertEqual(get_doc_path(Path(path), filename), None)
+
+    def test_sanitize_for_trigram(self):
+        for query, sanitized_query in [
+            ("simple search", "simple search"),
+            ("Python Django -Flask", "Python Django"),
+            ('Python "Django Framework" -Flask', "Python Django Framework"),
+            ("Développement -'Framework Django' web", "Developpement web"),
+            (
+                "Γλώσσα προγραμματισμού Python -'Flask και Django'",
+                "Γλωσσα προγραμματισμου Python",
+            ),
+            (
+                "Pemrograman Python -'Flask dan Django' backend",
+                "Pemrograman Python backend",
+            ),
+            (
+                "Programmazione 'Python e Django' -Flask",
+                "Programmazione Python e Django",
+            ),
+            ("Linguagem Python -'Django e Flask' web", "Linguagem Python web"),
+            ("Desarrollo Python -'Django y Flask' rápido", "Desarrollo Python rapido"),
+        ]:
+            with self.subTest(query=query):
+                self.assertEqual(sanitize_for_trigram(query), sanitized_query)
 
 
 class UpdateDocTests(TestCase):
@@ -548,18 +572,16 @@ class DocumentManagerTest(TestCase):
     def test_search(self):
         expected_list = [
             (
-                0.96982837,
                 "releases/1.2.1",
-                "<mark>Django</mark> 1.2.1 release notes",
+                "<mark>Django</mark> 1.2.1 release notes",  # Ranked: 0.96982837.
                 (
                     "<mark>Django</mark> 1.2.1 release notes ¶  \n "
                     "<mark>Django</mark> 1.2.1 was released almost immediately after 1.2.0 to correct two small"
                 ),
             ),
             (
-                0.9490876,
                 "releases/1.9.4",
-                "<mark>Django</mark> 1.9.4 release notes",
+                "<mark>Django</mark> 1.9.4 release notes",  # Ranked: 0.9490876.
                 (
                     "<mark>Django</mark> 1.9.4 release notes ¶  \n  "
                     "March 5, 2016  \n "
@@ -570,24 +592,24 @@ class DocumentManagerTest(TestCase):
         self.assertQuerySetEqual(
             Document.objects.search("django", self.release),
             expected_list,
-            transform=attrgetter("rank", "path", "headline", "highlight"),
+            transform=attrgetter("path", "headline", "highlight"),
         )
 
     def test_websearch(self):
         self.assertQuerySetEqual(
             Document.objects.search('django "release notes" -packaging', self.release),
-            [("Django 1.9.4 release notes", 1.5675676)],
-            transform=attrgetter("title", "rank"),
+            ["Django 1.9.4 release notes"],
+            transform=attrgetter("title"),
         )
 
     def test_multilingual_search(self):
         self.assertQuerySetEqual(
             Document.objects.search("publication", self.release_fr),
             [
-                ("Notes de publication de Django 1.2.1", 1.0693262),
-                ("Notes de publication de Django 1.9.4", 1.0458658),
+                "Notes de publication de Django 1.2.1",  # Ranked: 1.0693262.
+                "Notes de publication de Django 1.9.4",  # Ranked: 1.0458658.
             ],
-            transform=attrgetter("title", "rank"),
+            transform=attrgetter("title"),
         )
 
     def test_empty_search(self):
@@ -641,6 +663,15 @@ class DocumentManagerTest(TestCase):
             ],
             transform=attrgetter("headline", "highlight"),
         )
+
+    def test_search_title(self):
+        misspelled_query = Document.objects.search("viewss", self.release)
+        with self.assertNumQueries(2):
+            self.assertQuerySetEqual(
+                misspelled_query,
+                ["Generic views"],
+                transform=attrgetter("headline"),
+            )
 
 
 class TemplateTestCase(TestCase):
