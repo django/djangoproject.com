@@ -1,23 +1,51 @@
 {% extends 'base_error.html' %}
 {% load i18n %}
+{% load custom_tags %}
 
 {% block title %}{% translate "Page not found" %}{% endblock %}
 
-{% block header %}<h1>404</h1>{% endblock %}
+{% block header %}
+  <h1 class="error-title">404 - Page Not Found</h1>
+  <p class="error-subtitle">
+    {% translate "Oops! The page you’re looking for doesn’t exist." %}
+  </p>
+{% endblock %}
 
 {% block content %}
-  <h2>{% translate "Page not found" %}</h2>
+  <div class="error-container">
+    <h2>{% translate "We couldn’t find the page:" %}</h2>
+    <p class="broken-url">"<strong>{{ broken_path }}</strong>"</p>
 
-  <p>
-    {% blocktranslate trimmed %}
-      Looks like you followed a bad link. If you think it's our fault, please
-      <a href="https://code.djangoproject.com/">let us know</a>.
-    {% endblocktranslate %}</p>
+    <p>
+      {% blocktranslate trimmed %}
+        Looks like you followed a bad link. If you think it's our fault, please
+        <a href="https://code.djangoproject.com/">let us know</a>.
+      {% endblocktranslate %}
+    </p>
 
-  {% url 'homepage' as homepage_url %}
-  <p>
-    {% blocktranslate trimmed %}
-      Here's a link to the <a href="{{ homepage_url }}">homepage</a>. You know, just in case.
-    {% endblocktranslate %}</p>
+    <!-- Search Form -->
+    <div class="search-container">
+      <form method="get" action="{% url 'doc_search' %}">
+        {{ form.as_p }}
+        <button type="submit" class="search-button">{% translate "Search Docs" %}</button>
+      </form>
+    </div>
 
+    <!-- Suggested Closest Matches -->
+    {% if suggestions %}
+      <h3>{% translate "Did you mean?" %}</h3>
+      <ul class="suggestion-list">
+        {% for suggestion in suggestions %}
+          <li><a href="{{ suggestion }}">{{ suggestion }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% url 'homepage' as homepage_url %}
+    <p>
+      {% blocktranslate trimmed %}
+        Here's a link to the <a href="{{ homepage_url }}">homepage</a>. You know, just in case.
+      {% endblocktranslate %}
+    </p>
+  </div>
 {% endblock %}
