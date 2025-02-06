@@ -64,3 +64,37 @@ document.querySelector('.menu-button').addEventListener('click', function () {
   this.classList.toggle('active');
   menu_el.classList.toggle('active');
 });
+
+// Update search input placeholder text based on the user's operating system
+(function () {
+  const el = document.querySelector('#id_q');
+
+  if (!el) {
+    return;
+  }
+
+  const initial_value = el.getAttribute('placeholder');
+  const is_mac = navigator.userAgent.indexOf('Mac') !== -1;
+  const new_value = `${initial_value} (${is_mac ? '⌘' : 'Ctrl'} + K)`;
+
+  el.setAttribute('placeholder', new_value);
+})();
+
+// Focus, select, and scroll to search input when key combination is pressed
+window.addEventListener('keydown', function (e) {
+  if (!(e.metaKey || e.ctrlKey) || e.key !== 'k') {
+    return;
+  }
+
+  if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+    return;
+  }
+
+  e.preventDefault();
+
+  const el = document.querySelector('#id_q');
+
+  el.select();
+  el.focus({ preventScroll: true });
+  el.scrollIntoView({ behavior: 'smooth' });
+});
