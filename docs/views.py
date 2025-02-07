@@ -16,6 +16,7 @@ from django_hosts.resolvers import reverse
 
 from .forms import DocSearchForm
 from .models import Document, DocumentRelease
+from .search import START_SEL
 from .utils import get_doc_path_or_404, get_doc_root_or_404
 
 SIMPLE_SEARCH_OPERATORS = ["+", "|", "-", '"', "*", "(", ")", "~"]
@@ -215,6 +216,7 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                     "query": q,
                     "page": page,
                     "paginator": paginator,
+                    "start_sel": START_SEL,
                 }
             )
 

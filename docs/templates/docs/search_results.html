@@ -36,7 +36,7 @@
         {% for result in page.object_list %}
           <dt>
             <h2 class="result-title">
-              <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}">{{ result.headline|safe }}</a>
+              <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}{% if not start_sel in result.headline %}{{ result.highlight|fragment }}{% endif %}">{{ result.headline|safe }}</a>
             </h2>
             <span class="meta breadcrumbs">
               {% for breadcrumb in result.breadcrumbs %}
