@@ -19,7 +19,7 @@ from releases.models import Release
 
 from .models import DOCUMENT_SEARCH_VECTOR, Document, DocumentRelease
 from .sitemaps import DocsSitemap
-from .templatetags.docs import get_all_doc_versions
+from .templatetags.docs import generate_scroll_to_text_fragment, get_all_doc_versions
 from .utils import get_doc_path, sanitize_for_trigram
 
 
@@ -251,6 +251,80 @@ def band_listing(request):
             </div>
             """,
         )
+
+    def test_fragment_template_tag(self):
+        highlighted_text = """<mark>testing</mark> frameworks   section of   Advanced <mark>testing</mark> topics  .
+        Writing and running <mark>tests</mark>
+        <mark>Testing</mark> tools
+        Advanced <mark>testing</mark>
+        <mark>tests</mark> ¶"""
+        template = Template(
+            "{% load docs %}"
+            "https://docs.djangoproject.com/en/5.1/topics/testing/"
+            "{{ highlighted_text|fragment }}"
+        )
+        self.assertHTMLEqual(
+            template.render(Context({"highlighted_text": highlighted_text})),
+            "https://docs.djangoproject.com/en/5.1/topics/testing/"
+            "#:~:text=testing%20frameworks%20section%20of%20Advanced%20testing%20topics.",
+        )
+
+    def test_generate_scroll_to_text_fragment(self):
+        cases = [
+            (
+                """"<mark>StackedInline</mark>     [source]    ¶
+                The admin interface has the ability to edit models""",
+                "#:~:text=%22StackedInline%5Bsource%5D",
+            ),
+            (
+                """<mark>TextChoices</mark>  ):
+                         FRESHMAN   =   &quot;FR&quot;  ,   _  (  &quot;Freshman&quot;  )
+                         SOPHOMORE   =   &quot;SO&quot;  ,   _  (  &quot;Sophomore&quot;  )
+                         JUNIOR""",
+                "#:~:text=TextChoices%29%3A",
+            ),
+            (
+                """<mark>TextChoices</mark>  (  &quot;Medal&quot;  ,   &quot;GOLD SILVER BRONZE&quot;  )
+
+                    SPORT_CHOICES   =   [
+                        (  &quot;Martial Arts&quot;  ,   [(  &quot;judo""",
+                "#:~:text=TextChoices%28%22Medal%22%2C%20%22GOLD%20SILVER%20BRONZE%22%29",
+            ),
+            (
+                """<mark>TextChoices</mark>  ,   IntegerChoices  , and   Choices
+                are now available as a way to define    Field.choices   .   <mark>TextChoices</mark>
+                and   IntegerChoices""",
+                "#:~:text=TextChoices%2C%20IntegerChoices%2C%20and%20Choices",
+            ),
+            (
+                """<mark>TextChoices</mark>   or   IntegerChoices  ) instances.
+                Any Django field
+                Any function or method reference (e.g.   datetime.datetime.today  ) (must""",
+                "#:~:text=TextChoices%20or%20IntegerChoices%29%20instances.",
+            ),
+            (
+                """<mark>database</mark> configuration in    <mark>DATABASES</mark>   :
+
+                settings.py    ¶
+                <mark>DATABASES</mark>   =   {
+                &quot;default&quot;  :   {
+                    &quot;ENGINE&quot;  :   &quot;django.db.backends.postgresql&quot;  ,
+                    &quot;OPTIONS""",
+                "#:~:text=database%20configuration%20in%20DATABASES%3A",
+            ),
+            (
+                """
+                <mark>Generic</mark> <mark>views</mark> ¶
+                See   Built-in class-based <mark>views</mark> API  . """,
+                "#:~:text=Generic%20views",
+            ),
+        ]
+        for text, url_text_fragment in cases:
+            with self.subTest(url_text_fragment=url_text_fragment):
+                self.assertEqual(
+                    generate_scroll_to_text_fragment(text),
+                    url_text_fragment,
+                )
 
 
 class TestUtils(TestCase):
