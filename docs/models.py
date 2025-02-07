@@ -28,6 +28,8 @@ from . import utils
 from .search import (
     DEFAULT_TEXT_SEARCH_CONFIG,
     DOCUMENT_SEARCH_VECTOR,
+    START_SEL,
+    STOP_SEL,
     TSEARCH_CONFIG_LANGUAGES,
 )
 
@@ -265,15 +267,15 @@ class DocumentQuerySet(models.QuerySet):
                     headline=SearchHeadline(
                         "title",
                         search_query,
-                        start_sel="<mark>",
-                        stop_sel="</mark>",
+                        start_sel=START_SEL,
+                        stop_sel=STOP_SEL,
                         config=models.F("config"),
                     ),
                     highlight=SearchHeadline(
                         KeyTextTransform("body", "metadata"),
                         search_query,
-                        start_sel="<mark>",
-                        stop_sel="</mark>",
+                        start_sel=START_SEL,
+                        stop_sel=STOP_SEL,
                         config=models.F("config"),
                     ),
                     breadcrumbs=models.F("metadata__breadcrumbs"),

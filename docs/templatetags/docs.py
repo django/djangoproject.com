@@ -1,4 +1,8 @@
+import re
+from urllib.parse import quote
+
 from django import template
+from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.utils.version import get_version_tuple
 from pygments import highlight
@@ -7,6 +11,7 @@ from pygments.lexers import get_lexer_by_name
 
 from ..forms import DocSearchForm
 from ..models import DocumentRelease
+from ..search import START_SEL, STOP_SEL
 from ..utils import get_doc_path, get_doc_root
 
 register = template.Library()
@@ -81,3 +86,38 @@ def do_pygments(parser, token):
     nodelist = parser.parse(("endpygment",))
     parser.delete_first_token()
     return PygmentsNode(parser.compile_filter(tokens[1]), nodelist)
+
+
+@register.filter(name="fragment")
+@stringfilter
+def generate_scroll_to_text_fragment(highlighted_text):
+    """
+    Given the highlighted text generated from Document.objects.search()
+    constructs a scroll to text fragment.
+
+    This will not work when:
+    *  the highlighted test starts from a partial word, e.g it starts from
+       test_environment rather than DiscoverRunner.setup_test_environment().
+    *  it is trying to highlight a Python code snippet and the spacing logic
+       has fallen down e.g. test = 5 not test=5 but test(a=5) not test(a = 5).
+    """
+    first_non_empty_line = next(
+        (
+            stripped
+            for line in highlighted_text.split("\n")
+            if (stripped := line.strip())
+        ),
+        "",
+    )
+    # Remove highlight tags and unwanted symbols.
+    line_without_highlight = re.sub(
+        rf"{START_SEL}|{STOP_SEL}|¶", "", first_non_empty_line
+    )
+    line_without_highlight = line_without_highlight.replace("&quot;", '"')
+    # Remove excess spacing.
+    single_spaced = re.sub(r"\s+", " ", line_without_highlight).strip()
+    # Handle punctuation spacing.
+    single_spaced = re.sub(r"\s([.,;:!?)(\]\[])", r"\1", single_spaced)
+    # Due to Python code such as timezone.now(), remove the space after a bracket.
+    single_spaced = re.sub(r"([(\[])\s", r"\1", single_spaced)
+    return f"#:~:text={quote(single_spaced)}"

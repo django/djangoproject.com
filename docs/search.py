@@ -48,3 +48,6 @@ DOCUMENT_SEARCH_VECTOR = (
         KeyTextTransform("parents", "metadata"), weight="D", config=F("config")
     )
 )
+
+START_SEL = "<mark>"
+STOP_SEL = "</mark>"
