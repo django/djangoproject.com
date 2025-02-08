@@ -1,9 +1,18 @@
 {% extends 'base_error.html' %}
-{% load i18n %}
+{% load i18n docs %}
 
 {% block title %}{% translate "Page not found" %}{% endblock %}
 
-{% block header %}<h1>404</h1>{% endblock %}
+{% block header %}
+  <div class="copy-banner">
+    <div class="container--flex container--flex--wrap--mobile">
+      <h1>404</h1>
+      {% if request.host.regex == 'docs' %}
+        {% search_form %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
 
 {% block content %}
   <h2>{% translate "Page not found" %}</h2>
@@ -12,7 +21,8 @@
     {% blocktranslate trimmed %}
       Looks like you followed a bad link. If you think it's our fault, please
       <a href="https://code.djangoproject.com/">let us know</a>.
-    {% endblocktranslate %}</p>
+    {% endblocktranslate %}
+  </p>
 
   {% url 'homepage' as homepage_url %}
   <p>
