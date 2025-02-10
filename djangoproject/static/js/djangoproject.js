@@ -67,7 +67,7 @@ document.querySelector('.menu-button').addEventListener('click', function () {
 
 // Update search input placeholder text based on the user's operating system
 (function () {
-  const el = document.querySelector('#id_q');
+  const el = document.getElementById('id_q');
 
   if (!el) {
     return;
