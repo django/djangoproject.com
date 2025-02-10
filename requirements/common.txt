@@ -4,7 +4,7 @@ django-countries==7.6.1
 django-hosts==5.1
 django-money==3.5.3
 django-push @ git+https://github.com/brutasse/django-push.git@22fda99641cfbd2f3075a723d92652a8e38220a5
-django-read-only==1.18.0
+django-read-only==1.19.0
 django-recaptcha==4.0.0
 django-registration-redux==2.13
 Django==5.1.5
