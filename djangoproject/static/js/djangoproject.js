@@ -73,9 +73,9 @@ document.querySelector('.menu-button').addEventListener('click', function () {
     return;
   }
 
-  const initial_value = el.getAttribute('placeholder');
+  const original_placeholder = el.getAttribute('placeholder');
   const is_mac = navigator.userAgent.indexOf('Mac') !== -1;
-  const new_value = `${initial_value} (${is_mac ? '⌘' : 'Ctrl'} + K)`;
+  const new_value = `${original_placeholder} (${is_mac ? '⌘' : 'Ctrl'} + K)`;
 
   el.setAttribute('placeholder', new_value);
 })();
