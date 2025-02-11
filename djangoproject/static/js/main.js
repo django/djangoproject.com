@@ -33,11 +33,6 @@ define(function () {
     mods.push('dashboard/detail');
   }
 
-  // search form
-  if (hasClass('search')) {
-    mods.push('mod/search-key');
-  }
-
   if (hasClass('stripe-donation')) {
     mods.push('mod/stripe-donation');
   }
