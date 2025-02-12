@@ -51,7 +51,7 @@ class MeetingDetail(MeetingMixin, generic.DateDetailView):
         )
         context_data["new_business"] = meeting.business.filter(
             business_type=models.Business.NEW
-        ).order_by("id")
+        )
         return context_data
 
 
