@@ -20,7 +20,7 @@ from releases.models import Release
 from .models import DOCUMENT_SEARCH_VECTOR, Document, DocumentRelease
 from .sitemaps import DocsSitemap
 from .templatetags.docs import generate_scroll_to_text_fragment, get_all_doc_versions
-from .utils import get_doc_path, sanitize_for_trigram
+from .utils import generate_code_references, get_doc_path, sanitize_for_trigram
 
 
 class ModelsTests(TestCase):
@@ -360,6 +360,25 @@ class TestUtils(TestCase):
             with self.subTest(query=query):
                 self.assertEqual(sanitize_for_trigram(query), sanitized_query)
 
+    def test_generate_code_references(self):
+        test_cases = [
+            ("", {}),
+            (
+                '<dl class="py attribute"><dt class="sig sig-object py" id="django.db.migrations.Migration.initial">',
+                {"Migration.initial": "django.db.migrations.Migration.initial"},
+            ),
+            (
+                '<dl class="py class"><dt class="sig sig-object py" id="django.contrib.gis.gdal.Layer">',
+                {"Layer": "django.contrib.gis.gdal.Layer"},
+            ),
+            (
+                '<dl class="py method"><dt class="sig sig-object py" id="db_for_write">',
+                {"db_for_write": "db_for_write"},
+            ),
+        ]
+        for body, expected in test_cases:
+            self.assertEqual(generate_code_references(body), expected)
+
 
 class UpdateDocTests(TestCase):
     @classmethod
@@ -422,6 +441,38 @@ class UpdateDocTests(TestCase):
             self.release.documents.all(),
             ["Title & title"],
             transform=attrgetter("title"),
+        )
+
+    def test_code_entities(self):
+        self.release.sync_to_db(
+            [
+                {
+                    "body": (
+                        '<dl class="py class"><dt class="sig sig-object py" id="django.contrib.gis.gdal.Layer">'
+                        '<dl class="py attribute"><dt class="sig sig-object py" id="django.db.migrations.Migration.initial">'
+                        '<dl class="py method"><dt class="sig sig-object py" id="db_for_write">'
+                    ),
+                    "title": "This is the title",
+                    "current_page_name": "foo/bar",
+                }
+            ]
+        )
+        self.assertQuerySetEqual(
+            self.release.documents.all(),
+            [
+                (
+                    {
+                        "Layer": "django.contrib.gis.gdal.Layer",
+                        "Migration.initial": "django.db.migrations.Migration.initial",
+                        "db_for_write": "db_for_write",
+                    },
+                    "Layer Migration.initial db_for_write",
+                )
+            ],
+            transform=lambda doc: (
+                doc.metadata["code_references"],
+                doc.metadata["code_references_search"],
+            ),
         )
 
     def test_empty_documents(self):

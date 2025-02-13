@@ -1,4 +1,5 @@
 import re
+from collections import OrderedDict
 from urllib.parse import quote
 
 from django import template
@@ -121,3 +122,18 @@ def generate_scroll_to_text_fragment(highlighted_text):
     # Due to Python code such as timezone.now(), remove the space after a bracket.
     single_spaced = re.sub(r"([(\[])\s", r"\1", single_spaced)
     return f"#:~:text={quote(single_spaced)}"
+
+
+@register.simple_tag(name="code_links")
+def code_links(code_matched, code_references):
+    code_matches = [
+        word.replace(START_SEL, "").replace(STOP_SEL, "")
+        for word in code_matched.split(" ")
+        if START_SEL in word
+    ]
+    matched_reference = {
+        name: id_link
+        for name, id_link in code_references.items()
+        if name in code_matches
+    }
+    return OrderedDict(sorted(matched_reference.items()))

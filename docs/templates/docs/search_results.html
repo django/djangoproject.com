@@ -48,6 +48,18 @@
             {% if result.highlight %}
               …&nbsp;{{ result.highlight|cut:"¶"|safe }}&nbsp;…
             {% endif %}
+            {% code_links result.code_matched result.code_references as result_code_links %}
+            {% if result_code_links %}
+              <div style="margin-top: 15px; margin-left: 10px;">
+                {% for name, id_link in result_code_links.items %}
+                  <p>
+                    <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}#{{ id_link }}">
+                      <i class="icon icon-code"></i> <b>{{ name }}</b> ({{ id_link }})
+                    </a>
+                  </p>
+                {% endfor %}
+              </div>
+            {% endif %}
           </dd>
         {% endfor %}
       </dl>
