@@ -18,6 +18,7 @@ from djangoproject.urls import www as www_urls
 from releases.models import Release
 
 from .models import DOCUMENT_SEARCH_VECTOR, Document, DocumentRelease
+from .search import DOCUMENT_TYPES
 from .sitemaps import DocsSitemap
 from .templatetags.docs import generate_scroll_to_text_fragment, get_all_doc_versions
 from .utils import get_doc_path, sanitize_for_trigram
@@ -179,9 +180,32 @@ class RedirectsTests(TestCase):
 class SearchFormTestCase(TestCase):
     fixtures = ["doc_test_fixtures"]
 
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         # We need to create an extra Site because docs have SITE_ID=2
         Site.objects.create(name="Django test", domain="example2.com")
+        cls.release = Release.objects.create(version="5.1")
+        cls.doc_release = DocumentRelease.objects.create(release=cls.release)
+        cls.active_filter = '<a aria-current="page">'
+
+        for doc_type, title in DOCUMENT_TYPES.items():
+            Document.objects.create(
+                **{
+                    "metadata": {
+                        "body": "Generic Views",
+                        "breadcrumbs": [
+                            {"path": doc_type, "title": str(title)},
+                        ],
+                        "parents": doc_type,
+                        "slug": "generic-views",
+                        "title": "Generic views",
+                        "toc": '<ul>\n<li><a class="reference internal" href="#">Generic views</a></li>\n</ul>\n',
+                    },
+                    "path": f"{doc_type}/generic-views",
+                    "release": cls.doc_release,
+                    "title": "Generic views",
+                }
+            )
 
     @classmethod
     def tearDownClass(cls):
@@ -194,6 +218,68 @@ class SearchFormTestCase(TestCase):
             "/en/dev/search/", headers={"host": "docs.djangoproject.localhost:8000"}
         )
         self.assertEqual(response.status_code, 200)
+
+    def test_search_type_filter_all(self):
+        response = self.client.get(
+            "/en/5.1/search/?q=generic",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response, "4 results for <em>generic</em> in version 5.1", html=True
+        )
+        self.assertContains(response, self.active_filter, count=1)
+        self.assertContains(response, f"{self.active_filter}All</a>", html=True)
+
+    def test_search_type_filter_by_doc_types(self):
+        for doc_type, title in DOCUMENT_TYPES.items():
+            with self.subTest(type=doc_type):
+                response = self.client.get(
+                    f"/en/5.1/search/?q=generic&type={doc_type}",
+                    headers={"host": "docs.djangoproject.localhost:8000"},
+                )
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(
+                    response,
+                    "Only 1 result for <em>generic</em> in version 5.1",
+                    html=True,
+                )
+                self.assertContains(response, self.active_filter, count=1)
+                self.assertContains(
+                    response, f"{self.active_filter}{title}</a>", html=True
+                )
+                self.assertContains(response, '<a href="?q=generic">All</a>', html=True)
+
+    def test_search_type_filter_invalid_doc_types(self):
+        response = self.client.get(
+            "/en/5.1/search/?q=generic&type=invalid-so-ignored",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response, "4 results for <em>generic</em> in version 5.1", html=True
+        )
+        self.assertContains(response, self.active_filter, count=1)
+        self.assertContains(response, f"{self.active_filter}All</a>", html=True)
+
+    def test_search_type_filter_no_results(self):
+        response = self.client.get(
+            "/en/5.1/search/?q=potato&type=ref",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.active_filter, count=1)
+        self.assertContains(
+            response, f"{self.active_filter}API Reference</a>", html=True
+        )
+        self.assertContains(
+            response, "0 results for <em>potato</em> in version 5.1", html=True
+        )
+        self.assertContains(
+            response,
+            'Please try searching <a href="?q=potato">all documentation results</a>.',
+            html=True,
+        )
 
 
 class TemplateTagTests(TestCase):
