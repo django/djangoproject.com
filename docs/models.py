@@ -187,6 +187,9 @@ class DocumentRelease(models.Model):
             document_path = _clean_document_path(document["current_page_name"])
             document["slug"] = Path(document_path).parts[-1]
             document["parents"] = " ".join(Path(document_path).parts[:-1])
+            code_references = utils.generate_code_references(document["body"])
+            document["code_references"] = code_references
+            document["code_references_search"] = " ".join(code_references.keys())
             Document.objects.create(
                 release=self,
                 path=document_path,
@@ -278,7 +281,18 @@ class DocumentQuerySet(models.QuerySet):
                         stop_sel=STOP_SEL,
                         config=models.F("config"),
                     ),
+                    code_matched=SearchHeadline(
+                        KeyTextTransform("code_references_search", "metadata"),
+                        SearchQuery(
+                            query_text, config="simple", search_type="websearch"
+                        ),
+                        start_sel=START_SEL,
+                        stop_sel=STOP_SEL,
+                        config="simple",
+                        highlight_all=True,
+                    ),
                     breadcrumbs=models.F("metadata__breadcrumbs"),
+                    code_references=models.F("metadata__code_references"),
                 )
                 .only(
                     "path",

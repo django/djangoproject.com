@@ -57,3 +57,41 @@ def sanitize_for_trigram(text):
     text = unicodedata.normalize("NFKD", text)
     text = re.sub(r"[^\w\s]", "", text, flags=re.UNICODE)
     return " ".join(text.split())
+
+
+def generate_code_references(body):
+    """
+    Django documents classes with the syntax `.. class::`.
+    This results in the following HTML:
+    <dl class="py class">
+        <dt class="sig sig-object py" id="django.db.models.ManyToManyField">
+        ...
+        </dt>
+    </dl>
+    This is similar for attributes (`.. attribute::`), methods etc.
+    """
+    # Collect all <dt> HTML tag ids into a list, e.g:
+    # [
+    #    'django.db.models.Index',
+    #    'django.db.models.Index.expressions',
+    #    'django.db.models.Index.fields',
+    #    ...
+    # ]
+    code_references = list(re.findall(r'<dt[^>]+id="([^"]+)"', body))
+    # As the search term can be "expressions", "Index.expressions" etc. create a mapping
+    # between potential code search terms and their HTML id.
+    # {
+    #   'Index': 'django.db.models.Index',
+    #   'Index.expressions': 'django.db.models.Index.expressions',
+    #   'Index.fields': 'django.db.models.Index.fields',
+    #   ...
+    # }
+    code_paths = {}
+    for reference in code_references:
+        code_path = reference.split(".")[-2:]
+        if code_path[0][0].isupper():
+            name = ".".join(code_path)
+            code_paths[name] = reference
+        else:
+            code_paths[code_path[-1]] = reference
+    return code_paths
