@@ -1,11 +1,12 @@
 {% load i18n %}
+<search class="search form-input" aria-labelledby="docs-search-label">
+  <form action="{% url 'document-search' version=version lang=lang host 'docs' %}">
+    <label id="docs-search-label" class="visuallyhidden" for="{{ form.q.id_for_label }}">{{ form.q.field.widget.attrs.placeholder }}</label>
+    {{ form.q }}
 
-<form action="{% url 'document-search' version=version lang=lang host 'docs' %}" class="search form-input" role="search">
-  <label class="visuallyhidden" for="id_q">Search:</label>
-  {{ form.q }}
-
-  <button type="submit">
-    <i class="icon icon-search"></i>
-    <span class="visuallyhidden">{% trans 'Search' %}</span>
-  </button>
-</form>
+    <button type="submit">
+      <i class="icon icon-search" aria-hidden="true"></i>
+      <span class="visuallyhidden">{% translate "Submit" %}</span>
+    </button>
+  </form>
+</search>
