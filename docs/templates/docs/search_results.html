@@ -11,6 +11,13 @@
 
 {% block body %}
   {% if query %}
+    <search class="filters">
+      <span id="search-filters" class="visually-hidden">{% translate "Filter the current search results by documentation category" %}</span>
+      <a{% if not active_category %} aria-current="page"{% else %} href="{% querystring category=None page=None %}"{% endif %}>{% translate "All" context "all documentation categories" %}</a>
+      {% for category in DocumentationCategory %}
+        <a{% if active_category == category %} aria-current="page"{% else %} href="{% querystring category=category.value page=None %}"{% endif %}>{{ category.label }}</a>
+      {% endfor %}
+    </search>
     <h2>
       {% if release.is_dev %}
         {% blocktranslate count num_results=paginator.count trimmed %}
@@ -64,6 +71,15 @@
               </ul>
             {% endif %}
           </dd>
+        {% empty %}
+          {% if active_category %}
+            <dt>
+              <p>
+                {% querystring category=None page=None as all_search %}
+                {% blocktranslate trimmed %}Please try searching <a href="{{ all_search }}">all documentation results</a>.{% endblocktranslate %}
+              </p>
+            </dt>
+          {% endif %}
         {% endfor %}
       </dl>
     </div>
