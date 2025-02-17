@@ -43,7 +43,7 @@ repos:
           - id: black
             exclude: '(\/migrations\/)'
     - repo: https://github.com/rbubley/mirrors-prettier
-      rev: "v3.5.0"
+      rev: "v3.5.1"
       hooks:
           - id: prettier
             exclude_types: [html, json, scss]
@@ -53,7 +53,7 @@ repos:
       hooks:
           - id: isort
     - repo: https://github.com/pycqa/flake8
-      rev: "7.1.1"
+      rev: "7.1.2"
       hooks:
           - id: flake8
     - repo: https://github.com/rtts/djhtml
