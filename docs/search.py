@@ -1,6 +1,7 @@
 from django.contrib.postgres.search import SearchVector
 from django.db.models import F
 from django.db.models.fields.json import KeyTextTransform
+from django.utils.translation import gettext_lazy as _
 
 # Imported from
 # https://github.com/postgres/postgres/blob/REL_14_STABLE/src/bin/initdb/initdb.c#L659
@@ -51,3 +52,10 @@ DOCUMENT_SEARCH_VECTOR = (
 
 START_SEL = "<mark>"
 STOP_SEL = "</mark>"
+
+DOCUMENT_TYPES = {
+    "ref": _("API Reference"),
+    "topics": _("Using Django"),
+    "howto": _("How-to guides"),
+    "releases": _("Release notes"),
+}
