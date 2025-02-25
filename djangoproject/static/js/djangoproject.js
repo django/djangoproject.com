@@ -82,7 +82,8 @@ document.querySelector('.menu-button').addEventListener('click', function () {
 
 // Focus, select, and scroll to search input when key combination is pressed
 window.addEventListener('keydown', function (e) {
-  if (!(e.metaKey || e.ctrlKey) || e.key !== 'k') {
+  const is_ctrl_k = (e.metaKey || e.ctrlKey) && e.key === 'k';
+  if (!(is_ctrl_k || e.key === '/')) {
     return;
   }
 
