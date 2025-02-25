@@ -16,6 +16,8 @@ from pathlib import Path
 from django.conf import settings
 from django.core.management import BaseCommand, call_command
 from django.utils.translation import to_locale
+from sphinx.application import Sphinx
+from sphinx.errors import SphinxError
 
 from ...models import DocumentRelease
 
@@ -55,7 +57,7 @@ class Command(BaseCommand):
         self.update_index = kwargs["update_index"]
         self.purge_cache = kwargs["purge_cache"]
 
-        self.default_builders = ["json", "djangohtml"]
+        self.default_builders = ["pyjson", "djangohtml"]
         default_docs_version = DocumentRelease.objects.get(
             is_default=True
         ).release.version
@@ -176,28 +178,31 @@ class Command(BaseCommand):
             if self.verbosity >= 2:
                 self.stdout.write(f"  building {builder} ({source_dir} -> {build_dir})")
             try:
-                # Translated docs builds generate a lot of warnings, so send
-                # stderr to stdout to be logged (rather than generating an
-                # email)
-                subprocess.check_call(
-                    [
-                        "sphinx-build",
-                        "-b",
-                        builder,
-                        "-D",
-                        "language=%s" % to_locale(release.lang),
-                        "-j",
-                        "auto",
-                        "-Q" if self.verbosity == 0 else "-q",
-                        str(source_dir),  # Source file directory
-                        str(build_dir),  # Destination directory
-                    ],
-                    stderr=sys.stdout,
-                )
-            except subprocess.CalledProcessError:
+                Sphinx(
+                    srcdir=str(source_dir),
+                    confdir=str(source_dir),
+                    outdir=str(build_dir),
+                    doctreedir=str(build_dir / ".doctrees"),
+                    buildername=builder,
+                    confoverrides={
+                        "language": to_locale(release.lang),
+                        "extensions": [
+                            "djangodocs",
+                            "sphinx.ext.extlinks",
+                            "sphinx.ext.intersphinx",
+                            "sphinx.ext.autosectionlabel",
+                            "sphinx.ext.linkcode",
+                            "docs.builder",
+                        ],
+                    },
+                    # Translated docs builds generate a lot of warnings, so send
+                    # stderr to stdout to be logged (rather than generating an email)
+                    warning=sys.stdout,
+                ).build()
+            except SphinxError as e:
                 self.stderr.write(
-                    "sphinx-build returned an error (release %s, builder %s)"
-                    % (release, builder)
+                    "sphinx-build returned an error (release %s, builder %s): %s"
+                    % (release, builder, str(e))
                 )
                 return
 
@@ -252,8 +257,8 @@ class Command(BaseCommand):
         if self.verbosity >= 2:
             self.stdout.write("  reindexing...")
 
-        json_built_dir = parent_build_dir.joinpath("_built", "json")
-        documents = gen_decoded_documents(json_built_dir)
+        pyjson_built_dir = parent_build_dir.joinpath("_built", "pyjson")
+        documents = gen_decoded_documents(pyjson_built_dir)
         release.sync_to_db(documents)
 
     def update_git(self, url, destdir, changed_dir="."):
