@@ -42,8 +42,8 @@ html[data-theme="light"],
 
     // For Django 2.0 docs and older.
     .snippet-filename {
-        background: var(--secondary-accent);
-        color: var(--code-fg);
+        // background: var(--secondary-accent);
+        // color: var(--code-fg);
         @include monospace;
         font-size: 1em;
         padding: 5px 20px;
