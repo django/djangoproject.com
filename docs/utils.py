@@ -57,3 +57,9 @@ def sanitize_for_trigram(text):
     text = unicodedata.normalize("NFKD", text)
     text = re.sub(r"[^\w\s]", "", text, flags=re.UNICODE)
     return " ".join(text.split())
+
+
+def get_module_path(name, full_path):
+    if len(name) >= len(full_path):
+        return None
+    return full_path[: -len(name) - 1]
