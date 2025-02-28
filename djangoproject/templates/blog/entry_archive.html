@@ -1,4 +1,5 @@
 {% extends "base_weblog.html" %}
+{% load i18n %}
 
 {% block content %}
 
@@ -13,6 +14,8 @@
       </button>
     </form>
   {% endcomment %}
+
+  <h1>{% translate "Django Official Blog" %}</h1>
 
   <ul class="list-news">
 

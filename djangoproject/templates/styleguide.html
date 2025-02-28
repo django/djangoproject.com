@@ -4,7 +4,7 @@
 {% block body_class %}styleguide{% endblock %}
 
 {% block header %}
-  <h1>Style Guide</h1>
+  <h2>Style Guide</h2>
 {% endblock %}
 
 {% block content %}
@@ -413,9 +413,8 @@
 {% endblock %}
 
 {% block content-related %} {# Always include <h1> label and <div> with aria role. #}
-  <h1 class="visuallyhidden">Additional Information</h1>
   <div role="complementary">
-    <h2>Contents</h2>
+    <h2 id="aside-header">Contents</h2>
     <ul class="list-outline">
       <li><a class="reference internal" href="#">Django Web Style Guide</a>
         <ul>
