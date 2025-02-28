@@ -62,11 +62,11 @@
     .news-search,
     .backtotop,
     .nav-pagination,
-    [role="contentinfo"]>.container,
-    [role="contentinfo"] .logo,
+    footer>.container,
+    footer .logo,
     .thanks,
     [role="complementary"],
-    [role="navigation"],
+    nav,
     .form-input {
         display: none !important;
     }
@@ -75,8 +75,8 @@
         text-indent: 0 !important;
     }
 
-    [role="contentinfo"],
-    [role="contentinfo"] .copyright {
+    footer,
+    footer .copyright {
         margin: 0 !important;
         padding: 0 !important;
     }

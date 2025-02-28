@@ -123,7 +123,7 @@ html[data-theme="light"],
         background: darken($green, 10%);
 
         p,
-        h1 {
+        h2 {
             color: $green-very-light;
 
             @include respond-min(768px) {
@@ -149,7 +149,7 @@ html[data-theme="light"],
         }
     }
 
-    body [role="contentinfo"] {
+    body footer {
         background: darken($green, 10%);
     }
 
@@ -224,7 +224,7 @@ html[data-theme="dark"] {
         background: darken($green, 10%);
 
         p,
-        h1 {
+        h2 {
             color: $green-very-light;
 
             @include respond-min(768px) {
@@ -256,7 +256,7 @@ html[data-theme="dark"] {
         }
     }
 
-    [role="contentinfo"] {
+    footer {
         background: darken($green, 10%);
     }
 }
@@ -352,7 +352,7 @@ html[data-theme="light"] .theme-toggle .theme-label-when-light {
     }
 }
 
-[role="banner"] [role="navigation"] li:last-child {
+header nav li:last-child {
     @include respond-max(768px) {
         display: none;
     }
