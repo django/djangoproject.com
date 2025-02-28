@@ -3492,6 +3492,11 @@ ul.corporate-members li {
         .clipboard-success {
             font-size: 80%;
             margin-right: 10px;
+
+            &.fade-out {
+                opacity: 0;
+                transition: opacity 400ms;
+            }
         }
     }
 
