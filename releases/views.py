@@ -40,8 +40,8 @@ def index(request):
 
 def redirect(request, version, kind):
     release = get_object_or_404(Release, version=version)
-    try:
-        redirect_url = release.get_redirect_url(kind)
-    except ValueError:
+
+    if not (artifact := getattr(release, kind, None)):
         raise Http404
-    return HttpResponsePermanentRedirect(redirect_url)
+
+    return HttpResponsePermanentRedirect(artifact.url)
