@@ -60,6 +60,91 @@ class SearchFormTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
+    def test_code_links(self):
+        queryset_data = {
+            "metadata": {
+                "body": (
+                    "QuerySet API Reference QuerySet select_related selects related"
+                    " things select_for_update selects things for update."
+                ),
+                "python_objects": {
+                    "QuerySet": "django.db.models.query.QuerySet",
+                    "QuerySet.select_related": (
+                        "django.db.models.query.QuerySet.select_related"
+                    ),
+                    "QuerySet.select_for_update": (
+                        "django.db.models.query.QuerySet.select_for_update"
+                    ),
+                },
+                "python_objects_search": ("QuerySet select_related select_for_update"),
+                "breadcrumbs": [{"path": "refs", "title": "API Reference"}],
+                "parents": "API Reference",
+                "slug": "query",
+                "title": "QuerySet API Reference",
+                "toc": (
+                    '<ul>\n<li><a class="reference internal" href="#">QuerySet API'
+                    " Reference</a></li>\n</ul>\n"
+                ),
+            },
+            "path": "refs/query",
+            "release": self.doc_release,
+            "title": "QuerySet",
+        }
+        empty_page_data = {
+            "metadata": {
+                "body": "Empty page",
+                "breadcrumbs": [{"path": "refs", "title": "API Reference"}],
+                "parents": "API Reference",
+                "slug": "empty",
+                "title": "Empty page",
+                "toc": (
+                    '<ul>\n<li><a class="reference internal" href="#">Empty page'
+                    "</a></li>\n</ul>\n"
+                ),
+            },
+            "path": "refs/empty",
+            "release": self.doc_release,
+            "title": "Empty page",
+        }
+        Document.objects.bulk_create(
+            [Document(**queryset_data), Document(**empty_page_data)]
+        )
+        Document.objects.search_update()
+        base_url = reverse_with_host(
+            "document-detail",
+            host="docs",
+            kwargs={"lang": "en", "version": "5.1", "url": "refs/query"},
+        )
+        for query, expected_code_links in [
+            (
+                "queryset",
+                f'<ul class="code-links"><li><a href="{base_url}#django.db.models.query'
+                '.QuerySet"><div><code>QuerySet</code><div class="meta">django.db.'
+                "models.query</div></div></a></li></ul>",
+            ),
+            (
+                "select",
+                f'<ul class="code-links"><li><a href="{base_url}#django.db.models.query'
+                '.QuerySet.select_for_update"><div><code>QuerySet.select_for_update'
+                '</code><div class="meta">django.db.models.query</div></div></a></li>'
+                f'<li><a href="{base_url}#django.db.models.query.QuerySet.'
+                'select_related"><div><code>QuerySet.select_related</code><div '
+                'class="meta">django.db.models.query</div></div></a></li></ul>',
+            ),
+        ]:
+            with self.subTest(query=query):
+                response = self.client.get(
+                    f"/en/5.1/search/?q={query}",
+                    headers={"host": "docs.djangoproject.localhost:8000"},
+                )
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(
+                    response,
+                    f"Only 1 result for <em>{query}</em> in version 5.1",
+                    html=True,
+                )
+                self.assertContains(response, expected_code_links, html=True)
+
 
 class SitemapTests(TestCase):
     fixtures = ["doc_test_fixtures"]
