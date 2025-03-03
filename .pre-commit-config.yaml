@@ -43,13 +43,13 @@ repos:
           - id: black
             exclude: '(\/migrations\/)'
     - repo: https://github.com/rbubley/mirrors-prettier
-      rev: "v3.5.2"
+      rev: "v3.5.3"
       hooks:
           - id: prettier
             exclude_types: [html, json, scss]
             exclude: '(^djangoproject\/static\/js\/lib\/.*$)'
     - repo: https://github.com/pycqa/isort
-      rev: "6.0.0"
+      rev: "6.0.1"
       hooks:
           - id: isort
     - repo: https://github.com/pycqa/flake8
@@ -62,7 +62,7 @@ repos:
           - id: djhtml
             files: .*/templates/.*\.html$
     - repo: https://github.com/tox-dev/pyproject-fmt
-      rev: "v2.5.0"
+      rev: "v2.5.1"
       hooks:
           - id: pyproject-fmt
     - repo: https://github.com/mrtazz/checkmake.git
