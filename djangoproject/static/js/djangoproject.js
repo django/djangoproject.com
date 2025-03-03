@@ -133,7 +133,7 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
     });
 
     function on_success(el) {
-      success_el.appendChild(document.createTextNode('Copied!'));
+      success_el.innerText = 'Copied!';
 
       setTimeout(function () {
         success_el.classList.add('fade-out');
@@ -141,7 +141,7 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
     }
 
     function on_error(el) {
-      success_el.appendChild(document.createTextNode('Could not copy!'));
+      success_el.innerText = 'Could not copy!';
 
       setTimeout(function () {
         success_el.classList.add('fade-out');
