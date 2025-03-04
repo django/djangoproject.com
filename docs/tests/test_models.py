@@ -111,15 +111,42 @@ class ManagerTests(TestCase):
         r2 = Release.objects.create(version="2.0")
         DocumentRelease.objects.bulk_create(
             DocumentRelease(lang=lang, release=release)
-            for lang, release in [("en", r1), ("en", r2), ("sv", r1), ("ar", r1)]
+            for lang, release in [
+                ("en", None),
+                ("en", r1),
+                ("en", r2),
+                ("sv", r1),
+                ("ar", r1),
+            ]
         )
 
     def test_by_version(self):
-        doc_releases = DocumentRelease.objects.by_version("1.0")
-        self.assertEqual(
-            {(r.lang, r.release.version) for r in doc_releases},
-            {("en", "1.0"), ("sv", "1.0"), ("ar", "1.0")},
+        self.assertQuerySetEqual(
+            DocumentRelease.objects.by_version("1.0"),
+            [("en", "1.0"), ("sv", "1.0"), ("ar", "1.0")],
+            transform=attrgetter("lang", "version"),
+            ordered=False,
         )
+
+    def test_by_version_dev(self):
+        self.assertQuerySetEqual(
+            DocumentRelease.objects.by_version("dev"),
+            [("en", "dev")],
+            transform=attrgetter("lang", "version"),
+            ordered=False,
+        )
+
+    def test_by_versions(self):
+        self.assertQuerySetEqual(
+            DocumentRelease.objects.by_versions("1.0", "dev"),
+            [("en", "dev"), ("en", "1.0"), ("sv", "1.0"), ("ar", "1.0")],
+            transform=attrgetter("lang", "version"),
+            ordered=False,
+        )
+
+    def test_by_versions_empty(self):
+        with self.assertRaises(ValueError):
+            DocumentRelease.objects.by_versions()
 
     def test_get_by_version_and_lang_exists(self):
         doc = DocumentRelease.objects.get_by_version_and_lang("1.0", "en")
