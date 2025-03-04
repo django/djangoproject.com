@@ -98,3 +98,53 @@ window.addEventListener('keydown', function (e) {
   el.focus({ preventScroll: true });
   el.scrollIntoView({ behavior: 'smooth' });
 });
+
+// Add copy buttons to code snippets
+(function () {
+  const button_el = document.createElement('span');
+
+  button_el.classList.add('btn-clipboard');
+  button_el.setAttribute('title', 'Copy this code');
+  button_el.innerHTML = '<i class="icon icon-clipboard"></i>';
+
+  const selector = '.snippet-filename, .code-block-caption';
+
+  document.querySelectorAll(selector).forEach(function (el) {
+    el.insertBefore(button_el.cloneNode(true), null);
+  });
+})();
+
+// Attach copy functionality to dynamically-created buttons
+document.querySelectorAll('.btn-clipboard').forEach(function (el) {
+  el.addEventListener('click', function () {
+    const success_el = document.createElement('span');
+
+    success_el.classList.add('clipboard-success');
+
+    this.prepend(success_el);
+
+    success_el.addEventListener('transitionend', function () {
+      this.remove();
+    });
+
+    function on_success(el) {
+      success_el.innerText = 'Copied!';
+
+      setTimeout(function () {
+        success_el.classList.add('fade-out');
+      }, 1000);
+    }
+
+    function on_error(el) {
+      success_el.innerText = 'Could not copy!';
+
+      setTimeout(function () {
+        success_el.classList.add('fade-out');
+      }, 5000);
+    }
+
+    const text = this.parentElement.nextElementSibling.textContent.trim();
+
+    navigator.clipboard.writeText(text).then(on_success, on_error);
+  });
+});

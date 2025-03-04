@@ -45,9 +45,5 @@ define(function () {
     mods.push('mod/corporate-member-join');
   }
 
-  if (hasClass('code-block-caption') || hasClass('snippet')) {
-    mods.push('mod/clippify');
-  }
-
   require(mods);
 });
