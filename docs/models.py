@@ -34,7 +34,7 @@ from .search import (
 )
 
 
-class DocumentReleaseManager(models.Manager):
+class DocumentReleaseQuerySet(models.QuerySet):
     def current(self, lang="en"):
         current = self.get(is_default=True)
         if lang != "en":
@@ -58,10 +58,20 @@ class DocumentReleaseManager(models.Manager):
             )
         return current_version
 
-    def by_version(self, version):
-        return self.filter(
-            **{"release__isnull": True} if version == "dev" else {"release": version}
+    def _by_version_Q(self, version):
+        return (
+            models.Q(release__isnull=True)
+            if version == "dev"
+            else models.Q(release=version)
         )
+
+    def by_version(self, version):
+        return self.filter(self._by_version_Q(version))
+
+    def by_versions(self, *versions):
+        if not versions:
+            raise ValueError("by_versions() takes at least one argument")
+        return self.filter(reduce(operator.or_, map(self._by_version_Q, versions)))
 
     def get_by_version_and_lang(self, version, lang):
         return self.by_version(version).get(lang=lang)
@@ -86,7 +96,7 @@ class DocumentRelease(models.Model):
     )
     is_default = models.BooleanField(default=False)
 
-    objects = DocumentReleaseManager()
+    objects = DocumentReleaseQuerySet.as_manager()
 
     class Meta:
         unique_together = ("lang", "release")
