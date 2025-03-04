@@ -38,8 +38,8 @@
 {% endblock %}
 
 {% block content-related %}
-    <h1 class="visuallyhidden">{% translate "Help" %}</h1>
     <div role="complementary">
+        <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
         {% url 'registration_register' as register_url %}
         <p>
             {% blocktranslate trimmed %}

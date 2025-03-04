@@ -7,17 +7,17 @@
 {% block title %}Django Software Foundation{% endblock %}
 
 {% block header %}
-  <h1>Django Software Foundation</h1>
+  <p>Django Software Foundation</p>
 {% endblock %}
 
 {% block content-related %}
 
-{# Always include <h1> label and <div> with aria role. #}
-  <h1 class="visuallyhidden">Additional Information</h1>
+{# Always include <h2> label and <div> with aria role. #}
   <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
     {% donation_snippet %}
 
-    <h2>About the foundation</h2>
+    <h3>About the foundation</h3>
     <ul class="list-links">
       <li><a href="/foundation/faq/">FAQ</a></li>
       <li><a href="/foundation/records/">Records</a></li>
