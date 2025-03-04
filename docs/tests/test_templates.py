@@ -10,7 +10,11 @@ from django.test import RequestFactory, TestCase
 from releases.models import Release
 
 from ..models import Document, DocumentRelease
-from ..templatetags.docs import generate_scroll_to_text_fragment, get_all_doc_versions
+from ..templatetags.docs import (
+    code_links,
+    generate_scroll_to_text_fragment,
+    get_all_doc_versions,
+)
 
 
 class TemplateTagTests(TestCase):
@@ -147,6 +151,41 @@ def band_listing(request):
                 self.assertEqual(
                     generate_scroll_to_text_fragment(text),
                     url_text_fragment,
+                )
+
+    def test_code_links(self):
+        python_objects = {
+            "Layer": "django.contrib.gis.gdal.Layer",
+            "Migration.initial": "django.db.migrations.Migration.initial",
+            "db_for_write": "db_for_write",
+        }
+        for searched_python_objects, expected in [
+            (None, {}),
+            ("", {}),
+            ("Layer initial db_for_write", {}),
+            (
+                "Layer initial <mark>db_for</mark>_write",
+                {"db_for_write": {"full_path": "db_for_write", "module_path": None}},
+            ),
+            (
+                "<mark>Layer</mark> <mark>initial</mark> <mark>db_for</mark>_write",
+                {
+                    "db_for_write": {"full_path": "db_for_write", "module_path": None},
+                    "Layer": {
+                        "full_path": "django.contrib.gis.gdal.Layer",
+                        "module_path": "django.contrib.gis.gdal",
+                    },
+                    "Migration.initial": {
+                        "full_path": "django.db.migrations.Migration.initial",
+                        "module_path": "django.db.migrations",
+                    },
+                },
+            ),
+        ]:
+            with self.subTest(searched_python_objects=searched_python_objects):
+                self.assertEqual(
+                    code_links(searched_python_objects, python_objects),
+                    expected,
                 )
 
 
