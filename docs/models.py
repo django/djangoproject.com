@@ -2,7 +2,7 @@ import datetime
 import html
 import json
 import operator
-from functools import partial, reduce
+from functools import reduce
 from pathlib import Path
 
 from django.conf import settings
@@ -262,12 +262,6 @@ class DocumentQuerySet(models.QuerySet):
                 query_text, config=models.F("config"), search_type="websearch"
             )
             search_rank = SearchRank(models.F("search"), search_query)
-            search = partial(
-                SearchHeadline,
-                start_sel=START_SEL,
-                stop_sel=STOP_SEL,
-                config=models.F("config"),
-            )
             base_qs = (
                 self.prefetch_related(
                     Prefetch(
@@ -280,18 +274,21 @@ class DocumentQuerySet(models.QuerySet):
                 )
                 .filter(release_id=release.id)
                 .annotate(
-                    headline=search("title", search_query),
-                    highlight=search(
+                    headline=SearchHeadline(
+                        "title",
+                        search_query,
+                        start_sel=START_SEL,
+                        stop_sel=STOP_SEL,
+                        config=models.F("config"),
+                    ),
+                    highlight=SearchHeadline(
                         KeyTextTransform("body", "metadata"),
                         search_query,
-                    ),
-                    searched_python_objects=search(
-                        KeyTextTransform("python_objects_search", "metadata"),
-                        search_query,
-                        highlight_all=True,
+                        start_sel=START_SEL,
+                        stop_sel=STOP_SEL,
+                        config=models.F("config"),
                     ),
                     breadcrumbs=models.F("metadata__breadcrumbs"),
-                    python_objects=models.F("metadata__python_objects"),
                 )
                 .only(
                     "path",
