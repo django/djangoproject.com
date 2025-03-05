@@ -4,8 +4,8 @@ import re
 from django.conf import settings
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
-from django.core.validators import FileExtensionValidator, RegexValidator
 from django.core.files.storage import FileSystemStorage
+from django.core.validators import FileExtensionValidator, RegexValidator
 from django.db import models
 from django.utils.functional import cached_property
 from django.utils.version import get_complete_version, get_main_version
@@ -158,7 +158,9 @@ def upload_to_checksum(release, filename):
 
 
 tarball_name_re = re.compile(r"^[Dd]jango-\d+\.\d+(?:\.\d+)?(?:[a-zA-Z]\d*)?\.tar\.gz$")
-wheel_name_re = re.compile(r"^[Dd]jango-\d+\.\d+(?:\.\d+)?(?:[a-zA-Z]\d*)?-py3-none-any\.whl$")
+wheel_name_re = re.compile(
+    r"^[Dd]jango-\d+\.\d+(?:\.\d+)?(?:[a-zA-Z]\d*)?-py3-none-any\.whl$"
+)
 
 
 class Release(models.Model):
@@ -202,17 +204,29 @@ class Release(models.Model):
     iteration = models.PositiveSmallIntegerField(editable=False)
     tarball = models.FileField(
         "Tarball artifact as a .tar.gz file",
-        storage=get_storage, upload_to=upload_to_artifact, blank=True,
-        validators=[RegexValidator(tarball_name_re), FileExtensionValidator(allowed_extensions=["gz"])],
+        storage=get_storage,
+        upload_to=upload_to_artifact,
+        blank=True,
+        validators=[
+            RegexValidator(tarball_name_re),
+            FileExtensionValidator(allowed_extensions=["gz"]),
+        ],
     )
     wheel = models.FileField(
         "Wheel artifact as a .whl file",
-        storage=get_storage, upload_to=upload_to_artifact, blank=True,
-        validators=[RegexValidator(wheel_name_re), FileExtensionValidator(allowed_extensions=["whl"])],
+        storage=get_storage,
+        upload_to=upload_to_artifact,
+        blank=True,
+        validators=[
+            RegexValidator(wheel_name_re),
+            FileExtensionValidator(allowed_extensions=["whl"]),
+        ],
     )
     checksum = models.FileField(
         "Signed checksum as a .asc file",
-        storage=get_storage, upload_to=upload_to_checksum, blank=True,
+        storage=get_storage,
+        upload_to=upload_to_checksum,
+        blank=True,
         validators=[FileExtensionValidator(allowed_extensions=["asc", "txt"])],
     )
     is_lts = models.BooleanField(
@@ -226,12 +240,16 @@ class Release(models.Model):
     def clean(self):
         if self.date is not None and not self.tarball:
             raise ValidationError(
-                {"tarball": "This field is required when the release is active by having a date"}
+                {
+                    "tarball": "This field is required when the release is active by having a date"
+                }
             )
 
         if (self.tarball or self.wheel) and not self.checksum:
             raise ValidationError(
-                {"checksum": "This field is required when an artifact has been uploaded"}
+                {
+                    "checksum": "This field is required when an artifact has been uploaded"
+                }
             )
 
         version = get_version(self.version_tuple)
