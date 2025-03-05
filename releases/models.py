@@ -1,8 +1,10 @@
 import datetime
+import re
 
 from django.conf import settings
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator, RegexValidator
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.utils.functional import cached_property
@@ -137,27 +139,26 @@ class ReleaseManager(models.Manager):
 
 def get_storage():
     """
+    Return a FileSystemStorage that allows file name overwrites.
+
     The actual file name of release artifacts (tarball, wheel, ...) should not
-    be modified by the file storage, so a dedicated storage is used.
+    be modified on upload (i.e. no prefix should be added).
     """
     return FileSystemStorage(allow_overwrite=True)
 
 
-def upload_to_tarball(release, filename):
+def upload_to_artifact(release, filename):
     major, minor = release.version_tuple[:2]
-    version = get_version(release.version_tuple)
-    return f"releases/{major}.{minor}/django-{version}.tar.gz"
-
-
-def upload_to_wheel(release, filename):
-    major, minor = release.version_tuple[:2]
-    version = get_version(release.version_tuple)
-    return f"releases/{major}.{minor}/django-{version}-py3-none.whl"
+    return f"releases/{major}.{minor}/{filename}"
 
 
 def upload_to_checksum(release, filename):
     version = get_version(release.version_tuple)
-    return f"pgp/django-{version}.checksum.txt"
+    return f"pgp/Django-{version}.checksum.txt"
+
+
+tarball_name_re = re.compile(r"^[Dd]jango-\d+\.\d+(?:\.\d+)?(?:[a-zA-Z]\d*)?\.tar\.gz$")
+wheel_name_re = re.compile(r"^[Dd]jango-\d+\.\d+(?:\.\d+)?(?:[a-zA-Z]\d*)?-py3-none-any\.whl$")
 
 
 class Release(models.Model):
@@ -200,24 +201,49 @@ class Release(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, editable=False)
     iteration = models.PositiveSmallIntegerField(editable=False)
     tarball = models.FileField(
-        storage=get_storage, upload_to=upload_to_tarball, blank=True
+        "Tarball artifact as a .tar.gz file",
+        storage=get_storage, upload_to=upload_to_artifact, blank=True,
+        validators=[RegexValidator(tarball_name_re), FileExtensionValidator(allowed_extensions=["gz"])],
     )
-    wheel = models.FileField(storage=get_storage, upload_to=upload_to_wheel, blank=True)
+    wheel = models.FileField(
+        "Wheel artifact as a .whl file",
+        storage=get_storage, upload_to=upload_to_artifact, blank=True,
+        validators=[RegexValidator(wheel_name_re), FileExtensionValidator(allowed_extensions=["whl"])],
+    )
     checksum = models.FileField(
-        storage=get_storage, upload_to=upload_to_checksum, blank=True
+        "Signed checksum as a .asc file",
+        storage=get_storage, upload_to=upload_to_checksum, blank=True,
+        validators=[FileExtensionValidator(allowed_extensions=["asc", "txt"])],
     )
-
-    is_lts = models.BooleanField("Long term support release", default=False)
+    is_lts = models.BooleanField(
+        "Long Term Support",
+        help_text='Is this an (<abbr title="Long Term Support">LTS</abbr>) release?',
+        default=False,
+    )
 
     objects = ReleaseManager()
 
     def clean(self):
         if self.date is not None and not self.tarball:
             raise ValidationError(
-                {"tarball": "This field is required because the release is active"}
+                {"tarball": "This field is required when the release is active by having a date"}
             )
 
+        if (self.tarball or self.wheel) and not self.checksum:
+            raise ValidationError(
+                {"checksum": "This field is required when an artifact has been uploaded"}
+            )
+
+        version = get_version(self.version_tuple)
+        for attr in ("tarball", "wheel"):
+            name = getattr(self, attr).name
+            if name and (version not in name):
+                raise ValidationError(
+                    {attr: f"The provided name {name} should include {version} in it."}
+                )
+
     def save(self, *args, **kwargs):
+        self.full_clean()
         self.major, self.minor, self.micro, status, self.iteration = self.version_tuple
         self.status = self.STATUS_REVERSE[status]
         cache.delete(self.DEFAULT_CACHE_KEY)

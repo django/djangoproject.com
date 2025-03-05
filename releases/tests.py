@@ -8,7 +8,7 @@ from django.utils.safestring import SafeString
 
 from members.models import MEMBERSHIP_LEVELS, PLATINUM_MEMBERSHIP, CorporateMember
 
-from .models import Release, upload_to_checksum, upload_to_tarball, upload_to_wheel
+from .models import Release, upload_to_artifact, upload_to_checksum
 from .templatetags.date_format import isodate
 from .templatetags.release_notes import get_latest_micro_release, release_notes
 
