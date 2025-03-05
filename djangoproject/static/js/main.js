@@ -12,10 +12,6 @@ define(function () {
     mods.push('mod/list-collapsing');
   }
 
-  if (hasClass('doc-floating-warning')) {
-    mods.push('mod/floating-warning');
-  }
-
   //fundraising heart
   if (hasClass('fundraising-heart')) {
     mods.push('mod/fundraising-heart');
