@@ -2635,39 +2635,6 @@ table.docutils th {
             color: var(--search-mark-text);
         }
     }
-
-    .code-links {
-        margin-top: 15px;
-        margin-left: 10px;
-        list-style-type: none;
-        padding-left: 0;
-
-        a {
-            &:active,
-            &:focus,
-            &:hover {
-                code {
-                    color: var(--primary);
-                }
-                .meta {
-                    color: var(--text-light);
-                }
-            }
-        }
-
-        code {
-            color: var(--primary-accent);
-            font-weight: 700;
-        }
-
-        div {
-            margin: 0;
-            .meta {
-                margin: 5px 0 0;
-                color: var(--body-fg);
-            }
-        }
-    }
 }
 
 .list-links-small {
