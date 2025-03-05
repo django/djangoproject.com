@@ -8,7 +8,6 @@
 {% block title %}{% translate "Django Community" %}{% endblock %}
 
 {% block header %}
-  <h1 class="visuallyhidden">{% translate "Community" %}</h1>
   <p>
     {% if community_stats.age %}
       {% blocktranslate trimmed with age=community_stats.age %}
@@ -22,11 +21,11 @@
 {% endblock %}
 
 {% block content-related %}
-  <h1 class="visuallyhidden">{% translate "Additional Information" %}</h1>
   <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
     {% donation_snippet %}
 
-    <h2>{% translate "More Help" %}</h2>
+    <h3>{% translate "More Help" %}</h3>
     <dl class="list-links">
       <dt>
         <a href="{% url 'document-detail' lang='en' version='stable' url='faq' host 'docs' %}">
@@ -42,7 +41,7 @@
       <dd>{% translate "Chat with other Django users like it's 1999" %}</dd>
     </dl>
 
-    <h2>{% translate "Dive In" %}</h2>
+    <h3>{% translate "Dive In" %}</h3>
     <dl class="list-links">
       <dt><a href="https://code.djangoproject.com/">{% translate "Ticket System" %}</a></dt>
       <dd>{% translate "View and update bug reports" %}</dd>
@@ -52,7 +51,7 @@
       <dd>{% translate "Get updated for each code and ticket change" %}</dd>
     </dl>
 
-    <h2>{% translate "More Links" %}</h2>
+    <h3>{% translate "More Links" %}</h3>
     <dl class="list-links">
       <dt><a href="https://www.djangopackages.com/" rel="nofollow">{% translate "Django Packages" %}</a></dt>
       <dd>{% translate "Find third-party packages to supercharge your project" %}</dd>

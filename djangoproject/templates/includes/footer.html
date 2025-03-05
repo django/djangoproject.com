@@ -1,10 +1,10 @@
-<div role="contentinfo">
+<footer>
   <div class="subfooter">
     <div class="container">
-      <h1 class="visuallyhidden">Django Links</h1>
+      <h2 class="visuallyhidden">Django Links</h2>
       <div class="column-container">
         <div class="col-learn-more">
-          <h2>Learn More</h2>
+          <h3>Learn More</h3>
           <ul>
             <li><a href="{% url 'overview' %}">About Django</a></li>
             {% comment %}<li><a href="{% url 'case_study_index' %}">Case Studies</a></li>{% endcomment %}
@@ -18,7 +18,7 @@
         </div>
 
         <div class="col-get-involved">
-          <h2>Get Involved</h2>
+          <h3>Get Involved</h3>
           <ul>
             <li><a href="{% url 'community-index' %}">Join a Group</a></li>
             <li><a href="{% url 'document-detail' lang='en' version='dev' url="internals/contributing" host 'docs' %}">Contribute
@@ -34,7 +34,7 @@
         </div>
 
         <div class="col-get-help">
-          <h2>Get Help</h2>
+          <h3>Get Help</h3>
           <ul>
             <li><a href="{% url 'document-detail' lang='en' version='stable' url='faq' host 'docs' %}">Getting Help FAQ</a>
             </li>
@@ -44,7 +44,7 @@
         </div>
 
         <div class="col-follow-us">
-          <h2>Follow Us</h2>
+          <h3>Follow Us</h3>
           <ul>
             <li><a href="https://github.com/django">GitHub</a></li>
             <li><a href="https://twitter.com/djangoproject">Twitter</a></li>
@@ -54,7 +54,7 @@
         </div>
 
         <div class="col-support-us">
-          <h2>Support Us</h2>
+          <h3>Support Us</h3>
           <ul>
             <li><a href="{% url "fundraising:index" %}">Sponsor Django</a></li>
             <li><a href="/foundation/corporate-membership/">Corporate membership</a></li>
@@ -87,4 +87,4 @@
     </div>
   </div>
 
-</div>
+</footer>

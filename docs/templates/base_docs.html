@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block header %}
-  <h1><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a></h1>
+  <p><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a></p>
   {% search_form %}
 {% endblock %}
 

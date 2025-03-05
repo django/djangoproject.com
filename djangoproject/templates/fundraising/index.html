@@ -8,7 +8,6 @@
 {% block og_description %}{% translate "Support Django development by donating to the Django Software Foundation" %}{% endblock %}
 
 {% block header %}
-  <h1 class="visuallyhidden">{% translate "Support Django" %}</h1>
   <p>
     {% blocktranslate trimmed %}
       <em>Support Django development</em> by donating to the <em>Django Software Foundation</em>.
@@ -33,7 +32,7 @@
 
   {% donation_form_with_heart %}
 
-  <h1>{% translate "Other ways to give" %}</h1>
+  <h2>{% translate "Other ways to give" %}</h2>
   <ul>
     <li>
       {% blocktranslate trimmed %}
@@ -233,7 +232,7 @@
   <hr style="margin: 40px 0" />
 
   <div class="heroes-section">
-    <h1 id="dsf-supporters">{% translate "DSF Supporters" %}</h1>
+    <h2 id="dsf-supporters">{% translate "DSF Supporters" %}</h2>
     <p>
       {% blocktranslate trimmed %}
         Our donors make our work possible! We are incredibly grateful for the

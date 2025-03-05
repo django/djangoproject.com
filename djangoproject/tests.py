@@ -3,6 +3,7 @@ from io import StringIO
 
 from django.core.management import call_command
 from django.test import TestCase
+from django.urls import NoReverseMatch, get_resolver
 from django_hosts.resolvers import reverse
 
 from docs.models import DocumentRelease, Release
@@ -131,3 +132,35 @@ class PendingMigrationsTests(TestCase):
             )
         except SystemExit:  # pragma: no cover
             raise AssertionError("Pending migrations:\n" + out.getvalue()) from None
+
+
+class Header1Tests(TestCase):
+    def extract_patterns(self, patterns, prefix="", urls=None):
+        urls = urls or []
+        for pattern in patterns:
+            if hasattr(pattern, "url_patterns"):
+                self.extract_patterns(
+                    pattern.url_patterns, prefix + pattern.pattern.regex.pattern
+                )
+            elif hasattr(pattern, "pattern") and pattern.name:
+                try:
+                    urls.append(reverse(pattern.name))
+                except NoReverseMatch:
+                    pass  # Ignore URLs that require arguments.
+        return urls
+
+    def test_single_h1_per_page(self):
+        excluded_urls = [
+            "rss/",
+            "styleguide/",  # Has multiple <h1> examples.
+            "admin/",  # Admin templates are out of our control.
+            "reset/done/",  # Uses an admin template.
+        ]
+        resolver = get_resolver()
+        urls = self.extract_patterns(resolver.url_patterns)
+        for url in urls:
+            if all(url_substring not in url for url_substring in excluded_urls):
+                with self.subTest(url=url):
+                    response = self.client.get(url)
+                    self.assertEqual(response.status_code, 200)
+                    self.assertContains(response, "<h1", count=1)
