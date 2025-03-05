@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime, timedelta
 
 from django.contrib.auth.models import User
 from django.test import TestCase
@@ -113,3 +113,71 @@ class MeetingTestCase(TestCase):
         self.assertContains(response, "Business item 1")
         self.assertContains(response, "Business item 2")
         self.assertContains(response, "Business item 3")
+
+    def test_new_business_ordering(self):
+        """Test that new business items are ordered by created_on timestamp."""
+        meeting = Meeting.objects.create(
+            date=date(2023, 6, 15),
+            title="DSF Board monthly meeting",
+            slug="dsf-board-monthly-meeting",
+            leader=self.member,
+            treasurer_report="Treasurer Report",
+        )
+
+        # Create business items with explicitly set created_on timestamps
+        # Item 3 is created first but should appear last due to ordering
+        common_business_data = {
+            "body": "Example",
+            "body_html": "Example",
+            "business_type": "New",
+            "meeting": meeting,
+        }
+
+        # Create items with different timestamps, intentionally out of order
+        now = datetime.now()
+        Business.objects.create(
+            title="Business item 3",
+            created_on=now - timedelta(hours=2),
+            **common_business_data
+        )
+        Business.objects.create(
+            title="Business item 1",
+            created_on=now - timedelta(hours=4),
+            **common_business_data
+        )
+        Business.objects.create(
+            title="Business item 2",
+            created_on=now - timedelta(hours=3),
+            **common_business_data
+        )
+        response = self.client.get(
+            reverse(
+                "foundation_meeting_detail",
+                kwargs={
+                    "year": 2023,
+                    "month": "jun",
+                    "day": 15,
+                    "slug": "dsf-board-monthly-meeting",
+                },
+            )
+        )
+
+        self.assertContains(response, "DSF Board monthly meeting")
+
+        # Check that items appear in the correct order based on created_on
+        content = response.content.decode()
+        # Find positions of each business item in the response content
+        pos1 = content.find("Business item 1")
+        pos2 = content.find("Business item 2")
+        pos3 = content.find("Business item 3")
+
+        # Verify that items appear in ascending order by created_on timestamp
+        self.assertGreater(pos1, 0, "Business item 1 not found in response")
+        self.assertGreater(pos2, 0, "Business item 2 not found in response")
+        self.assertGreater(pos3, 0, "Business item 3 not found in response")
+        self.assertLess(
+            pos1, pos2, "Business item 1 should appear before Business item 2"
+        )
+        self.assertLess(
+            pos2, pos3, "Business item 2 should appear before Business item 3"
+        )
