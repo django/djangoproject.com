@@ -1,7 +1,11 @@
 import datetime
+import re
 
 from django.conf import settings
 from django.core.cache import cache
+from django.core.exceptions import ValidationError
+from django.core.files.storage import FileSystemStorage
+from django.core.validators import FileExtensionValidator, RegexValidator
 from django.db import models
 from django.utils.functional import cached_property
 from django.utils.version import get_complete_version, get_main_version
@@ -133,6 +137,32 @@ class ReleaseManager(models.Manager):
         return current_version
 
 
+def get_storage():
+    """
+    Return a FileSystemStorage that allows file name overwrites.
+
+    The actual file name of release artifacts (tarball, wheel, ...) should not
+    be modified on upload (i.e. no prefix should be added).
+    """
+    return FileSystemStorage(allow_overwrite=True)
+
+
+def upload_to_artifact(release, filename):
+    major, minor = release.version_tuple[:2]
+    return f"releases/{major}.{minor}/{filename}"
+
+
+def upload_to_checksum(release, filename):
+    version = get_version(release.version_tuple)
+    return f"pgp/Django-{version}.checksum.txt"
+
+
+tarball_name_re = re.compile(r"^[Dd]jango-\d+\.\d+(?:\.\d+)?(?:[a-zA-Z]\d*)?\.tar\.gz$")
+wheel_name_re = re.compile(
+    r"^[Dd]jango-\d+\.\d+(?:\.\d+)?(?:[a-zA-Z]\d*)?-py3-none-any\.whl$"
+)
+
+
 class Release(models.Model):
     DEFAULT_CACHE_KEY = "%s_django_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
     STATUS_CHOICES = (
@@ -172,12 +202,66 @@ class Release(models.Model):
     micro = models.PositiveSmallIntegerField(editable=False)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, editable=False)
     iteration = models.PositiveSmallIntegerField(editable=False)
-
-    is_lts = models.BooleanField("Long term support release", default=False)
+    tarball = models.FileField(
+        "Tarball artifact as a .tar.gz file",
+        storage=get_storage,
+        upload_to=upload_to_artifact,
+        blank=True,
+        validators=[
+            RegexValidator(tarball_name_re),
+            FileExtensionValidator(allowed_extensions=["gz"]),
+        ],
+    )
+    wheel = models.FileField(
+        "Wheel artifact as a .whl file",
+        storage=get_storage,
+        upload_to=upload_to_artifact,
+        blank=True,
+        validators=[
+            RegexValidator(wheel_name_re),
+            FileExtensionValidator(allowed_extensions=["whl"]),
+        ],
+    )
+    checksum = models.FileField(
+        "Signed checksum as a .asc file",
+        storage=get_storage,
+        upload_to=upload_to_checksum,
+        blank=True,
+        validators=[FileExtensionValidator(allowed_extensions=["asc", "txt"])],
+    )
+    is_lts = models.BooleanField(
+        "Long Term Support",
+        help_text='Is this an (<abbr title="Long Term Support">LTS</abbr>) release?',
+        default=False,
+    )
 
     objects = ReleaseManager()
 
+    def clean(self):
+        if self.date is not None and not self.tarball:
+            raise ValidationError(
+                {
+                    "tarball": "This field is required when the release is active by having a date"
+                }
+            )
+
+        if (self.tarball or self.wheel) and not self.checksum:
+            raise ValidationError(
+                {
+                    "checksum": "This field is required when an artifact has been uploaded"
+                }
+            )
+
+        version = get_version(self.version_tuple)
+        for attr in ("tarball", "wheel"):
+            name = getattr(self, attr).name
+            if name and (version not in name):
+                raise ValidationError(
+                    {attr: f"The provided name {name} should include {version} in it."}
+                )
+
     def save(self, *args, **kwargs):
+        self.full_clean()
         self.major, self.minor, self.micro, status, self.iteration = self.version_tuple
         self.status = self.STATUS_REVERSE[status]
         cache.delete(self.DEFAULT_CACHE_KEY)
@@ -211,110 +295,3 @@ class Release(models.Model):
         if len(version) == 4:
             version.append(0)
         return tuple(version)
-
-    def get_redirect_url(self, kind):
-        directory = "%d.%d" % self.version_tuple[:2]
-        # Django gained PEP 386 numbering in 1.4b1.
-        if self.version_tuple >= (1, 4, 0, "beta", 0):
-            actual_version = get_version(self.version_tuple)
-        else:
-            actual_version = self.version
-
-        if kind == "tarball":
-            pattern = "%(media)sreleases/%(directory)s/Django-%(version)s.tar.gz"
-
-        elif kind == "checksum":
-            if self.version_tuple[:3] >= (1, 0, 4):
-                pattern = "%(media)spgp/Django-%(version)s.checksum.txt"
-            else:
-                raise ValueError("No checksum for this version")
-        else:
-            raise ValueError("Unknown file")
-
-        return pattern % {
-            "media": settings.MEDIA_URL,
-            "directory": directory,
-            "version": actual_version,
-            "major": self.version_tuple[0],
-            "minor": self.version_tuple[1],
-        }
-
-
-def create_releases_up_to_1_5():
-    if Release.objects.exists():
-        raise Exception("Releases already exist, aborting.")
-    versions = [  # extracted from the redirects table
-        "0.90",
-        "0.91",
-        "0.91.1",
-        "0.91.2",
-        "0.91.3",
-        "0.95",
-        "0.95.1",
-        "0.95.2",
-        "0.95.3",
-        "0.95.4",
-        "0.96",
-        "0.96.1",
-        "0.96.2",
-        "0.96.3",
-        "0.96.4",
-        "0.96.5",
-        "1.0-alpha",
-        "1.0-alpha-2",
-        "1.0-beta-1",
-        "1.0-beta-2",
-        "1.0-rc_1",
-        "1.0",
-        "1.0.1-beta-1",
-        "1.0.1",
-        "1.0.2",
-        "1.0.3",
-        "1.0.4",
-        "1.1-rc-1",
-        "1.1.1",
-        "1.1.2",
-        "1.1.3",
-        "1.1.4",
-        "1.1",
-        "1.2-alpha-1",
-        "1.2-beta-1",
-        "1.2-rc-1",
-        "1.2",
-        "1.2.1",
-        "1.2.2",
-        "1.2.3",
-        "1.2.4",
-        "1.2.5",
-        "1.2.6",
-        "1.2.7",
-        "1.3-alpha-1",
-        "1.3-beta-1",
-        "1.3-rc-1",
-        "1.3",
-        "1.3.1",
-        "1.3.2",
-        "1.3.3",
-        "1.3.4",
-        "1.3.5",
-        "1.3.6",
-        "1.3.7",
-        "1.4-alpha-1",
-        "1.4-beta-1",
-        "1.4-rc-1",
-        "1.4-rc-2",
-        "1.4",
-        "1.4.1",
-        "1.4.2",
-        "1.4.3",
-        "1.4.4",
-        "1.4.5",
-        "1.5a1",
-        "1.5b1",
-        "1.5b2",
-        "1.5c1",
-        "1.5c2",
-        "1.5",
-    ]
-    for version in versions:
-        Release.objects.create(version=version)
