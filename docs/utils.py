@@ -57,38 +57,3 @@ def sanitize_for_trigram(text):
     text = unicodedata.normalize("NFKD", text)
     text = re.sub(r"[^\w\s]", "", text, flags=re.UNICODE)
     return " ".join(text.split())
-
-
-def get_module_path(name, full_path):
-    """
-    Checks if the `full_path` ends with `.name` and, if so, removes it to return
-    the module path. Otherwise, it returns `None`.
-
-    Args:
-        name (str):
-            The short name of the object (e.g., `"QuerySet.select_related"`).
-        full_path (str):
-            The full path of the object (e.g.,
-            `"django.db.models.query.QuerySet.select_related"`).
-
-    Returns:
-        str or None:
-            The module path if `full_path` ends with `.name`, otherwise `None`.
-
-    Example:
-        >>> get_module_path(
-        ...   "QuerySet.select_related",
-        ...   "django.db.models.query.QuerySet.select_related"
-        ... )
-        'django.db.models.query'
-
-        >>> get_module_path("Model", "django.db.models.Model")
-        'django.db.models'
-
-        >>> get_module_path("django", "django")
-        None
-    """
-    name_suffix = f".{name}"
-    if full_path.endswith(name_suffix):
-        return full_path.removesuffix(name_suffix)
-    return None
