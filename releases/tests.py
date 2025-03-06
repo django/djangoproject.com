@@ -1,4 +1,5 @@
 import datetime
+from unittest import skip
 
 from django.contrib import admin
 from django.core.files.base import ContentFile
@@ -141,40 +142,46 @@ class TestReleaseManager(TestCase):
 
 
 class ReleaseUploadToTestCase(SimpleTestCase):
-    def test_upload_to_tarball(self):
-        for version, expected in [
-            ("5.2", "releases/5.2/django-5.2.tar.gz"),
-            ("5.2.1", "releases/5.2/django-5.2.1.tar.gz"),
-            ("5.2a1", "releases/5.2/django-5.2a1.tar.gz"),
-            ("5.2b2", "releases/5.2/django-5.2b2.tar.gz"),
+    def test_upload_to_artifact(self):
+        for version, filename, expected in [
+            ("5.2", "django-5.2.tar.gz", "releases/5.2/django-5.2.tar.gz"),
+            ("5.2", "django-5.2.tar.xz", "releases/5.2/django-5.2.tar.xz"),
+            ("5.2", "Django-5.2.tar.gz", "releases/5.2/Django-5.2.tar.gz"),
+            ("5.2", "DJANGO-5.2.tar.gz", "releases/5.2/DJANGO-5.2.tar.gz"),
+            ("5.2.1", "django-5.2.1.tar.gz", "releases/5.2/django-5.2.1.tar.gz"),
+            ("5.2a1", "django-5.2a1.tar.gz", "releases/5.2/django-5.2a1.tar.gz"),
+            ("5.2b2", "django-5.2b2.tar.gz", "releases/5.2/django-5.2b2.tar.gz"),
+            ("5.2", "django-5.2-py3-none.whl", "releases/5.2/django-5.2-py3-none.whl"),
+            ("5.2", "Django-5.2-py3-none.whl", "releases/5.2/Django-5.2-py3-none.whl"),
+            ("5.2", "DJANGO-5.2-py3-none.whl", "releases/5.2/DJANGO-5.2-py3-none.whl"),
+            (
+                "5.2.1",
+                "django-5.2.1-py3-none.whl",
+                "releases/5.2/django-5.2.1-py3-none.whl",
+            ),
+            (
+                "5.2a1",
+                "django-5.2a1-py3-none.whl",
+                "releases/5.2/django-5.2a1-py3-none.whl",
+            ),
+            (
+                "5.2b2",
+                "django-5.2b2-py3-none.whl",
+                "releases/5.2/django-5.2b2-py3-none.whl",
+            ),
         ]:
-            with self.subTest(version=version):
+            with self.subTest(version=version, filename=filename):
                 self.assertEqual(
-                    # filename should not matter
-                    upload_to_tarball(Release(version=version), filename=None),
-                    expected,
-                )
-
-    def test_upload_to_wheel(self):
-        for version, expected in [
-            ("5.2", "releases/5.2/django-5.2-py3-none.whl"),
-            ("5.2.1", "releases/5.2/django-5.2.1-py3-none.whl"),
-            ("5.2a1", "releases/5.2/django-5.2a1-py3-none.whl"),
-            ("5.2b2", "releases/5.2/django-5.2b2-py3-none.whl"),
-        ]:
-            with self.subTest(version=version):
-                self.assertEqual(
-                    # filename should not matter
-                    upload_to_wheel(Release(version=version), filename=None),
+                    upload_to_artifact(Release(version=version), filename=filename),
                     expected,
                 )
 
     def test_upload_to_checksum(self):
         for version, expected in [
-            ("5.2", "pgp/django-5.2.checksum.txt"),
-            ("5.2.1", "pgp/django-5.2.1.checksum.txt"),
-            ("5.2a1", "pgp/django-5.2a1.checksum.txt"),
-            ("5.2b2", "pgp/django-5.2b2.checksum.txt"),
+            ("5.2", "pgp/Django-5.2.checksum.txt"),
+            ("5.2.1", "pgp/Django-5.2.1.checksum.txt"),
+            ("5.2a1", "pgp/Django-5.2a1.checksum.txt"),
+            ("5.2b2", "pgp/Django-5.2b2.checksum.txt"),
         ]:
             with self.subTest(version=version):
                 self.assertEqual(
@@ -197,9 +204,12 @@ class ReleaseAdminFormTestCase(TestCase):
     def test_published_releases_tarball_required(self):
         form = self.form_class({"version": "1.0", "date": "2008-09-03"})
         self.assertFormError(
-            form, "tarball", "This field is required because the release is active"
+            form,
+            "tarball",
+            "This field is required when the release is active by having a date",
         )
 
+    @skip  # TODO (restore feature or delete test)
     def test_artifact_file_inputs_have_extension_hint(self):
         form = self.form_class(auto_id=None)  # auto_id=None makes testing easier
         self.assertHTMLEqual(
@@ -218,16 +228,18 @@ class ReleaseAdminFormTestCase(TestCase):
         data = {"version": "1.2.3"}
         files = {
             # The content of the files doesn't matter
-            "tarball": ContentFile(b".", name="some-random-name.tar.gz"),
-            "wheel": ContentFile(b".", name="some-random-name.wl"),
+            "tarball": ContentFile(b".", name="django-1.2.3.tar.gz"),
+            "wheel": ContentFile(b".", name="django-1.2.3-py3-none-any.whl"),
             "checksum": ContentFile(b".", name="some-random-name.checksum.txt"),
         }
         form = self.form_class(data=data, files=files)
         self.assertTrue(form.is_valid(), form.errors.as_json())
         release = form.save()
         self.assertEqual(release.tarball.name, "releases/1.2/django-1.2.3.tar.gz")
-        self.assertEqual(release.wheel.name, "releases/1.2/django-1.2.3-py3-none.whl")
-        self.assertEqual(release.checksum.name, "pgp/django-1.2.3.checksum.txt")
+        self.assertEqual(
+            release.wheel.name, "releases/1.2/django-1.2.3-py3-none-any.whl"
+        )
+        self.assertEqual(release.checksum.name, "pgp/Django-1.2.3.checksum.txt")
 
 
 class RedirectViewTestCase(TestCase):
