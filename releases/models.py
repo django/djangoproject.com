@@ -241,14 +241,19 @@ class Release(models.Model):
         if self.date is not None and not self.tarball:
             raise ValidationError(
                 {
-                    "tarball": "This field is required when the release is active by having a date"
+                    "tarball": (
+                        "This field is required when the release is active "
+                        "by having a date"
+                    )
                 }
             )
 
         if (self.tarball or self.wheel) and not self.checksum:
             raise ValidationError(
                 {
-                    "checksum": "This field is required when an artifact has been uploaded"
+                    "checksum": (
+                        "This field is required when an artifact has been uploaded"
+                    )
                 }
             )
 
@@ -261,7 +266,6 @@ class Release(models.Model):
                 )
 
     def save(self, *args, **kwargs):
-        self.full_clean()
         self.major, self.minor, self.micro, status, self.iteration = self.version_tuple
         self.status = self.STATUS_REVERSE[status]
         cache.delete(self.DEFAULT_CACHE_KEY)
