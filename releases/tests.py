@@ -299,7 +299,7 @@ class ReleaseAdminFormTestCase(TestCase):
         )
         self.assertHTMLEqual(
             form["checksum"].as_widget(),
-            '<input type="file" name="checksum" accept=".txt">',
+            '<input type="file" name="checksum" accept=".asc, .txt">',
         )
 
     def test_file_upload_renames_correctly(self):
