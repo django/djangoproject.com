@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.files.storage import FileSystemStorage
-from django.core.validators import FileExtensionValidator, RegexValidator
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.functional import cached_property
 from django.utils.version import get_complete_version, get_main_version
@@ -157,12 +157,6 @@ def upload_to_checksum(release, filename):
     return f"pgp/Django-{version}.checksum.txt"
 
 
-tarball_name_re = re.compile(r"^[Dd]jango-\d+\.\d+(?:\.\d+)?(?:[a-zA-Z]\d*)?\.tar\.gz$")
-wheel_name_re = re.compile(
-    r"^[Dd]jango-\d+\.\d+(?:\.\d+)?(?:[a-zA-Z]\d*)?-py3-none-any\.whl$"
-)
-
-
 class Release(models.Model):
     DEFAULT_CACHE_KEY = "%s_django_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
     STATUS_CHOICES = (
@@ -207,27 +201,18 @@ class Release(models.Model):
         storage=get_storage,
         upload_to=upload_to_artifact,
         blank=True,
-        validators=[
-            RegexValidator(tarball_name_re),
-            FileExtensionValidator(allowed_extensions=["gz"]),
-        ],
     )
     wheel = models.FileField(
         "Wheel artifact as a .whl file",
         storage=get_storage,
         upload_to=upload_to_artifact,
         blank=True,
-        validators=[
-            RegexValidator(wheel_name_re),
-            FileExtensionValidator(allowed_extensions=["whl"]),
-        ],
     )
     checksum = models.FileField(
         "Signed checksum as a .asc file",
         storage=get_storage,
         upload_to=upload_to_checksum,
         blank=True,
-        validators=[FileExtensionValidator(allowed_extensions=["asc", "txt"])],
     )
     is_lts = models.BooleanField(
         "Long Term Support",
@@ -257,13 +242,17 @@ class Release(models.Model):
                 }
             )
 
-        version = get_version(self.version_tuple)
-        for attr in ("tarball", "wheel"):
-            name = getattr(self, attr).name
-            if name and (version not in name):
-                raise ValidationError(
-                    {attr: f"The provided name {name} should include {version} in it."}
-                )
+        if self.tarball:
+            try:
+                self.validate_artifact_name(self.tarball.name, suffix=".tar.gz")
+            except ValidationError as e:
+                raise ValidationError({"tarball": e})
+
+        if self.wheel:
+            try:
+                self.validate_artifact_name(self.wheel.name, suffix="-py3-none-any.whl")
+            except ValidationError as e:
+                raise ValidationError({"wheel": e})
 
     def save(self, *args, **kwargs):
         self.major, self.minor, self.micro, status, self.iteration = self.version_tuple
@@ -299,3 +288,9 @@ class Release(models.Model):
         if len(version) == 4:
             version.append(0)
         return tuple(version)
+
+    def validate_artifact_name(self, name, suffix):
+        version = get_version(self.version_tuple)
+        regex = f"^[Dd]jango-{re.escape(version)}{re.escape(suffix)}$"
+        message = f"Filename {name} does not match pattern {regex}."
+        return RegexValidator(regex, message=message, code="invalid_name")(name)

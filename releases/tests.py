@@ -1,4 +1,5 @@
 import datetime
+import re
 from unittest import skip
 
 from django.contrib import admin
@@ -208,6 +209,83 @@ class ReleaseAdminFormTestCase(TestCase):
             "tarball",
             "This field is required when the release is active by having a date",
         )
+
+    def test_checksum_required_if_tarball_provided(self):
+        form = self.form_class(
+            data={"version": "1.0", "date": None},
+            files={"tarball": ContentFile(b".", name="django-1.0.tar.gz")},
+        )
+        self.assertFormError(
+            form,
+            "checksum",
+            "This field is required when an artifact has been uploaded",
+        )
+
+    def test_checksum_required_if_wheel_provided(self):
+        form = self.form_class(
+            data={"version": "1.0", "date": None},
+            files={"wheel": ContentFile(b".", name="django-1.0-py3-none-any.whl")},
+        )
+        self.assertFormError(
+            form,
+            "checksum",
+            "This field is required when an artifact has been uploaded",
+        )
+
+    def test_tarball_filename_validation_valid(self):
+        for artifact, version, filename in [
+            ("tarball", "1.0", "django-1.0.tar.gz"),
+            ("tarball", "1.0", "Django-1.0.tar.gz"),
+            ("tarball", "1.10", "django-1.10.tar.gz"),
+            ("tarball", "1.2.3", "django-1.2.3.tar.gz"),
+            ("tarball", "1.0a1", "django-1.0a1.tar.gz"),
+            ("tarball", "1.0b1", "django-1.0b1.tar.gz"),
+            ("tarball", "1.0c1", "django-1.0c1.tar.gz"),
+            ("wheel", "1.0", "django-1.0-py3-none-any.whl"),
+            ("wheel", "1.0", "Django-1.0-py3-none-any.whl"),
+            ("wheel", "1.10", "django-1.10-py3-none-any.whl"),
+            ("wheel", "1.2.3", "django-1.2.3-py3-none-any.whl"),
+            ("wheel", "1.0a1", "django-1.0a1-py3-none-any.whl"),
+            ("wheel", "1.0b1", "django-1.0b1-py3-none-any.whl"),
+            ("wheel", "1.0c1", "django-1.0c1-py3-none-any.whl"),
+        ]:
+            form = self.form_class(
+                data={"version": version},
+                files={artifact: ContentFile(b".", name=filename)},
+            )
+            with self.subTest(version=version, filename=filename):
+                self.assertFormError(form, artifact, [])
+
+    def test_tarball_filename_validation_invalid(self):
+        for artifact, version, filename in [
+            ("tarball", "1.0", "django-1.2.tar.gz"),
+            ("tarball", "1.0", "django-1.0.1.tar.gz"),
+            ("tarball", "1.0.1", "django-1.0.tar.gz"),
+            ("tarball", "1.0a1", "django-1.0.tar.gz"),
+            ("tarball", "1.0", "django-1.0-py3-none-any.tar.gz"),
+            ("tarball", "1.0", "django-1.0-py3-none-any.whl"),
+            ("tarball", "1.0", "django-1.0.tar.xz"),
+            ("wheel", "1.0", "django-1.2-py3-none-any.whl"),
+            ("wheel", "1.0", "django-1.0.1-py3-none-any.whl"),
+            ("wheel", "1.0.1", "django-1.0-py3-none-any.whl"),
+            ("wheel", "1.0a1", "django-1.0-py3-none-any.whl"),
+            ("wheel", "1.0", "django-1.0.whl"),
+            ("wheel", "1.0", "django-1.0.tar.gz"),
+        ]:
+            form = self.form_class(
+                data={"version": version, "date": None},
+                files={
+                    artifact: ContentFile(b".", name=filename),
+                    "checksum": ContentFile(b".", name="doesntmatter.txt"),
+                },
+            )
+            if artifact == "tarball":
+                pattern = rf"^[Dd]jango-{re.escape(version)}\.tar\.gz$"
+            else:
+                pattern = rf"^[Dd]jango-{re.escape(version)}\-py3\-none\-any\.whl$"
+            error = f"Filename {filename} does not match pattern {pattern}."
+            with self.subTest(version=version, filename=filename):
+                self.assertFormError(form, artifact, error)
 
     @skip  # TODO (restore feature or delete test)
     def test_artifact_file_inputs_have_extension_hint(self):
