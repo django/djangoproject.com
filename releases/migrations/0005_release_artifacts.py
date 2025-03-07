@@ -115,7 +115,7 @@ class Migration(migrations.Migration):
             name="is_lts",
             field=models.BooleanField(
                 default=False,
-                help_text='Is this an (<abbr title="Long Term Support">LTS</abbr>) release?',
+                help_text='Is this an <abbr title="Long Term Support">LTS</abbr> release?',
                 verbose_name="Long Term Support",
             ),
         ),

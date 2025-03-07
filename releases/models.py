@@ -216,7 +216,7 @@ class Release(models.Model):
     )
     is_lts = models.BooleanField(
         "Long Term Support",
-        help_text='Is this an (<abbr title="Long Term Support">LTS</abbr>) release?',
+        help_text='Is this an <abbr title="Long Term Support">LTS</abbr> release?',
         default=False,
     )
 
