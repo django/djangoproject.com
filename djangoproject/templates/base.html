@@ -131,7 +131,6 @@
         paths: {
           "jquery": extless("{% static 'js/lib/jquery.min.js' %}"),
           "jquery.flot": extless("{% static 'js/lib/jquery.flot.min.js' %}"),
-          "mod/floating-warning": extless("{% static 'js/mod/floating-warning.js' %}"),
           "mod/list-collapsing": extless("{% static 'js/mod/list-collapsing.js' %}"),
           "mod/stripe-change-card": extless("{% static 'js/mod/stripe-change-card.js' %}"),
           "mod/switch-dark-mode": extless("{% static 'js/mod/switch-dark-mode.js' %}"),
@@ -141,7 +140,7 @@
       };
     </script>
     <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>
-    <script src="{% static "js/djangoproject.js" %}"></script>
     {% block body_extra %}{% endblock body_extra %}
+    <script src="{% static "js/djangoproject.js" %}"></script>
   </body>
 </html>
