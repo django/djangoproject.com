@@ -7,7 +7,7 @@
   {% regroup django_communities|dictsort:"continent" by continent as grouped_django_communities %}
 
 
-  <h2>{% translate "Local Django Communities" %}</h2>
+  <h1>{% translate "Local Django Communities" %}</h1>
 
   <p>{% blocktranslate trimmed %}Something missing? <a href="https://github.com/django/djangoproject.com/issues/new?assignees=&amp;labels=type%3Acommunity&amp;projects=&amp;template=community_request.md">Suggest your community{% endblocktranslate %}</a>.</p>
 
