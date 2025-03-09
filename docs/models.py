@@ -254,7 +254,7 @@ class DocumentQuerySet(models.QuerySet):
         else:
             return self.none()
 
-    def search(self, query_text, release):
+    def search(self, query_text, release, document_category=None):
         """Use full-text search to return documents matching query_text."""
         query_text = query_text.strip()
         if query_text:
@@ -262,6 +262,9 @@ class DocumentQuerySet(models.QuerySet):
                 query_text, config=models.F("config"), search_type="websearch"
             )
             search_rank = SearchRank(models.F("search"), search_query)
+            base_filter = Q(release_id=release.id)
+            if document_category:
+                base_filter &= Q(metadata__parents__startswith=document_category)
             base_qs = (
                 self.prefetch_related(
                     Prefetch(
@@ -272,7 +275,7 @@ class DocumentQuerySet(models.QuerySet):
                         "release__release", queryset=Release.objects.only("version")
                     ),
                 )
-                .filter(release_id=release.id)
+                .filter(base_filter)
                 .annotate(
                     headline=SearchHeadline(
                         "title",
