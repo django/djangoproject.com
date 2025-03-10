@@ -5,6 +5,11 @@ from .models import Release
 
 @admin.register(Release)
 class ReleaseAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {"fields": ["version", "is_lts"]}),
+        ("Dates", {"fields": ["date", "eol_date"]}),
+        ("Artifacts", {"fields": ["tarball", "wheel", "checksum"]}),
+    ]
     list_display = (
         "version",
         "is_lts",

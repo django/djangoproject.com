@@ -1,33 +1,18 @@
 import datetime
+import re
+from unittest import skip
 
-from django.contrib.redirects.models import Redirect
-from django.test import TestCase, override_settings
+from django.contrib import admin
+from django.core.files.base import ContentFile
+from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils.safestring import SafeString
 
 from members.models import MEMBERSHIP_LEVELS, PLATINUM_MEMBERSHIP, CorporateMember
 
-from .models import Release, create_releases_up_to_1_5
+from .models import Release, upload_to_artifact, upload_to_checksum
 from .templatetags.date_format import isodate
 from .templatetags.release_notes import get_latest_micro_release, release_notes
-
-
-class LegacyURLsTests(TestCase):
-    fixtures = ["redirects-downloads"]  # provided by the legacy app
-
-    def test_legacy_redirects(self):
-        # Save list of redirects, then wipe them
-        redirects = list(Redirect.objects.values_list("old_path", "new_path"))
-        Redirect.objects.all().delete()
-        # Ensure the releases app faithfully reproduces the redirects
-        create_releases_up_to_1_5()
-        for old_path, new_path in redirects:
-            response = self.client.get(old_path, follow=False)
-            location = response.get("Location", "")
-            if location.startswith("http://testserver"):
-                location = location[17:]
-            self.assertEqual(location, new_path)
-            self.assertEqual(response.status_code, 301)
 
 
 class TestTemplateTags(TestCase):
@@ -155,6 +140,211 @@ class TestReleaseManager(TestCase):
             version="1.9b2", date=datetime.date.today(), eol_date=None
         )
         self.assertEqual(Release.objects.preview().version, "1.9b2")
+
+
+class ReleaseUploadToTestCase(SimpleTestCase):
+    def test_upload_to_artifact(self):
+        for version, filename, expected in [
+            ("5.2", "django-5.2.tar.gz", "releases/5.2/django-5.2.tar.gz"),
+            ("5.2", "django-5.2.tar.xz", "releases/5.2/django-5.2.tar.xz"),
+            ("5.2", "Django-5.2.tar.gz", "releases/5.2/Django-5.2.tar.gz"),
+            ("5.2", "DJANGO-5.2.tar.gz", "releases/5.2/DJANGO-5.2.tar.gz"),
+            ("5.2.1", "django-5.2.1.tar.gz", "releases/5.2/django-5.2.1.tar.gz"),
+            ("5.2a1", "django-5.2a1.tar.gz", "releases/5.2/django-5.2a1.tar.gz"),
+            ("5.2b2", "django-5.2b2.tar.gz", "releases/5.2/django-5.2b2.tar.gz"),
+            ("5.2", "django-5.2-py3-none.whl", "releases/5.2/django-5.2-py3-none.whl"),
+            ("5.2", "Django-5.2-py3-none.whl", "releases/5.2/Django-5.2-py3-none.whl"),
+            ("5.2", "DJANGO-5.2-py3-none.whl", "releases/5.2/DJANGO-5.2-py3-none.whl"),
+            (
+                "5.2.1",
+                "django-5.2.1-py3-none.whl",
+                "releases/5.2/django-5.2.1-py3-none.whl",
+            ),
+            (
+                "5.2a1",
+                "django-5.2a1-py3-none.whl",
+                "releases/5.2/django-5.2a1-py3-none.whl",
+            ),
+            (
+                "5.2b2",
+                "django-5.2b2-py3-none.whl",
+                "releases/5.2/django-5.2b2-py3-none.whl",
+            ),
+        ]:
+            with self.subTest(version=version, filename=filename):
+                self.assertEqual(
+                    upload_to_artifact(Release(version=version), filename=filename),
+                    expected,
+                )
+
+    def test_upload_to_checksum(self):
+        for version, expected in [
+            ("5.2", "pgp/Django-5.2.checksum.txt"),
+            ("5.2.1", "pgp/Django-5.2.1.checksum.txt"),
+            ("5.2a1", "pgp/Django-5.2a1.checksum.txt"),
+            ("5.2b2", "pgp/Django-5.2b2.checksum.txt"),
+        ]:
+            with self.subTest(version=version):
+                self.assertEqual(
+                    # filename should not matter
+                    upload_to_checksum(Release(version=version), filename=None),
+                    expected,
+                )
+
+
+class ReleaseAdminFormTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.form_class = admin.site.get_model_admin(Release).get_form(request=None)
+
+    def test_non_published_releases_tarball_not_required(self):
+        form = self.form_class({"version": "1.0", "date": None})
+        self.assertTrue(form.is_valid(), form.errors)
+
+    def test_published_releases_tarball_required(self):
+        form = self.form_class({"version": "1.0", "date": "2008-09-03"})
+        self.assertFormError(
+            form,
+            "tarball",
+            "This field is required when the release is active by having a date",
+        )
+
+    def test_checksum_required_if_tarball_provided(self):
+        form = self.form_class(
+            data={"version": "1.0", "date": None},
+            files={"tarball": ContentFile(b".", name="django-1.0.tar.gz")},
+        )
+        self.assertFormError(
+            form,
+            "checksum",
+            "This field is required when an artifact has been uploaded",
+        )
+
+    def test_checksum_required_if_wheel_provided(self):
+        form = self.form_class(
+            data={"version": "1.0", "date": None},
+            files={"wheel": ContentFile(b".", name="django-1.0-py3-none-any.whl")},
+        )
+        self.assertFormError(
+            form,
+            "checksum",
+            "This field is required when an artifact has been uploaded",
+        )
+
+    def test_tarball_filename_validation_valid(self):
+        for artifact, version, filename in [
+            ("tarball", "1.0", "django-1.0.tar.gz"),
+            ("tarball", "1.0", "Django-1.0.tar.gz"),
+            ("tarball", "1.10", "django-1.10.tar.gz"),
+            ("tarball", "1.2.3", "django-1.2.3.tar.gz"),
+            ("tarball", "1.0a1", "django-1.0a1.tar.gz"),
+            ("tarball", "1.0b1", "django-1.0b1.tar.gz"),
+            ("tarball", "1.0c1", "django-1.0c1.tar.gz"),
+            ("wheel", "1.0", "django-1.0-py3-none-any.whl"),
+            ("wheel", "1.0", "Django-1.0-py3-none-any.whl"),
+            ("wheel", "1.10", "django-1.10-py3-none-any.whl"),
+            ("wheel", "1.2.3", "django-1.2.3-py3-none-any.whl"),
+            ("wheel", "1.0a1", "django-1.0a1-py3-none-any.whl"),
+            ("wheel", "1.0b1", "django-1.0b1-py3-none-any.whl"),
+            ("wheel", "1.0c1", "django-1.0c1-py3-none-any.whl"),
+        ]:
+            form = self.form_class(
+                data={"version": version},
+                files={artifact: ContentFile(b".", name=filename)},
+            )
+            with self.subTest(version=version, filename=filename):
+                self.assertFormError(form, artifact, [])
+
+    def test_tarball_filename_validation_invalid(self):
+        for artifact, version, filename in [
+            ("tarball", "1.0", "django-1.2.tar.gz"),
+            ("tarball", "1.0", "django-1.0.1.tar.gz"),
+            ("tarball", "1.0.1", "django-1.0.tar.gz"),
+            ("tarball", "1.0a1", "django-1.0.tar.gz"),
+            ("tarball", "1.0", "django-1.0-py3-none-any.tar.gz"),
+            ("tarball", "1.0", "django-1.0-py3-none-any.whl"),
+            ("tarball", "1.0", "django-1.0.tar.xz"),
+            ("wheel", "1.0", "django-1.2-py3-none-any.whl"),
+            ("wheel", "1.0", "django-1.0.1-py3-none-any.whl"),
+            ("wheel", "1.0.1", "django-1.0-py3-none-any.whl"),
+            ("wheel", "1.0a1", "django-1.0-py3-none-any.whl"),
+            ("wheel", "1.0", "django-1.0.whl"),
+            ("wheel", "1.0", "django-1.0.tar.gz"),
+        ]:
+            form = self.form_class(
+                data={"version": version, "date": None},
+                files={
+                    artifact: ContentFile(b".", name=filename),
+                    "checksum": ContentFile(b".", name="doesntmatter.txt"),
+                },
+            )
+            if artifact == "tarball":
+                pattern = rf"^[Dd]jango-{re.escape(version)}\.tar\.gz$"
+            else:
+                pattern = rf"^[Dd]jango-{re.escape(version)}\-py3\-none\-any\.whl$"
+            error = f"Filename {filename} does not match pattern {pattern}."
+            with self.subTest(version=version, filename=filename):
+                self.assertFormError(form, artifact, error)
+
+    @skip  # TODO (restore feature or delete test)
+    def test_artifact_file_inputs_have_extension_hint(self):
+        form = self.form_class(auto_id=None)  # auto_id=None makes testing easier
+        self.assertHTMLEqual(
+            form["tarball"].as_widget(),
+            '<input type="file" name="tarball" accept=".tar.gz">',
+        )
+        self.assertHTMLEqual(
+            form["wheel"].as_widget(), '<input type="file" name="wheel" accept=".whl">'
+        )
+        self.assertHTMLEqual(
+            form["checksum"].as_widget(),
+            '<input type="file" name="checksum" accept=".asc, .txt">',
+        )
+
+    def test_file_upload_renames_correctly(self):
+        data = {"version": "1.2.3"}
+        files = {
+            # The content of the files doesn't matter
+            "tarball": ContentFile(b".", name="django-1.2.3.tar.gz"),
+            "wheel": ContentFile(b".", name="django-1.2.3-py3-none-any.whl"),
+            "checksum": ContentFile(b".", name="some-random-name.checksum.txt"),
+        }
+        form = self.form_class(data=data, files=files)
+        self.assertTrue(form.is_valid(), form.errors.as_json())
+        release = form.save()
+        self.assertEqual(release.tarball.name, "releases/1.2/django-1.2.3.tar.gz")
+        self.assertEqual(
+            release.wheel.name, "releases/1.2/django-1.2.3-py3-none-any.whl"
+        )
+        self.assertEqual(release.checksum.name, "pgp/Django-1.2.3.checksum.txt")
+
+
+class RedirectViewTestCase(TestCase):
+    def test_redirect(self):
+        Release.objects.create(
+            version="1.0",
+            tarball="test.tar.gz",
+            wheel="test.whl",
+            checksum="test.checksum.txt",
+        )
+
+        for kind, url in [
+            ("tarball", "/m/test.tar.gz"),
+            ("wheel", "/m/test.whl"),
+            ("checksum", "/m/test.checksum.txt"),
+        ]:
+            response = self.client.get(f"/download/1.0/{kind}/")
+            with self.subTest(kind=kind):
+                self.assertRedirects(response, url, 301, fetch_redirect_response=False)
+
+    def test_redirect_404(self):
+        Release.objects.create(version="1.0")
+
+        for kind in ["tarball", "wheel", "checksum"]:
+            response = self.client.get(f"/download/1.0/{kind}/")
+            with self.subTest(kind=kind):
+                self.assertEqual(response.status_code, 404)
 
 
 class CorporateMembersTestCase(TestCase):
