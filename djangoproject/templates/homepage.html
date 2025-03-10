@@ -16,56 +16,57 @@
 {% endblock %}
 
 {% block content %}
-  <div class="section">
-    <h1>{% translate "Meet Django" %}</h1>
-    <p>
-      {% blocktranslate trimmed %}
-        Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design.
-        Built by experienced developers, it takes care of much of the hassle of web development, so you can focus
-        on writing your app without needing to reinvent the wheel. It’s free and open source.
-      {% endblocktranslate %}
-    </p>
-    <dl class="list-features">
-      <dt><i class="icon icon-bolt"></i> {% translate "Ridiculously fast." %}</dt>
-      <dd>
-        <p>{% translate "Django was designed to help developers take applications from concept to completion as quickly as possible." %}</p>
-      </dd>
+  <div class="homepage-container">
+    <div class="section">
+      <h1>{% translate "Meet Django" %}</h1>
+      <p>
+        {% blocktranslate trimmed %}
+          Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design.
+          Built by experienced developers, it takes care of much of the hassle of web development, so you can focus
+          on writing your app without needing to reinvent the wheel. It’s free and open source.
+        {% endblocktranslate %}
+      </p>
+      <dl class="list-features">
+        <dt><i class="icon icon-bolt"></i> {% translate "Ridiculously fast." %}</dt>
+        <dd>
+          <p>{% translate "Django was designed to help developers take applications from concept to completion as quickly as possible." %}</p>
+        </dd>
 
-      <dt><i class="icon icon-lock"></i> {% translate "Reassuringly secure." %}</dt>
-      <dd>
-        <p>{% translate "Django takes security seriously and helps developers avoid many common security mistakes." %}</p>
-      </dd>
+        <dt><i class="icon icon-lock"></i> {% translate "Reassuringly secure." %}</dt>
+        <dd>
+          <p>{% translate "Django takes security seriously and helps developers avoid many common security mistakes." %}</p>
+        </dd>
 
-      <dt><i class="icon icon-dashboard"></i> {% translate "Exceedingly scalable." %}</dt>
-      <dd>
-        <p>{% translate "Some of the busiest sites on the web leverage Django’s ability to quickly and flexibly scale." %}</p>
-      </dd>
-    </dl>
+        <dt><i class="icon icon-dashboard"></i> {% translate "Exceedingly scalable." %}</dt>
+        <dd>
+          <p>{% translate "Some of the busiest sites on the web leverage Django’s ability to quickly and flexibly scale." %}</p>
+        </dd>
+      </dl>
 
-    <a href="{% url 'overview' %}" class="cta outline">{% translate "Learn more about Django" %}</a>
-  </div>
-
-  <div class="section">
-    <h2>{% translate "Join the Community" %}</h2>
-    <div class="community-cta-wrapper">
-      <a href="https://forum.djangoproject.com/" class="community-cta-a">
-        <div class="community-cta">
-          <div>
-            {% include "svg_logos/forum.html" %}
-          </div>
-          <h3>{% translate "Forum - Post a question" %}</h3>
-        </div>
-      </a>
-      <a href="https://chat.djangoproject.com" class="community-cta-a">
-        <div class="community-cta">
-          <div>
-            {% include "svg_logos/discord.html" %}
-          </div>
-          <h3>{% translate "Discord - Chat with us" %}</h3>
-        </div>
-      </a>
+      <a href="{% url 'overview' %}" class="cta outline">{% translate "Learn more about Django" %}</a>
     </div>
-  </div>
+
+    <div class="section">
+      <h2>{% translate "Join the Community" %}</h2>
+      <div class="community-cta-wrapper">
+        <a href="https://forum.djangoproject.com/" class="community-cta-a">
+          <div class="community-cta">
+            <div>
+              {% include "svg_logos/forum.html" %}
+            </div>
+            <h3>{% translate "Forum - Post a question" %}</h3>
+          </div>
+        </a>
+        <a href="https://chat.djangoproject.com" class="community-cta-a">
+          <div class="community-cta">
+            <div>
+              {% include "svg_logos/discord.html" %}
+            </div>
+            <h3>{% translate "Discord - Chat with us" %}</h3>
+          </div>
+        </a>
+      </div>
+    </div>
 
     {% comment %}
 
@@ -99,11 +100,12 @@
     </div>
 
     {% endcomment %}
-
+  </div>
     <!-- END #content-secondary -->
 {% endblock %}
 
 {% block content-related %}
+
   <div role="complementary">
     <a href="{% url 'download' %}" class="cta">
       {% blocktranslate trimmed %}
