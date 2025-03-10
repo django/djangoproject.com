@@ -48,6 +48,21 @@
             {% if result.highlight %}
               …&nbsp;{{ result.highlight|cut:"¶"|safe }}&nbsp;…
             {% endif %}
+            {% code_links result.searched_python_objects result.python_objects as result_code_links %}
+            {% if result_code_links %}
+              <ul class="code-links">
+                {% for name, value in result_code_links.items %}
+                  <li>
+                    <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}#{{ value.full_path }}">
+                      <div>
+                        <code>{{ name }}</code>
+                        {% if value.module_path %}<div class="meta">{{ value.module_path }}</div>{% endif %}
+                      </div>
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
           </dd>
         {% endfor %}
       </dl>
