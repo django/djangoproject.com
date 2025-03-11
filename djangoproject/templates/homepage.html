@@ -6,6 +6,7 @@
 {% block layout_class %}column-container sidebar-right{% endblock %}
 
 {% block header %}
+  <h1 class="visuallyhidden">Django</h1>
   <p>
     <em>{% translate "Django makes it easier to build better web apps more quickly and with less code." %}</em>
   </p>
@@ -103,9 +104,7 @@
 {% endblock %}
 
 {% block content-related %}
-  <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
   <div role="complementary">
-    <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
     <a href="{% url 'download' %}" class="cta">
       {% blocktranslate trimmed %}
         Download <em>latest release: {{ DJANGO_VERSION }}</em>

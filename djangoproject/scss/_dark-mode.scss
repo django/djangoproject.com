@@ -149,7 +149,7 @@ html[data-theme="light"],
         }
     }
 
-    body footer {
+    body [role="contentinfo"] {
         background: darken($green, 10%);
     }
 
@@ -256,7 +256,7 @@ html[data-theme="dark"] {
         }
     }
 
-    footer {
+    [role="contentinfo"] {
         background: darken($green, 10%);
     }
 }
@@ -352,7 +352,7 @@ html[data-theme="light"] .theme-toggle .theme-label-when-light {
     }
 }
 
-header nav li:last-child {
+[role="banner"] [role="navigation"] li:last-child {
     @include respond-max(768px) {
         display: none;
     }

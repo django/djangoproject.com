@@ -12,7 +12,6 @@ from .models import Entry, Event
 class BlogViewMixin:
     date_field = "pub_date"
     paginate_by = 10
-    banner_is_title = True
 
     def get_allow_future(self):
         return self.request.user.is_staff
@@ -29,7 +28,6 @@ class BlogViewMixin:
         events_queryset = Event.objects.future().published()
 
         context["events"] = events_queryset[:3]
-        context["banner_is_title"] = self.banner_is_title
 
         return context
 
@@ -51,4 +49,4 @@ class BlogDayArchiveView(BlogViewMixin, DayArchiveView):
 
 
 class BlogDateDetailView(BlogViewMixin, DateDetailView):
-    banner_is_title = False
+    pass

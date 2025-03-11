@@ -4,8 +4,9 @@
 {% block title %}{% firstof user_obj.profile.name user_obj.username %}{% endblock %}
 
 {% block content-related %}
+    <h1 class="visuallyhidden">{% translate "Additional Information" %}</h1>
     <div role="complementary">
-        <h2 id="aside-header">
+        <h2>
             {% if user_obj == user %}
                 {% translate "This is you!" %}
             {% else %}
