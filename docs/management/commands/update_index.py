@@ -20,7 +20,7 @@ class Command(BaseCommand):
             Document.objects.search_reset()
             updated_documents = Document.objects.search_update()
         elapsed = time.time() - _started_at
-        if options["verbosity"] >= 2:
+        if options["verbosity"] >= 1:
             self.stdout.write(
                 self.style.SUCCESS(
                     f"Indexed {updated_documents} documents in {elapsed:.03}s."
