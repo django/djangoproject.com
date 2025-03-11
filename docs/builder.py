@@ -74,3 +74,11 @@ class PythonObjectsJSONHTMLBuilder(JSONHTMLBuilder):
 
 def setup(app):
     app.add_builder(PythonObjectsJSONHTMLBuilder, override=True)
+
+    # JSONHTMLBuilder marks parallel read/write as safe, so our implementation
+    # should also handle that.
+    return {
+        "version": "0.1",
+        "parallel_read_safe": True,
+        "parallel_write_safe": True,
+    }
