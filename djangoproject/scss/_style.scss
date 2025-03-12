@@ -352,12 +352,16 @@ blockquote {
     //Sidebar in column layouts, gray section in fullwidth layout
     padding: 0 10px 20px;
     @include font-size(14);
+    position: sticky;
+    top: 0;
+    max-height: calc(100vh);
+    overflow-y: auto;
 
     @include respond-min(768px) {
         float: right;
         margin: 20px 0;
         margin-right: 3%;
-        padding: 0 0 40px 0;
+        padding: 0 40px 40px 0;
         width: 30%;
 
         .sidebar-right & {
@@ -391,6 +395,34 @@ blockquote {
             }
         }
     }
+}
+/* Default scrollbar styles */
+[role="complementary"]::-webkit-scrollbar {
+    width: 8px;
+}
+
+[role="complementary"]::-webkit-scrollbar-track {
+    background: transparent; /* Hide track */
+}
+
+[role="complementary"]::-webkit-scrollbar-button {
+    background-color: transparent;
+}
+
+[role="complementary"]::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 0;
+}
+
+/* Thumb hover effect */
+[role="complementary"]::-webkit-scrollbar-thumb:hover {
+    background: #aaa; /* Darker on hover */
+}
+
+/* For Firefox */
+[role="complementary"] {
+    scrollbar-width: thin; /* Thin scrollbar */
+    scrollbar-color: #ccc transparent; /* Default thumb color and track color */
 }
 
 [role="secondary"] {
@@ -3586,3 +3618,13 @@ ul.corporate-members li {
         color: var(--community-img-fg);
     }
 }
+.homepage-container {
+    width: 100%;
+  }
+
+/* Apply left padding only on full-screen (large screens) */
+@media (min-width: 1200px) { /* Adjust breakpoint as needed */
+    .homepage-container {
+      padding-left: 40px; /* Adjust the padding as needed */
+    }
+  }
