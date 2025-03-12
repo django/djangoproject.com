@@ -15,7 +15,7 @@ from django.contrib.postgres.search import (
     TrigramSimilarity,
 )
 from django.core.cache import cache
-from django.db import models, transaction
+from django.db import connection, models, transaction
 from django.db.models import Prefetch, Q
 from django.db.models.fields.json import KeyTextTransform
 from django.utils.functional import cached_property
@@ -184,6 +184,18 @@ class DocumentRelease(models.Model):
                 if line.startswith(f"Disallow: /{self.lang}/{self.release_id}/")
             ]
 
+        language_mapping = TSEARCH_CONFIG_LANGUAGES
+        english = "custom_english"
+        with connection.cursor() as cursor:
+            cursor.execute(
+                "SELECT EXISTS(SELECT 1 FROM pg_ts_config WHERE cfgname = %s)",
+                [english],
+            )
+            has_custom_english_config = cursor.fetchone()[0]
+
+        if has_custom_english_config:
+            language_mapping["en"] = english
+
         for document in decoded_documents:
             if (
                 "body" not in document
@@ -202,9 +214,7 @@ class DocumentRelease(models.Model):
                 path=document_path,
                 title=html.unescape(strip_tags(document["title"])),
                 metadata=document,
-                config=TSEARCH_CONFIG_LANGUAGES.get(
-                    self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG
-                ),
+                config=language_mapping.get(self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG),
             )
         for document in self.documents.all():
             document.metadata["breadcrumbs"] = list(
