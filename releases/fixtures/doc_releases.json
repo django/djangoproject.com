@@ -205,5 +205,19 @@
     "iteration": 0,
     "is_lts": false
   }
+},
+{
+  "model": "releases.release",
+  "pk": "5.2",
+  "fields": {
+    "date": "2025-04-02",
+    "eol_date": null,
+    "major": 5,
+    "minor": 2,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": true
+  }
 }
 ]
