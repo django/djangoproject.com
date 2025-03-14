@@ -59,7 +59,7 @@ document.querySelectorAll('.console-block label').forEach(function (el) {
 
 // Toggle mobile menu on button click
 document.querySelector('.menu-button').addEventListener('click', function () {
-  const menu_el = document.querySelector('#top [role="navigation"]');
+  const menu_el = document.querySelector('#top nav');
 
   this.classList.toggle('active');
   menu_el.classList.toggle('active');
