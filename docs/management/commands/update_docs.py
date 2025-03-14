@@ -227,7 +227,7 @@ class Command(BaseCommand):
                         # stderr to stdout to be logged (rather than generating an email)
                         warning=sys.stdout,
                         parallel=multiprocessing.cpu_count(),
-                        verbosity=self.verbosity,
+                        verbosity=0,
                         confoverrides={
                             "language": to_locale(release.lang),
                             "extensions": extensions,
