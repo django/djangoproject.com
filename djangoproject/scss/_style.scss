@@ -2578,6 +2578,40 @@ table.docutils th {
     }
 }
 
+search.filters {
+    @include sans-serif;
+
+    display: flex;
+    gap: 10px;
+    border-bottom: 2px solid var(--hairline-color);
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 0;
+    position: relative;
+
+    a {
+      padding: 10px 20px;
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      transition: color 0.3s ease, border-bottom 0.3s ease;
+      color: var(--text-light);
+      flex-shrink: 0;
+
+      &:not([href]) {
+        color: var(--body-fg);
+        font-weight: bold;
+        border-bottom: 3px solid var(--primary);
+      }
+
+      &[href]:focus,
+      &[href]:active,
+      &[href]:hover {
+        outline: none;
+        border-bottom: 3px solid var(--hairline-color);
+      }
+    }
+}
+
 .search-links {
     @extend .list-links;
 
