@@ -2980,33 +2980,6 @@ form {
 
 
 
-form.donate {
-    max-width: 150px;
-
-    label {
-        position: absolute;
-        left: 0px;
-        color: var(--primary-accent);
-        padding-top: 0.3em;
-        padding-left: 0.5em;
-    }
-
-    input[type=text] {
-        padding-left: 20px;
-        padding-right: 9px;
-        /* Magic value to right-align the button inside the input */
-    }
-}
-
-div[role=main] {
-    form.donate {
-        label {
-            padding-top: 0.7em;
-        }
-    }
-}
-
-
 .form-email {
 
     // Email submission forms on Community page.
