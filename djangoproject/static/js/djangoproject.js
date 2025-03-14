@@ -183,3 +183,32 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
 
   window.addEventListener('hashchange', scroll_to_hash);
 })();
+
+// Update donate button text on fundraising page based on interval selection
+document.getElementById('id_interval').addEventListener('change', function () {
+  const text = this.value === 'onetime' ? 'Donate' : `Donate ${this.value}`;
+
+  document.getElementById('donate-button').value = text;
+});
+
+// Manage custom donation amount input on fundraising page
+document.getElementById('id_amount').addEventListener('change', function () {
+  if (this.value !== 'custom') {
+    return;
+  }
+
+  const input_el = document.createElement('input');
+
+  input_el.setAttribute('type', 'number');
+  input_el.setAttribute('name', 'amount');
+
+  const custom_donation_el = document.querySelector('.custom-donation');
+
+  custom_donation_el.appendChild(input_el);
+  custom_donation_el.style.display = 'block';
+
+  this.remove();
+
+  input_el.focus();
+  input_el.value = '25';
+});
