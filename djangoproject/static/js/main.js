@@ -16,10 +16,6 @@ define(function () {
   if (hasClass('fundraising-heart')) {
     mods.push('mod/fundraising-heart');
   }
-  //fundraising donation form
-  if (hasClass('fundraising-index')) {
-    mods.push('mod/fundraising-index');
-  }
 
   if (hasClass('dashboard-index')) {
     mods.push('dashboard/index');
