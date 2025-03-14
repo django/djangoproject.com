@@ -233,6 +233,7 @@ class Command(BaseCommand):
                             "language": to_locale(release.lang),
                             "extensions": extensions,
                         },
+                        freshenv=True,
                     ).build()
                 # Clean up global state after building each language.
                 _clean_up_global_state()
