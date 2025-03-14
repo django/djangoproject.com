@@ -513,7 +513,7 @@ class CorporateMembersTestCase(TestCase):
 
         response = self.client.get(reverse("download"))
 
-        self.assertContains(response, "<h2>Diamond and Platinum Members</h2>")
+        self.assertContains(response, "<h3>Diamond and Platinum Members</h3>")
         member_link = (
             lambda m: f'<a href="{m.url}" title="{m.display_name}">{m.description}</a>'
         )
@@ -534,7 +534,7 @@ class CorporateMembersTestCase(TestCase):
 
         response = self.client.get(reverse("download"))
 
-        self.assertNotContains(response, "<h2>Diamond and Platinum Members</h2>")
+        self.assertNotContains(response, "<h3>Diamond and Platinum Members</h3>")
         for member in members:
             self.assertNotContains(response, member.display_name)
             self.assertNotContains(response, member.url)

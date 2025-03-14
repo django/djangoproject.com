@@ -13,7 +13,7 @@
 {% block og_image_height %}480{% endblock %}
 
 {% block header %}
-  <h1>Download</h1>
+  <p>Download</p>
 {% endblock %}
 
 {% block content %}
@@ -259,12 +259,12 @@
 
 {% block content-related %}
 
-  <h1 class="visuallyhidden">Additional information</h1>
   <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
 
     {% if corporate_members %}
       <div class="corporate-members">
-        <h2>Diamond and Platinum Members</h2>
+        <h3>Diamond and Platinum Members</h3>
         {% for obj in corporate_members %}
           <div class="clearfix">
             <div class="member-logo">
@@ -287,7 +287,7 @@
 
     {% donation_snippet %}
 
-    <h2>For the impatient:</h2>
+    <h3>For the impatient:</h3>
     <ul>
       <li>Latest release:
         {% include "releases/_download_links.html" with release=current %}
@@ -300,11 +300,11 @@
       {% endif %}
     </ul>
 
-    <h2>Which version is better?</h2>
+    <h3>Which version is better?</h3>
     <p>We improve Django almost every day and are pretty good about keeping the code stable. Thus, using the latest development code is a safe and easy way to get access to new features as they’re added. If you choose to follow the development version, keep in mind that there will occasionally be backwards-incompatible changes. You’ll want to pay close attention to the commits by watching <a href="https://github.com/django/django">Django on GitHub</a> or subscribing to <a href="https://groups.google.com/group/django-updates">django-updates</a>.</p>
 
     <p>If you’re just looking for a stable deployment target and don’t mind waiting for the next release, you’ll want to stick with the latest official release (which will always include detailed notes on any changes you’ll need to make while upgrading).</p>
-    <h2>Previous releases</h2>
+    <h3>Previous releases</h3>
     <ul>
       <li>Django {{ previous.version }}{% if previous.is_lts %} (LTS){% endif %}:
         {% include "releases/_download_links.html" with release=previous %}
@@ -316,7 +316,7 @@
       {% endif %}
     </ul>
 
-    <h2>Unsupported previous releases (no longer receive security updates or bug fixes)</h2>
+    <h3>Unsupported previous releases (no longer receive security updates or bug fixes)</h3>
     <ul>
       {% for release in unsupported %}
         <li>Django {{ release.version }}:

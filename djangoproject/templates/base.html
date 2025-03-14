@@ -49,11 +49,11 @@
 
     {% include "includes/header.html" %}
 
-    <div class="copy-banner">
+    <section class="copy-banner">
       <div class="container {% block header-classes %}{% endblock %}">
         {% block header %}{% endblock %}
       </div>
-    </div>
+    </section>
 
     {% comment %}
     Replace the div#billboard below with banner using the skeleton here to
@@ -72,7 +72,7 @@
     <div id="billboard">{% block billboard %}{% endblock %}</div>
 
     <div class="container {% block layout_class %}{% endblock %}">
-      <div role="main">
+      <main>
 
         {% block messages %}
           {% if messages %}
@@ -89,7 +89,7 @@
 
         {% block content %}{% endblock %}
         <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
-      </div>
+      </main>
 
       {% block content-related %}{% endblock %}
       {% block content-extra %}{% endblock %}

@@ -9,7 +9,7 @@
 {% endblocktranslate %}{% endblock %}
 
 {% block content %}
-    <h2>{{ object.headline|safe }}</h2>
+    <h1>{{ object.headline|safe }}</h1>
 
     <span class="meta">{% blocktranslate trimmed with author=object.author pub_date=object.pub_date|date:"DATE_FORMAT" %}
         Posted by <strong>{{ author }}</strong> on {{ pub_date }} </span>
