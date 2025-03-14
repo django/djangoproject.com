@@ -21,6 +21,7 @@ from django.utils.translation import to_locale
 from sphinx.application import Sphinx
 from sphinx.config import Config
 from sphinx.errors import SphinxError
+from sphinx.util.docutils import docutils_namespace, patch_docutils
 
 from ...models import DocumentRelease
 
@@ -213,22 +214,25 @@ class Command(BaseCommand):
             conf_extensions = Config.read(source_dir.resolve()).extensions
             extensions = [*conf_extensions, "docs.builder"]
             try:
-                Sphinx(
-                    srcdir=source_dir,
-                    confdir=source_dir,
-                    outdir=build_dir,
-                    doctreedir=build_dir.joinpath(".doctrees"),
-                    buildername=builder,
-                    # Translated docs builds generate a lot of warnings, so send
-                    # stderr to stdout to be logged (rather than generating an email)
-                    warning=sys.stdout,
-                    parallel=multiprocessing.cpu_count(),
-                    verbosity=self.verbosity,
-                    confoverrides={
-                        "language": to_locale(release.lang),
-                        "extensions": extensions,
-                    },
-                ).build()
+                # Prevent global state persisting between builds
+                # https://github.com/sphinx-doc/sphinx/issues/12130
+                with patch_docutils(source_dir), docutils_namespace():
+                    Sphinx(
+                        srcdir=source_dir,
+                        confdir=source_dir,
+                        outdir=build_dir,
+                        doctreedir=build_dir.joinpath(".doctrees"),
+                        buildername=builder,
+                        # Translated docs builds generate a lot of warnings, so send
+                        # stderr to stdout to be logged (rather than generating an email)
+                        warning=sys.stdout,
+                        parallel=multiprocessing.cpu_count(),
+                        verbosity=self.verbosity,
+                        confoverrides={
+                            "language": to_locale(release.lang),
+                            "extensions": extensions,
+                        },
+                    ).build()
             except SphinxError as e:
                 self.stderr.write(
                     "sphinx-build returned an error (release %s, builder %s): %s"
