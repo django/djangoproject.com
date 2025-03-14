@@ -21,6 +21,7 @@ from django.utils.translation import to_locale
 from sphinx.application import Sphinx
 from sphinx.config import Config
 from sphinx.errors import SphinxError
+from sphinx.testing.util import _clean_up_global_state
 from sphinx.util.docutils import docutils_namespace, patch_docutils
 
 from ...models import DocumentRelease
@@ -233,6 +234,8 @@ class Command(BaseCommand):
                             "extensions": extensions,
                         },
                     ).build()
+                # Clean up global state after building each language.
+                _clean_up_global_state()
             except SphinxError as e:
                 self.stderr.write(
                     "sphinx-build returned an error (release %s, builder %s): %s"

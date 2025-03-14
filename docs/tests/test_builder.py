@@ -1,6 +1,7 @@
 from unittest.mock import Mock, patch
 
 from django.test import SimpleTestCase
+from sphinx.testing.util import _clean_up_global_state
 
 from ..builder import DomainObject, PythonObjectsJSONHTMLBuilder
 
@@ -61,3 +62,8 @@ class TestPythonObjectsJSONHTMLBuilder(SimpleTestCase):
         self.assertIn("python_objects_search", result)
         self.assertEqual(result["python_objects"], {"ClassA": "module1.ClassA"})
         self.assertEqual(result["python_objects_search"], "ClassA")
+
+
+class TestSphinxAPI(SimpleTestCase):
+    def test_private_sphinx_function_exists(self):
+        _clean_up_global_state()
