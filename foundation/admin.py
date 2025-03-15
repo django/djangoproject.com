@@ -99,5 +99,14 @@ class CoreAwardAdmin(admin.ModelAdmin):
     list_display = ["recipient", "cohort"]
 
 
+# Register BusinessAdmin
+
+
+class BusinessAdmin(admin.ModelAdmin):
+    list_display = ["title", "business_type", "meeting", "created_at"]
+    ordering = ["created_at"]
+
+
+admin.site.register(models.Business, BusinessAdmin)
 admin.site.register(models.CoreAward, CoreAwardAdmin)
 admin.site.register(models.CoreAwardCohort)
