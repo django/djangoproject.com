@@ -1,4 +1,3 @@
-import datetime
 from operator import attrgetter
 
 import requests_mock
@@ -8,6 +7,7 @@ from django.core import mail
 from django.core.management import call_command
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
+from django.utils import timezone
 
 from docs.models import DocumentRelease
 from releases.models import Release
@@ -85,7 +85,7 @@ class AggregatorTests(TestCase):
                 feed=feed,
                 title="%s Item" % feed.title,
                 link=feed.public_url,
-                date_modified=datetime.datetime.now(),
+                date_modified=timezone.now(),
                 guid=feed.title,
             )
 

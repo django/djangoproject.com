@@ -218,7 +218,7 @@ TIME_ZONE = "America/Chicago"
 USE_I18N = True
 
 
-USE_TZ = False
+USE_TZ = True
 
 # django-contact-form / Akismet settings
 
