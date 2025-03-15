@@ -1,4 +1,3 @@
-
 from operator import attrgetter
 
 import requests_mock
@@ -9,6 +8,7 @@ from django.core.management import call_command
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 from django.utils import timezone
+
 from docs.models import DocumentRelease
 from releases.models import Release
 
@@ -174,4 +174,3 @@ class TestForms(SimpleTestCase):
                 ]
             },
         )
-
