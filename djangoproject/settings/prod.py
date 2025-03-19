@@ -98,3 +98,7 @@ if "recaptcha_public_key" in SECRETS:
     RECAPTCHA_PRIVATE_KEY = SECRETS.get("recaptcha_private_key")
 
 RECAPTCHA_REQUIRED_SCORE = 0.9
+
+# Release artifacts are uploaded via the admin and are about 10Mb each
+# The nginx configuration still restricts the upload size on most pages.
+DATA_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024  # 50 Mb
