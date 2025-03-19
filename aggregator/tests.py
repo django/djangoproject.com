@@ -1,3 +1,4 @@
+from datetime import timezone as dt_timezone
 from operator import attrgetter
 
 import requests_mock
@@ -8,14 +9,13 @@ from django.core.management import call_command
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 from django.utils import timezone
-from datetime import timezone as dt_timezone
 
+from aggregator.models import Feed, FeedItem, FeedType
 from docs.models import DocumentRelease
 from releases.models import Release
 
 from . import feeds, models
 from .forms import FeedModelForm
-from aggregator.models import Feed, FeedType,FeedItem 
 
 
 class AggregatorTests(TestCase):
@@ -205,7 +205,13 @@ class TimezoneTests(TestCase):
         saved_feed_item = FeedItem.objects.get(id=feed_item.id)
 
         # Check if timestamp is timezone-aware
-        self.assertIsNotNone(saved_feed_item.date_modified.tzinfo, "Timestamp should have timezone info")
+        self.assertIsNotNone(
+            saved_feed_item.date_modified.tzinfo, "Timestamp should have timezone info"
+        )
 
         # ✅ FIX: Use `datetime.timezone.utc` instead of `timezone.utc`
-        self.assertEqual(saved_feed_item.date_modified.tzinfo, dt_timezone.utc, "Timestamp should be in UTC")
+        self.assertEqual(
+            saved_feed_item.date_modified.tzinfo,
+            dt_timezone.utc,
+            "Timestamp should be in UTC",
+        )

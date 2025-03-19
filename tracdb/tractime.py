@@ -2,8 +2,7 @@ import datetime
 
 from django.utils import timezone
 
-
-_epoc = datetime.datetime(1970, 1, 1, tzinfo=datetime.timezone.utc)
+_epoc = datetime.datetime(1970, 1, 1, tzinfo=datetime.UTC)
 
 
 class time_property:
