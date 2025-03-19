@@ -8,12 +8,14 @@ from django.core.management import call_command
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 from django.utils import timezone
+from datetime import timezone as dt_timezone
 
 from docs.models import DocumentRelease
 from releases.models import Release
 
 from . import feeds, models
 from .forms import FeedModelForm
+from aggregator.models import Feed, FeedType,FeedItem 
 
 
 class AggregatorTests(TestCase):
@@ -174,3 +176,36 @@ class TestForms(SimpleTestCase):
                 ]
             },
         )
+
+
+class TimezoneTests(TestCase):
+    def test_feed_item_timestamp_uses_utc(self):
+        """Ensure feed item timestamps are stored in UTC."""
+
+        # Create a FeedType and Feed
+        feed_type = FeedType.objects.create(name="News", slug="news")
+        feed = Feed.objects.create(
+            title="Test Feed",
+            feed_url="https://example.com",
+            public_url="https://example.com/public",  # Required field
+            feed_type=feed_type,
+        )
+
+        # Create a FeedItem with a timezone-aware timestamp
+        feed_item = FeedItem.objects.create(
+            feed=feed,
+            title="Test Article",
+            link="https://example.com/article",
+            summary="This is a test summary.",
+            date_modified=timezone.now(),  # Use timezone-aware timestamp
+            guid="unique-guid-123",
+        )
+
+        # Fetch the saved object
+        saved_feed_item = FeedItem.objects.get(id=feed_item.id)
+
+        # Check if timestamp is timezone-aware
+        self.assertIsNotNone(saved_feed_item.date_modified.tzinfo, "Timestamp should have timezone info")
+
+        # ✅ FIX: Use `datetime.timezone.utc` instead of `timezone.utc`
+        self.assertEqual(saved_feed_item.date_modified.tzinfo, dt_timezone.utc, "Timestamp should be in UTC")
