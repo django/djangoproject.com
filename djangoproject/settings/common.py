@@ -89,6 +89,9 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "django_push.subscriber",
     "django_read_only",
+    # Temporary fix for Sphinx bug.https://github.com/sphinx-doc/sphinx/issues/13448
+    # Can be removed (and code deleted) once fixed.
+    "_sphinx_13448_workaround",
 ]
 
 LANGUAGE_CODE = "en-us"
