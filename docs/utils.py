@@ -5,12 +5,12 @@ from django.conf import settings
 from django.http import Http404
 
 
-def get_doc_root(lang, version, subroot="json"):
-    return settings.DOCS_BUILD_ROOT.joinpath(lang, version, "_built", subroot)
+def get_doc_root(lang, version, builder="json"):
+    return settings.DOCS_BUILD_ROOT.joinpath(lang, version, "_built", builder)
 
 
-def get_doc_root_or_404(lang, version, subroot="json"):
-    docroot = get_doc_root(lang, version, subroot)
+def get_doc_root_or_404(lang, version, builder="json"):
+    docroot = get_doc_root(lang, version, builder)
     if not docroot.exists():
         raise Http404(str(docroot))
     return docroot
