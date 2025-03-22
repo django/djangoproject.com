@@ -285,6 +285,9 @@ class Command(BaseCommand):
             ]
         )
 
+        if release.is_default:
+            self._setup_stable_symlink(release, built_dir)
+
         #
         # Rebuild the imported document list and search index.
         #
@@ -359,6 +362,14 @@ class Command(BaseCommand):
                 stderr=sys.stdout,
             )
         return True
+
+    def _setup_stable_symlink(self, release, built_dir):
+        """
+        Setup a symbolic link called "stable" pointing to the given release build
+        """
+        stable = built_dir / "stable"
+        target = built_dir / release.version
+        stable.symlink_to(target, target_is_directory=True)
 
 
 def gen_decoded_documents(directory):
