@@ -64,6 +64,38 @@ class ContentFormat(models.TextChoices):
             )
         raise ValueError(f"Unsupported format {fmt}")
 
+    def img(self, url, alt_text):
+        """
+        Generate the source code for an image in the current format
+        """
+        CF = type(self)
+        return {
+            CF.REST: f".. image:: {url}\n   :alt: {alt_text}",
+            CF.HTML: f'<img src="{url}" alt="{alt_text}">',
+            CF.MARKDOWN: f"![{alt_text}]({url})",
+        }[self]
+
+
+class ImageUpload(models.Model):
+    """
+    Make it easier to attach images to blog posts.
+    """
+
+    title = models.CharField(
+        max_length=100, help_text="Not published anywhere, just used internally"
+    )
+    image = models.FileField(upload_to="blog/images/%Y/%m/")
+    alt_text = models.TextField(
+        help_text="Make the extra effort, it makes a difference 💖"
+    )
+    uploaded_on = models.DateTimeField(auto_now_add=True)
+    uploaded_by = models.ForeignKey(
+        "auth.User", null=True, editable=False, on_delete=models.SET_NULL
+    )
+
+    class Meta:
+        ordering = ("-uploaded_on",)
+
 
 class Entry(models.Model):
     headline = models.CharField(max_length=200)
