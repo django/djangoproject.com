@@ -9,6 +9,7 @@ from djangoproject.urls import www as www_urls
 from releases.models import Release
 
 from ..models import Document, DocumentRelease
+from ..search import DocumentationCategory
 from ..sitemaps import DocsSitemap
 
 
@@ -47,6 +48,29 @@ class SearchFormTestCase(TestCase):
         Site.objects.create(name="Django test", domain="example2.com")
         cls.release = Release.objects.create(version="5.1")
         cls.doc_release = DocumentRelease.objects.create(release=cls.release)
+        cls.active_filter = '<a aria-current="page">'
+
+        for category in DocumentationCategory:
+            Document.objects.create(
+                **{
+                    "metadata": {
+                        "body": "Generic Views",
+                        "breadcrumbs": [
+                            {"path": category.value, "title": str(category.label)},
+                        ],
+                        "parents": category.value,
+                        "slug": "generic-views",
+                        "title": "Generic views",
+                        "toc": (
+                            '<ul>\n<li><a class="reference internal" href="#">'
+                            "Generic views</a></li>\n</ul>\n"
+                        ),
+                    },
+                    "path": f"{category.value}/generic-views",
+                    "release": cls.doc_release,
+                    "title": "Generic views",
+                }
+            )
 
     @classmethod
     def tearDownClass(cls):
@@ -59,6 +83,68 @@ class SearchFormTestCase(TestCase):
             "/en/dev/search/", headers={"host": "docs.djangoproject.localhost:8000"}
         )
         self.assertEqual(response.status_code, 200)
+
+    def test_search_type_filter_all(self):
+        response = self.client.get(
+            "/en/5.1/search/?q=generic",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response, "4 results for <em>generic</em> in version 5.1", html=True
+        )
+        self.assertContains(response, self.active_filter, count=1)
+        self.assertContains(response, f"{self.active_filter}All</a>", html=True)
+
+    def test_search_type_filter_by_doc_types(self):
+        for category in DocumentationCategory:
+            with self.subTest(category=category):
+                response = self.client.get(
+                    f"/en/5.1/search/?q=generic&category={category.value}",
+                    headers={"host": "docs.djangoproject.localhost:8000"},
+                )
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(
+                    response,
+                    "Only 1 result for <em>generic</em> in version 5.1",
+                    html=True,
+                )
+                self.assertContains(response, self.active_filter, count=1)
+                self.assertContains(
+                    response, f"{self.active_filter}{category.label}</a>", html=True
+                )
+                self.assertContains(response, '<a href="?q=generic">All</a>', html=True)
+
+    def test_search_category_filter_invalid_doc_categories(self):
+        response = self.client.get(
+            "/en/5.1/search/?q=generic&category=invalid-so-ignored",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response, "4 results for <em>generic</em> in version 5.1", html=True
+        )
+        self.assertContains(response, self.active_filter, count=1)
+        self.assertContains(response, f"{self.active_filter}All</a>", html=True)
+
+    def test_search_category_filter_no_results(self):
+        response = self.client.get(
+            "/en/5.1/search/?q=potato&category=ref",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.active_filter, count=1)
+        self.assertContains(
+            response, f"{self.active_filter}API Reference</a>", html=True
+        )
+        self.assertContains(
+            response, "0 results for <em>potato</em> in version 5.1", html=True
+        )
+        self.assertContains(
+            response,
+            'Please try searching <a href="?q=potato">all documentation results</a>.',
+            html=True,
+        )
 
     def test_code_links(self):
         queryset_data = {
