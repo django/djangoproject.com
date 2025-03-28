@@ -57,6 +57,6 @@ if settings.DEBUG:
             r"^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/(?P<subpath>_downloads|_images|_source)/(?P<path>.*)$",  # noqa: E501
             views_debug.sphinx_static,
         ),
-        re_path(r"^pots/(?P<pot_name>\w+\.pot)$", views.pot_file),
+        re_path(r"^pots/(?P<pot_name>\w+\.pot)$", views_debug.pot_file),
         *urlpatterns,
     ]
