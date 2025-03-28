@@ -3,11 +3,12 @@ from datetime import timedelta
 from io import StringIO
 
 from django.contrib.auth.models import User
+from django.core.files.base import ContentFile
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from .models import ContentFormat, Entry, Event
+from .models import ContentFormat, Entry, Event, ImageUpload
 from .sitemaps import WeblogSitemap
 
 
@@ -235,3 +236,41 @@ class SitemapTests(DateTimeMixin, TestCase):
         self.assertEqual(len(urls), 1)
         url_info = urls[0]
         self.assertEqual(url_info["location"], entry.get_absolute_url())
+
+
+class ImageUploadTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_superuser("test")
+
+    def setUp(self):
+        super().setUp()
+        self.client.force_login(self.user)
+
+    def test_uploaded_by(self):
+        # Can't test the ModelForm directly because the logic in
+        # ModelAdmin.save_model()
+        data = {
+            "title": "test",
+            "alt_text": "test",
+            "image": ContentFile(b".", name="test.png"),
+        }
+        response = self.client.post(
+            reverse("admin:blog_imageupload_add"),
+            data=data,
+        )
+        self.assertEqual(response.status_code, 302)
+        upload = ImageUpload.objects.get()
+        self.assertEqual(upload.uploaded_by, self.user)
+
+    def test_contentformat_image_tags(self):
+        for cf, expected in [
+            (ContentFormat.REST, ".. image:: /test/image.png\n   :alt: TEST"),
+            (ContentFormat.HTML, '<img src="/test/image.png" alt="TEST">'),
+            (ContentFormat.MARKDOWN, "![TEST](/test/image.png)"),
+        ]:
+            with self.subTest(contentformat=cf):
+                self.assertEqual(
+                    cf.img(url="/test/image.png", alt_text="TEST"),
+                    expected,
+                )
