@@ -22,6 +22,11 @@ urlpatterns = [
         {"url": ""},
         name="document-index",
     ),
+    re_path(
+        r"^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/_images/(?P<path>.*)$",
+        views_debug.sphinx_static,
+        {"subpath": "_images"},
+    ),
     re_path("^(.*)/index/$", views.redirect_index),
     re_path(
         r"^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/search/$",
@@ -54,7 +59,7 @@ if settings.DEBUG:
             views_debug.objects_inventory,
         ),
         re_path(
-            r"^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/(?P<subpath>_downloads|_images|_source)/(?P<path>.*)$",  # noqa: E501
+            r"^(?P<lang>[a-z-]+)/(?P<version>[\w.-]+)/(?P<subpath>_downloads|_source)/(?P<path>.*)$",  # noqa: E501
             views_debug.sphinx_static,
         ),
         re_path(r"^pots/(?P<pot_name>\w+\.pot)$", views_debug.pot_file),
