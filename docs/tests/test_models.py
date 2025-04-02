@@ -173,7 +173,9 @@ class ManagerTests(TestCase):
 class DocumentManagerTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.release = DocumentRelease.objects.create()
+        cls.release = DocumentRelease.objects.create(
+            release=Release.objects.create(version="1.2.3"),
+        )
         cls.release_fr = DocumentRelease.objects.create(lang="fr")
         documents = [
             {
@@ -450,11 +452,13 @@ class DocumentManagerTest(TestCase):
 
     def test_search_title(self):
         misspelled_query = Document.objects.search("viewss", self.release)
-        with self.assertNumQueries(2):
+        with self.assertNumQueries(1):
             self.assertQuerySetEqual(
                 misspelled_query,
-                ["Generic views"],
-                transform=attrgetter("headline"),
+                [("Generic views", "en", "1.2.3")],
+                transform=attrgetter(
+                    "headline", "release.lang", "release.release.version"
+                ),
             )
 
 
