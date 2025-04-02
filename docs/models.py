@@ -16,7 +16,7 @@ from django.contrib.postgres.search import (
 )
 from django.core.cache import cache
 from django.db import models, transaction
-from django.db.models import Prefetch, Q
+from django.db.models import Q
 from django.db.models.fields.json import KeyTextTransform
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
@@ -269,15 +269,7 @@ class DocumentQuerySet(models.QuerySet):
                 config=models.F("config"),
             )
             base_qs = (
-                self.prefetch_related(
-                    Prefetch(
-                        "release",
-                        queryset=DocumentRelease.objects.only("lang", "release"),
-                    ),
-                    Prefetch(
-                        "release__release", queryset=Release.objects.only("version")
-                    ),
-                )
+                self.select_related("release__release")
                 .filter(release_id=release.id)
                 .annotate(
                     headline=search("title", search_query),
@@ -295,7 +287,8 @@ class DocumentQuerySet(models.QuerySet):
                 )
                 .only(
                     "path",
-                    "release",
+                    "release__lang",
+                    "release__release__version",
                 )
             )
             vector_qs = (
