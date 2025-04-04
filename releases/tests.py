@@ -212,6 +212,29 @@ class ReleaseTestCase(TestCase):
             with self.subTest(**params):
                 self.assertEqual(previous.eol_date, expected_eol_date)
 
+    def test_save_eol_date_pre_releases(self):
+        other_release = Release.objects.create(version="5.1.7", is_active=True)
+        today = datetime.date.today()
+        cases = [
+            ("5.2a1", "5.2a2"),
+            ("5.2a2", "5.2b1"),
+            ("5.2b1", "5.2rc1"),
+            ("5.2rc1", "5.2"),
+            ("5.2", "5.2.1"),
+        ]
+        for previous_version, next_version in cases:
+            with self.subTest(msg=f"{previous_version} -> {next_version}"):
+                previous_release, _ = Release.objects.get_or_create(
+                    version=previous_version,
+                    is_active=True,
+                )
+                self.assertIsNone(previous_release.eol_date)
+                Release.objects.create(version=next_version, is_active=True)
+                previous_release.refresh_from_db()
+                other_release.refresh_from_db()
+                self.assertEqual(previous_release.eol_date, today)
+                self.assertIsNone(other_release.eol_date)
+
 
 class ReleaseUploadToTestCase(SimpleTestCase):
     def test_upload_to_artifact(self):
