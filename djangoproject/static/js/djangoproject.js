@@ -185,18 +185,29 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
 })();
 
 // Update donate button text on fundraising page based on interval selection
-document
-  .querySelector('#donate #id_interval')
-  .addEventListener('change', function () {
+(function () {
+  const el = document.querySelector('#donate #id_interval');
+
+  if (!el) {
+    return;
+  }
+
+  el.addEventListener('change', function () {
     const text = this.value === 'onetime' ? 'Donate' : `Donate ${this.value}`;
 
     document.getElementById('donate-button').value = text;
   });
+})();
 
 // Manage custom donation amount input on fundraising page
-document
-  .querySelector('#donate #id_amount')
-  .addEventListener('change', function () {
+(function () {
+  const el = document.querySelector('#donate #id_amount');
+
+  if (!el) {
+    return;
+  }
+
+  el.addEventListener('change', function () {
     if (this.value !== 'custom') {
       return;
     }
@@ -216,3 +227,4 @@ document
     input_el.focus();
     input_el.value = '25';
   });
+})();
