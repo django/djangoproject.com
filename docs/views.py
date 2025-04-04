@@ -15,7 +15,7 @@ from django_hosts.resolvers import reverse
 
 from .forms import DocSearchForm
 from .models import Document, DocumentRelease
-from .search import START_SEL
+from .search import START_SEL, DocumentationCategory
 from .utils import get_doc_path_or_404, get_doc_root_or_404
 
 SIMPLE_SEARCH_OPERATORS = ["+", "|", "-", '"', "*", "(", ")", "~"]
@@ -163,7 +163,10 @@ def search_results(request, lang, version, per_page=10, orphans=3):
             if exact is not None:
                 return redirect(exact)
 
-            results = Document.objects.search(q, release)
+            doc_category = DocumentationCategory.parse(request.GET.get("category"))
+            results = Document.objects.search(
+                q, release, document_category=doc_category
+            )
 
             page_number = request.GET.get("page") or 1
             paginator = Paginator(results, per_page=per_page, orphans=orphans)
@@ -192,6 +195,8 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                     "page": page,
                     "paginator": paginator,
                     "start_sel": START_SEL,
+                    "active_category": doc_category,
+                    "DocumentationCategory": DocumentationCategory,
                 }
             )
 

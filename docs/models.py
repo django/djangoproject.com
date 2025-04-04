@@ -254,7 +254,7 @@ class DocumentQuerySet(models.QuerySet):
         else:
             return self.none()
 
-    def search(self, query_text, release):
+    def search(self, query_text, release, document_category=None):
         """Use full-text search to return documents matching query_text."""
         query_text = query_text.strip()
         if query_text:
@@ -268,9 +268,12 @@ class DocumentQuerySet(models.QuerySet):
                 stop_sel=STOP_SEL,
                 config=models.F("config"),
             )
+            base_filter = Q(release_id=release.id)
+            if document_category:
+                base_filter &= Q(metadata__parents__startswith=document_category)
             base_qs = (
                 self.select_related("release__release")
-                .filter(release_id=release.id)
+                .filter(base_filter)
                 .annotate(
                     headline=search("title", search_query),
                     highlight=search(
