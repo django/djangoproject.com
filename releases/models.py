@@ -242,15 +242,8 @@ class Release(models.Model):
         self.status = self.STATUS_REVERSE[status]
         cache.delete(self.DEFAULT_CACHE_KEY)
         super().save(*args, **kwargs)
-        # Each micro release EOLs the previous one in the same series.
-        if self.status == "f" and self.micro > 0 and self.is_active:
-            (
-                type(self)
-                .objects.filter(
-                    major=self.major, minor=self.minor, micro=self.micro - 1, status="f"
-                )
-                .update(eol_date=self.date)
-            )
+        if self.is_active:
+            self.set_previous_release_as_eol()
 
     def __str__(self):
         return self.version
@@ -313,3 +306,27 @@ class Release(models.Model):
         regex = f"^[Dd]jango-{re.escape(version)}{re.escape(suffix)}$"
         message = f"Filename {name} does not match pattern {regex}."
         return RegexValidator(regex, message=message, code="invalid_name")(name)
+
+    def set_previous_release_as_eol(self):
+        """Handles setting EOL date for the previous release in the series."""
+        previous_release_kwargs = {
+            "major": self.major,
+            "minor": self.minor,
+            "micro": self.micro,
+            "status": self.status,
+            "eol_date__isnull": True,
+        }
+        if self.iteration > 1:
+            previous_release_kwargs["iteration"] = self.iteration - 1
+        elif self.status == "b":
+            previous_release_kwargs["status"] = "a"
+        elif self.status == "c":
+            previous_release_kwargs["status"] = "b"
+        elif self.status == "f" and self.micro == 0:
+            previous_release_kwargs["status"] = "c"
+        elif self.status == "f" and self.micro > 0:
+            previous_release_kwargs["micro"] = self.micro - 1
+
+        self.__class__.objects.filter(**previous_release_kwargs).update(
+            eol_date=self.date
+        )
