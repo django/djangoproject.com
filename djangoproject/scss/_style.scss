@@ -3576,3 +3576,13 @@ ul.corporate-members li {
         }
     }
 }
+
+.blog {
+    .blog-entry-body {
+        img {
+            max-width: 100%;
+            display: block;
+            margin: auto;
+        }
+    }
+}
