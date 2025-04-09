@@ -1,6 +1,7 @@
+import time_machine
+
 from datetime import date, timedelta
 
-import time_machine
 from django.core.management.base import CommandError, LabelCommand
 from django.db.models import Case, Max, Min, When
 
