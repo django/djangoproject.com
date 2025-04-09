@@ -50,10 +50,16 @@ class BusinessInline(admin.StackedInline):
 
 class ActionItemInline(admin.StackedInline):
     model = models.ActionItem
+    verbose_name_plural = _(
+        "Action Items (aka todos. "
+        "Combine the last meeting's remaining action items, "
+        "and add any new ones)"
+    )
 
 
 @admin.register(models.Meeting)
 class MeetingAdmin(admin.ModelAdmin):
+    change_form_template = "admin/foundation/meeting/change_form.html"
     fieldsets = (
         (
             "Metadata",
