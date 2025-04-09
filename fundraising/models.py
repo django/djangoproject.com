@@ -11,7 +11,7 @@ from sorl.thumbnail import ImageField
 
 from djangoproject.thumbnails import LogoThumbnailMixin
 
-GOAL_AMOUNT = Decimal("200000.00")
+GOAL_AMOUNT = Decimal("300000.00")
 GOAL_START_DATE = datetime.date(datetime.datetime.today().year, 1, 1)
 DISPLAY_DONOR_DAYS = 365
 DEFAULT_DONATION_AMOUNT = 50
