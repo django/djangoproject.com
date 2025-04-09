@@ -16,5 +16,5 @@
             Posted by <strong>{{ author }}</strong> on {{ pub_date }}
         {% endblocktranslate %}
     </span>
-    {{ object.body_html|safe }}
+    <div class="blog-entry-body">{{ object.body_html|safe }}</div>
 {% endblock %}
