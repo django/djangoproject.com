@@ -9,8 +9,6 @@ import os
 import shutil
 import subprocess
 import sys
-import zipfile
-from contextlib import closing
 from datetime import datetime
 from pathlib import Path
 
@@ -242,31 +240,6 @@ class Command(BaseCommand):
                     % (release, builder, str(e))
                 )
                 return
-
-        #
-        # Create a zip file of the HTML build for offline reading.
-        # This gets moved into MEDIA_ROOT for downloading.
-        #
-        html_build_dir = parent_build_dir.joinpath("_build", "djangohtml")
-        zipfile_name = f"django-docs-{release.version}-{release.lang}.zip"
-        zipfile_path = Path(settings.MEDIA_ROOT).joinpath("docs", zipfile_name)
-        if not zipfile_path.parent.exists():
-            zipfile_path.parent.mkdir(parents=True)
-        if self.verbosity >= 2:
-            self.stdout.write("  build zip (into %s)" % zipfile_path)
-
-        def zipfile_inclusion_filter(file_path):
-            return ".doctrees" not in file_path.parts
-
-        with closing(
-            zipfile.ZipFile(str(zipfile_path), "w", compression=zipfile.ZIP_DEFLATED)
-        ) as zf:
-            for root, dirs, files in os.walk(str(html_build_dir)):
-                for f in files:
-                    file_path = Path(os.path.join(root, f))
-                    if zipfile_inclusion_filter(file_path):
-                        rel_path = str(file_path.relative_to(html_build_dir))
-                        zf.write(str(file_path), rel_path)
 
         #
         # Copy the build results to the directory used for serving
