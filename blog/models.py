@@ -1,3 +1,4 @@
+import mimetypes
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -9,7 +10,7 @@ from django.utils import timezone
 from django.utils.cache import _generate_cache_header_key
 from django.utils.formats import date_format
 from django.utils.translation import gettext_lazy as _
-from django_hosts.resolvers import reverse
+from django_hosts.resolvers import get_host, reverse, reverse_host
 from docutils.core import publish_parts
 from markdown import markdown
 from markdown.extensions.toc import TocExtension, slugify as _md_title_slugify
@@ -98,6 +99,26 @@ class ImageUpload(models.Model):
     class Meta:
         ordering = ("-uploaded_on",)
 
+    def __str__(self):
+        return f"({self.uploaded_on.date()}) {self.title}"
+
+    @property
+    def mimetype(self):
+        mimetype, _ = mimetypes.guess_type(self.image.name)
+        return mimetype or "application/octet-stream"
+
+    @property
+    def full_url(self):
+        """
+        Return a full URL (scheme + hostname + path) to the image
+        """
+        p = urlparse(self.image.url)
+        if p.netloc:
+            return self.image.url
+        host = get_host()
+        hostname = reverse_host(host)
+        return f"{host.scheme}{hostname}{host.port}{self.image.url}"
+
 
 class Entry(models.Model):
     headline = models.CharField(max_length=200)
@@ -123,6 +144,16 @@ class Entry(models.Model):
     body = models.TextField()
     body_html = models.TextField()
     author = models.CharField(max_length=100)
+    social_media_card = models.ForeignKey(
+        ImageUpload,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+        help_text=_(
+            "For maximum compatibility, the image should be < 5 Mb "
+            "and at least 1200x630 px."
+        ),
+    )
 
     objects = EntryQuerySet.as_manager()
 
@@ -179,7 +210,7 @@ class Entry(models.Model):
 
     @property
     def opengraph_tags(self):
-        return {
+        tags = {
             "og:type": "article",
             "og:title": self.headline,
             "og:description": _("Posted by {author} on {pub_date}").format(
@@ -196,6 +227,14 @@ class Entry(models.Model):
             "twitter:creator": "djangoproject",
             "twitter:site": "djangoproject",
         }
+        if card := self.social_media_card:
+            tags |= {
+                "og:image": card.full_url,
+                "og:image:alt": card.alt_text,
+                "og:image:type": card.mimetype,
+            }
+
+        return tags
 
 
 class EventQuerySet(EntryQuerySet):
