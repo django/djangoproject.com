@@ -1,12 +1,12 @@
 from contextlib import redirect_stderr
-from datetime import timedelta
+from datetime import date, timedelta
 from io import StringIO
 
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.test import TestCase
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import timezone, translation
 
 from .models import ContentFormat, Entry, Event, ImageUpload
 from .sitemaps import WeblogSitemap
@@ -125,6 +125,12 @@ class EntryTestCase(DateTimeMixin, TestCase):
             content_format=ContentFormat.MARKDOWN,
         )
         self.assertHTMLEqual(entry.body_html, '<h3 id="s-test">test</h3>')
+
+    def test_pub_date_localized(self):
+        entry = Entry(pub_date=date(2005, 7, 21))
+        self.assertEqual(entry.pub_date_localized, "July 21, 2005")
+        with translation.override("nn"):
+            self.assertEqual(entry.pub_date_localized, "21. juli 2005")
 
 
 class EventTestCase(DateTimeMixin, TestCase):
