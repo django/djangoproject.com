@@ -3,9 +3,11 @@ from urllib.parse import urlparse
 from django.conf import settings
 from django.core.cache import caches
 from django.db import models
+from django.templatetags.static import static
 from django.test import RequestFactory
 from django.utils import timezone
 from django.utils.cache import _generate_cache_header_key
+from django.utils.formats import date_format
 from django.utils.translation import gettext_lazy as _
 from django_hosts.resolvers import reverse
 from docutils.core import publish_parts
@@ -150,6 +152,10 @@ class Entry(models.Model):
 
     is_published.boolean = True
 
+    @property
+    def pub_date_localized(self):
+        return date_format(self.pub_date)
+
     def save(self, *args, **kwargs):
         self.summary_html = ContentFormat.to_html(self.content_format, self.summary)
         self.body_html = ContentFormat.to_html(self.content_format, self.body)
@@ -170,6 +176,25 @@ class Entry(models.Model):
             settings.CACHE_MIDDLEWARE_KEY_PREFIX, request
         )
         cache.delete(cache_key)
+
+    @property
+    def opengraph_tags(self):
+        return {
+            "og:type": "article",
+            "og:title": self.headline,
+            "og:description": _("Posted by {author} on {pub_date}").format(
+                author=self.author, pub_date=self.pub_date_localized
+            ),
+            "og:article:published_time": self.pub_date.isoformat(),
+            "og:article:author": self.author,
+            "og:image": static("img/logos/django-logo-negative.png"),
+            "og:image:alt": "Django logo",
+            "og:url": self.get_absolute_url(),
+            "og:site_name": "Django Project",
+            "twitter:card": "summary",
+            "twitter:creator": "djangoproject",
+            "twitter:site": "djangoproject",
+        }
 
 
 class EventQuerySet(EntryQuerySet):
