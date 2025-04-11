@@ -2,6 +2,7 @@ from contextlib import redirect_stderr
 from datetime import date, timedelta
 from io import StringIO
 
+import time_machine
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.test import TestCase
@@ -280,3 +281,19 @@ class ImageUploadTestCase(TestCase):
                     cf.img(url="/test/image.png", alt_text="TEST"),
                     expected,
                 )
+
+    @time_machine.travel("2005-07-21")
+    def test_full_url(self):
+        i = ImageUpload.objects.create(
+            title="test",
+            alt_text="test",
+            image=ContentFile(b".", name="test.png"),
+        )
+        # Because the storage is persistent between test runs, running this
+        # test twice will trigger a filename clash and the storage will append
+        # a random suffix to the filename, hence the use of assertRegex here.
+        self.assertRegex(
+            i.full_url,
+            r"http://www\.djangoproject\.localhost:8000"
+            r"/m/blog/images/2005/07/test(_\w+)?\.png",
+        )
