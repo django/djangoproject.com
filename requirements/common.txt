@@ -1,5 +1,5 @@
 Babel==2.17.0
-django-contact-form==5.1.2
+django-contact-form==5.2.0
 django-countries==7.6.1
 django-hosts==5.1
 django-money @ git+https://github.com/gvangool/django-money.git@408ed3ce4d65689a60221f90713313f56cea5724
