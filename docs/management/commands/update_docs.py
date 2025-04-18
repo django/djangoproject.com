@@ -369,7 +369,9 @@ class Command(BaseCommand):
         """
         stable = built_dir / "stable"
         target = built_dir / release.version
-        stable.symlink_to(target, target_is_directory=True)
+        if stable.resolve() != target:  # Symlink is either missing or has changed
+            stable.unlink(missing_ok=True)
+            stable.symlink_to(target, target_is_directory=True)
 
 
 def gen_decoded_documents(directory):
