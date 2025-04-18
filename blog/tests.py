@@ -197,115 +197,6 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         entries in the list, but can view the detail page
     """
 
-    # def test_anonymous_user_cant_see_entries(self):
-    #     """
-    #     A test which creates an unpublished entry and then loads the list view
-    #     followed by detail view as an anonymous user to check that the entry cannot
-    #     be seen.
-    #     """
-    #     e1 = Entry.objects.create(
-    #         pub_date=self.yesterday, is_active=False, headline="inactive", slug="a"
-    #     )
-    #     e2 = Entry.objects.create(
-    #         pub_date=self.yesterday, is_active=True, headline="active", slug="b"
-    #     )
-    #     response = self.client.get(reverse("weblog:index"))
-    #     self.assertNotContains(response, "active")
-    #     response = self.client.get(
-    #         reverse(
-    #             "weblog:entry",
-    #             kwargs={
-    #                 "year": e1.pub_date.year,
-    #                 "month": e1.pub_date.month,
-    #                 "day": e1.pub_date.day,
-    #                 "slug": e1.slug,
-    #             },
-    #         )
-    #     )
-    #     self.assertEqual(response.status_code, 404)
-    #     response = self.client.get(
-    #         reverse(
-    #             "weblog:entry",
-    #             kwargs={
-    #                 "year": e2.pub_date.year,
-    #                 "month": e2.pub_date.month,
-    #                 "day": e2.pub_date.day,
-    #                 "slug": e2.slug,
-    #             },
-    #         )
-    #     )
-    #     self.assertEqual(response.status_code, 404)
-    #
-    # def test_logged_in_user_cant_see_entries(self):
-    #     """
-    #     A test which creates an unpublished entry and then loads the list view
-    #     followed by detail view as a non-staff user to check that the entry cannot be
-    #     seen.
-    #     """
-    #     e = Entry.objects.create(
-    #         pub_date=self.yesterday, is_active=False, headline="inactive", slug="a"
-    #     )
-    #     user = User.objects.create_user("user", "user@example.com", "password")
-    #     self.client.force_login(user)
-    #     response = self.client.get(reverse("weblog:index"))
-    #     self.assertNotContains(response, "active")
-    #     response = self.client.get(
-    #         reverse(
-    #             "weblog:entry",
-    #             kwargs={
-    #                 "year": e.pub_date.year,
-    #                 "month": e.pub_date.month,
-    #                 "day": e.pub_date.day,
-    #                 "slug": e.slug,
-    #             },
-    #         )
-    #     )
-    #     self.assertEqual(response.status_code, 404)
-    #
-    # def test_staff_no_write_permission_cant_see_entries(self):
-    #     """
-    #     A test which creates an unpublished entry and then loads the list view
-    #     followed by detail view as a staff user without blog write permissions to
-    #     check that the entry cannot be seen.
-    #     """
-    #     e1 = Entry.objects.create(
-    #         pub_date=self.yesterday, is_active=False, headline="inactive", slug="a"
-    #     )
-    #     e2 = Entry.objects.create(
-    #         pub_date=self.yesterday, is_active=True, headline="active", slug="b"
-    #     )
-    #     user = User.objects.create_user(
-    #         "staff", "staff@example.com", "password", is_staff=True
-    #     )
-    #     self.client.force_login(user)
-    #     response = self.client.get(reverse("weblog:index"))
-    #
-    #     self.assertContains(response, "active")
-    #     response = self.client.get(
-    #         reverse(
-    #             "weblog:entry",
-    #             kwargs={
-    #                 "year": e1.pub_date.year,
-    #                 "month": e1.pub_date.month,
-    #                 "day": e1.pub_date.day,
-    #                 "slug": e1.slug,
-    #             },
-    #         )
-    #     )
-    #     self.assertEqual(response.status_code, 404)
-    #     response = self.client.get(
-    #         reverse(
-    #             "weblog:entry",
-    #             kwargs={
-    #                 "year": e2.pub_date.year,
-    #                 "month": e2.pub_date.month,
-    #                 "day": e2.pub_date.day,
-    #                 "slug": e2.slug,
-    #             },
-    #         )
-    #     )
-    #     self.assertEqual(response.status_code, 404)
-
     def test_staff_with_write_permission_can_see_unpublished_detail_view(self):
         """
         staff users with write permission on BlogEntry can't see unpublished entries
@@ -325,7 +216,7 @@ class ViewsTestCase(DateTimeMixin, TestCase):
                 "weblog:entry",
                 kwargs={
                     "year": e1.pub_date.year,
-                    "month": e1.pub_date.month,
+                    "month": e1.pub_date.strftime("%b").lower(),
                     "day": e1.pub_date.day,
                     "slug": e1.slug,
                 },
