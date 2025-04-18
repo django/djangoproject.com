@@ -51,8 +51,10 @@ class BlogDateDetailView(BlogViewMixin, DateDetailView):
     banner_is_title = False
 
     def get_queryset(self):
-        """Allows staff users to view unpublished entries"""
-        if self.request.user.is_staff:
+        """Allows staff users with blog write permission to view unpublished entries"""
+        if self.request.user.is_staff and self.request.user.has_perm(
+            "blog.change_entry"
+        ):
             return Entry.objects.all()
         else:
             return Entry.objects.published()

@@ -187,13 +187,6 @@ class EventTestCase(DateTimeMixin, TestCase):
 
 
 class ViewsTestCase(DateTimeMixin, TestCase):
-    """
-    TODO:
-        * staff users without write permission on BlogEntry can't see unpublished
-        entries at all
-        * staff users with write permission on BlogEntry can't see unpublished
-        entries in the list, but can view the detail page
-    """
 
     def test_staff_with_write_permission_can_see_unpublished_detail_view(self):
         """
@@ -204,6 +197,15 @@ class ViewsTestCase(DateTimeMixin, TestCase):
             pub_date=self.yesterday, is_active=False, headline="inactive", slug="a"
         )
         user = User.objects.create(username="staff", is_staff=True)
+        # Add blog entry change permission
+        from django.contrib.auth.models import Permission
+        from django.contrib.contenttypes.models import ContentType
+
+        content_type = ContentType.objects.get_for_model(Entry)
+        change_permission = Permission.objects.get(
+            content_type=content_type, codename="change_entry"
+        )
+        user.user_permissions.add(change_permission)
         self.client.force_login(user)
         self.assertEqual(Entry.objects.all().count(), 1)
         response = self.client.get(reverse("weblog:index"))
@@ -222,7 +224,37 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         )
         request = response.context["request"]
         self.assertTrue(request.user.is_staff)
+        self.assertTrue(request.user.has_perm("blog.change_entry"))
         self.assertEqual(response.status_code, 200)
+
+    def test_staff_without_write_permission_cannot_see_unpublished_detail_view(self):
+        """
+        staff users without write permission on BlogEntry can't see unpublished entries
+        """
+        e1 = Entry.objects.create(
+            pub_date=self.yesterday, is_active=False, headline="inactive", slug="a"
+        )
+        user = User.objects.create(username="staff-no-perm", is_staff=True)
+        # No permissions added
+        self.client.force_login(user)
+        self.assertEqual(Entry.objects.all().count(), 1)
+
+        # Test detail view for unpublished entry - should return 404
+        response = self.client.get(
+            reverse(
+                "weblog:entry",
+                kwargs={
+                    "year": e1.pub_date.year,
+                    "month": e1.pub_date.strftime("%b").lower(),
+                    "day": e1.pub_date.day,
+                    "slug": e1.slug,
+                },
+            )
+        )
+        request = response.context["request"]
+        self.assertTrue(request.user.is_staff)
+        self.assertFalse(request.user.has_perm("blog.change_entry"))
+        self.assertEqual(response.status_code, 404)
 
     def test_no_past_upcoming_events(self):
         """
