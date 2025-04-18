@@ -271,6 +271,58 @@ class ViewsTestCase(DateTimeMixin, TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertQuerySetEqual(response.context["events"], [])
 
+    def test_anonymous_user_cannot_see_unpublished_entries(self):
+        """
+        Anonymous users can't see unpublished entries at all (list or detail view)
+        """
+        # Create a published entry to ensure the list view works
+        published_entry = Entry.objects.create(
+            pub_date=self.yesterday,
+            is_active=True,
+            headline="published",
+            slug="published",
+        )
+
+        # Create an unpublished entry
+        unpublished_entry = Entry.objects.create(
+            pub_date=self.tomorrow,
+            is_active=True,
+            headline="unpublished",
+            slug="unpublished",
+        )
+
+        # Test list view - should return 200 but not include the unpublished entry
+        response = self.client.get(reverse("weblog:index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "published")
+        self.assertNotContains(response, "unpublished")
+
+        # Test detail view for unpublished entry - should return 404
+        unpublished_url = reverse(
+            "weblog:entry",
+            kwargs={
+                "year": unpublished_entry.pub_date.year,
+                "month": unpublished_entry.pub_date.strftime("%b").lower(),
+                "day": unpublished_entry.pub_date.day,
+                "slug": unpublished_entry.slug,
+            },
+        )
+        response = self.client.get(unpublished_url)
+        self.assertEqual(response.status_code, 404)
+
+        # Test detail view for published entry - should return 200
+        published_url = reverse(
+            "weblog:entry",
+            kwargs={
+                "year": published_entry.pub_date.year,
+                "month": published_entry.pub_date.strftime("%b").lower(),
+                "day": published_entry.pub_date.day,
+                "slug": published_entry.slug,
+            },
+        )
+        response = self.client.get(published_url)
+        self.assertEqual(response.status_code, 200)
+
 
 class SitemapTests(DateTimeMixin, TestCase):
     def test_sitemap(self):
