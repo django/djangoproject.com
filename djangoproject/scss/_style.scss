@@ -2822,7 +2822,7 @@ search.filters {
 }
 
 //------------------- Forms
-form {
+form:not(#djDebug form) {
     @include sans-serif;
     @include font-size(16);
 
