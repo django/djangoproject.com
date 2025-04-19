@@ -33,9 +33,5 @@ define(function () {
     mods.push('mod/stripe-change-card');
   }
 
-  if (hasClass('corporate-membership-join-form')) {
-    mods.push('mod/corporate-member-join');
-  }
-
   require(mods);
 });
