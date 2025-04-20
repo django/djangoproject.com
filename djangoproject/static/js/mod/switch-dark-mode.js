@@ -35,15 +35,12 @@ function cycleTheme() {
       setTheme('auto');
     }
   }
-
-  setReleaseImgClass();
 }
 
 function initTheme() {
   // set theme defined in localStorage if there is one, or fallback to auto mode
   const currentTheme = getCookie('theme');
   currentTheme ? setTheme(currentTheme) : setTheme('auto');
-  setReleaseImgClass();
 }
 
 function setupTheme() {
@@ -51,30 +48,6 @@ function setupTheme() {
   let buttons = document.getElementsByClassName('theme-toggle');
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', cycleTheme);
-  }
-  setReleaseImgClass();
-}
-
-function setReleaseImgClass() {
-  // set class for the image about releases to invert color if needed
-  const currentTheme = getCookie('theme') || 'auto';
-  const image = document.getElementsByClassName('img-release')[0];
-
-  if (image && currentTheme == 'auto' && prefersDark) {
-    image.classList.add('dark');
-    image.classList.remove('light');
-  }
-  if (image && currentTheme == 'auto' && !prefersDark) {
-    image.classList.add('light');
-    image.classList.remove('dark');
-  }
-  if (image && currentTheme == 'light') {
-    image.classList.add('light');
-    image.classList.remove('dark');
-  }
-  if (image && currentTheme == 'dark') {
-    image.classList.add('dark');
-    image.classList.remove('light');
   }
 }
 
@@ -118,5 +91,4 @@ window
   .addEventListener('change', function (e) {
     prefersDark = e.matches;
     initTheme();
-    setReleaseImgClass();
   });
