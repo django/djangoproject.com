@@ -49,16 +49,7 @@ Install and run locally from a virtual environment
    to your ``~/.bashrc`` (or ``~/.zshrc`` if you're using zsh, ``~/.bash_profile`` if
    you're on macOS and using bash) file and then run ``source ~/.bashrc`` (or
    ``source ~/.zshrc``, or ``source ~/.bash_profile``) to load the changes.
-    {
-      "secret_key": "xyz",
-      "superfeedr_creds": ["any@email.com", "some_string"],
-      "db_host": "localhost",
-      "db_password": "secret",
-      "db_user": "djangoproject",
-      "trac_db_host": "localhost",
-      "trac_db_password": "secret",
-      "trac_db_user": "code.djangoproject"
-    }
+
 #. Create databases::
 
     createuser -d djangoproject --superuser
