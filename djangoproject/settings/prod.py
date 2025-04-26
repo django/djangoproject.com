@@ -2,6 +2,15 @@ from .common import *  # noqa
 
 DOMAIN_NAME = os.getenv("DOMAIN_NAME", "djangoproject.com")
 
+# Protect against accidentally not setting DJANGO_DB_NAME environment variable
+if (
+    DOMAIN_NAME != "djangoproject.com"
+    and DATABASES["default"]["NAME"] == "djangoproject"
+):
+    raise ValueError(
+        f"You must set DJANGO_DB_NAME to the database name for {DOMAIN_NAME}."
+    )
+
 ALLOWED_HOSTS = [
     f"www.{DOMAIN_NAME}",
     DOMAIN_NAME,

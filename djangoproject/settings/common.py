@@ -33,7 +33,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = "django"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "djangoproject",
+        "NAME": os.getenv("DJANGO_DB_NAME", "djangoproject"),
         "USER": SECRETS.get("db_user", "djangoproject"),
         "HOST": SECRETS.get("db_host", ""),
         "PASSWORD": SECRETS.get("db_password", ""),
@@ -41,7 +41,7 @@ DATABASES = {
     },
     "trac": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "code.djangoproject",
+        "NAME": os.getenv("TRAC_DB_NAME", "code.djangoproject"),
         "USER": SECRETS.get("trac_db_user", "code.djangoproject"),
         "HOST": SECRETS.get("trac_db_host", ""),
         "PASSWORD": SECRETS.get("trac_db_password", ""),
