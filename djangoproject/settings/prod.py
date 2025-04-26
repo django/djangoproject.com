@@ -2,6 +2,9 @@ from .common import *  # noqa
 
 DOMAIN_NAME = os.getenv("DOMAIN_NAME", "djangoproject.com")
 
+if not os.getenv("DJANGO_DB_NAME"):
+    raise ValueError("You must set DJANGO_DB_NAME in deployed environments.")
+
 ALLOWED_HOSTS = [
     f"www.{DOMAIN_NAME}",
     DOMAIN_NAME,
