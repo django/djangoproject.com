@@ -1,6 +1,6 @@
 // CSS from pygments github dark theme
 @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
         .highlight {
             td.linenos .normal {
                 color: #6e7681;
