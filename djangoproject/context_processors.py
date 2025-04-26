@@ -7,9 +7,11 @@ def display_preview_banner(request):
     distinguish between the preview and production sites. The banner is
     based on the domain name configured in settings, if any, and will
     appear on https://*.preview.djangoproject.com/ (but not
-    https://*.djangoproject.com/).
+    https://*.djangoproject.com/ nor in local development).
     """
-    domain_name = getattr(settings, "DOMAIN_NAME", "djangoproject.com")
+    production_tld = "djangoproject.com"
+    # Note: DOMAIN_NAME is not defined in local development
+    domain_name = getattr(settings, "DOMAIN_NAME", production_tld)
     return {
-        "DISPLAY_PREVIEW_BANNER": domain_name != "djangoproject.com",
+        "DISPLAY_PREVIEW_BANNER": domain_name != production_tld,
     }
