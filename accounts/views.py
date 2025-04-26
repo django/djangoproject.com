@@ -37,7 +37,7 @@ def edit_profile(request):
 def get_user_stats(user):
     c = caches["default"]
     username = user.username.encode("ascii", "ignore")
-    key = "user_vital_status:%s" % hashlib.md5(username).hexdigest()
+    key = "user_vital_status:%s" % hashlib.sha256(username).hexdigest()
     info = c.get(key)
     if info is None:
         info = trac_stats.get_user_stats(user.username)
