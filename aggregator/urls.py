@@ -8,7 +8,7 @@ urlpatterns = [
     path(
         "ecosystem/",
         TemplateView.as_view(template_name="aggregator/ecosystem.html"),
-        name="local-django-communities",
+        name="community-ecosystem",
     ),
     path(
         "local/",
