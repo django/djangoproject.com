@@ -1345,6 +1345,18 @@ label[for] {
   margin: 10px 0;
 }
 
+.cta.arrow {
+  height: auto;
+  &::after {
+    content: " →" / "";
+  }
+  &:dir(rtl) {
+    &::after {
+      content: " ←" / "";
+    }
+  }
+}
+
 .callout-right {
     @include respond-min(768px) {
         float: right;
