@@ -210,10 +210,6 @@ html[data-theme="dark"] {
     --community-img-bg: #{$green-dark};
     --community-img-fg: #{$white};
 
-    .img-release {
-        filter: invert(1);
-    }
-
     .homepage {
         .copy-banner {
             background: var(--white-color);
@@ -261,12 +257,22 @@ html[data-theme="dark"] {
     }
 }
 
-.img-release {
-    &.light {
+html[data-theme="light"] .img-release {
+  filter: invert(0);
+}
+
+@media (prefers-color-scheme: light) {
+    html[data-theme="auto"] .img-release {
         filter: invert(0);
     }
+}
 
-    &.dark {
+html[data-theme="dark"] .img-release {
+  filter: invert(1);
+}
+
+@media (prefers-color-scheme: dark) {
+    html[data-theme="auto"] .img-release {
         filter: invert(1);
     }
 }
