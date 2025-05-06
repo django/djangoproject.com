@@ -1334,6 +1334,17 @@ a.cta {
     }
 }
 
+label[for] {
+  font-weight: bold;
+}
+
+.errorlist {
+  color: var(--error-fg);
+  background-color: var(--error-light-l10);
+  border-radius: .3em;
+  margin: 10px 0;
+}
+
 .callout-right {
     @include respond-min(768px) {
         float: right;

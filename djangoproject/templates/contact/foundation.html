@@ -31,23 +31,19 @@
   </p>
   <form action="." method="post" accept-charset="utf-8" class="form-input">
     {% csrf_token %}
-    <p>
-      {% if form.name.errors %}<p class="errors">{{ form.name.errors.as_text }}</p>{% endif %}
-      {{ form.name }}
-    </p>
-    <p class="form-email">
-      {% if form.email.errors %}<p class="errors">{{ form.email.errors.as_text }}</p>{% endif %}
-      {{ form.email }}
-    </p>
-    <p>
-      {% if form.message_subject.errors %}<p class="errors">{{ form.message_subject.errors.as_text }}</p>{% endif %}
-      {{ form.message_subject }}
-    </p>
-    <p>
-      {% if form.body.errors %}<p class="errors">{{ form.body.errors.as_text }}</p>{% endif %}
-      {{ form.body }}
-    </p>
-    <p>{{ form.captcha }}</p>
+    <div>
+      {{ form.name.as_field_group }}
+    </div>
+    <div>
+      {{ form.email.as_field_group }}
+    </div>
+    <div>
+      {{ form.message_subject.as_field_group }}
+    </div>
+    <div>
+      {{ form.body.as_field_group }}
+    </div>
+    {{ form.captcha }}
     <p class="submit"><input type="submit" class="cta" value="{% translate "Send &rarr;" %}"></p>
   </form>
 {% endblock %}
