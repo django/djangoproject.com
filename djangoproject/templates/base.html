@@ -47,6 +47,7 @@
 
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
 
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     {% include "includes/header.html" %}
 
     <section class="copy-banner">
@@ -86,6 +87,7 @@
             </ul>
           {% endif %}
         {% endblock %}
+        <div id="main-content"></div>
 
         {% block content %}{% endblock %}
         <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
