@@ -228,3 +228,32 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
     input_el.value = '25';
   });
 })();
+
+// Manage amount and membership level fields on corporate membership page
+(function () {
+  const form_el = document.querySelector('.corporate-membership-join-form');
+
+  if (!form_el) {
+    return;
+  }
+
+  const amount_el = form_el.querySelector('#id_amount');
+  const level_el = form_el.querySelector('#id_membership_level');
+  const levels = [-Infinity, 2000, 5000, 12500, 30000, 100000];
+
+  amount_el.addEventListener('change', function () {
+    let value;
+
+    for (let i = 0; i < levels.length; i++) {
+      if (this.value >= levels[i]) {
+        value = i;
+      }
+
+      level_el.value = value || '';
+    }
+  });
+
+  level_el.addEventListener('change', function () {
+    amount_el.value = this.value ? levels[Number(this.value)] : '';
+  });
+})();
