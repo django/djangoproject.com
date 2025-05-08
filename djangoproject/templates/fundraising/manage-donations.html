@@ -7,7 +7,7 @@
     {% for message in messages %}
       <p>{{ message }}</p>
     {% endfor %}
-    <hr>
+    <hr aria-hidden="true" />
   {% endif %}
 
 {% endblock %}
@@ -36,7 +36,7 @@
   {# Always include to avoid "Management form has been tampered with" if no recurring donations exist #}
     {{ modify_donations_formset.management_form }}
     {% if recurring_donations %}
-      <hr />
+      <hr aria-hidden="true" />
       <h2>{% translate "Modify your recurring donations" %}</h2>
       <p>{% translate "Update the time interval or amount of your recurring donation here:" %}</p>
       {% for form in modify_donations_formset %}
@@ -51,7 +51,7 @@
         <button type="submit" class="cta arrow">{% translate "Save" context "Save personal details about donation" %}</button>
       </div>
       </form>
-      <hr />
+      <hr aria-hidden="true" />
       <h2>{% translate "Cancel your recurring donations" %}</h2>
       <p>{% translate "You can cancel your recurring donation to the Django Software Foundation anytime." %}</p>
       <ul>
@@ -72,7 +72,7 @@
       </form>
     {% endif %}
     {% if past_payments %}
-      <hr />
+      <hr aria-hidden="true" />
       <h2>{% translate "Your past donations" %}</h2>
       <ul>
         {% for payment in past_payments %}
