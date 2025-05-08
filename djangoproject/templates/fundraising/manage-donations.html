@@ -23,16 +23,16 @@
     {% endblocktranslate %}
   </p>
 
-  <form enctype="multipart/form-data" action="" method="post" class="form-input django-hero-form"
+  <form enctype="multipart/form-data" action="" method="post" class="django-hero-form"
         data-stripe-key="{{ stripe_publishable_key }}" data-stripe-icon="{% static 'img/dj-stripe-icon.jpg' %}"
         data-update-card-url="{% url 'fundraising:update-card' %}">
     <h2>{% translate "Manage your participation in the fundraising campaigns" %}</h2>
     <p>{% translate "Information entered below will be visible on all of your donations to the Django Project." %}</p>
     {% csrf_token %}
     {% include 'fundraising/includes/_form.html' with form=hero_form %}
-    <p class="submit">
-      <input type="submit" class="cta" value="{% translate "Save &rarr;" context "Save personal details about donation" %}">
-    </p>
+    <div class="submit">
+      <button type="submit" class="cta arrow">{% translate "Save" context "Save personal details about donation" %}</button>
+    </div>
   {# Always include to avoid "Management form has been tampered with" if no recurring donations exist #}
     {{ modify_donations_formset.management_form }}
     {% if recurring_donations %}
@@ -47,9 +47,9 @@
           <span class="change-card-result"></span>
         </div>
       {% endfor %}
-      <p class="submit">
-        <input type="submit" class="cta" value="{% translate "Save &rarr;" context "Save personal details about donation" %}">
-      </p>
+      <div class="submit">
+        <button type="submit" class="cta arrow">{% translate "Save" context "Save personal details about donation" %}</button>
+      </div>
       </form>
       <hr />
       <h2>{% translate "Cancel your recurring donations" %}</h2>
