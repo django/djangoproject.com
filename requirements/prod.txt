@@ -1,4 +1,4 @@
 -r common.txt
 gunicorn==23.0.0
 redis==5.2.1
-sentry-sdk==2.27.0
+sentry-sdk==2.28.0
