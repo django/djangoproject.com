@@ -5,8 +5,8 @@ FROM python:3.12-slim-bookworm
 WORKDIR /usr/src/app
 
 # set environment varibles
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # install deb packages
 RUN apt-get update \
