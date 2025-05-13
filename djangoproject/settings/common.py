@@ -209,7 +209,6 @@ TEMPLATES = [
                 "docs.context_processors.docs_version",
                 "releases.context_processors.django_version",
                 "aggregator.context_processors.community_stats",
-                "djangoproject.context_processors.display_preview_banner",
                 "django.template.context_processors.request",
             ],
         },
