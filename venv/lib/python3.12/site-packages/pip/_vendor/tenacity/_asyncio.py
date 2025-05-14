@@ -20,11 +20,13 @@ import sys
 import typing as t
 from asyncio import sleep
 
-from pip._vendor.tenacity import AttemptManager
-from pip._vendor.tenacity import BaseRetrying
-from pip._vendor.tenacity import DoAttempt
-from pip._vendor.tenacity import DoSleep
-from pip._vendor.tenacity import RetryCallState
+from pip._vendor.tenacity import (
+    AttemptManager,
+    BaseRetrying,
+    DoAttempt,
+    DoSleep,
+    RetryCallState,
+)
 
 WrappedFnReturnT = t.TypeVar("WrappedFnReturnT")
 WrappedFn = t.TypeVar("WrappedFn", bound=t.Callable[..., t.Awaitable[t.Any]])
@@ -33,7 +35,9 @@ WrappedFn = t.TypeVar("WrappedFn", bound=t.Callable[..., t.Awaitable[t.Any]])
 class AsyncRetrying(BaseRetrying):
     sleep: t.Callable[[float], t.Awaitable[t.Any]]
 
-    def __init__(self, sleep: t.Callable[[float], t.Awaitable[t.Any]] = sleep, **kwargs: t.Any) -> None:
+    def __init__(
+        self, sleep: t.Callable[[float], t.Awaitable[t.Any]] = sleep, **kwargs: t.Any
+    ) -> None:
         super().__init__(**kwargs)
         self.sleep = sleep
 
