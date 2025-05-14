@@ -33,7 +33,7 @@ CACHE_MIDDLEWARE_KEY_PREFIX = "django"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "djangoproject",
+        "NAME": os.getenv("DJANGO_DB_NAME", "djangoproject"),
         "USER": SECRETS.get("db_user", "djangoproject"),
         "HOST": SECRETS.get("db_host", ""),
         "PASSWORD": SECRETS.get("db_password", ""),
@@ -41,7 +41,7 @@ DATABASES = {
     },
     "trac": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "code.djangoproject",
+        "NAME": os.getenv("TRAC_DB_NAME", "code.djangoproject"),
         "USER": SECRETS.get("trac_db_user", "code.djangoproject"),
         "HOST": SECRETS.get("trac_db_host", ""),
         "PASSWORD": SECRETS.get("trac_db_password", ""),
@@ -89,6 +89,9 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "django_push.subscriber",
     "django_read_only",
+    # Temporary fix for Sphinx bug.https://github.com/sphinx-doc/sphinx/issues/13448
+    # Can be removed (and code deleted) once fixed.
+    "_sphinx_13448_workaround",
 ]
 
 LANGUAGE_CODE = "en-us"
@@ -157,11 +160,6 @@ MIDDLEWARE = [
     "django_hosts.middleware.HostsResponseMiddleware",
 ]
 
-PASSWORD_HASHERS = [
-    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
-    "accounts.hashers.PBKDF2WrappedSHA1PasswordHasher",
-]
-
 ROOT_URLCONF = "djangoproject.urls.www"
 
 SECRET_KEY = str(SECRETS["secret_key"])
@@ -177,7 +175,6 @@ SERVER_EMAIL = "root@djangoproject.com"
 SESSION_COOKIE_HTTPONLY = True
 
 SILENCED_SYSTEM_CHECKS = [
-    "fields.W342",  # tracdb has ForeignKey(unique=True) in lieu of multi-col PKs
     "security.W008",  # SSL redirect is handled by nginx
     "security.W009",  # SECRET_KEY is setup through Ansible secrets
 ]
@@ -212,6 +209,7 @@ TEMPLATES = [
                 "docs.context_processors.docs_version",
                 "releases.context_processors.django_version",
                 "aggregator.context_processors.community_stats",
+                "djangoproject.context_processors.display_preview_banner",
                 "django.template.context_processors.request",
             ],
         },
@@ -273,6 +271,7 @@ STRIPE_SECRET_KEY = SECRETS.get("stripe_secret_key", "sk_test_x6zP4wd7Z5jcvDOJbb
 STRIPE_PUBLISHABLE_KEY = SECRETS.get(
     "stripe_publishable_key", "pk_test_TyB5jcROwK8mlCNrn3dCwW7l"
 )
+STRIPE_ENDPOINT_SECRET = SECRETS.get("stripe_endpoint_secret", "insecure")
 
 # product IDs
 PRODUCTS = {

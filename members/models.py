@@ -8,7 +8,9 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.dates import timezone_today
 from django_hosts import reverse
-from sorl.thumbnail import ImageField, get_thumbnail
+from sorl.thumbnail import ImageField
+
+from djangoproject.thumbnails import LogoThumbnailMixin
 
 BRONZE_MEMBERSHIP = 1
 SILVER_MEMBERSHIP = 2
@@ -91,7 +93,7 @@ class CorporateMemberManager(models.Manager):
         return members_by_type
 
 
-class CorporateMember(models.Model):
+class CorporateMember(LogoThumbnailMixin, models.Model):
     display_name = models.CharField(max_length=250)
     billing_name = models.CharField(
         max_length=250,
@@ -147,10 +149,6 @@ class CorporateMember(models.Model):
             elif invoice.expiration_date and invoice.expiration_date > expiry_date:
                 expiry_date = invoice.expiration_date
         return expiry_date
-
-    @property
-    def thumbnail(self):
-        return get_thumbnail(self.logo, "170x170", quality=100) if self.logo else None
 
     def get_renewal_link(self):
         return reverse(

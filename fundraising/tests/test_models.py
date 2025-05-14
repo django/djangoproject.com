@@ -1,14 +1,12 @@
-import os
 from datetime import date
 
-from django.conf import settings
 from django.test import TestCase
-from PIL import Image
 
 from ..models import DjangoHero, Donation, InKindDonor
+from .utils import ImageFileFactory, TemporaryMediaRootMixin
 
 
-class TestDjangoHero(TestCase):
+class TestDjangoHero(TemporaryMediaRootMixin, TestCase):
     def setUp(self):
         kwargs = {
             "approved": True,
@@ -26,26 +24,13 @@ class TestDjangoHero(TestCase):
         self.today = date.today()
 
     def test_thumbnail(self):
-        try:
-            os.makedirs(os.path.join(settings.MEDIA_ROOT, "fundraising/logos/"))
-        except OSError:  # directory may already exist
-            pass
-        image_path = os.path.join(
-            settings.MEDIA_ROOT, "fundraising/logos/test_logo.jpg"
-        )
-        image = Image.new("L", (500, 500))
-        image.save(image_path)
-        self.h1.logo = image_path
+        self.h1.logo = ImageFileFactory(name="logo.jpeg")
         self.h1.save()
         thumbnail = self.h1.thumbnail
         self.assertEqual(thumbnail.x, 170)
         self.assertEqual(thumbnail.y, 170)
-        os.remove(image_path)
-        self.assertTrue(
-            os.path.exists(
-                thumbnail.url.replace(settings.MEDIA_URL, f"{settings.MEDIA_ROOT}/")
-            )
-        )
+        self.h1.logo.delete()
+        self.assertTrue(thumbnail.exists())
 
     def test_thumbnail_no_logo(self):
         self.assertIsNone(self.h2.thumbnail)

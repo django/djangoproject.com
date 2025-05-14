@@ -61,10 +61,6 @@ button:focus {
     background-color: var(--selection);
 }
 
-::-moz-selection {
-    background-color: var(--selection);
-}
-
 ol li,
 ul li {
     //list style
@@ -90,7 +86,7 @@ dl {
 
     &.glossary {
         dt {
-            font-weight: 600;
+            font-weight: 700;
         }
     }
 }
@@ -126,7 +122,7 @@ h1 {
         color: var(--body-fg);
     }
 
-    [role="main"] & {
+    main & {
         @include font-size(32);
         margin: 40px 0px 30px;
         color: var(--body-fg);
@@ -163,7 +159,7 @@ h2 {
         }
     }
 
-    [role="main"] & {
+    main & {
         margin-top: 40px;
         margin-bottom: 15px;
     }
@@ -178,20 +174,24 @@ h3 {
 
     [role="complementary"] &,
     .layout-secondary & {
-        @include font-size(18);
+        @include font-size(20);
+        border-bottom: 1px solid var(--hairline-color);
         font-weight: 400;
         padding-bottom: 15px;
+        margin-top: 30px;
+
+        &:first-of-type {
+            margin-top: inherit;
+        }
 
         &:first-child {
             @include respond-min(768px) {
-                margin-top: 12px;
+                margin-top: 20px;
             }
         }
-    }
-
-    [role="complementary"] & {
-        @include font-size(18);
-        border-bottom: 1px solid var(--hairline-color);
+        .full-width & {
+            @include font-size(24);
+        }
     }
 }
 
@@ -240,7 +240,7 @@ a:focus {
 p {
 
     //increase top margin if first item in container
-    [role="main"]>&:first-child {
+    main>&:first-child {
         margin-top: 30px;
     }
 }
@@ -278,39 +278,29 @@ blockquote {
 //------------------- Layout
 
 
-[role="main"] {
+main {
     //Main column. Left aligned by default. See /styleguide for explanation.
     background: var(--white-color);
     padding: 1px 10px 40px;
 
     @include respond-min(768px) {
         min-height: 800px;
-        border: 1px solid #ddd;
+        border: none;
+        box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), 460px 0 0 0 var(--white-color), 1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), 460px 600px 0 0px var(--white-color);
         float: right;
         margin: 0;
         padding-bottom: 80px;
-        padding-left: 3%;
-        padding-right: 3%;
-        width: 60%;
-
-        .mdzr-boxshadow & {
-            border: none;
-            box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), 460px 0 0 0 var(--white-color), 1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), 460px 600px 0 0px var(--white-color);
-            padding-left: 4%;
-            padding-right: 0;
-            width: 63%;
-        }
+        padding-left: 4%;
+        padding-right: 0;
+        width: 63%;
 
         .sidebar-right & {
+            border: none;
+            box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), -460px 0 0 0 var(--white-color), -1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), -460px 600px 0 0px var(--white-color);
             float: left;
-
-            .mdzr-boxshadow & {
-                border: none;
-                box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), -460px 0 0 0 var(--white-color), -1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), -460px 600px 0 0px var(--white-color);
-                padding-left: 0;
-                width: 62%;
-                padding-right: 4%;
-            }
+            padding-left: 0;
+            width: 62%;
+            padding-right: 4%;
         }
     }
 
@@ -347,23 +337,19 @@ blockquote {
 }
 
 .full-width {
+    border: none;
+    box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
 
     // Single column, full width layout. See /styleguide for explanation.
     &.container {
         width: 100%;
         padding: 0;
         max-width: none;
-        border-bottom: 1px solid #ddd;
         background: var(--white-color);
     }
 
     // High-level class denoting full-width layout
     @include clearfix;
-
-    .mdzr-boxshadow & {
-        border: none;
-        @include secondary-shadow-top;
-    }
 }
 
 [role="complementary"] {
@@ -431,13 +417,9 @@ blockquote {
 .layout-tertiary {
     // Tertiary (white) content area on full-width pages
     background: var(--white-color);
-    border-top: 1px solid #ddd;
+    border: none;
+    box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
     padding: 20px 10px 50px;
-
-    .mdzr-boxshadow & {
-        border: none;
-        @include secondary-shadow-bottom;
-    }
 }
 
 .container {
@@ -448,9 +430,7 @@ blockquote {
     }
 
     &.sidebar-right {
-        .mdzr-boxshadow & {
-            box-shadow: -1200px 0 0 0px var(--white-color);
-        }
+        box-shadow: -1200px 0 0 0px var(--white-color);
     }
 }
 
@@ -471,7 +451,7 @@ blockquote {
 
 //-------------------  Site Chrome (Header/Footer)
 
-[role="banner"] {
+header {
     // Includes global navigation, logo, and tagline at top of document
     @include clearfix;
     background: $green-dark;
@@ -510,7 +490,7 @@ blockquote {
     .logo {
         @include font-size(40);
         @include sans-serif;
-        background: url(../img/logo-django.png) 0 0 no-repeat;
+        background: url(../img/logo-django.svg) center center no-repeat;
         color: var(--white-color);
         display: block;
         font-weight: 700;
@@ -520,11 +500,6 @@ blockquote {
         text-indent: 100%;
         width: 104px;
         height: 36px;
-
-        .mdzr-svg & {
-            // deliver svg logo if applicable
-            background: url(../img/logo-django.svg) center center no-repeat;
-        }
 
         @include respond-min(768px) {
             margin-left: 0;
@@ -558,7 +533,7 @@ blockquote {
         }
     }
 
-    [role="navigation"] {
+    nav {
         width: 100%;
         background: $green-dark;
         transition: max-height 0.3s ease-out;
@@ -612,6 +587,10 @@ blockquote {
             color: var(--menu);
             display: block;
             text-decoration: none;
+
+            &:visited {
+              color: var(--menu);
+            }
 
             &:active,
             &:hover {
@@ -676,6 +655,7 @@ blockquote {
 /* banner for billboard */
 #billboard {
     background-color: $green-medium;
+    border-top: 1px solid $black;
 
     * {
         color: $black;
@@ -699,6 +679,7 @@ blockquote {
 
     a, h1 a {
         color: $black;
+        font-weight: bold;
         text-decoration: none;
         &:hover {
             text-decoration: underline;
@@ -724,6 +705,7 @@ blockquote {
         line-height: 1.3;
         padding: 1px 0 6px;
         margin: .45em 0 .35em;
+        letter-spacing: -1px;
 
         em {
             font-style: normal;
@@ -742,6 +724,7 @@ blockquote {
         a {
             font-weight: 300;
             color: var(--secondary-accent);
+            text-decoration: none;
         }
 
         a.cta,
@@ -835,53 +818,6 @@ blockquote {
                 background: darken($green-medium, 2%);
             }
         }
-
-        .django-companies {
-            max-width: 750px;
-            margin: 0 auto;
-            list-style: none;
-            padding: 0 0 0 30px;
-
-            li {
-                width: 144px;
-                display: inline-block;
-                text-indent: -1000px;
-                overflow: hidden;
-                margin: 0;
-
-                a {
-                    display: block;
-                    height: 46px;
-                    background-position: center;
-                    background-repeat: no-repeat;
-
-                    &.company-mozilla {
-                        @include svg-image(company-mozilla);
-                        background-position: center 7px;
-                    }
-
-                    &.company-pinterest {
-                        @include svg-image(company-pinterest);
-                        background-position: center 7px;
-                    }
-
-                    &.company-theguardian {
-                        @include svg-image(company-theguardian);
-                        background-position: center 14px;
-                    }
-
-                    &.company-instagram {
-                        @include svg-image(company-instagram);
-                        background-position: center 10px;
-                    }
-
-                    &.company-rdio {
-                        @include svg-image(company-rdio);
-                        background-position: 15px 6px;
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -938,7 +874,7 @@ blockquote {
 
 }
 
-[role="contentinfo"] {
+footer {
     // Global Footer at bottom of page
     @include clearfix;
     @include sans-serif;
@@ -986,7 +922,7 @@ blockquote {
 
     }
 
-    h2 {
+    h3 {
         @include font-size(16);
         border-top: 1px solid var(--hairline-color);
         color: var(--menu);
@@ -1016,10 +952,15 @@ blockquote {
             color: var(--menu);
             text-decoration: none;
 
+            &:visited {
+              color: var(--menu);
+            }
+
             &:hover,
             &:active,
             &:focus {
                 text-decoration: underline;
+                color: var(--menu);
             }
         }
     }
@@ -1036,40 +977,29 @@ blockquote {
         }
 
         .logo {
+            background-position: left center;
             margin-right: 0;
-            margin-top: 28px;
-
-            .mdzr-svg & {
-                background-position: left center;
-                margin-right: 0;
-                margin-top: 20px;
-            }
+            margin-top: 20px;
         }
     }
 
     .logo {
         @include font-size(40);
         @include sans-serif;
-        background: url(../img/logo-django.png) 0 0 no-repeat;
+        background: url(../img/logo-django.svg) center center no-repeat;
         color: $green-dark;
         display: block;
         font-weight: 700;
-        height: 50px;
+        height: 39px;
         margin: 10px;
         overflow: hidden;
         text-decoration: none;
         text-indent: 100%;
-        width: 142px;
+        width: 109px;
 
         @include respond-min(768px) {
             float: left;
             margin: 20px 90px 0 0;
-        }
-
-        .mdzr-svg & {
-            background: url(../img/logo-django.svg) center center no-repeat;
-            height: 39px;
-            width: 109px;
         }
     }
 
@@ -1150,19 +1080,11 @@ blockquote {
             }
 
             &.threespot {
-                background: url(../img/logo-threespot.png) no-repeat left center;
-
-                .mdzr-svg & {
-                    background: url(../img/logo-threespot.svg) no-repeat left center;
-                }
+                background: url(../img/logo-threespot.svg) no-repeat left center;
             }
 
             &.andrevv {
-                background: url(../img/logo-andrevv.png) no-repeat left center;
-
-                .mdzr-svg & {
-                    background: url(../img/logo-andrevv.svg) no-repeat left center;
-                }
+                background: url(../img/logo-andrevv.svg) no-repeat left center;
             }
         }
     }
@@ -1209,8 +1131,7 @@ a.cta {
     // Call To Action buttons
     @include sans-serif;
     font-weight: 700;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+    appearance: none;
     background: var(--primary);
     border: none;
     border-radius: 5px;
@@ -1413,6 +1334,17 @@ a.cta {
     }
 }
 
+label[for] {
+  font-weight: bold;
+}
+
+.errorlist {
+  color: var(--error-fg);
+  background-color: var(--error-light-l10);
+  border-radius: .3em;
+  margin: 10px 0;
+}
+
 .callout-right {
     @include respond-min(768px) {
         float: right;
@@ -1553,7 +1485,7 @@ a.cta {
         margin-bottom: 5px;
     }
 
-    li {
+    > li {
         border-top: 1px solid var(--hairline-color);
         margin-top: 35px;
         padding-top: 10px;
@@ -1642,35 +1574,23 @@ a.cta {
 
     // Logo List
     [title="Knight Foundation"] {
-        background: url(../img/logo-knight.png) no-repeat bottom left;
+        background: url(../img/logo-knight.svg) no-repeat bottom left;
         height: 25px;
         padding-top: 7px;
         width: 190px;
-
-        .mdzr-svg & {
-            background: url(../img/logo-knight.svg) no-repeat bottom left;
-        }
     }
 
     [title="Mozilla"] {
-        background: url(../img/logo-mozilla.png) no-repeat bottom left;
+        background: url(../img/logo-mozilla.svg) no-repeat bottom left;
         height: 32px;
         width: 120px;
-
-        .mdzr-svg & {
-            background: url(../img/logo-mozilla.svg) no-repeat bottom left;
-        }
     }
 
     [title="Disqus"] {
-        background: url(../img/logo-disqus.png) no-repeat bottom left;
+        background: url(../img/logo-disqus.svg) no-repeat bottom left;
         height: 28px;
         padding-top: 4px;
         width: 140px;
-
-        .mdzr-svg & {
-            background: url(../img/logo-disqus.svg) no-repeat bottom left;
-        }
     }
 
     &.single-col {
@@ -1802,6 +1722,9 @@ h2+.list-link-soup {
 
         i {
             @include font-size(120);
+            background: url(../img/bg-features.svg) no-repeat center center;
+            border-radius: 100px;
+            color: var(--white-color);
             display: block;
             height: 200px;
             left: 0;
@@ -1811,89 +1734,70 @@ h2+.list-link-soup {
             width: 200px;
             margin-right: 0;
 
-            // Border Radius Enabled
-            .mdzr-borderradius & {
-                background: var(--primary);
-                border-radius: 100px;
-                color: var(--white-color);
+            &.icon-bolt {
+                background-position: -150px -269px;
             }
 
-            // SVG Enabled
-            .mdzr-svg & {
-                background: url(../img/bg-features.svg) no-repeat center center;
-
-                &.icon-bolt {
-                    background-position: -150px -269px;
-                }
-
-                &.icon-briefcase {
-                    background-position: -354px -7px;
-                }
-
-                &.icon-lock {
-                    background-position: -36px -96px;
-                }
-
-                &.icon-dashboard {
-                    background-position: -270px -9px;
-                }
-
-                &.icon-cogs {
-                    background-position: -334px -12px;
-                }
+            &.icon-briefcase {
+                background-position: -354px -7px;
             }
 
-            // Border Radius, SVG, and Animation Enabled
-            .mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
-                -webkit-transition: all 0.3s ease-out;
-                transition: all 0.3s ease-out;
+            &.icon-lock {
+                background-position: -36px -96px;
+            }
 
-                -webkit-transform: rotate(0.5turn);
-                transform: rotate(0.5turn);
+            &.icon-dashboard {
+                background-position: -270px -9px;
+            }
+
+            &.icon-cogs {
+                background-position: -334px -12px;
+            }
+
+            transform: rotate(0.5turn);
+            transition: all 0.3s ease-out;
+
+            &.inview {
+                transform: rotate(0turn);
+            }
+
+            &.icon-bolt {
+                background-position: 40px -369px;
 
                 &.inview {
-                    -webkit-transform: rotate(0turn);
-                    transform: rotate(0turn);
+                    background-position: -150px -269px;
                 }
+            }
 
-                &.icon-bolt {
-                    background-position: 40px -369px;
+            &.icon-briefcase {
+                background-position: -494px 207px;
 
-                    &.inview {
-                        background-position: -150px -269px;
-                    }
+                &.inview {
+                    background-position: -354px -7px;
                 }
+            }
 
-                &.icon-briefcase {
-                    background-position: -494px 207px;
+            &.icon-lock {
+                background-position: 148px -206px;
 
-                    &.inview {
-                        background-position: -354px -7px;
-                    }
+                &.inview {
+                    background-position: -36px -96px;
                 }
+            }
 
-                &.icon-lock {
-                    background-position: 144px -206px;
+            &.icon-dashboard {
+                background-position: -367px 201px;
 
-                    &.inview {
-                        background-position: -36px -96px;
-                    }
+                &.inview {
+                    background-position: -270px -9px;
                 }
+            }
 
-                &.icon-dashboard {
-                    background-position: -360px 201px;
+            &.icon-cogs {
+                background-position: -500px -180px;
 
-                    &.inview {
-                        background-position: -270px -9px;
-                    }
-                }
-
-                &.icon-cogs {
-                    background-position: -500px -180px;
-
-                    &.inview {
-                        background-position: -334px -12px;
-                    }
+                &.inview {
+                    background-position: -334px -12px;
                 }
             }
 
@@ -1930,19 +1834,12 @@ h2+.list-link-soup {
             background: var(--secondary);
             display: inline-block;
             text-align: center;
+            transform: rotate(0.5turn);
+            transition: all 0.3s ease-out;
             @include font-size(24);
 
-            .mdzr-svg.mdzr-borderradius.mdzr-cssanimations & {
-                -webkit-transition: all 0.3s ease-out;
-                transition: all 0.3s ease-out;
-
-                -webkit-transform: rotate(0.5turn);
-                transform: rotate(0.5turn);
-
-                &.inview {
-                    -webkit-transform: rotate(0turn);
-                    transform: rotate(0turn);
-                }
+            &.inview {
+                transform: rotate(0turn);
             }
         }
 
@@ -2464,11 +2361,7 @@ h2+.list-link-soup {
     top: 0;
     width: 100%;
     padding: 8px 20px 8px;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    background-image: -webkit-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
-    background-image: -moz-linear-gradient(-45deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
     background-image: linear-gradient(135deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
     @include sans-serif;
     font-size: 14px;
@@ -2691,8 +2584,42 @@ table.docutils th {
         }
     }
 
-    +h2 {
+    +h3 {
         margin-top: 34px;
+    }
+}
+
+search.filters {
+    @include sans-serif;
+
+    display: flex;
+    gap: 10px;
+    border-bottom: 2px solid var(--hairline-color);
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 0;
+    position: relative;
+
+    a {
+      padding: 10px 20px;
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      transition: color 0.3s ease, border-bottom 0.3s ease;
+      color: var(--text-light);
+      flex-shrink: 0;
+
+      &:not([href]) {
+        color: var(--body-fg);
+        font-weight: bold;
+        border-bottom: 3px solid var(--primary);
+      }
+
+      &[href]:focus,
+      &[href]:active,
+      &[href]:hover {
+        outline: none;
+        border-bottom: 3px solid var(--hairline-color);
+      }
     }
 }
 
@@ -2766,6 +2693,39 @@ table.docutils th {
         mark {
             background-color: var(--secondary-accent);
             color: var(--search-mark-text);
+        }
+    }
+
+    .code-links {
+        margin-top: 15px;
+        margin-left: 10px;
+        list-style-type: none;
+        padding-left: 0;
+
+        a {
+            &:active,
+            &:focus,
+            &:hover {
+                code {
+                    color: var(--primary);
+                }
+                .meta {
+                    color: var(--text-light);
+                }
+            }
+        }
+
+        code {
+            color: var(--primary-accent);
+            font-weight: 700;
+        }
+
+        div {
+            margin: 0;
+            .meta {
+                margin: 5px 0 0;
+                color: var(--body-fg);
+            }
         }
     }
 }
@@ -2887,8 +2847,7 @@ form {
     textarea {
         @include sans-serif;
         @include font-size(16);
-        -webkit-appearance: none;
-        -moz-appearance: none;
+        appearance: none;
         background: var(--white-color);
         border: 1px solid var(--hairline-color);
         color: var(--body-fg);
@@ -2916,22 +2875,6 @@ form {
         &:focus {
             outline: none;
             border-color: var(--secondary);
-        }
-
-        &::-webkit-input-placeholder {
-            color: var(--body-fg);
-        }
-
-        &:-ms-input-placeholder {
-            color: var(--body-fg);
-        }
-
-        &::-moz-placeholder {
-            color: var(--body-fg);
-        }
-
-        &:-moz-placeholder {
-            color: var(--body-fg);
         }
 
         &::placeholder {
@@ -2964,8 +2907,6 @@ form {
     }
 
     button {
-        -moz-appearance: none;
-        -webkit-appearance: none;
         appearance: none;
 
         background: var(--secondary);
@@ -3084,33 +3025,6 @@ form {
 
 
 
-form.donate {
-    max-width: 150px;
-
-    label {
-        position: absolute;
-        left: 0px;
-        color: var(--primary-accent);
-        padding-top: 0.3em;
-        padding-left: 0.5em;
-    }
-
-    input[type=text] {
-        padding-left: 20px;
-        padding-right: 9px;
-        /* Magic value to right-align the button inside the input */
-    }
-}
-
-div[role=main] {
-    form.donate {
-        label {
-            padding-top: 0.7em;
-        }
-    }
-}
-
-
 .form-email {
 
     // Email submission forms on Community page.
@@ -3204,23 +3118,6 @@ div[role=main] {
                 color: var(--white-color);
             }
         }
-
-        .mdzr-no-borderradius & {
-            display: inline;
-            background: none;
-            color: var(--text-light);
-            height: auto;
-            width: auto;
-            margin: 0 5px !important;
-
-            &:hover,
-            &:active,
-            &:focus,
-            &.active {
-                background: none;
-                color: var(--secondary);
-            }
-        }
     }
 }
 
@@ -3304,8 +3201,6 @@ hr {
             fill: rgba(50, 50, 50, 0.3);
             stroke: #aaaaaa;
             stroke-width: 2px;
-            -moz-user-select: none;
-            -ms-user-select: none;
             -webkit-user-select: none;
             user-select: none;
             cursor: default;
@@ -3598,6 +3493,11 @@ ul.corporate-members li {
             margin-right: 10px;
         }
 
+        &.fade-out {
+            opacity: 0;
+            transition: opacity 400ms;
+        }
+
         &.info {
             &::before {
                 content: $fa-var-info-circle;
@@ -3658,6 +3558,11 @@ ul.corporate-members li {
         .clipboard-success {
             font-size: 80%;
             margin-right: 10px;
+
+            &.fade-out {
+                opacity: 0;
+                transition: opacity 400ms;
+            }
         }
     }
 
@@ -3710,7 +3615,19 @@ ul.corporate-members li {
         border-radius: 20px;
     }
 
-    .community-cta svg, h3 {
-        color: var(--community-img-fg);
+    .community-cta {
+        svg, h3 {
+            color: var(--community-img-fg);
+        }
+    }
+}
+
+.blog {
+    .blog-entry-body {
+        img {
+            max-width: 100%;
+            display: block;
+            margin: auto;
+        }
     }
 }

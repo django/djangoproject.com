@@ -7,7 +7,6 @@
 {% block og_description %}{% translate "It's quick & easy to get up and running with Django" %}{% endblock %}
 
 {% block header %}
-  <h1 class="visuallyhidden">{% translate "Get started" %}</h1>
   <div class="layout-2col">
     <div class="col two-third">
       <p>{% translate "It’s <em>quick &amp; easy</em> to get up and running with <em>Django</em>." %}</p>
@@ -136,7 +135,7 @@ class Member(models.Model):
           </div>
         </li>
         <li>
-          <h2>{% translate "URLs and views</h2>
+          <h2>{% translate "URLs and views" %}</h2>
           <div class="collapsing-content">
             <p>A clean, elegant URL scheme is an important detail in a high-quality web application. Django encourages beautiful URL design and doesn’t put any cruft in URLs, like .php or .asp.</p>
             <p>To design URLs for an application, you create a Python module called a URLconf. Like a table of contents for your app, it contains a simple mapping between URL patterns and your views.</p>

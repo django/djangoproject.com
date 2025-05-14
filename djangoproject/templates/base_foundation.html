@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load fundraising_extras %}
+{% load fundraising_extras meetings i18n %}
 
 {% block og_title %}Django Software Foundation{% endblock %}
 
@@ -7,17 +7,17 @@
 {% block title %}Django Software Foundation{% endblock %}
 
 {% block header %}
-  <h1>Django Software Foundation</h1>
+  <p>Django Software Foundation</p>
 {% endblock %}
 
 {% block content-related %}
 
-{# Always include <h1> label and <div> with aria role. #}
-  <h1 class="visuallyhidden">Additional Information</h1>
+{# Always include <h2> label and <div> with aria role. #}
   <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
     {% donation_snippet %}
 
-    <h2>About the foundation</h2>
+    <h3>About the foundation</h3>
     <ul class="list-links">
       <li><a href="/foundation/faq/">FAQ</a></li>
       <li><a href="/foundation/records/">Records</a></li>
@@ -25,5 +25,8 @@
       <li><a href="/foundation/cla/">Contributor license agreements</a></li>
       <li><a href="/foundation/conferences/">Organizing a Django conference</a></li>
     </ul>
+    <h3>{% translate "Latest DSF meeting minutes" %}</h3>
+    {% render_latest_meeting_minute_entries 2 %}
+    <a href="{% url 'foundation_meeting_archive_index' %}" class="link-readmore">{% translate "More meeting minutes" %}</a>
   </div>
 {% endblock %}

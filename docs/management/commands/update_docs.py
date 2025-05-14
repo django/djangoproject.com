@@ -4,6 +4,7 @@ app.
 """
 
 import json
+import multiprocessing
 import os
 import shutil
 import subprocess
@@ -15,7 +16,13 @@ from pathlib import Path
 
 from django.conf import settings
 from django.core.management import BaseCommand, call_command
+from django.db.models import Q
 from django.utils.translation import to_locale
+from sphinx.application import Sphinx
+from sphinx.config import Config
+from sphinx.errors import SphinxError
+from sphinx.testing.util import _clean_up_global_state
+from sphinx.util.docutils import docutils_namespace, patch_docutils
 
 from ...models import DocumentRelease
 
@@ -36,6 +43,11 @@ class Command(BaseCommand):
             ),
         )
         parser.add_argument(
+            "--interactive",
+            action="store_true",
+            help="Ask before building each version",
+        )
+        parser.add_argument(
             "--update-index",
             action="store_true",
             dest="update_index",
@@ -49,16 +61,47 @@ class Command(BaseCommand):
             default=False,
             help="Also invalidate downstream caches for any changed doc versions.",
         )
+        parser.add_argument(
+            "args",
+            metavar="versions",
+            nargs="*",
+            help="Which version to rebuild (all by default)",
+        )
 
-    def handle(self, **kwargs):
+    def _get_doc_releases(self, versions, options):
+        """
+        Return a DocumentRelease queryset of all the versions that should be
+        built, based on the arguments received on the command line.
+        """
+        default_docs_version = DocumentRelease.objects.get(
+            is_default=True
+        ).release.version
+
+        # Somehow, bizarely, there's a bug in Sphinx such that if I try to
+        # build 1.0 before other versions, things fail in weird ways. However,
+        # building newer versions first works. I suspect Sphinx is hanging onto
+        # some global state. Anyway, we can work around it by making sure that
+        # "dev" builds before "1.0". This is ugly, but oh well.
+        queryset = DocumentRelease.objects.order_by("-release")
+
+        # Skip translated non-stable versions to avoid a crash:
+        # https://github.com/django/djangoproject.com/issues/627
+        queryset = queryset.filter(Q(lang="en") | Q(release=default_docs_version))
+
+        if options["language"]:
+            queryset = queryset.filter(lang=options["language"])
+
+        if versions:
+            queryset = queryset.by_versions(*versions)
+
+        return queryset
+
+    def handle(self, *versions, **kwargs):
         self.verbosity = kwargs["verbosity"]
         self.update_index = kwargs["update_index"]
         self.purge_cache = kwargs["purge_cache"]
 
         self.default_builders = ["json", "djangohtml"]
-        default_docs_version = DocumentRelease.objects.get(
-            is_default=True
-        ).release.version
 
         # Keep track of which Git sources have been updated, e.g.,
         # {'1.8': True} if the 1.8 docs updated.
@@ -66,23 +109,10 @@ class Command(BaseCommand):
         # Only update the index if some docs rebuild.
         self.update_index_required = False
 
-        # Somehow, bizarely, there's a bug in Sphinx such that if I try to
-        # build 1.0 before other versions, things fail in weird ways. However,
-        # building newer versions first works. I suspect Sphinx is hanging onto
-        # some global state. Anyway, we can work around it by making sure that
-        # "dev" builds before "1.0". This is ugly, but oh well.
-        doc_releases = DocumentRelease.objects.order_by("-release")
-        if kwargs["language"]:
-            doc_releases = doc_releases.filter(lang=kwargs["language"])
-        for release in doc_releases:
-            # Skip translated non-stable versions to avoid a crash:
-            # https://github.com/django/djangoproject.com/issues/627
-            if (
-                release.lang != "en"
-                and not release.release.version == default_docs_version
-            ):
-                continue
-            self.build_doc_release(release, force=kwargs["force"])
+        for release in self._get_doc_releases(versions, kwargs):
+            self.build_doc_release(
+                release, force=kwargs["force"], interactive=kwargs["interactive"]
+            )
 
         if self.update_index_required:
             call_command("update_index", **{"verbosity": self.verbosity})
@@ -102,10 +132,16 @@ class Command(BaseCommand):
                 if self.verbosity >= 1:
                     self.stdout.write("No docs changes; skipping cache purge.")
 
-    def build_doc_release(self, release, force=False):
+    def build_doc_release(self, release, force=False, interactive=False):
         # Skip not supported releases.
         if not release.is_supported and not force:
             return
+        if interactive:
+            prompt = (
+                f"About to start building docs for release {release}. Continue? Y/n "
+            )
+            if input(prompt).upper() not in {"", "Y", "YES", "OUI"}:
+                return
         if self.verbosity >= 1:
             self.stdout.write(f"Starting update for {release} at {datetime.now()}...")
 
@@ -175,29 +211,35 @@ class Command(BaseCommand):
 
             if self.verbosity >= 2:
                 self.stdout.write(f"  building {builder} ({source_dir} -> {build_dir})")
+            # Retrieve the extensions from the conf.py so we can append to them.
+            conf_extensions = Config.read(source_dir.resolve()).extensions
+            extensions = [*conf_extensions, "docs.builder"]
             try:
-                # Translated docs builds generate a lot of warnings, so send
-                # stderr to stdout to be logged (rather than generating an
-                # email)
-                subprocess.check_call(
-                    [
-                        "sphinx-build",
-                        "-b",
-                        builder,
-                        "-D",
-                        "language=%s" % to_locale(release.lang),
-                        "-j",
-                        "auto",
-                        "-Q" if self.verbosity == 0 else "-q",
-                        str(source_dir),  # Source file directory
-                        str(build_dir),  # Destination directory
-                    ],
-                    stderr=sys.stdout,
-                )
-            except subprocess.CalledProcessError:
+                # Prevent global state persisting between builds
+                # https://github.com/sphinx-doc/sphinx/issues/12130
+                with patch_docutils(source_dir), docutils_namespace():
+                    Sphinx(
+                        srcdir=source_dir,
+                        confdir=source_dir,
+                        outdir=build_dir,
+                        doctreedir=build_dir.joinpath(".doctrees"),
+                        buildername=builder,
+                        # Translated docs builds generate a lot of warnings, so send
+                        # stderr to stdout to be logged (rather than generating an email)
+                        warning=sys.stdout,
+                        parallel=multiprocessing.cpu_count(),
+                        verbosity=0,
+                        confoverrides={
+                            "language": to_locale(release.lang),
+                            "extensions": extensions,
+                        },
+                    ).build()
+                # Clean up global state after building each language.
+                _clean_up_global_state()
+            except SphinxError as e:
                 self.stderr.write(
-                    "sphinx-build returned an error (release %s, builder %s)"
-                    % (release, builder)
+                    "sphinx-build returned an error (release %s, builder %s): %s"
+                    % (release, builder, str(e))
                 )
                 return
 
@@ -242,6 +284,9 @@ class Command(BaseCommand):
                 str(built_dir),
             ]
         )
+
+        if release.is_default:
+            self._setup_stable_symlink(release, built_dir)
 
         #
         # Rebuild the imported document list and search index.
@@ -317,6 +362,14 @@ class Command(BaseCommand):
                 stderr=sys.stdout,
             )
         return True
+
+    def _setup_stable_symlink(self, release, built_dir):
+        """
+        Setup a symbolic link called "stable" pointing to the given release build
+        """
+        stable = built_dir / "stable"
+        target = built_dir / release.version
+        stable.symlink_to(target, target_is_directory=True)
 
 
 def gen_decoded_documents(directory):

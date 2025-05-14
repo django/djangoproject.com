@@ -3,16 +3,19 @@
 
 {% block title %}{{ object.headline|escape }} | Weblog{% endblock %}
 
-{% block og_title %}{{ object.headline|safe }}{% endblock %}
-{% block og_description %}{% blocktranslate trimmed with author=object.author pub_date=object.pub_date|date:"DATE_FORMAT" %}
-    Posted by {{ author }} on {{ pub_date }}
-{% endblocktranslate %}{% endblock %}
+{% block og_tags %}
+    {% for property, content in object.opengraph_tags.items %}
+        <meta property="{{ property }}" content="{{ content }}" />
+    {% endfor %}
+{% endblock og_tags %}
 
 {% block content %}
-    <h2>{{ object.headline|safe }}</h2>
+    <h1>{{ object.headline|safe }}</h1>
 
-    <span class="meta">{% blocktranslate trimmed with author=object.author pub_date=object.pub_date|date:"DATE_FORMAT" %}
-        Posted by <strong>{{ author }}</strong> on {{ pub_date }} </span>
-    {% endblocktranslate %}
-        {{ object.body_html|safe }}
+    <span class="meta">
+        {% blocktranslate trimmed with author=object.author pub_date=object.pub_date|date:"DATE_FORMAT" %}
+            Posted by <strong>{{ author }}</strong> on {{ pub_date }}
+        {% endblocktranslate %}
+    </span>
+    <div class="blog-entry-body">{{ object.body_html|safe }}</div>
 {% endblock %}

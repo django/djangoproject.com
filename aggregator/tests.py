@@ -95,6 +95,18 @@ class AggregatorTests(TestCase):
         with self.assertNumQueries(6):
             self.client.get(url)
 
+    def test_empty_feed_type_not_rendered(self):
+        empty_type = models.FeedType.objects.create(name="Empty", slug="empty")
+        models.Feed.objects.create(
+            title="Empty blog",
+            feed_url="empty.com/rss/",
+            public_url="empty.com/",
+            approval_status=models.APPROVED_FEED,
+            feed_type=empty_type,
+        )
+        response = self.client.get(reverse("community-index"))
+        self.assertNotContains(response, "Empty")
+
     def test_feed_list_only_approved_and_active(self):
         url = reverse(
             "community-feed-list", kwargs={"feed_type_slug": self.feed_type.slug}

@@ -4,7 +4,7 @@
 {% block layout_class %}column-container sidebar-right{% endblock %}
 
 {% block content %}
-
+  <h1>{% translate "Community" %}</h1>
   <h2 class="community-title">{% translate "Get Help" %}</h2>
   <div class="community-cta-wrapper">
     <a href="https://forum.djangoproject.com/" class="community-cta-a">
@@ -15,7 +15,7 @@
         <h3>{% translate "Forum - Post a question" %}</h3>
       </div>
     </a>
-    <a href="https://discord.gg/xcRH6mN4fa" class="community-cta-a">
+    <a href="https://chat.djangoproject.com" class="community-cta-a">
       <div class="community-cta">
         <div>
           {% include "svg_logos/discord.html" %}
@@ -84,8 +84,4 @@
       </li>
     {% endfor %}
   </ul>
-
-  <h2>{% translate "Mailing Lists" %}</h2>
-  {% include "includes/mailing_lists.html" %}
-
 {% endblock %}

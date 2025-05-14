@@ -17,21 +17,20 @@ logger = logging.getLogger(__name__)
 class BaseContactForm(ContactForm):
     message_subject = forms.CharField(
         max_length=100,
-        widget=forms.TextInput(
-            attrs={"class": "required", "placeholder": _("Message subject")}
-        ),
+        widget=forms.TextInput(attrs={"class": "required"}),
         label=_("Message subject"),
     )
     email = forms.EmailField(
-        widget=forms.TextInput(attrs={"class": "required", "placeholder": _("E-mail")})
+        widget=forms.TextInput(attrs={"class": "required"}),
+        label=_("E-mail"),
     )
     name = forms.CharField(
-        widget=forms.TextInput(attrs={"class": "required", "placeholder": _("Name")})
+        widget=forms.TextInput(attrs={"class": "required"}),
+        label=_("Name"),
     )
     body = forms.CharField(
-        widget=forms.Textarea(
-            attrs={"class": "required", "placeholder": _("Your message")}
-        )
+        widget=forms.Textarea(attrs={"class": "required"}),
+        label=_("Your message"),
     )
     captcha = ReCaptchaField(widget=ReCaptchaV3)
 

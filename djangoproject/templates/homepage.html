@@ -6,7 +6,6 @@
 {% block layout_class %}column-container sidebar-right{% endblock %}
 
 {% block header %}
-  <h1 class="visuallyhidden">Django</h1>
   <p>
     <em>{% translate "Django makes it easier to build better web apps more quickly and with less code." %}</em>
   </p>
@@ -56,7 +55,7 @@
           <h3>{% translate "Forum - Post a question" %}</h3>
         </div>
       </a>
-      <a href="https://discord.gg/xcRH6mN4fa" class="community-cta-a">
+      <a href="https://chat.djangoproject.com" class="community-cta-a">
         <div class="community-cta">
           <div>
             {% include "svg_logos/discord.html" %}
@@ -100,17 +99,13 @@
 
     {% endcomment %}
 
-  <div class="section">
-    <h1>{% translate "Stay in the loop" %}</h1>
-    <p>{% translate "Subscribe to one of our mailing lists to stay up to date with everything in the Django community:" %}</p>
-    {% include "includes/mailing_lists.html" %}
-  </div>
-
     <!-- END #content-secondary -->
 {% endblock %}
 
 {% block content-related %}
+  <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
   <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
     <a href="{% url 'download' %}" class="cta">
       {% blocktranslate trimmed %}
         Download <em>latest release: {{ DJANGO_VERSION }}</em>
@@ -155,12 +150,7 @@
 
     <h3>{% translate "Get Help" %}</h3>
     <dl class="list-links-small">
-      <dt><a href="irc://irc.libera.chat/django">{% translate "#django IRC channel" %}</a></dt>
-      <dd>
-        {% translate "Chat with other Django users" %}
-      </dd>
-
-      <dt><a href="https://discord.gg/xcRH6mN4fa" target="_blank">{% translate "Django Discord Server" %}</a></dt>
+      <dt><a href="https://chat.djangoproject.com" target="_blank">{% translate "Django Discord Server" %}</a></dt>
       <dd>
         {% translate "Join the Django Discord Community" %}
       </dd>

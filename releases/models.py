@@ -1,7 +1,12 @@
 import datetime
+import re
+from pathlib import Path
 
 from django.conf import settings
 from django.core.cache import cache
+from django.core.exceptions import ValidationError
+from django.core.files.storage import FileSystemStorage
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.functional import cached_property
 from django.utils.version import get_complete_version, get_main_version
@@ -32,9 +37,11 @@ def get_version(version=None):
 
 
 class ReleaseManager(models.Manager):
-    def active(self, at=None):
+    def published(self, at=None):
         """
-        List of active releases at a given date (today by default).
+        List of published releases at a given date (today by default).
+
+        A published release has a suitable publication date and is active.
 
         The resulting queryset is sorted by decreasing version number.
 
@@ -47,7 +54,7 @@ class ReleaseManager(models.Manager):
         # .exclude(eol_date__lte=at) includes releases where eol_date IS NULL
         # because a version without an end of life date is still supported.
         return (
-            self.filter(major__gte=1, date__lte=at)
+            self.filter(major__gte=1, date__lte=at, is_active=True)
             .exclude(eol_date__lte=at)
             .order_by("-major", "-minor", "-micro", "-status")
         )
@@ -56,7 +63,7 @@ class ReleaseManager(models.Manager):
         """
         List of supported final releases.
         """
-        return self.active(at).filter(status="f")
+        return self.published(at).filter(status="f")
 
     def unsupported(self, at=None):
         """
@@ -115,7 +122,7 @@ class ReleaseManager(models.Manager):
         """
         Preview release or None if there isn't a preview release currently.
         """
-        return self.active(at).exclude(status="f").first()
+        return self.published(at).exclude(status="f").first()
 
     def current_version(self):
         current_version = cache.get(Release.DEFAULT_CACHE_KEY, None)
@@ -131,6 +138,26 @@ class ReleaseManager(models.Manager):
                 settings.CACHE_MIDDLEWARE_SECONDS,
             )
         return current_version
+
+
+def get_storage():
+    """
+    Return a FileSystemStorage that allows file name overwrites.
+
+    The actual file name of release artifacts (tarball, wheel, ...) should not
+    be modified on upload (i.e. no prefix should be added).
+    """
+    return FileSystemStorage(allow_overwrite=True)
+
+
+def upload_to_artifact(release, filename):
+    major, minor = release.version_tuple[:2]
+    return f"releases/{major}.{minor}/{filename}"
+
+
+def upload_to_checksum(release, filename):
+    version = get_version(release.version_tuple)
+    return f"pgp/Django-{version}.checksum.txt"
 
 
 class Release(models.Model):
@@ -149,6 +176,14 @@ class Release(models.Model):
     }
 
     version = models.CharField(max_length=16, primary_key=True)
+    is_active = models.BooleanField(
+        help_text=(
+            "Set this release as active. A release is considered active only "
+            "if its date is today or in the past and this flag is enabled. "
+            "Enable this flag when the release is available on PyPI."
+        ),
+        default=False,
+    )
     date = models.DateField(
         "Release date",
         null=True,
@@ -172,8 +207,33 @@ class Release(models.Model):
     micro = models.PositiveSmallIntegerField(editable=False)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, editable=False)
     iteration = models.PositiveSmallIntegerField(editable=False)
-
-    is_lts = models.BooleanField("Long term support release", default=False)
+    is_lts = models.BooleanField(
+        "Long Term Support",
+        help_text=(
+            'Is this a release for an <abbr title="Long Term Support">LTS</abbr> Django '
+            "version (e.g. 5.2a1, 5.2, 5.2.4)?"
+        ),
+        default=False,
+    )
+    # Artifacts.
+    tarball = models.FileField(
+        "Tarball artifact as a .tar.gz file",
+        storage=get_storage,
+        upload_to=upload_to_artifact,
+        blank=True,
+    )
+    wheel = models.FileField(
+        "Wheel artifact as a .whl file",
+        storage=get_storage,
+        upload_to=upload_to_artifact,
+        blank=True,
+    )
+    checksum = models.FileField(
+        "Signed checksum as a .asc file",
+        storage=get_storage,
+        upload_to=upload_to_checksum,
+        blank=True,
+    )
 
     objects = ReleaseManager()
 
@@ -182,18 +242,19 @@ class Release(models.Model):
         self.status = self.STATUS_REVERSE[status]
         cache.delete(self.DEFAULT_CACHE_KEY)
         super().save(*args, **kwargs)
-        # Each micro release EOLs the previous one in the same series.
-        if self.status == "f" and self.micro > 0:
-            (
-                type(self)
-                .objects.filter(
-                    major=self.major, minor=self.minor, micro=self.micro - 1, status="f"
-                )
-                .update(eol_date=self.date)
-            )
+        if self.is_active:
+            self.set_previous_release_as_eol()
 
     def __str__(self):
         return self.version
+
+    @property
+    def is_published(self):
+        return (
+            self.is_active
+            and self.date is not None
+            and self.date <= datetime.date.today()
+        )
 
     @cached_property
     def version_tuple(self):
@@ -212,109 +273,60 @@ class Release(models.Model):
             version.append(0)
         return tuple(version)
 
-    def get_redirect_url(self, kind):
-        directory = "%d.%d" % self.version_tuple[:2]
-        # Django gained PEP 386 numbering in 1.4b1.
-        if self.version_tuple >= (1, 4, 0, "beta", 0):
-            actual_version = get_version(self.version_tuple)
-        else:
-            actual_version = self.version
+    def clean(self):
+        if self.is_published and not self.tarball:
+            raise ValidationError(
+                {"tarball": "This field is required when the release is active."}
+            )
 
-        if kind == "tarball":
-            pattern = "%(media)sreleases/%(directory)s/Django-%(version)s.tar.gz"
+        if (self.tarball or self.wheel) and not self.checksum:
+            raise ValidationError(
+                {
+                    "checksum": (
+                        "This field is required when an artifact has been uploaded."
+                    )
+                }
+            )
 
-        elif kind == "checksum":
-            if self.version_tuple[:3] >= (1, 0, 4):
-                pattern = "%(media)spgp/Django-%(version)s.checksum.txt"
-            else:
-                raise ValueError("No checksum for this version")
-        else:
-            raise ValueError("Unknown file")
+        if self.tarball:
+            try:
+                self.validate_artifact_name(self.tarball.name, suffix=".tar.gz")
+            except ValidationError as e:
+                raise ValidationError({"tarball": e})
 
-        return pattern % {
-            "media": settings.MEDIA_URL,
-            "directory": directory,
-            "version": actual_version,
-            "major": self.version_tuple[0],
-            "minor": self.version_tuple[1],
+        if self.wheel:
+            try:
+                self.validate_artifact_name(self.wheel.name, suffix="-py3-none-any.whl")
+            except ValidationError as e:
+                raise ValidationError({"wheel": e})
+
+    def validate_artifact_name(self, name, suffix):
+        name = Path(name).name  # strip any folder name if present
+        version = get_version(self.version_tuple)
+        regex = f"^[Dd]jango-{re.escape(version)}{re.escape(suffix)}$"
+        message = f"Filename {name} does not match pattern {regex}."
+        return RegexValidator(regex, message=message, code="invalid_name")(name)
+
+    def set_previous_release_as_eol(self):
+        """Handles setting EOL date for the previous release in the series."""
+        previous_release_kwargs = {
+            "major": self.major,
+            "minor": self.minor,
+            "micro": self.micro,
+            "status": self.status,
+            "eol_date__isnull": True,
         }
+        if self.iteration > 1:
+            previous_release_kwargs["iteration"] = self.iteration - 1
+        elif self.status == "b":
+            previous_release_kwargs["status"] = "a"
+        elif self.status == "c":
+            previous_release_kwargs["status"] = "b"
+        elif self.status == "f" and self.micro == 0:
+            previous_release_kwargs["status"] = "c"
+        elif self.status == "f" and self.micro > 0:
+            previous_release_kwargs["micro"] = self.micro - 1
 
-
-def create_releases_up_to_1_5():
-    if Release.objects.exists():
-        raise Exception("Releases already exist, aborting.")
-    versions = [  # extracted from the redirects table
-        "0.90",
-        "0.91",
-        "0.91.1",
-        "0.91.2",
-        "0.91.3",
-        "0.95",
-        "0.95.1",
-        "0.95.2",
-        "0.95.3",
-        "0.95.4",
-        "0.96",
-        "0.96.1",
-        "0.96.2",
-        "0.96.3",
-        "0.96.4",
-        "0.96.5",
-        "1.0-alpha",
-        "1.0-alpha-2",
-        "1.0-beta-1",
-        "1.0-beta-2",
-        "1.0-rc_1",
-        "1.0",
-        "1.0.1-beta-1",
-        "1.0.1",
-        "1.0.2",
-        "1.0.3",
-        "1.0.4",
-        "1.1-rc-1",
-        "1.1.1",
-        "1.1.2",
-        "1.1.3",
-        "1.1.4",
-        "1.1",
-        "1.2-alpha-1",
-        "1.2-beta-1",
-        "1.2-rc-1",
-        "1.2",
-        "1.2.1",
-        "1.2.2",
-        "1.2.3",
-        "1.2.4",
-        "1.2.5",
-        "1.2.6",
-        "1.2.7",
-        "1.3-alpha-1",
-        "1.3-beta-1",
-        "1.3-rc-1",
-        "1.3",
-        "1.3.1",
-        "1.3.2",
-        "1.3.3",
-        "1.3.4",
-        "1.3.5",
-        "1.3.6",
-        "1.3.7",
-        "1.4-alpha-1",
-        "1.4-beta-1",
-        "1.4-rc-1",
-        "1.4-rc-2",
-        "1.4",
-        "1.4.1",
-        "1.4.2",
-        "1.4.3",
-        "1.4.4",
-        "1.4.5",
-        "1.5a1",
-        "1.5b1",
-        "1.5b2",
-        "1.5c1",
-        "1.5c2",
-        "1.5",
-    ]
-    for version in versions:
-        Release.objects.create(version=version)
+        self.__class__.objects.filter(**previous_release_kwargs).update(
+            eol_date=self.date
+        )

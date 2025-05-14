@@ -15,11 +15,7 @@ RUN apt-get update \
         git \
         libpq5 \
         make \
-        netcat-openbsd \
-        npm \
-        postgresql-client-15 \
         rsync \
-        zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
 ARG REQ_FILE=requirements/prod.txt
@@ -35,15 +31,12 @@ RUN apt-get update \
         zlib1g-dev \
     && python3 -m pip install --no-cache-dir -r ${REQ_FILE} \
     && apt-get purge --assume-yes --auto-remove \
+        g++ \
         gcc \
         libc6-dev \
         libpq-dev \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
-
-# install node dependencies
-COPY ./package.json ./package.json
-RUN npm install
 
 # copy project
 COPY . .

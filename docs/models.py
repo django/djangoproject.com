@@ -2,7 +2,7 @@ import datetime
 import html
 import json
 import operator
-from functools import reduce
+from functools import partial, reduce
 from pathlib import Path
 
 from django.conf import settings
@@ -16,7 +16,7 @@ from django.contrib.postgres.search import (
 )
 from django.core.cache import cache
 from django.db import models, transaction
-from django.db.models import Prefetch, Q
+from django.db.models import Q
 from django.db.models.fields.json import KeyTextTransform
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
@@ -28,11 +28,13 @@ from . import utils
 from .search import (
     DEFAULT_TEXT_SEARCH_CONFIG,
     DOCUMENT_SEARCH_VECTOR,
+    START_SEL,
+    STOP_SEL,
     TSEARCH_CONFIG_LANGUAGES,
 )
 
 
-class DocumentReleaseManager(models.Manager):
+class DocumentReleaseQuerySet(models.QuerySet):
     def current(self, lang="en"):
         current = self.get(is_default=True)
         if lang != "en":
@@ -56,10 +58,20 @@ class DocumentReleaseManager(models.Manager):
             )
         return current_version
 
-    def by_version(self, version):
-        return self.filter(
-            **{"release__isnull": True} if version == "dev" else {"release": version}
+    def _by_version_Q(self, version):
+        return (
+            models.Q(release__isnull=True)
+            if version == "dev"
+            else models.Q(release=version)
         )
+
+    def by_version(self, version):
+        return self.filter(self._by_version_Q(version))
+
+    def by_versions(self, *versions):
+        if not versions:
+            raise ValueError("by_versions() takes at least one argument")
+        return self.filter(reduce(operator.or_, map(self._by_version_Q, versions)))
 
     def get_by_version_and_lang(self, version, lang):
         return self.by_version(version).get(lang=lang)
@@ -84,7 +96,7 @@ class DocumentRelease(models.Model):
     )
     is_default = models.BooleanField(default=False)
 
-    objects = DocumentReleaseManager()
+    objects = DocumentReleaseQuerySet.as_manager()
 
     class Meta:
         unique_together = ("lang", "release")
@@ -242,7 +254,7 @@ class DocumentQuerySet(models.QuerySet):
         else:
             return self.none()
 
-    def search(self, query_text, release):
+    def search(self, query_text, release, document_category=None):
         """Use full-text search to return documents matching query_text."""
         query_text = query_text.strip()
         if query_text:
@@ -250,43 +262,55 @@ class DocumentQuerySet(models.QuerySet):
                 query_text, config=models.F("config"), search_type="websearch"
             )
             search_rank = SearchRank(models.F("search"), search_query)
-            similarity = TrigramSimilarity("title", query_text)
-            return (
-                self.prefetch_related(
-                    Prefetch(
-                        "release",
-                        queryset=DocumentRelease.objects.only("lang", "release"),
-                    ),
-                    Prefetch(
-                        "release__release", queryset=Release.objects.only("version")
-                    ),
-                )
-                .filter(
-                    release_id=release.id,
-                    search=search_query,
-                )
+            search = partial(
+                SearchHeadline,
+                start_sel=START_SEL,
+                stop_sel=STOP_SEL,
+                config=models.F("config"),
+            )
+            base_filter = Q(release_id=release.id)
+            if document_category:
+                base_filter &= Q(metadata__parents__startswith=document_category)
+            base_qs = (
+                self.select_related("release__release")
+                .filter(base_filter)
                 .annotate(
-                    rank=search_rank + similarity,
-                    headline=SearchHeadline(
-                        "title",
-                        search_query,
-                        start_sel="<mark>",
-                        stop_sel="</mark>",
-                    ),
-                    highlight=SearchHeadline(
+                    headline=search("title", search_query),
+                    highlight=search(
                         KeyTextTransform("body", "metadata"),
                         search_query,
-                        start_sel="<mark>",
-                        stop_sel="</mark>",
+                    ),
+                    searched_python_objects=search(
+                        KeyTextTransform("python_objects_search", "metadata"),
+                        search_query,
+                        highlight_all=True,
                     ),
                     breadcrumbs=models.F("metadata__breadcrumbs"),
+                    python_objects=models.F("metadata__python_objects"),
                 )
-                .order_by("-rank")
                 .only(
                     "path",
-                    "release",
+                    "release__lang",
+                    "release__release__version",
                 )
             )
+            vector_qs = (
+                base_qs.alias(rank=search_rank)
+                .filter(search=search_query)
+                .order_by("-rank")
+            )
+            if not vector_qs:
+                return (
+                    base_qs.alias(
+                        similarity=TrigramSimilarity(
+                            "title", utils.sanitize_for_trigram(query_text)
+                        )
+                    )
+                    .filter(similarity__gt=0.3)
+                    .order_by("-similarity")
+                )
+            else:
+                return vector_qs
         else:
             return self.none()
 

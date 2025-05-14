@@ -1,11 +1,15 @@
-from datetime import timedelta
-from test.support import captured_stderr
+from contextlib import redirect_stderr
+from datetime import date, timedelta
+from io import StringIO
 
+import time_machine
+from django.contrib.auth.models import User
+from django.core.files.base import ContentFile
 from django.test import TestCase
 from django.urls import reverse
-from django.utils import timezone
+from django.utils import timezone, translation
 
-from .models import ContentFormat, Entry, Event
+from .models import ContentFormat, Entry, Event, ImageUpload
 from .sitemaps import WeblogSitemap
 
 
@@ -64,7 +68,7 @@ class EntryTestCase(DateTimeMixin, TestCase):
         """
         Make sure docutils' file inclusion directives are disabled by default.
         """
-        with captured_stderr() as self.docutils_stderr:
+        with redirect_stderr(StringIO()):
             entry = Entry.objects.create(
                 pub_date=self.now,
                 is_active=True,
@@ -122,6 +126,12 @@ class EntryTestCase(DateTimeMixin, TestCase):
             content_format=ContentFormat.MARKDOWN,
         )
         self.assertHTMLEqual(entry.body_html, '<h3 id="s-test">test</h3>')
+
+    def test_pub_date_localized(self):
+        entry = Entry(pub_date=date(2005, 7, 21))
+        self.assertEqual(entry.pub_date_localized, "July 21, 2005")
+        with translation.override("nn"):
+            self.assertEqual(entry.pub_date_localized, "21. juli 2005")
 
 
 class EventTestCase(DateTimeMixin, TestCase):
@@ -190,6 +200,38 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertQuerySetEqual(response.context["events"], [])
 
+    def test_no_unpublished_future_events(self):
+        """
+        Make sure there are no unpublished future events in the "upcoming events" sidebar
+        """
+        # We need a published entry on the index page so that it doesn't return a 404
+        Entry.objects.create(pub_date=self.yesterday, is_active=True, slug="a")
+        Event.objects.create(
+            date=self.tomorrow,
+            pub_date=self.yesterday,
+            is_active=False,
+            headline="inactive",
+        )
+        Event.objects.create(
+            date=self.tomorrow,
+            pub_date=self.tomorrow,
+            is_active=True,
+            headline="future publish date",
+        )
+
+        for user in [
+            None,
+            User.objects.create(username="non-staff", is_staff=False),
+            User.objects.create(username="staff", is_staff=True),
+            User.objects.create_superuser(username="superuser"),
+        ]:
+            if user:
+                self.client.force_login(user)
+            response = self.client.get(reverse("weblog:index"))
+            with self.subTest(user=user):
+                self.assertEqual(response.status_code, 200)
+                self.assertQuerySetEqual(response.context["events"], [])
+
 
 class SitemapTests(DateTimeMixin, TestCase):
     def test_sitemap(self):
@@ -201,3 +243,57 @@ class SitemapTests(DateTimeMixin, TestCase):
         self.assertEqual(len(urls), 1)
         url_info = urls[0]
         self.assertEqual(url_info["location"], entry.get_absolute_url())
+
+
+class ImageUploadTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_superuser("test")
+
+    def setUp(self):
+        super().setUp()
+        self.client.force_login(self.user)
+
+    def test_uploaded_by(self):
+        # Can't test the ModelForm directly because the logic in
+        # ModelAdmin.save_model()
+        data = {
+            "title": "test",
+            "alt_text": "test",
+            "image": ContentFile(b".", name="test.png"),
+        }
+        response = self.client.post(
+            reverse("admin:blog_imageupload_add"),
+            data=data,
+        )
+        self.assertEqual(response.status_code, 302)
+        upload = ImageUpload.objects.get()
+        self.assertEqual(upload.uploaded_by, self.user)
+
+    def test_contentformat_image_tags(self):
+        for cf, expected in [
+            (ContentFormat.REST, ".. image:: /test/image.png\n   :alt: TEST"),
+            (ContentFormat.HTML, '<img src="/test/image.png" alt="TEST">'),
+            (ContentFormat.MARKDOWN, "![TEST](/test/image.png)"),
+        ]:
+            with self.subTest(contentformat=cf):
+                self.assertEqual(
+                    cf.img(url="/test/image.png", alt_text="TEST"),
+                    expected,
+                )
+
+    @time_machine.travel("2005-07-21")
+    def test_full_url(self):
+        i = ImageUpload.objects.create(
+            title="test",
+            alt_text="test",
+            image=ContentFile(b".", name="test.png"),
+        )
+        # Because the storage is persistent between test runs, running this
+        # test twice will trigger a filename clash and the storage will append
+        # a random suffix to the filename, hence the use of assertRegex here.
+        self.assertRegex(
+            i.full_url,
+            r"http://www\.djangoproject\.localhost:8000"
+            r"/m/blog/images/2005/07/test(_\w+)?\.png",
+        )

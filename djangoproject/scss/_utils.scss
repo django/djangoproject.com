@@ -39,28 +39,57 @@ $red-dark: #6A0E0E;
 $red-dark-l10: lighten($red-dark, 10);
 $black: #0e1117;
 $black-light-5: lighten($black, 5);
-$font-path: "../fonts/fira-mono";
+$font-path: "../font";
 $logo-bg-dark: #272c27;
 
 
 // @font-face declarations
 
 @font-face {
+    font-family: 'Roboto';
+    src: url('#{$font-path}/Roboto-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('#{$font-path}/Roboto-Italic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('#{$font-path}/Roboto-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('#{$font-path}/Roboto-BoldItalic.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('#{$font-path}/Roboto-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'Fira Mono';
-    src: url('#{$font-path}/FiraMono-Regular.eot');
-    src: url('#{$font-path}/FiraMono-Regular.eot') format('embedded-opentype'),
-    url('#{$font-path}/FiraMono-Regular.woff') format('woff'),
-    url('#{$font-path}/FiraMono-Regular.ttf') format('truetype');
+    src: url('#{$font-path}/FiraMono-Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Fira Mono';
-    src: url('#{$font-path}/FiraMono-Bold.eot');
-    src: url('#{$font-path}/FiraMono-Bold.eot') format('embedded-opentype'),
-    url('#{$font-path}/FiraMono-Bold.woff') format('woff'),
-    url('#{$font-path}/FiraMono-Bold.ttf') format('truetype');
+    src: url('#{$font-path}/FiraMono-Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
 }
@@ -80,15 +109,6 @@ $logo-bg-dark: #272c27;
 
 @mixin device-min($width) {
     @media screen and (min-device-width: $width) {
-        @content;
-    }
-}
-
-// Retina media query mixin
-@mixin retina-display {
-
-    @media only screen and (-webkit-min-device-pixel-ratio: 2),
-    (min-resolution: 192dpi) {
         @content;
     }
 }
@@ -144,14 +164,6 @@ html {
     }
 }
 
-@mixin svg-image ($name ) {
-    background-image: url('../img/' +$name+'.png');
-
-    .mdzr-svg & {
-        background-image: url('../img/' +$name+'.svg');
-    }
-}
-
 // Green Link Mixin
 @mixin link-green {
     color: var(--link-color);
@@ -168,19 +180,6 @@ html {
         text-decoration: none;
     }
 
-}
-
-// Secondary content box-shadow:
-@mixin secondary-shadow-top {
-    -moz-box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
-    -webkit-box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
-    box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
-}
-
-@mixin secondary-shadow-bottom {
-    -moz-box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
-    -webkit-box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
-    box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
 }
 
 @mixin framed-image {

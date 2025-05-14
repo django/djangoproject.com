@@ -3,6 +3,7 @@ from operator import attrgetter
 
 import time_machine
 from django.test import SimpleTestCase, TestCase
+from django.urls import reverse
 
 from .models import (
     Attachment,
@@ -29,7 +30,7 @@ class TestModels(TestCase):
 
 
 class TicketTestCase(TracDBCreateDatabaseMixin, TestCase):
-    databases = {"trac"}
+    databases = {"default", "trac"}
 
     def _create_ticket(self, custom=None, **kwargs):
         """
@@ -88,7 +89,7 @@ class TicketTestCase(TracDBCreateDatabaseMixin, TestCase):
 
         self.assertTicketsEqual(
             Ticket.objects.with_custom().filter(custom__x="A"),
-            [("test")],
+            ["test"],
         )
 
     def test_with_custom_lookup_multiple(self):
@@ -98,7 +99,7 @@ class TicketTestCase(TracDBCreateDatabaseMixin, TestCase):
 
         self.assertTicketsEqual(
             Ticket.objects.with_custom().filter(custom__x="A", custom__y="A"),
-            [("test1")],
+            ["test1"],
         )
 
     def test_from_querystring_model_field(self):
@@ -223,6 +224,59 @@ class TicketTestCase(TracDBCreateDatabaseMixin, TestCase):
     def test_from_querystring_invalid_time(self):
         with self.assertRaises(ValueError):
             Ticket.objects.from_querystring("time=2024-10-24..")
+
+    def test_api_ticket_404(self):
+        no_ticket_url = reverse("api_ticket", args=[30000])
+        response = self.client.get(no_ticket_url)
+        self.assertEqual(response.status_code, 404)
+
+    def test_api_ticket_405(self):
+        ticket = self._create_ticket(summary="test")
+        ticket_url = reverse("api_ticket", args=[ticket.id])
+        post_response = self.client.post(ticket_url, {})
+        delete_response = self.client.delete(ticket_url)
+        self.assertEqual(post_response.status_code, 405)
+        self.assertEqual(delete_response.status_code, 405)
+
+    def test_api_ticket_200(self):
+        ticket = self._create_ticket(
+            reporter="reporter@email.com",
+            type="Bug",
+            summary="test summary",
+            description="test description",
+            severity="Normal",
+            resolution="fixed",
+            status="assigned",
+            custom={
+                "stage": "Accepted",
+                "has_patch": "1",
+                "needs_better_patch": "0",
+                "needs_tests": "0",
+            },
+        )
+
+        with self.assertNumQueries(1, using="trac"):
+            response = self.client.get(reverse("api_ticket", args=[ticket.id]))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(
+            response.content,
+            {
+                "id": ticket.id,
+                "type": "Bug",
+                "summary": "test summary",
+                "description": "test description",
+                "severity": "Normal",
+                "status": "assigned",
+                "resolution": "fixed",
+                "custom": {
+                    "stage": "Accepted",
+                    "has_patch": "1",
+                    "needs_better_patch": "0",
+                    "needs_tests": "0",
+                },
+            },
+        )
 
 
 class TracTimeTestCase(SimpleTestCase):

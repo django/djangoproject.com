@@ -1,6 +1,9 @@
 from django import db
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
+from django.views.decorators.http import require_http_methods
 
+from .models import Ticket
 from .tractime import timestamp_to_datetime
 
 
@@ -29,3 +32,19 @@ def bouncing_tickets(request):
 def dictfetchall(cursor):
     desc = cursor.description
     return [dict(zip([col[0] for col in desc], row)) for row in cursor.fetchall()]
+
+
+@require_http_methods(["GET"])
+def api_ticket(request, ticket_id):
+    ticket_qs = Ticket.objects.with_custom().values(
+        "id",
+        "type",
+        "summary",
+        "description",
+        "severity",
+        "status",
+        "resolution",
+        "custom",
+    )
+    ticket = get_object_or_404(ticket_qs, id=ticket_id)
+    return JsonResponse(ticket)

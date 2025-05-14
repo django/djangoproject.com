@@ -3,9 +3,7 @@
 {% block title %}Django Web Styleguide{% endblock %}
 {% block body_class %}styleguide{% endblock %}
 
-{% block header %}
-  <h1>Style Guide</h1>
-{% endblock %}
+{% block header %}<p>Style Guide</p>{% endblock %}
 
 {% block content %}
 
@@ -110,7 +108,7 @@
     </p>
 
     <p>
-      For documentation styles, the monospace font is <em><a href="https://fonts.google.com/specimen/Inconsolata">Inconsolata</a></em>. <em>Normal (400)</em> and <em>Bold (700)</em> weights are available.
+      For documentation styles, the monospace font is <em><a href="https://fonts.google.com/specimen/Fira+Mono">Fira Mono</a></em>. <em>Normal (400)</em> and <em>Bold (700)</em> weights are available.
     </p>
 
     <h3 id="typography-maincontent">Main content</h3>
@@ -161,7 +159,7 @@
 
   <div class="section" id="icons">
     <h2>Icons</h2>
-    <p><em>Djangoproject.com</em> makes use of <a href="http://fontawesome.io"><em>Font Awesome</em></a> for any icons throughout the interface. This all-inclusive webfont icon set eliminates the need to design icons for specific purposes, and keeps the icon language consistent throughout.</p>
+    <p><em>Djangoproject.com</em> makes use of <a href="https://fontawesome.com/"><em>Font Awesome</em></a> for any icons throughout the interface. This all-inclusive webfont icon set eliminates the need to design icons for specific purposes, and keeps the icon language consistent throughout.</p>
 
     <div class="example">
       <big>
@@ -413,9 +411,8 @@
 {% endblock %}
 
 {% block content-related %} {# Always include <h1> label and <div> with aria role. #}
-  <h1 class="visuallyhidden">Additional Information</h1>
   <div role="complementary">
-    <h2>Contents</h2>
+    <h2 id="aside-header">Contents</h2>
     <ul class="list-outline">
       <li><a class="reference internal" href="#">Django Web Style Guide</a>
         <ul>

@@ -1,11 +1,20 @@
-{% load static thumbnail %}
+{% load i18n static thumbnail %}
 <div class="hero">
   <div class="hero-logo">
     {% if obj.url %}<a href="{{ obj.url }}" rel="nofollow">{% endif %}
-    <img src="{% static 'img/fundraising-heart.svg' %}"
-         data-src="{% if obj.logo %}{{ obj.thumbnail.url }}{% else %}{% static 'img/fundraising-heart.svg' %}{% endif %}"
-         data-src-retina="{% if obj.logo %}{{ obj.thumbnail.url|resolution:'2x' }}{% else %}{% static 'img/fundraising-heart.svg' %}{% endif %}"
-         alt="{{ obj.display_name }}" />
+    {% if obj.logo %}
+      <img
+        src="{{ obj.thumbnail.url }}"
+        srcset="{{ obj.thumbnail.url|resolution:'2x' }} 2x"
+        width="{{ obj.thumbnail.width }}"
+        height="{{ obj.thumbnail.height }}"
+        loading="lazy"
+        alt="{% blocktranslate trimmed with company_name=obj.display_name %}
+               Logo of company {{ company_name }}{% endblocktranslate %}"
+      >
+    {% else %}
+      <img src="{% static 'img/fundraising-heart.svg' %}" alt="{% translate 'Pixelated heart logo' %}">
+    {% endif %}
     {% if obj.url %}</a>{% endif %}
   </div>
   <div class="hero-name">

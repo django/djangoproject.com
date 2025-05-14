@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
     web:
         build:
@@ -24,10 +22,16 @@ services:
             - SQL_HOST=db
             - SQL_PORT=5432
         depends_on:
-            - db
+            db:
+                condition: service_healthy
     db:
-        image: postgres:14-alpine
+        image: postgres:14-bookworm
         environment:
             - POSTGRES_USER=djangoproject
             - POSTGRES_PASSWORD=secret
             - POSTGRES_DB=djangoproject
+        healthcheck:
+            test: ["CMD", "pg_isready", "--host", "db", "--port", "5432"]
+            interval: 1s
+            timeout: 10s
+            retries: 10

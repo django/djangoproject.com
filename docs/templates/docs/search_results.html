@@ -1,7 +1,7 @@
 {% extends "docs/doc.html" %}
 {% load i18n docs %}
 
-{% block title %}{% trans "Search | Django documentation" %}{% endblock %}
+{% block title %}{% translate "Search | Django documentation" %}{% endblock %}
 
 {% block toc-wrapper %}{% endblock %}
 {% block breadcrumbs-wrapper %}{% endblock %}
@@ -11,23 +11,30 @@
 
 {% block body %}
   {% if query %}
+    <search class="filters">
+      <span id="search-filters" class="visually-hidden">{% translate "Filter the current search results by documentation category" %}</span>
+      <a{% if not active_category %} aria-current="page"{% else %} href="{% querystring category=None page=None %}"{% endif %}>{% translate "All" context "all documentation categories" %}</a>
+      {% for category in DocumentationCategory %}
+        <a{% if active_category == category %} aria-current="page"{% else %} href="{% querystring category=category.value page=None %}"{% endif %}>{{ category.label }}</a>
+      {% endfor %}
+    </search>
     <h2>
       {% if release.is_dev %}
-        {% blocktrans count num_results=paginator.count trimmed %}
+        {% blocktranslate count num_results=paginator.count trimmed %}
           Only 1 result for <em>{{ query }}</em> in the development version
         {% plural %}
           {{ num_results }} results for <em>{{ query }}</em> in the development version
-        {% endblocktrans %}
+        {% endblocktranslate %}
       {% else %}
-        {% blocktrans count num_results=paginator.count trimmed %}
+        {% blocktranslate count num_results=paginator.count trimmed %}
           Only 1 result for <em>{{ query }}</em> in version {{ version }}
         {% plural %}
           {{ num_results }} results for <em>{{ query }}</em> in version {{ version }}
-        {% endblocktrans %}
+        {% endblocktranslate %}
       {% endif %}
     </h2>
   {% else %}
-    <h2>{% trans "No search query given" %}</h2>
+    <h2>{% translate "No search query given" %}</h2>
   {% endif %}
 
   {% if query %}
@@ -36,7 +43,7 @@
         {% for result in page.object_list %}
           <dt>
             <h2 class="result-title">
-              <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}">{{ result.headline|safe }}</a>
+              <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}{% if not start_sel in result.headline %}{{ result.highlight|fragment }}{% endif %}">{{ result.headline|safe }}</a>
             </h2>
             <span class="meta breadcrumbs">
               {% for breadcrumb in result.breadcrumbs %}
@@ -48,7 +55,31 @@
             {% if result.highlight %}
               …&nbsp;{{ result.highlight|cut:"¶"|safe }}&nbsp;…
             {% endif %}
+            {% code_links result.searched_python_objects result.python_objects as result_code_links %}
+            {% if result_code_links %}
+              <ul class="code-links">
+                {% for name, value in result_code_links.items %}
+                  <li>
+                    <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}#{{ value.full_path }}">
+                      <div>
+                        <code>{{ name }}</code>
+                        {% if value.module_path %}<div class="meta">{{ value.module_path }}</div>{% endif %}
+                      </div>
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
           </dd>
+        {% empty %}
+          {% if active_category %}
+            <dt>
+              <p>
+                {% querystring category=None page=None as all_search %}
+                {% blocktranslate trimmed %}Please try searching <a href="{{ all_search }}">all documentation results</a>.{% endblocktranslate %}
+              </p>
+            </dt>
+          {% endif %}
         {% endfor %}
       </dl>
     </div>
@@ -57,20 +88,20 @@
       <div class="pagination">
         <ul class="nav-pagination" role="navigation">
           {% if page.has_previous %}
-            <li><a rel="prev" class="previous" href="?q={{ query }}&amp;release={{ release.version }}&amp;page={{ page.previous_page_number }}">
+            <li><a rel="prev" class="previous" href="{% querystring page=page.previous_page_number %}">
               <i class="icon icon-chevron-left"></i>
-              <span class="visuallyhidden">{% trans "Previous" %}</span>
+              <span class="visuallyhidden">{% translate "Previous" context "pagination" %}</span>
             </a></li>
           {% endif %}
           <span class="page-current">
-            {% blocktrans with page_number=page.number num_pages=page.paginator.num_pages trimmed %}
+            {% blocktranslate with page_number=page.number num_pages=page.paginator.num_pages trimmed %}
               Page {{ page_number }} of {{ num_pages }}
-            {% endblocktrans %}
+            {% endblocktranslate %}
           </span>
           {% if page.has_next %}
-            <li><a rel="next" class="next" href="?q={{ query }}&amp;release={{ release.version }}&amp;page={{ page.next_page_number }}">
+            <li><a rel="next" class="next" href="{% querystring page=page.next_page_number %}">
               <i class="icon icon-chevron-right"></i>
-              <span class="visuallyhidden">{% trans "Next" %}</span>
+              <span class="visuallyhidden">{% translate "Next" context "pagination" %}</span>
             </a></li>
           {% endif %}
         </ul>

@@ -10,12 +10,12 @@ from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
 from django.template.response import TemplateResponse
 from django.utils.translation import activate, gettext_lazy as _
-from django.views import static
 from django.views.decorators.cache import cache_page
 from django_hosts.resolvers import reverse
 
 from .forms import DocSearchForm
 from .models import Document, DocumentRelease
+from .search import START_SEL, DocumentationCategory
 from .utils import get_doc_path_or_404, get_doc_root_or_404
 
 SIMPLE_SEARCH_OPERATORS = ["+", "|", "-", '"', "*", "(", ")", "~"]
@@ -110,30 +110,6 @@ if not settings.DEBUG:
     )
 
 
-def pot_file(request, pot_name):
-    version = DocumentRelease.objects.current().version
-    doc_root = str(get_doc_root_or_404("en", version, subroot="gettext"))
-    return static.serve(request, document_root=doc_root, path=pot_name)
-
-
-def sphinx_static(request, lang, version, path, subpath=None):
-    """
-    Serve Sphinx static assets from a subdir of the build location.
-    """
-    document_root = str(get_doc_root_or_404(lang, version).joinpath(subpath))
-    return static.serve(request, document_root=document_root, path=path)
-
-
-def objects_inventory(request, lang, version):
-    response = static.serve(
-        request,
-        document_root=str(get_doc_root_or_404(lang, version)),
-        path="objects.inv",
-    )
-    response["Content-Type"] = "text/plain"
-    return response
-
-
 def redirect_index(request, *args, **kwargs):
     assert request.path.endswith("index/")
     return redirect(request.path[:-6])
@@ -187,7 +163,10 @@ def search_results(request, lang, version, per_page=10, orphans=3):
             if exact is not None:
                 return redirect(exact)
 
-            results = Document.objects.search(q, release)
+            doc_category = DocumentationCategory.parse(request.GET.get("category"))
+            results = Document.objects.search(
+                q, release, document_category=doc_category
+            )
 
             page_number = request.GET.get("page") or 1
             paginator = Paginator(results, per_page=per_page, orphans=orphans)
@@ -215,6 +194,9 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                     "query": q,
                     "page": page,
                     "paginator": paginator,
+                    "start_sel": START_SEL,
+                    "active_category": doc_category,
+                    "DocumentationCategory": DocumentationCategory,
                 }
             )
 

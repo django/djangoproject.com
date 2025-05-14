@@ -1,5 +1,4 @@
 import decimal
-import json
 import logging
 
 import stripe
@@ -157,10 +156,10 @@ def manage_donations(request, hero):
 def update_card(request):
     donation = get_object_or_404(Donation, id=request.POST["donation_id"])
     try:
-        customer = stripe.Customer.retrieve(donation.stripe_customer_id)
-        subscription = customer.subscriptions.retrieve(donation.stripe_subscription_id)
-        subscription.source = request.POST["stripe_token"]
-        subscription.save()
+        stripe.Customer.modify(
+            donation.stripe_customer_id,
+            source=request.POST["stripe_token"],
+        )
     except stripe.error.StripeError as e:
         data = {"success": False, "error": str(e)}
     else:
@@ -175,7 +174,9 @@ def cancel_donation(request, hero):
     donations = hero.donation_set.exclude(stripe_subscription_id="")
     donation = get_object_or_404(donations, pk=donation_id)
 
-    customer = stripe.Customer.retrieve(donation.stripe_customer_id)
+    customer = stripe.Customer.retrieve(
+        donation.stripe_customer_id, expand=["subscriptions"]
+    )
     customer.subscriptions.retrieve(donation.stripe_subscription_id).delete()
 
     donation.stripe_subscription_id = ""
@@ -189,16 +190,13 @@ def cancel_donation(request, hero):
 @csrf_exempt
 def receive_webhook(request):
     try:
-        data = json.loads(request.body.decode())
-    except ValueError:
-        return HttpResponse(422)
-
-    # For security, re-request the event object from Stripe.
-    # TODO: Verify shared secret here?
-    try:
-        event = stripe.Event.retrieve(data["id"])
-    except stripe.error.InvalidRequestError:
-        return HttpResponse(422)
+        event = stripe.Webhook.construct_event(
+            request.body,
+            request.headers["stripe-signature"],
+            settings.STRIPE_ENDPOINT_SECRET,
+        )
+    except (KeyError, ValueError, stripe.error.SignatureVerificationError):
+        return HttpResponse(status=422)
 
     return WebhookHandler(event).handle()
 
@@ -214,7 +212,7 @@ class WebhookHandler:
             "customer.subscription.deleted": self.subscription_cancelled,
             "checkout.session.completed": self.checkout_session_completed,
         }
-        handler = handlers.get(self.event.type, lambda: HttpResponse(422))
+        handler = handlers.get(self.event.type, lambda: HttpResponse(status=422))
         if not self.event.data.object:
             return HttpResponse(status=422)
         return handler()
@@ -320,10 +318,9 @@ class WebhookHandler:
         )
         if interval == "onetime":
             payment_intent = stripe.PaymentIntent.retrieve(session.payment_intent)
-            charge = payment_intent.charges.data[0]
             donation.payment_set.create(
                 amount=dollar_amount,
-                stripe_charge_id=charge.id,
+                stripe_charge_id=payment_intent.latest_charge,
             )
 
         # Send an email message about managing your donation

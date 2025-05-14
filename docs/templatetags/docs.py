@@ -1,4 +1,8 @@
+import re
+from urllib.parse import quote
+
 from django import template
+from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.utils.version import get_version_tuple
 from pygments import highlight
@@ -7,7 +11,8 @@ from pygments.lexers import get_lexer_by_name
 
 from ..forms import DocSearchForm
 from ..models import DocumentRelease
-from ..utils import get_doc_path, get_doc_root
+from ..search import START_SEL, STOP_SEL
+from ..utils import get_doc_path, get_doc_root, get_module_path
 
 register = template.Library()
 
@@ -81,3 +86,103 @@ def do_pygments(parser, token):
     nodelist = parser.parse(("endpygment",))
     parser.delete_first_token()
     return PygmentsNode(parser.compile_filter(tokens[1]), nodelist)
+
+
+@register.filter(name="fragment")
+@stringfilter
+def generate_scroll_to_text_fragment(highlighted_text):
+    """
+    Given the highlighted text generated from Document.objects.search()
+    constructs a scroll to text fragment.
+
+    This will not work when:
+    *  the highlighted test starts from a partial word, e.g it starts from
+       test_environment rather than DiscoverRunner.setup_test_environment().
+    *  it is trying to highlight a Python code snippet and the spacing logic
+       has fallen down e.g. test = 5 not test=5 but test(a=5) not test(a = 5).
+    """
+    first_non_empty_line = next(
+        (
+            stripped
+            for line in highlighted_text.split("\n")
+            if (stripped := line.strip())
+        ),
+        "",
+    )
+    # Remove highlight tags and unwanted symbols.
+    line_without_highlight = re.sub(
+        rf"{START_SEL}|{STOP_SEL}|¶", "", first_non_empty_line
+    )
+    line_without_highlight = line_without_highlight.replace("&quot;", '"')
+    # Remove excess spacing.
+    single_spaced = re.sub(r"\s+", " ", line_without_highlight).strip()
+    # Handle punctuation spacing.
+    single_spaced = re.sub(r"\s([.,;:!?)(\]\[])", r"\1", single_spaced)
+    # Due to Python code such as timezone.now(), remove the space after a bracket.
+    single_spaced = re.sub(r"([(\[])\s", r"\1", single_spaced)
+    return f"#:~:text={quote(single_spaced)}"
+
+
+@register.simple_tag
+def code_links(searched_python_objects, python_objects):
+    """
+    Processes a highlighted search result (from a `SearchHeadline` annotation)
+    to extract Python object references and map them to their full paths.
+
+    Args:
+        searched_python_objects (str):
+            A string from a `SearchHeadline` queryset annotation, containing
+            highlighted Python object names wrapped with `START_SEL` and `STOP_SEL`.
+            Example:
+                "QuerySet {START_SEL}select_related{STOP_SEL} prefetch_related"
+
+        python_objects (dict):
+            A dictionary mapping object short names to their full path. This is
+            generated from PythonObjectsJSONHTMLBuilder.
+            Example:
+                {
+                    "QuerySet": "django.db.models.query.QuerySet",
+                    "QuerySet.select_related": (
+                        "django.db.models.query.QuerySet.select_related"
+                    ),
+                    "QuerySet.prefetch_related": (
+                        "django.db.models.query.QuerySet.prefetch_related"
+                    ),
+                }
+
+    Returns:
+        dict: A sorted dictionary where:
+            - Keys are matched Python object short names.
+            - Values are dictionaries containing:
+                - `"full_path"` (str): The full path of the object.
+                - `"module_path"` (str): The module path derived from the object name.
+            Example:
+                {
+                    "QuerySet.select_related": {
+                        "full_path": "django.db.models.query.QuerySet.select_related",
+                        "module_path": "django.db.models.query",
+                    }
+                }
+    """
+    if not searched_python_objects or START_SEL not in searched_python_objects:
+        return {}
+    python_objects_matched_short_names = [
+        word.replace(START_SEL, "").replace(STOP_SEL, "")
+        for word in searched_python_objects.split(" ")
+        if START_SEL in word
+    ]
+    matched_reference = {}
+    # Map "select_related" to "QuerySet.select_related" in code_references.
+    reference_map = {key.split(".")[-1]: key for key in python_objects.keys()}
+    for short_name in python_objects_matched_short_names:
+        if full_path := python_objects.get(short_name):
+            matched_reference[short_name] = {
+                "full_path": full_path,
+                "module_path": get_module_path(short_name, full_path),
+            }
+        elif name := reference_map.get(short_name):
+            matched_reference[name] = {
+                "full_path": python_objects[name],
+                "module_path": get_module_path(name, python_objects[name]),
+            }
+    return dict(sorted(matched_reference.items()))

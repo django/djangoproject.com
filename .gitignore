@@ -14,10 +14,5 @@ locale/*/LC_MESSAGES/django.mo
 .envrc
 .tox
 djangoproject/cache
-djangoproject/static/js/lib/jquery-flot/examples
 djangoproject/static/css/*.map
 djangoproject/static/css/*.css
-djangoproject/static/js/lib/unveil/jquery-1.9.1.min.js
-djangoproject/static/js/lib/unveil/index.html
-djangoproject/static/js/lib/unveil/img
-node_modules/
