@@ -16,5 +16,3 @@ locale/*/LC_MESSAGES/django.mo
 djangoproject/cache
 djangoproject/static/css/*.map
 djangoproject/static/css/*.css
-venv/
-djangoproject_env/
