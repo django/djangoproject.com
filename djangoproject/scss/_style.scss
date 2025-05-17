@@ -12,6 +12,39 @@ CSS rendered with Libsass 0.7.0
 */
 
 //------------------- Globals
+/* Fallback for browsers that don't support :has() */
+html {
+    scroll-padding-top: 38px;
+}
+
+body {
+    /* Add a class to the body element when the warning is present */
+    &.has-doc-warning {
+        margin-top: 38px;
+    }
+}
+
+/* Modern browsers that support :has() */
+@supports selector(:has(a, b)) {
+    html {
+        scroll-padding-top: 0; /* Reset */
+
+        &:has(#dev-warning, #outdated-warning) {
+            scroll-padding-top: 38px;
+        }
+    }
+
+    body {
+        &.has-doc-warning {
+            margin-top: 0; /* Reset */
+        }
+
+        &:has(#dev-warning, #outdated-warning) {
+            margin-top: 38px;
+        }
+    }
+}
+
 body {
     @include serif;
     @include font-size(18);
@@ -2357,9 +2390,11 @@ h2+.list-link-soup {
 
 #dev-warning,
 #outdated-warning {
-    position: absolute;
+    position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
+    height: 38px;
     padding: 8px 20px 8px;
     box-sizing: border-box;
     background-image: linear-gradient(135deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
@@ -2368,10 +2403,14 @@ h2+.list-link-soup {
     text-align: center;
     background-color: $warning-bg;
     color: $text;
+    z-index: 1000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     @include respond-min(768px) {
-        position: fixed;
-        min-width: 768px;
+        white-space: normal;
+        overflow: visible;
     }
 }
 

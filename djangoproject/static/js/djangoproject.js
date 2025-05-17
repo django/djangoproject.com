@@ -151,37 +151,12 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
   });
 });
 
-// Compensate for floating warning element when scrolling to a URL hash in docs
+// Add a class to the body element when a warning is present
+// This is a fallback for browsers that don't support the :has() selector
 (function () {
-  const warning_el = document.querySelector('.doc-floating-warning');
-
-  if (!warning_el) {
-    return;
+  if (document.querySelector('#dev-warning, #outdated-warning')) {
+    document.body.classList.add('has-doc-warning');
   }
-
-  // This element will dynamically enforce the correct amount of top spacing
-  const warning_el_copy = warning_el.cloneNode(true);
-
-  warning_el_copy.style.position = 'relative';
-
-  document.body.prepend(warning_el_copy);
-
-  function scroll_to_hash(e) {
-    const target_el = document.querySelector(window.location.hash || null);
-
-    if (!target_el) {
-      return;
-    }
-
-    const y_position = target_el.getBoundingClientRect().top + window.scrollY;
-    const correction = -warning_el.offsetHeight - 4;
-
-    window.scrollTo(0, y_position + correction);
-  }
-
-  setTimeout(scroll_to_hash, 50);
-
-  window.addEventListener('hashchange', scroll_to_hash);
 })();
 
 // Update donate button text on fundraising page based on interval selection
