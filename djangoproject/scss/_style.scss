@@ -3631,3 +3631,19 @@ ul.corporate-members li {
         }
     }
 }
+
+// added for skip to main functionality
+.skip-link {
+    position: absolute;
+    top: -5em;
+    z-index: 1;
+    background: var(--body-bg);
+    color: var(--link-color);
+    border: 0.5em solid var(--primary);
+    padding: 0.5em 2em;
+    transition: top 0.5s ease-out;
+
+    &:focus {
+        top: 0;
+    }
+}
