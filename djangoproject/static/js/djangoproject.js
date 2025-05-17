@@ -95,7 +95,8 @@ window.addEventListener('keydown', function (e) {
   e.preventDefault();
 
   const el = document.querySelector('#id_q');
-  const warningBannerHeight = document.querySelector('.doc-floating-warning')?.offsetHeight || 0;
+  const warningBannerHeight =
+    document.querySelector('.doc-floating-warning')?.offsetHeight || 0;
   const searchFormInputTop = el.getBoundingClientRect().top + window.scrollY;
   const scrollToPosition = searchFormInputTop - warningBannerHeight;
 
@@ -103,7 +104,7 @@ window.addEventListener('keydown', function (e) {
   el.focus();
   window.scrollTo({
     top: scrollToPosition,
-    behavior: 'smooth'
+    behavior: 'smooth',
   });
 });
 
