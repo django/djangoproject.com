@@ -115,7 +115,7 @@ class MeetingTestCase(TestCase):
         self.assertContains(response, "Business item 3")
 
     def test_new_business_ordering(self):
-        """Test that new business items are ordered by created_on timestamp."""
+        """Test that new business items are ordered by created_at timestamp."""
         meeting = Meeting.objects.create(
             date=date(2023, 6, 15),
             title="DSF Board monthly meeting",
@@ -124,7 +124,7 @@ class MeetingTestCase(TestCase):
             treasurer_report="Treasurer Report",
         )
 
-        # Create business items with explicitly set created_on timestamps
+        # Create business items with explicitly set created_at timestamps
         # Item 3 is created first but should appear last due to ordering
         common_business_data = {
             "body": "Example",
@@ -137,17 +137,17 @@ class MeetingTestCase(TestCase):
         now = datetime.now()
         Business.objects.create(
             title="Business item 3",
-            created_on=now - timedelta(hours=2),
+            created_at=now - timedelta(hours=2),
             **common_business_data
         )
         Business.objects.create(
             title="Business item 1",
-            created_on=now - timedelta(hours=4),
+            created_at=now - timedelta(hours=4),
             **common_business_data
         )
         Business.objects.create(
             title="Business item 2",
-            created_on=now - timedelta(hours=3),
+            created_at=now - timedelta(hours=3),
             **common_business_data
         )
         response = self.client.get(
@@ -164,14 +164,14 @@ class MeetingTestCase(TestCase):
 
         self.assertContains(response, "DSF Board monthly meeting")
 
-        # Check that items appear in the correct order based on created_on
+        # Check that items appear in the correct order based on created_at
         content = response.content.decode()
         # Find positions of each business item in the response content
         pos1 = content.find("Business item 1")
         pos2 = content.find("Business item 2")
         pos3 = content.find("Business item 3")
 
-        # Verify that items appear in ascending order by created_on timestamp
+        # Verify that items appear in ascending order by created_at timestamp
         self.assertGreater(pos1, 0, "Business item 1 not found in response")
         self.assertGreater(pos2, 0, "Business item 2 not found in response")
         self.assertGreater(pos3, 0, "Business item 3 not found in response")
