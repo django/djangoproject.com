@@ -207,7 +207,7 @@ class Business(models.Model):
     meeting = models.ForeignKey(
         Meeting, related_name="business", on_delete=models.CASCADE
     )
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ("title",)
