@@ -297,3 +297,43 @@ class ImageUploadTestCase(TestCase):
             r"http://www\.djangoproject\.localhost:8000"
             r"/m/blog/images/2005/07/test(_\w+)?\.png",
         )
+
+    def test_alt_text_html_escape(self):
+        testdata = [
+            (ContentFormat.HTML, 'te"st', '<img src="." alt="te&quot;st">'),
+            (ContentFormat.HTML, "te<st>", '<img src="." alt="te&lt;st&gt;">'),
+            (ContentFormat.MARKDOWN, 'te"st', '<img src="." alt="te&quot;st">'),
+            (ContentFormat.MARKDOWN, "te[st]", '<img src="." alt="te[st]">'),
+            (ContentFormat.MARKDOWN, "te{st}", '<img src="." alt="te{st}">'),
+            (ContentFormat.MARKDOWN, "te<st>", '<img src="." alt="te&lt;st&gt;">'),
+            (ContentFormat.MARKDOWN, "test*", '<img src="." alt="test*">'),
+            (ContentFormat.MARKDOWN, "test_", '<img src="." alt="test_">'),
+            (ContentFormat.MARKDOWN, "test`", '<img src="." alt="test`">'),
+            (ContentFormat.MARKDOWN, "test+", '<img src="." alt="test+">'),
+            (ContentFormat.MARKDOWN, "test-", '<img src="." alt="test-">'),
+            (ContentFormat.MARKDOWN, "test.", '<img src="." alt="test.">'),
+            (ContentFormat.MARKDOWN, "test!", '<img src="." alt="test!">'),
+            (ContentFormat.MARKDOWN, "te\nst", '<img src="." alt="te\nst">'),
+            (ContentFormat.REST, 'te"st', '<img src="." alt="te&quot;st">'),
+            (ContentFormat.REST, "te[st]", '<img src="." alt="te[st]">'),
+            (ContentFormat.REST, "te{st}", '<img src="." alt="te{st}">'),
+            (ContentFormat.REST, "te<st>", '<img src="." alt="te&lt;st&gt;">'),
+            (ContentFormat.REST, "te:st", '<img src="." alt="te:st">'),
+            (ContentFormat.REST, "test*", '<img src="." alt="test*">'),
+            (ContentFormat.REST, "test_", '<img src="." alt="test_">'),
+            (ContentFormat.REST, "test`", '<img src="." alt="test`">'),
+            (ContentFormat.REST, "test+", '<img src="." alt="test+">'),
+            (ContentFormat.REST, "test-", '<img src="." alt="test-">'),
+            (ContentFormat.REST, "test.", '<img src="." alt="test.">'),
+            (ContentFormat.REST, "test!", '<img src="." alt="test!">'),
+        ]
+        for cf, alt_text, expected in testdata:
+            # RST doesn't like an empty src, so we use . instead
+            img_tag = cf.img(url=".", alt_text=alt_text)
+            if cf is ContentFormat.MARKDOWN:
+                expected = f"<p>{expected}</p>"
+            with self.subTest(cf=cf, alt_text=alt_text):
+                self.assertHTMLEqual(
+                    ContentFormat.to_html(cf, img_tag),
+                    expected,
+                )
