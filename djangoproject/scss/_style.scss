@@ -12,38 +12,15 @@ CSS rendered with Libsass 0.7.0
 */
 
 //------------------- Globals
-/* Fallback for browsers that don't support :has() */
+
 html {
-    scroll-padding-top: 38px;
+  scroll-padding-top: 38px;
 }
 
-body {
-    /* Add a class to the body element when the warning is present */
-    &.has-doc-warning {
-        margin-top: 38px;
-    }
+body.has-doc-warning {
+  margin-top: 38px;
 }
 
-/* Modern browsers that support :has() */
-@supports selector(:has(a, b)) {
-    html {
-        scroll-padding-top: 0; /* Reset */
-
-        &:has(#dev-warning, #outdated-warning) {
-            scroll-padding-top: 38px;
-        }
-    }
-
-    body {
-        &.has-doc-warning {
-            margin-top: 0; /* Reset */
-        }
-
-        &:has(#dev-warning, #outdated-warning) {
-            margin-top: 38px;
-        }
-    }
-}
 
 body {
     @include serif;

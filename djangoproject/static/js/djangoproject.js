@@ -153,11 +153,14 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
 
 // Add a class to the body element when a warning is present
 // This is a fallback for browsers that don't support the :has() selector
-(function () {
-  if (document.querySelector('#dev-warning, #outdated-warning')) {
+document.addEventListener('DOMContentLoaded', function () {
+  const warning = document.querySelector('#dev-warning, #outdated-warning');
+
+  if (warning) {
     document.body.classList.add('has-doc-warning');
   }
-})();
+});
+
 
 // Update donate button text on fundraising page based on interval selection
 (function () {
