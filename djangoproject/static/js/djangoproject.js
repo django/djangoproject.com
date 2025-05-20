@@ -161,7 +161,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-
 // Update donate button text on fundraising page based on interval selection
 (function () {
   const el = document.querySelector('#donate #id_interval');
