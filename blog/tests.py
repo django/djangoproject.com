@@ -326,7 +326,6 @@ class ImageUploadTestCase(TestCase):
             (ContentFormat.REST, "test-", '<img src="." alt="test-">'),
             (ContentFormat.REST, "test.", '<img src="." alt="test.">'),
             (ContentFormat.REST, "test!", '<img src="." alt="test!">'),
-            (ContentFormat.REST, "te\nst", '<img src="." alt="te st">'),
         ]
         for cf, alt_text, expected in testdata:
             # RST doesn't like an empty src, so we use . instead

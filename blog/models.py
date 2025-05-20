@@ -1,4 +1,3 @@
-import re
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -25,25 +24,10 @@ BLOG_DOCUTILS_SETTINGS = {
 }
 BLOG_DOCUTILS_SETTINGS.update(getattr(settings, "BLOG_DOCUTILS_SETTINGS", {}))
 
-# List copied from:
-# https://github.com/Python-Markdown/markdown/blob/3.8/markdown/core.py#L112
-_MD_ESCAPE_CHARS = "\\`*_{}[]>()#+-.!"
-_MD_ESCAPE_REGEX = re.compile(f"[{re.escape(_MD_ESCAPE_CHARS)}]")
-
 
 def _md_slugify(value, separator):
     # matches the `id_prefix` setting of BLOG_DOCUTILS_SETTINGS
     return "s" + separator + _md_title_slugify(value, separator)
-
-
-def _md_escape(s):
-    # Add a backslash \ before any reserved characters
-    return _MD_ESCAPE_REGEX.sub(r"\\\g<0>", s)
-
-
-def _rst_escape(s):
-    # New lines mess up rst, it's easier to replace them with spaces.
-    return s.replace("\n", " ")
 
 
 class EntryQuerySet(models.QuerySet):
@@ -89,9 +73,9 @@ class ContentFormat(models.TextChoices):
         """
         CF = type(self)
         return {
-            CF.REST: f".. image:: {url}\n   :alt: {_rst_escape(alt_text)}",
+            CF.REST: f".. image:: {url}\n   :alt: {alt_text}",
             CF.HTML: format_html('<img src="{}" alt="{}">', url, alt_text),
-            CF.MARKDOWN: f"![{_md_escape(alt_text)}]({url})",
+            CF.MARKDOWN: f"![{alt_text}]({url})",
         }[self]
 
 
