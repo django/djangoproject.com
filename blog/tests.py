@@ -3,7 +3,8 @@ from datetime import date, timedelta
 from io import StringIO
 
 import time_machine
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Permission, User
+from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
 from django.test import TestCase
 from django.urls import reverse
@@ -187,10 +188,9 @@ class EventTestCase(DateTimeMixin, TestCase):
 
 
 class ViewsTestCase(DateTimeMixin, TestCase):
-
-    def test_staff_with_write_permission_can_see_unpublished_detail_view(self):
+    def test_staff_with_change_permission_can_see_unpublished_detail_view(self):
         """
-        staff users with write permission on BlogEntry can't see unpublished entries
+        Staff users with change permission on BlogEntry can't see unpublished entries
         in the list, but can view the detail page
         """
         e1 = Entry.objects.create(
@@ -198,8 +198,6 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         )
         user = User.objects.create(username="staff", is_staff=True)
         # Add blog entry change permission
-        from django.contrib.auth.models import Permission
-        from django.contrib.contenttypes.models import ContentType
 
         content_type = ContentType.objects.get_for_model(Entry)
         change_permission = Permission.objects.get(
@@ -227,9 +225,9 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         self.assertTrue(request.user.has_perm("blog.change_entry"))
         self.assertEqual(response.status_code, 200)
 
-    def test_staff_without_write_permission_cannot_see_unpublished_detail_view(self):
+    def test_staff_without_change_permission_cannot_see_unpublished_detail_view(self):
         """
-        staff users without write permission on BlogEntry can't see unpublished entries
+        Staff users without change permission on BlogEntry can't see unpublished entries
         """
         e1 = Entry.objects.create(
             pub_date=self.yesterday, is_active=False, headline="inactive", slug="a"
