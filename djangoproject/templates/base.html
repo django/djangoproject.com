@@ -47,6 +47,7 @@
 
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
 
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     {% include "includes/header.html" %}
 
     <section class="copy-banner">
@@ -72,7 +73,7 @@
     <div id="billboard">{% block billboard %}{% endblock %}</div>
 
     <div class="container {% block layout_class %}{% endblock %}">
-      <main>
+      <main id="main-content">
 
         {% block messages %}
           {% if messages %}
