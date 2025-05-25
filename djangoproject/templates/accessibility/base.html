@@ -1,0 +1,36 @@
+{% extends "base_community.html" %}
+{% load i18n %}
+
+{% block og_title %}{% translate "Django Accessibility Statement" %}{% endblock %}
+{% block og_description %}{% translate "We welcome you." %}{% endblock %}
+
+{% block header %}
+  <p>{% translate "Django Accessibility Statement" %}</p>
+{% endblock %}
+
+{% block content-related %}
+  <div role="complementary">
+    <h2 id="aside-header">{% translate "Django Accessibility Statement" %}</h2>
+
+    <ul class="list-links">
+      <li><a href="{% url 'accessibility' %}">{% translate "Accessibility Statement" %}</a></li>
+      <li><a href="{% url 'accessibility_changes' %}">{% translate "Changes" %}</a></li>
+    </ul>
+
+    <h3>{% translate "License" %}</h3>
+    <p>
+      {% blocktranslate trimmed %}
+        All content on this page is licensed under a
+        <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+          Attribution </a> license.
+      {% endblocktranslate %}
+    </p>
+    <p>
+      <a href="https://creativecommons.org/licenses/by/3.0/">
+        <img src="https://i.creativecommons.org/l/by/3.0/88x31.png" height="31" width="88" alt="CC-by">
+      </a>
+    </p>
+  </div>
+{% endblock %}
+
+{% block title %}{% translate "Django Accessibility Statement" %}{% endblock %}
