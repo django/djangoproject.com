@@ -28,7 +28,7 @@ repos:
           - id: mixed-line-ending
           - id: trailing-whitespace
     - repo: https://github.com/asottile/pyupgrade
-      rev: "v3.19.1"
+      rev: "v3.20.0"
       hooks:
           - id: pyupgrade
             args: [--py312]
@@ -57,12 +57,12 @@ repos:
       hooks:
           - id: flake8
     - repo: https://github.com/rtts/djhtml
-      rev: "3.0.7"
+      rev: "3.0.8"
       hooks:
           - id: djhtml
             files: .*/templates/.*\.html$
     - repo: https://github.com/tox-dev/pyproject-fmt
-      rev: "v2.5.1"
+      rev: "v2.6.0"
       hooks:
           - id: pyproject-fmt
     - repo: https://github.com/mrtazz/checkmake.git
