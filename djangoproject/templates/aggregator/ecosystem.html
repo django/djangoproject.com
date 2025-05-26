@@ -85,7 +85,7 @@
 
   <h3>Storage & Static Files</h3>
   <ul>
-    <li><a href="https://github.com/jschneier/django-storages">django-storages</a> &mdash; Provides a variety of storage backends for Django, including S3, Azure, and more.</li>
+    <li><a href="https://github.com/jschneier/django-storages">django-storages</a> &mdash; Provides a variety of storage backends for Django, including S3, Azure, and more. <a href="#django-storages">Learn More...</a></li>
     <li><a href="https://github.com/evansd/whitenoise">Whitenoise</a> &mdash; Serves static files directly from Django without the need for a separate web server.</li>
   </ul>
 
@@ -157,4 +157,20 @@
     <li><a href="https://github.com/carltongibson/django-filter">django-filter</a> &mdash; Provides a simple way to filter down querysets based on user selections.</li>
     <li><a href="https://github.com/RealOrangeOne/django-tasks">Django Tasks</a> &mdash; A lightweight task queue for Django applications, suitable for simple background task processing.</li>
   </ul>
+
+  <h2>More Information</h2>
+
+  <p>Some things require more information than others.  To keep the above more scanable we will include any in-depth information here.</p> 
+
+  <h3 id="django-storages">django-storages</h3> 
+
+  <p>
+  This package is perfect when deploying Django in situations that do include a shared filesystem. For either uploaded files from 
+  users and/or you static media if is often necessary to store files using "object storage" such as Amazon S3. 
+  </p> 
+
+  <p>
+  Keep in mind there are many S3 compatible object storage systems.  Most cloud providers you may have an option and if not you can run your own MinIO instance. 
+  Get more information which options are supported <a href="https://django-storages.readthedocs.io/en/latest/">in the django-storages docs</a>.
+  </p> 
 {% endblock %}
