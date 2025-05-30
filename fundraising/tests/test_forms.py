@@ -3,7 +3,8 @@ from unittest.mock import patch
 from django.test import TestCase
 from django_recaptcha.client import RecaptchaResponse
 
-from ..forms import PaymentForm
+from ..forms import DonationForm, PaymentForm
+from ..models import DjangoHero, Donation
 
 
 class TestPaymentForm(TestCase):
@@ -44,3 +45,27 @@ class TestPaymentForm(TestCase):
         )
         self.assertFalse(form.is_valid())
         self.assertIn("captcha", form.errors)
+
+    @patch("fundraising.forms.stripe.Subscription.retrieve", side_effect=KeyError)
+    def test_donation_form_save_atomic(self, *mocks):
+        """
+        A stripe error in save() should rollback any change made to the Donation
+        """
+        donation = Donation.objects.create(
+            interval="monthly",
+            subscription_amount=50,
+            donor=DjangoHero.objects.create(),
+        )
+        form = DonationForm(
+            instance=donation,
+            data={"subscription_amount": 25, "interval": "yearly"},
+        )
+
+        # Save the form, this will trigger a KeyError but we catch it and move on
+        self.assertTrue(form.is_valid())
+        self.assertRaises(KeyError, form.save)
+
+        # The donation should not have been updated with new data
+        donation.refresh_from_db()
+        self.assertEqual(donation.interval, "monthly")
+        self.assertEqual(donation.subscription_amount, 50)
