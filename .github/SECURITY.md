@@ -2,10 +2,10 @@
 
 This document outlines security procedures and general policies for the Django website (`djangoproject.com`). This is separate from [Django's security policies](https://docs.djangoproject.com/en/dev/internals/security/).
 
-  * [Reporting a Bug](#reporting-a-bug)
-  * [Reporting Guidelines](#reporting-guidelines)
-  * [Disclosure Policy](#disclosure-policy)
-  * [Comments on this Policy](#comments-on-this-policy)
+- [Reporting a Bug](#reporting-a-bug)
+- [Reporting Guidelines](#reporting-guidelines)
+- [Disclosure Policy](#disclosure-policy)
+- [Comments on this Policy](#comments-on-this-policy)
 
 ## Reporting a Bug
 
@@ -27,18 +27,18 @@ the website working group comes to a conclusion and resolve the issue.
 While reporting a security issue related to the Django website, we encourage
 to follow few guidelines that helps us in analysis and resolving the issue quicker.
 
-  * Include a runnable proof of concept to reproduce the issue
-  * User input must be sanitized
+- Include a runnable proof of concept to reproduce the issue
+- User input must be sanitized
 
 ## Disclosure Policy
 
 When the website working group receives a security bug report, they will
 identify and fix the issues in the website, involving the following steps:
 
-  * Confirm the problem.
-  * Audit code to find any potential similar problems.
-  * Apply the relevant patches to the codebase.
-  * Deploy the fixed codebase.
+- Confirm the problem.
+- Audit code to find any potential similar problems.
+- Apply the relevant patches to the codebase.
+- Deploy the fixed codebase.
 
 ## Comments on this Policy
 
