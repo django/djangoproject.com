@@ -1,5 +1,6 @@
 import stripe
 from django import forms
+from django.db import transaction
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 from django_recaptcha.fields import ReCaptchaField
@@ -154,17 +155,15 @@ class DonationForm(forms.ModelForm):
         model = Donation
         fields = ("subscription_amount", "interval")
 
+    @transaction.atomic()
     def save(self, commit=True, *args, **kwargs):
         donation = super().save(commit=commit)
-        interval = self.cleaned_data.get("interval")
-        amount = self.cleaned_data.get("subscription_amount")
 
         # Send data to Stripe
-        customer = stripe.Customer.retrieve(donation.stripe_customer_id)
-        subscription = customer.subscriptions.retrieve(donation.stripe_subscription_id)
+        subscription = stripe.Subscription.retrieve(donation.stripe_subscription_id)
         # TODO: Setting the plan is deprecated — use Price API instead.
-        subscription.plan = interval
-        subscription.quantity = int(amount)
+        subscription.plan = self.cleaned_data["interval"]
+        subscription.quantity = int(self.cleaned_data["subscription_amount"])
 
         subscription.save()
 
