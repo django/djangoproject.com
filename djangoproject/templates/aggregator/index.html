@@ -25,6 +25,18 @@
     </a>
   </div>
 
+  <h2 class="community-title">{% translate "Third Party Packages" %}</h2>
+  <div class="community-cta-wrapper">
+    <a href="{% url "community-ecosystem" %}" class="community-cta-a">
+      <div class="community-cta">
+        <div>
+          {% include "svg_logos/package.html" %}
+        </div>
+        <h3>{% translate "Package Ecosystem" %}</h3>
+      </div>
+    </a>
+  </div>
+
   <h2 class="community-title">{% translate "Get Involved" %}</h2>
   <div class="community-cta-wrapper">
     <a href="https://docs.djangoproject.com/en/dev/internals/contributing/bugs-and-features/#reporting-bugs" class="community-cta-a">
