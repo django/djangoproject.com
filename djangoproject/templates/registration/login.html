@@ -15,7 +15,9 @@
 
     <form method="post" action="" class="form-input">
         {% csrf_token %}
-        <input type="hidden" name="next" value="{{ next|default:"/" }}">
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
 
         <div>
             <label for="id_username">{% translate "Username:" %}</label>
