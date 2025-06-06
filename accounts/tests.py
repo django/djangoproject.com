@@ -1,4 +1,7 @@
+import hashlib
+
 from django.contrib.auth.models import User
+from django.core.cache import cache
 from django.test import TestCase, override_settings
 from django_hosts.resolvers import reverse
 
@@ -151,6 +154,23 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
 
         response = self.client.get(self.user1_url)
         self.assertContains(response, "New tickets triaged: 1.")
+
+    @override_settings(
+        CACHES={
+            "default": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "unique-snowflake",
+            }
+        }
+    )
+    def test_caches_trac_stats(self):
+        key = "user_vital_status:%s" % hashlib.md5(b"user1").hexdigest()
+
+        self.assertIsNone(cache.get(key))
+
+        self.client.get(self.user1_url)
+
+        self.assertIsNotNone(cache.get(key))
 
 
 class ViewsTests(TestCase):
