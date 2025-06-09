@@ -1,9 +1,15 @@
 from django.urls import path
+from django.views.generic.base import TemplateView
 
 from . import views
 
 urlpatterns = [
     path("", views.index, name="community-index"),
+    path(
+        "ecosystem/",
+        TemplateView.as_view(template_name="aggregator/ecosystem.html"),
+        name="community-ecosystem",
+    ),
     path(
         "local/",
         views.LocalDjangoCommunitiesListView.as_view(),
