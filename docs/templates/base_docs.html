@@ -10,7 +10,15 @@
 {% endblock %}
 
 {% block header %}
-  <p><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a></p>
+  {% comment %}
+    <p><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a></p>
+  {% endcomment %}
+  <p>
+    <a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a> &ndash;
+    <a href="https://www.djangoproject.com/weblog/2025/jun/09/django-fellow-applicants-2025/">
+      DSF calls for applicants for a Django Fellow, deadline July 1!
+    </a>
+  </p>
   {% search_form %}
 {% endblock %}
 
