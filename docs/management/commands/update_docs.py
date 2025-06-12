@@ -358,7 +358,17 @@ class Command(BaseCommand):
                 os.chdir(cwd)
         else:
             subprocess.check_call(
-                ["git", "clone", "--branch", branch, repo, str(destdir), quiet],
+                [
+                    "git",
+                    "clone",
+                    "--depth",
+                    "1",
+                    "--branch",
+                    branch,
+                    repo,
+                    str(destdir),
+                    quiet,
+                ],
                 stderr=sys.stdout,
             )
         return True
