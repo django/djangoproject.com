@@ -38,7 +38,10 @@
   {% if release.is_dev %}
     {% if "internals" not in docurl %}{# The dev version is canonical for internals/. #}
       <div id="dev-warning" class="doc-floating-warning">
-        {% trans "This document is for Django's development version, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
+      {% blocktrans trimmed %}
+      This document is for Django's development version, which can be significantly different from previous releases.
+        <a href="https://docs.djangoproject.com/en/stable/" style="font-weight : bold; text-decoration: underline;"> Click here for the stable version </a>
+        {% endblocktrans %}
       </div>
     {% endif %}
   {% elif release.is_preview %}
