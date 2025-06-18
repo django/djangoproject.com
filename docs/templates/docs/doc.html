@@ -41,7 +41,7 @@
         {% blocktrans trimmed %}
           This document is for Django's development version, which can be significantly different from previous releases.
           <a href="{% url 'docs_version' version='stable %}" style="font-weight : bold; text-decoration: underline;"> Click here for the stable version </a>
-          {% endblocktrans %}
+        {% endblocktrans %}
       </div>
     {% endif %}
   {% elif release.is_preview %}
