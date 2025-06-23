@@ -12,7 +12,7 @@ docutils==0.21.2
 feedparser==6.0.11
 Jinja2==3.1.6
 libsass==0.23.0
-Markdown==3.8
+Markdown==3.8.2
 Pillow==11.2.1
 psycopg[c]==3.2.9
 Pygments==2.19.2
