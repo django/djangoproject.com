@@ -26,6 +26,7 @@
       <li><a href="/foundation/conferences/">Organizing a Django conference</a></li>
     </ul>
     <h3>{% translate "Latest DSF meeting minutes" %}</h3>
+    <p> {% translate "The minutes from May 2025 onwards are stored in the repo https://github.com/django/dsf-minutes" %} </p>
     {% render_latest_meeting_minute_entries 2 %}
     <a href="{% url 'foundation_meeting_archive_index' %}" class="link-readmore">{% translate "More meeting minutes" %}</a>
   </div>
