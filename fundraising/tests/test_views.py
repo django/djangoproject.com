@@ -151,7 +151,7 @@ class TestCampaign(TemporaryMediaRootMixin, TestCase):
         )
         retrieve_customer.assert_called_once_with("54321", expand=["subscriptions"])
         donation = Donation.objects.get(id=donation.id)
-        self.assertEqual("", donation.stripe_subscription_id)
+        self.assertEqual("cancel12345", donation.stripe_subscription_id)
 
     @patch("stripe.Customer.retrieve")
     def test_cancel_already_cancelled_donation(self, retrieve_customer):
@@ -282,7 +282,12 @@ class TestWebhooks(TestCase):
         payment = self.donation.payment_set.first()
         self.assertEqual(payment.amount, 10)
 
-    def test_subscription_cancelled(self):
+    @patch("stripe.Event.retrieve")
+    def test_subscription_cancelled(self, event):
+        event.return_value = self.stripe_data("subscription_cancelled")
+        donation = Donation.objects.get(id=self.donation.id)
+        donation.stripe_subscription_id = "cancel" + donation.stripe_subscription_id
+        donation.save()
         self.post_event(self.stripe_data("subscription_cancelled"))
         donation = Donation.objects.get(id=self.donation.id)
         self.assertEqual(donation.stripe_subscription_id, "")
