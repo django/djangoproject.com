@@ -11,11 +11,13 @@
 {% block content %}
   <h1>{% translate "Meeting minutes archive" %}</h1>
 
-  <p>{% translate "Select a year to view meeting minutes:" %}</p>
+  <p>{% translate "The minutes from May 2025 onwards are stored in the repo https://github.com/django/dsf-minutes" %}
 
-  <ul>
-    {% for year in date_list %}
-      <li><a href="{% url 'foundation_meeting_archive_year' year=year.year %}">{{ year.year }}</a></li>
-    {% endfor %}
-  </ul>
+    <p>{% translate "Select a year to view meeting minutes:" %}</p>
+
+    <ul>
+      {% for year in date_list %}
+        <li><a href="{% url 'foundation_meeting_archive_year' year=year.year %}">{{ year.year }}</a></li>
+      {% endfor %}
+    </ul>
 {% endblock %}
