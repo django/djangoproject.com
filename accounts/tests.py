@@ -193,7 +193,7 @@ class ViewsTests(TestCase):
             reverse("user_profile", host="www", args=[username])
 
 
-class UserDeletionTestCase(TestCase):
+class UserDeletionTests(TestCase):
     def create_user_and_form(self, bound=True, **userkwargs):
         userkwargs.setdefault("username", "test")
         userkwargs.setdefault("email", "test@example.com")
