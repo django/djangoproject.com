@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Confirmation: delete your profile" %}{% endblock %}
+
+{% block content %}
+    {% if form.errors %}
+        <h2>{% translate "Could not delete account" %}</h2>
+
+        <p>{% blocktranslate trimmed %}
+            Sorry, something went wrong when trying to delete your account.
+            That means there's probably some protected data still associated
+            with your account.
+            Please contact
+            <a href="mailto:ops@djangoproject.com?{{ OPS_EMAIL_PRESETS }}">the operations team</a>,
+            and we'll sort it out for you.
+        {% endblocktranslate %}</p>
+    {% else %}
+        <h2>{% translate "Are you sure?" %}</h2>
+
+        <p>{% blocktranslate trimmed with username=request.user.username %}
+            ⚠️ You are about to delete all data associated with the username
+            <strong>{{ username }}</strong>.
+        {% endblocktranslate %}</p>
+
+        <p>{% blocktranslate trimmed %}
+            Deleting your account is permanent and <strong>cannot be reversed</strong>.
+            Are you sure you want to continue?
+        {% endblocktranslate %}</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="submit">
+                <button type="submit">{% translate "Yes, delete account" %}</button>
+                <a href="{% url 'edit_profile' %}">
+                    {% translate "No, cancel and go back" %}
+                </a>
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}

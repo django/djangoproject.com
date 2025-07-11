@@ -1,4 +1,6 @@
 from django import forms
+from django.db import transaction
+from django.db.models import ProtectedError
 from django.utils.translation import gettext_lazy as _
 
 from .models import Profile
@@ -36,3 +38,52 @@ class ProfileForm(forms.ModelForm):
             if commit:
                 instance.user.save()
         return instance
+
+
+class DeleteProfileForm(forms.Form):
+    """
+    A form for deleting the request's user and their associated data.
+
+    This form has no fields, it's used as a container for validation and deletion
+    logic.
+    """
+
+    class InvalidFormError(Exception):
+        pass
+
+    def __init__(self, *args, user=None, **kwargs):
+        if user.is_anonymous:
+            raise TypeError("DeleteProfileForm only accepts actual User instances")
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if self.user.is_staff:
+            # Prevent potentially deleting some important history (admin.LogEntry)
+            raise forms.ValidationError(_("Staff users cannot be deleted"))
+        return cleaned_data
+
+    def add_errors_from_protectederror(self, exception):
+        """
+        Convert the given ProtectedError exception object into validation
+        errors on the instance.
+        """
+        self.add_error(None, _("User has protected data and cannot be deleted"))
+
+    @transaction.atomic()
+    def delete(self):
+        """
+        Delete the form's user (self.instance).
+        """
+        if not self.is_valid():
+            raise self.InvalidFormError(
+                "DeleteProfileForm.delete() can only be called on valid forms"
+            )
+
+        try:
+            self.user.delete()
+        except ProtectedError as e:
+            self.add_errors_from_protectederror(e)
+            return None
+        return self.user

@@ -49,5 +49,11 @@
             emails. We'll also use this email to try to fetch a <a
                 href="https://en.gravatar.com/">Gravatar</a>. You can change the image for this
             email at <a href="https://en.gravatar.com/">Gravatar</a>.{% endblocktranslate %}</p>
+
+        <p>
+            <a href="{% url 'delete_profile' %}">
+                {% translate "Want to delete your account?" %}
+            </a>
+        </p>
     </div>
 {% endblock %}
