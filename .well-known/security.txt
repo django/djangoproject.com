@@ -1,0 +1,10 @@
+Policy: https://www.djangoproject.com/security/
+Contact: https://www.djangoproject.com/security/
+Expires: 2026-12-31T00:00:00.000Z
+Encryption: https://keys.openpgp.org/vks/v1/by-fingerprint/AF3516D27D0621171E0CCE25FCB84B8D1D17F80B
+Preferred-Languages: en
+
+# Hello security researcher!
+# We appreciate your help in keeping Django secure.
+# Please report security issues that concern the Django website (djangoproject.com) to ops@djangoproject.com
+# This helps us make sure your report is seen by the right people.
