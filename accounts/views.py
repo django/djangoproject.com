@@ -40,16 +40,15 @@ def edit_profile(request):
 def delete_profile(request):
     if request.method == "POST":
         form = DeleteProfileForm(data=request.POST, user=request.user)
-        if form.is_valid():
-            if form.delete():
-                logout(request)
-                return redirect("delete_profile_success")
+        if form.is_valid() and form.delete():
+            logout(request)
+            return redirect("delete_profile_success")
     else:
         form = DeleteProfileForm(user=request.user)
 
     context = {
         "form": form,
-        # Strings are left translated on purpose (ops prefer english :D)
+        # Strings are left untranslated on purpose (ops prefer english :D)
         "OPS_EMAIL_PRESETS": urlencode(
             {
                 "subject": "[djangoproject.com] Manual account deletion",

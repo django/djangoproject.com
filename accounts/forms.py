@@ -42,9 +42,9 @@ class ProfileForm(forms.ModelForm):
 
 class DeleteProfileForm(forms.Form):
     """
-    A form for delete the request's user and their associated data.
+    A form for deleting the request's user and their associated data.
 
-    This form has no fields, it's used as a container for validation and deltion
+    This form has no fields, it's used as a container for validation and deletion
     logic.
     """
 
