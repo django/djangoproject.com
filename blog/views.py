@@ -57,4 +57,4 @@ class BlogDateDetailView(BlogViewMixin, DateDetailView):
         ):
             return Entry.objects.all()
         else:
-            return self.get_queryset()
+            return super().get_queryset()
