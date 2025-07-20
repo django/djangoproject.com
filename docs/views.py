@@ -1,5 +1,8 @@
 import datetime
 import json
+import json
+import logging
+
 
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -17,6 +20,7 @@ from .forms import DocSearchForm
 from .models import Document, DocumentRelease
 from .search import START_SEL, DocumentationCategory
 from .utils import get_doc_path_or_404, get_doc_root_or_404
+logger = logging.getLogger(__name__)
 
 SIMPLE_SEARCH_OPERATORS = ["+", "|", "-", '"', "*", "(", ")", "~"]
 
@@ -145,6 +149,8 @@ def search_results(request, lang, version, per_page=10, orphans=3):
     activate(lang)
 
     form = DocSearchForm(request.GET or None, release=release)
+    logger.info("Search view accessed with query: %s", request.GET.get("q", ""))
+
 
     context = {
         "form": form,
