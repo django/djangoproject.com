@@ -12,7 +12,6 @@ locale/*/LC_MESSAGES/django.mo
 .coverage
 .direnv
 .envrc
-.tox
 djangoproject/cache
 djangoproject/static/css/*.map
 djangoproject/static/css/*.css
