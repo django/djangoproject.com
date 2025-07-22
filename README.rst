@@ -138,8 +138,7 @@ Then in the root directory (next to the ``manage.py`` file) run::
     tox
 
 Behind the scenes, this will run the usual ``python -m manage test`` management
-command with a preset list of apps that we want to test as well as
-`flake8 <https://flake8.readthedocs.io/>`_ for code quality checks. We
+command with a preset list of apps that we want to test. We
 collect test coverage data as part of that tox run, to show the result
 simply run::
 
