@@ -19,12 +19,6 @@ compile-scss-debug:
 install:
 	python -m pip install --requirement requirements/dev.txt
 
-isort:
-	python -m isort $(APP_LIST)
-
-isort-check:
-	python -m isort --check $(APP_LIST)
-
 migrations-check:
 	python -m manage makemigrations --check --dry-run
 
