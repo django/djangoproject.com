@@ -46,8 +46,11 @@
       {% trans "This document is for a preview release of Django, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
     </div>
   {% elif not release.is_supported %}
+    {% url 'document-detail' lang='en' version='stable' url=docurl host='docs' as latest_url %}
     <div id="outdated-warning" class="doc-floating-warning">
-      {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
+      {% blocktrans with link='<a href="'|add:latest_url|add:'">here</a>'|safe %}
+        This document is for an insecure version of Django that is no longer supported. Please click {{ link }} for the latest version.
+      {% endblocktrans %}
     </div>
   {% endif %}
 {% endblock body_extra %}
