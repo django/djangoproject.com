@@ -22,6 +22,7 @@ from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django_hosts.resolvers import reverse
 
+from blog.models import Entry
 from releases.models import Release
 
 from . import utils
@@ -95,6 +96,11 @@ class DocumentRelease(models.Model):
         on_delete=models.CASCADE,
     )
     is_default = models.BooleanField(default=False)
+    support_end = models.DateField(
+        null=True,
+        blank=True,
+        help_text="The end of support for this release of Django.",
+    )
 
     objects = DocumentReleaseQuerySet.as_manager()
 
@@ -211,6 +217,32 @@ class DocumentRelease(models.Model):
                 Document.objects.breadcrumbs(document).values("title", "path")
             )
             document.save(update_fields=("metadata",))
+
+    def _sync_blog_to_db(self):
+        """
+        Sync the blog entries into search based on the release documents
+        support end date.
+        """
+        if self.lang == "en":
+            for entry in Entry.objects.published():
+                Document.objects.create(
+                    release=self,
+                    path=entry.get_absolute_url(),
+                    title=entry.headline,
+                    metadata={
+                        "body": entry.body_html,
+                        "breadcrumbs": [
+                            {"path": "weblog", "title": "News"},
+                        ],
+                        "parents": "weblog",
+                        "slug": entry.slug,
+                        "title": entry.headline,
+                        "toc": "",
+                    },
+                    config=TSEARCH_CONFIG_LANGUAGES.get(
+                        self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG
+                    ),
+                )
 
 
 def _clean_document_path(path):
@@ -382,3 +414,16 @@ class Document(models.Model):
         with open(str(self.full_path)) as fp:
             doc = json.load(fp)
         return doc["body"]
+
+    def document_url(self):
+        if self.metadata["parents"] == "weblog":
+            return self.path
+        return reverse(
+            "document-detail",
+            kwargs={
+                "lang": self.release.lang,
+                "version": self.release.version,
+                "url": self.path,
+            },
+            host="docs",
+        )
