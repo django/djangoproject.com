@@ -223,8 +223,8 @@ class DocumentRelease(models.Model):
         Sync the blog entries into search based on the release documents
         support end date.
         """
-        if self.lang == "en":
-            for entry in Entry.objects.published():
+        if self.lang == "en" and self.support_end:
+            for entry in Entry.objects.published(self.support_end):
                 Document.objects.create(
                     release=self,
                     path=entry.get_absolute_url(),
