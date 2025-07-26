@@ -1,11 +1,6 @@
 from .common import *  # noqa
 
-ALLOWED_HOSTS = [
-    "www.djangoproject.localhost",
-    "djangoproject.localhost",
-    "docs.djangoproject.localhost",
-    "dashboard.djangoproject.localhost",
-] + SECRETS.get("allowed_hosts", [])
+ALLOWED_HOSTS = ["*"]
 
 LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = ["docs.djangoproject.localhost"]
 
