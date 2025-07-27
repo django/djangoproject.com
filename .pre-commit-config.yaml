@@ -41,7 +41,6 @@ repos:
       rev: 25.9.0
       hooks:
           - id: black
-            exclude: '(\/migrations\/)'
     - repo: https://github.com/rbubley/mirrors-prettier
       rev: "v3.6.2"
       hooks:
