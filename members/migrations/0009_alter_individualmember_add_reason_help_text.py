@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('members', '0008_auto_20181001_1031'),
+        ("members", "0008_auto_20181001_1031"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='individualmember',
-            name='reason_for_leaving',
-            field=models.TextField(blank=True, help_text='⚠️ This reason is publicly displayed on the website. <strong>Do not include confidential details.</strong>'),
+            model_name="individualmember",
+            name="reason_for_leaving",
+            field=models.TextField(
+                blank=True,
+                help_text="⚠️ This reason is publicly displayed on the website. <strong>Do not include confidential details.</strong>",
+            ),
         ),
     ]
