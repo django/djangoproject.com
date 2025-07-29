@@ -130,16 +130,13 @@ Our test results can be found here:
 
 * https://github.com/django/djangoproject.com/actions
 
-For local development don't hesitate to install
-`tox <https://tox.readthedocs.io/>`_ to run the website's test suite.
-
 Then in the root directory (next to the ``manage.py`` file) run::
 
-    tox
+    make test
 
 Behind the scenes, this will run the usual ``python -m manage test`` management
 command with a preset list of apps that we want to test. We
-collect test coverage data as part of that tox run, to show the result
+collect test coverage data as part of that test run, to show the result
 simply run::
 
     python -m coverage report
@@ -364,7 +361,6 @@ Running Locally with Docker
 
 4. Run the tests::
 
-    docker compose run --rm web tox
     docker compose run --rm web python -m manage test
 
 Pre-commit checks
