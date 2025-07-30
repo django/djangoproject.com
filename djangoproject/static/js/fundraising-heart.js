@@ -1,4 +1,4 @@
-define(['jquery'], function ($) {
+(function () {
   var maroon = '#ad1d45';
   var amaranth = '#d9195c';
   var cerise = '#d62d75';
@@ -45,8 +45,8 @@ define(['jquery'], function ($) {
     { x: 3, y: 5, color: razzmatazz },
   ];
 
-  var Heart = function (heart) {
-    this.heart = $(heart);
+  var Heart = function (selector) {
+    this.heart = document.querySelector(selector);
     this.init();
   };
 
@@ -61,7 +61,7 @@ define(['jquery'], function ($) {
     },
     fadePixels: function () {
       var pixels;
-      var percent = this.heart.data('percent');
+      var percent = this.heart.dataset.percent;
       var fadedCount = Math.ceil((this.pixels.length * (100 - percent)) / 100);
       for (var i = 0; i < fadedCount; i++) {
         pixels = this.visiblePixels();
@@ -115,6 +115,5 @@ define(['jquery'], function ($) {
     },
   };
 
-  // Export a single instance of our module:
-  return new Heart('.fundraising-heart');
-});
+  new Heart('.fundraising-heart');
+})();
