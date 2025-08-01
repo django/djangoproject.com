@@ -76,6 +76,7 @@ INSTALLED_APPS = [
     "django_hosts",
     "sorl.thumbnail",
     "djmoney",
+    "flatpages_extra",
     "django.contrib.sites",
     "django.contrib.auth",
     "django.contrib.admin",
