@@ -139,6 +139,7 @@ urlpatterns = [
     path("weblog/", include("blog.urls")),
     path("download/", include("releases.urls")),
     path("svntogit/", include("svntogit.urls")),
+    path("flatpagesextra/", include("flatpages_extra.urls")),
     path("", include("legacy.urls")),
 ]
 
