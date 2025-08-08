@@ -29,7 +29,7 @@
       <a href="https://forum.djangoproject.com">Django Forum</a>.
     {% endblocktranslate %}
   </p>
-  <form action="." method="post" accept-charset="utf-8" class="form-input">
+  <form action="." method="post" accept-charset="utf-8">
     {% csrf_token %}
     <div>
       {{ form.name.as_field_group }}
@@ -44,6 +44,8 @@
       {{ form.body.as_field_group }}
     </div>
     {{ form.captcha }}
-    <p class="submit"><input type="submit" class="cta" value="{% translate "Send &rarr;" %}"></p>
+    <div class="submit">
+      <button type="submit" class="cta arrow">{% translate "Send" %}</button>
+    </div>
   </form>
 {% endblock %}
