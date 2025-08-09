@@ -1,6 +1,8 @@
+from datetime import datetime, timedelta
 from http import HTTPStatus
 from io import StringIO
 
+from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import NoReverseMatch, get_resolver
@@ -164,3 +166,40 @@ class Header1Tests(TestCase):
                     response = self.client.get(url)
                     self.assertEqual(response.status_code, 200)
                     self.assertContains(response, "<h1", count=1)
+
+
+class SecurityTxtFileTests(TestCase):
+    """
+    Tests for the security.txt file.
+    """
+
+    def test_security_txt_not_expired(self):
+        """
+        The security.txt file should not be expired.
+        """
+        FILE_PATH = settings.BASE_DIR / ".well-known" / "security.txt"
+        with open(FILE_PATH) as f:
+            content = f.read()
+            # Read the line that starts with "Expires:", and parse the date.
+            for line in content.splitlines():
+                if line.startswith("Expires:"):
+                    expires = line.strip("Expires: ")
+                    break
+            else:
+                self.fail("No Expires line found in security.txt")
+
+            expires_date = datetime.strptime(
+                expires,
+                "%Y-%m-%dT%H:%M:%S.%fZ",
+            ).date()
+            # We should ideally be two weeks early with updating - active over reactive
+            cutoff = (datetime.now() - timedelta(days=15)).date()
+            self.assertGreater(
+                expires_date,
+                cutoff,
+                "The security.txt file is close to expiring. \
+Please update the 'Expires' line in to confirm the contents are \
+still accurate: {}".format(
+                    FILE_PATH
+                ),
+            )
