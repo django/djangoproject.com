@@ -117,32 +117,33 @@
       {% include "includes/footer.html" %}
     {% endblock %}
 
-    {# Require JS #}
-    <script>
-      function extless(input) {
-        return input.replace(/(.*)\.[^.]+$/, '$1');
-      }
-      var require = {
-        shim: {
-          'jquery': [],
-          'jquery.flot': ["jquery"],
-          'stripe': {
-            exports: 'Stripe'
-          }
-        },
-        paths: {
-          "jquery": extless("{% static 'js/lib/jquery.min.js' %}"),
-          "jquery.flot": extless("{% static 'js/lib/jquery.flot.min.js' %}"),
-          "mod/list-collapsing": extless("{% static 'js/mod/list-collapsing.js' %}"),
-          "mod/stripe-change-card": extless("{% static 'js/mod/stripe-change-card.js' %}"),
-          "mod/switch-dark-mode": extless("{% static 'js/mod/switch-dark-mode.js' %}"),
-          "stripe-checkout": "https://checkout.stripe.com/checkout",
-          "stripe": "https://js.stripe.com/v3/?" // ? needed due to require.js
-        }
-      };
-    </script>
-    <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>
     {% block body_extra %}{% endblock body_extra %}
-    <script src="{% static "js/djangoproject.js" %}"></script>
+
+    {% block javascript %}
+      {# Require JS #}
+      <script>
+        function extless(input) {
+          return input.replace(/(.*)\.[^.]+$/, '$1');
+        }
+        var require = {
+          shim: {
+            'jquery': [],
+            'stripe': {
+              exports: 'Stripe'
+            }
+          },
+          paths: {
+            "jquery": extless("{% static 'js/lib/jquery.min.js' %}"),
+            "mod/list-collapsing": extless("{% static 'js/mod/list-collapsing.js' %}"),
+            "mod/stripe-change-card": extless("{% static 'js/mod/stripe-change-card.js' %}"),
+            "mod/switch-dark-mode": extless("{% static 'js/mod/switch-dark-mode.js' %}"),
+            "stripe-checkout": "https://checkout.stripe.com/checkout",
+            "stripe": "https://js.stripe.com/v3/?" // ? needed due to require.js
+          }
+        };
+      </script>
+      <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>
+      <script src="{% static "js/djangoproject.js" %}"></script>
+    {% endblock %}
   </body>
 </html>
