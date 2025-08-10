@@ -1,8 +1,9 @@
+import re
+import warnings
 from datetime import datetime, timedelta
 from http import HTTPStatus
 from io import StringIO
 
-from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import NoReverseMatch, get_resolver
@@ -214,38 +215,33 @@ class Header1Tests(ReleaseMixin, TestCase):
                     self.assertContains(response, "<h1", count=1)
 
 
-class SecurityTxtFileTests(TestCase):
+class SecurityTxtTests(TestCase):
     """
     Tests for the security.txt file.
     """
 
-    def test_security_txt_not_expired(self):
+    def test_security_txt(self):
         """
-        The security.txt file should not be expired.
+        The security.txt file should be reachable at the expected URL.
         """
-        FILE_PATH = settings.BASE_DIR / ".well-known" / "security.txt"
-        with open(FILE_PATH) as f:
-            content = f.read()
-            # Read the line that starts with "Expires:", and parse the date.
-            for line in content.splitlines():
-                if line.startswith("Expires:"):
-                    expires = line.strip("Expires: ")
-                    break
-            else:
-                self.fail("No Expires line found in security.txt")
+        response = self.client.get("/.well-known/security.txt")
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(response["Content-Type"], "text/plain")
 
-            expires_date = datetime.strptime(
-                expires,
-                "%Y-%m-%dT%H:%M:%S.%fZ",
-            ).date()
-            # We should ideally be two weeks early with updating - active over reactive
-            cutoff = (datetime.now() - timedelta(days=15)).date()
-            self.assertGreater(
-                expires_date,
-                cutoff,
-                "The security.txt file is close to expiring. \
-Please update the 'Expires' line in to confirm the contents are \
-still accurate: {}".format(
-                    FILE_PATH
-                ),
+        match = re.search(
+            "^Expires: (.*)$", response.content.decode("utf-8"), flags=re.MULTILINE
+        )
+        if match is None:
+            self.fail("No Expires line found in security.txt")
+        else:
+            expires = match[1]
+
+        expires_date = datetime.fromisoformat(expires).date()
+
+        if expires_date < datetime.now().date() - timedelta(days=15):
+            warnings.warn(
+                "The djangoproject/templates/well-known/security.txt file is"
+                " close to expiring. Please update the 'Expires' line to confirm"
+                " the contents are still accurate.",
+                category=UserWarning,
             )
