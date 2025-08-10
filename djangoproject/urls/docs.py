@@ -3,6 +3,7 @@ from collections.abc import MutableMapping
 from django.contrib.sitemaps.views import sitemap
 from django.http import HttpResponse
 from django.urls import include, path
+from django.views.generic import TemplateView
 
 from docs.models import DocumentRelease
 from docs.sitemaps import DocsSitemap
@@ -53,6 +54,12 @@ urlpatterns = docs_urlpatterns + [
         "google79eabba6bf6fd6d3.html",
         lambda req: HttpResponse(
             "google-site-verification: google79eabba6bf6fd6d3.html"
+        ),
+    ),
+    path(
+        ".well-known/security.txt",
+        TemplateView.as_view(
+            template_name="well-known/security.txt", content_type="text/plain"
         ),
     ),
     # This just exists to make sure we can proof that the error pages work
