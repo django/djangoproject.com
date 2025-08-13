@@ -24,7 +24,7 @@ def search_form(context):
         context["version"],
         context["lang"],
     )
-    
+
     # Pass the selected category from GET parameters
     selected_category = request.GET.get("category", "")
 
@@ -34,6 +34,7 @@ def search_form(context):
         "lang": context["lang"],
         "category": selected_category,  # <- new line
     }
+
 
 @register.simple_tag(takes_context=True)
 def get_all_doc_versions(context, url=None):
