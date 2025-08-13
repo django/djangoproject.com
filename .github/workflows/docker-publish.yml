@@ -33,7 +33,7 @@ jobs:
                   images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
                   tags: |
                       # set latest tag for main branch only
-                      type=raw,value=latest,enable=main
+                      type=raw,value=latest,enable={{is_default_branch}}
                       type=ref,event=branch
                       type=sha
 
