@@ -2523,10 +2523,28 @@ table.foundation td {
     padding: 0 5px;
 }
 
-table.docutils td,
-table.docutils th {
-    border-bottom: 1px solid var(--hairline-color);
-}
+table.docutils {
+    border-collapse: collapse;
+    margin-bottom: 10.5em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  table.docutils td, table.docutils th {
+    border-bottom: 1px solid #ccc;
+    padding: 8px 12px;
+    line-height: 1.4;
+  }
+  table.docutils thead th {
+    background-color: var(--code-bg);
+    border-bottom: 2px solid #999;
+    font-weight: bold;
+  }
+  table.docutils tr:nth-child(even) {
+    background-color: var(--code-bg);
+  }
+  table.docutils tr:hover {
+    background-color: var(--selection);
+  }
+
 
 .list-links {
     //Can be used globally to stack list items either with a <ul>, or with a <dl> using the <dd> to add meta information.  (See Community Page - sidebar and block body.)
