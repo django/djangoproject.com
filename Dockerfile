@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.12-slim-bookworm
+FROM python:3.12-slim-trixie
 
 # set work directory
 WORKDIR /usr/src/app
@@ -16,7 +16,7 @@ RUN apt-get update \
         libpq5 \
         make \
         rsync \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get distclean
 
 ARG REQ_FILE=requirements/prod.txt
 
@@ -36,7 +36,7 @@ RUN apt-get update \
         libc6-dev \
         libpq-dev \
         zlib1g-dev \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get distclean
 
 # copy project
 COPY . .
