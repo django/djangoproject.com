@@ -1,5 +1,7 @@
 from django.test import SimpleTestCase
+
 from blog.templatetags.blog_extras import add_lazy_loading
+
 
 class AddLazyLoadingFilterTests(SimpleTestCase):
     def test_adds_attributes_to_img_without_them(self):
@@ -21,6 +23,6 @@ class AddLazyLoadingFilterTests(SimpleTestCase):
         self.assertEqual(result.count('decoding="async"'), 2)
 
     def test_non_image_tags_are_untouched(self):
-        html = '<p>No images here</p>'
+        html = "<p>No images here</p>"
         result = add_lazy_loading(html)
         self.assertEqual(result, html)

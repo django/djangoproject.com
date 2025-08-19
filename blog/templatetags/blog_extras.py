@@ -1,8 +1,10 @@
-from django import template
-from django.utils.html import format_html
 from html.parser import HTMLParser
 
+from django import template
+from django.utils.html import format_html
+
 register = template.Library()
+
 
 class LazyLoadingHTMLParser(HTMLParser):
     def __init__(self):
@@ -37,6 +39,7 @@ class LazyLoadingHTMLParser(HTMLParser):
         else:
             attrs_str = " ".join(f'{k}="{v}"' for k, v in attrs)
             self.result.append(f"<{tag}{' ' + attrs_str if attrs_str else ''} />")
+
 
 @register.filter
 def add_lazy_loading(html):

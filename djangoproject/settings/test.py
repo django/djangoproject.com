@@ -1,7 +1,7 @@
 from .common import INSTALLED_APPS
 
 DEBUG = False
-SECRET_KEY = 'test-secret-key'
+SECRET_KEY = "test-secret-key"
 
 INSTALLED_APPS = [app for app in INSTALLED_APPS if app != "foundation"]
 
@@ -13,5 +13,5 @@ DATABASES = {
 }
 
 PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.MD5PasswordHasher',
+    "django.contrib.auth.hashers.MD5PasswordHasher",
 ]
