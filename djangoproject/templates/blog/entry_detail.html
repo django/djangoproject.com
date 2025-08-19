@@ -1,5 +1,6 @@
 {% extends "base_weblog.html" %}
 {% load i18n %}
+{% load blog_extras %} {# Load your custom filter #}
 
 {% block title %}{{ object.headline|escape }} | Weblog{% endblock %}
 
@@ -17,5 +18,8 @@
             Posted by <strong>{{ author }}</strong> on {{ pub_date }}
         {% endblocktranslate %}
     </span>
-    <div class="blog-entry-body">{{ object.body_html|safe }}</div>
+
+    <div class="blog-entry-body">
+        {{ object.body_html|add_lazy_loading|safe }}
+    </div>
 {% endblock %}
