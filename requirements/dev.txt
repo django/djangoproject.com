@@ -1,4 +1,4 @@
 -r common.txt
-django-debug-toolbar==5.2.0
+django-debug-toolbar==6.0.0
 pre-commit~=4.3.0
 watchdog==6.0.0
