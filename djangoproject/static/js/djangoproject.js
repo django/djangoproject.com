@@ -97,8 +97,9 @@ window.addEventListener('keydown', function (e) {
   const el = document.querySelector('#id_q');
 
   el.select();
-  el.focus({ preventScroll: true });
-  el.scrollIntoView({ behavior: 'smooth' });
+  el.focus();
+
+  window.scrollTo(0, 0);
 });
 
 // Add copy buttons to code snippets
