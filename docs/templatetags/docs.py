@@ -24,10 +24,15 @@ def search_form(context):
         context["version"],
         context["lang"],
     )
+
+    # Pass the selected category from GET parameters
+    selected_category = request.GET.get("category", "")
+
     return {
         "form": DocSearchForm(request.GET, release=release),
         "version": context["version"],
         "lang": context["lang"],
+        "category": selected_category,  # <- new line
     }
 
 
