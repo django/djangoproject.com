@@ -13,6 +13,8 @@
   </div>
 {% endblock %}
 
-{% block dashboard_javascript %}
+{% block javascript %}
+  {{ block.super }}
+
   <script src="{% static "js/dashboard/detail.js" %}"></script>
 {% endblock %}
