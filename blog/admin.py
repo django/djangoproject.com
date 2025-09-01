@@ -11,8 +11,15 @@ from .models import ContentFormat, Entry, Event, ImageUpload
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
-    list_display = ("headline", "pub_date", "is_active", "is_published", "author")
-    list_filter = ("is_active",)
+    list_display = (
+        "headline",
+        "pub_date",
+        "is_active",
+        "is_published",
+        "is_searchable",
+        "author",
+    )
+    list_filter = ("is_active", "is_searchable")
     exclude = ("summary_html", "body_html")
     prepopulated_fields = {"slug": ("headline",)}
     raw_id_fields = ["social_media_card"]
