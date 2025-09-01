@@ -18,10 +18,13 @@ from django.core.cache import cache
 from django.db import models, transaction
 from django.db.models import Q
 from django.db.models.fields.json import KeyTextTransform
+from django.test import RequestFactory
+from django.urls import resolve, reverse as reverse_path
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django_hosts.resolvers import reverse
 
+from blog.models import Entry
 from releases.models import Release
 
 from . import utils
@@ -31,6 +34,7 @@ from .search import (
     START_SEL,
     STOP_SEL,
     TSEARCH_CONFIG_LANGUAGES,
+    DocumentationCategory,
 )
 
 
@@ -95,6 +99,11 @@ class DocumentRelease(models.Model):
         on_delete=models.CASCADE,
     )
     is_default = models.BooleanField(default=False)
+    support_end = models.DateField(
+        null=True,
+        blank=True,
+        help_text="The end of support for this release of Django.",
+    )
 
     objects = DocumentReleaseQuerySet.as_manager()
 
@@ -212,6 +221,83 @@ class DocumentRelease(models.Model):
             )
             document.save(update_fields=("metadata",))
 
+        self._sync_blog_to_db()
+        self._sync_views_to_db()
+
+    def _sync_blog_to_db(self):
+        """
+        Sync the blog entries into search based on the release documents
+        support end date.
+        """
+        if self.lang == "en" and self.support_end:
+            for entry in Entry.objects.published(self.support_end).searchable():
+                Document.objects.create(
+                    release=self,
+                    path=entry.get_absolute_url(),
+                    title=entry.headline,
+                    metadata={
+                        "body": entry.body_html,
+                        "breadcrumbs": [
+                            {
+                                "path": DocumentationCategory.WEBSITE.value,
+                                "title": "News",
+                            },
+                        ],
+                        "parents": DocumentationCategory.WEBSITE.value,
+                        "slug": entry.slug,
+                        "title": entry.headline,
+                        "toc": "",
+                    },
+                    config=TSEARCH_CONFIG_LANGUAGES.get(
+                        self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG
+                    ),
+                )
+
+    def _sync_views_to_db(self):
+        """
+        Sync the blog entries into search based on the release documents
+        support end date.
+        """
+        if self.lang == "en":
+            # The request needs to come through as a valid one, it's best if it
+            # matches the exact host we're looking for.
+            www_hosts = [
+                host for host in settings.ALLOWED_HOSTS if host.startswith("www.")
+            ]
+            if not www_hosts or not (www_host := www_hosts[0]):
+                return
+            synced_views = [
+                # Page title, url name, url kwargs
+                ("Django's Ecosystem", "community-ecosystem", {}),
+            ]
+            for title, url_name, kwargs in synced_views:
+                absolute_url = reverse(url_name, kwargs=kwargs, host="www")
+                path = reverse_path(url_name, kwargs=kwargs)
+                request = RequestFactory().get(path, HTTP_HOST=www_host)
+                body = resolve(path).func(request).render().text
+                # Need to parse the body element.
+                Document.objects.create(
+                    release=self,
+                    path=absolute_url,
+                    title=title,
+                    metadata={
+                        "body": body,
+                        "breadcrumbs": [
+                            {
+                                "path": DocumentationCategory.WEBSITE.value,
+                                "title": "Website",
+                            },
+                        ],
+                        "parents": DocumentationCategory.WEBSITE.value,
+                        "slug": url_name,
+                        "title": title,
+                        "toc": "",
+                    },
+                    config=TSEARCH_CONFIG_LANGUAGES.get(
+                        self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG
+                    ),
+                )
+
 
 def _clean_document_path(path):
     # We have to be a bit careful to reverse-engineer the correct
@@ -224,7 +310,9 @@ def _clean_document_path(path):
 
 
 def document_url(doc):
-    if doc.path:
+    if doc.metadata.get("parents") == DocumentationCategory.WEBSITE.value:
+        return doc.path
+    elif doc.path:
         kwargs = {
             "lang": doc.release.lang,
             "version": doc.release.version,

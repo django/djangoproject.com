@@ -65,6 +65,7 @@ class DocumentationCategory(TextChoices):
     TOPICS = "topics", _("Using Django")
     HOWTO = "howto", _("How-to guides")
     RELEASE_NOTES = "releases", _("Release notes")
+    WEBSITE = "weblog", _("Django Website")
 
     @classmethod
     def parse(cls, value, default=None):

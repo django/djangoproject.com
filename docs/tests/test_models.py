@@ -4,10 +4,14 @@ from operator import attrgetter
 from django.conf import settings
 from django.db import connection
 from django.test import TestCase
+from django.utils import timezone
+from django_hosts import reverse
 
+from blog.models import Entry
 from releases.models import Release
 
 from ..models import DOCUMENT_SEARCH_VECTOR, Document, DocumentRelease
+from ..search import DocumentationCategory
 
 
 class ModelsTests(TestCase):
@@ -465,7 +469,21 @@ class DocumentManagerTest(TestCase):
 class UpdateDocTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.release = DocumentRelease.objects.create()
+        now = timezone.now()
+        cls.release = DocumentRelease.objects.create(
+            support_end=now + datetime.timedelta(days=1)
+        )
+        cls.entry = Entry.objects.create(
+            pub_date=now,
+            is_active=True,
+            is_searchable=True,
+            headline="Searchable post",
+            slug="a",
+            body_html="<h1>Searchable Blog Post</h1>",
+        )
+        cls.docs_documents = cls.release.documents.exclude(
+            metadata__parents=DocumentationCategory.WEBSITE.value
+        )
 
     def test_sync_to_db(self):
         self.release.sync_to_db(
@@ -477,8 +495,43 @@ class UpdateDocTests(TestCase):
                 }
             ]
         )
-        document = self.release.documents.get()
-        self.assertEqual(document.path, "foo/bar")
+        document_paths = set(self.release.documents.values_list("path", flat=True))
+        self.assertEqual(
+            document_paths,
+            {
+                "foo/bar",
+                reverse("community-ecosystem", host="www"),
+                self.entry.get_absolute_url(),
+            },
+        )
+
+    def test_blog_to_db_skip_non_english(self):
+        """
+        Releases must be English to include the blog and website results in search.
+        """
+        non_english = DocumentRelease.objects.create(
+            lang="es",
+            release=Release.objects.create(version="88.0"),
+            support_end=self.release.support_end,
+        )
+        non_english.sync_to_db([])
+        self.assertFalse(non_english.documents.exists())
+
+    def test_blog_to_db_skip_no_end_support(self):
+        """
+        Releases must have an end support to include the blog.
+        """
+        no_end_support = DocumentRelease.objects.create(
+            lang="en",
+            release=Release.objects.create(version="99.0"),
+        )
+        no_end_support.sync_to_db([])
+        self.assertEqual(
+            set(no_end_support.documents.values_list("path", flat=True)),
+            {
+                reverse("community-ecosystem", host="www"),
+            },
+        )
 
     def test_clean_path(self):
         self.release.sync_to_db(
@@ -490,7 +543,7 @@ class UpdateDocTests(TestCase):
                 }
             ]
         )
-        document = self.release.documents.get()
+        document = self.docs_documents.get()
         self.assertEqual(document.path, "foo/bar")
 
     def test_title_strip_tags(self):
@@ -504,7 +557,7 @@ class UpdateDocTests(TestCase):
             ]
         )
         self.assertQuerySetEqual(
-            self.release.documents.all(),
+            self.docs_documents.all(),
             ["This is the title"],
             transform=attrgetter("title"),
         )
@@ -520,7 +573,7 @@ class UpdateDocTests(TestCase):
             ]
         )
         self.assertQuerySetEqual(
-            self.release.documents.all(),
+            self.docs_documents,
             ["Title & title"],
             transform=attrgetter("title"),
         )
@@ -533,7 +586,7 @@ class UpdateDocTests(TestCase):
                 {"current_page_name": "foo/3"},
             ]
         )
-        self.assertQuerySetEqual(self.release.documents.all(), [])
+        self.assertQuerySetEqual(self.docs_documents, [])
 
     def test_excluded_documents(self):
         """
@@ -562,3 +615,47 @@ class UpdateDocTests(TestCase):
         )
         document = release.documents.get()
         self.assertEqual(document.path, "nonexcluded/bar")
+
+
+class DocumentUrlTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.release = DocumentRelease.objects.create(
+            release=Release.objects.create(version="1.2.3"),
+        )
+        documents = [
+            {
+                "metadata": {"parents": "topics http"},
+                "path": "topics/http/generic-views",
+                "release": cls.release,
+                "title": "Generic views",
+            },
+            # I'm not sure if this is valid or not.
+            {
+                "metadata": {},
+                "path": "",
+                "release": cls.release,
+                "title": "Index",
+            },
+        ]
+        # Include the static views in the document search
+        cls.release._sync_views_to_db()
+        Document.objects.bulk_create(Document(**doc) for doc in documents)
+        cls.document_index, cls.document_view, cls.document_detail = (
+            cls.release.documents.order_by("path")
+        )
+
+    def test_document_url(self):
+        self.assertEqual(
+            self.document_index.get_absolute_url(),
+            "http://docs.djangoproject.localhost:8000/en/1.2.3/",
+        )
+        self.assertEqual(
+            self.document_view.get_absolute_url(),
+            "http://www.djangoproject.localhost:8000/community/ecosystem/",
+        )
+        self.assertEqual(
+            self.document_detail.get_absolute_url(),
+            "http://docs.djangoproject.localhost:8000"
+            "/en/1.2.3/topics/http/generic-views/",
+        )
