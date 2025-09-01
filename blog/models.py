@@ -180,7 +180,7 @@ class Entry(models.Model):
             "day": self.pub_date.strftime("%d").lower(),
             "slug": self.slug,
         }
-        return reverse("weblog:entry", kwargs=kwargs)
+        return reverse("weblog:entry", kwargs=kwargs, host="www")
 
     def is_published(self):
         """
