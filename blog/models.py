@@ -31,11 +31,16 @@ def _md_slugify(value, separator):
 
 
 class EntryQuerySet(models.QuerySet):
-    def published(self):
-        return self.active().filter(pub_date__lte=timezone.now())
+    def published(self, pub_date=None):
+        if pub_date is None:
+            pub_date = timezone.now()
+        return self.active().filter(pub_date__lte=pub_date)
 
     def active(self):
         return self.filter(is_active=True)
+
+    def searchable(self):
+        return self.filter(is_searchable=True)
 
 
 class ContentFormat(models.TextChoices):
@@ -125,6 +130,13 @@ class Entry(models.Model):
             "inactive entries whereas the general public aren't."
         ),
         default=False,
+    )
+    is_searchable = models.BooleanField(
+        default=False,
+        help_text=_(
+            "Tick to make this entry allow this entry to appear in the "
+            "Django documentation search."
+        ),
     )
     pub_date = models.DateTimeField(
         verbose_name=_("Publication date"),
