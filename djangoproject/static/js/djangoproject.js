@@ -99,7 +99,7 @@ window.addEventListener('keydown', function (e) {
   el.select();
   el.focus();
 
-  window.scrollTo(0, 0);
+  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 });
 
 // Add copy buttons to code snippets
