@@ -1,14 +1,20 @@
 {% extends "base_dashboard.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{{ metric }} | {{ block.super }}{% endblock %}
 
 {% block content %}
-  <div class="dashboard-detail">
+  <div>
     <h2><a href="{{ metric.link }}">{{ metric }}</a></h2>
     <div class="graph-wrapper">
       <div id="graph" class="graph" data-path="{% url "metric-list" host "dashboard" %}" data-metric="{{ metric.slug }}"></div>
     </div>
     <a class="link-readmore back-link" href="{% url "dashboard-index" host "dashboard" %}">{% translate "All metrics" %}</a>
   </div>
+{% endblock %}
+
+{% block javascript %}
+  {{ block.super }}
+
+  <script src="{% static "js/dashboard/detail.js" %}"></script>
 {% endblock %}

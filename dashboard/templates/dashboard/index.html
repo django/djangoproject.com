@@ -1,8 +1,9 @@
 {% extends "base_dashboard.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block content %}
-  <div class="dashboard-index">
+  <div>
     {% for report in data %}
       {% ifchanged report.metric.category %}
         {% if report.metric.category %}<h2>{{ report.metric.category }}</h2>{% endif %}
@@ -22,4 +23,10 @@
       {% blocktranslate with timestamp=data.0.latest.timestamp|timesince %}Updated {{ timestamp }} ago.{% endblocktranslate %}
     </p>
   </div>
+{% endblock %}
+
+{% block javascript %}
+  {{ block.super }}
+
+  <script src="{% static "js/dashboard/index.js" %}"></script>
 {% endblock %}
