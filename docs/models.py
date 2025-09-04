@@ -232,70 +232,74 @@ class DocumentRelease(models.Model):
         Sync the blog entries into search based on the release documents
         support end date.
         """
-        if self.lang == "en" and self.support_end:
-            for entry in Entry.objects.published(self.support_end).searchable():
-                Document.objects.create(
-                    release=self,
-                    path=entry.get_absolute_url(),
-                    title=entry.headline,
-                    metadata={
-                        "body": entry.body_html,
-                        "breadcrumbs": [
-                            {
-                                "path": DocumentationCategory.WEBSITE.value,
-                                "title": "News",
-                            },
-                        ],
-                        "parents": DocumentationCategory.WEBSITE.value,
-                        "slug": entry.slug,
-                        "title": entry.headline,
-                        "toc": "",
-                    },
-                    config=get_search_config(self.lang),
-                )
+        if self.lang != "en" or not self.support_end:
+            # The blog is only written in English, and we need to know
+            # the release's support end to know when to stop considering
+            # blog posts relevant.
+            return
+        for entry in Entry.objects.published(self.support_end).searchable():
+            Document.objects.create(
+                release=self,
+                path=entry.get_absolute_url(),
+                title=entry.headline,
+                metadata={
+                    "body": entry.body_html,
+                    "breadcrumbs": [
+                        {
+                            "path": DocumentationCategory.WEBSITE.value,
+                            "title": "News",
+                        },
+                    ],
+                    "parents": DocumentationCategory.WEBSITE.value,
+                    "slug": entry.slug,
+                    "title": entry.headline,
+                    "toc": "",
+                },
+                config=get_search_config(self.lang),
+            )
 
     def _sync_views_to_db(self):
         """
         Sync the specific views into search based on the release documents
         support end date.
         """
-        if self.lang == "en":
-            # The request needs to come through as a valid one, it's best if it
-            # matches the exact host we're looking for.
-            www_hosts = [
-                host for host in settings.ALLOWED_HOSTS if host.startswith("www.")
-            ]
-            if not www_hosts or not (www_host := www_hosts[0]):
-                return
-            synced_views = [
-                # Page title, url name, url kwargs
-                ("Django's Ecosystem", "community-ecosystem", {}),
-            ]
-            for title, url_name, kwargs in synced_views:
-                absolute_url = reverse(url_name, kwargs=kwargs, host="www")
-                path = reverse_path(url_name, kwargs=kwargs)
-                request = RequestFactory().get(path, HTTP_HOST=www_host)
-                body = resolve(path).func(request).render().text
-                # Need to parse the body element.
-                Document.objects.create(
-                    release=self,
-                    path=absolute_url,
-                    title=title,
-                    metadata={
-                        "body": body,
-                        "breadcrumbs": [
-                            {
-                                "path": DocumentationCategory.WEBSITE.value,
-                                "title": "Website",
-                            },
-                        ],
-                        "parents": DocumentationCategory.WEBSITE.value,
-                        "slug": url_name,
-                        "title": title,
-                        "toc": "",
-                    },
-                    config=get_search_config(self.lang),
-                )
+        if self.lang != "en":
+            return  # The searchable views are only written in English currently
+
+        # The request needs to come through as a valid one, it's best if it
+        # matches the exact host we're looking for.
+        www_hosts = [host for host in settings.ALLOWED_HOSTS if host.startswith("www.")]
+        if not www_hosts or not (www_host := www_hosts[0]):
+            return
+        synced_views = [
+            # Page title, url name, url kwargs
+            ("Django's Ecosystem", "community-ecosystem", {}),
+        ]
+        for title, url_name, kwargs in synced_views:
+            absolute_url = reverse(url_name, kwargs=kwargs, host="www")
+            path = reverse_path(url_name, kwargs=kwargs)
+            request = RequestFactory().get(path, HTTP_HOST=www_host)
+            body = resolve(path).func(request).render().text
+            # Need to parse the body element.
+            Document.objects.create(
+                release=self,
+                path=absolute_url,
+                title=title,
+                metadata={
+                    "body": body,
+                    "breadcrumbs": [
+                        {
+                            "path": DocumentationCategory.WEBSITE.value,
+                            "title": "Website",
+                        },
+                    ],
+                    "parents": DocumentationCategory.WEBSITE.value,
+                    "slug": url_name,
+                    "title": title,
+                    "toc": "",
+                },
+                config=get_search_config(self.lang),
+            )
 
 
 def _clean_document_path(path):
