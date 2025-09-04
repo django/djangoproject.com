@@ -256,7 +256,7 @@ class DocumentRelease(models.Model):
 
     def _sync_views_to_db(self):
         """
-        Sync the blog entries into search based on the release documents
+        Sync the specific views into search based on the release documents
         support end date.
         """
         if self.lang == "en":
