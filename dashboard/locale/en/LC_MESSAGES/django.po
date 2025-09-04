@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-11 20:38-0500\n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,53 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: dashboard/templates/base_dashboard.html:6
+msgid "Instant"
+msgstr ""
+
+msgid "Daily"
+msgstr ""
+
+msgid "Weekly"
+msgstr ""
+
+msgid "categories"
+msgstr ""
+
+msgid "Jenkins instance root URL"
+msgstr ""
+
+msgid "E.g. http://ci.djangoproject.com/"
+msgstr ""
+
+msgid "E.g. Django Python3"
+msgstr ""
+
+msgid "Should the metric be a value representing success ratio?"
+msgstr ""
+
+msgid ""
+"E.g. if there are 50 tests of which 30 are failing the value of this metric "
+"will be 20 (or 40%.)"
+msgstr ""
+
+msgid "Should the metric be a percentage value?"
+msgstr ""
+
+msgid ""
+"E.g. if there are 50 tests of which 30 are failing the value of this metric "
+"will be 60%."
+msgstr ""
+
 msgid "Development dashboard"
 msgstr ""
 
-#: dashboard/templates/dashboard/index.html:22
+msgid "All metrics"
+msgstr ""
+
 #, python-format
 msgid "Updated %(timestamp)s ago."
+msgstr ""
+
+#, python-format
+msgid "Could not find metric with slug %s"
 msgstr ""

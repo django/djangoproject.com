@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-17 01:14-0500\n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,179 +17,180 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: docs/apps.py:7 docs/templates/base_docs.html:9
 msgid "Documentation"
 msgstr ""
 
-#: docs/forms.py:4
 #, python-format
 msgid "Search %s documentation"
 msgstr ""
 
-#: docs/forms.py:8 docs/templates/docs/search_form.html:9
 msgid "Search"
 msgstr ""
 
-#: docs/templates/base_docs.html:6
+msgid "API Reference"
+msgstr ""
+
+msgid "Using Django"
+msgstr ""
+
+msgid "How-to guides"
+msgstr ""
+
+msgid "Release notes"
+msgstr ""
+
 msgid "Django Documentation"
 msgstr ""
 
-#: docs/templates/docs/doc.html:4 docs/templates/docs/doc.html:33
 msgid "Django documentation"
 msgstr ""
 
-#: docs/templates/docs/doc.html:40
 msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases. For older releases, use the "
 "version selector floating in the bottom right corner of this page."
 msgstr ""
 
-#: docs/templates/docs/doc.html:45
+msgid ""
+"This document is for a preview release of Django, which can be significantly "
+"different from previous releases. For older releases, use the version "
+"selector floating in the bottom right corner of this page."
+msgstr ""
+
 msgid ""
 "This document is for an insecure version of Django that is no longer "
 "supported. Please upgrade to a newer release!"
 msgstr ""
 
-#: docs/templates/docs/doc.html:66
+msgid "Getting Help"
+msgstr ""
+
 msgid "Click on the links on the left to switch to another language."
 msgstr ""
 
-#: docs/templates/docs/doc.html:67
 msgid "Language:"
 msgstr ""
 
-#: docs/templates/docs/doc.html:86
 msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases."
 msgstr ""
 
-#: docs/templates/docs/doc.html:88
 #, python-format
 msgid "This document describes Django %(version)s."
 msgstr ""
 
-#: docs/templates/docs/doc.html:90
 msgid "Click on the links on the left to see other versions."
 msgstr ""
 
-#: docs/templates/docs/doc.html:93
 msgid "Documentation version:"
 msgstr ""
 
-#: docs/templates/docs/doc.html:121
+msgid "Previous page and next page"
+msgstr ""
+
 msgid "Additional Information"
 msgstr ""
 
-#: docs/templates/docs/doc.html:130
 msgid "Contents"
 msgstr ""
 
-#: docs/templates/docs/doc.html:137
 msgid "Browse"
 msgstr ""
 
-#: docs/templates/docs/doc.html:141
 msgid "Prev:"
 msgstr ""
 
-#: docs/templates/docs/doc.html:144
 msgid "Next:"
 msgstr ""
 
-#: docs/templates/docs/doc.html:146
 msgid "Table of contents"
 msgstr ""
 
-#: docs/templates/docs/doc.html:155
 msgid "You are here:"
 msgstr ""
 
-#: docs/templates/docs/doc.html:158
 #, python-format
 msgid "Django %(version)s documentation"
 msgstr ""
 
-#: docs/templates/docs/doc.html:169
 msgid "Getting help"
 msgstr ""
 
-#: docs/templates/docs/doc.html:172
+msgid "FAQ"
+msgstr ""
+
 msgid "Try the FAQ — it's got answers to many common questions."
 msgstr ""
 
-#: docs/templates/docs/doc.html:174
 msgid "Index"
 msgstr ""
 
-#: docs/templates/docs/doc.html:174 docs/templates/docs/py-modindex.html:6
-#: docs/templates/docs/py-modindex.html:9
 msgid "Module Index"
 msgstr ""
 
-#: docs/templates/docs/doc.html:174
 msgid "Table of Contents"
 msgstr ""
 
-#: docs/templates/docs/doc.html:175
 msgid "Handy when looking for specific information."
 msgstr ""
 
-#: docs/templates/docs/doc.html:178
-msgid ""
-"Search for information in the archives of the django-users mailing list, or "
-"post a question."
+msgid "Django Discord Server"
 msgstr ""
 
-#: docs/templates/docs/doc.html:181
-msgid ""
-"Ask a question in the #django IRC channel, or search the IRC logs to see if "
-"it’s been asked before."
+msgid "Join the Django Discord Community."
 msgstr ""
 
-#: docs/templates/docs/doc.html:184
+msgid "Official Django Forum"
+msgstr ""
+
+msgid "Join the community on the Django Forum."
+msgstr ""
+
+msgid "Ticket tracker"
+msgstr ""
+
 msgid "Report bugs with Django or Django documentation in our ticket tracker."
 msgstr ""
 
-#: docs/templates/docs/doc.html:189
 msgid "Download:"
 msgstr ""
 
-#: docs/templates/docs/doc.html:191
 msgid "Offline (development version):"
 msgstr ""
 
-#: docs/templates/docs/doc.html:192
 #, python-format
 msgid "Offline (Django %(version)s):"
 msgstr ""
 
-#: docs/templates/docs/doc.html:198
 msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
 msgstr ""
 
-#: docs/templates/docs/genindex.html:4
 msgid "General Index | Django Documentation"
 msgstr ""
 
-#: docs/templates/docs/genindex.html:6 docs/templates/docs/genindex.html:9
 msgid "General Index"
 msgstr ""
 
-#: docs/templates/docs/genindex.html:39
 msgid "[Link]"
 msgstr ""
 
-#: docs/templates/docs/py-modindex.html:4
 msgid "Module Index | Django Documentation"
 msgstr ""
 
-#: docs/templates/docs/search_results.html:4
+msgid "Submit"
+msgstr ""
+
 msgid "Search | Django documentation"
 msgstr ""
 
-#: docs/templates/docs/search_results.html:16
+msgid "Filter the current search results by documentation category"
+msgstr ""
+
+msgctxt "all documentation categories"
+msgid "All"
+msgstr ""
+
 #, python-format
 msgid "Only 1 result for <em>%(query)s</em> in the development version"
 msgid_plural ""
@@ -197,7 +198,6 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: docs/templates/docs/search_results.html:22
 #, python-format
 msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
 msgid_plural ""
@@ -205,28 +205,30 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: docs/templates/docs/search_results.html:30
 msgid "No search query given"
 msgstr ""
 
-#: docs/templates/docs/search_results.html:62
+#, python-format
+msgid ""
+"Please try searching <a href=\"%(all_search)s\">all documentation results</"
+"a>."
+msgstr ""
+
+msgctxt "pagination"
 msgid "Previous"
 msgstr ""
 
-#: docs/templates/docs/search_results.html:66
 #, python-format
 msgid "Page %(page_number)s of %(num_pages)s"
 msgstr ""
 
-#: docs/templates/docs/search_results.html:73
+msgctxt "pagination"
 msgid "Next"
 msgstr ""
 
-#: docs/views.py:189
 msgid "Page is not 'last', nor can it be converted to an int."
 msgstr ""
 
-#: docs/views.py:195
 #, python-format
 msgid "Invalid page (%(page_number)s): %(message)s"
 msgstr ""

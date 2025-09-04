@@ -3,14 +3,9 @@
 # source files.
 #
 # Translators:
-# Sebastián Magrí, 2019
-# Ernesto Rico Schmidt <ernesto@rico-schmidt.name>, 2019
-# LECbg, 2020
-# Uriel Medina <urimeba511@gmail.com>, 2021
-# Samuel David Ramirez Mantione <venezuelapoliglota@hotmail.com>, 2025
-# Ignacio José Lizarán Rus <ilizaran@gmail.com>, 2025
+# Michael Thornhill <michael@maithu.com>, 2019
 # Claude Paroz <claude@2xlibre.net>, 2025
-# JUAN DAVID JARAMILLO ORTIZ <juanda097@protonmail.ch>, 2025
+# Aindriú Mac Giolla Eoin, 2025
 #
 #, fuzzy
 msgid ""
@@ -19,52 +14,52 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-04 10:04-0500\n"
 "PO-Revision-Date: 2019-02-19 01:18+0000\n"
-"Last-Translator: JUAN DAVID JARAMILLO ORTIZ <juanda097@protonmail.ch>, 2025\n"
-"Language-Team: Spanish (https://app.transifex.com/django/teams/17080/es/)\n"
+"Last-Translator: Aindriú Mac Giolla Eoin, 2025\n"
+"Language-Team: Irish (https://app.transifex.com/django/teams/17080/ga/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Language: ga\n"
+"Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : "
+"4);\n"
 
 msgid "Documentation"
-msgstr "Documentación"
+msgstr "Doiciméadúchán"
 
 #, python-format
 msgid "Search %s documentation"
-msgstr "Buscar documentación sobre %s "
+msgstr "Cuardaigh %s doiciméad"
 
 msgid "Search"
-msgstr "Buscar"
+msgstr "Cuardach"
 
 msgid "API Reference"
-msgstr ""
+msgstr "Tagairt API"
 
 msgid "Using Django"
 msgstr ""
 
 msgid "How-to guides"
-msgstr ""
+msgstr "Treoracha conas"
 
 msgid "Release notes"
-msgstr ""
+msgstr "Nótaí scaoilte"
 
 msgid "Django Documentation"
-msgstr "Documentación de Django"
+msgstr "Doiciméadú Django"
 
 msgid "Django documentation"
-msgstr "Documentación de Django"
+msgstr "Doiciméid Django"
 
 msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases. For older releases, use the "
 "version selector floating in the bottom right corner of this page."
 msgstr ""
-"Este documento es para la versión de desarrollo de Django, que puede ser "
-"significativamente diferente de las versiones anteriores. Para versiones "
-"anteriores, use el selector de versión que se encuentra en la esquina "
-"inferior derecha de esta página."
+"Tá an doiciméad seo le haghaidh leagan forbartha Django, ar féidir a bheith "
+"difriúil go suntasach ó eisiúintí roimhe seo. Le haghaidh eisiúintí níos "
+"sine, bain úsáid as an roghnóir leagan atá ar snámh sa chúinne ag bun ar "
+"dheis an leathanaigh seo."
 
 msgid ""
 "This document is for a preview release of Django, which can be significantly "
@@ -76,84 +71,86 @@ msgid ""
 "This document is for an insecure version of Django that is no longer "
 "supported. Please upgrade to a newer release!"
 msgstr ""
-"Este documento es para una versión insegura de Django que ya no es "
-"compatible. ¡Por favor, actualice a una versión más reciente!"
+"Tá an doiciméad seo le haghaidh leagan neamhchinnte de Django nach "
+"dtacaítear leis a thuilleadh. Uasghrádaigh chuig eisiúint níos nuaí le do "
+"thoil!"
 
 msgid "Getting Help"
 msgstr ""
 
 msgid "Click on the links on the left to switch to another language."
-msgstr "Haga clic en los enlaces de la izquierda para cambiar a otro idioma."
+msgstr "Cliceáil ar na naisc ar chlé chun aistriú go teanga eile."
 
 msgid "Language:"
-msgstr "Idioma:"
+msgstr "Teanga:"
 
 msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases."
 msgstr ""
-"Este documento es para la versión de desarrollo de Django, que puede ser "
-"significativamente diferente de las versiones anteriores."
+"Tá an doiciméad seo le haghaidh leagan forbartha Django, ar féidir a bheith "
+"difriúil go suntasach ó eisiúintí roimhe seo."
 
 #, python-format
 msgid "This document describes Django %(version)s."
-msgstr "Este documento describe Django %(version)s."
+msgstr "Déanann an doiciméad seo cur síos ar Django %(version)s."
 
 msgid "Click on the links on the left to see other versions."
-msgstr "Haga clic en los enlaces de la izquierda para ver otras versiones."
+msgstr "Cliceáil ar na naisc ar chlé chun leaganacha eile a fheiceáil."
 
 msgid "Documentation version:"
-msgstr "Versión de la documentación:"
+msgstr "Leagan doiciméadaithe:"
 
 msgid "Previous page and next page"
 msgstr ""
 
 msgid "Additional Information"
-msgstr "Información Adicional"
+msgstr "Eolas Breise"
 
 msgid "Contents"
-msgstr "Contenidos"
+msgstr "Clár ábhair"
 
 msgid "Browse"
-msgstr "Navegar"
+msgstr "Brabhsáil"
 
 msgid "Prev:"
-msgstr "Previo:"
+msgstr "Roimhe seo:"
 
 msgid "Next:"
-msgstr "Siguiente:"
+msgstr "Ar Aghaidh:"
 
 msgid "Table of contents"
-msgstr "Tabla de contenidos"
+msgstr "Clár ábhar"
 
 msgid "You are here:"
-msgstr "Usted está aquí:"
+msgstr "Tá tú anseo:"
 
 #, python-format
 msgid "Django %(version)s documentation"
-msgstr "Documentación de Django %(version)s "
+msgstr "Django %(version)s doiciméadú"
 
 msgid "Getting help"
-msgstr "Obtener ayuda"
+msgstr "Cabhair a fháil"
 
 msgid "FAQ"
-msgstr "FAQ"
+msgstr ""
 
 msgid "Try the FAQ — it's got answers to many common questions."
 msgstr ""
-"Pruebe las preguntas frecuentes: tiene respuestas a muchas preguntas comunes."
+"Bain triail as na Ceisteanna Coitianta - tá freagraí faighte aige ar go leor "
+"ceisteanna coitianta."
 
 msgid "Index"
-msgstr "Índice"
+msgstr "Innéacs"
 
 msgid "Module Index"
-msgstr "Índice del módulo"
+msgstr "Innéacs Modúil"
 
 msgid "Table of Contents"
-msgstr "Tabla de Contenidos"
+msgstr "Clár na nÁbhar"
 
 msgid "Handy when looking for specific information."
-msgstr "Práctico cuando se busca información específica."
+msgstr "Áisiúil nuair a bhíonn faisnéis faoi leith á lorg."
 
 msgid "Django Discord Server"
 msgstr ""
@@ -172,75 +169,74 @@ msgstr ""
 
 msgid "Report bugs with Django or Django documentation in our ticket tracker."
 msgstr ""
-"Reporte bugs con Django o con la documentación de Django en nuestro "
-"rastreador de tickets."
+"Déan tuairisc ar fhabhtanna le cáipéisí Django nó Django inár rianaire "
+"ticéad."
 
 msgid "Download:"
-msgstr "Descarga:"
+msgstr "Íoslódáil:"
 
 msgid "Offline (development version):"
-msgstr "Fuera de línea (versión de desarrollo):"
+msgstr "As líne (leagan forbartha):"
 
 #, python-format
 msgid "Offline (Django %(version)s):"
-msgstr "Fuera de línea (Django %(version)s):"
+msgstr "As Líne (Django %(version)s):"
 
 msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
-msgstr ""
-"Proporcionado por <a href=\"https://readthedocs.org/\">Lea los documentos.</"
-"a>\n"
-" "
+msgstr "Ar fáil ag <a href=\"https://readthedocs.org/\">Léigh na Docs</a>."
 
 msgid "General Index | Django Documentation"
-msgstr "Índice general | Documentación Django"
+msgstr "Innéacs Ginearálta | Doiciméadú Django"
 
 msgid "General Index"
-msgstr "Índice general"
+msgstr "Innéacs Ginearálta"
 
 msgid "[Link]"
-msgstr "[Link]"
+msgstr "[Nasc]"
 
 msgid "Module Index | Django Documentation"
-msgstr "Índice del módulo | Documentación Django"
+msgstr "Innéacs Modúil | Doiciméadú Django"
 
 msgid "Submit"
-msgstr "Enviar"
+msgstr "Cuir isteach"
 
 msgid "Search | Django documentation"
-msgstr "Búsqueda | Documentación de django"
+msgstr "Cuardach | Doiciméid Django"
 
 msgid "Filter the current search results by documentation category"
 msgstr ""
 
 msgctxt "all documentation categories"
 msgid "All"
-msgstr "Todo"
+msgstr "Gach"
 
 #, python-format
 msgid "Only 1 result for <em>%(query)s</em> in the development version"
 msgid_plural ""
 "%(num_results)s results for <em>%(query)s</em> in the development version"
 msgstr[0] ""
-"Sólo 1 resultado para <em>%(query)s</em> en la versión de desarrollo"
-msgstr[1] ""
-"%(num_results)s resultados para <em>%(query)s</em> en la versión de "
-"desarrollo"
-msgstr[2] ""
-"%(num_results)s resultados para <em>%(query)s</em> en la versión de "
-"desarrollo"
+"Ní raibh ach toradh amháin ar <em>%(query)s</em> sa leagan forbartha"
+msgstr[1] "%(num_results)s torthaí do <em>%(query)s</em> sa leagan forbartha"
+msgstr[2] "%(num_results)s torthaí do <em>%(query)s</em> sa leagan forbartha"
+msgstr[3] "%(num_results)s torthaí do <em>%(query)s</em> sa leagan forbartha"
+msgstr[4] "%(num_results)s torthaí do <em>%(query)s</em> sa leagan forbartha"
 
 #, python-format
 msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
 msgid_plural ""
 "%(num_results)s results for <em>%(query)s</em> in version %(version)s"
-msgstr[0] "Sólo 1 resultado para <em>%(query)s</em> en la versión %(version)s"
+msgstr[0] "Níl ach toradh amháin ar <em>%(query)s</em> i leagan %(version)s"
 msgstr[1] ""
-"%(num_results)s resultados para <em>%(query)s</em> en la versión %(version)s"
+"%(num_results)s torthaí le haghaidh <em>%(query)s</em> i leagan %(version)s"
 msgstr[2] ""
-"%(num_results)s resultados para <em>%(query)s</em> en la versión %(version)s"
+"%(num_results)s torthaí le haghaidh <em>%(query)s</em> i leagan %(version)s"
+msgstr[3] ""
+"%(num_results)s torthaí le haghaidh <em>%(query)s</em> i leagan %(version)s"
+msgstr[4] ""
+"%(num_results)s torthaí le haghaidh <em>%(query)s</em> i leagan %(version)s"
 
 msgid "No search query given"
-msgstr "No se proporcionó ninguna consulta de búsqueda"
+msgstr "Níor tugadh aon cheist chuardaigh"
 
 #, python-format
 msgid ""
@@ -250,19 +246,20 @@ msgstr ""
 
 msgctxt "pagination"
 msgid "Previous"
-msgstr "Anterior"
+msgstr "Roimhe Seo"
 
 #, python-format
 msgid "Page %(page_number)s of %(num_pages)s"
-msgstr "Página %(page_number)s de %(num_pages)s"
+msgstr "Leathanach %(page_number)s de %(num_pages)s"
 
 msgctxt "pagination"
 msgid "Next"
-msgstr "Siguiente"
+msgstr "Ar aghaidh"
 
 msgid "Page is not 'last', nor can it be converted to an int."
-msgstr "La página no es la \"ultima\", ni puede ser convertida a un entero."
+msgstr ""
+"Ní 'deireanach' é an leathanach, agus ní féidir é a thiontú go slánuimhir."
 
 #, python-format
 msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr "Página inválida (%(page_number)s): %(message)s"
+msgstr "Leathanach neamhbhailí (%(page_number)s): %(message)s"

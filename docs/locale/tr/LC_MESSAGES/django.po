@@ -3,14 +3,10 @@
 # source files.
 #
 # Translators:
-# Sebastián Magrí, 2019
-# Ernesto Rico Schmidt <ernesto@rico-schmidt.name>, 2019
-# LECbg, 2020
-# Uriel Medina <urimeba511@gmail.com>, 2021
-# Samuel David Ramirez Mantione <venezuelapoliglota@hotmail.com>, 2025
-# Ignacio José Lizarán Rus <ilizaran@gmail.com>, 2025
+# Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019
+# Necdet Yücel <necdetyucel@gmail.com>, 2025
 # Claude Paroz <claude@2xlibre.net>, 2025
-# JUAN DAVID JARAMILLO ORTIZ <juanda097@protonmail.ch>, 2025
+# BouRock, 2025
 #
 #, fuzzy
 msgid ""
@@ -19,30 +15,29 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-04 10:04-0500\n"
 "PO-Revision-Date: 2019-02-19 01:18+0000\n"
-"Last-Translator: JUAN DAVID JARAMILLO ORTIZ <juanda097@protonmail.ch>, 2025\n"
-"Language-Team: Spanish (https://app.transifex.com/django/teams/17080/es/)\n"
+"Last-Translator: BouRock, 2025\n"
+"Language-Team: Turkish (https://app.transifex.com/django/teams/17080/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Language: tr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 msgid "Documentation"
-msgstr "Documentación"
+msgstr "Belgeler"
 
 #, python-format
 msgid "Search %s documentation"
-msgstr "Buscar documentación sobre %s "
+msgstr "%s belgelerini ara"
 
 msgid "Search"
-msgstr "Buscar"
+msgstr "Arama"
 
 msgid "API Reference"
 msgstr ""
 
 msgid "Using Django"
-msgstr ""
+msgstr "Django kullanmak"
 
 msgid "How-to guides"
 msgstr ""
@@ -51,20 +46,19 @@ msgid "Release notes"
 msgstr ""
 
 msgid "Django Documentation"
-msgstr "Documentación de Django"
+msgstr "Django Belgeleri"
 
 msgid "Django documentation"
-msgstr "Documentación de Django"
+msgstr "Django belgeleri"
 
 msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases. For older releases, use the "
 "version selector floating in the bottom right corner of this page."
 msgstr ""
-"Este documento es para la versión de desarrollo de Django, que puede ser "
-"significativamente diferente de las versiones anteriores. Para versiones "
-"anteriores, use el selector de versión que se encuentra en la esquina "
-"inferior derecha de esta página."
+"Bu belge, önceki yayımlardan önemli ölçüde farklı olabilen Django'nun "
+"geliştirme sürümüdür. Eski yayımlar için bu sayfanın sağ alt köşesinde "
+"gezinen sürüm seçiciyi kullanın."
 
 msgid ""
 "This document is for a preview release of Django, which can be significantly "
@@ -76,84 +70,83 @@ msgid ""
 "This document is for an insecure version of Django that is no longer "
 "supported. Please upgrade to a newer release!"
 msgstr ""
-"Este documento es para una versión insegura de Django que ya no es "
-"compatible. ¡Por favor, actualice a una versión más reciente!"
+"Bu belge, artık desteklenmeyen Django'nun güvensiz bir sürümü içindir. "
+"Lütfen daha yeni bir yayıma yükseltin!"
 
 msgid "Getting Help"
 msgstr ""
 
 msgid "Click on the links on the left to switch to another language."
-msgstr "Haga clic en los enlaces de la izquierda para cambiar a otro idioma."
+msgstr "Başka bir dile geçmek için soldaki bağlantılara tıklayın."
 
 msgid "Language:"
-msgstr "Idioma:"
+msgstr "Dil:"
 
 msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases."
 msgstr ""
-"Este documento es para la versión de desarrollo de Django, que puede ser "
-"significativamente diferente de las versiones anteriores."
+"Bu belge, önceki yayımlardan önemli ölçüde farklı olabilen Django'nun "
+"geliştirme sürümüdür."
 
 #, python-format
 msgid "This document describes Django %(version)s."
-msgstr "Este documento describe Django %(version)s."
+msgstr "Bu belge Django %(version)s sürümünü anlatır."
 
 msgid "Click on the links on the left to see other versions."
-msgstr "Haga clic en los enlaces de la izquierda para ver otras versiones."
+msgstr "Diğer sürümleri görmek için soldaki bağlantılara tıklayın."
 
 msgid "Documentation version:"
-msgstr "Versión de la documentación:"
+msgstr "Belgelerin sürümü:"
 
 msgid "Previous page and next page"
 msgstr ""
 
 msgid "Additional Information"
-msgstr "Información Adicional"
+msgstr "İlave Bilgiler"
 
 msgid "Contents"
-msgstr "Contenidos"
+msgstr "İçerikler"
 
 msgid "Browse"
-msgstr "Navegar"
+msgstr "Gözat"
 
 msgid "Prev:"
-msgstr "Previo:"
+msgstr "Önceki:"
 
 msgid "Next:"
-msgstr "Siguiente:"
+msgstr "Sonraki:"
 
 msgid "Table of contents"
-msgstr "Tabla de contenidos"
+msgstr "İçindekiler"
 
 msgid "You are here:"
-msgstr "Usted está aquí:"
+msgstr "Buradasınız:"
 
 #, python-format
 msgid "Django %(version)s documentation"
-msgstr "Documentación de Django %(version)s "
+msgstr "Django %(version)s belgeleri"
 
 msgid "Getting help"
-msgstr "Obtener ayuda"
+msgstr "Yardım alın"
 
 msgid "FAQ"
-msgstr "FAQ"
+msgstr "SSS"
 
 msgid "Try the FAQ — it's got answers to many common questions."
-msgstr ""
-"Pruebe las preguntas frecuentes: tiene respuestas a muchas preguntas comunes."
+msgstr "SSS deneyin — birçok genel sorunun yanıtı burada."
 
 msgid "Index"
-msgstr "Índice"
+msgstr "İndeks"
 
 msgid "Module Index"
-msgstr "Índice del módulo"
+msgstr "Modül İndeksi"
 
 msgid "Table of Contents"
-msgstr "Tabla de Contenidos"
+msgstr "İçindekiler"
 
 msgid "Handy when looking for specific information."
-msgstr "Práctico cuando se busca información específica."
+msgstr "Belirli bir bilgi ararken kullanışlı."
 
 msgid "Django Discord Server"
 msgstr ""
@@ -172,75 +165,64 @@ msgstr ""
 
 msgid "Report bugs with Django or Django documentation in our ticket tracker."
 msgstr ""
-"Reporte bugs con Django o con la documentación de Django en nuestro "
-"rastreador de tickets."
+"Çağrı izleyicimizde Django veya Django belgelerinde olan hataları bildirin."
 
 msgid "Download:"
-msgstr "Descarga:"
+msgstr "İndirme:"
 
 msgid "Offline (development version):"
-msgstr "Fuera de línea (versión de desarrollo):"
+msgstr "Çevrimdışı (geliştirme sürümü):"
 
 #, python-format
 msgid "Offline (Django %(version)s):"
-msgstr "Fuera de línea (Django %(version)s):"
+msgstr "Çevrimdışı (Django %(version)s):"
 
 msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
 msgstr ""
-"Proporcionado por <a href=\"https://readthedocs.org/\">Lea los documentos.</"
-"a>\n"
-" "
+"<a href=\"https://readthedocs.org/\">Read the Docs</a> tarafından "
+"sağlanmaktadır."
 
 msgid "General Index | Django Documentation"
-msgstr "Índice general | Documentación Django"
+msgstr "Genel İndeks | Django Belgeleri"
 
 msgid "General Index"
-msgstr "Índice general"
+msgstr "Genel İndeks"
 
 msgid "[Link]"
-msgstr "[Link]"
+msgstr "[Bağlantı]"
 
 msgid "Module Index | Django Documentation"
-msgstr "Índice del módulo | Documentación Django"
+msgstr "Modül İndeksi | Django Belgeleri"
 
 msgid "Submit"
-msgstr "Enviar"
+msgstr "Gönder"
 
 msgid "Search | Django documentation"
-msgstr "Búsqueda | Documentación de django"
+msgstr "Arama | Django Belgeleri"
 
 msgid "Filter the current search results by documentation category"
 msgstr ""
 
 msgctxt "all documentation categories"
 msgid "All"
-msgstr "Todo"
+msgstr "Tümü"
 
 #, python-format
 msgid "Only 1 result for <em>%(query)s</em> in the development version"
 msgid_plural ""
 "%(num_results)s results for <em>%(query)s</em> in the development version"
-msgstr[0] ""
-"Sólo 1 resultado para <em>%(query)s</em> en la versión de desarrollo"
-msgstr[1] ""
-"%(num_results)s resultados para <em>%(query)s</em> en la versión de "
-"desarrollo"
-msgstr[2] ""
-"%(num_results)s resultados para <em>%(query)s</em> en la versión de "
-"desarrollo"
+msgstr[0] "Geliştirme sürümünde <em>%(query)s</em> için sadece 1 sonuç"
+msgstr[1] "Geliştirme sürümünde <em>%(query)s</em> için %(num_results)s sonuç"
 
 #, python-format
 msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
 msgid_plural ""
 "%(num_results)s results for <em>%(query)s</em> in version %(version)s"
-msgstr[0] "Sólo 1 resultado para <em>%(query)s</em> en la versión %(version)s"
-msgstr[1] ""
-"%(num_results)s resultados para <em>%(query)s</em> en la versión %(version)s"
-msgstr[2] ""
-"%(num_results)s resultados para <em>%(query)s</em> en la versión %(version)s"
+msgstr[0] "%(version)s sürümünde <em>%(query)s</em> için sadece 1 sonuç"
+msgstr[1] "%(version)s sürümünde <em>%(query)s</em> için %(num_results)s sonuç"
 
 msgid "No search query given"
-msgstr "No se proporcionó ninguna consulta de búsqueda"
+msgstr "Verilen arama sorgusu yok"
 
 #, python-format
 msgid ""
@@ -250,19 +232,19 @@ msgstr ""
 
 msgctxt "pagination"
 msgid "Previous"
-msgstr "Anterior"
+msgstr "Önceki"
 
 #, python-format
 msgid "Page %(page_number)s of %(num_pages)s"
-msgstr "Página %(page_number)s de %(num_pages)s"
+msgstr "Sayfa %(page_number)s / %(num_pages)s"
 
 msgctxt "pagination"
 msgid "Next"
-msgstr "Siguiente"
+msgstr "Sonraki"
 
 msgid "Page is not 'last', nor can it be converted to an int."
-msgstr "La página no es la \"ultima\", ni puede ser convertida a un entero."
+msgstr "Sayfa 'sonuncu' değil, ya da bir int'e dönüştürülemez."
 
 #, python-format
 msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr "Página inválida (%(page_number)s): %(message)s"
+msgstr "Geçersiz sayfa (%(page_number)s): %(message)s"
