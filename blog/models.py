@@ -134,8 +134,7 @@ class Entry(models.Model):
     is_searchable = models.BooleanField(
         default=False,
         help_text=_(
-            "Tick to make this entry allow this entry to appear in the "
-            "Django documentation search."
+            "Tick to make this entry appear in the Django documentation search."
         ),
     )
     pub_date = models.DateTimeField(

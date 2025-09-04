@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='entry',
             name='is_searchable',
-            field=models.BooleanField(help_text='Tick to make this entry allow this entry to appear in the Django documentation search.', null=True),
+            field=models.BooleanField(help_text='Tick to make this entry appear in the Django documentation search.', null=True),
         ),
     ]
