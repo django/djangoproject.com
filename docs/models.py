@@ -18,8 +18,7 @@ from django.core.cache import cache
 from django.db import models, transaction
 from django.db.models import Q
 from django.db.models.fields.json import KeyTextTransform
-from django.test import RequestFactory
-from django.urls import resolve, reverse as reverse_path
+from django.template.loader import get_template
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django_hosts.resolvers import reverse
@@ -31,6 +30,7 @@ from . import utils
 from .search import (
     DEFAULT_TEXT_SEARCH_CONFIG,
     DOCUMENT_SEARCH_VECTOR,
+    SEARCHABLE_VIEWS,
     START_SEL,
     STOP_SEL,
     TSEARCH_CONFIG_LANGUAGES,
@@ -266,27 +266,17 @@ class DocumentRelease(models.Model):
         if self.lang != "en":
             return  # The searchable views are only written in English currently
 
-        # The request needs to come through as a valid one, it's best if it
-        # matches the exact host we're looking for.
-        www_hosts = [host for host in settings.ALLOWED_HOSTS if host.startswith("www.")]
-        if not www_hosts or not (www_host := www_hosts[0]):
-            return
-        synced_views = [
-            # Page title, url name, url kwargs
-            ("Django's Ecosystem", "community-ecosystem", {}),
-        ]
-        for title, url_name, kwargs in synced_views:
-            absolute_url = reverse(url_name, kwargs=kwargs, host="www")
-            path = reverse_path(url_name, kwargs=kwargs)
-            request = RequestFactory().get(path, HTTP_HOST=www_host)
-            body = resolve(path).func(request).render().text
+        for searchable_view in SEARCHABLE_VIEWS:
+            absolute_url = reverse(searchable_view.url_name, host="www")
+            # This must match the template used for the url `community-ecosystem`
+            html = get_template("aggregator/ecosystem.html").render()
             # Need to parse the body element.
             Document.objects.create(
                 release=self,
                 path=absolute_url,
-                title=title,
+                title=searchable_view.page_title,
                 metadata={
-                    "body": body,
+                    "body": html,
                     "breadcrumbs": [
                         {
                             "path": DocumentationCategory.WEBSITE,
@@ -294,8 +284,8 @@ class DocumentRelease(models.Model):
                         },
                     ],
                     "parents": DocumentationCategory.WEBSITE,
-                    "slug": url_name,
-                    "title": title,
+                    "slug": searchable_view.url_name,
+                    "title": searchable_view.page_title,
                     "toc": "",
                 },
                 config=get_search_config(self.lang),
