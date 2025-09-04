@@ -38,6 +38,11 @@ from .search import (
 )
 
 
+def get_search_config(lang):
+    """Determine the PostgreSQL search language"""
+    return TSEARCH_CONFIG_LANGUAGES.get(lang[:2], DEFAULT_TEXT_SEARCH_CONFIG)
+
+
 class DocumentReleaseQuerySet(models.QuerySet):
     def current(self, lang="en"):
         current = self.get(is_default=True)
@@ -211,9 +216,7 @@ class DocumentRelease(models.Model):
                 path=document_path,
                 title=html.unescape(strip_tags(document["title"])),
                 metadata=document,
-                config=TSEARCH_CONFIG_LANGUAGES.get(
-                    self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG
-                ),
+                config=get_search_config(self.lang),
             )
         for document in self.documents.all():
             document.metadata["breadcrumbs"] = list(
@@ -248,9 +251,7 @@ class DocumentRelease(models.Model):
                         "title": entry.headline,
                         "toc": "",
                     },
-                    config=TSEARCH_CONFIG_LANGUAGES.get(
-                        self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG
-                    ),
+                    config=get_search_config(self.lang),
                 )
 
     def _sync_views_to_db(self):
@@ -293,9 +294,7 @@ class DocumentRelease(models.Model):
                         "title": title,
                         "toc": "",
                     },
-                    config=TSEARCH_CONFIG_LANGUAGES.get(
-                        self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG
-                    ),
+                    config=get_search_config(self.lang),
                 )
 
 
