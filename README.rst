@@ -4,9 +4,6 @@ djangoproject.com source code
 .. image:: https://github.com/django/djangoproject.com/workflows/Tests/badge.svg?branch=main
     :target: https://github.com/django/djangoproject.com/actions
 
-.. image:: https://coveralls.io/repos/django/djangoproject.com/badge.svg?branch=main
-    :target: https://coveralls.io/r/django/djangoproject.com?branch=main
-
 To run locally, you can either:
 
 - Install and run from a virtual environment
