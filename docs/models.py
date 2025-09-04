@@ -246,11 +246,11 @@ class DocumentRelease(models.Model):
                     "body": entry.body_html,
                     "breadcrumbs": [
                         {
-                            "path": DocumentationCategory.WEBSITE.value,
+                            "path": DocumentationCategory.WEBSITE,
                             "title": "News",
                         },
                     ],
-                    "parents": DocumentationCategory.WEBSITE.value,
+                    "parents": DocumentationCategory.WEBSITE,
                     "slug": entry.slug,
                     "title": entry.headline,
                     "toc": "",
@@ -289,11 +289,11 @@ class DocumentRelease(models.Model):
                     "body": body,
                     "breadcrumbs": [
                         {
-                            "path": DocumentationCategory.WEBSITE.value,
+                            "path": DocumentationCategory.WEBSITE,
                             "title": "Website",
                         },
                     ],
-                    "parents": DocumentationCategory.WEBSITE.value,
+                    "parents": DocumentationCategory.WEBSITE,
                     "slug": url_name,
                     "title": title,
                     "toc": "",
@@ -313,7 +313,7 @@ def _clean_document_path(path):
 
 
 def document_url(doc):
-    if doc.metadata.get("parents") == DocumentationCategory.WEBSITE.value:
+    if doc.metadata.get("parents") == DocumentationCategory.WEBSITE:
         return doc.path
     elif doc.path:
         kwargs = {

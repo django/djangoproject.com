@@ -482,7 +482,7 @@ class UpdateDocTests(TestCase):
             body_html="<h1>Searchable Blog Post</h1>",
         )
         cls.docs_documents = cls.release.documents.exclude(
-            metadata__parents=DocumentationCategory.WEBSITE.value
+            metadata__parents=DocumentationCategory.WEBSITE
         )
 
     def test_sync_to_db(self):
