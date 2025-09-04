@@ -515,7 +515,7 @@ class UpdateDocTests(TestCase):
             support_end=self.release.support_end,
         )
         non_english.sync_to_db([])
-        self.assertFalse(non_english.documents.exists())
+        self.assertQuerySetEqual(non_english.documents.all(), [])
 
     def test_blog_to_db_skip_no_end_support(self):
         """
