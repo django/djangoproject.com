@@ -625,39 +625,38 @@ class DocumentUrlTests(TestCase):
         cls.release = DocumentRelease.objects.create(
             release=Release.objects.create(version="1.2.3"),
         )
+
+    def test_document_url(self):
         documents = [
             {
                 "metadata": {"parents": "topics http"},
                 "path": "topics/http/generic-views",
-                "release": cls.release,
+                "release": self.release,
                 "title": "Generic views",
             },
-            # I'm not sure if this is valid or not.
             {
                 "metadata": {},
                 "path": "",
-                "release": cls.release,
+                "release": self.release,
                 "title": "Index",
             },
         ]
-        # Include the static views in the document search
-        cls.release._sync_views_to_db()
         Document.objects.bulk_create(Document(**doc) for doc in documents)
-        cls.document_index, cls.document_view, cls.document_detail = (
-            cls.release.documents.order_by("path")
-        )
-
-    def test_document_url(self):
+        document_index, document_detail = self.release.documents.order_by("path")
         self.assertEqual(
-            self.document_index.get_absolute_url(),
+            document_index.get_absolute_url(),
             "http://docs.djangoproject.localhost:8000/en/1.2.3/",
         )
         self.assertEqual(
-            self.document_view.get_absolute_url(),
-            "http://www.djangoproject.localhost:8000/community/ecosystem/",
-        )
-        self.assertEqual(
-            self.document_detail.get_absolute_url(),
+            document_detail.get_absolute_url(),
             "http://docs.djangoproject.localhost:8000"
             "/en/1.2.3/topics/http/generic-views/",
+        )
+
+    def test_document_url_documentation_category_website(self):
+        self.release._sync_views_to_db()
+        document_view = self.release.documents.get()
+        self.assertEqual(
+            document_view.get_absolute_url(),
+            "http://www.djangoproject.localhost:8000/community/ecosystem/",
         )
