@@ -495,14 +495,15 @@ class UpdateDocTests(TestCase):
                 }
             ]
         )
-        document_paths = set(self.release.documents.values_list("path", flat=True))
-        self.assertEqual(
-            document_paths,
-            {
+        self.assertQuerySetEqual(
+            self.release.documents.all(),
+            [
                 "foo/bar",
                 reverse("community-ecosystem", host="www"),
                 self.entry.get_absolute_url(),
-            },
+            ],
+            ordered=False,
+            transform=attrgetter("path"),
         )
 
     def test_blog_to_db_skip_non_english(self):
@@ -526,11 +527,12 @@ class UpdateDocTests(TestCase):
             release=Release.objects.create(version="99.0"),
         )
         no_end_support.sync_to_db([])
-        self.assertEqual(
-            set(no_end_support.documents.values_list("path", flat=True)),
-            {
-                reverse("community-ecosystem", host="www"),
-            },
+
+        self.assertQuerySetEqual(
+            no_end_support.documents.all(),
+            [reverse("community-ecosystem", host="www")],
+            ordered=False,
+            transform=attrgetter("path"),
         )
 
     def test_clean_path(self):
