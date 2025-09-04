@@ -3,22 +3,25 @@
 # source files.
 #
 # Translators:
-# Claude Paroz <claude@2xlibre.net>, 2019
 # Jiyoon, Ha <cryptography@konkuk.ac.kr>, 2019
-# Yong Choi <sk8er.choi@gmail.com>, 2019
 # Seonpil Kim <swag.seonpil@gmail.com>, 2019
-# Yongtaek Jun <guardian.yong@gmail.com>, 2019
 # Park Hyunwoo <ez.amiryo@gmail.com>, 2019
+# Geonho Kim / Leo Kim <gh.leokim@gmail.com>, 2019
+# Peace Kim, 2025
+# Yong Choi <sk8er.choi@gmail.com>, 2025
+# 정환 윤, 2025
+# Claude Paroz <claude@2xlibre.net>, 2025
+# Yeonsu Bak <yeonsubak@gmail.com>, 2025
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-11 20:38-0500\n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
 "PO-Revision-Date: 2019-02-19 01:18+0000\n"
-"Last-Translator: Park Hyunwoo <ez.amiryo@gmail.com>, 2019\n"
-"Language-Team: Korean (https://www.transifex.com/django/teams/17080/ko/)\n"
+"Last-Translator: Yeonsu Bak <yeonsubak@gmail.com>, 2025\n"
+"Language-Team: Korean (https://app.transifex.com/django/teams/17080/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,6 +38,18 @@ msgstr "%s 문서 검색"
 msgid "Search"
 msgstr "검색"
 
+msgid "API Reference"
+msgstr "API 레퍼런스"
+
+msgid "Using Django"
+msgstr "Django 사용하기"
+
+msgid "How-to guides"
+msgstr ""
+
+msgid "Release notes"
+msgstr ""
+
 msgid "Django Documentation"
 msgstr "Django 문서"
 
@@ -50,9 +65,18 @@ msgstr ""
 "구 버전 문서를 보려면 이 페이지 오른쪽 하단의 버전 선택 버튼을 사용하세요."
 
 msgid ""
+"This document is for a preview release of Django, which can be significantly "
+"different from previous releases. For older releases, use the version "
+"selector floating in the bottom right corner of this page."
+msgstr ""
+
+msgid ""
 "This document is for an insecure version of Django that is no longer "
 "supported. Please upgrade to a newer release!"
 msgstr "지원이 중단된 Django 버전의 문서입니다. 새 릴리스로 업그레이드하세요!"
+
+msgid "Getting Help"
+msgstr ""
 
 msgid "Click on the links on the left to switch to another language."
 msgstr "다른 언어로 변경하려면 왼쪽의 링크를 클릭하세요."
@@ -76,6 +100,9 @@ msgstr "다른 버전을 보려면 왼쪽의 링크를 클릭하세요."
 msgid "Documentation version:"
 msgstr "문서 버전:"
 
+msgid "Previous page and next page"
+msgstr ""
+
 msgid "Additional Information"
 msgstr "추가 정보"
 
@@ -83,7 +110,7 @@ msgid "Contents"
 msgstr "목차"
 
 msgid "Browse"
-msgstr ""
+msgstr "탐색"
 
 msgid "Prev:"
 msgstr "이전:"
@@ -104,6 +131,9 @@ msgstr "Django %(version)s 문서"
 msgid "Getting help"
 msgstr "도움말"
 
+msgid "FAQ"
+msgstr "자주 묻는 질문"
+
 msgid "Try the FAQ — it's got answers to many common questions."
 msgstr "공통적인 질문에 대한 답을 FAQ에서 찾아보세요."
 
@@ -117,20 +147,25 @@ msgid "Table of Contents"
 msgstr "목차"
 
 msgid "Handy when looking for specific information."
+msgstr "특정한 주제에 대한 정보를 찾는데 유용합니다."
+
+msgid "Django Discord Server"
 msgstr ""
 
-msgid ""
-"Search for information in the archives of the django-users mailing list, or "
-"post a question."
-msgstr "|django-users 메일링 리스트 저장소나 공개된 질문에서 정보를 찾으세요"
+msgid "Join the Django Discord Community."
+msgstr ""
 
-msgid ""
-"Ask a question in the #django IRC channel, or search the IRC logs to see if "
-"it’s been asked before."
+msgid "Official Django Forum"
+msgstr ""
+
+msgid "Join the community on the Django Forum."
+msgstr ""
+
+msgid "Ticket tracker"
 msgstr ""
 
 msgid "Report bugs with Django or Django documentation in our ticket tracker."
-msgstr ""
+msgstr "티켓 트래커를 통해 Django 혹은 Django 문서의 버그를 신고해주세요."
 
 msgid "Download:"
 msgstr "다운로드:"
@@ -157,48 +192,49 @@ msgstr "[링크]"
 msgid "Module Index | Django Documentation"
 msgstr "모듈 색인 | Django 문서"
 
+msgid "Submit"
+msgstr "제출"
+
 msgid "Search | Django documentation"
 msgstr "검색 | Django 문서"
 
-#, python-format
-msgid ""
-"\n"
-"    Only 1 result for <em>%(query)s</em> in the development version\n"
-"  "
-msgid_plural ""
-"\n"
-"    %(num_results)s results for <em>%(query)s</em> in the development "
-"version\n"
-"  "
-msgstr[0] ""
+msgid "Filter the current search results by documentation category"
+msgstr ""
+
+msgctxt "all documentation categories"
+msgid "All"
+msgstr "모두"
 
 #, python-format
-msgid ""
-"\n"
-"    Only 1 result for <em>%(query)s</em> in version %(version)s\n"
-"  "
+msgid "Only 1 result for <em>%(query)s</em> in the development version"
 msgid_plural ""
-"\n"
-"    %(num_results)s results for <em>%(query)s</em> in version %(version)s\n"
-"  "
-msgstr[0] ""
+"%(num_results)s results for <em>%(query)s</em> in the development version"
+msgstr[0] "development 버전에서 <em>%(query)s</em>의 결과 %(num_results)s건"
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in version %(version)s"
+msgstr[0] "%(version)s버전에서 <em>%(query)s</em>의 결과 %(num_results)s건"
 
 msgid "No search query given"
 msgstr "검색 질의 없음"
 
+#, python-format
+msgid ""
+"Please try searching <a href=\"%(all_search)s\">all documentation results</"
+"a>."
+msgstr ""
+
+msgctxt "pagination"
 msgid "Previous"
 msgstr "이전"
 
 #, python-format
-msgid ""
-"\n"
-"        Page %(page_number)s of %(num_pages)s\n"
-"      "
-msgstr ""
-"\n"
-"        페이지 %(page_number)s of %(num_pages)s\n"
-"      "
+msgid "Page %(page_number)s of %(num_pages)s"
+msgstr "총 %(num_pages)s 페이지 중 %(page_number)s페이지"
 
+msgctxt "pagination"
 msgid "Next"
 msgstr "다음"
 
