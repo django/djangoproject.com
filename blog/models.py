@@ -31,11 +31,16 @@ def _md_slugify(value, separator):
 
 
 class EntryQuerySet(models.QuerySet):
-    def published(self):
-        return self.active().filter(pub_date__lte=timezone.now())
+    def published(self, as_of=None):
+        if as_of is None:
+            as_of = timezone.now()
+        return self.active().filter(pub_date__lte=as_of)
 
     def active(self):
         return self.filter(is_active=True)
+
+    def searchable(self):
+        return self.filter(is_searchable=True)
 
 
 class ContentFormat(models.TextChoices):
@@ -126,6 +131,12 @@ class Entry(models.Model):
         ),
         default=False,
     )
+    is_searchable = models.BooleanField(
+        default=False,
+        help_text=_(
+            "Tick to make this entry appear in the Django documentation search."
+        ),
+    )
     pub_date = models.DateTimeField(
         verbose_name=_("Publication date"),
         help_text=_(
@@ -168,7 +179,7 @@ class Entry(models.Model):
             "day": self.pub_date.strftime("%d").lower(),
             "slug": self.slug,
         }
-        return reverse("weblog:entry", kwargs=kwargs)
+        return reverse("weblog:entry", kwargs=kwargs, host="www")
 
     def is_published(self):
         """

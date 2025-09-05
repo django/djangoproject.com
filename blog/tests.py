@@ -64,6 +64,31 @@ class EntryTestCase(DateTimeMixin, TestCase):
             ["past active"],
             transform=lambda entry: entry.headline,
         )
+        self.assertQuerySetEqual(
+            Entry.objects.published(self.tomorrow),
+            ["future active", "past active"],
+            transform=lambda entry: entry.headline,
+        )
+
+    def test_manager_searchable(self):
+        """
+        Make sure that the Entry manager's `searchable` method works
+        """
+        Entry.objects.create(
+            pub_date=self.yesterday,
+            is_searchable=False,
+            headline="not searchable",
+            slug="a",
+        )
+        Entry.objects.create(
+            pub_date=self.yesterday, is_searchable=True, headline="searchable", slug="b"
+        )
+
+        self.assertQuerySetEqual(
+            Entry.objects.searchable(),
+            ["searchable"],
+            transform=lambda entry: entry.headline,
+        )
 
     def test_docutils_safe(self):
         """
