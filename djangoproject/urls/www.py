@@ -94,6 +94,16 @@ urlpatterns = [
         TemplateView.as_view(template_name="diversity/changes.html"),
         name="diversity_changes",
     ),
+    path(
+        "accessibility/",
+        TemplateView.as_view(template_name="accessibility/index.html"),
+        name="accessibility",
+    ),
+    path(
+        "accessibility/changes/",
+        TemplateView.as_view(template_name="accessibility/changes.html"),
+        name="accessibility_changes",
+    ),
     path("contact/", include("contact.urls")),
     path("foundation/django_core/", CoreDevelopers.as_view()),
     path("foundation/minutes/", include("foundation.urls.meetings")),
