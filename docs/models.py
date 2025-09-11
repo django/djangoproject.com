@@ -16,7 +16,11 @@ from django.contrib.postgres.search import (
 )
 from django.core.cache import cache
 from django.db import models, transaction
-from django.db.models import Q
+from django.db.models import (
+    Case,
+    Q,
+    When,
+)
 from django.db.models.fields.json import KeyTextTransform
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
@@ -27,10 +31,10 @@ from releases.models import Release
 from . import utils
 from .search import (
     DEFAULT_TEXT_SEARCH_CONFIG,
-    DOCUMENT_SEARCH_VECTOR,
     START_SEL,
     STOP_SEL,
     TSEARCH_CONFIG_LANGUAGES,
+    get_document_search_vector,
 )
 
 
@@ -261,7 +265,7 @@ class DocumentQuerySet(models.QuerySet):
             search_query = SearchQuery(
                 query_text, config=models.F("config"), search_type="websearch"
             )
-            search_rank = SearchRank(models.F("search"), search_query)
+            search_rank = SearchRank(models.F("vector"), search_query)
             search = partial(
                 SearchHeadline,
                 start_sel=START_SEL,
@@ -296,7 +300,7 @@ class DocumentQuerySet(models.QuerySet):
             )
             vector_qs = (
                 base_qs.alias(rank=search_rank)
-                .filter(search=search_query)
+                .filter(vector=search_query)
                 .order_by("-rank")
             )
             if not vector_qs:
@@ -314,22 +318,6 @@ class DocumentQuerySet(models.QuerySet):
         else:
             return self.none()
 
-    def search_reset(self):
-        """Set to null all not null Document's search vector fields."""
-        return Document.objects.exclude(search=None).update(search=None)
-
-    def search_update(self):
-        """
-        Update Document's search vector fields using the document definition.
-
-        This method don't index the module pages (since source code is hard to
-        combine with full text search) and the big flattened index of the CBVs.
-        """
-        return Document.objects.exclude(
-            Q(path__startswith="_modules")
-            | Q(path__startswith="ref/class-based-views/flattened-index")
-        ).update(search=DOCUMENT_SEARCH_VECTOR)
-
 
 class Document(models.Model):
     """
@@ -344,8 +332,44 @@ class Document(models.Model):
     path = models.CharField(max_length=500)
     title = models.CharField(max_length=500)
     metadata = models.JSONField(default=dict)
-    search = SearchVectorField(null=True, editable=False)
-    config = models.SlugField(default=DEFAULT_TEXT_SEARCH_CONFIG)
+    vector = models.GeneratedField(
+        expression=Case(
+            When(config="arabic", then=get_document_search_vector("arabic")),
+            When(config="catalan", then=get_document_search_vector("catalan")),
+            When(config="danish", then=get_document_search_vector("danish")),
+            When(config="german", then=get_document_search_vector("german")),
+            When(config="greek", then=get_document_search_vector("greek")),
+            When(config="english", then=get_document_search_vector("english")),
+            When(config="spanish", then=get_document_search_vector("spanish")),
+            When(config="basque", then=get_document_search_vector("basque")),
+            When(config="finnish", then=get_document_search_vector("finnish")),
+            When(config="french", then=get_document_search_vector("french")),
+            When(config="irish", then=get_document_search_vector("irish")),
+            When(config="hindi", then=get_document_search_vector("hindi")),
+            When(config="hungarian", then=get_document_search_vector("hungarian")),
+            When(config="armenian", then=get_document_search_vector("armenian")),
+            When(config="indonesian", then=get_document_search_vector("indonesian")),
+            When(config="italian", then=get_document_search_vector("italian")),
+            When(config="lithuanian", then=get_document_search_vector("lithuanian")),
+            When(config="nepali", then=get_document_search_vector("nepali")),
+            When(config="dutch", then=get_document_search_vector("dutch")),
+            When(config="norwegian", then=get_document_search_vector("norwegian")),
+            When(config="portuguese", then=get_document_search_vector("portuguese")),
+            When(config="romanian", then=get_document_search_vector("romanian")),
+            When(config="russian", then=get_document_search_vector("russian")),
+            When(config="serbian", then=get_document_search_vector("serbian")),
+            When(config="swedish", then=get_document_search_vector("swedish")),
+            When(config="tamil", then=get_document_search_vector("tamil")),
+            When(config="turkish", then=get_document_search_vector("turkish")),
+            When(config="yiddish", then=get_document_search_vector("yiddish")),
+            default=get_document_search_vector(),
+        ),
+        output_field=SearchVectorField(),
+        db_persist=True,
+    )
+    config = models.SlugField(
+        db_default=DEFAULT_TEXT_SEARCH_CONFIG, default=DEFAULT_TEXT_SEARCH_CONFIG
+    )
 
     objects = DocumentQuerySet.as_manager()
 
@@ -354,7 +378,7 @@ class Document(models.Model):
             models.Index(
                 fields=["release", "title"], name="document_release_title_idx"
             ),
-            GinIndex(fields=["search"]),
+            GinIndex(fields=["vector"], name="document_vector_idx"),
         ]
         unique_together = ("release", "path")
 
