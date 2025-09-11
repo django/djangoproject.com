@@ -12,14 +12,6 @@ define(function () {
     mods.push('mod/list-collapsing');
   }
 
-  if (hasClass('dashboard-index')) {
-    mods.push('dashboard/index');
-  }
-
-  if (hasClass('dashboard-detail')) {
-    mods.push('dashboard/detail');
-  }
-
   if (hasClass('stripe-donation')) {
     mods.push('mod/stripe-donation');
   }
