@@ -42,4 +42,4 @@ services:
             timeout: 10s
             retries: 10
         volumes:
-        - ./initdb/tracdb.sql:/docker-entrypoint-initdb.d/tracdb.sql
+            - ./initdb/tracdb.sql:/docker-entrypoint-initdb.d/tracdb.sql
