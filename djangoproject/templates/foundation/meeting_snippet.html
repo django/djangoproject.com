@@ -24,8 +24,13 @@
   {% endfor %}
 </ul>
 <p>
-  Board meetings are generally the second Thursday of the month but are
-  occasionally rescheduled for attendance. {% if next_meeting_date %}
-    Next meeting scheduled for: {{ next_meeting_date |date:"DATE_FORMAT"}}
+  {% blocktranslate trimmed %}
+    Board meetings are generally the second Thursday of the month but are
+    occasionally rescheduled for attendance. 
+  {% endblocktranslate %}
+  {% if next_meeting_date %}
+    {% translate "Next meeting scheduled for: " context "Following meetings schedule" %}
+    {{next_meeting_date|date:"DATE_FORMAT"}}
   {% endif %}
+
 </p>
