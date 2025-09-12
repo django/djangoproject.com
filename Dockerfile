@@ -19,7 +19,7 @@ RUN apt-get update \
         rsync \
     && /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y \
     && apt-get install --assume-yes --no-install-recommends \
-        postgresql-client-14 \
+        postgresql-client-17 \
     && apt-get distclean
 
 ARG REQ_FILE=requirements/prod.txt
