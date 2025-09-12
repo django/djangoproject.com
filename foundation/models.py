@@ -95,6 +95,7 @@ class Meeting(models.Model):
     )
     treasurer_report = models.TextField(blank=True)
     treasurer_report_html = models.TextField(editable=False)
+    next_meeting_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return "{}, {}".format(self.title, date_format(self.date, "F j, Y"))
