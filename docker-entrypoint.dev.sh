@@ -1,7 +1,7 @@
 #!/bin/sh
 
 python -m manage flush --no-input
-# PGPASSWORD=djangoproject psql --host db --port 5432 --username=code.djangoproject --dbname=code.djangoproject < tracdb/trac.sql
+PGPASSWORD=secret psql --host db --port 5432 --username=code.djangoproject --dbname=code.djangoproject < tracdb/trac.sql
 python -m manage migrate
 make compile-scss # must come before collectstatic
 python -m manage collectstatic --no-input --clear
