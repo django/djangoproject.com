@@ -16,7 +16,7 @@ jobs:
 
         services:
             postgres:
-                image: postgres:17-bookworm
+                image: postgres:17-trixie
                 env:
                     POSTGRES_PASSWORD: postgres
                 options: >-

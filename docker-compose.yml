@@ -25,7 +25,7 @@ services:
             db:
                 condition: service_healthy
     db:
-        image: postgres:17-bookworm
+        image: postgres:17-trixie
         environment:
             - POSTGRES_USER=djangoproject
             - POSTGRES_PASSWORD=secret
