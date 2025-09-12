@@ -10,6 +10,7 @@ DATABASES = {
         "PORT": os.environ.get("SQL_PORT"),
     }
 }
+
 # Trac connection
 DATABASES["trac"] = {
     "ENGINE": "django.db.backends.postgresql",
@@ -27,4 +28,4 @@ ALLOWED_HOSTS = [".localhost", "127.0.0.1", "www.127.0.0.1"]
 LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = ["docs.djangoproject.localhost"]
 
 # django-hosts settings
-PARENT_HOST = "localhost:8000"
+PARENT_HOST = "djangoproject.localhost:8000"
