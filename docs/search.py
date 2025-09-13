@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 from django.contrib.postgres.search import SearchVector
 from django.db.models import F, TextChoices
 from django.db.models.fields.json import KeyTextTransform
@@ -65,6 +67,7 @@ class DocumentationCategory(TextChoices):
     TOPICS = "topics", _("Using Django")
     HOWTO = "howto", _("How-to guides")
     RELEASE_NOTES = "releases", _("Release notes")
+    WEBSITE = "weblog", _("Django Website")
 
     @classmethod
     def parse(cls, value, default=None):
@@ -72,3 +75,14 @@ class DocumentationCategory(TextChoices):
             return cls(value)
         except ValueError:
             return None
+
+
+@dataclass
+class SearchableView:
+    page_title: str
+    url_name: str
+
+
+SEARCHABLE_VIEWS = [
+    SearchableView(page_title="Django's Ecosystem", url_name="community-ecosystem")
+]

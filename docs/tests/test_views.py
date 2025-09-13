@@ -91,7 +91,7 @@ class SearchFormTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(
-            response, "4 results for <em>generic</em> in version 5.1", html=True
+            response, "5 results for <em>generic</em> in version 5.1", html=True
         )
         self.assertContains(response, self.active_filter, count=1)
         self.assertContains(response, f"{self.active_filter}All</a>", html=True)
@@ -122,7 +122,7 @@ class SearchFormTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(
-            response, "4 results for <em>generic</em> in version 5.1", html=True
+            response, "5 results for <em>generic</em> in version 5.1", html=True
         )
         self.assertContains(response, self.active_filter, count=1)
         self.assertContains(response, f"{self.active_filter}All</a>", html=True)
