@@ -5,7 +5,7 @@ SCSS = djangoproject/scss
 STATIC = djangoproject/static
 
 ci: test
-	@python -m coverage report
+	@python -m coverage report --fail-under=80
 
 collectstatics: compile-scss
 	python -m manage collectstatic --noinput
