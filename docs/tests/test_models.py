@@ -471,7 +471,10 @@ class UpdateDocTests(TestCase):
     def setUpTestData(cls):
         now = timezone.now()
         cls.release = DocumentRelease.objects.create(
-            support_end=now + datetime.timedelta(days=1)
+            release=Release.objects.create(
+                version="1.0.0",
+                eol_date=now + datetime.timedelta(days=1),
+            )
         )
         cls.entry = Entry.objects.create(
             pub_date=now,
@@ -512,8 +515,9 @@ class UpdateDocTests(TestCase):
         """
         non_english = DocumentRelease.objects.create(
             lang="es",
-            release=Release.objects.create(version="88.0"),
-            support_end=self.release.support_end,
+            release=Release.objects.create(
+                version="88.0", eol_date=self.release.release.eol_date
+            ),
         )
         non_english.sync_to_db([])
         self.assertQuerySetEqual(non_english.documents.all(), [])

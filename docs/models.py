@@ -104,11 +104,6 @@ class DocumentRelease(models.Model):
         on_delete=models.CASCADE,
     )
     is_default = models.BooleanField(default=False)
-    support_end = models.DateField(
-        null=True,
-        blank=True,
-        help_text="The end of support for this release of Django.",
-    )
 
     objects = DocumentReleaseQuerySet.as_manager()
 
@@ -232,12 +227,12 @@ class DocumentRelease(models.Model):
         Sync the blog entries into search based on the release documents
         support end date.
         """
-        if self.lang != "en" or not self.support_end:
+        if self.lang != "en" or not self.release.eol_date:
             # The blog is only written in English, and we need to know
             # the release's support end to know when to stop considering
             # blog posts relevant.
             return
-        for entry in Entry.objects.published(self.support_end).searchable():
+        for entry in Entry.objects.published(self.release.eol_date).searchable():
             Document.objects.create(
                 release=self,
                 path=entry.get_absolute_url(),
