@@ -3,7 +3,9 @@ from dataclasses import dataclass
 from django.contrib.postgres.search import SearchVector
 from django.db.models import F, TextChoices
 from django.db.models.fields.json import KeyTextTransform
+from django.template.loader import get_template
 from django.utils.translation import gettext_lazy as _
+from django_hosts import reverse
 
 # Imported from
 # https://github.com/postgres/postgres/blob/REL_14_STABLE/src/bin/initdb/initdb.c#L659
@@ -81,8 +83,21 @@ class DocumentationCategory(TextChoices):
 class SearchableView:
     page_title: str
     url_name: str
+    template: str
+
+    @property
+    def html(self):
+        return get_template(self.template).render()
+
+    @property
+    def www_absolute_url(self):
+        return reverse(self.url_name, host="www")
 
 
 SEARCHABLE_VIEWS = [
-    SearchableView(page_title="Django's Ecosystem", url_name="community-ecosystem")
+    SearchableView(
+        page_title="Django's Ecosystem",
+        url_name="community-ecosystem",
+        template="aggregator/ecosystem.html",
+    ),
 ]

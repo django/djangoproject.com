@@ -18,7 +18,6 @@ from django.core.cache import cache
 from django.db import models, transaction
 from django.db.models import Q
 from django.db.models.fields.json import KeyTextTransform
-from django.template.loader import get_template
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django_hosts.resolvers import reverse
@@ -262,16 +261,12 @@ class DocumentRelease(models.Model):
             return  # The searchable views are only written in English currently
 
         for searchable_view in SEARCHABLE_VIEWS:
-            absolute_url = reverse(searchable_view.url_name, host="www")
-            # This must match the template used for the url `community-ecosystem`
-            html = get_template("aggregator/ecosystem.html").render()
-            # Need to parse the body element.
             Document.objects.create(
                 release=self,
-                path=absolute_url,
+                path=searchable_view.www_absolute_url,
                 title=searchable_view.page_title,
                 metadata={
-                    "body": html,
+                    "body": searchable_view.html,
                     "breadcrumbs": [
                         {
                             "path": DocumentationCategory.WEBSITE,
