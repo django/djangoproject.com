@@ -318,6 +318,8 @@ class Release(models.Model):
         }
         if self.iteration > 1:
             previous_release_kwargs["iteration"] = self.iteration - 1
+        elif self.status == "a":
+            return
         elif self.status == "b":
             previous_release_kwargs["status"] = "a"
         elif self.status == "c":
