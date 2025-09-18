@@ -332,6 +332,8 @@ class Document(models.Model):
     path = models.CharField(max_length=500)
     title = models.CharField(max_length=500)
     metadata = models.JSONField(default=dict)
+    # Use Case/When to force the expression to be immutable, per:
+    # https://www.paulox.net/2025/09/08/djangocon-us-2025/
     search_vector = models.GeneratedField(
         expression=Case(
             *[
