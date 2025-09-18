@@ -231,26 +231,31 @@ class DocumentRelease(models.Model):
             # the release's support end to know when to stop considering
             # blog posts relevant.
             return
-        for entry in Entry.objects.published(self.release.eol_date).searchable():
-            Document.objects.create(
-                release=self,
-                path=entry.get_absolute_url(),
-                title=entry.headline,
-                metadata={
-                    "body": entry.body_html,
-                    "breadcrumbs": [
-                        {
-                            "path": DocumentationCategory.WEBSITE,
-                            "title": "News",
-                        },
-                    ],
-                    "parents": DocumentationCategory.WEBSITE,
-                    "slug": entry.slug,
-                    "title": entry.headline,
-                    "toc": "",
-                },
-                config=get_search_config(self.lang),
-            )
+        entries = Entry.objects.published(self.release.eol_date).searchable()
+        Document.objects.bulk_create(
+            [
+                Document(
+                    release=self,
+                    path=entry.get_absolute_url(),
+                    title=entry.headline,
+                    metadata={
+                        "body": entry.body_html,
+                        "breadcrumbs": [
+                            {
+                                "path": DocumentationCategory.WEBSITE,
+                                "title": "News",
+                            },
+                        ],
+                        "parents": DocumentationCategory.WEBSITE,
+                        "slug": entry.slug,
+                        "title": entry.headline,
+                        "toc": "",
+                    },
+                    config=get_search_config(self.lang),
+                )
+                for entry in entries
+            ]
+        )
 
     def _sync_views_to_db(self):
         """
@@ -260,26 +265,30 @@ class DocumentRelease(models.Model):
         if self.lang != "en":
             return  # The searchable views are only written in English currently
 
-        for searchable_view in SEARCHABLE_VIEWS:
-            Document.objects.create(
-                release=self,
-                path=searchable_view.www_absolute_url,
-                title=searchable_view.page_title,
-                metadata={
-                    "body": searchable_view.html,
-                    "breadcrumbs": [
-                        {
-                            "path": DocumentationCategory.WEBSITE,
-                            "title": "Website",
-                        },
-                    ],
-                    "parents": DocumentationCategory.WEBSITE,
-                    "slug": searchable_view.url_name,
-                    "title": searchable_view.page_title,
-                    "toc": "",
-                },
-                config=get_search_config(self.lang),
-            )
+        Document.objects.bulk_create(
+            [
+                Document(
+                    release=self,
+                    path=searchable_view.www_absolute_url,
+                    title=searchable_view.page_title,
+                    metadata={
+                        "body": searchable_view.html,
+                        "breadcrumbs": [
+                            {
+                                "path": DocumentationCategory.WEBSITE,
+                                "title": "Website",
+                            },
+                        ],
+                        "parents": DocumentationCategory.WEBSITE,
+                        "slug": searchable_view.url_name,
+                        "title": searchable_view.page_title,
+                        "toc": "",
+                    },
+                    config=get_search_config(self.lang),
+                )
+                for searchable_view in SEARCHABLE_VIEWS
+            ]
+        )
 
 
 def _clean_document_path(path):
