@@ -1,5 +1,6 @@
 {% extends "base_foundation.html" %}
 {% load i18n %}
+{% load blog_extras %} {# Load your custom filter #}
 
 {% block og_title %}{% blocktranslate %}Meeting minutes: {{ meeting }}{% endblocktranslate %}{% endblock %}
 {% block og_description %}{% blocktranslate %}Meeting minutes for {{ meeting }}{% endblocktranslate %}{% endblock %}
@@ -80,7 +81,7 @@
     {% for business in ongoing_business %}
       <h3>{{ business.title }}</h3>
 
-      {{ business.body_html|safe }}
+      {{ business.body_html|add_lazy_loading|safe }}
     {% endfor %}
   {% endif %}
 
@@ -90,7 +91,7 @@
     {% for business in new_business %}
       <h3>{{ business.title }}</h3>
 
-      {{ business.body_html|safe }}
+      {{ business.body_html|add_lazy_loading|safe }}
     {% endfor %}
   {% endif %}
 
