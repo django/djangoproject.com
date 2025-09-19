@@ -4,6 +4,7 @@ import re
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
+from django.template.defaultfilters import date as datefilter
 from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils.safestring import SafeString
@@ -567,3 +568,89 @@ class CorporateMembersTestCase(TestCase):
             self.assertNotContains(response, member.display_name)
             self.assertNotContains(response, member.url)
             self.assertNotContains(response, member.description)
+
+
+class RoadmapViewTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        # Define release schedule for 5.2, 6.0, and 6.1 series.
+        cls.release_schedule = {
+            "5.2": [
+                ("a1", datetime.date(2025, 1, 15)),
+                ("b1", datetime.date(2025, 2, 19)),
+                ("rc1", datetime.date(2025, 3, 19)),
+                ("", datetime.date(2025, 4, 2)),  # final
+            ],
+            "6.0": [
+                ("a1", datetime.date(2025, 9, 17)),
+                ("b1", datetime.date(2025, 10, 22)),
+                ("rc1", datetime.date(2025, 11, 19)),
+                ("", datetime.date(2025, 12, 3)),  # final
+            ],
+            "6.1": [
+                ("a1", datetime.date(2026, 5, 20)),
+                ("b1", datetime.date(2026, 6, 24)),
+                ("rc1", datetime.date(2026, 7, 22)),
+                ("", datetime.date(2026, 8, 5)),  # final
+            ],
+        }
+        for series, milestones in cls.release_schedule.items():
+            for milestone, date in milestones:
+                version = f"{series}{milestone}" if milestone else series
+                Release.objects.create(
+                    version=version,
+                    is_active=True,
+                    date=date,
+                    is_lts=series.endswith(".2"),
+                )
+
+    def test_roadmap_page_renders_series_title(self):
+        for series in self.release_schedule.keys():
+            url = reverse("roadmap", kwargs={"series": series})
+            response = self.client.get(url)
+            self.assertContains(response, f"Django {series} Roadmap", html=True)
+
+    def test_roadmap_page_contains_milestones(self):
+        for series, releases in self.release_schedule.items():
+            with self.subTest(series=series):
+                url = reverse("roadmap", kwargs={"series": series})
+                response = self.client.get(url)
+                for detail, date in [
+                    (f"Django {series} alpha; feature freeze.", releases[0][1]),
+                    (
+                        f"Django {series} beta; non-release blocking bug fix freeze.",
+                        releases[1][1],
+                    ),
+                    (
+                        f"Django {series} RC 1; translation string freeze.",
+                        releases[2][1],
+                    ),
+                    (f"Django {series} final.", releases[3][1]),
+                ]:
+                    expected = f"<tr><td>{datefilter(date)}</td><td>{detail}</td></tr>"
+                    self.assertContains(response, expected, html=True)
+
+    def test_series_non_digits(self):
+        for series in (0, "", "a.b", "2.2.0"):
+            with self.subTest(series=series):
+                response = self.client.get(f"/download/{series}/roadmap/")
+                self.assertEqual(response.status_code, 404)
+
+    def test_major_lower_bound(self):
+        for minor in (0, 1, 2, 3, 11):
+            with self.subTest(minor=minor):
+                response = self.client.get(f"/download/1.{minor}/roadmap/")
+                self.assertEqual(response.status_code, 404)
+
+    def test_links_to_contributing_and_release_process_present(self):
+        url = reverse("roadmap", kwargs={"series": "20.0"})
+        response = self.client.get(url)
+        self.assertContains(
+            response,
+            'href="http://docs.djangoproject.com/en/dev/internals/contributing/"',
+        )
+        self.assertContains(
+            response,
+            'href="http://docs.djangoproject.com/en/dev/internals/release-process/"',
+        )
