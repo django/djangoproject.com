@@ -83,7 +83,9 @@ class MeetingTestCase(TestCase):
             "title": "DSF Board monthly meeting",
         }
         latest_meeting = Meeting.objects.create(
-            date=date(2023, 5, 12), **common_meeting_data
+            date=date(2023, 5, 12),
+            next_meeting_date=date(2023, 6, 13),
+            **common_meeting_data
         )
         previous_meeting = Meeting.objects.create(
             date=date(2023, 4, 12), **common_meeting_data
@@ -104,6 +106,7 @@ class MeetingTestCase(TestCase):
         self.assertContains(response, "Latest DSF meeting minutes")
 
         self.assertContains(response, "DSF Board monthly meeting, May 12, 2023")
+        self.assertContains(response, "Next meeting scheduled for: June 13, 2023")
         self.assertContains(response, latest_meeting.get_absolute_url())
         self.assertContains(response, "DSF Board monthly meeting, April 12, 2023")
         self.assertContains(response, previous_meeting.get_absolute_url())
