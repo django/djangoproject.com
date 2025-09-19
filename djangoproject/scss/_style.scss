@@ -13,7 +13,7 @@ CSS rendered with Libsass 0.7.0
 
 //------------------- Globals
 body {
-    @include serif;
+    @include sans-serif;
     @include font-size(18);
     background: var(--sidebar-bg);
     color: var(--body-fg);
@@ -636,7 +636,6 @@ header {
     }
 
     p {
-        @include serif;
         @include font-size(18);
         color: var(--white-color);
         left: -9999px;
