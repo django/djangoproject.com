@@ -1,4 +1,4 @@
-exclude: '^djangoproject\/static\/(css\/|fonts\/|img\/|robots).*$'
+exclude: '^djangoproject\/static\/(css\/|fonts\/|img\/|robots).*$.'
 default_language_version:
     python: python3
 repos:
@@ -32,7 +32,7 @@ repos:
       rev: v3.21.2
       hooks:
           - id: pyupgrade
-            args: [--py312]
+            args: [--py313]
 
     - repo: https://github.com/adamchainz/django-upgrade
       rev: 1.31.1
