@@ -217,8 +217,16 @@ TEMPLATES = [
 
 TIME_ZONE = "America/Chicago"
 
+# Internationalization settings
+
 USE_I18N = True
 
+LOCALE_PATHS = [
+    # List apps first so their translations take precedence.
+    # This list should match LOCALE_DIRS in update-translations.sh.
+    str(BASE_DIR.joinpath(path))
+    for path in ("dashboard/locale/", "docs/locale/", "locale/")
+]
 
 USE_TZ = False
 
