@@ -31,7 +31,7 @@ repos:
       rev: "v3.21.0"
       hooks:
           - id: pyupgrade
-            args: [--py312]
+            args: [--py313]
     - repo: https://github.com/adamchainz/django-upgrade
       rev: "1.29.0"
       hooks:
