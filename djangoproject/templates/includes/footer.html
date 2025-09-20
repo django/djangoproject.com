@@ -1,3 +1,5 @@
+{% load hosts %}
+
 <footer>
   <div class="subfooter">
     <div class="container">
@@ -59,9 +61,9 @@
           <h3>Support Us</h3>
           <ul>
             <li><a href="{% url "fundraising:index" %}">Sponsor Django</a></li>
-            <li><a href="/foundation/corporate-membership/">Corporate membership</a></li>
+            <li><a href="{% host_url "homepage" host "www" %}foundation/corporate-membership/">Corporate membership</a></li>
             <li><a href="https://django.threadless.com/" target="_blank">Official merchandise store</a></li>
-            <li><a href="/foundation/donate/#benevity-giving">Benevity Workplace Giving Program</a></li>
+            <li><a href="{% host_url "homepage" host "www" %}foundation/donate/#benevity-giving">Benevity Workplace Giving Program</a></li>
           </ul>
         </div>
       </div>

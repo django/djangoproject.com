@@ -1,0 +1,251 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# Tobias McNulty <tobias+dsf@caktusgroup.com>, 2025
+# Claude Paroz <claude@2xlibre.net>, 2025
+# Besnik Bleta <besnik@programeshqip.org>, 2025
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
+"PO-Revision-Date: 2019-02-19 01:18+0000\n"
+"Last-Translator: Besnik Bleta <besnik@programeshqip.org>, 2025\n"
+"Language-Team: Albanian (https://app.transifex.com/django/teams/17080/sq/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sq\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Documentation"
+msgstr "Dokumentim"
+
+#, python-format
+msgid "Search %s documentation"
+msgstr "Kërkoni te dokumentimi i %s"
+
+msgid "Search"
+msgstr "Kërkoni"
+
+msgid "API Reference"
+msgstr ""
+
+msgid "Using Django"
+msgstr ""
+
+msgid "How-to guides"
+msgstr ""
+
+msgid "Release notes"
+msgstr ""
+
+msgid "Django Documentation"
+msgstr "Dokumentim i Django-s"
+
+msgid "Django documentation"
+msgstr "Dokumentim i Django-s"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases. For older releases, use the "
+"version selector floating in the bottom right corner of this page."
+msgstr ""
+"Ky dokument vlen për versionin zhvillim të Django-s, i cili mund të jetë jo "
+"pak i ndryshëm nga hedhjet e mëparshme në qarkullim. Për hedhje më të vjetra "
+"në qarkullim, përdorni përzgjedhësin e versioneve, që shfaqet pezull te cepi "
+"i poshtëm djathtas në këtë faqe."
+
+msgid ""
+"This document is for a preview release of Django, which can be significantly "
+"different from previous releases. For older releases, use the version "
+"selector floating in the bottom right corner of this page."
+msgstr ""
+
+msgid ""
+"This document is for an insecure version of Django that is no longer "
+"supported. Please upgrade to a newer release!"
+msgstr ""
+"Ky dokument vlen për një version jo të sigurt të Django-s, që s’mbulohet më. "
+"Ju lutemi, përmirësojeni me një version të ri!"
+
+msgid "Getting Help"
+msgstr ""
+
+msgid "Click on the links on the left to switch to another language."
+msgstr "Që të kaloni në një gjuhë tjetër, klikoni mbi lidhjet në të majtë."
+
+msgid "Language:"
+msgstr "Gjuhë:"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases."
+msgstr ""
+"Ky dokument vlen për një version zhvillim të Django-s, i cili mund të jetë "
+"jo pak i ndryshëm nga hedhjet e mëparshme në qarkullim."
+
+#, python-format
+msgid "This document describes Django %(version)s."
+msgstr "Ky dokument përshkruan Django %(version)s."
+
+msgid "Click on the links on the left to see other versions."
+msgstr "Që të shihni versione të tjerë, klikoni mbi lidhjet në të majtë."
+
+msgid "Documentation version:"
+msgstr "Version dokumentimi:"
+
+msgid "Previous page and next page"
+msgstr ""
+
+msgid "Additional Information"
+msgstr "Informacion Shtesë"
+
+msgid "Contents"
+msgstr "Lëndë"
+
+msgid "Browse"
+msgstr "Shfletoni"
+
+msgid "Prev:"
+msgstr "I mëparshmi:"
+
+msgid "Next:"
+msgstr "Pasuesi:"
+
+msgid "Table of contents"
+msgstr "Pasqyrë e lëndës"
+
+msgid "You are here:"
+msgstr "Gjendeni këtu:"
+
+#, python-format
+msgid "Django %(version)s documentation"
+msgstr "Dokumentim i Django-s %(version)s"
+
+msgid "Getting help"
+msgstr "Si të merret ndihmë"
+
+msgid "FAQ"
+msgstr ""
+
+msgid "Try the FAQ — it's got answers to many common questions."
+msgstr "Provoni PBR — përmbajnë përgjigje për shumë pyetje të rëndomta."
+
+msgid "Index"
+msgstr "Tregues"
+
+msgid "Module Index"
+msgstr "Tregues Modulesh"
+
+msgid "Table of Contents"
+msgstr "Pasqyrë e Lëndës"
+
+msgid "Handy when looking for specific information."
+msgstr "E dobishme kur kërkohet për informacion të cakuar."
+
+msgid "Django Discord Server"
+msgstr ""
+
+msgid "Join the Django Discord Community."
+msgstr ""
+
+msgid "Official Django Forum"
+msgstr ""
+
+msgid "Join the community on the Django Forum."
+msgstr ""
+
+msgid "Ticket tracker"
+msgstr ""
+
+msgid "Report bugs with Django or Django documentation in our ticket tracker."
+msgstr ""
+"Njoftoni të meta të Django-s apo dokumentimit të Django-s përmes ndjekësit "
+"tonë të të metave."
+
+msgid "Download:"
+msgstr "Shkarkim:"
+
+msgid "Offline (development version):"
+msgstr "Offline (version zhvillim):"
+
+#, python-format
+msgid "Offline (Django %(version)s):"
+msgstr "Offline (Django %(version)s):"
+
+msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+msgstr "Furnizuar nga <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+
+msgid "General Index | Django Documentation"
+msgstr "Tregues i Përgjithshëm | Dokumentim i Django-s"
+
+msgid "General Index"
+msgstr "Tregues i Përgjithshëm"
+
+msgid "[Link]"
+msgstr "[Lidhje]"
+
+msgid "Module Index | Django Documentation"
+msgstr "Tregues Modulesh | Dokumentim i Django-s"
+
+msgid "Submit"
+msgstr "Parashtrojeni"
+
+msgid "Search | Django documentation"
+msgstr "Kërkim | Dokumentim i Django-s"
+
+msgid "Filter the current search results by documentation category"
+msgstr ""
+
+msgctxt "all documentation categories"
+msgid "All"
+msgstr "Krejt"
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in the development version"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in the development version"
+msgstr[0] "Vetëm 1 përfundim për <em>%(query)s</em> në versionin zhvillim"
+msgstr[1] ""
+"%(num_results)s përfundime për <em>%(query)s</em> në versionin zhvillim"
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in version %(version)s"
+msgstr[0] "Vetëm 1 përfundim për <em>%(query)s</em> në versionin %(version)s"
+msgstr[1] ""
+"%(num_results)s përfundime për <em>%(query)s</em> në versionin %(version)s"
+
+msgid "No search query given"
+msgstr "S’u dha term kërkimi"
+
+#, python-format
+msgid ""
+"Please try searching <a href=\"%(all_search)s\">all documentation results</"
+"a>."
+msgstr ""
+
+msgctxt "pagination"
+msgid "Previous"
+msgstr "I mëparshmi"
+
+#, python-format
+msgid "Page %(page_number)s of %(num_pages)s"
+msgstr "Faqja %(page_number)s nga %(num_pages)s"
+
+msgctxt "pagination"
+msgid "Next"
+msgstr "Pasuesi"
+
+msgid "Page is not 'last', nor can it be converted to an int."
+msgstr "Faqja s’është 'last', as mund të shndërrohet në një int."
+
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "Faqe e pavlefshme (%(page_number)s): %(message)s"

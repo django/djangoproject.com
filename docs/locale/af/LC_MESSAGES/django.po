@@ -1,0 +1,249 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# Claude Paroz <claude@2xlibre.net>, 2019
+# Charl du Plessis <cjdupless@gmail.com>, 2021
+# Tobias McNulty <tobias+dsf@caktusgroup.com>, 2025
+# F Wolff <friedel@translate.org.za>, 2025
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
+"PO-Revision-Date: 2019-02-19 01:18+0000\n"
+"Last-Translator: F Wolff <friedel@translate.org.za>, 2025\n"
+"Language-Team: Afrikaans (https://app.transifex.com/django/teams/17080/af/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: af\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Documentation"
+msgstr "Dokumentasie"
+
+#, python-format
+msgid "Search %s documentation"
+msgstr "Deursoek %s-dokumentasie"
+
+msgid "Search"
+msgstr "Soek"
+
+msgid "API Reference"
+msgstr ""
+
+msgid "Using Django"
+msgstr ""
+
+msgid "How-to guides"
+msgstr ""
+
+msgid "Release notes"
+msgstr ""
+
+msgid "Django Documentation"
+msgstr "Django-dokumentasie"
+
+msgid "Django documentation"
+msgstr "Django-dokumentasie"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases. For older releases, use the "
+"version selector floating in the bottom right corner of this page."
+msgstr ""
+"Hierdie dokument is vir Django se ontwikkelingsweergawe wat aansienlik kan "
+"verskil van vorige weergawes. Vir ouer weergawes, kies uit die weergawelys "
+"in die regter onderste hoek van dié bladsy."
+
+msgid ""
+"This document is for a preview release of Django, which can be significantly "
+"different from previous releases. For older releases, use the version "
+"selector floating in the bottom right corner of this page."
+msgstr ""
+
+msgid ""
+"This document is for an insecure version of Django that is no longer "
+"supported. Please upgrade to a newer release!"
+msgstr ""
+"Hierdie dokument is vir ’n onveilige weergawe van Django wat nie meer "
+"ondersteun word nie. Gradeer asb. op na ’n nuwer weergawe!"
+
+msgid "Getting Help"
+msgstr ""
+
+msgid "Click on the links on the left to switch to another language."
+msgstr "Klik op die skakels aan die linkerkant om na ’n ander taal te wissel."
+
+msgid "Language:"
+msgstr "Taal:"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases."
+msgstr ""
+"Hierdie dokument is vir Django se ontwikkelingsweergawe wat aansienlik kan "
+"verskil van vorige weergawes."
+
+#, python-format
+msgid "This document describes Django %(version)s."
+msgstr "Hierdie dokument beskryf Django %(version)s."
+
+msgid "Click on the links on the left to see other versions."
+msgstr "Klik op die skakels aan die linkerkant om ander weergawes te sien."
+
+msgid "Documentation version:"
+msgstr "Dokumentasieweergawe:"
+
+msgid "Previous page and next page"
+msgstr ""
+
+msgid "Additional Information"
+msgstr "Bykomende inligting"
+
+msgid "Contents"
+msgstr "Inhoud"
+
+msgid "Browse"
+msgstr "Blaai"
+
+msgid "Prev:"
+msgstr "Vorige:"
+
+msgid "Next:"
+msgstr "Volgende:"
+
+msgid "Table of contents"
+msgstr "Inhoudsopgawe"
+
+msgid "You are here:"
+msgstr "Tans hier:"
+
+#, python-format
+msgid "Django %(version)s documentation"
+msgstr "Dokumentasie vir Django %(version)s"
+
+msgid "Getting help"
+msgstr "Hoe om hulp te kry"
+
+msgid "FAQ"
+msgstr ""
+
+msgid "Try the FAQ — it's got answers to many common questions."
+msgstr "Probeer die algemene vrae — dit het heelwat antwoorde."
+
+msgid "Index"
+msgstr "Indeks"
+
+msgid "Module Index"
+msgstr "Module-indeks"
+
+msgid "Table of Contents"
+msgstr "Inhoudsopgawe"
+
+msgid "Handy when looking for specific information."
+msgstr "Nuttig wanneer mens vir spesifieke inligting soek."
+
+msgid "Django Discord Server"
+msgstr ""
+
+msgid "Join the Django Discord Community."
+msgstr ""
+
+msgid "Official Django Forum"
+msgstr ""
+
+msgid "Join the community on the Django Forum."
+msgstr ""
+
+msgid "Ticket tracker"
+msgstr ""
+
+msgid "Report bugs with Django or Django documentation in our ticket tracker."
+msgstr ""
+"Rapporteer probleme met Django of Django-dokumentasie in ons kaartjiestelsel."
+
+msgid "Download:"
+msgstr "Laai af:"
+
+msgid "Offline (development version):"
+msgstr "Vanlyn (ontwikkelingsweergawe):"
+
+#, python-format
+msgid "Offline (Django %(version)s):"
+msgstr "Vanlyn (Django %(version)s):"
+
+msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+msgstr "Verskaf deur <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+
+msgid "General Index | Django Documentation"
+msgstr "Algemene indeks | Django-dokumentasie"
+
+msgid "General Index"
+msgstr "Algemene indeks"
+
+msgid "[Link]"
+msgstr "[Skakel]"
+
+msgid "Module Index | Django Documentation"
+msgstr "Module-indeks | Django-dokumentasie"
+
+msgid "Submit"
+msgstr "Dien in"
+
+msgid "Search | Django documentation"
+msgstr "Soek | Django-dokumentasie"
+
+msgid "Filter the current search results by documentation category"
+msgstr ""
+
+msgctxt "all documentation categories"
+msgid "All"
+msgstr "Almal"
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in the development version"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in the development version"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in version %(version)s"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "No search query given"
+msgstr "Geen soeknavraag gegee nie"
+
+#, python-format
+msgid ""
+"Please try searching <a href=\"%(all_search)s\">all documentation results</"
+"a>."
+msgstr ""
+
+msgctxt "pagination"
+msgid "Previous"
+msgstr "Vorige"
+
+#, python-format
+msgid "Page %(page_number)s of %(num_pages)s"
+msgstr "Bladsy %(page_number)s van %(num_pages)s"
+
+msgctxt "pagination"
+msgid "Next"
+msgstr "Volgende"
+
+msgid "Page is not 'last', nor can it be converted to an int."
+msgstr ""
+"Bladsy is nie “last” nie en kan ook nie na heelgetal omgeskakel word nie."
+
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "Ongeldige bladsy (%(page_number)s): %(message)s"

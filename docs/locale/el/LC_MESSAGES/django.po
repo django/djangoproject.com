@@ -1,0 +1,252 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# Stavros Korokithakis <stavros@korokithakis.net>, 2019
+# Dimitris Glezos <glezos@transifex.com>, 2019
+# Claude Paroz <claude@2xlibre.net>, 2025
+# Nick Mavrakis <mavrakis.n@gmail.com>, 2025
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
+"PO-Revision-Date: 2019-02-19 01:18+0000\n"
+"Last-Translator: Nick Mavrakis <mavrakis.n@gmail.com>, 2025\n"
+"Language-Team: Greek (https://app.transifex.com/django/teams/17080/el/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Documentation"
+msgstr "Τεκμηρίωση"
+
+#, python-format
+msgid "Search %s documentation"
+msgstr "Αναζήτηση %s στο documentation"
+
+msgid "Search"
+msgstr "Αναζήτηση"
+
+msgid "API Reference"
+msgstr ""
+
+msgid "Using Django"
+msgstr ""
+
+msgid "How-to guides"
+msgstr ""
+
+msgid "Release notes"
+msgstr ""
+
+msgid "Django Documentation"
+msgstr "Εγχειρίδιο Django"
+
+msgid "Django documentation"
+msgstr "Εγχειρίδιο Django"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases. For older releases, use the "
+"version selector floating in the bottom right corner of this page."
+msgstr ""
+"Αυτό το έγγραφο αφορά την αναπτυξιακή έκδοση του Django, η οποία ενδέχεται "
+"να διαφέρει κατά πολύ σε σχέση με άλλες εκδόσεις. Για παλαίοτερες εκδόσεις "
+"χρησιμοποιήστε τον επιλογέα έκδοσης που βρίσκεται κάτω δεξιά στη σελίδα."
+
+msgid ""
+"This document is for a preview release of Django, which can be significantly "
+"different from previous releases. For older releases, use the version "
+"selector floating in the bottom right corner of this page."
+msgstr ""
+
+msgid ""
+"This document is for an insecure version of Django that is no longer "
+"supported. Please upgrade to a newer release!"
+msgstr ""
+"Αυτό το έγγραφο αφορά μια ανασφαλής έκδοση του Django η οποία δεν "
+"υποστηρίζεται πλέον. Παρακαλούμε αναβαθμίστε σε μια νέα έκδοση!"
+
+msgid "Getting Help"
+msgstr ""
+
+msgid "Click on the links on the left to switch to another language."
+msgstr "Κλικάρετε στους συνδέσμους στα αριστερά για να αλλάξετε γλώσσα."
+
+msgid "Language:"
+msgstr "Γλώσσα:"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases."
+msgstr ""
+"Αυτό το έγγραφο αφορά την αναπτυξιακή έκδοση του Django, η οποία ενδέχεται "
+"να διαφέρει κατά πολύ σε σχέση με άλλες εκδόσεις."
+
+#, python-format
+msgid "This document describes Django %(version)s."
+msgstr "Αυτό το έγγραφο περιγράφει το Django %(version)s."
+
+msgid "Click on the links on the left to see other versions."
+msgstr "Κλικάρετε στους συνδέσμους στα αριστερά για να δείτε άλλες εκδόσεις."
+
+msgid "Documentation version:"
+msgstr "Έκδοση εγγράφου:"
+
+msgid "Previous page and next page"
+msgstr ""
+
+msgid "Additional Information"
+msgstr "Πρόσθετες πληροφορίες"
+
+msgid "Contents"
+msgstr "Περιεχόμενα"
+
+msgid "Browse"
+msgstr "Περιήγηση"
+
+msgid "Prev:"
+msgstr "Προηγ:"
+
+msgid "Next:"
+msgstr "Επόμενο:"
+
+msgid "Table of contents"
+msgstr "Πίνακας περιεχομένων"
+
+msgid "You are here:"
+msgstr "Βρίσκεστε εδώ:"
+
+#, python-format
+msgid "Django %(version)s documentation"
+msgstr "Django %(version)s documentation"
+
+msgid "Getting help"
+msgstr "Μέρη για βοήθεια"
+
+msgid "FAQ"
+msgstr ""
+
+msgid "Try the FAQ — it's got answers to many common questions."
+msgstr ""
+"Δοκιμάστε τα FAQ — περιέχουν απαντήσεις σε αρκετές συνηθισμένες ερωτήσεις."
+
+msgid "Index"
+msgstr "Ευρετήριο"
+
+msgid "Module Index"
+msgstr "Ευρετήριο Module"
+
+msgid "Table of Contents"
+msgstr "Πίνακας περιεχομένων"
+
+msgid "Handy when looking for specific information."
+msgstr "Χρήησιμο όταν αναζητείτε συγκεκριμένες πληροφορίες."
+
+msgid "Django Discord Server"
+msgstr ""
+
+msgid "Join the Django Discord Community."
+msgstr ""
+
+msgid "Official Django Forum"
+msgstr ""
+
+msgid "Join the community on the Django Forum."
+msgstr ""
+
+msgid "Ticket tracker"
+msgstr ""
+
+msgid "Report bugs with Django or Django documentation in our ticket tracker."
+msgstr ""
+"Αναφέρετε τυχόν bugs του Django ή του Django documentation στον ticket "
+"tracker."
+
+msgid "Download:"
+msgstr "Κατέβασμα:"
+
+msgid "Offline (development version):"
+msgstr "Εκτός σύνδεσης (αναπτυξιακή έκδοση):"
+
+#, python-format
+msgid "Offline (Django %(version)s):"
+msgstr "Εκτός σύνδεσης (Django %(version)s):"
+
+msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+msgstr "Από το <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+
+msgid "General Index | Django Documentation"
+msgstr "Γενικό ευρετήριο | Django Documentation"
+
+msgid "General Index"
+msgstr "Γενικό Ευρετήριο"
+
+msgid "[Link]"
+msgstr "[Σύνδεσμος]"
+
+msgid "Module Index | Django Documentation"
+msgstr "Ευρετήριο Module | Django Documentation"
+
+msgid "Submit"
+msgstr "Υποβολή"
+
+msgid "Search | Django documentation"
+msgstr "Αναζήτηση | Django documentation"
+
+msgid "Filter the current search results by documentation category"
+msgstr ""
+
+msgctxt "all documentation categories"
+msgid "All"
+msgstr "Όλα"
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in the development version"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in the development version"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in version %(version)s"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "No search query given"
+msgstr "Δεν δόθηκε ερώτημα αναζήτησης"
+
+#, python-format
+msgid ""
+"Please try searching <a href=\"%(all_search)s\">all documentation results</"
+"a>."
+msgstr ""
+
+msgctxt "pagination"
+msgid "Previous"
+msgstr "Προηγούμενο"
+
+#, python-format
+msgid "Page %(page_number)s of %(num_pages)s"
+msgstr ""
+
+msgctxt "pagination"
+msgid "Next"
+msgstr "Επόμενο"
+
+msgid "Page is not 'last', nor can it be converted to an int."
+msgstr ""
+"Η σελίδα δεν έχει την τιμή 'last' υποδηλώνοντας την τελευταία σελίδα, ούτε "
+"μπορεί να μετατραπεί σε ακέραιο."
+
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "Άκυρη σελίδα (%(page_number)s): %(message)s"
