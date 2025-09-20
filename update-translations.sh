@@ -6,6 +6,7 @@
 
 set -ex
 
+# This list should match the LOCALE_PATHS in djangoproject/settings/common.py
 LOCALE_DIRS="dashboard/locale/ docs/locale/ locale/"
 
 tx pull -a -f --minimum-perc=70
