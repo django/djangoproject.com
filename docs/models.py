@@ -16,7 +16,11 @@ from django.contrib.postgres.search import (
 )
 from django.core.cache import cache
 from django.db import models, transaction
-from django.db.models import Q
+from django.db.models import (
+    Case,
+    Q,
+    When,
+)
 from django.db.models.fields.json import KeyTextTransform
 from django.utils.functional import cached_property
 from django.utils.html import strip_tags
@@ -27,10 +31,10 @@ from releases.models import Release
 from . import utils
 from .search import (
     DEFAULT_TEXT_SEARCH_CONFIG,
-    DOCUMENT_SEARCH_VECTOR,
     START_SEL,
     STOP_SEL,
     TSEARCH_CONFIG_LANGUAGES,
+    get_document_search_vector,
 )
 
 
@@ -261,7 +265,7 @@ class DocumentQuerySet(models.QuerySet):
             search_query = SearchQuery(
                 query_text, config=models.F("config"), search_type="websearch"
             )
-            search_rank = SearchRank(models.F("search"), search_query)
+            search_rank = SearchRank(models.F("search_vector"), search_query)
             search = partial(
                 SearchHeadline,
                 start_sel=START_SEL,
@@ -296,7 +300,7 @@ class DocumentQuerySet(models.QuerySet):
             )
             vector_qs = (
                 base_qs.alias(rank=search_rank)
-                .filter(search=search_query)
+                .filter(search_vector=search_query)
                 .order_by("-rank")
             )
             if not vector_qs:
@@ -314,22 +318,6 @@ class DocumentQuerySet(models.QuerySet):
         else:
             return self.none()
 
-    def search_reset(self):
-        """Set to null all not null Document's search vector fields."""
-        return Document.objects.exclude(search=None).update(search=None)
-
-    def search_update(self):
-        """
-        Update Document's search vector fields using the document definition.
-
-        This method don't index the module pages (since source code is hard to
-        combine with full text search) and the big flattened index of the CBVs.
-        """
-        return Document.objects.exclude(
-            Q(path__startswith="_modules")
-            | Q(path__startswith="ref/class-based-views/flattened-index")
-        ).update(search=DOCUMENT_SEARCH_VECTOR)
-
 
 class Document(models.Model):
     """
@@ -344,17 +332,42 @@ class Document(models.Model):
     path = models.CharField(max_length=500)
     title = models.CharField(max_length=500)
     metadata = models.JSONField(default=dict)
-    search = SearchVectorField(null=True, editable=False)
-    config = models.SlugField(default=DEFAULT_TEXT_SEARCH_CONFIG)
+    # Use Case/When to force the expression to be immutable, per:
+    # https://www.paulox.net/2025/09/08/djangocon-us-2025/
+    search_vector = models.GeneratedField(
+        expression=Case(
+            *[
+                When(config=lang, then=get_document_search_vector(lang))
+                for lang in TSEARCH_CONFIG_LANGUAGES.values()
+            ],
+            default=get_document_search_vector(),
+        ),
+        output_field=SearchVectorField(),
+        db_persist=True,
+    )
+    config = models.SlugField(
+        db_default=DEFAULT_TEXT_SEARCH_CONFIG, default=DEFAULT_TEXT_SEARCH_CONFIG
+    )
 
     objects = DocumentQuerySet.as_manager()
 
     class Meta:
+        constraints = [
+            models.CheckConstraint(
+                condition=Q(
+                    config__in=[
+                        DEFAULT_TEXT_SEARCH_CONFIG,
+                        *TSEARCH_CONFIG_LANGUAGES.values(),
+                    ]
+                ),
+                name="document_config_allowed_languages",
+            )
+        ]
         indexes = [
             models.Index(
                 fields=["release", "title"], name="document_release_title_idx"
             ),
-            GinIndex(fields=["search"]),
+            GinIndex(fields=["search_vector"], name="document_search_vector_idx"),
         ]
         unique_together = ("release", "path")
 
