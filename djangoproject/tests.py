@@ -4,9 +4,47 @@ from io import StringIO
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import NoReverseMatch, get_resolver
+from django.utils.translation import activate, gettext as _
 from django_hosts.resolvers import reverse
 
 from docs.models import DocumentRelease, Release
+
+
+class LocaleSmokeTests(TestCase):
+    """
+    Smoke test a translated string from each of the 3 locale directories
+    (one defined in settings.LOCALE_PATHS, plus the dashboard and docs apps).
+    """
+
+    def test_dashboard_locale(self):
+        """dashboard/locale/ should contain translations for 'Development dashboard'"""
+        activate("fr")
+        translated = _("Development dashboard")
+        self.assertEqual(
+            translated,
+            "Tableau de bord de développement",
+            msg="dashboard/locale/ translation not loaded or incorrect",
+        )
+
+    def test_docs_locale(self):
+        """docs/locale/ should contain translations for 'Using Django'"""
+        activate("fr")
+        translated = _("Using Django")
+        self.assertEqual(
+            translated,
+            "Utilisation de Django",
+            msg="docs/locale/ translation not loaded or incorrect",
+        )
+
+    def test_project_locale(self):
+        """locale/ should contain translations for 'Fundraising'"""
+        activate("fr")
+        translated = _("Fundraising")
+        self.assertEqual(
+            translated,
+            "Levée de fonds",
+            msg="project-level locale/ translation not loaded or incorrect",
+        )
 
 
 class TemplateViewTests(TestCase):
