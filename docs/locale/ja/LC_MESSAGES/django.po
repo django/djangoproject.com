@@ -13,6 +13,7 @@
 # Claude Paroz <claude@2xlibre.net>, 2025
 # xiu1 <d84ea@hotmail.co.jp>, 2025
 # Akio Ogasahara <libratechwriter@gmail.com>, 2025
+# TANIGUCHI Taichi, 2025
 #
 #, fuzzy
 msgid ""
@@ -21,7 +22,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-04 10:04-0500\n"
 "PO-Revision-Date: 2019-02-19 01:18+0000\n"
-"Last-Translator: Akio Ogasahara <libratechwriter@gmail.com>, 2025\n"
+"Last-Translator: TANIGUCHI Taichi, 2025\n"
 "Language-Team: Japanese (https://app.transifex.com/django/teams/17080/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,6 +72,9 @@ msgid ""
 "different from previous releases. For older releases, use the version "
 "selector floating in the bottom right corner of this page."
 msgstr ""
+"このドキュメントは将来の Django のリリースを対象としており、これまでのリリー"
+"スとは大きく異なる場合があります。過去のリリースについては、このページの右下"
+"端に追尾するバージョンセレクタから確認してください。"
 
 msgid ""
 "This document is for an insecure version of Django that is no longer "
@@ -81,7 +85,7 @@ msgstr ""
 "い！"
 
 msgid "Getting Help"
-msgstr ""
+msgstr "助けを求める"
 
 msgid "Click on the links on the left to switch to another language."
 msgstr "他の言語に変更するためには、左側のリンクをクリックしてください。"
@@ -109,7 +113,7 @@ msgid "Documentation version:"
 msgstr "ドキュメントのバージョン:"
 
 msgid "Previous page and next page"
-msgstr ""
+msgstr "前のページと次のページ"
 
 msgid "Additional Information"
 msgstr "追加的な情報"
@@ -158,19 +162,19 @@ msgid "Handy when looking for specific information."
 msgstr "特定の情報を見つけたい場合に便利です。"
 
 msgid "Django Discord Server"
-msgstr ""
+msgstr "Django Discord サーバ"
 
 msgid "Join the Django Discord Community."
-msgstr ""
+msgstr "Django Discord コミュニティに参加しましょう。"
 
 msgid "Official Django Forum"
-msgstr ""
+msgstr "公式 Django フォーラム"
 
 msgid "Join the community on the Django Forum."
-msgstr ""
+msgstr "Django フォーラムのコミュニティに参加しましょう。"
 
 msgid "Ticket tracker"
-msgstr ""
+msgstr "チケットトラッカー"
 
 msgid "Report bugs with Django or Django documentation in our ticket tracker."
 msgstr ""
@@ -211,7 +215,7 @@ msgid "Search | Django documentation"
 msgstr "検索 | Django ドキュメント"
 
 msgid "Filter the current search results by documentation category"
-msgstr ""
+msgstr "ドキュメントのカテゴリによって検索結果をフィルターする"
 
 msgctxt "all documentation categories"
 msgid "All"
@@ -241,6 +245,7 @@ msgid ""
 "Please try searching <a href=\"%(all_search)s\">all documentation results</"
 "a>."
 msgstr ""
+"<a href=\"%(all_search)s\">すべてのドキュメントで検索</a> を試してください。"
 
 msgctxt "pagination"
 msgid "Previous"

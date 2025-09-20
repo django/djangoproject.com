@@ -1,0 +1,77 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# Yuuki Ebihara <yuuki.ebihara813@gmail.com>, 2019
+# TANIGUCHI Taichi, 2025
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
+"PO-Revision-Date: 2019-02-21 14:15+0000\n"
+"Last-Translator: TANIGUCHI Taichi, 2025\n"
+"Language-Team: Japanese (https://app.transifex.com/django/teams/17080/ja/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Instant"
+msgstr "即時"
+
+msgid "Daily"
+msgstr "日次"
+
+msgid "Weekly"
+msgstr "週次"
+
+msgid "categories"
+msgstr "カテゴリー"
+
+msgid "Jenkins instance root URL"
+msgstr "Jenkins インスタンスのルート URL"
+
+msgid "E.g. http://ci.djangoproject.com/"
+msgstr "例： http://ci.djangoproject.com/"
+
+msgid "E.g. Django Python3"
+msgstr "例： Django Python3"
+
+msgid "Should the metric be a value representing success ratio?"
+msgstr "指標は成功率を表す値であるべきですか？"
+
+msgid ""
+"E.g. if there are 50 tests of which 30 are failing the value of this metric "
+"will be 20 (or 40%.)"
+msgstr ""
+"例：50件のテストのうち30件が失敗している場合、この指標の値は20（または40％）"
+"になります。"
+
+msgid "Should the metric be a percentage value?"
+msgstr "指標はパーセントの値であるべきですか？"
+
+msgid ""
+"E.g. if there are 50 tests of which 30 are failing the value of this metric "
+"will be 60%."
+msgstr ""
+"例：50 件のテストのうち 30 件が失敗している場合、この指標の値は 60% になりま"
+"す。"
+
+msgid "Development dashboard"
+msgstr "開発用ダッシュボード"
+
+msgid "All metrics"
+msgstr "すべての指標"
+
+#, python-format
+msgid "Updated %(timestamp)s ago."
+msgstr "%(timestamp)s前に更新"
+
+#, python-format
+msgid "Could not find metric with slug %s"
+msgstr "スラグ %s の指標は見つかりませんでした"
