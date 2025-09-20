@@ -1,4 +1,5 @@
 -r common.txt
 django-debug-toolbar==6.0.0
 pre-commit~=4.3.0
+psycopg[binary]==3.2.10
 watchdog==6.0.0
