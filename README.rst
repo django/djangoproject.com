@@ -84,7 +84,7 @@ Install and run locally from a virtual environment
 #. For docs (next step requires ``gettext``)::
 
     python -m manage loaddata doc_releases
-    python -m manage update_docs --update-index
+    python -m manage update_docs
 
 #. For dashboard:
 
@@ -233,16 +233,8 @@ minified version of it to this directory.
 Documentation search
 --------------------
 
-When running ``python -m manage update_docs --update-index`` to build all
-documents it will also automatically index every document it builds in the
-search engine as well. In case you've already built the documents and would like
-to reindex the search index, run the command::
-
-    python -m manage update_index
-
-This is also the right command to run when you work on the search feature
-itself. You can pass the ``-d`` option to try to drop the search index
-first before indexing all the documents.
+When running ``python -m manage update_docs`` to build all documents it will
+also automatically index every document it builds in the search engine as well.
 
 Updating metrics from production
 --------------------------------

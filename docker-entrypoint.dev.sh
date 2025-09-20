@@ -12,6 +12,5 @@ python -m manage loaddata doc_releases
 python -m manage loaddata dashboard_production_metrics
 # python -m manage loaddata dashboard_example_data
 python -m manage update_metrics
-#python -m manage update_index
 
 exec "$@"

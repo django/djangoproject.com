@@ -195,7 +195,6 @@ class SearchFormTestCase(TestCase):
         Document.objects.bulk_create(
             [Document(**queryset_data), Document(**empty_page_data)]
         )
-        Document.objects.search_update()
         base_url = reverse_with_host(
             "document-detail",
             host="docs",
