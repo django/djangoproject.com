@@ -343,11 +343,25 @@ Running Locally with Docker
 
     docker compose up
 
-3. View the site at http://localhost:8000/
-
-4. Run the tests::
+3. Run the tests::
 
     docker compose run --rm web python -m manage test
+
+4. Load the sample / local dev data::
+
+    docker compose run --rm web make reset-local-db
+
+   If preferred, refer to the "Install and run locally from a virtual environment"
+   for more granular management commands to load specific data sets.
+
+5. View the site at http://www.djangoproject.localhost:8000/
+   or http://dashboard.djangoproject.localhost:8000/.
+
+6. For docs, download the documentation (takes awhile)::
+
+    docker compose exec -it web python -m manage update_docs
+
+7. View the docs at http://docs.djangoproject.localhost:8000/.
 
 Pre-commit checks
 -----------------

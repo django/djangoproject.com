@@ -30,3 +30,10 @@ test:
 
 watch-scss:
 	watchmedo shell-command --patterns=*.scss --recursive --command="make compile-scss-debug" $(SCSS)
+
+reset-local-db:
+	python -m manage flush --no-input
+	python -m manage loaddata dev_sites
+	python -m manage loaddata doc_releases
+	python -m manage loaddata dashboard_production_metrics
+	python -m manage update_metrics
