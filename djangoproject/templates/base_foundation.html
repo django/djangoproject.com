@@ -26,10 +26,11 @@
       <li><a href="/foundation/conferences/">Organizing a Django conference</a></li>
     </ul>
     <h3>{% translate "Latest DSF meeting minutes" %}</h3>
-    <p> {% translate "The minutes from May 2025 onwards are stored in the repo" %}
-      <a href="https://github.com/django/dsf-minutes">https://github.com/django/dsf-minutes</a>
+
+    <p>
+      {% blocktrans with minutes_url="https://github.com/django/dsf-minutes" %}
+        The latest meeting minutes can be found on <a href="{{ minutes_url }}">the minutes repository</a>.
+      {% endblocktrans %}
     </p>
-    {% render_latest_meeting_minute_entries 2 %}
-    <a href="{% url 'foundation_meeting_archive_index' %}" class="link-readmore">{% translate "More meeting minutes" %}</a>
   </div>
 {% endblock %}
