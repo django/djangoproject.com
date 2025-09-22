@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.urls import reverse
 from djmoney.money import Money
 
-from .models import ApprovedGrant, BoardMember, Business, Meeting, Office, Term
+from .models import ApprovedGrant, BoardMember, Meeting, Office, Term
 
 
 class MeetingTestCase(TestCase):
@@ -82,34 +82,8 @@ class MeetingTestCase(TestCase):
             "treasurer_report": "Hello World",
             "title": "DSF Board monthly meeting",
         }
-        latest_meeting = Meeting.objects.create(
-            date=date(2023, 5, 12), **common_meeting_data
-        )
-        previous_meeting = Meeting.objects.create(
-            date=date(2023, 4, 12), **common_meeting_data
-        )
         Meeting.objects.create(date=date(2023, 3, 12), **common_meeting_data)
-        common_business_data = {
-            "body": "Example",
-            "body_html": "Example",
-            "business_type": "New",
-            "meeting": latest_meeting,
-        }
-        Business.objects.create(title="Business item 1", **common_business_data)
-        Business.objects.create(title="Business item 2", **common_business_data)
-        Business.objects.create(title="Business item 3", **common_business_data)
-
         response = self.client.get(reverse("foundation_meeting_archive_index"))
 
         self.assertContains(response, "Latest DSF meeting minutes")
-
-        self.assertContains(response, "DSF Board monthly meeting, May 12, 2023")
-        self.assertContains(response, latest_meeting.get_absolute_url())
-        self.assertContains(response, "DSF Board monthly meeting, April 12, 2023")
-        self.assertContains(response, previous_meeting.get_absolute_url())
-        self.assertNotContains(response, "DSF Board monthly meeting, March 12, 2023")
-
-        self.assertContains(response, "New and Ongoing business", count=1)
-        self.assertContains(response, "Business item 1")
-        self.assertContains(response, "Business item 2")
-        self.assertContains(response, "Business item 3")
+        self.assertContains(response, "https://github.com/django/dsf-minutes")
