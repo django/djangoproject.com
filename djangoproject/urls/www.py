@@ -13,16 +13,13 @@ from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
-from djangoproject.sitemaps import TemplateViewSitemap
-from foundation.feeds import FoundationMinutesFeed
-from foundation.views import BannerPreview, CoreDevelopers
+from foundation.views import CoreDevelopers
 
 admin.autodiscover()
 
 sitemaps = {
     "weblog": WeblogSitemap,
     "flatpages": FlatPageSitemap,
-    "templates": TemplateViewSitemap,
 }
 
 
@@ -105,13 +102,7 @@ urlpatterns = [
     ),
     path("checklists/", include("checklists.urls")),
     path("contact/", include("contact.urls")),
-    path(
-        "foundation/banners/<int:pk>/preview/",
-        BannerPreview.as_view(),
-        name="foundation_banner_preview",
-    ),
     path("foundation/django_core/", CoreDevelopers.as_view()),
-    path("foundation/minutes/", include("foundation.urls.meetings")),
     path("foundation/", include("members.urls")),
     path("fundraising/", include("fundraising.urls")),
     # Used by docs search suggestions
@@ -131,11 +122,6 @@ urlpatterns = [
         name="aggregator-firehose-feed",
     ),
     path("rss/community/<slug>/", CommunityAggregatorFeed(), name="aggregator-feed"),
-    path(
-        "rss/foundation/minutes/",
-        FoundationMinutesFeed(),
-        name="foundation-minutes-feed",
-    ),
     # django-push
     path("subscriber/", include("django_push.subscriber.urls")),
     # Trac schtuff
@@ -150,7 +136,6 @@ urlpatterns = [
         "sitemap.xml",
         cache_page(60 * 60 * 6)(sitemap_views.sitemap),
         {"sitemaps": sitemaps},
-        name="sitemap",
     ),
     path(
         ".well-known/security.txt",
