@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 class CoreAwardCohort(models.Model):
     """
     A cohort of individuals -- such as "Q1 2021" -- receiving the Django Core
