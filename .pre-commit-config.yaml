@@ -3,7 +3,7 @@ default_language_version:
     python: python3
 repos:
     - repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: "v5.0.0"
+      rev: "v6.0.0"
       hooks:
           - id: check-added-large-files
             args: ["--maxkb=1024"]
@@ -23,7 +23,7 @@ repos:
             exclude_types: [json, sql]
           - id: file-contents-sorter
             files: ^(requirements/\w*.txt)$
-            args: ["--ignore-case", "--unique"]
+            args: ["--ignore-case"]
           - id: fix-byte-order-marker
           - id: mixed-line-ending
           - id: trailing-whitespace
