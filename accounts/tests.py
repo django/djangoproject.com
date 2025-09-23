@@ -7,8 +7,8 @@ from django_hosts.resolvers import reverse
 
 from accounts.forms import DeleteProfileForm
 from djangoproject.tests import ReleaseMixin
-from foundation import models as foundationmodels
 from tracdb.models import Revision, Ticket, TicketChange
+
 from tracdb.testutils import TracDBCreateDatabaseMixin
 
 

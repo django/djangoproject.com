@@ -3,10 +3,9 @@ from django.contrib.flatpages.models import FlatPage
 from django.contrib.sites.models import Site
 from django.test import TestCase
 
-from djangoproject.tests import ReleaseMixin
 
+class MeetingTestCase(TestCase):
 
-class MeetingTestCase(ReleaseMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -19,7 +18,7 @@ class MeetingTestCase(ReleaseMixin, TestCase):
         page = FlatPage.objects.create(
             title="Foundation",
             url="/foundation/",
-            template_name="flatpages/foundation.html"
+            template_name="flatpages/foundation.html",
         )
         page.sites.add(self.site)
 
