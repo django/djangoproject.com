@@ -218,17 +218,6 @@ class UserDeletionTests(TestCase):
         form = self.create_user_and_form(is_staff=True)
         self.assertFormError(form, None, ["Staff users cannot be deleted"])
 
-    def test_user_with_protected_data(self):
-        form = self.create_user_and_form()
-        form.user.boardmember_set.create(
-            office=foundationmodels.Office.objects.create(name="test"),
-            term=foundationmodels.Term.objects.create(year=2000),
-        )
-        form.delete()
-        self.assertFormError(
-            form, None, ["User has protected data and cannot be deleted"]
-        )
-
     def test_form_delete_method_requires_valid_form(self):
         form = self.create_user_and_form(is_staff=True)
         self.assertRaises(form.InvalidFormError, form.delete)

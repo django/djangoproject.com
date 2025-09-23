@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User
+from django.contrib.flatpages.models import FlatPage
+from django.contrib.sites.models import Site
 from django.test import TestCase
 
 class MeetingTestCase(TestCase):
@@ -7,21 +9,17 @@ class MeetingTestCase(TestCase):
         cls.user = User.objects.create_superuser(
             "admin", "admin@example.com", "password"
         )
+        cls.site = Site.objects.get_current()
 
     def test_latest_meeting_minutes(self):
-        pass
+        page = FlatPage.objects.create(
+            title="Foundation",
+            url="/foundation/",
+            template_name="flatpages/foundation.html"
+        )
+        page.sites.add(self.site)
 
-        # TODO: Find a way to initalize the foundation page without using the Meeting
-        # object
-
-        common_meeting_data = {
-            "slug": "dsf-board-monthly-meeting",
-            "leader": self.member,
-            "treasurer_report": "Hello World",
-            "title": "DSF Board monthly meeting",
-        }
-        Meeting.objects.create(date=date(2023, 3, 12), **common_meeting_data)
-        response = self.client.get(reverse("foundation_meeting_archive_index"))
+        response = self.client.get("/foundation/")
 
         self.assertContains(response, "Latest DSF meeting minutes")
         self.assertContains(response, "https://github.com/django/dsf-minutes")
