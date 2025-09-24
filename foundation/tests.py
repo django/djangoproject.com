@@ -116,3 +116,33 @@ class MeetingTestCase(TestCase):
         self.assertContains(response, "Business item 1")
         self.assertContains(response, "Business item 2")
         self.assertContains(response, "Business item 3")
+
+    def test_latest_meeting_minutes_without_next_meeting_date(self):
+        common_meeting_data = {
+            "slug": "dsf-board-monthly-meeting",
+            "leader": self.member,
+            "treasurer_report": "Hello World",
+            "title": "DSF Board monthly meeting",
+        }
+        latest_meeting = Meeting.objects.create(
+            date=date(2023, 5, 12),
+            next_meeting_date=None,  # Explicitly left out
+            **common_meeting_data
+        )
+        Meeting.objects.create(date=date(2023, 4, 12), **common_meeting_data)
+
+        Business.objects.create(
+            title="Business item 1",
+            body="Example",
+            body_html="Example",
+            business_type="New",
+            meeting=latest_meeting,
+        )
+
+        response = self.client.get(reverse("foundation_meeting_archive_index"))
+
+        self.assertContains(response, "Latest DSF meeting minutes")
+        self.assertContains(response, "DSF Board monthly meeting, May 12, 2023")
+
+        # Key check for no meeting schedule
+        self.assertNotContains(response, "Next meeting scheduled for")
