@@ -42,7 +42,4 @@ jobs:
               name: Run the tests via Docker
               run: |
                   docker compose build
-                  docker compose up -d db
-                  # Wait for Postgres to be ready
-                  docker compose exec db sh -c 'until pg_isready ; do sleep 1; done'
                   docker compose run --rm web make ci
