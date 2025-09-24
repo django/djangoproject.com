@@ -3,17 +3,12 @@ name: Docker test build
 on:
     pull_request:
 
-env:
-    REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}
-
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 
 permissions:
     contents: read
-    packages: write
 
 jobs:
     build-image:
@@ -50,8 +45,6 @@ jobs:
                   push: false
                   build-args: |
                       REQ_FILE=requirements/${{ matrix.req_file }}
-                  cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-buildcache:bc-test-build-${{ matrix.req_file }}
-                  cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-buildcache:bc-test-build-${{ matrix.req_file }},mode=max
 
             - if: matrix.req_file == 'tests.txt'
               name: Run the tests via Docker
