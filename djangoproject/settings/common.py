@@ -217,8 +217,13 @@ TEMPLATES = [
 
 TIME_ZONE = "America/Chicago"
 
+# Internationalization settings
+
 USE_I18N = True
 
+# Django discovers locale directories in the installed apps on its own,
+# but the main project locale directory needs to be listed explicitly.
+LOCALE_PATHS = (BASE_DIR / "locale",)
 
 USE_TZ = False
 
