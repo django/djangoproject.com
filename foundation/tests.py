@@ -106,7 +106,7 @@ class MeetingTestCase(TestCase):
         self.assertContains(response, "Latest DSF meeting minutes")
 
         self.assertContains(response, "DSF Board monthly meeting, May 12, 2023")
-        self.assertContains(response, "Next meeting scheduled for: June 13, 2023")
+        self.assertContains(response, "The next meeting is scheduled for: June 13, 2023")
         self.assertContains(response, latest_meeting.get_absolute_url())
         self.assertContains(response, "DSF Board monthly meeting, April 12, 2023")
         self.assertContains(response, previous_meeting.get_absolute_url())
@@ -145,4 +145,4 @@ class MeetingTestCase(TestCase):
         self.assertContains(response, "DSF Board monthly meeting, May 12, 2023")
 
         # Key check for no meeting schedule
-        self.assertNotContains(response, "Next meeting scheduled for")
+        self.assertNotContains(response, "The next meeting is scheduled for: ")
