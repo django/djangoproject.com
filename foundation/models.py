@@ -98,7 +98,9 @@ class Meeting(models.Model):
     next_meeting_date = models.DateField(
         null=True,
         blank=True,
-        help_text=_("This will be shown on the website as the board's next meeting date. The latest meeting's Next Meeting Date will be used.")
+        help_text=_(
+            "This will be shown on the website as the board's next meeting date. The latest meeting's Next Meeting Date will be used."
+        ),
     )
 
     def __str__(self):

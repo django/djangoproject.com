@@ -29,7 +29,7 @@
     occasionally rescheduled for attendance.
   {% endblocktranslate %}
   {% if next_meeting_date %}
-    {% translate "The next meeting is scheduled for: " context "Following meetings schedule" %} 
+    {% translate "The next meeting is scheduled for: " context "Following meetings schedule" %}
     {{next_meeting_date|date:"DATE_FORMAT"}}
   {% endif %}
 
