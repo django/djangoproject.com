@@ -1,8 +1,6 @@
 from django.http import Http404, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404, render
 
-from members.models import CorporateMember
-
 from .models import Release
 
 
@@ -23,17 +21,12 @@ def index(request):
     # Get the list of earlier releases.
     unsupported = Release.objects.unsupported()
 
-    corporate_members = CorporateMember.objects.by_membership_level()
-
     context = {
         "current": current,
         "previous": previous,
         "lts": lts,
         "unsupported": unsupported,
         "preview": preview,
-        "corporate_members": (
-            corporate_members["diamond"] + corporate_members["platinum"]
-        ),
     }
     return render(request, "releases/download.html", context)
 

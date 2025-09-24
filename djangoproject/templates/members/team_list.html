@@ -14,7 +14,21 @@
 {% block content %}
 
   <h2>{% translate "Teams" %}</h2>
-  <p>{% translate "Teams indicate who is actively contributing in certain areas." %}</p>
+  <p>
+    {% blocktranslate trimmed %}
+      The following teams are groups of people who support the Django project
+      and the Django Software Foundation. Apart from the Django Fellows, who
+      are paid contractors, all of these contributors are volunteers.
+      Most teams are distinct, contactable groups with their own set of goals.
+      Some roles are also listed, such as Mergers and Releasers, which are
+      individuals with elevated permissions rather than formal teams. For an
+      overview of how the Django Project is organized and the principles that
+      guide it, see the
+      <a href="https://docs.djangoproject.com/en/dev/internals/organization/#organization-of-the-django-project">
+        organization and principles
+      </a> page.
+    {% endblocktranslate %}
+  </p>
 
   {% for team in teams %}
     <div class="section">

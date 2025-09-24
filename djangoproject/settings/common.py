@@ -221,12 +221,9 @@ TIME_ZONE = "America/Chicago"
 
 USE_I18N = True
 
-LOCALE_PATHS = [
-    # List apps first so their translations take precedence.
-    # This list should match LOCALE_DIRS in update-translations.sh.
-    str(BASE_DIR.joinpath(path))
-    for path in ("dashboard/locale/", "docs/locale/", "locale/")
-]
+# Django discovers locale directories in the installed apps on its own,
+# but the main project locale directory needs to be listed explicitly.
+LOCALE_PATHS = (BASE_DIR / "locale",)
 
 USE_TZ = False
 

@@ -111,3 +111,10 @@ def display_django_heroes():
         "display_logo_amount": int(LEADERSHIP_LEVEL_AMOUNT),
         "corporate_membership_amounts": CORPORATE_MEMBERSHIP_AMOUNTS,
     }
+
+
+@register.inclusion_tag("fundraising/includes/top_corporate_members.html")
+def top_corporate_members():
+    members = CorporateMember.objects.by_membership_level()
+
+    return {"members": members["diamond"] + members["platinum"]}

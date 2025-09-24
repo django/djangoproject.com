@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from decimal import Decimal
 
 from django.test import TestCase
@@ -17,6 +17,7 @@ from ..models import (
 from ..templatetags.fundraising_extras import (
     display_django_heroes,
     donation_form_with_heart,
+    top_corporate_members,
 )
 
 
@@ -93,3 +94,76 @@ class TestDisplayDjangoHeroes(TestCase):
 
         response = display_django_heroes()
         self.assertEqual(response["heroes"], [hero2, hero3])
+
+
+class TestTopCorporateMembers(TestCase):
+    past_date = date(2000, 1, 1)
+    future_date = date(3000, 1, 1)
+
+    @classmethod
+    def setUpTestData(cls):
+        member_1 = CorporateMember.objects.create(membership_level=1)
+        member_2 = CorporateMember.objects.create(membership_level=2)
+        member_3 = CorporateMember.objects.create(membership_level=3)
+        member_4 = CorporateMember.objects.create(membership_level=4)
+        member_5 = CorporateMember.objects.create(membership_level=5)
+
+        member_1.invoice_set.create(amount=5, expiration_date=cls.future_date)
+        member_2.invoice_set.create(amount=5, expiration_date=cls.future_date)
+        member_3.invoice_set.create(amount=5, expiration_date=cls.future_date)
+        member_4.invoice_set.create(amount=5, expiration_date=cls.past_date)
+        member_5.invoice_set.create(amount=5, expiration_date=cls.past_date)
+
+    def test_with_no_platinum_or_diamond_members(self):
+        members = top_corporate_members()["members"]
+
+        self.assertEqual(members, [])
+
+    def test_with_diamond_members_and_no_platinum_members(self):
+        member_1 = CorporateMember.objects.create(membership_level=5)
+        member_2 = CorporateMember.objects.create(membership_level=5)
+        member_3 = CorporateMember.objects.create(membership_level=5)
+
+        member_1.invoice_set.create(amount=4, expiration_date=self.future_date)
+        member_2.invoice_set.create(amount=8, expiration_date=self.future_date)
+        member_3.invoice_set.create(amount=2, expiration_date=self.future_date)
+
+        members = top_corporate_members()["members"]
+
+        self.assertEqual(members, [member_2, member_1, member_3])
+
+    def test_with_platinum_members_and_no_diamond_members(self):
+        member_1 = CorporateMember.objects.create(membership_level=4)
+        member_2 = CorporateMember.objects.create(membership_level=4)
+        member_3 = CorporateMember.objects.create(membership_level=4)
+
+        member_1.invoice_set.create(amount=4, expiration_date=self.future_date)
+        member_2.invoice_set.create(amount=8, expiration_date=self.future_date)
+        member_3.invoice_set.create(amount=2, expiration_date=self.future_date)
+
+        members = top_corporate_members()["members"]
+
+        self.assertEqual(members, [member_2, member_1, member_3])
+
+    def test_with_diamond_members_and_platinum_members(self):
+        member_1 = CorporateMember.objects.create(membership_level=4)
+        member_2 = CorporateMember.objects.create(membership_level=4)
+        member_3 = CorporateMember.objects.create(membership_level=4)
+
+        member_4 = CorporateMember.objects.create(membership_level=5)
+        member_5 = CorporateMember.objects.create(membership_level=5)
+        member_6 = CorporateMember.objects.create(membership_level=5)
+
+        member_1.invoice_set.create(amount=4, expiration_date=self.future_date)
+        member_2.invoice_set.create(amount=8, expiration_date=self.future_date)
+        member_3.invoice_set.create(amount=2, expiration_date=self.future_date)
+
+        member_4.invoice_set.create(amount=4, expiration_date=self.future_date)
+        member_5.invoice_set.create(amount=8, expiration_date=self.future_date)
+        member_6.invoice_set.create(amount=2, expiration_date=self.future_date)
+
+        members = top_corporate_members()["members"]
+
+        expected = [member_5, member_4, member_6, member_2, member_1, member_3]
+
+        self.assertEqual(members, expected)
