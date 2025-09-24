@@ -221,10 +221,11 @@ TIME_ZONE = "America/Chicago"
 
 USE_I18N = True
 
-# Django discovers locale directories in the dashboard and docs apps
-# on its own, but the main project locale/ directory needs to be
-# explicitly listed here.
-LOCALE_PATHS = [str(BASE_DIR.joinpath("locale/"))]
+# Django discovers locale directories in the installed apps on its own,
+# but the main project locale directory needs to be listed explicitly.
+LOCALE_PATHS = (
+    BASE_DIR / "locale",
+)
 
 USE_TZ = False
 
