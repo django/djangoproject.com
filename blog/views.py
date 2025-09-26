@@ -1,3 +1,4 @@
+from django.utils.cache import add_never_cache_headers
 from django.views.generic.dates import (
     ArchiveIndexView,
     DateDetailView,
@@ -58,3 +59,9 @@ class BlogDateDetailView(BlogViewMixin, DateDetailView):
             return Entry.objects.all()
         else:
             return super().get_queryset()
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        if not self.object.is_published():
+            add_never_cache_headers(response)
+        return response

@@ -3,10 +3,12 @@ from datetime import date, timedelta
 from io import StringIO
 
 import time_machine
+from django.conf import settings
 from django.contrib.auth.models import Permission, User
 from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
 from django.test import TestCase
+from django.test.utils import override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
 
@@ -405,6 +407,77 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         )
         response = self.client.get(published_url)
         self.assertEqual(response.status_code, 200)
+
+
+@override_settings(
+    # Caching middleware is added in the production settings file;
+    # simulate that here for the tests.
+    MIDDLEWARE=(
+        ["django.middleware.cache.UpdateCacheMiddleware"]
+        + settings.MIDDLEWARE
+        + ["django.middleware.cache.FetchFromCacheMiddleware"]
+    ),
+)
+class ViewsCachingTestCase(DateTimeMixin, TestCase):
+    def test_drafts_have_no_cache_headers(self):
+        """
+        Draft (unpublished) entries have no-cache headers.
+        """
+        user = User.objects.create(username="staff", is_staff=True)
+        content_type = ContentType.objects.get_for_model(Entry)
+        change_permission = Permission.objects.get(
+            content_type=content_type, codename="change_entry"
+        )
+        user.user_permissions.add(change_permission)
+        self.client.force_login(user)
+
+        unpublished_entry = Entry.objects.create(
+            pub_date=self.tomorrow,
+            is_active=True,
+            headline="unpublished",
+            slug="unpublished",
+        )
+        unpublished_url = reverse(
+            "weblog:entry",
+            kwargs={
+                "year": unpublished_entry.pub_date.year,
+                "month": unpublished_entry.pub_date.strftime("%b").lower(),
+                "day": unpublished_entry.pub_date.day,
+                "slug": unpublished_entry.slug,
+            },
+        )
+
+        response = self.client.get(unpublished_url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Cache-Control", response.headers)
+        self.assertEqual(
+            response.headers["Cache-Control"],
+            "max-age=0, no-cache, no-store, must-revalidate, private",
+        )
+
+    def test_published_blogs_have_cache_control_headers(self):
+        """
+        Published blog posts has Cache-Control header.
+        """
+        entry = Entry.objects.create(
+            pub_date=self.yesterday,
+            is_active=True,
+            headline="published",
+            slug="published",
+        )
+        url = reverse(
+            "weblog:entry",
+            kwargs={
+                "year": entry.pub_date.year,
+                "month": entry.pub_date.strftime("%b").lower(),
+                "day": entry.pub_date.day,
+                "slug": entry.slug,
+            },
+        )
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["Cache-Control"], "max-age=300")
 
 
 class SitemapTests(DateTimeMixin, TestCase):
