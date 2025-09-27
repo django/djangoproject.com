@@ -13,7 +13,7 @@ from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
-from foundation.views import CoreDevelopers
+from foundation.views import CoreDevelopers, minutes_redirect
 
 admin.autodiscover()
 
@@ -95,6 +95,11 @@ urlpatterns = [
     ),
     path("contact/", include("contact.urls")),
     path("foundation/django_core/", CoreDevelopers.as_view()),
+    path(
+        "foundation/minutes/<int:year>/<str:month>/<int:day>/<str:slug>/",
+        minutes_redirect,
+        name="minutes_redirect",
+    ),
     path("foundation/", include("members.urls")),
     path("fundraising/", include("fundraising.urls")),
     # Used by docs search suggestions
