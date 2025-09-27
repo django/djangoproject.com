@@ -4,8 +4,7 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.views import generic
 
-from . import models
-from . import redirects
+from . import models, redirects
 
 
 class CoreDevelopers(generic.ListView):
