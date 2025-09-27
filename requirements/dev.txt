@@ -1,4 +1,5 @@
 -r common.txt
+black==25.9.0  # Used by Django's find_formatters and run_formatters
 django-debug-toolbar==6.0.0
 pre-commit~=4.3.0
 watchdog==6.0.0

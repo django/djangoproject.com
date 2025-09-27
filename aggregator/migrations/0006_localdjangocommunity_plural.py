@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('aggregator', '0005_feeditem_add_index_date_modified'),
+        ("aggregator", "0005_feeditem_add_index_date_modified"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='localdjangocommunity',
-            options={'verbose_name_plural': 'Local Django Communities'},
+            name="localdjangocommunity",
+            options={"verbose_name_plural": "Local Django Communities"},
         ),
     ]
