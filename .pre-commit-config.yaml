@@ -33,12 +33,12 @@ repos:
           - id: pyupgrade
             args: [--py312]
     - repo: https://github.com/adamchainz/django-upgrade
-      rev: "1.25.0"
+      rev: "1.28.0"
       hooks:
           - id: django-upgrade
             args: [--target-version, "5.2"]
     - repo: https://github.com/psf/black
-      rev: 25.1.0
+      rev: 25.9.0
       hooks:
           - id: black
             exclude: '(\/migrations\/)'
@@ -57,7 +57,7 @@ repos:
       hooks:
           - id: flake8
     - repo: https://github.com/rtts/djhtml
-      rev: "3.0.8"
+      rev: "3.0.9"
       hooks:
           - id: djhtml
             files: .*/templates/.*\.html$
