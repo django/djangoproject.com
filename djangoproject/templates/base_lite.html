@@ -1,0 +1,97 @@
+{% load static %}<!DOCTYPE html>
+<html lang="{% block html_language_code %}en{% endblock %}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="{% block keywords %}Python, Django, framework, open-source{% endblock %}" />
+    <meta name="description" content="{% block description %}{% endblock %}" />
+    <meta name="fediverse:creator" content="@django@fosstodon.org" />
+    {% block link_rel_tags %}{% endblock link_rel_tags %}
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="{% static "img/icon-touch.png" %}">
+    <link rel="icon" sizes="192x192" href="{% static "img/icon-touch.png" %}">
+    <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="{% static "img/icon-tile.png" %}">
+    <meta name="theme-color" content="#0C4B33">
+
+    {% block og_tags %}
+      <meta property="og:title" content="{% block og_title %}Django{% endblock %}" />
+      <meta property="og:description" content="{% block og_description %}{% spaceless %}
+                                                 The web framework for perfectionists with deadlines.
+                                               {% endspaceless %}{% endblock %}" />
+      <meta property="og:image" content="{% block og_image %}{% static "img/logos/django-logo-negative.png" %}{% endblock %}" />
+      <meta property="og:image:alt" content="{% block og_image_alt %}Django logo{% endblock %}" />
+      <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}" />
+      <meta property="og:image:height" content="{% block og_image_height %}546{% endblock %}" />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+      <meta property="og:site_name" content="Django Project" />
+
+      <meta property="twitter:creator" content="djangoproject" />
+      <meta property="twitter:site" content="djangoproject" />
+      <meta property="twitter:card" content="{% block twitter_card %}summary{% endblock %}">
+    {% endblock og_tags %}
+
+    <title>{% block title %}Django{% endblock %}</title>
+
+    {% comment %}
+    Custom stylesheets block - allows for completely different styling
+    By default, no stylesheets are included to allow for custom styling
+    {% endcomment %}
+    {% block stylesheets %}
+      {% comment %}
+      Example usage:
+      {% block stylesheets %}
+        <link rel="stylesheet" href="{% static "css/annual-report.css" %}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Custom+Font">
+      {% endblock %}
+      {% endcomment %}
+    {% endblock stylesheets %}
+
+    {% block head_extra %}{% endblock head_extra %}
+  </head>
+
+  <body id="{% block sectionid %}lite{% endblock %}" class="{% block body_class %}lite-template{% endblock %}">
+    {% comment %}
+    Skip link for accessibility - can be overridden if needed
+    {% endcomment %}
+    {% block skip_link %}
+      <a href="#main-content" class="skip-link">Skip to main content</a>
+    {% endblock skip_link %}
+
+    {% comment %}
+    Optional minimal header - can be completely overridden or omitted
+    {% endcomment %}
+    {% block header %}{% endblock header %}
+
+    {% comment %}
+    Main content area - completely flexible
+    {% endcomment %}
+    <main id="main-content" {% block main_attributes %}{% endblock main_attributes %}>
+      {% block content %}{% endblock content %}
+    </main>
+
+    {% comment %}
+    Optional footer - can be completely overridden or omitted
+    {% endcomment %}
+    {% block footer %}{% endblock footer %}
+
+    {% comment %}
+    Minimal JavaScript block - only includes essentials
+    Can be overridden for custom JS needs
+    {% endcomment %}
+    {% block javascript %}
+      {% comment %}
+      Add any essential JavaScript here or override completely
+      {% endcomment %}
+    {% endblock javascript %}
+
+    {% block body_extra %}{% endblock body_extra %}
+  </body>
+</html>
