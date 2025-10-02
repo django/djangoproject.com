@@ -216,6 +216,7 @@ class ReleaseTestCase(TestCase):
         other_release = Release.objects.create(version="5.1.7", is_active=True)
         today = datetime.date.today()
         cases = [
+            ("5.1.1", "5.2a1"),
             ("5.2a1", "5.2a2"),
             ("5.2a2", "5.2b1"),
             ("5.2b1", "5.2rc1"),
@@ -229,10 +230,14 @@ class ReleaseTestCase(TestCase):
                     is_active=True,
                 )
                 self.assertIsNone(previous_release.eol_date)
-                Release.objects.create(version=next_version, is_active=True)
+                next_release = Release.objects.create(
+                    version=next_version, is_active=True
+                )
                 previous_release.refresh_from_db()
                 other_release.refresh_from_db()
-                self.assertEqual(previous_release.eol_date, today)
+                if next_release.version_tuple[-2:] != ("alpha", 1):
+                    self.assertEqual(previous_release.eol_date, today)
+                self.assertIsNone(next_release.eol_date)
                 self.assertIsNone(other_release.eol_date)
 
 

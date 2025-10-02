@@ -6,6 +6,7 @@
 
 set -ex
 
+# Any non-app directories added here must also be added to settings.LOCALE_PATHS
 LOCALE_DIRS="dashboard/locale/ docs/locale/ locale/"
 
 tx pull -a -f --minimum-perc=70

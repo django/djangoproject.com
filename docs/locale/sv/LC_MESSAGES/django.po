@@ -44,7 +44,7 @@ msgid "How-to guides"
 msgstr "Hur man gör-guider"
 
 msgid "Release notes"
-msgstr "Kommentarer om versionen"
+msgstr "Versionsinformation"
 
 msgid "Django Documentation"
 msgstr "Djangodokumentation"
@@ -66,6 +66,9 @@ msgid ""
 "different from previous releases. For older releases, use the version "
 "selector floating in the bottom right corner of this page."
 msgstr ""
+"Detta dokument gäller en förhandsutgåva av Django, som kan skilja sig "
+"avsevärt från tidigare utgåvor. För äldre utgåvor, använd versionsväljaren "
+"som finns i det nedre högra hörnet på denna sida."
 
 msgid ""
 "This document is for an insecure version of Django that is no longer "
@@ -75,7 +78,7 @@ msgstr ""
 "Vänligen uppgradera till en nyare version!"
 
 msgid "Getting Help"
-msgstr ""
+msgstr "Få hjälp"
 
 msgid "Click on the links on the left to switch to another language."
 msgstr "Klicka på länkarna till vänster för att byta till ett annat språk."
@@ -101,7 +104,7 @@ msgid "Documentation version:"
 msgstr "Dokumentationsversion:"
 
 msgid "Previous page and next page"
-msgstr ""
+msgstr "Föregående sida och nästa sida"
 
 msgid "Additional Information"
 msgstr "Ytterligare information"
@@ -150,19 +153,19 @@ msgid "Handy when looking for specific information."
 msgstr "Praktiskt när du letar efter specifik information."
 
 msgid "Django Discord Server"
-msgstr ""
+msgstr "Djangos Discord-server"
 
 msgid "Join the Django Discord Community."
-msgstr ""
+msgstr "Gå med i Djangos Discord-gemenskap."
 
 msgid "Official Django Forum"
-msgstr ""
+msgstr "Officiellt Django-forum"
 
 msgid "Join the community on the Django Forum."
-msgstr ""
+msgstr "Gå med i gemenskapen på Djangos forum."
 
 msgid "Ticket tracker"
-msgstr ""
+msgstr "Ärendehantering"
 
 msgid "Report bugs with Django or Django documentation in our ticket tracker."
 msgstr ""
@@ -201,7 +204,7 @@ msgid "Search | Django documentation"
 msgstr "Sök | Django-dokumentation"
 
 msgid "Filter the current search results by documentation category"
-msgstr ""
+msgstr "Filtrera aktuella sökresultat efter dokumentationskategori"
 
 msgctxt "all documentation categories"
 msgid "All"
@@ -231,6 +234,7 @@ msgid ""
 "Please try searching <a href=\"%(all_search)s\">all documentation results</"
 "a>."
 msgstr ""
+"Prova att söka i <a href=\"%(all_search)s\">alla dokumentationsresultat</a>."
 
 msgctxt "pagination"
 msgid "Previous"

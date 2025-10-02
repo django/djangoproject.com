@@ -1,0 +1,76 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# Daniel Nylander <po@danielnylander.se>, 2025
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
+"PO-Revision-Date: 2019-02-21 14:15+0000\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>, 2025\n"
+"Language-Team: Swedish (https://app.transifex.com/django/teams/17080/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Instant"
+msgstr "Direkt"
+
+msgid "Daily"
+msgstr "Dagligen"
+
+msgid "Weekly"
+msgstr "Veckovis"
+
+msgid "categories"
+msgstr "kategorier"
+
+msgid "Jenkins instance root URL"
+msgstr "Jenkins-instansens rot-URL"
+
+msgid "E.g. http://ci.djangoproject.com/"
+msgstr "T.ex. http://ci.djangoproject.com/"
+
+msgid "E.g. Django Python3"
+msgstr "T.ex. Django Python3"
+
+msgid "Should the metric be a value representing success ratio?"
+msgstr "Bör måttet vara ett värde som representerar framgångskvoten?"
+
+msgid ""
+"E.g. if there are 50 tests of which 30 are failing the value of this metric "
+"will be 20 (or 40%.)"
+msgstr ""
+"Om det t.ex. finns 50 tester varav 30 underkänns blir värdet på detta mått "
+"20 (eller 40 %)"
+
+msgid "Should the metric be a percentage value?"
+msgstr "Bör måttet vara ett procentvärde?"
+
+msgid ""
+"E.g. if there are 50 tests of which 30 are failing the value of this metric "
+"will be 60%."
+msgstr ""
+"Om det t.ex. finns 50 tester varav 30 underkänns blir värdet på detta mått "
+"60%."
+
+msgid "Development dashboard"
+msgstr "Instrumentpanel för utveckling"
+
+msgid "All metrics"
+msgstr "Alla mätvärden"
+
+#, python-format
+msgid "Updated %(timestamp)s ago."
+msgstr "Uppdaterades %(timestamp)s sedan."
+
+#, python-format
+msgid "Could not find metric with slug %s"
+msgstr "Kunde inte hitta metric med slug %s"

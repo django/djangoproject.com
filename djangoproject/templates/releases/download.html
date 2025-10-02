@@ -273,28 +273,7 @@
   <div role="complementary">
     <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
 
-    {% if corporate_members %}
-      <div class="corporate-members">
-        <h3>Diamond and Platinum Members</h3>
-        {% for obj in corporate_members %}
-          <div class="clearfix">
-            <div class="member-logo">
-              <a href="{{ obj.url }}" title="{{ obj.display_name }}">
-                <img src="{{ obj.thumbnail.url }}" alt="{{ obj.display_name }}" />
-              </a>
-            </div>
-            <div class="small-cta">
-              <ul class="list-links-small">
-                <li><strong>{{ obj.display_name }}</strong></li>
-                <li><a href="{{ obj.url }}" title="{{ obj.display_name }}">
-                  {{ obj.description }}
-                </a></li>
-              </ul>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
+    {% top_corporate_members %}
 
     {% donation_snippet %}
 

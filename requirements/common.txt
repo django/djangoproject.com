@@ -4,17 +4,16 @@ django-countries==7.6.1
 django-hosts==5.1
 django-money==3.5.4
 django-push @ git+https://github.com/brutasse/django-push.git@22fda99641cfbd2f3075a723d92652a8e38220a5
-django-read-only==1.19.0
+django-read-only==1.21.0
 django-recaptcha==4.1.0
 django-registration-redux==2.13
-Django==5.2
+Django==5.2.7
 docutils==0.21.2
-feedparser==6.0.11
+feedparser==6.0.12
 Jinja2==3.1.6
 libsass==0.23.0
 Markdown==3.9
 Pillow==11.3.0
-psycopg[c]==3.2.9
 Pygments==2.19.2
 pykismet3==0.1.1
 requests==2.32.5
