@@ -24,7 +24,7 @@ repos:
           - id: file-contents-sorter
             files: ^(requirements/\w*.txt)$
             args: ["--ignore-case"]
-            exclude: ^(requirements/common.txt)$  # Exclude files that need comments
+            exclude: ^(requirements/common.txt)$ # Exclude files that need comments
           - id: requirements-txt-fixer
             files: ^(requirements/common.txt)$
           - id: fix-byte-order-marker
