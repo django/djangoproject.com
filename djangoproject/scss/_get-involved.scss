@@ -1,0 +1,224 @@
+/* Get Involved Page Styles */
+
+.time-sensitive-section,
+.ongoing-section,
+.getting-started-section,
+.impact-section {
+    margin: 40px 0;
+}
+
+.opportunity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin: 24px 0;
+}
+
+.opportunity-card {
+    border: 1px solid var(--hairline-color);
+    border-radius: 8px;
+    padding: 24px;
+    background: var(--body-bg);
+    transition: all 0.2s ease;
+    
+    &:hover {
+        border-color: var(--primary);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    &.urgent {
+        border-color: var(--warning);
+        background: var(--warning-admonition-bg);
+        border-width: 2px;
+        
+        &:hover {
+            border-color: var(--warning-dark);
+        }
+    }
+    
+    h3 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        color: var(--primary);
+        font-size: 1.25rem;
+    }
+    
+    p {
+        margin-bottom: 16px;
+        line-height: 1.6;
+    }
+    
+    .deadline {
+        font-weight: bold;
+        color: var(--warning-dark);
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+    }
+}
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.cta {
+    display: inline-block;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    
+    &.primary {
+        background: var(--primary);
+        color: white;
+        
+        &:hover {
+            background: var(--primary-accent);
+            transform: translateY(-1px);
+        }
+    }
+    
+    &.secondary {
+        background: transparent;
+        color: var(--primary);
+        border-color: var(--primary);
+        
+        &:hover {
+            background: var(--primary);
+            color: white;
+        }
+    }
+}
+
+.info-box {
+    background: var(--secondary-accent);
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    
+    p {
+        margin: 0;
+        font-size: 1.1rem;
+    }
+}
+
+.getting-started-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 24px;
+    
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+.step-guide {
+    ol {
+        padding-left: 20px;
+        
+        li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            
+            strong {
+                color: var(--primary);
+            }
+        }
+    }
+}
+
+.resources {
+    ul {
+        list-style: none;
+        padding: 0;
+        
+        li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            
+            &:before {
+                content: "→";
+                position: absolute;
+                left: 0;
+                color: var(--primary);
+                font-weight: bold;
+            }
+            
+            a {
+                color: var(--link-color);
+                text-decoration: none;
+                
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+.impact-section {
+    background: var(--secondary-accent);
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    
+    p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 16px;
+        
+        &:last-child {
+            margin-bottom: 0;
+            font-size: 1.2rem;
+        }
+    }
+}
+
+.sidebar-section {
+    margin-bottom: 32px;
+    
+    h3 {
+        color: var(--primary);
+        margin-bottom: 12px;
+        font-size: 1.1rem;
+    }
+    
+    ul {
+        list-style: none;
+        padding: 0;
+        
+        li {
+            margin-bottom: 8px;
+            
+            a {
+                color: var(--link-color);
+                text-decoration: none;
+                
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    
+    p {
+        line-height: 1.5;
+        font-size: 0.95rem;
+    }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+    .opportunity-card {
+        &:hover {
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+        }
+    }
+}

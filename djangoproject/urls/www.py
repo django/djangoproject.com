@@ -32,6 +32,11 @@ urlpatterns = [
         name="overview",
     ),
     path("start/", TemplateView.as_view(template_name="start.html"), name="start"),
+    path(
+        "get-involved/",
+        TemplateView.as_view(template_name="get_involved.html"),
+        name="get_involved",
+    ),
     # to work around a permanent redirect stored in the db that existed
     #  before the redesign:
     path("overview/", RedirectView.as_view(url="/start/overview/", permanent=False)),

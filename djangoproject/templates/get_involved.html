@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Get Involved with Django{% endblock %}
+{% block layout_class %}sidebar-right{% endblock %}
+
+{% block og_title %}Get Involved with Django{% endblock %}
+{% block og_description %}Discover all the ways you can support and contribute to the Django project and community.{% endblock %}
+
+{% block header %}
+  <p>Community</p>
+{% endblock %}
+
+{% block content %}
+  <h1>Get Involved with Django</h1>
+  
+  <p class="lead">
+    There are many ways to support the Django project and community. Whether you have 5 minutes or 5 hours, 
+    there's something you can do to help make Django better for everyone.
+  </p>
+
+  <section class="time-sensitive-section">
+    <h2>⏰ Time-Sensitive Opportunities</h2>
+    <p>These opportunities have specific deadlines and are currently accepting applications or nominations:</p>
+    
+    <div class="opportunity-grid">
+      <div class="opportunity-card urgent" id="board-elections" style="display: none;">
+        <h3>🗳️ DSF Board Elections</h3>
+        <p>Help shape Django's future by voting for Django Software Foundation board members.</p>
+        <p class="deadline">Voting Period: <span class="dates"></span></p>
+        <a href="https://www.djangoproject.com/foundation/" class="cta">Learn More</a>
+      </div>
+      
+      <div class="opportunity-card urgent" id="steering-council" style="display: none;">
+        <h3>🎯 Steering Council Elections</h3>
+        <p>Vote for technical leadership of the Django project.</p>
+        <p class="deadline">Nomination Period: <span class="dates"></span></p>
+        <a href="https://github.com/django/django/tree/main/docs/internals" class="cta">Participate</a>
+      </div>
+      
+      <div class="opportunity-card urgent" id="djangocon-proposals" style="display: none;">
+        <h3>🎤 DjangoCon Talk Proposals</h3>
+        <p>Share your Django knowledge by proposing a talk for DjangoCon.</p>
+        <p class="deadline">Proposal Deadline: <span class="dates"></span></p>
+        <a href="https://djangocon.eu/" class="cta">Submit Proposal</a>
+      </div>
+      
+      <div class="opportunity-card urgent" id="malcolm-prize" style="display: none;">
+        <h3>🏆 Malcolm Tredinnick Memorial Prize</h3>
+        <p>Nominate someone who embodies the spirit of Django's community values.</p>
+        <p class="deadline">Nominations Due: <span class="dates"></span></p>
+        <a href="https://www.djangoproject.com/community/awards/" class="cta">Nominate</a>
+      </div>
+    </div>
+    
+    <div id="no-urgent-opportunities" class="info-box">
+      <p>🎉 No urgent deadlines right now! Check back regularly or follow <a href="https://twitter.com/djangoproject">@djangoproject</a> for announcements.</p>
+    </div>
+  </section>
+
+  <section class="ongoing-section">
+    <h2>🌟 Ongoing Ways to Help</h2>
+    <p>These opportunities are always available and perfect for getting started:</p>
+    
+    <div class="opportunity-grid">
+      <div class="opportunity-card">
+        <h3>💰 Financial Support</h3>
+        <p>Help fund Django's development, infrastructure, and community programs. Every contribution makes a difference.</p>
+        <div class="action-buttons">
+          <a href="{% url 'fundraising:index' %}" class="cta primary">Donate to Django</a>
+          <a href="{% url 'fundraising:corporate-membership' %}" class="cta secondary">Corporate Membership</a>
+        </div>
+      </div>
+      
+      <div class="opportunity-card">
+        <h3>💻 Code Contributions</h3>
+        <p>Fix bugs, add features, improve performance. Start with "easy pickings" tickets.</p>
+        <div class="action-buttons">
+          <a href="https://docs.djangoproject.com/en/dev/internals/contributing/" class="cta primary">Contribution Guide</a>
+          <a href="https://code.djangoproject.com/query?status=!closed&easy=1" class="cta secondary">Easy Tickets</a>
+        </div>
+      </div>
+      
+      <div class="opportunity-card">
+        <h3>📚 Documentation</h3>
+        <p>Help make Django's documentation even better. Fix typos, clarify explanations, add examples.</p>
+        <div class="action-buttons">
+          <a href="https://docs.djangoproject.com/en/dev/internals/contributing/writing-documentation/" class="cta primary">Write Docs</a>
+          <a href="https://code.djangoproject.com/query?status=!closed&component=Documentation" class="cta secondary">Doc Tickets</a>
+        </div>
+      </div>
+      
+      <div class="opportunity-card">
+        <h3>🌍 Translation</h3>
+        <p>Translate Django into your language and help make it accessible worldwide.</p>
+        <div class="action-buttons">
+          <a href="https://docs.djangoproject.com/en/dev/internals/contributing/localizing/" class="cta primary">Translation Guide</a>
+          <a href="https://www.transifex.com/django/django/" class="cta secondary">Transifex Project</a>
+        </div>
+      </div>
+      
+      <div class="opportunity-card">
+        <h3>👥 Community Support</h3>
+        <p>Help others learn Django by answering questions in forums and chat.</p>
+        <div class="action-buttons">
+          <a href="https://forum.djangoproject.com/" class="cta primary">Django Forum</a>
+          <a href="https://discord.gg/xcRH6mN4fa" class="cta secondary">Discord Chat</a>
+        </div>
+      </div>
+      
+      <div class="opportunity-card">
+        <h3>🔍 Code Review</h3>
+        <p>Review pull requests and help improve code quality. Your feedback matters!</p>
+        <div class="action-buttons">
+          <a href="https://github.com/django/django/pulls" class="cta primary">Review PRs</a>
+          <a href="https://docs.djangoproject.com/en/dev/internals/contributing/triaging-tickets/" class="cta secondary">Triage Guide</a>
+        </div>
+      </div>
+      
+      <div class="opportunity-card">
+        <h3>📝 Content Creation</h3>
+        <p>Write blog posts, create tutorials, speak at conferences. Share your Django knowledge!</p>
+        <div class="action-buttons">
+          <a href="https://djangopackages.org/" class="cta primary">Django Packages</a>
+          <a href="https://www.djangoproject.com/community/blogs/" class="cta secondary">Community Blogs</a>
+        </div>
+      </div>
+      
+      <div class="opportunity-card">
+        <h3>🎓 Mentoring</h3>
+        <p>Help newcomers get started with Django through mentoring and teaching.</p>
+        <div class="action-buttons">
+          <a href="https://djangogirls.org/" class="cta primary">Django Girls</a>
+          <a href="https://www.djangoproject.com/community/" class="cta secondary">Find Local Groups</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="getting-started-section">
+    <h2>🚀 New to Contributing?</h2>
+    <div class="getting-started-content">
+      <div class="step-guide">
+        <h3>Quick Start Guide</h3>
+        <ol>
+          <li><strong>Pick your interest:</strong> Code, docs, translation, or community support</li>
+          <li><strong>Read the guides:</strong> Each area has detailed contribution instructions</li>
+          <li><strong>Start small:</strong> Look for "easy pickings" tickets or simple documentation fixes</li>
+          <li><strong>Ask questions:</strong> The Django community is welcoming and helpful</li>
+          <li><strong>Join the conversation:</strong> Follow our forum, Discord, and mailing lists</li>
+        </ol>
+      </div>
+      
+      <div class="resources">
+        <h3>Essential Resources</h3>
+        <ul>
+          <li><a href="https://docs.djangoproject.com/en/dev/internals/contributing/">Complete Contributing Guide</a></li>
+          <li><a href="https://code.djangoproject.com/">Django Issue Tracker</a></li>
+          <li><a href="https://github.com/django/django">Django on GitHub</a></li>
+          <li><a href="https://forum.djangoproject.com/">Django Forum</a></li>
+          <li><a href="https://groups.google.com/g/django-developers">Django Developers Mailing List</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="impact-section">
+    <h2>🌟 Your Impact Matters</h2>
+    <p>
+      Django powers millions of websites and applications. When you contribute to Django, 
+      you're helping developers worldwide build amazing things. Every bug fix, documentation 
+      improvement, and translation makes Django better for everyone.
+    </p>
+    <p>
+      <strong>Thank you for being part of the Django community!</strong> 🎉
+    </p>
+  </section>
+
+  <script>
+    // Simple script to show/hide time-sensitive opportunities
+    // In a real implementation, this would be managed by the backend
+    document.addEventListener('DOMContentLoaded', function() {
+      const urgentOpportunities = document.querySelectorAll('.opportunity-card.urgent');
+      const noUrgentMessage = document.getElementById('no-urgent-opportunities');
+      
+      // Check if any urgent opportunities are visible
+      let hasVisible = false;
+      urgentOpportunities.forEach(card => {
+        if (card.style.display !== 'none') {
+          hasVisible = true;
+        }
+      });
+      
+      // Show/hide the "no urgent opportunities" message
+      if (!hasVisible) {
+        noUrgentMessage.style.display = 'block';
+      } else {
+        noUrgentMessage.style.display = 'none';
+      }
+    });
+  </script>
+{% endblock %}
+
+{% block content-related %}
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+    
+    <div class="sidebar-section">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="{% url 'fundraising:index' %}">Donate to Django</a></li>
+        <li><a href="https://forum.djangoproject.com/">Forum</a></li>
+        <li><a href="https://code.djangoproject.com/">Issue Tracker</a></li>
+        <li><a href="https://github.com/django/django">GitHub</a></li>
+      </ul>
+    </div>
+    
+    <div class="sidebar-section">
+      <h3>Stay Updated</h3>
+      <p>Follow <a href="https://twitter.com/djangoproject">@djangoproject</a> for announcements about time-sensitive opportunities.</p>
+    </div>
+    
+    <div class="sidebar-section">
+      <h3>Recognition</h3>
+      <p>Contributors are recognized in release notes, and significant contributors may be invited to join the Django team.</p>
+    </div>
+  </div>
+{% endblock %}
