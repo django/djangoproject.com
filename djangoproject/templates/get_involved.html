@@ -13,16 +13,16 @@
 
 {% block content %}
   <h1>Get Involved with Django</h1>
-  
+
   <p class="lead">
-    There are many ways to support the Django project and community. Whether you have 5 minutes or 5 hours, 
+    There are many ways to support the Django project and community. Whether you have 5 minutes or 5 hours,
     there's something you can do to help make Django better for everyone.
   </p>
 
   <section class="time-sensitive-section">
     <h2>⏰ Time-Sensitive Opportunities</h2>
     <p>These opportunities have specific deadlines and are currently accepting applications or nominations:</p>
-    
+
     <div class="opportunity-grid">
       <div class="opportunity-card urgent" id="board-elections" style="display: none;">
         <h3>🗳️ DSF Board Elections</h3>
@@ -30,21 +30,21 @@
         <p class="deadline">Voting Period: <span class="dates"></span></p>
         <a href="https://www.djangoproject.com/foundation/" class="cta">Learn More</a>
       </div>
-      
+
       <div class="opportunity-card urgent" id="steering-council" style="display: none;">
         <h3>🎯 Steering Council Elections</h3>
         <p>Vote for technical leadership of the Django project.</p>
         <p class="deadline">Nomination Period: <span class="dates"></span></p>
         <a href="https://github.com/django/django/tree/main/docs/internals" class="cta">Participate</a>
       </div>
-      
+
       <div class="opportunity-card urgent" id="djangocon-proposals" style="display: none;">
         <h3>🎤 DjangoCon Talk Proposals</h3>
         <p>Share your Django knowledge by proposing a talk for DjangoCon.</p>
         <p class="deadline">Proposal Deadline: <span class="dates"></span></p>
         <a href="https://djangocon.eu/" class="cta">Submit Proposal</a>
       </div>
-      
+
       <div class="opportunity-card urgent" id="malcolm-prize" style="display: none;">
         <h3>🏆 Malcolm Tredinnick Memorial Prize</h3>
         <p>Nominate someone who embodies the spirit of Django's community values.</p>
@@ -52,7 +52,7 @@
         <a href="https://www.djangoproject.com/community/awards/" class="cta">Nominate</a>
       </div>
     </div>
-    
+
     <div id="no-urgent-opportunities" class="info-box">
       <p>🎉 No urgent deadlines right now! Check back regularly or follow <a href="https://twitter.com/djangoproject">@djangoproject</a> for announcements.</p>
     </div>
@@ -61,7 +61,7 @@
   <section class="ongoing-section">
     <h2>🌟 Ongoing Ways to Help</h2>
     <p>These opportunities are always available and perfect for getting started:</p>
-    
+
     <div class="opportunity-grid">
       <div class="opportunity-card">
         <h3>💰 Financial Support</h3>
@@ -71,7 +71,7 @@
           <a href="{% url 'fundraising:corporate-membership' %}" class="cta secondary">Corporate Membership</a>
         </div>
       </div>
-      
+
       <div class="opportunity-card">
         <h3>💻 Code Contributions</h3>
         <p>Fix bugs, add features, improve performance. Start with "easy pickings" tickets.</p>
@@ -80,7 +80,7 @@
           <a href="https://code.djangoproject.com/query?status=!closed&easy=1" class="cta secondary">Easy Tickets</a>
         </div>
       </div>
-      
+
       <div class="opportunity-card">
         <h3>📚 Documentation</h3>
         <p>Help make Django's documentation even better. Fix typos, clarify explanations, add examples.</p>
@@ -89,7 +89,7 @@
           <a href="https://code.djangoproject.com/query?status=!closed&component=Documentation" class="cta secondary">Doc Tickets</a>
         </div>
       </div>
-      
+
       <div class="opportunity-card">
         <h3>🌍 Translation</h3>
         <p>Translate Django into your language and help make it accessible worldwide.</p>
@@ -98,7 +98,7 @@
           <a href="https://www.transifex.com/django/django/" class="cta secondary">Transifex Project</a>
         </div>
       </div>
-      
+
       <div class="opportunity-card">
         <h3>👥 Community Support</h3>
         <p>Help others learn Django by answering questions in forums and chat.</p>
@@ -107,7 +107,7 @@
           <a href="https://discord.gg/xcRH6mN4fa" class="cta secondary">Discord Chat</a>
         </div>
       </div>
-      
+
       <div class="opportunity-card">
         <h3>🔍 Code Review</h3>
         <p>Review pull requests and help improve code quality. Your feedback matters!</p>
@@ -116,7 +116,7 @@
           <a href="https://docs.djangoproject.com/en/dev/internals/contributing/triaging-tickets/" class="cta secondary">Triage Guide</a>
         </div>
       </div>
-      
+
       <div class="opportunity-card">
         <h3>📝 Content Creation</h3>
         <p>Write blog posts, create tutorials, speak at conferences. Share your Django knowledge!</p>
@@ -125,7 +125,7 @@
           <a href="https://www.djangoproject.com/community/blogs/" class="cta secondary">Community Blogs</a>
         </div>
       </div>
-      
+
       <div class="opportunity-card">
         <h3>🎓 Mentoring</h3>
         <p>Help newcomers get started with Django through mentoring and teaching.</p>
@@ -150,7 +150,7 @@
           <li><strong>Join the conversation:</strong> Follow our forum, Discord, and mailing lists</li>
         </ol>
       </div>
-      
+
       <div class="resources">
         <h3>Essential Resources</h3>
         <ul>
@@ -167,8 +167,8 @@
   <section class="impact-section">
     <h2>🌟 Your Impact Matters</h2>
     <p>
-      Django powers millions of websites and applications. When you contribute to Django, 
-      you're helping developers worldwide build amazing things. Every bug fix, documentation 
+      Django powers millions of websites and applications. When you contribute to Django,
+      you're helping developers worldwide build amazing things. Every bug fix, documentation
       improvement, and translation makes Django better for everyone.
     </p>
     <p>
@@ -182,7 +182,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       const urgentOpportunities = document.querySelectorAll('.opportunity-card.urgent');
       const noUrgentMessage = document.getElementById('no-urgent-opportunities');
-      
+
       // Check if any urgent opportunities are visible
       let hasVisible = false;
       urgentOpportunities.forEach(card => {
@@ -190,7 +190,7 @@
           hasVisible = true;
         }
       });
-      
+
       // Show/hide the "no urgent opportunities" message
       if (!hasVisible) {
         noUrgentMessage.style.display = 'block';
@@ -204,7 +204,7 @@
 {% block content-related %}
   <div role="complementary">
     <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
-    
+
     <div class="sidebar-section">
       <h3>Quick Links</h3>
       <ul>
@@ -214,12 +214,12 @@
         <li><a href="https://github.com/django/django">GitHub</a></li>
       </ul>
     </div>
-    
+
     <div class="sidebar-section">
       <h3>Stay Updated</h3>
       <p>Follow <a href="https://twitter.com/djangoproject">@djangoproject</a> for announcements about time-sensitive opportunities.</p>
     </div>
-    
+
     <div class="sidebar-section">
       <h3>Recognition</h3>
       <p>Contributors are recognized in release notes, and significant contributors may be invited to join the Django team.</p>
