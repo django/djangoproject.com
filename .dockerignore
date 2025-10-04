@@ -1,0 +1,16 @@
+# Copied from .gitignore
+__pycache__
+data
+*.pyc
+*.db
+locale/*/LC_MESSAGES/django.mo
+*/locale/*/LC_MESSAGES/django.mo
+.sass-cache/
+.coverage
+.direnv
+.envrc
+djangoproject/cache
+djangoproject/static/css/*.map
+djangoproject/static/css/*.css
+# Additional ignores for Docker
+.git/
