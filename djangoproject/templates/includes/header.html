@@ -30,6 +30,9 @@
         <li{% if 'community' in request.path or 'conduct' in request.path %} class="active"{% endif %}>
           <a href="{% url 'community-index' %}">Community</a>
         </li>
+        <li{% if 'get-involved' in request.path %} class="active"{% endif %}>
+          <a href="{% url 'get_involved' %}">Get Involved</a>
+        </li>
         <li>
           <a href="https://github.com/django/django" target="_blank" rel="noopener">Code</a>
         </li>
