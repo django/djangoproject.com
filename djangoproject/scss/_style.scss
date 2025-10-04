@@ -3352,6 +3352,20 @@ hr {
     }
 }
 
+/* Improve accessibility for footnote links in tables */
+table sup a,
+.django-supported-versions sup a,
+.django-unsupported-versions sup a {
+    color: var(--link-color);
+    text-decoration: underline;
+
+    &:hover,
+    &:focus {
+        color: var(--primary-accent);
+        text-decoration: underline;
+    }
+}
+
 form .footnote {
     margin-top: 10px;
     text-align: left;
