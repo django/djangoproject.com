@@ -57,6 +57,7 @@ FUNDRAISING_DEFAULT_FROM_EMAIL = "fundraising@djangoproject.com"
 FIXTURE_DIRS = [str(PROJECT_PACKAGE.joinpath("fixtures"))]
 
 INSTALLED_APPS = [
+    "djangoproject",  # Add main project app for template tags
     "accounts",
     "aggregator",
     "blog",
