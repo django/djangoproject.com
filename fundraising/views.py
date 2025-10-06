@@ -160,7 +160,7 @@ def update_card(request):
             donation.stripe_customer_id,
             source=request.POST["stripe_token"],
         )
-    except stripe.error.StripeError as e:
+    except stripe.StripeError as e:
         data = {"success": False, "error": str(e)}
     else:
         data = {"success": True}
@@ -195,7 +195,7 @@ def receive_webhook(request):
             request.headers["stripe-signature"],
             settings.STRIPE_ENDPOINT_SECRET,
         )
-    except (KeyError, ValueError, stripe.error.SignatureVerificationError):
+    except (KeyError, ValueError, stripe.SignatureVerificationError):
         return HttpResponse(status=422)
 
     return WebhookHandler(event).handle()
