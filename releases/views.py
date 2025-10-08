@@ -31,6 +31,20 @@ def index(request):
     return render(request, "releases/download.html", context)
 
 
+def roadmap(request, series):
+    major, minor = series.split(".")
+    major = int(major)
+    if major < 2:
+        raise Http404
+
+    releases = Release.objects.filter(major=major, minor=minor, micro=0)
+    context = {
+        "series": series,
+        "releases": {r.status: r for r in releases},
+    }
+    return render(request, "releases/roadmap.html", context)
+
+
 def redirect(request, version, kind):
     release = get_object_or_404(Release, version=version)
 

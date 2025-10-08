@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load date_format %}
+
+{% block sectionid %}roadmap{% endblock %}
+{% block title %}Django {{ series }} Roadmap{% endblock %}
+{% block layout_class %}sidebar-right{% endblock %}
+
+{% block header %}
+  <p>Download</p>
+{% endblock %}
+
+{% block content %}
+  <h1>Django {{ series }} Roadmap</h1>
+  <p>This document details the schedule and roadmap towards Django {{ series }}.</p>
+
+  <section id="what-features-will-be-released">
+    <h2>What features will be in Django {{ series }}?</h2>
+    <p>Whatever gets committed by the alpha feature freeze!</p>
+    <p>Django {{ series }} will be a time-based release. Any features completed and committed
+      to main by the alpha feature freeze deadline noted below will be included. Any
+      that miss the deadline won't.</p>
+    <p>If you have a major feature you'd like to contribute, please introduce yourself
+      on the <a href="https://forum.djangoproject.com/c/internals/5">django-internals forum</a>
+      so you can find a shepherd for your feature.</p>
+    <p>Minor features and bug fixes will be merged as they are completed. If you
+      have submitted a patch, ensure the flags on the Trac ticket are correct so it
+      appears in the "Patches needing review" filter of the
+      <a href="https://dashboard.djangoproject.com/">Django Development Dashboard</a>.
+      Better yet, find someone to review your patch and mark the ticket as
+      "Ready for checkin". Tickets marked "Ready for checkin" are regularly reviewed
+      by mergers.</p>
+  </section>
+
+  <section id="schedule">
+    <h2>Schedule</h2>
+    <p>
+      Major milestones along the way to {{ series }} are scheduled below.
+      See <a href="#process">Process</a> for more details. Dates are subject to change.
+    </p>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Milestone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ releases.a.date|default:"TBD" }}</td>
+            <td>Django {{ series }} alpha; feature freeze.</td>
+          </tr>
+          <tr>
+            <td>{{ releases.b.date|default:"TBD" }}</td>
+            <td>Django {{ series }} beta; non-release blocking bug fix freeze.</td>
+          </tr>
+          <tr>
+            <td>{{ releases.c.date|default:"TBD" }}</td>
+            <td>Django {{ series }} RC 1; translation string freeze.</td>
+          </tr>
+          <tr>
+            <td>{{ releases.f.date|default:"TBD" }}</td>
+            <td>Django {{ series }} final.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="process">
+    <h2>Process</h2>
+    <p>Any features not completed by the feature freeze date won't make it into {{ series }}.</p>
+    <p>The release manager will keep the schedule updated and ensure efficient
+      routing of issues and reminders for deadlines.</p>
+
+    <section id="feature-freeze-alpha-1">
+      <h3>Feature freeze / Alpha 1</h3>
+      <p>All major and minor features must be merged by the Alpha 1 deadline. Any
+        features not done by this point will be deferred or dropped. At this time, we
+        will fork <code>stable/{{ series }}.x</code> from <code>main</code>.</p>
+      <p>After the alpha, non-release blocking bug fixes may be backported at the
+        mergers' discretion.</p>
+    </section>
+
+    <section id="beta-1">
+      <h3>Beta 1</h3>
+      <p>Beta 1 marks the end of changes that aren't release blocking bugs. Only release
+        blocking bug fixes will be allowed to be backported after the beta.</p>
+    </section>
+
+    <section id="rc-1">
+      <h3>RC 1</h3>
+      <p>If release blockers are still coming in at the planned release candidate date,
+        we'll release beta 2 to encourage further testing. RC 1 marks the freeze for
+        translation strings; translators will have two weeks to submit updates. Release
+        blocking bug fixes may continue to be backported.</p>
+    </section>
+
+    <section id="final">
+      <h3>Final</h3>
+      <p>Django {{ series }} final will ideally ship two weeks after the last RC. If no major bugs
+        are found by then, {{ series }} final will be issued; otherwise, the timeline will be
+        adjusted as needed.</p>
+    </section>
+
+    <section id="how-to-help">
+      <h3>How you can help</h3>
+      <p>Community effort is key. You can help by:</p>
+      <ul>
+        <li>Reading the <a href="http://docs.djangoproject.com/en/dev/internals/contributing/">guide to contributing</a>
+          and <a href="http://docs.djangoproject.com/en/dev/internals/release-process/">Django's release process</a>.</li>
+        <li>Working on patches and <a href="https://docs.djangoproject.com/en/dev/internals/contributing/triaging-tickets/">triaging tickets</a>.</li>
+        <li>Attending sprints.</li>
+        <li>Testing release snapshots (alphas, betas) against your code and reporting bugs.</li>
+        <li>Providing as many testers as possible to ensure a bug-free release.</li>
+      </ul>
+    </section>
+  </section>
+
+{% endblock %}

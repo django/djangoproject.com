@@ -2529,14 +2529,48 @@ dl.data {
     white-space: normal;
 }
 
+table {
+    th {
+        background: var(--sidebar-bg);
+        font-weight: bold;
+        text-align: left;
+    }
+
+    td {
+        border-bottom: 1px solid var(--hairline-color);
+    }
+
+    td,
+    th {
+        padding: 0.5em 1em;
+    }
+}
+
 table.foundation td {
-    border-bottom: 1px solid var(--hairline-color);
     padding: 0 5px;
 }
 
-table.docutils td,
-table.docutils th {
-    border-bottom: 1px solid var(--hairline-color);
+table.django-supported-versions,
+table.django-unsupported-versions {
+    border: 1px solid var(--hairline-color);
+    color: var(--table-color);
+
+    th,
+    td {
+        border-bottom: none;
+        padding: 5px;
+        text-align: center;
+    }
+}
+
+table.django-supported-versions th,
+table.django-supported-versions tr {
+    background-color: var(--secondary-accent);
+}
+
+table.django-unsupported-versions th,
+table.django-unsupported-versions tr {
+    background-color: var(--error-light);
 }
 
 .list-links {
@@ -3418,26 +3452,6 @@ form .footnote {
         display: inline-block;
         margin-left: 1em;
     }
-}
-
-table.django-supported-versions,
-table.django-unsupported-versions {
-    border: 1px solid black;
-    text-align: center;
-    color: var(--table-color);
-
-    th,
-    td {
-        padding: 5px;
-    }
-}
-
-table.django-supported-versions tr {
-    background-color: var(--secondary-accent);
-}
-
-table.django-unsupported-versions tr {
-    background-color: var(--error-light);
 }
 
 /* Corporate membership list page */
