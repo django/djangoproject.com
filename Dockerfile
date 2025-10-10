@@ -29,9 +29,7 @@ ARG BUILD_DEPENDENCIES="g++ gcc libc6-dev libpq-dev zlib1g-dev"
 # install python dependencies
 COPY ./requirements ./requirements
 RUN apt-get update \
-    && apt-get install --assume-yes --no-install-recommends ${BUILD_DEPENDENCIES} \
     && python3 -m pip install --no-cache-dir -r ${REQ_FILE} \
-    && apt-get purge --assume-yes --auto-remove ${BUILD_DEPENDENCIES} \
     && apt-get distclean
 
 # copy project
