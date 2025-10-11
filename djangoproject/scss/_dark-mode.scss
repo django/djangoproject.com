@@ -139,7 +139,7 @@ html[data-theme="light"],
     body table.django-supported-versions,
     body table.django-unsupported-versions {
         a {
-            color: $black;
+            color: var(--table-color);
 
             &:active,
             &:focus,
