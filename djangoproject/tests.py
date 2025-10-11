@@ -104,7 +104,8 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
         "We get no Content-Language or Vary headers when docs host is excluded"
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
             resp = self.client.get("/", headers={"host": self.docs_host})
-        self.assertEqual(resp.status_code, HTTPStatus.FOUND)
+
+        self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertNotIn("Content-Language", resp)
         self.assertNotIn("Vary", resp)
 
@@ -128,7 +129,8 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
             LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host], USE_X_FORWARDED_HOST=True
         ):
             resp = self.client.get("/", headers={"x-forwarded-host": self.docs_host})
-        self.assertEqual(resp.status_code, HTTPStatus.FOUND)
+
+        self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertNotIn("Content-Language", resp)
         self.assertNotIn("Vary", resp)
 
@@ -136,7 +138,8 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
         "We still get Content-Language when docs host is not excluded"
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[]):
             resp = self.client.get("/", headers={"host": self.docs_host})
-        self.assertEqual(resp.status_code, HTTPStatus.FOUND)
+
+        self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn("Content-Language", resp)
         self.assertIn("Vary", resp)
 
