@@ -198,6 +198,7 @@ html[data-theme="dark"] {
     --error-dark: #{$red-medium};
 
     --table-color: var(--body-bg);
+    --table-link-hover: #09422C;
     --cta-color-accent: #{$black};
     --white-color: #{$black};
 
@@ -241,7 +242,7 @@ html[data-theme="dark"] {
             &:active,
             &:focus,
             &:hover {
-                color: $gray-medium;
+                color: var(--table-link-hover);
             }
         }
     }
