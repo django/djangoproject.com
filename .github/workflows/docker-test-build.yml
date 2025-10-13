@@ -25,10 +25,21 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - name: Test docker image build (local development)
+            - if: matrix.req_file != 'tests.txt'
+              name: Test docker image build (${{ matrix.req_file }})
               uses: docker/build-push-action@v6
               with:
                   context: .
                   push: false
                   build-args: |
                       REQ_FILE=requirements/${{ matrix.req_file }}
+
+            - if: matrix.req_file == 'tests.txt'
+              name: Set up Docker Compose
+              uses: docker/setup-compose-action@v1
+
+            - if: matrix.req_file == 'tests.txt'
+              name: Run the tests via Docker
+              run: |
+                  docker compose build
+                  docker compose run --rm web make ci
