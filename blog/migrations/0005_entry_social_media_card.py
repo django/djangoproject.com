@@ -7,13 +7,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0004_imageupload'),
+        ("blog", "0004_imageupload"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='entry',
-            name='social_media_card',
-            field=models.ForeignKey(blank=True, help_text='For maximum compatibility, the image should be < 5 MB and at least 1200x627 px.', null=True, on_delete=django.db.models.deletion.PROTECT, to='blog.imageupload'),
+            model_name="entry",
+            name="social_media_card",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="For maximum compatibility, the image should be < 5 MB and at least 1200x627 px.",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="blog.imageupload",
+            ),
         ),
     ]
