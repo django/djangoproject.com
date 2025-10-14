@@ -398,7 +398,7 @@ class ReleaseAdminFormTestCase(TestCase):
         form = self.form_class(auto_id=None)  # auto_id=None makes testing easier
         self.assertHTMLEqual(
             form["tarball"].as_widget(),
-            '<input type="file" name="tarball" accept=".tar.gz">',
+            '<input type="file" name="tarball" accept=".gz">',
         )
         self.assertHTMLEqual(
             form["wheel"].as_widget(), '<input type="file" name="wheel" accept=".whl">'

@@ -12,7 +12,7 @@ class ReleaseAdminForm(forms.ModelForm):
 
         # Add `accept` attributes to the artifact file fields to make it a bit
         # easier to pick the right files in the browser's 'filepicker
-        extensions = {"tarball": ".tar.gz", "wheel": ".whl", "checksum": ".asc,.txt"}
+        extensions = {"tarball": ".gz", "wheel": ".whl", "checksum": ".asc,.txt"}
         for field, accept in extensions.items():
             widget = self.fields[field].widget
             widget.attrs.setdefault("accept", accept)
