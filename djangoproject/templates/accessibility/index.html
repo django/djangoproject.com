@@ -120,12 +120,12 @@
 
   <ul>
     <li>
-        {% url 'document-detail' lang='en' version='dev' url='internals/contributing/bugs-and-features' host 'docs' as reporting_url %}
-        {% blocktranslate trimmed %}
-          <a href="{{ reporting_url }}">
-            Reporting accessibility issues</a> in Django's admin interface, documentation, or websites. This can also be
-          done on the <a href="https://forum.djangoproject.com/c/internals/accessibility/26">Django forum in accessibility</a>.
-        {% endblocktranslate %}</li>
+      {% url 'document-detail' lang='en' version='dev' url='internals/contributing/bugs-and-features' host 'docs' as reporting_url %}
+      {% blocktranslate trimmed %}
+        <a href="{{ reporting_url }}">
+          Reporting accessibility issues</a> in Django's admin interface, documentation, or websites. This can also be
+        done on the <a href="https://forum.djangoproject.com/c/internals/accessibility/26">Django forum in accessibility</a>.
+      {% endblocktranslate %}</li>
     <li>
       <p>{% translate "Sharing knowledge, testing, or feedback on accessibility in Django-built projects." %}</p>
       <li>
