@@ -428,7 +428,6 @@ class ReleaseAdminFormTestCase(TestCase):
     def test_clearing_also_deletes_file(self, commit_save=True):
         tempdir = Path(tempfile.mkdtemp(prefix="djangoprojectcom_"))
         self.addCleanup(shutil.rmtree, tempdir, ignore_errors=True)
-        self.enterContext(override_settings(MEDIA_ROOT=tempdir))
 
         files = {
             "checksum": tempdir / "checksum.txt",
@@ -439,20 +438,20 @@ class ReleaseAdminFormTestCase(TestCase):
         for f in files.values():
             f.touch()
 
-        release = Release.objects.create(
-            version="1.0", **{a: f.name for a, f in files.items()}
-        )
-        data = {"version": "2.0", **{f"{a}-clear": True for a in files.keys()}}
-        form = self.form_class(instance=release, data=data)
-        self.assertTrue(form.is_valid(), form.errors)
-        form.save(commit=commit_save)
-        if not commit_save:
-            for artifact, tmpfile in files.items():
-                with self.subTest(artifact=artifact):
-                    self.assertTrue(tmpfile.exists())
-            release.save()
-            form.save_m2m()
-        release.refresh_from_db()
+        with override_settings(MEDIA_ROOT=tempdir):
+            release = Release.objects.create(
+                version="1.0", **{a: f.name for a, f in files.items()}
+            )
+            data = {"version": "2.0", **{f"{a}-clear": True for a in files.keys()}}
+            form = self.form_class(instance=release, data=data)
+            self.assertTrue(form.is_valid(), form.errors)
+            form.save(commit=commit_save)
+            if not commit_save:
+                for artifact, tmpfile in files.items():
+                    with self.subTest(artifact=artifact):
+                        self.assertTrue(tmpfile.exists())
+                release.save()
+                form.save_m2m()
 
         for artifact, tmpfile in files.items():
             with self.subTest(artifact=artifact):
