@@ -16,7 +16,7 @@
     {% endblocktranslate %}
   </p>
 
-  <h2>{% translate "Our commitment" %}</h2>
+  <h2>{% translate "Our commitment" %} <a class="plink" href="#our-commitment">¶</a></h2>
 
   <p>
     {% blocktranslate trimmed %}
@@ -25,7 +25,7 @@
     {% endblocktranslate %}
   </p>
 
-  <ul class="simple">
+  <ul>
     <li>{% translate "Supporting the creation of accessible web applications with Django." %}</li>
     <li>
       {% blocktranslate trimmed %}
@@ -39,7 +39,7 @@
       {% endblocktranslate %}</li>
   </ul>
 
-  <h3>{% translate "Accessibility in the Django web framework" %}</h3>
+  <h3>{% translate "Accessibility in the Django web framework" %} <a class="plink" href="#accessibility-in-the-django-web-framework">¶</a></h3>
 
   <p>
     {% blocktranslate trimmed %}
@@ -54,7 +54,13 @@
     {% endblocktranslate %}
   </p>
 
-  <h3>{% translate "Community and events" %}</h3>
+  <p>
+    {% blocktranslate trimmed %}
+      We also encourage feedback and contributions to improve accessibility features in Django’s admin interface and related tools such as Django forms, particularly from people with disabilities or other accessibility needs.
+    {% endblocktranslate %}
+  </p>
+
+  <h3>{% translate "Community and events" %} <a class="plink" href="#community-and-events">¶</a></h3>
 
   <p>
     {% blocktranslate trimmed %}
@@ -66,9 +72,9 @@
     {% endblocktranslate %}
   </p>
 
-  <h2>{% translate "What we do" %}</h2>
+  <h2>{% translate "What we do" %} <a class="plink" href="#what-we-do">¶</a></h2>
 
-  <h3>{% translate "Known issues and continuous improvement" %}</h3>
+  <h3>{% translate "Known issues and continuous improvement" %} <a class="plink" href="#known-issues-and-continuous-improvement">¶</a></h3>
 
   <p>
     {% blocktranslate trimmed %}
@@ -81,12 +87,9 @@
 
   <p>{% translate "For further details, see:" %}</p>
 
-  <ul class="simple">
+  <ul>
     <li>
-      <a href="https://code.djangoproject.com/query?description=~accessibility\&status=assigned\
-               &status=closed\&status=new\&or\&keywords=~accessibility\&or\&summary=~accessibility\&order=id\
-               &desc=1\&col=id\&col=summary\&col=owner\&col=type\&col=component">
-        Issues matching “accessibility” for the Django framework</a></li>
+      <a href="https://code.djangoproject.com/query?description=~accessibility&status=assigned&status=closed&status=new&or&keywords=~accessibility&or&summary=~accessibility&order=id&desc=1&col=id&col=summary&col=owner&col=type&col=component">        Issues matching “accessibility” for the Django framework</a></li>
     <li>
       <a href="https://github.com/django/djangoproject.com/issues?q=is%3Aissue%20state%3Aopen%20label
                %3Aaccessibility">
@@ -96,30 +99,33 @@
         Django accessibility improvements kanban</a></li>
   </ul>
 
-  <h3>{% translate "Current efforts" %}</h3>
+  <h3>{% translate "Current efforts" %} <a class="plink" href="#current-efforts">¶</a></h3>
 
   <p>
+    {% url 'members:teams' as teams_url %}
+    {% url 'document-detail' lang='en' version='stable' url='faq/admin' host 'docs' as admin_faq_url %}
     {% blocktranslate trimmed %}
-      The <a href="https://www.djangoproject.com/foundation/teams/#accessibility-team">Django accessibility team</a>
+      The <a href="{{ teams_url }}#accessibility-team">Django accessibility team</a>
       encourages projects maintained by the Django Software Foundation to be accessible to as many people as possible,
       particularly those with disabilities that make using the web more difficult. This includes
-      <a href="https://docs.djangoproject.com/en/5.1/faq/admin/#what-assistive-technologies-are-supported-for-using-the-admin">
+      <a href="{{ admin_faq_url }}#what-assistive-technologies-are-supported-for-using-the-admin">
         testing with assistive technologies</a>, reviewing changes to Django for accessibility, updating project guidelines
       and documentation, and publishing reports.
     {% endblocktranslate %}
   </p>
 
-  <h3>{% translate "How you can help" %}</h3>
+  <h3>{% translate "How you can help" %} <a class="plink" href="#how-you-can-help">¶</a></h3>
 
   <p>{% translate "We invite all members of the community to contribute to accessibility efforts. This could include:" %}</p>
 
-  <ul class="simple">
+  <ul>
     <li>
-      {% blocktranslate trimmed %}
-        <a href="https://docs.djangoproject.com/en/dev/internals/contributing/bugs-and-features/">
-          Reporting accessibility issues</a> in Django's admin interface, documentation, or websites. This can also be
-        done on the <a href="https://forum.djangoproject.com/c/internals/accessibility/26">Django forum in accessibility</a>.
-      {% endblocktranslate %}</li>
+        {% url 'document-detail' lang='en' version='dev' url='internals/contributing/bugs-and-features' host 'docs' as reporting_url %}
+        {% blocktranslate trimmed %}
+          <a href="{{ reporting_url }}">
+            Reporting accessibility issues</a> in Django's admin interface, documentation, or websites. This can also be
+          done on the <a href="https://forum.djangoproject.com/c/internals/accessibility/26">Django forum in accessibility</a>.
+        {% endblocktranslate %}</li>
     <li>
       <p>{% translate "Sharing knowledge, testing, or feedback on accessibility in Django-built projects." %}</p>
       <li>
@@ -127,22 +133,24 @@
       </ul>
 
       <p>
+        {% url 'members:teams' as teams_url %}
         {% blocktranslate trimmed %}
           For more information and opportunities to contribute, consider contacting the
-          <a href="https://www.djangoproject.com/foundation/teams/#accessibility-team">Django accessibility team</a>.
+          <a href="{{ teams_url }}#accessibility-team">Django accessibility team</a>.
         {% endblocktranslate %}
       </p>
 
-      <h2>{% translate "Feedback and contact" %}</h2>
+      <h2>{% translate "Feedback and contact" %} <a class="plink" href="#feedback-and-contact">¶</a></h2>
 
       <p>
+        {% url 'contact_foundation' as contact_url %}
         {% blocktranslate trimmed %}
           We value your input. If you encounter an accessibility barrier or have suggestions for improvement and none of the
           above options seem appropriate, please contact the accessibility team. Find us on:
           <a href="https://forum.djangoproject.com/c/internals/accessibility/26">Accessibility on the forum</a>,
           <a href="https://discord.com/channels/856567261900832808/931568482489860137">#accessibility on Discord</a>,
           or if neither work for you please use the
-          <a href="https://www.djangoproject.com/contact/foundation/">Contact us page</a>.
+          <a href="{{ contact_url }}">Contact us page</a>.
         {% endblocktranslate %}
       </p>
 
