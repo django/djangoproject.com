@@ -1,0 +1,71 @@
+{% extends "base_lite.html" %}
+{% load static lite_filters %}
+
+{% comment %}
+Lite flatpage template for documents with custom styling
+
+This template is designed for one-off documents like annual reports,
+special publications, or any content that needs completely different
+styling from the main Django website.
+
+Usage:
+1. Create your flatpage in Django admin
+2. Set the template name to "flatpages/lite.html"
+3. Add custom CSS by creating blocks in your content or
+   by extending this template further
+
+Example custom styling approaches:
+
+Approach 1: Inline styles in flatpage content
+<style>
+  body { background: #f0f0f0; font-family: 'Custom Font'; }
+  .special-section { color: red; }
+</style>
+
+Approach 2: External stylesheet in flatpage content
+<link rel="stylesheet" href="{% static 'css/my-custom-report.css' %}">
+
+Approach 3: Create a custom template that extends this one
+{% extends "flatpages/lite.html" %}
+{% block stylesheets %}
+  <link rel="stylesheet" href="{% static 'css/annual-report.css' %}">
+{% endblock %}
+{% endcomment %}
+
+{% block title %}{{ flatpage.title }}{% endblock %}
+{% block og_title %}{{ flatpage.title }}{% endblock %}
+
+{% comment %}
+Extract CSS and JS from flatpage content if present
+This allows content editors to include custom styles directly in the content
+{% endcomment %}
+{% block stylesheets %}
+  {% comment %}
+  Extract any <link> or <style> tags from the beginning of flatpage content
+  and include them in the head section for proper CSS loading
+  {% endcomment %}
+  {{ flatpage.content|extract_head_tags }}
+{% endblock stylesheets %}
+
+{% block content %}
+  {% comment %}
+  Include the flatpage content with head tags removed
+  to avoid duplicate CSS/JS includes
+  If filters fail, fall back to showing full content
+  {% endcomment %}
+  {% with cleaned_content=flatpage.content|remove_head_tags|remove_script_tags %}
+    {% if cleaned_content %}
+      {{ cleaned_content }}
+    {% else %}
+      {{ flatpage.content }}
+    {% endif %}
+  {% endwith %}
+{% endblock content %}
+
+{% comment %}
+Extract any JavaScript from flatpage content and include at bottom
+{% endcomment %}
+{% block javascript %}
+  {{ block.super }}
+  {{ flatpage.content|extract_script_tags }}
+{% endblock javascript %}
