@@ -81,6 +81,13 @@ Install and run locally from a virtual environment
 
     python -m manage loaddata dev_sites
 
+#. Compile .po files to .mo files for translations::
+
+    make compilemessages
+
+    This only needs to happen once to support running the locale tests
+    locally.
+
 #. For docs (next step requires ``gettext``)::
 
     python -m manage loaddata doc_releases
