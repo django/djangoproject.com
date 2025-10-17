@@ -1,3 +1,6 @@
+import re
+import warnings
+from datetime import datetime, timedelta
 from http import HTTPStatus
 from io import StringIO
 
@@ -205,3 +208,35 @@ class Header1Tests(TestCase):
                     response = self.client.get(url)
                     self.assertEqual(response.status_code, 200)
                     self.assertContains(response, "<h1", count=1)
+
+
+class SecurityTxtTests(TestCase):
+    """
+    Tests for the security.txt file.
+    """
+
+    def test_security_txt(self):
+        """
+        The security.txt file should be reachable at the expected URL.
+        """
+        response = self.client.get("/.well-known/security.txt")
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(response["Content-Type"], "text/plain")
+
+        match = re.search(
+            "^Expires: (.*)$", response.content.decode("utf-8"), flags=re.MULTILINE
+        )
+        if match is None:
+            self.fail("No Expires line found in security.txt")
+        else:
+            expires = match[1]
+
+        expires_date = datetime.fromisoformat(expires).date()
+
+        if expires_date < datetime.now().date() - timedelta(days=15):
+            warnings.warn(
+                "The djangoproject/templates/well-known/security.txt file is"
+                " close to expiring. Please update the 'Expires' line to confirm"
+                " the contents are still accurate.",
+                category=UserWarning,
+            )
