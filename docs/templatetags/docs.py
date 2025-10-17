@@ -2,6 +2,7 @@ import re
 from urllib.parse import quote
 
 from django import template
+from django.conf import settings
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.utils.version import get_version_tuple
@@ -38,7 +39,7 @@ def get_all_doc_versions(context, url=None):
 
     Usage: {% get_all_doc_versions <url> as "varname" %}
     """
-    lang = context.get("lang", "en")
+    lang = context.get("lang", settings.DEFAULT_LANGUAGE_CODE)
     versions = []
 
     # Look for each version of the docs.

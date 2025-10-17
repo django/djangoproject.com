@@ -1,6 +1,7 @@
 from http import HTTPStatus
 from io import StringIO
 
+from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import NoReverseMatch, get_resolver
@@ -98,7 +99,9 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         r2 = Release.objects.create(version="2.0")
-        DocumentRelease.objects.create(lang="en", release=r2, is_default=True)
+        DocumentRelease.objects.create(
+            lang=settings.DEFAULT_LANGUAGE_CODE, release=r2, is_default=True
+        )
 
     def test_docs_host_excluded(self):
         """We get no Content-Language or Vary headers when docs host is excluded"""
