@@ -425,7 +425,6 @@ main {
 .container {
     @include respond-min(768px) {
         margin: 0 auto;
-        max-width: 1400px;
         padding: 0 (32/768) * 100%;
     }
 
@@ -463,13 +462,10 @@ header {
 
     .container {
         display: flex;
-        flex-direction: row;
-        @include respond-min(768px) {
-            position: relative;
-        }
+        align-items: center;
     }
 
-    .mobile-toggle {margin-left: auto}
+    .header-mobile-only {margin-left: auto}
 
     .meta {
         @include font-size(13);
@@ -479,7 +475,7 @@ header {
         margin: 8px 0 0 10px;
         display: none;
 
-        @include respond-min(1150px) {
+        @include respond-min(1080px) {
             width: 200px;
             display: block;
         }
@@ -490,19 +486,26 @@ header {
     .logo {
         @include font-size(40);
         @include sans-serif;
-        background: url(../img/logo-django.svg) center center no-repeat;
+        // Small screens less than 500px use the dj logo. This gives more
+        // horizontal space for a searchbar in the header.
+        background: url(../img/logo-dj.svg) center center no-repeat;
         color: var(--white-color);
         display: block;
         font-weight: 700;
-        margin: 10px;
+        margin: 10px 4px;
         overflow: hidden;
         text-decoration: none;
         text-indent: 100%;
-        width: 104px;
+        width: 45px;
         height: 36px;
 
-        @include respond-min(768px) {
-            margin-left: 0;
+        @include respond-min(500px) {
+            background: url(../img/logo-django.svg) center center no-repeat;
+            width: 104px;
+        }
+
+        @include respond-min(1080px) {
+            margin-left: 10px;
         }
     }
 
@@ -514,13 +517,12 @@ header {
         cursor: pointer;
         display: block;
         height: 45px;
-        line-height: 48px;
-        margin: 4px 10px;
+        margin: 2px;
         text-align: center;
         text-decoration: none;
         width: 45px;
 
-        @include respond-min(768px) {
+        @include respond-min(1080px) {
             display: none;
         }
 
@@ -544,7 +546,7 @@ header {
             max-height: 580px;
         }
 
-        @include respond-min(768px) {
+        @include respond-min(1080px) {
             width: auto;
             max-height: none; // always show menu on a desktop width
         }
@@ -553,7 +555,9 @@ header {
             margin: 10px 0 0;
             padding: 0;
 
-            @include respond-min(768px) {
+            @include respond-min(1080px) {
+                display: flex;
+                align-items: center;
                 margin: 0;
             }
         }
@@ -568,14 +572,18 @@ header {
             text-transform: uppercase;
             margin: 0 10px;
             border-top: 1px solid lighten($green-dark, 5%);
-            padding: 20px 0px;
+            > :not(.search){
+              padding: 20px 0px;
+            }
 
-            @include respond-min(768px) {
+            @include respond-min(1080px) {
                 margin: 0;
                 border: 0;
                 float: left;
                 text-align: left;
-                padding: 20px 10px;
+                > :not(.search){
+                  padding: 10px;
+                }
             }
 
             &.active a {
@@ -608,18 +616,11 @@ header {
                 color: var(--secondary-accent);
             }
 
-            @include respond-min(768px) {
+            @include respond-min(1080px) {
                 padding: 20px 10px;
             }
         }
 
-        .nav-primary {
-            @include respond-min(768px) {
-                position: absolute;
-                right: 0;
-                top: 45px;
-            }
-        }
     }
 }
 
@@ -645,7 +646,7 @@ header {
         top: 0;
         max-width: 660px;
 
-        @include respond-min(768px) {
+        @include respond-min(1080px) {
             position: static;
         }
     }
@@ -3008,13 +3009,9 @@ form {
         height: 40px;
         padding: 0;
         position: absolute;
-        right: 2%;
+        right: 0;
         top: 6%;
         width: 40px;
-
-        @include respond-min(768px) {
-            right: 1%;
-        }
 
         i {
             @include font-size(20);
@@ -3057,16 +3054,15 @@ form {
     }
 
     &.search {
-        @include respond-min(768px) {
-            flex: 0 0 40%;
-            margin: 10px 0;
-        }
-
-        flex: 0 0 100%;
-        margin: 0 0 10px 0;
-
-        button {
-            top: 19%;
+        width: 20%;
+        min-width: 200px;
+        margin: 10px;
+        margin-left: 0;
+        input {
+          margin: 0;
+          @include respond-min(1080px) {
+            margin: 0 10px;
+          }
         }
     }
 }
@@ -3605,7 +3601,7 @@ ul.corporate-members li {
         justify-content: space-between;
     }
 
-    @include respond-max(1200px) {
+    @include respond-max(1080px) {
         .community-title {
             text-align: center;
         }
