@@ -3,6 +3,7 @@ import shutil
 import tempfile
 from pathlib import Path
 
+from django.conf import settings
 from django.template import Context, Template
 from django.template.loader import render_to_string
 from django.test import RequestFactory, TestCase
@@ -27,8 +28,16 @@ class TemplateTagTests(TestCase):
     def test_get_all_doc_versions(self):
         tmp_docs_build_root = Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, tmp_docs_build_root)
-        os.makedirs(tmp_docs_build_root.joinpath("en", "1.8", "_built", "json"))
-        os.makedirs(tmp_docs_build_root.joinpath("en", "1.11", "_built", "json"))
+        os.makedirs(
+            tmp_docs_build_root.joinpath(
+                settings.DEFAULT_LANGUAGE_CODE, "1.8", "_built", "json"
+            )
+        )
+        os.makedirs(
+            tmp_docs_build_root.joinpath(
+                settings.DEFAULT_LANGUAGE_CODE, "1.11", "_built", "json"
+            )
+        )
         with self.settings(DOCS_BUILD_ROOT=tmp_docs_build_root):
             self.assertEqual(get_all_doc_versions({}), ["1.8", "1.11", "dev"])
 
@@ -193,7 +202,7 @@ class TemplateTestCase(TestCase):
     def _assertOGTitleEqual(self, doc, expected):
         output = render_to_string(
             "docs/doc.html",
-            {"doc": doc, "lang": "en", "version": "5.0"},
+            {"doc": doc, "lang": settings.DEFAULT_LANGUAGE_CODE, "version": "5.0"},
             request=RequestFactory().get("/"),
         )
         self.assertInHTML(f'<meta property="og:title" content="{expected}" />', output)
@@ -201,7 +210,7 @@ class TemplateTestCase(TestCase):
     def test_opengraph_title(self):
         doc = Document.objects.create(
             release=DocumentRelease.objects.create(
-                lang="en",
+                lang=settings.DEFAULT_LANGUAGE_CODE,
                 release=Release.objects.create(version="5.0"),
             ),
         )

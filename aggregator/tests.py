@@ -26,7 +26,7 @@ class AggregatorTests(TestCase):
         )
         DocumentRelease.objects.update_or_create(
             release=release,
-            lang="en",
+            lang=settings.DEFAULT_LANGUAGE_CODE,
             defaults={"is_default": True},
         )
 

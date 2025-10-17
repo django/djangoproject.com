@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 from django.utils.html import format_html
 from django.utils.translation import gettext as _
 from django_hosts.resolvers import reverse
@@ -26,7 +27,7 @@ def release_notes(version, show_version=False):
             "document-detail",
             host="docs",
             kwargs={
-                "lang": "en",
+                "lang": settings.DEFAULT_LANGUAGE_CODE,
                 "version": version_x_dot_y,
                 "url": release_notes_path,
             },

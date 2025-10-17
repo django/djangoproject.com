@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.views import static
 
 from .models import DocumentRelease
@@ -24,5 +25,7 @@ def objects_inventory(request, lang, version):
 
 def pot_file(request, pot_name):
     version = DocumentRelease.objects.current().version
-    doc_root = get_doc_root_or_404("en", version, builder="gettext")
+    doc_root = get_doc_root_or_404(
+        settings.DEFAULT_LANGUAGE_CODE, version, builder="gettext"
+    )
     return static.serve(request, document_root=doc_root, path=pot_name)
