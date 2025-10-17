@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n docs %}
+{% load i18n %}
 
 {% block html_language_code %}{{ lang|default:"en" }}{% endblock %}
 
@@ -11,7 +11,6 @@
 
 {% block header %}
   <p><a href="{% block doc_url %}{% url 'homepage' %}{% endblock %}">{% trans 'Documentation' %}</a></p>
-  {% search_form %}
 {% endblock %}
 
 {% block layout_class %}sidebar-right{% endblock %}
