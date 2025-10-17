@@ -199,7 +199,11 @@ class SearchFormTestCase(TestCase):
         base_url = reverse_with_host(
             "document-detail",
             host="docs",
-            kwargs={"lang": "en", "version": "5.1", "url": "refs/query"},
+            kwargs={
+                "lang": settings.DEFAULT_LANGUAGE_CODE,
+                "version": "5.1",
+                "url": "refs/query",
+            },
         )
         for query, expected_code_links in [
             (
@@ -247,7 +251,9 @@ class SitemapTests(TestCase):
         )
         self.assertContains(response, "<sitemap>", count=2)
         en_sitemap_url = reverse_with_host(
-            "document-sitemap", host="docs", kwargs={"section": "en"}
+            "document-sitemap",
+            host="docs",
+            kwargs={"section": settings.DEFAULT_LANGUAGE_CODE},
         )
         self.assertContains(response, f"<loc>{en_sitemap_url}</loc>")
 

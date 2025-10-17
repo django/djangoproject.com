@@ -211,7 +211,7 @@ class Entry(models.Model):
         )
         is_secure = url.scheme == "https"
         request = rf.get(url.path, secure=is_secure)
-        request.LANGUAGE_CODE = "en"
+        request.LANGUAGE_CODE = settings.DEFAULT_LANGUAGE_CODE
         cache = caches[settings.CACHE_MIDDLEWARE_ALIAS]
         cache_key = _generate_cache_header_key(
             settings.CACHE_MIDDLEWARE_KEY_PREFIX, request
