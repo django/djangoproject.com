@@ -12,6 +12,7 @@ from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils.safestring import SafeString
 
+from djangoproject.tests import ReleaseMixin
 from members.models import MEMBERSHIP_LEVELS, PLATINUM_MEMBERSHIP, CorporateMember
 
 from .models import Release, upload_to_artifact, upload_to_checksum
@@ -538,9 +539,10 @@ class RedirectViewTestCase(TestCase):
                     self.assertEqual(response.status_code, status_code)
 
 
-class CorporateMembersTestCase(TestCase):
+class CorporateMembersTestCase(ReleaseMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
+        super().setUpTestData()
         cls.today = today = datetime.date.today()
         day = datetime.timedelta(1)
         Release.objects.create(
@@ -609,10 +611,11 @@ class CorporateMembersTestCase(TestCase):
             self.assertNotContains(response, member.description)
 
 
-class RoadmapViewTestCase(TestCase):
+class RoadmapViewTestCase(ReleaseMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        super().setUpTestData()
         # Define release schedule for 5.2, 6.0, and 6.1 series.
         cls.release_schedule = {
             "5.2": [

@@ -2,11 +2,13 @@ import os
 import shutil
 import tempfile
 from pathlib import Path
+from unittest.mock import Mock
 
 from django.conf import settings
 from django.template import Context, Template
 from django.template.loader import render_to_string
 from django.test import RequestFactory, TestCase
+from django_hosts.resolvers import reverse as reverse_with_host
 
 from releases.models import Release
 
@@ -225,3 +227,39 @@ class TemplateTestCase(TestCase):
             doc.title = title
             with self.subTest(title=title):
                 self._assertOGTitleEqual(doc, f"{expected} | Django documentation")
+
+
+class TemplateTagTestCase(TestCase):
+    def test_search_form_renders_without_request_in_template(self):
+        """
+        Ensures the tag doesn't crash when rendered inside a template that
+        lacks a 'request' variable e.g. during Django's built-in error views.
+        """
+        template = Template("{% load docs %}{% search_form %}")
+        rendered = template.render(Context({}))
+        self.assertIn(
+            '<search class="search form-input" aria-labelledby="docs-search-label">',
+            rendered,
+        )
+        docs_search_url = reverse_with_host(
+            "document-search",
+            host="docs",
+            kwargs={"lang": settings.DEFAULT_LANGUAGE_CODE, "version": "dev"},
+        )
+        self.assertIn(f'<form action="{docs_search_url}">', rendered)
+
+    def test_search_form_queries_multiple_renders(self):
+        r2 = Release.objects.create(version="2.0")
+        DocumentRelease.objects.create(
+            lang=settings.DEFAULT_LANGUAGE_CODE, release=r2, is_default=True
+        )
+        template = Template("{% load docs %}{% search_form %}{% search_form %}")
+        with self.assertNumQueries(1):
+            rendered = template.render(Context({"request": Mock()}))
+
+        docs_search_url = reverse_with_host(
+            "document-search",
+            host="docs",
+            kwargs={"lang": settings.DEFAULT_LANGUAGE_CODE, "version": "2.0"},
+        )
+        self.assertEqual(rendered.count(f'<form action="{docs_search_url}">'), 2)
