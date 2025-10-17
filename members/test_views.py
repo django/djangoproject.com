@@ -3,15 +3,18 @@ from datetime import date, timedelta
 from django.test import TestCase
 from django.urls import reverse
 
+from djangoproject.tests import ReleaseMixin
+
 from .models import CorporateMember, IndividualMember, Team
 from .utils import get_temporary_image
 
 
-class IndividualMemberListViewTests(TestCase):
+class IndividualMemberListViewTests(ReleaseMixin, TestCase):
     url = reverse("members:individual-members")
 
     @classmethod
     def setUpTestData(cls):
+        super().setUpTestData()
         IndividualMember.objects.create(
             name="DjangoDeveloper", email="developer@example.com"
         )
@@ -37,11 +40,12 @@ class IndividualMemberListViewTests(TestCase):
         self.assertContains(response, "FormerDjangoDeveloper", count=1)
 
 
-class CorporateMemberListViewTests(TestCase):
+class CorporateMemberListViewTests(ReleaseMixin, TestCase):
     url = reverse("members:corporate-members")
 
     @classmethod
     def setUpTestData(cls):
+        super().setUpTestData()
         cls.today = today = date.today()
         cls.member = CorporateMember.objects.create(
             display_name="Corporation",
@@ -90,7 +94,7 @@ class CorporateMemberListViewTests(TestCase):
         self.assertSequenceEqual(members["silver"], [self.member, member])
 
 
-class CorporateMemberJoinViewTests(TestCase):
+class CorporateMemberJoinViewTests(ReleaseMixin, TestCase):
     def test_get(self):
         response = self.client.get(reverse("members:corporate-members-join"))
         self.assertContains(response, "Become a DSF corporate member")
@@ -117,9 +121,10 @@ class CorporateMemberJoinViewTests(TestCase):
         self.assertEqual(member.invoice_set.get().amount, data["amount"])
 
 
-class CorporateMemberRenewalViewTests(TestCase):
+class CorporateMemberRenewalViewTests(ReleaseMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
+        super().setUpTestData()
         cls.member = CorporateMember.objects.create(
             display_name="Corporation",
             contact_email="c@example.com",
@@ -137,11 +142,12 @@ class CorporateMemberRenewalViewTests(TestCase):
         self.assertEqual(response.status_code, 404)
 
 
-class TeamListViewTests(TestCase):
+class TeamListViewTests(ReleaseMixin, TestCase):
     url = reverse("members:teams")
 
     @classmethod
     def setUpTestData(cls):
+        super().setUpTestData()
         dev = IndividualMember.objects.create(
             name="DjangoDeveloper",
             email="developer@example.com",
