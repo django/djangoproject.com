@@ -1,6 +1,32 @@
+from django import forms
 from django.contrib import admin
 
 from .models import Release
+
+_ARTIFACTS = ["checksum", "tarball", "wheel"]
+
+
+class ReleaseAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Add `accept` attributes to the artifact file fields to make it a bit
+        # easier to pick the right files in the browser's 'filepicker
+        extensions = {"tarball": ".gz", "wheel": ".whl", "checksum": ".asc,.txt"}
+        for field, accept in extensions.items():
+            widget = self.fields[field].widget
+            widget.attrs.setdefault("accept", accept)
+
+        self._previous_file_fields = {a: getattr(self.instance, a) for a in _ARTIFACTS}
+
+    # Extending _save_m2m() instead of save() lets us support both save(commit=True/False)
+    def _save_m2m(self):
+        super()._save_m2m()
+
+        # Delete any files from storage that might have been cleared
+        for a in _ARTIFACTS:
+            if self._previous_file_fields[a] and not getattr(self.instance, a):
+                self._previous_file_fields[a].delete(save=False)
 
 
 @admin.register(Release)
@@ -10,6 +36,7 @@ class ReleaseAdmin(admin.ModelAdmin):
         ("Dates", {"fields": ["date", "eol_date"]}),
         ("Artifacts", {"fields": ["tarball", "wheel", "checksum"]}),
     ]
+    form = ReleaseAdminForm
     list_display = (
         "version",
         "show_is_published",
@@ -24,16 +51,6 @@ class ReleaseAdmin(admin.ModelAdmin):
     )
     list_filter = ("status", "is_lts", "is_active")
     ordering = ("-major", "-minor", "-micro", "-status", "-iteration")
-
-    def get_form(self, request, obj=None, change=False, **kwargs):
-        form_class = super().get_form(request, obj=obj, change=change, **kwargs)
-        # Add `accept` attributes to the artifact file fields to make it a bit
-        # easier to pick the right files in the browser's 'filepicker
-        extensions = {"tarball": ".tar.gz", "wheel": ".whl", "checksum": ".asc,.txt"}
-        for field, accept in extensions.items():
-            widget = form_class.base_fields[field].widget
-            widget.attrs.setdefault("accept", accept)
-        return form_class
 
     @admin.display(
         description="status",

@@ -20,7 +20,7 @@ from .utils import get_loose_version_tuple
 # about older release candidates. Safe to use Django's copy of get_version()
 # when upgrading this website to use Django 1.10.
 def get_version(version=None):
-    "Return a PEP 386-compliant version number from VERSION."
+    """Return a PEP 386-compliant version number from VERSION."""
     version = get_complete_version(version)
 
     # Now build the two parts of the version number:

@@ -43,4 +43,9 @@ services:
             timeout: 10s
             retries: 10
         volumes:
-            - ./initdb/tracdb.sql:/docker-entrypoint-initdb.d/tracdb.sql
+            # Mount the Postgres initialization scripts
+            - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+            # This file contains the initial Trac database schema, but needs
+            # to be loaded into the database manually (via 02_trac_schema.sh)
+            # since it applies to the trac database, not the main Django database.
+            - ./tracdb/trac.sql:/trac.sql
