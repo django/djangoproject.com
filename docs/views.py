@@ -146,11 +146,17 @@ def search_results(request, lang, version, per_page=10, orphans=3):
 
     form = DocSearchForm(request.GET or None, release=release)
 
+    # Get available languages for the language switcher
+    available_languages = DocumentRelease.objects.get_available_languages_by_version(
+        version
+    )
+
     context = {
         "form": form,
         "lang": release.lang,
         "version": release.version,
         "release": release,
+        "available_languages": available_languages,
         "searchparams": request.GET.urlencode(),
     }
 
