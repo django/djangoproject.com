@@ -2640,10 +2640,43 @@ search.filters {
     display: flex;
     gap: 10px;
     border-bottom: 2px solid var(--hairline-color);
-    overflow-x: auto;
-    white-space: nowrap;
     padding-bottom: 0;
     position: relative;
+
+    // Desktop: Show horizontal tabs
+    .filter-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      white-space: nowrap;
+      flex: 1;
+
+      @media (max-width: 768px) {
+        display: none; // Hide tabs on mobile
+      }
+    }
+
+    // Mobile: Show dropdown
+    .filter-dropdown {
+      display: none; // Hide on desktop
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid var(--hairline-color);
+      border-radius: 4px;
+      background-color: var(--body-bg);
+      color: var(--body-fg);
+      cursor: pointer;
+
+      @media (max-width: 768px) {
+        display: block; // Show dropdown on mobile
+      }
+
+      &:focus {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+    }
 
     a {
       padding: 10px 20px;
