@@ -168,6 +168,11 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                 q, release, document_category=doc_category
             )
 
+            # Force queryset evaluation to prevent race conditions between
+            # paginator.count and page.object_list accessing the database
+            # at different times with potentially different transaction states
+            results = list(results)
+
             page_number = request.GET.get("page") or 1
             paginator = Paginator(results, per_page=per_page, orphans=orphans)
 
