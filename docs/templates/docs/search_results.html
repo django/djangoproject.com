@@ -18,21 +18,35 @@
         <a{% if active_category == category %} aria-current="page"{% else %} href="{% querystring category=category.value page=None %}"{% endif %}>{{ category.label }}</a>
       {% endfor %}
     </search>
-    <h2>
-      {% if release.is_dev %}
-        {% blocktranslate count num_results=paginator.count trimmed %}
-          Only 1 result for <em>{{ query }}</em> in the development version
-        {% plural %}
-          {{ num_results }} results for <em>{{ query }}</em> in the development version
-        {% endblocktranslate %}
-      {% else %}
-        {% blocktranslate count num_results=paginator.count trimmed %}
-          Only 1 result for <em>{{ query }}</em> in version {{ version }}
-        {% plural %}
-          {{ num_results }} results for <em>{{ query }}</em> in version {{ version }}
-        {% endblocktranslate %}
-      {% endif %}
-    </h2>
+    {% if paginator.count > 0 %}
+      <h2>
+        {% if release.is_dev %}
+          {% blocktranslate count num_results=paginator.count trimmed %}
+            Only 1 result for <em>{{ query }}</em> in the development version
+          {% plural %}
+            {{ num_results }} results for <em>{{ query }}</em> in the development version
+          {% endblocktranslate %}
+        {% else %}
+          {% blocktranslate count num_results=paginator.count trimmed %}
+            Only 1 result for <em>{{ query }}</em> in version {{ version }}
+          {% plural %}
+            {{ num_results }} results for <em>{{ query }}</em> in version {{ version }}
+          {% endblocktranslate %}
+        {% endif %}
+      </h2>
+    {% else %}
+      <h2>
+        {% if release.is_dev %}
+          {% blocktranslate trimmed %}
+            No results for <em>{{ query }}</em> in the development version
+          {% endblocktranslate %}
+        {% else %}
+          {% blocktranslate trimmed %}
+            No results for <em>{{ query }}</em> in version {{ version }}
+          {% endblocktranslate %}
+        {% endif %}
+      </h2>
+    {% endif %}
   {% else %}
     <h2>{% translate "No search query given" %}</h2>
   {% endif %}
