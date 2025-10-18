@@ -13,7 +13,7 @@
   {% if query %}
     <search class="filters">
       <span id="search-filters" class="visually-hidden">{% translate "Filter the current search results by documentation category" %}</span>
-      
+
       {# Desktop: Horizontal tabs #}
       <div class="filter-tabs">
         <a{% if not active_category %} aria-current="page"{% else %} href="{% querystring category=None page=None %}"{% endif %}>{% translate "All" context "all documentation categories" %}</a>
@@ -21,7 +21,7 @@
           <a{% if active_category == category %} aria-current="page"{% else %} href="{% querystring category=category.value page=None %}"{% endif %}>{{ category.label }}</a>
         {% endfor %}
       </div>
-      
+
       {# Mobile: Dropdown select #}
       <select class="filter-dropdown" onchange="if(this.value) window.location.href=this.value" aria-labelledby="search-filters">
         <option value="{% querystring category=None page=None %}"{% if not active_category %} selected{% endif %}>{% translate "All" context "all documentation categories" %}</option>
