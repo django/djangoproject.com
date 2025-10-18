@@ -5,6 +5,8 @@ import time_machine
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 
+from djangoproject.tests import ReleaseMixin
+
 from .models import (
     Attachment,
     Milestone,
@@ -29,7 +31,7 @@ class TestModels(TestCase):
         self.assertEqual(Revision.objects.db, "trac")
 
 
-class TicketTestCase(TracDBCreateDatabaseMixin, TestCase):
+class TicketTestCase(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
     databases = {"default", "trac"}
 
     def _create_ticket(self, custom=None, **kwargs):

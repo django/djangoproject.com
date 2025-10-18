@@ -1,5 +1,6 @@
 from http import HTTPStatus
 
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse, set_urlconf
@@ -198,7 +199,11 @@ class SearchFormTestCase(TestCase):
         base_url = reverse_with_host(
             "document-detail",
             host="docs",
-            kwargs={"lang": "en", "version": "5.1", "url": "refs/query"},
+            kwargs={
+                "lang": settings.DEFAULT_LANGUAGE_CODE,
+                "version": "5.1",
+                "url": "refs/query",
+            },
         )
         for query, expected_code_links in [
             (
@@ -246,14 +251,16 @@ class SitemapTests(TestCase):
         )
         self.assertContains(response, "<sitemap>", count=2)
         en_sitemap_url = reverse_with_host(
-            "document-sitemap", host="docs", kwargs={"section": "en"}
+            "document-sitemap",
+            host="docs",
+            kwargs={"section": settings.DEFAULT_LANGUAGE_CODE},
         )
         self.assertContains(response, f"<loc>{en_sitemap_url}</loc>")
 
     def test_sitemap(self):
         doc_release = DocumentRelease.objects.create()
         document = Document.objects.create(release=doc_release)
-        sitemap = DocsSitemap("en")
+        sitemap = DocsSitemap(settings.DEFAULT_LANGUAGE_CODE)
         urls = sitemap.get_urls()
         self.assertEqual(len(urls), 1)
         url_info = urls[0]

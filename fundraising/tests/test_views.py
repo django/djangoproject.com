@@ -12,19 +12,20 @@ from django.urls import reverse
 from django_hosts.resolvers import reverse as django_hosts_reverse
 from django_recaptcha.client import RecaptchaResponse
 
+from djangoproject.tests import ReleaseMixin
 from members.models import CorporateMember, Invoice
 
 from ..models import DjangoHero, Donation
 from .utils import ImageFileFactory, TemporaryMediaRootMixin
 
 
-class TestIndex(TestCase):
+class TestIndex(ReleaseMixin, TestCase):
     def test_redirect(self):
         response = self.client.get(reverse("fundraising:index"))
         self.assertEqual(response.status_code, 200)
 
 
-class TestCampaign(TemporaryMediaRootMixin, TestCase):
+class TestCampaign(ReleaseMixin, TemporaryMediaRootMixin, TestCase):
     def setUp(self):
         self.index_url = reverse("fundraising:index")
 
@@ -163,7 +164,7 @@ class TestCampaign(TemporaryMediaRootMixin, TestCase):
         self.assertFalse(retrieve_customer.called)
 
 
-class TestThankYou(TestCase):
+class TestThankYou(ReleaseMixin, TestCase):
     def setUp(self):
         self.url = reverse("fundraising:thank-you")
 
@@ -172,11 +173,12 @@ class TestThankYou(TestCase):
         self.assertTemplateUsed(response, "fundraising/thank-you.html")
 
 
-class TestManageDonations(TestCase):
+class TestManageDonations(ReleaseMixin, TestCase):
     past_donations_header = "<h2>Your past donations</h2>"
 
     @classmethod
     def setUpTestData(cls):
+        super().setUpTestData()
         cls.hero = DjangoHero.objects.create()
         cls.donation1 = cls.hero.donation_set.create(
             interval="onetime",
@@ -249,7 +251,7 @@ def _stripe_signature_header(data):
     return f"t={timestamp},v1={signature}"
 
 
-class TestWebhooks(TestCase):
+class TestWebhooks(ReleaseMixin, TestCase):
     def setUp(self):
         self.hero = DjangoHero.objects.create(email="hero@djangoproject.com")
         self.donation = Donation.objects.create(

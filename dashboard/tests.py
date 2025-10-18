@@ -9,6 +9,7 @@ from django.http import Http404
 from django.test import RequestFactory, TestCase
 from django_hosts.resolvers import reverse
 
+from djangoproject.tests import ReleaseMixin
 from tracdb.models import Ticket
 from tracdb.testutils import TracDBCreateDatabaseMixin
 from tracdb.tractime import datetime_to_timestamp
@@ -24,7 +25,7 @@ from .models import (
 from .views import index, metric_detail, metric_json
 
 
-class ViewTests(TestCase):
+class ViewTests(ReleaseMixin, TestCase):
     fixtures = ["dashboard_test_data"]
 
     def setUp(self):
