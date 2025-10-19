@@ -196,6 +196,7 @@ class Header1Tests(TestCase):
             "styleguide/",  # Has multiple <h1> examples.
             "admin/",  # Admin templates are out of our control.
             "reset/done/",  # Uses an admin template.
+            "sitemap.xml",
         ]
         resolver = get_resolver()
         urls = self.extract_patterns(resolver.url_patterns)
@@ -205,3 +206,9 @@ class Header1Tests(TestCase):
                     response = self.client.get(url)
                     self.assertEqual(response.status_code, 200)
                     self.assertContains(response, "<h1", count=1)
+
+
+class SiteMapTests(TestCase):
+    def test_sitemap_renders(self):
+        response = self.client.get(reverse("sitemap"))
+        self.assertEqual(response.status_code, 200)
