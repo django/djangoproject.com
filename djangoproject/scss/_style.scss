@@ -2643,60 +2643,247 @@ search.filters {
     padding-bottom: 0;
     position: relative;
 
-    // Desktop: Show horizontal tabs
-    .filter-tabs {
+    // Remove border and add spacing on mobile/tablet
+    @media (max-width: 1024px) {
+      border-bottom: none;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      padding: 10px 0;
+    }
+
+    // Desktop: Show all horizontal tabs (wide screens)
+    .filter-tabs-desktop {
       display: flex;
       gap: 10px;
       overflow-x: auto;
       white-space: nowrap;
       flex: 1;
 
-      @media (max-width: 768px) {
-        display: none; // Hide tabs on mobile
+      @media (max-width: 1024px) {
+        display: none; // Hide full tabs on tablet/mobile
       }
     }
 
-    // Mobile: Show dropdown
-    .filter-dropdown {
+    // Tablet/Mobile: Show hybrid (All + selected + More dropdown)
+    .filter-tabs-responsive {
       display: none; // Hide on desktop
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
+      
+      @media (max-width: 1024px) {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex: 1;
+      }
+    }
+
+    // "More" dropdown container
+    .filter-more-dropdown {
+      position: relative;
+      margin-left: auto; // Push to the right
+    }
+
+    // "More" button styling
+    .filter-more-button {
+      @include sans-serif;
+      padding: 10px 20px;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: inherit;
+      white-space: nowrap;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      // Add filter funnel icon before text
+      &::before {
+        content: "☰";
+        font-size: 16px;
+        margin-right: 6px;
+        opacity: 0.8;
+        font-weight: bold;
+      }
+
+      &:hover,
+      &:focus {
+        color: var(--body-fg);
+        outline: none;
+      }
+
+      &[aria-expanded="true"] {
+        color: var(--body-fg);
+        
+        .filter-more-icon {
+          transform: rotate(180deg);
+        }
+      }
+
+      .filter-more-icon {
+        font-size: 12px;
+        transition: transform 0.2s ease;
+      }
+    }
+
+    // Dropdown menu
+    .filter-more-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 5px;
+      background-color: var(--body-bg);
       border: 1px solid var(--hairline-color);
       border-radius: 4px;
-      background-color: var(--body-bg);
-      color: var(--body-fg);
-      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      min-width: 200px;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1000;
 
-      @media (max-width: 768px) {
-        display: block; // Show dropdown on mobile
+      &[hidden] {
+        display: none;
       }
 
-      &:focus {
-        outline: 2px solid var(--primary);
-        outline-offset: 2px;
+      // Custom scrollbar styling (for webkit browsers)
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: var(--hairline-color);
+        border-radius: 4px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--text-light);
+        border-radius: 4px;
+
+        &:hover {
+          background: var(--body-fg);
+        }
       }
     }
 
-    a {
+    // Dropdown menu links - very specific selector to override everything
+    .filter-more-dropdown .filter-more-menu a,
+    .filter-more-dropdown .filter-more-menu a:link,
+    .filter-more-dropdown .filter-more-menu a:visited,
+    .filter-more-dropdown .filter-more-menu a:active {
+        display: block !important;
+        padding: 12px 16px !important;
+        border: none !important;
+        border-bottom: none !important;
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        transition: background-color 0.2s ease, color 0.2s ease, padding-left 0.2s ease !important;
+        position: relative;
+        color: var(--body-fg) !important;
+        text-decoration: none !important;
+        text-decoration-line: none !important;
+        text-decoration-style: none !important;
+        text-underline-offset: 0 !important;
+        background-color: transparent !important;
+        outline: none !important;
+        box-shadow: none !important;
+
+        // Remove underline from all child elements
+        *, 
+        .filter-checkmark {
+          text-decoration: none !important;
+          text-decoration-line: none !important;
+          border-bottom: none !important;
+        }
+
+        &:hover,
+        &:focus {
+          background-color: rgba(0, 0, 0, 0.08) !important;
+          color: var(--body-fg) !important;
+          border: none !important;
+          border-bottom: none !important;
+          border-top: none !important;
+          border-left: none !important;
+          border-right: none !important;
+          padding-left: 20px !important;
+          text-decoration: none !important;
+          text-underline-offset: 0 !important;
+          transform: none !important;
+          outline: none !important;
+          
+          // Add subtle left border on hover
+          &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background-color: var(--primary);
+          }
+        }
+
+        &:last-child {
+          border: none !important;
+          border-bottom: none !important;
+        }
+
+        // Active/selected item in dropdown
+        &.filter-menu-active {
+          background-color: rgba(0, 0, 0, 0.05) !important;
+          font-weight: bold;
+          color: var(--body-fg) !important;
+          border: none !important;
+          border-bottom: none !important;
+          
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.12) !important;
+            border: none !important;
+            border-bottom: none !important;
+          }
+        }
+
+        .filter-checkmark {
+          color: var(--primary);
+          margin-right: 5px;
+          font-weight: bold;
+        }
+      }
+
+    // Common link styling (for tabs)
+    .filter-tabs-desktop a,
+    .filter-tabs-responsive > a {
       padding: 10px 20px;
       text-decoration: none;
       border-bottom: 3px solid transparent;
-      transition: color 0.3s ease, border-bottom 0.3s ease;
+      transition: color 0.25s ease, border-bottom 0.25s ease, background-color 0.25s ease, transform 0.2s ease;
       color: var(--text-light);
       flex-shrink: 0;
 
-      &:not([href]) {
+      &:not([href]),
+      &[aria-current="page"] {
         color: var(--body-fg);
         font-weight: bold;
         border-bottom: 3px solid var(--primary);
       }
 
-      &[href]:focus,
-      &[href]:active,
+      // Hover state - just mouse over, no click
       &[href]:hover {
+        color: var(--body-bg) !important; // Inverted color
+        border-bottom: 3px solid var(--primary) !important;
+        background-color: var(--body-fg) !important; // Inverted background
+        transform: translateY(-1px);
         outline: none;
-        border-bottom: 3px solid var(--hairline-color);
+      }
+
+      // Focus and active states
+      &[href]:focus,
+      &[href]:active {
+        outline: none;
+        color: var(--body-bg);
+        border-bottom: 3px solid var(--primary);
+        background-color: var(--body-fg);
+        transform: translateY(-1px);
       }
     }
 }

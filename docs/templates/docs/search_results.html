@@ -14,21 +14,35 @@
     <search class="filters">
       <span id="search-filters" class="visually-hidden">{% translate "Filter the current search results by documentation category" %}</span>
       
-      {# Desktop: Horizontal tabs #}
-      <div class="filter-tabs">
+      {# Desktop: All horizontal tabs #}
+      <div class="filter-tabs filter-tabs-desktop">
         <a{% if not active_category %} aria-current="page"{% else %} href="{% querystring category=None page=None %}"{% endif %}>{% translate "All" context "all documentation categories" %}</a>
         {% for category in DocumentationCategory %}
           <a{% if active_category == category %} aria-current="page"{% else %} href="{% querystring category=category.value page=None %}"{% endif %}>{{ category.label }}</a>
         {% endfor %}
       </div>
       
-      {# Mobile: Dropdown select #}
-      <select class="filter-dropdown" onchange="if(this.value) window.location.href=this.value" aria-labelledby="search-filters">
-        <option value="{% querystring category=None page=None %}"{% if not active_category %} selected{% endif %}>{% translate "All" context "all documentation categories" %}</option>
-        {% for category in DocumentationCategory %}
-          <option value="{% querystring category=category.value page=None %}"{% if active_category == category %} selected{% endif %}>{{ category.label }}</option>
-        {% endfor %}
-      </select>
+      {# Tablet/Mobile: Show "All" + "More" dropdown (selected shown in dropdown) #}
+      <div class="filter-tabs filter-tabs-responsive">
+        <a{% if not active_category %} aria-current="page"{% else %} href="{% querystring category=None page=None %}"{% endif %}>{% translate "All" context "all documentation categories" %}</a>
+        
+        <div class="filter-more-dropdown">
+          <button type="button" class="filter-more-button" aria-expanded="false" aria-haspopup="true">
+            {% if active_category %}
+              {{ active_category.label }} <span class="filter-more-icon">▼</span>
+            {% else %}
+              {% translate "More" %} <span class="filter-more-icon">▼</span>
+            {% endif %}
+          </button>
+          <div class="filter-more-menu" hidden>
+            {% for category in DocumentationCategory %}
+              <a href="{% querystring category=category.value page=None %}"{% if active_category == category %} class="filter-menu-active" aria-current="page"{% endif %}>
+                {% if active_category == category %}<span class="filter-checkmark">✓</span> {% endif %}{{ category.label }}
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
     </search>
     <h2>
       {% if release.is_dev %}
@@ -121,4 +135,39 @@
     {% endif %}
 
   {% endif %}
+
+  <script>
+    // Handle "More" dropdown toggle
+    (function() {
+      const moreButton = document.querySelector('.filter-more-button');
+      const moreMenu = document.querySelector('.filter-more-menu');
+      
+      if (moreButton && moreMenu) {
+        // Toggle dropdown on button click
+        moreButton.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const isExpanded = moreButton.getAttribute('aria-expanded') === 'true';
+          moreButton.setAttribute('aria-expanded', !isExpanded);
+          moreMenu.hidden = isExpanded;
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!moreButton.contains(e.target) && !moreMenu.contains(e.target)) {
+            moreButton.setAttribute('aria-expanded', 'false');
+            moreMenu.hidden = true;
+          }
+        });
+        
+        // Close dropdown on escape key
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && moreButton.getAttribute('aria-expanded') === 'true') {
+            moreButton.setAttribute('aria-expanded', 'false');
+            moreMenu.hidden = true;
+            moreButton.focus();
+          }
+        });
+      }
+    })();
+  </script>
 {% endblock %}
