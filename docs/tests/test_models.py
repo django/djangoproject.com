@@ -7,8 +7,10 @@ from django.conf import settings
 from django.db import connection
 from django.test import TestCase
 from django.utils import timezone
+from django_hosts import reverse
 
 from blog.models import ContentFormat, Entry
+from djangoproject.sitemaps import StaticViewSitemap
 from releases.models import Release
 
 from ..models import Document, DocumentRelease
@@ -607,7 +609,7 @@ class UpdateDocTests(TestCase):
 
     def test_sync_from_sitemap_skip_non_en_dev_release(self):
         release = Release.objects.create(version="5.2")
-        Entry.objects.create(
+        blog_entry = Entry.objects.create(
             pub_date=timezone.now() - datetime.timedelta(days=2),
             slug="a",
             body="<strong>test</strong>",
@@ -625,7 +627,16 @@ class UpdateDocTests(TestCase):
             )
             with self.subTest(lang=lang, release=release_obj):
                 doc_release.sync_from_sitemap()
-                self.assertFalse(Document.objects.exists())
+                self.assertFalse(
+                    Document.objects.filter(path=blog_entry.get_absolute_url()).exists()
+                )
+
+    @staticmethod
+    def _mock_static_sitemap_urls(mocker):
+        sitemap = StaticViewSitemap()
+        for item in sitemap.items():
+            url = reverse(item.name, host=item.host)
+            mocker.get(url, text="", headers={"Content-Type": "text/html"})
 
     @requests_mock.mock()
     def test_sync_from_sitemap(self, mocker):
@@ -636,6 +647,7 @@ class UpdateDocTests(TestCase):
             content_format=ContentFormat.HTML,
             is_active=True,
         )
+        self._mock_static_sitemap_urls(mocker)
         mocker.get(
             blog_entry.get_absolute_url(),
             text="<html><main>Main 1</main><h1>Title 1</h1></html>",
@@ -643,10 +655,8 @@ class UpdateDocTests(TestCase):
         )
         self.release.sync_from_sitemap()
 
-        document = Document.objects.get(release=self.release)
-        self.assertEqual(
-            document.path,
-            blog_entry.get_absolute_url(),
+        document = Document.objects.get(
+            release=self.release, path=blog_entry.get_absolute_url()
         )
         self.assertEqual(
             document.title,
@@ -683,12 +693,10 @@ class UpdateDocTests(TestCase):
 
         mock_fetch_html.assert_not_called()
 
-        document = Document.objects.get(release=self.release)
-        # Confirm Document has not been updated.
-        self.assertEqual(
-            document.path,
-            blog_entry.get_absolute_url(),
+        document = Document.objects.get(
+            release=self.release, path=blog_entry.get_absolute_url()
         )
+        # Confirm Document has not been updated.
         self.assertEqual(
             document.metadata,
             {"parents": DocumentationCategory.WEBSITE},
@@ -714,6 +722,7 @@ class UpdateDocTests(TestCase):
             metadata={"parents": DocumentationCategory.WEBSITE},
             path=blog_url,
         )
+        self._mock_static_sitemap_urls(mocker)
         mocker.get(
             blog_url,
             text="<html><main>Main 1</main><h1>Title 1</h1></html>",
