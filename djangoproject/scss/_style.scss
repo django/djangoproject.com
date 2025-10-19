@@ -2667,7 +2667,7 @@ search.filters {
     // Tablet/Mobile: Show hybrid (All + selected + More dropdown)
     .filter-tabs-responsive {
       display: none; // Hide on desktop
-      
+
       @media (max-width: 1024px) {
         display: flex;
         gap: 10px;
@@ -2714,7 +2714,7 @@ search.filters {
 
       &[aria-expanded="true"] {
         color: var(--body-fg);
-        
+
         .filter-more-icon {
           transform: rotate(180deg);
         }
@@ -2789,7 +2789,7 @@ search.filters {
         box-shadow: none !important;
 
         // Remove underline from all child elements
-        *, 
+        *,
         .filter-checkmark {
           text-decoration: none !important;
           text-decoration-line: none !important;
@@ -2810,7 +2810,7 @@ search.filters {
           text-underline-offset: 0 !important;
           transform: none !important;
           outline: none !important;
-          
+
           // Add subtle left border on hover
           &::before {
             content: "";
@@ -2835,7 +2835,7 @@ search.filters {
           color: var(--body-fg) !important;
           border: none !important;
           border-bottom: none !important;
-          
+
           &:hover {
             background-color: rgba(0, 0, 0, 0.12) !important;
             border: none !important;

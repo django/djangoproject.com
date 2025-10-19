@@ -13,7 +13,7 @@
   {% if query %}
     <search class="filters">
       <span id="search-filters" class="visually-hidden">{% translate "Filter the current search results by documentation category" %}</span>
-      
+
       {# Desktop: All horizontal tabs #}
       <div class="filter-tabs filter-tabs-desktop">
         <a{% if not active_category %} aria-current="page"{% else %} href="{% querystring category=None page=None %}"{% endif %}>{% translate "All" context "all documentation categories" %}</a>
@@ -21,11 +21,11 @@
           <a{% if active_category == category %} aria-current="page"{% else %} href="{% querystring category=category.value page=None %}"{% endif %}>{{ category.label }}</a>
         {% endfor %}
       </div>
-      
+
       {# Tablet/Mobile: Show "All" + "More" dropdown (selected shown in dropdown) #}
       <div class="filter-tabs filter-tabs-responsive">
         <a{% if not active_category %} aria-current="page"{% else %} href="{% querystring category=None page=None %}"{% endif %}>{% translate "All" context "all documentation categories" %}</a>
-        
+
         <div class="filter-more-dropdown">
           <button type="button" class="filter-more-button" aria-expanded="false" aria-haspopup="true">
             {% if active_category %}
@@ -141,7 +141,7 @@
     (function() {
       const moreButton = document.querySelector('.filter-more-button');
       const moreMenu = document.querySelector('.filter-more-menu');
-      
+
       if (moreButton && moreMenu) {
         // Toggle dropdown on button click
         moreButton.addEventListener('click', function(e) {
@@ -150,7 +150,7 @@
           moreButton.setAttribute('aria-expanded', !isExpanded);
           moreMenu.hidden = isExpanded;
         });
-        
+
         // Close dropdown when clicking outside
         document.addEventListener('click', function(e) {
           if (!moreButton.contains(e.target) && !moreMenu.contains(e.target)) {
@@ -158,7 +158,7 @@
             moreMenu.hidden = true;
           }
         });
-        
+
         // Close dropdown on escape key
         document.addEventListener('keydown', function(e) {
           if (e.key === 'Escape' && moreButton.getAttribute('aria-expanded') === 'true') {
