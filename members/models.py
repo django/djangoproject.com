@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+from django.conf import settings
 from django.core import signing
 from django.db import models
 from django.db.models.signals import post_save
@@ -41,6 +42,12 @@ MEMBERSHIP_TO_KEY = {k: v.lower().replace(" ", "_") for k, v in MEMBERSHIP_LEVEL
 
 
 class IndividualMember(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
     name = models.CharField(max_length=250)
     email = models.EmailField(unique=True)
     member_since = models.DateField(default=timezone_today)
