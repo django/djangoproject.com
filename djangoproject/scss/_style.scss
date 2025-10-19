@@ -3191,7 +3191,25 @@ hr {
 .user-info {
     .avatar {
         @include framed-image();
-        float: right;
+        margin: 4rem 1rem 0rem 1rem;
+
+        // The reason for specifying `355px` is to ensure that the image does not cause vertical space between the first name and last name on this screen size.
+        @include respond-min(355px) {
+            float: right;
+            margin: 0 0 1rem 1rem;
+        }
+    }
+
+    .name {
+        margin-bottom: 0;
+    }
+
+    .bio {
+        @include font-size(16);
+        font-weight: normal;
+        line-height: 1.5;
+        white-space: pre-line;
+        margin-top: 0;
     }
 }
 

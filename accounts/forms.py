@@ -20,10 +20,13 @@ class ProfileForm(forms.ModelForm):
     email = forms.EmailField(
         required=False, widget=forms.TextInput(attrs={"placeholder": _("Email")})
     )
+    bio = forms.CharField(
+        required=False, widget=forms.Textarea(attrs={"placeholder": _("Bio")})
+    )
 
     class Meta:
         model = Profile
-        fields = ["name"]
+        fields = ["name", "bio"]
 
     def __init__(self, *args, **kwargs):
         instance = kwargs.get("instance", None)
