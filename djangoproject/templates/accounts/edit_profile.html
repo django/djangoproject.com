@@ -27,6 +27,13 @@
             <p>{{ form.email }}</p>
         </div>
 
+        <div>
+            {% if form.bio.errors %}
+                <p class="errors">{{ form.bio.errors.as_text }}</p>
+            {% endif %}
+            <p>{{ form.bio }}</p>
+        </div>
+
         <div class="submit">
             <input class="cta" type="submit" value="{% translate "Save" %}"/>
         </div>
