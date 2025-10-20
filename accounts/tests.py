@@ -24,7 +24,7 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
 
     def test_username_is_page_title(self):
         response = self.client.get(self.user1_url)
-        self.assertContains(response, "<h1>user1</h1>", html=True)
+        self.assertContains(response, '<h1 class="name">user1</h1>', html=True)
 
     def test_stat_commits(self):
         Revision.objects.create(
