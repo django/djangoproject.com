@@ -3189,19 +3189,33 @@ hr {
 }
 
 .user-info {
+    // Keep this value in sync with the width value of the img element in the HTML.
+    $user_info_avatar_img_width: 150px;
+
     .avatar {
         @include framed-image();
         margin: 4rem 1rem 0rem 1rem;
 
-        // The reason for specifying `355px` is to ensure that the image does not cause vertical space between the first name and last name on this screen size.
-        @include respond-min(355px) {
+        // Using `float: right` causes the image to separate words vertically by its own height on some screen sizes.
+        @include respond-min(811px) {
             float: right;
-            margin: 0 0 1rem 1rem;
+            margin: 4rem 1rem 1rem 1rem;
         }
     }
 
     .name {
         margin-bottom: 0;
+        
+        @include respond-min(811px) {
+            // These rules prevents the unwanted vertical space between words as described in the `.avatar` class.
+            display: inline-block;
+            max-width: calc(100% - $user_info_avatar_img_width);
+        }
+
+        @include respond-max(810px) {
+            // Reposition the name when it's below the image on small screens.
+            margin-top: 2rem;
+        }
     }
 
     .bio {
