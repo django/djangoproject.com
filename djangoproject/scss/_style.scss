@@ -3351,7 +3351,7 @@ hr {
 
     .name {
         margin-bottom: 0;
-        
+
         @include respond-min(811px) {
             // These rules prevents the unwanted vertical space between words as described in the `.avatar` class.
             display: inline-block;
