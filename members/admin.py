@@ -19,6 +19,7 @@ class IndividualMemberAdmin(admin.ModelAdmin):
         "member_until",
     ]
     search_fields = ["name"]
+    autocomplete_fields = ["user"]
 
 
 class InvoiceInline(admin.TabularInline):
