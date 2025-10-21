@@ -25,7 +25,7 @@
         <li{% if 'download' in request.path %} class="active"{% endif %}>
           <a href="{% url 'download' %}">Download</a>
         </li>
-        <li{% if request.host.name == 'docs' %} class="active"{% endif %}>
+        <li{% if request.host.name == 'docs' and 'search' not in request.path %} class="active"{% endif %}>
           <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}">Documentation</a>
         </li>
         <li{% if 'weblog' in request.path %} class="active"{% endif %}>

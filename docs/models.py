@@ -5,6 +5,7 @@ import operator
 from functools import partial, reduce
 from pathlib import Path
 
+import requests
 from django.conf import settings
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import (
@@ -34,8 +35,16 @@ from .search import (
     START_SEL,
     STOP_SEL,
     TSEARCH_CONFIG_LANGUAGES,
+    DocumentationCategory,
+    fetch_html,
     get_document_search_vector,
 )
+from .utils import extract_inner_html
+
+
+def get_search_config(lang):
+    """Determine the PostgreSQL search language"""
+    return TSEARCH_CONFIG_LANGUAGES.get(lang[:2], DEFAULT_TEXT_SEARCH_CONFIG)
 
 
 class DocumentReleaseQuerySet(models.QuerySet):
@@ -177,7 +186,7 @@ class DocumentRelease(models.Model):
         the database. Deletes all the release's documents first then
         reinserts them as needed.
         """
-        self.documents.all().delete()
+        self.documents.exclude(metadata__parents=DocumentationCategory.WEBSITE).delete()
 
         # Read excluded paths from robots.docs.txt.
         robots_path = settings.BASE_DIR.joinpath(
@@ -208,15 +217,65 @@ class DocumentRelease(models.Model):
                 path=document_path,
                 title=html.unescape(strip_tags(document["title"])),
                 metadata=document,
-                config=TSEARCH_CONFIG_LANGUAGES.get(
-                    self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG
-                ),
+                config=get_search_config(self.lang),
             )
-        for document in self.documents.all():
+        for document in self.documents.exclude(
+            metadata__parents=DocumentationCategory.WEBSITE
+        ):
             document.metadata["breadcrumbs"] = list(
                 Document.objects.breadcrumbs(document).values("title", "path")
             )
             document.save(update_fields=("metadata",))
+
+    def sync_from_sitemap(self, force=False):
+        from djangoproject.urls.www import sitemaps
+
+        if not self.is_dev:
+            return
+
+        if force:
+            Document.objects.filter(
+                metadata__parents=DocumentationCategory.WEBSITE
+            ).delete()
+
+        doc_urls = set(
+            Document.objects.filter(
+                metadata__parents=DocumentationCategory.WEBSITE
+            ).values_list("path", flat=True)
+        )
+
+        for sitemap in sitemaps.values():
+            for url in sitemap().get_urls():
+                path = url["location"]
+                if path in doc_urls:
+                    continue
+                try:
+                    page_html = fetch_html(path)
+                except requests.RequestException:
+                    continue
+                try:
+                    main_html = extract_inner_html(page_html, tag="main")
+                    title = extract_inner_html(page_html, tag="h1")
+                except ValueError:
+                    continue
+                Document.objects.create(
+                    release=self,
+                    path=path,
+                    title=title,
+                    metadata={
+                        "body": main_html,
+                        "breadcrumbs": [
+                            {
+                                "path": DocumentationCategory.WEBSITE,
+                                "title": "Website",
+                            },
+                        ],
+                        "parents": DocumentationCategory.WEBSITE,
+                        "title": title,
+                        "toc": "",
+                    },
+                    config=get_search_config(self.lang),
+                )
 
 
 def _clean_document_path(path):
@@ -230,7 +289,9 @@ def _clean_document_path(path):
 
 
 def document_url(doc):
-    if doc.path:
+    if doc.metadata.get("parents") == DocumentationCategory.WEBSITE:
+        return doc.path
+    elif doc.path:
         kwargs = {
             "lang": doc.release.lang,
             "version": doc.release.version,
@@ -275,6 +336,14 @@ class DocumentQuerySet(models.QuerySet):
                 config=models.F("config"),
             )
             base_filter = Q(release_id=release.id)
+            if release.lang == settings.DEFAULT_LANGUAGE_CODE and not release.is_dev:
+                dev_release = DocumentRelease.objects.get_by_version_and_lang(
+                    version="dev", lang=settings.DEFAULT_LANGUAGE_CODE
+                )
+                base_filter |= Q(
+                    release_id=dev_release.id,
+                    metadata__parents=DocumentationCategory.WEBSITE,
+                )
             if document_category:
                 base_filter &= Q(metadata__parents__startswith=document_category)
             base_qs = (
