@@ -113,7 +113,8 @@ class IndividualMember(models.Model):
                 "name": self.name,
             },
         )
-        # Create an inner savepoint to prevent any outer successful operation to be rolled back in case of failure here.
+        # Create an inner savepoint to prevent any outer successful operation
+        # to be rolled back in case of failure here.
         with transaction.atomic():
             sent = send_mail(
                 mail_subject,
