@@ -1,12 +1,20 @@
 from datetime import date, timedelta
 
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.contrib.auth import get_permission_codename
+from django.db import transaction
 from django.templatetags.static import static
 from django.utils.formats import localize
 from django.utils.html import format_html
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, ngettext
 
-from members.models import CorporateMember, IndividualMember, Invoice, Team
+from members.models import (
+    CorporateMember,
+    IndividualMember,
+    IndividualMemberAccountInviteSendMailStatus,
+    Invoice,
+    Team,
+)
 
 
 @admin.register(IndividualMember)
@@ -17,9 +25,69 @@ class IndividualMemberAdmin(admin.ModelAdmin):
         "is_active",
         "member_since",
         "member_until",
+        "account_invite_mail_sent_at",
     ]
     search_fields = ["name"]
+    list_filter = ["member_until", "account_invite_mail_sent_at"]
     autocomplete_fields = ["user"]
+    actions = ["send_account_invite_mail"]
+
+    @admin.action(
+        description=_("Send account invite mail to selected individual members"),
+        permissions=["send_account_invite_mail"],
+    )
+    def send_account_invite_mail(self, request, queryset):
+        with transaction.atomic():
+            results = IndividualMember.send_account_invite_mails(queryset)
+        sent_count = results.get(
+            IndividualMemberAccountInviteSendMailStatus.SENT,
+            0,
+        )
+        failed_count = results.get(
+            IndividualMemberAccountInviteSendMailStatus.FAILED,
+            0,
+        )
+        skipped_count = results.get(
+            IndividualMemberAccountInviteSendMailStatus.SKIPPED,
+            0,
+        )
+        if sent_count > 0:
+            self.message_user(
+                request,
+                ngettext(
+                    "Sent account invite mail to 1 individual member.",
+                    "Sent account invite mail to %(count)d individual members.",
+                    sent_count,
+                )
+                % {"count": sent_count},
+                messages.SUCCESS,
+            )
+        if failed_count > 0:
+            self.message_user(
+                request,
+                ngettext(
+                    "Failed to send account invite mail to 1 individual member.",
+                    "Failed to send account invite mail to %(count)d individual members.",
+                    failed_count,
+                )
+                % {"count": failed_count},
+                messages.ERROR,
+            )
+        if skipped_count > 0:
+            self.message_user(
+                request,
+                ngettext(
+                    "Skipped sending account invite mail to 1 individual member (already has an account linked or an invite mail has been sent).",
+                    "Skipped sending account invite mail to %(count)d individual members (already have accounts linked or invite mails have been sent).",
+                    skipped_count,
+                )
+                % {"count": skipped_count},
+                messages.INFO,
+            )
+
+    def has_send_account_invite_mail_permission(self, request):
+        codename = get_permission_codename("send_account_invite_mail", self.opts)
+        return request.user.has_perm("%s.%s" % (self.opts.app_label, codename))
 
 
 class InvoiceInline(admin.TabularInline):

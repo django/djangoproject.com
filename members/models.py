@@ -1,11 +1,15 @@
 from collections import defaultdict
+from enum import StrEnum
 
 from django.conf import settings
 from django.core import signing
-from django.db import models
+from django.core.mail import send_mail
+from django.db import models, transaction
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.template.loader import render_to_string
 from django.utils.safestring import mark_safe
+from django.utils.timezone import now as timezone_now
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.dates import timezone_today
 from django_hosts import reverse
@@ -38,6 +42,12 @@ MEMBERSHIP_LEVELS = (
 MEMBERSHIP_TO_KEY = {k: v.lower() for k, v in MEMBERSHIP_LEVELS}
 
 
+class IndividualMemberAccountInviteSendMailStatus(StrEnum):
+    SENT = "SENT"
+    FAILED = "FAILED"
+    SKIPPED = "SKIPPED"
+
+
 class IndividualMember(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -48,7 +58,7 @@ class IndividualMember(models.Model):
     name = models.CharField(max_length=250)
     email = models.EmailField(unique=True)
     member_since = models.DateField(default=timezone_today)
-    member_until = models.DateField(null=True, blank=True)
+    member_until = models.DateField(null=True, blank=True, db_index=True)
     reason_for_leaving = models.TextField(
         blank=True,
         help_text=mark_safe(
@@ -58,9 +68,33 @@ class IndividualMember(models.Model):
             )
         ),
     )
+    account_invite_mail_sent_at = models.DateTimeField(
+        blank=True,
+        null=True,
+        db_index=True,
+    )
 
     class Meta:
         ordering = ["name"]
+        permissions = [
+            (
+                "send_account_invite_mail",
+                _("Can send account invite mail to an individual member"),
+            ),
+        ]
+
+    @classmethod
+    def send_account_invite_mails(cls, queryset):
+        results = {}
+        # Wait for other active transactions to prevent race conditions.
+        queryset = queryset.select_for_update(nowait=False)
+        for individual_member in queryset.iterator():
+            status = individual_member.send_account_invite_mail()
+            if status not in results:
+                results[status] = 1
+            else:
+                results[status] += 1
+        return results
 
     def __str__(self):
         return self.name
@@ -68,6 +102,33 @@ class IndividualMember(models.Model):
     @property
     def is_active(self):
         return self.member_until is None
+
+    def send_account_invite_mail(self):
+        if self.user_id or self.account_invite_mail_sent_at:
+            return IndividualMemberAccountInviteSendMailStatus.SKIPPED
+        mail_subject = "Make your Django Individual Membership profile visible"
+        mail_content = render_to_string(
+            "members/email/account_invite.txt",
+            {
+                "name": self.name,
+            },
+        )
+        # Create an inner savepoint to prevent any outer successful operation to be rolled back in case of failure here.
+        with transaction.atomic():
+            sent = send_mail(
+                mail_subject,
+                mail_content,
+                settings.INDIVIDUAL_MEMBER_ACCOUNT_INVITE_DEFAULT_FROM_EMAIL,
+                [
+                    settings.INDIVIDUAL_MEMBER_ACCOUNT_INVITE_DEFAULT_FROM_EMAIL,
+                    self.email,
+                ],
+            )
+            if sent:
+                self.account_invite_mail_sent_at = timezone_now()
+                self.save()
+                return IndividualMemberAccountInviteSendMailStatus.SENT
+        return IndividualMemberAccountInviteSendMailStatus.FAILED
 
 
 class Team(models.Model):

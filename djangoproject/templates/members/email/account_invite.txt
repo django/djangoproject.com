@@ -1,0 +1,17 @@
+{% spaceless %}
+Hello {{ name }},
+
+We're updating the Django Individual Members list so each member's name can link to their djangoproject.com profile. On your profile, you can share a short bio, highlight your contributions to Django or the community, and provide ways for others to get in touch.
+
+To have your name linked, please create an account (if you don't already have one) at:
+
+{% url 'registration_register' %}
+
+Once your account is ready, let us know your username so we can connect it to the members list.
+
+This small step helps the community grow more connected and makes it easier for everyone to explore and engage with it.
+
+Thank you for being part of the Django community.
+
+Django Software Foundation
+{% endspaceless %}
