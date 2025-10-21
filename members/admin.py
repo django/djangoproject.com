@@ -77,8 +77,16 @@ class IndividualMemberAdmin(admin.ModelAdmin):
             self.message_user(
                 request,
                 ngettext(
-                    "Skipped sending account invite mail to 1 individual member (already has an account linked or an invite mail has been sent).",
-                    "Skipped sending account invite mail to %(count)d individual members (already have accounts linked or invite mails have been sent).",
+                    (
+                        "Skipped sending account invite mail to 1 individual member"
+                        " (already has an account linked or an invite mail has been"
+                        " sent)."
+                    ),
+                    (
+                        "Skipped sending account invite mail to %(count)d individual"
+                        " members (already have accounts linked or invite mails have"
+                        " been sent)."
+                    ),
                     skipped_count,
                 )
                 % {"count": skipped_count},
