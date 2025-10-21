@@ -95,7 +95,7 @@ class IndividualMemberAdmin(admin.ModelAdmin):
 
     def has_send_account_invite_mail_permission(self, request):
         codename = get_permission_codename("send_account_invite_mail", self.opts)
-        return request.user.has_perm("{}.{}".format(self.opts.app_label, codename))
+        return request.user.has_perm(f"{self.opts.app_label}.{codename}")
 
 
 class InvoiceInline(admin.TabularInline):
