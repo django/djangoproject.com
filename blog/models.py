@@ -37,9 +37,6 @@ class EntryQuerySet(models.QuerySet):
     def active(self):
         return self.filter(is_active=True)
 
-    def searchable(self):
-        return self.filter(is_searchable=True)
-
 
 class ContentFormat(models.TextChoices):
     REST = "reST", "reStructuredText"

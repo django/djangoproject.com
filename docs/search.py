@@ -1,11 +1,10 @@
-from dataclasses import dataclass
+from urllib.parse import urlparse
 
 from django.contrib.postgres.search import SearchVector
 from django.db.models import TextChoices
 from django.db.models.fields.json import KeyTextTransform
-from django.template.loader import get_template
+from django.test import Client
 from django.utils.translation import gettext_lazy as _
-from django_hosts import reverse
 
 # Imported from
 # https://github.com/postgres/postgres/blob/REL_14_STABLE/src/bin/initdb/initdb.c#L659
@@ -81,25 +80,16 @@ class DocumentationCategory(TextChoices):
             return None
 
 
-@dataclass
-class SearchableView:
-    page_title: str
-    url_name: str
-    template: str
-
-    @property
-    def html(self):
-        return get_template(self.template).render()
-
-    @property
-    def www_absolute_url(self):
-        return reverse(self.url_name, host="www")
-
-
-SEARCHABLE_VIEWS = [
-    SearchableView(
-        page_title="Django's Ecosystem",
-        url_name="community-ecosystem",
-        template="aggregator/ecosystem.html",
-    ),
-]
+def fetch_html(url):
+    parsed = urlparse(url)
+    headers = {"HOST": parsed.netloc}  # Use netloc to include the port.
+    client = Client(headers=headers, raise_request_exception=False)
+    response = client.get(parsed.path)
+    content_type = response.headers.get("Content-Type", "")
+    if response.status_code == 200 and "text/html" in content_type:
+        return response.text
+    raise ValueError(
+        f"Failed to fetch {url}, "
+        f"status code: {response.status_code}, "
+        f"Content-Type: {content_type}"
+    )
