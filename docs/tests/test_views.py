@@ -106,7 +106,7 @@ class SearchFormTestCase(TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertContains(
                     response,
-                    "Only 1 result for <em>generic</em> in version 5.1",
+                    "1 result for <em>generic</em> in version 5.1",
                     html=True,
                 )
                 self.assertContains(response, self.active_filter, count=1)
@@ -225,7 +225,7 @@ class SearchFormTestCase(TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertContains(
                     response,
-                    f"Only 1 result for <em>{query}</em> in version 5.1",
+                    f"1 result for <em>{query}</em> in version 5.1",
                     html=True,
                 )
                 self.assertContains(response, expected_code_links, html=True)
