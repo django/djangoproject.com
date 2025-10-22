@@ -1,6 +1,8 @@
-let CHARACTER_COUNTER_INPUT_SELECTOR_ATTR = 'data-character-counter-input-selector';
+let CHARACTER_COUNTER_INPUT_SELECTOR_ATTR =
+  'data-character-counter-input-selector';
 
-let CHARACTER_COUNTER_INDICATOR_SELECTOR_ATTR = 'data-character-counter-indicator-selector';
+let CHARACTER_COUNTER_INDICATOR_SELECTOR_ATTR =
+  'data-character-counter-indicator-selector';
 
 let CharacterCounter = function (inputElement, indicatorElement) {
   this.inputElement = inputElement;
@@ -21,18 +23,23 @@ CharacterCounter.prototype = {
       return;
     }
 
-    const remaining = this.inputElement.maxLength - this.inputElement.value.length;
+    const remaining =
+      this.inputElement.maxLength - this.inputElement.value.length;
     this.indicatorElement.innerText = String(remaining);
   },
 };
 
 function setupCharacterCounter(counterElement) {
-  let inputSelector = counterElement.getAttribute(CHARACTER_COUNTER_INPUT_SELECTOR_ATTR);
+  let inputSelector = counterElement.getAttribute(
+    CHARACTER_COUNTER_INPUT_SELECTOR_ATTR,
+  );
   if (typeof inputSelector !== 'string') {
     return;
   }
 
-  let indicatorSelector = counterElement.getAttribute(CHARACTER_COUNTER_INDICATOR_SELECTOR_ATTR);
+  let indicatorSelector = counterElement.getAttribute(
+    CHARACTER_COUNTER_INDICATOR_SELECTOR_ATTR,
+  );
   if (typeof indicatorSelector !== 'string') {
     return;
   }
@@ -52,7 +59,7 @@ function setupCharacterCounter(counterElement) {
   inputElement.addEventListener(
     'input',
     characterCounter.handleInputEvent.bind(characterCounter),
-  )
+  );
 }
 
 function setupCharacterCounters() {

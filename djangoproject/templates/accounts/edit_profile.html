@@ -4,7 +4,7 @@
 {% block title %}{% translate "Edit your profile" %}{% endblock %}
 
 {% block head_extra %}
-  <script src="{% static "js/mod/character-counter.js" %}"></script>
+    <script src="{% static "js/mod/character-counter.js" %}"></script>
 {% endblock head_extra %}
 
 {% block content %}
@@ -34,7 +34,7 @@
         <div>
             {% if form.bio.errors %}
                 <p id="{{ form.bio.id_for_label }}_error" class="errors">
-                  {{ form.bio.errors.as_text }}
+                    {{ form.bio.errors.as_text }}
                 </p>
             {% endif %}
             <p>{{ form.bio }}</p>
