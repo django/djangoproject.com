@@ -6,6 +6,8 @@ from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV3
 from registration.forms import RegistrationFormUniqueEmail
 
+from contrib.django.forms.boundfields import BoundFieldWithCharacterCounter
+
 from .models import Profile
 
 
@@ -35,7 +37,13 @@ class ProfileForm(forms.ModelForm):
         required=False, widget=forms.TextInput(attrs={"placeholder": _("Email")})
     )
     bio = forms.CharField(
-        required=False, widget=forms.Textarea(attrs={"placeholder": _("Bio")})
+        bound_field_class=BoundFieldWithCharacterCounter,
+        required=False,
+        max_length=3_000,
+        widget=forms.Textarea(attrs={"placeholder": _("Bio")}),
+        help_text=_(
+            "URLs and email addresses are automatically converted into clickable links.",
+        ),
     )
 
     class Meta:

@@ -3118,6 +3118,10 @@ form {
             background: var(--primary);
         }
     }
+
+    .help-text  {
+      @include font-size(14);
+    }
 }
 
 .form-general {
