@@ -1,8 +1,9 @@
 import hashlib
+from random import randint
 
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.cache import cache
-from django.test import TestCase, override_settings
+from django.test import RequestFactory, TestCase, override_settings
 from django_hosts.resolvers import reverse
 
 from accounts.forms import DeleteProfileForm
@@ -10,6 +11,9 @@ from accounts.models import Profile
 from foundation import models as foundationmodels
 from tracdb.models import Revision, Ticket, TicketChange
 from tracdb.testutils import TracDBCreateDatabaseMixin
+
+from .forms import ProfileForm
+from .views import edit_profile
 
 
 @override_settings(TRAC_URL="https://code.djangoproject.com/")
@@ -164,25 +168,25 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             author="user1",
             newvalue="Accepted",
             ticket=Ticket.objects.create(),
-            **initial_ticket_values
+            **initial_ticket_values,
         )
         TicketChange.objects.create(
             author="user1",
             newvalue="Someday/Maybe",
             ticket=Ticket.objects.create(),
-            **initial_ticket_values
+            **initial_ticket_values,
         )
         TicketChange.objects.create(
             author="user1",
             newvalue="Ready for checkin",
             ticket=Ticket.objects.create(),
-            **initial_ticket_values
+            **initial_ticket_values,
         )
         TicketChange.objects.create(
             author="user2",
             newvalue="Accepted",
             ticket=Ticket.objects.create(),
-            **initial_ticket_values
+            **initial_ticket_values,
         )
 
         response = self.client.get(self.user1_url)
@@ -198,13 +202,13 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             oldvalue="Unreviewed",
             newvalue="Accepted",
             ticket=Ticket.objects.create(),
-            **common_ticket_values
+            **common_ticket_values,
         )
         TicketChange.objects.create(
             oldvalue="Accepted",
             newvalue="Unreviewed",
             ticket=Ticket.objects.create(),
-            **common_ticket_values
+            **common_ticket_values,
         )
 
         response = self.client.get(self.user1_url)
@@ -226,6 +230,46 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
         self.client.get(self.user1_url)
 
         self.assertIsNotNone(cache.get(key))
+
+
+class UserProfileUpdateFormTests(TestCase):
+    def setUp(self):
+        self.request_factory = RequestFactory()
+        self.edit_profile_url = reverse("edit_profile")
+
+    def test_bio_field_has_max_length(self):
+        form = ProfileForm()
+        self.assertIsNotNone(
+            form.fields["bio"].max_length,
+            "`ProfileForm.bio` field does not have `max_length` specified",
+        )
+
+    def test_page_shows_characters_remaining_count_for_bio(self):
+        profile_edit_form = ProfileForm()
+        bio_field = profile_edit_form.fields["bio"]
+        bio_length = randint(0, bio_field.max_length)
+        bio = "*" * bio_length
+        expected_characters_remaining_count = bio_field.max_length - bio_length
+        self.assertGreaterEqual(expected_characters_remaining_count, 0)
+        user = User.objects.create_user(username="user", password="password")
+        Profile.objects.create(user=user, bio=bio)
+        request = self.request_factory.get(self.edit_profile_url)
+        request.user = user
+        response = edit_profile(request)
+        self.assertContains(
+            response,
+            "<span>Characters remaining:</span>",
+            html=True,
+        )
+        self.assertContains(
+            response,
+            f"""
+                                class="character-counter__indicator"
+                            >
+                                {expected_characters_remaining_count}
+                            </span>
+            """.strip(),
+        )
 
 
 class ViewsTests(TestCase):
