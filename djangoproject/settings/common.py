@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "blog",
     "checklists",
     "contact",
+    "contrib.django.forms",
     "dashboard",
     "docs",
     "foundation",
