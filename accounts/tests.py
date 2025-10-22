@@ -6,6 +6,7 @@ from django.test import TestCase, override_settings
 from django_hosts.resolvers import reverse
 
 from accounts.forms import DeleteProfileForm
+from accounts.models import Profile
 from foundation import models as foundationmodels
 from tracdb.models import Revision, Ticket, TicketChange
 from tracdb.testutils import TracDBCreateDatabaseMixin
@@ -17,14 +18,66 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        User.objects.create_user(username="user1", password="password")
-        User.objects.create_user(username="user2", password="password")
+        user1_bio = "\n".join(
+            [
+                "[pre]",
+                "\n",
+                "Email: user1@example.com",
+                "Website: user1.example.com",
+                "GitHub: https://github.com/ghost",
+                "\n",
+                "[post]",
+            ],
+        )
+        user2_bio = ""
+        user1 = User.objects.create_user(username="user1", password="password")
+        user2 = User.objects.create_user(username="user2", password="password")
+        Profile.objects.create(user=user1, bio=user1_bio)
+        Profile.objects.create(user=user2, bio=user2_bio)
         cls.user1_url = reverse("user_profile", args=["user1"])
         cls.user2_url = reverse("user_profile", args=["user2"])
 
     def test_username_is_page_title(self):
         response = self.client.get(self.user1_url)
         self.assertContains(response, '<h1 class="name">user1</h1>', html=True)
+
+    def test_page_displays_bio_when_present(self):
+        response = self.client.get(self.user1_url)
+        self.assertContains(response, '<p class="bio">')
+
+    def test_page_hides_bio_when_absent(self):
+        response = self.client.get(self.user2_url)
+        self.assertNotContains(response, '<p class="bio">')
+
+    def test_bio_contains_mail_addresses_clickable(self):
+        response = self.client.get(self.user1_url)
+        self.assertContains(
+            response,
+            '<a href="mailto:user1@example.com">user1@example.com</a>',
+            html=True,
+        )
+
+    def test_bio_contains_links_without_protocol_clickable(self):
+        response = self.client.get(self.user1_url)
+        self.assertContains(
+            response,
+            (
+                '<a href="http://user1.example.com" rel="nofollow">'
+                "user1.example.com</a>"
+            ),
+            html=True,
+        )
+
+    def test_bio_contains_links_with_protocol_clickable(self):
+        response = self.client.get(self.user1_url)
+        self.assertContains(
+            response,
+            (
+                '<a href="https://github.com/ghost" rel="nofollow">'
+                "https://github.com/ghost</a>"
+            ),
+            html=True,
+        )
 
     def test_stat_commits(self):
         Revision.objects.create(
