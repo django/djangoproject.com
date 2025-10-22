@@ -55,7 +55,7 @@ class IndividualMemberAdmin(admin.ModelAdmin):
             self.message_user(
                 request,
                 ngettext(
-                    "Sent account invite mail to 1 individual member.",
+                    "Sent account invite mail to %(count)d individual member.",
                     "Sent account invite mail to %(count)d individual members.",
                     sent_count,
                 )
@@ -66,8 +66,11 @@ class IndividualMemberAdmin(admin.ModelAdmin):
             self.message_user(
                 request,
                 ngettext(
-                    "Failed to send account invite mail to 1 individual member.",
-                    "Failed to send account invite mail to %(count)d individual members.",
+                    "Failed to send account invite mail to %(count)d individual member.",
+                    (
+                        "Failed to send account invite mail to %(count)d individual"
+                        " members.",
+                    ),
                     failed_count,
                 )
                 % {"count": failed_count},
@@ -78,9 +81,9 @@ class IndividualMemberAdmin(admin.ModelAdmin):
                 request,
                 ngettext(
                     (
-                        "Skipped sending account invite mail to 1 individual member"
-                        " (already has an account linked or an invite mail has been"
-                        " sent)."
+                        "Skipped sending account invite mail to %(count)d individual"
+                        " member (already has an account linked or an invite mail has"
+                        " been sent)."
                     ),
                     (
                         "Skipped sending account invite mail to %(count)d individual"
