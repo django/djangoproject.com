@@ -2,6 +2,7 @@ from collections import defaultdict
 from enum import StrEnum
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core import signing
 from django.core.mail import send_mail
 from django.db import models, transaction
@@ -16,6 +17,9 @@ from django_hosts import reverse
 from sorl.thumbnail import ImageField
 
 from djangoproject.thumbnails import LogoThumbnailMixin
+
+User = get_user_model()
+
 
 BRONZE_MEMBERSHIP = 1
 SILVER_MEMBERSHIP = 2
@@ -82,6 +86,22 @@ class IndividualMember(models.Model):
                 _("Can send account invite mail to an individual member"),
             ),
         ]
+
+    @classmethod
+    def match_and_set_users_by_email(cls, queryset=None):
+        updated_count = 0
+        if queryset is None:
+            queryset = cls.objects.all()
+        queryset = queryset.filter(user_id__isnull=True)
+        # Wait for other active transactions to prevent race conditions.
+        queryset = queryset.select_for_update(nowait=False)
+        users_queryset = User.objects.filter(
+            email__in=queryset.values_list("email", flat=True),
+        )
+        for user in users_queryset.iterator():
+            with transaction.atomic():
+                updated_count += cls.objects.filter(email=user.email).update(user=user)
+        return updated_count
 
     @classmethod
     def send_account_invite_mails(cls, queryset):
