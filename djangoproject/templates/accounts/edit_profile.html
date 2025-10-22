@@ -1,7 +1,11 @@
 {% extends "registration/base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% translate "Edit your profile" %}{% endblock %}
+
+{% block head_extra %}
+  <script src="{% static "js/mod/character-counter.js" %}"></script>
+{% endblock head_extra %}
 
 {% block content %}
 
@@ -29,9 +33,31 @@
 
         <div>
             {% if form.bio.errors %}
-                <p class="errors">{{ form.bio.errors.as_text }}</p>
+                <p id="{{ form.bio.id_for_label }}_error" class="errors">
+                  {{ form.bio.errors.as_text }}
+                </p>
             {% endif %}
             <p>{{ form.bio }}</p>
+            <div id="{{ form.bio.id_for_label }}_helptext" class="help-text">
+                <div>{{ form.bio.help_text }}</div>
+                {% with bio_characters_remaining_count=form.bio.get_characters_remaining_count %}
+                    {% if bio_characters_remaining_count is not None %}
+                        <div
+                            class="character-counter"
+                            data-character-counter-input-selector="#{{ form.bio.id_for_label }}"
+                            data-character-counter-indicator-selector="#{{ form.bio.id_for_label }}_characters_remaining_count"
+                        >
+                            <span>{% translate "Characters remaining:" %}</span>
+                            <span
+                                id="{{ form.bio.id_for_label }}_characters_remaining_count"
+                                class="character-counter__indicator"
+                            >
+                                {{ bio_characters_remaining_count }}
+                            </span>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
         </div>
 
         <div class="submit">

@@ -43,7 +43,7 @@
 
         {% if user_obj.profile.bio %}
             <p class="bio">
-                {{ user_obj.profile.bio }}
+                {{ user_obj.profile.bio|urlize }}
             </p>
         {% endif %}
 
