@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "aggregator",
     "blog",
     "contact",
+    "contrib.django.forms",
     "dashboard",
     "docs",
     "foundation",
