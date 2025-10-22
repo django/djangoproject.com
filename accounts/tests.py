@@ -1,9 +1,10 @@
 import hashlib
+from random import randint
 
 from django.contrib.auth.models import AnonymousUser, User
 from django.core import mail
 from django.core.cache import cache
-from django.test import TestCase, override_settings
+from django.test import RequestFactory, TestCase, override_settings
 from django_hosts.resolvers import reverse
 
 from accounts.forms import DeleteProfileForm, RegistrationFormWithCaptcha
@@ -12,6 +13,9 @@ from djangoproject.tests import ReleaseMixin, patch_captcha
 from foundation import models as foundationmodels
 from tracdb.models import Revision, Ticket, TicketChange
 from tracdb.testutils import TracDBCreateDatabaseMixin
+
+from .forms import ProfileForm
+from .views import edit_profile
 
 
 @override_settings(TRAC_URL="https://code.djangoproject.com/")
@@ -231,21 +235,44 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         self.assertIsNotNone(cache.get(key))
 
 
-class ViewsTests(ReleaseMixin, TestCase):
-    def test_login_redirect(self):
-        credentials = {"username": "a-user", "password": "password"}
-        User.objects.create_user(**credentials)
+class UserProfileUpdateFormTests(TestCase):
+    def setUp(self):
+        self.request_factory = RequestFactory()
+        self.edit_profile_url = reverse("edit_profile")
 
-        response = self.client.post(reverse("login"), credentials)
-        self.assertRedirects(response, "/accounts/edit/")
+    def test_bio_field_has_max_length(self):
+        form = ProfileForm()
+        self.assertIsNotNone(
+            form.fields["bio"].max_length,
+            "`ProfileForm.bio` field does not have `max_length` specified",
+        )
 
-    def test_profile_view_reversal(self):
-        """
-        The profile view can be reversed for usernames containing "weird" but
-        valid username characters.
-        """
-        for username in ["asdf", "@asdf", "asd-f", "as.df", "as+df"]:
-            reverse("user_profile", host="www", args=[username])
+    def test_page_shows_characters_remaining_count_for_bio(self):
+        profile_edit_form = ProfileForm()
+        bio_field = profile_edit_form.fields["bio"]
+        bio_length = randint(0, bio_field.max_length)
+        bio = "*" * bio_length
+        expected_characters_remaining_count = bio_field.max_length - bio_length
+        self.assertGreaterEqual(expected_characters_remaining_count, 0)
+        user = User.objects.create_user(username="user", password="password")
+        Profile.objects.create(user=user, bio=bio)
+        request = self.request_factory.get(self.edit_profile_url)
+        request.user = user
+        response = edit_profile(request)
+        self.assertContains(
+            response,
+            "<span>Characters remaining:</span>",
+            html=True,
+        )
+        self.assertContains(
+            response,
+            f"""
+                                class="character-counter__indicator"
+                            >
+                                {expected_characters_remaining_count}
+                            </span>
+            """.strip(),
+        )
 
 
 class UserDeletionTests(ReleaseMixin, TestCase):
@@ -373,3 +400,20 @@ class RegistrationTests(ReleaseMixin, TestCase):
     def test_captcha_widget_is_rendered(self):
         response = self.client.get(reverse("registration_register"))
         self.assertContains(response, "g-recaptcha")
+
+
+class ViewsTests(ReleaseMixin, TestCase):
+    def test_login_redirect(self):
+        credentials = {"username": "a-user", "password": "password"}
+        User.objects.create_user(**credentials)
+
+        response = self.client.post(reverse("login"), credentials)
+        self.assertRedirects(response, "/accounts/edit/")
+
+    def test_profile_view_reversal(self):
+        """
+        The profile view can be reversed for usernames containing "weird" but
+        valid username characters.
+        """
+        for username in ["asdf", "@asdf", "asd-f", "as.df", "as+df"]:
+            reverse("user_profile", host="www", args=[username])
