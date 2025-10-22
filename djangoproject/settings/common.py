@@ -313,3 +313,5 @@ TRAC_URL = "https://code.djangoproject.com/"
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 FORMS_URLFIELD_ASSUME_HTTPS = True
+
+DEFAULT_LANGUAGE_CODE = "en"
