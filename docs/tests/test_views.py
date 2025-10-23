@@ -276,7 +276,15 @@ class SitemapTests(TestCase):
 
     def test_sitemap(self):
         doc_release = DocumentRelease.objects.create()
-        document = Document.objects.create(release=doc_release)
+        document = Document.objects.create(
+            release=doc_release,
+            metadata={"parents": DocumentationCategory.TOPICS},
+        )
+        Document.objects.create(
+            release=doc_release,
+            metadata={"parents": DocumentationCategory.WEBSITE},
+            path="example",
+        )
         sitemap = DocsSitemap(settings.DEFAULT_LANGUAGE_CODE)
         urls = sitemap.get_urls()
         self.assertEqual(len(urls), 1)

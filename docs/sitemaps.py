@@ -1,6 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 
 from .models import Document
+from .search import DocumentationCategory
 
 
 class DocsSitemap(Sitemap):
@@ -10,6 +11,7 @@ class DocsSitemap(Sitemap):
     def items(self):
         return (
             Document.objects.filter(release__lang=self.lang)
+            .exclude(metadata__parents=DocumentationCategory.WEBSITE)
             .order_by("-release__release", "path")
             .select_related("release__release")
         )
