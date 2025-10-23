@@ -239,15 +239,12 @@ class UserProfileUpdateFormTests(TestCase):
 
     def test_bio_field_has_max_length(self):
         form = ProfileForm()
-        self.assertIsNotNone(
-            form.fields["bio"].max_length,
-            "`ProfileForm.bio` field does not have `max_length` specified",
-        )
+        self.assertIsInstance(form.fields["bio"].max_length, int)
 
     def test_page_shows_characters_remaining_count_for_bio(self):
         profile_edit_form = ProfileForm()
         bio_field = profile_edit_form.fields["bio"]
-        bio_length = randint(0, bio_field.max_length)
+        bio_length = randint(0, max(bio_field.max_length, 20))
         bio = "*" * bio_length
         expected_characters_remaining_count = bio_field.max_length - bio_length
         self.assertGreaterEqual(expected_characters_remaining_count, 0)

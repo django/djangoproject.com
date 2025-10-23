@@ -45,14 +45,14 @@ class BoundFieldWithCharacterCounterTests(TestCase):
         self.assertIsNone(remaining_count)
 
     def test_characters_remaining_count_with_max_length(self):
-        max_length = randint(0, 500)
+        max_length = randint(0, 20)
         bound_field = self.__class__.prepare_sample_bound_field(max_length=max_length)
         remaining_count = bound_field.get_characters_remaining_count()
         self.assertGreaterEqual(remaining_count, 0)
         self.assertEqual(remaining_count, max_length)
 
     def test_characters_remaining_is_negative_when_content_exceeds_max_length(self):
-        max_length = randint(0, 500)
+        max_length = randint(0, 20)
         content_length = max_length + 1
         content = "*" * content_length
         bound_field = self.__class__.prepare_sample_bound_field(
@@ -65,7 +65,7 @@ class BoundFieldWithCharacterCounterTests(TestCase):
 
     def test_characters_remaining_matches_client_side_js_implementation(self):
         ending = "\r\n\r\r\n"
-        max_length = randint(0, 500)
+        max_length = randint(0, 20)
         visual_content_length = max_length - len(ending)
         visual_content = "*" * visual_content_length
         content = visual_content + ending

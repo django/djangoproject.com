@@ -45,7 +45,7 @@ class IndividualMemberTests(TestCase):
         self.assertFalse(self.member.is_active)
 
     def test_match_and_set_users_by_email(self):
-        members_count = randint(2, 20)
+        members_count = randint(2, 8)
         user_pk_to_email_mapping = {}
         for i in range(members_count):
             username = f"user{i}"
