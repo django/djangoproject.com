@@ -1,5 +1,6 @@
 from http import HTTPStatus
 
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse, set_urlconf
@@ -252,8 +253,16 @@ class SitemapTests(TestCase):
 
     def test_sitemap(self):
         doc_release = DocumentRelease.objects.create()
-        document = Document.objects.create(release=doc_release)
-        sitemap = DocsSitemap("en")
+        document = Document.objects.create(
+            release=doc_release,
+            metadata={"parents": DocumentationCategory.TOPICS},
+        )
+        Document.objects.create(
+            release=doc_release,
+            metadata={"parents": DocumentationCategory.WEBSITE},
+            path="example",
+        )
+        sitemap = DocsSitemap(settings.DEFAULT_LANGUAGE_CODE)
         urls = sitemap.get_urls()
         self.assertEqual(len(urls), 1)
         url_info = urls[0]
