@@ -7,6 +7,8 @@ To have your name linked, please create an account (if you don't already have on
 
 {% url 'registration_register' %}
 
+Note: If you log in to Trac with your GitHub account, your djangoproject.com username should match your GitHub username for certain stats to appear on your profile.
+
 Once your account is ready, let us know your username so we can connect it to the members list.
 
 This small step helps the community grow more connected and makes it easier for everyone to explore and engage with it.
