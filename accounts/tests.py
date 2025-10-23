@@ -83,6 +83,26 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             html=True,
         )
 
+    def test_trac_username_overrides_user_username(self):
+        djangoproject_username = "djangoproject_user"
+        trac_username = "trac_user"
+        user = User.objects.create_user(username=djangoproject_username)
+        Profile.objects.create(user=user, trac_username=trac_username)
+        Revision.objects.create(
+            author=trac_username,
+            rev="91c879eda595c12477bbfa6f51115e88b75ddf88",
+            _time=1731669560,
+        )
+
+        user_profile_url = reverse("user_profile", args=[djangoproject_username])
+        user_profile_response = self.client.get(user_profile_url)
+        self.assertContains(
+            user_profile_response,
+            '<a href="https://github.com/django/django/commits/main/'
+            f'?author={trac_username}">Commits: 1.</a>',
+            html=True,
+        )
+
     def test_stat_commits(self):
         Revision.objects.create(
             author="user1",
@@ -223,7 +243,7 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
         }
     )
     def test_caches_trac_stats(self):
-        key = "user_vital_status:%s" % hashlib.md5(b"user1").hexdigest()
+        key = "trac_user_vital_status:%s" % hashlib.md5(b"user1").hexdigest()
 
         self.assertIsNone(cache.get(key))
 
@@ -236,6 +256,17 @@ class UserProfileUpdateFormTests(TestCase):
     def setUp(self):
         self.request_factory = RequestFactory()
         self.edit_profile_url = reverse("edit_profile")
+
+    def test_trac_username_field_is_excluded(self):
+        form = ProfileForm()
+        self.assertNotIn(
+            "trac_username",
+            form.fields,
+            (
+                "`ProfileForm` includes the field `trac_username`."
+                " This may lead to security vulnerabilities."
+            ),
+        )
 
     def test_bio_field_has_max_length(self):
         form = ProfileForm()
