@@ -126,7 +126,7 @@ class IndividualMember(models.Model):
     def send_account_invite_mail(self):
         if self.user_id or self.account_invite_mail_sent_at:
             return IndividualMemberAccountInviteSendMailStatus.SKIPPED
-        mail_subject = "Make your Django Individual Membership profile visible"
+        mail_subject = "Django Individual Membership - Account Setup"
         mail_content = render_to_string(
             "members/email/account_invite.txt",
             {
