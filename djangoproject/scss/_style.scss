@@ -679,7 +679,7 @@ header {
     a, h1 a {
         color: $black;
         font-weight: bold;
-        text-decoration: none;
+        text-decoration: underline;
         &:hover {
             text-decoration: underline;
         }
