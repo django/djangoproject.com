@@ -8,6 +8,7 @@ from django.core.cache import cache
 from django.shortcuts import get_object_or_404, redirect, render
 
 from tracdb import stats as trac_stats
+from tracdb.utils import get_trac_username
 
 from .forms import DeleteProfileForm, ProfileForm
 from .models import Profile
@@ -72,11 +73,12 @@ def delete_profile_success(request):
 
 
 def get_user_stats(user):
-    username = user.username.encode("ascii", "ignore")
-    key = "user_vital_status:%s" % hashlib.md5(username).hexdigest()
+    trac_username = get_trac_username(user)
+    encoded_trac_username = trac_username.encode("ascii", "ignore")
+    key = "trac_user_vital_status:%s" % hashlib.md5(encoded_trac_username).hexdigest()
     info = cache.get(key)
     if info is None:
-        info = trac_stats.get_user_stats(user.username)
+        info = trac_stats.get_user_stats(trac_username)
         # Hide any stat with a value = 0 so that we don't accidentally insult
         # non-contributors.
         for k, v in list(info.items()):
