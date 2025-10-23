@@ -4,6 +4,7 @@ from random import randint
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.test import TestCase
+from django.urls import reverse
 
 from members.models import (
     GOLD_MEMBERSHIP,
@@ -103,6 +104,23 @@ class IndividualMemberTests(TestCase):
             individual_members_count,
         )
         self.assertEqual(len(mail.outbox), individual_members_count)
+
+    def test_send_account_invite_mail(self):
+        individual_member = IndividualMember.objects.create(
+            name=f"Member 1",
+            email="member1@example.com",
+        )
+        self.assertEqual(len(mail.outbox), 0)
+        status = individual_member.send_account_invite_mail()
+        self.assertEqual(
+            status,
+            IndividualMemberAccountInviteSendMailStatus.SENT,
+        )
+        self.assertEqual(len(mail.outbox), 1)
+        email_message = mail.outbox.pop()
+        self.assertIn(individual_member.email, email_message.to)
+        self.assertIn(individual_member.name, email_message.body)
+        self.assertIn(reverse("registration_register"), email_message.body)
 
 
 class CorporateMemberTests(TestCase):
