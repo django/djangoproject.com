@@ -1,5 +1,7 @@
 from datetime import date, timedelta
+from random import randint
 
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 from members.models import (
@@ -10,6 +12,8 @@ from members.models import (
     IndividualMember,
     Team,
 )
+
+User = get_user_model()
 
 
 class IndividualMemberTests(TestCase):
@@ -32,6 +36,43 @@ class IndividualMemberTests(TestCase):
         self.assertTrue(self.member.is_active)
         self.member.member_until = date.today()
         self.assertFalse(self.member.is_active)
+
+    def test_match_and_set_users_by_email(self):
+        members_count = randint(2, 20)
+        user_pk_to_email_mapping = {}
+        for i in range(members_count):
+            username = f"user{i}"
+            email = f"{username}@example.com"
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password="password",
+            )
+            user_pk_to_email_mapping[user.pk] = email
+            IndividualMember.objects.create(
+                name=f"User {i}",
+                email=email,
+            )
+        self.assertEqual(
+            IndividualMember.objects.filter(
+                user_id__isnull=True,
+                email__in=user_pk_to_email_mapping.values(),
+            ).count(),
+            members_count,
+        )
+        IndividualMember.match_and_set_users_by_email()
+        individual_member_queryset = IndividualMember.objects.filter(
+            user_id__in=user_pk_to_email_mapping.keys(),
+        )
+        self.assertEqual(
+            individual_member_queryset.count(),
+            members_count,
+        )
+        for individual_member in individual_member_queryset.iterator():
+            self.assertEqual(
+                individual_member.email,
+                user_pk_to_email_mapping[individual_member.user_id],
+            )
 
 
 class CorporateMemberTests(TestCase):
