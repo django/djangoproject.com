@@ -123,7 +123,11 @@ class IndividualMemberTests(TestCase):
         self.assertEqual(len(mail.outbox), 1)
         email_message = mail.outbox.pop()
         self.assertIn(individual_member.email, email_message.to)
-        self.assertIn(individual_member.name, email_message.body)
+        self.assertEqual(
+            email_message.subject,
+            "Django Individual Membership - Account Setup",
+        )
+        self.assertIn(f"Hello {individual_member.name},", email_message.body)
         self.assertIn(reverse("registration_register"), email_message.body)
 
 
