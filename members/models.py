@@ -140,9 +140,7 @@ class IndividualMember(models.Model):
                 mail_subject,
                 mail_content,
                 settings.INDIVIDUAL_MEMBER_ACCOUNT_INVITE_DEFAULT_FROM_EMAIL,
-                [
-                    self.email,
-                ],
+                [self.email],
             )
             if sent:
                 self.account_invite_mail_sent_at = timezone_now()
