@@ -79,7 +79,9 @@ class Command(BaseCommand):
 
         # Skip translated non-stable versions to avoid a crash:
         # https://github.com/django/djangoproject.com/issues/627
-        queryset = queryset.filter(Q(lang="en") | Q(release=default_docs_version))
+        queryset = queryset.filter(
+            Q(lang=settings.DEFAULT_LANGUAGE_CODE) | Q(release=default_docs_version)
+        )
 
         if options["language"]:
             queryset = queryset.filter(lang=options["language"])
@@ -132,6 +134,8 @@ class Command(BaseCommand):
         if self.verbosity >= 1:
             self.stdout.write(f"Starting update for {release} at {datetime.now()}...")
 
+        release.sync_from_sitemap(force=force)
+
         # checkout_dir is shared for all languages.
         checkout_dir = settings.DOCS_BUILD_ROOT.joinpath("sources", release.version)
         parent_build_dir = settings.DOCS_BUILD_ROOT.joinpath(
@@ -161,7 +165,7 @@ class Command(BaseCommand):
 
         source_dir = checkout_dir.joinpath("docs")
 
-        if release.lang != "en":
+        if release.lang != settings.DEFAULT_LANGUAGE_CODE:
             scm_url = release.scm_url.replace(
                 "django.git", "django-docs-translations.git"
             )

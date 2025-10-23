@@ -1,11 +1,11 @@
 from django import forms
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 
-search_placeholder = _("Search %s documentation")
+search_label_placeholder = pgettext_lazy("Action to search the whole site", "Search")
 
 
 class DocSearchForm(forms.Form):
-    q = forms.CharField(required=False, label=_("Search"))
+    q = forms.CharField(required=False, label=search_label_placeholder)
 
     def __init__(self, data=None, **kwargs):
         self.release = kwargs.pop("release")
@@ -13,6 +13,6 @@ class DocSearchForm(forms.Form):
         self.fields["q"].widget = forms.TextInput(
             attrs={
                 "type": "search",
-                "placeholder": search_placeholder % self.release.human_version,
+                "placeholder": search_label_placeholder,
             }
         )

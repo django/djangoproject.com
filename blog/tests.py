@@ -12,6 +12,8 @@ from django.test.utils import override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
 
+from djangoproject.tests import ReleaseMixin
+
 from .models import ContentFormat, Entry, Event, ImageUpload
 from .sitemaps import WeblogSitemap
 
@@ -189,7 +191,7 @@ class EventTestCase(DateTimeMixin, TestCase):
         )
 
 
-class ViewsTestCase(DateTimeMixin, TestCase):
+class ViewsTestCase(ReleaseMixin, DateTimeMixin, TestCase):
     def test_staff_with_change_permission_can_see_unpublished_detail_view(self):
         """
         Staff users with change permission on BlogEntry can't see unpublished entries
@@ -418,7 +420,7 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         + ["django.middleware.cache.FetchFromCacheMiddleware"]
     ),
 )
-class ViewsCachingTestCase(DateTimeMixin, TestCase):
+class ViewsCachingTestCase(ReleaseMixin, DateTimeMixin, TestCase):
     def test_drafts_have_no_cache_headers(self):
         """
         Draft (unpublished) entries have no-cache headers.

@@ -1,7 +1,9 @@
 from django.test import TestCase
 
+from djangoproject.tests import ReleaseMixin
 
-class SvnToGitTests(TestCase):
+
+class SvnToGitTests(ReleaseMixin, TestCase):
     def test_redirect(self):
         response = self.client.get("/svntogit/1/", follow=False)
         target = "https://github.com/django/django/commit/d6ded0e91b"
