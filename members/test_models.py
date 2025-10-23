@@ -171,11 +171,9 @@ class IndividualMemberTransactionTests(TransactionTestCase):
                 futures.append(
                     executor.submit(execute_send_account_invite_mails_task),
                 )
-        results_list = []
-        for future in futures:
-            results_list.append(future.result())
         status_aggregation = {}
-        for results in results_list:
+        for future in futures:
+            results = future.result()
             for key, value in results.items():
                 if key not in status_aggregation:
                     status_aggregation[key] = value
