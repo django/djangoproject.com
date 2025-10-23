@@ -1,9 +1,13 @@
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import ExitStack
 from datetime import date, timedelta
 from random import randint
+from multiprocessing import cpu_count as get_cpu_count
 
 from django.contrib.auth import get_user_model
 from django.core import mail
-from django.test import TestCase
+from django.db import connections, transaction
+from django.test import TestCase, TransactionTestCase
 from django.urls import reverse
 
 from members.models import (
@@ -121,6 +125,72 @@ class IndividualMemberTests(TestCase):
         self.assertIn(individual_member.email, email_message.to)
         self.assertIn(individual_member.name, email_message.body)
         self.assertIn(reverse("registration_register"), email_message.body)
+
+
+class IndividualMemberTransactionTests(TransactionTestCase):
+    def test_send_account_invite_mails_prevents_race_condition(self):
+        # Try to find the ideal number of processes/workers for the
+        # current machine.
+        cpu_count = get_cpu_count()
+        processes_count = max(min(4 * cpu_count, 64), 8)
+        workers_count = max(min(cpu_count * 2 + 1, 8), 16)
+        individual_members_count = randint(5, 10)
+        individual_member_pks = set()
+        for i in range(individual_members_count):
+            individual_member = IndividualMember.objects.create(
+                name=f"User {i}",
+                email=f"user{i}@example.com",
+            )
+            individual_member_pks.add(individual_member.pk)
+        individual_members_queryset = IndividualMember.objects.filter(
+            pk__in=individual_member_pks,
+        )
+
+        def execute_send_account_invite_mails_task():
+            # This is a thread entry point. Note that Django doesn't close
+            # our custom connections created in separated threads, which
+            # causes `django.db.utils.OperationalError` to be raised with
+            # message "There are N other sessions using the database" in most
+            # cases.
+            #
+            # Ensure all the connections are closed at the end.
+            with ExitStack() as exit_stack:
+                exit_stack.callback(connections.close_all)
+                with transaction.atomic():
+                    return IndividualMember.send_account_invite_mails(
+                        individual_members_queryset,
+                    )
+
+        futures = []
+        with ThreadPoolExecutor(max_workers=workers_count) as executor:
+            for i in range(processes_count):
+                futures.append(
+                    executor.submit(execute_send_account_invite_mails_task),
+                )
+        results_list = []
+        for future in futures:
+            results_list.append(future.result())
+        status_aggregation = {}
+        for results in results_list:
+            for key, value in results.items():
+                if key not in status_aggregation:
+                    status_aggregation[key] = value
+                else:
+                    status_aggregation[key] += value
+        self.assertEqual(
+            status_aggregation.get(
+                IndividualMemberAccountInviteSendMailStatus.SENT,
+                0,
+            ),
+            individual_members_count,
+        )
+        self.assertEqual(
+            status_aggregation.get(
+                IndividualMemberAccountInviteSendMailStatus.SKIPPED,
+                0,
+            ),
+            individual_members_count * (processes_count - 1),
+        )
 
 
 class CorporateMemberTests(TestCase):
