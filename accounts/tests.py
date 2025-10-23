@@ -11,6 +11,7 @@ from accounts.models import Profile
 from foundation import models as foundationmodels
 from tracdb.models import Revision, Ticket, TicketChange
 from tracdb.testutils import TracDBCreateDatabaseMixin
+from tracdb.utils import get_user_trac_username
 
 from .forms import ProfileForm
 from .views import edit_profile
@@ -84,23 +85,19 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
         )
 
     def test_trac_username_overrides_user_username(self):
-        djangoproject_username = "djangoproject_user"
-        trac_username = "trac_user"
-        user = User.objects.create_user(username=djangoproject_username)
-        Profile.objects.create(user=user, trac_username=trac_username)
-        Revision.objects.create(
-            author=trac_username,
-            rev="91c879eda595c12477bbfa6f51115e88b75ddf88",
-            _time=1731669560,
+        djangoproject_username1 = "djangoproject_user1"
+        djangoproject_username2 = "djangoproject_user2"
+        trac_username1 = "trac_user1"
+        user1 = User.objects.create_user(username=djangoproject_username1)
+        user2 = User.objects.create_user(username=djangoproject_username2)
+        Profile.objects.create(user=user1, trac_username=trac_username1)
+        self.assertEqual(
+            get_user_trac_username(user1),
+            trac_username1,
         )
-
-        user_profile_url = reverse("user_profile", args=[djangoproject_username])
-        user_profile_response = self.client.get(user_profile_url)
-        self.assertContains(
-            user_profile_response,
-            '<a href="https://github.com/django/django/commits/main/'
-            f'?author={trac_username}">Commits: 1.</a>',
-            html=True,
+        self.assertEqual(
+            get_user_trac_username(user2),
+            djangoproject_username2,
         )
 
     def test_stat_commits(self):
@@ -129,6 +126,32 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             html=True,
         )
         self.assertNotContains(user2_response, "Commits")
+
+    def test_stat_commits_for_custom_trac_username(self):
+        djangoproject_username = "djangoproject_user"
+        trac_username = "trac_user"
+        user = User.objects.create_user(username=djangoproject_username)
+        Profile.objects.create(user=user, trac_username=trac_username)
+
+        Revision.objects.create(
+            author=trac_username,
+            rev="91c879eda595c12477bbfa6f51115e88b75ddf88",
+            _time=1731669560,
+        )
+        Revision.objects.create(
+            author=trac_username,
+            rev="da2432cccae841f0d7629f17a5d79ec47ed7b7cb",
+            _time=1731669560,
+        )
+
+        user_profile_url = reverse("user_profile", args=[djangoproject_username])
+        user_profile_response = self.client.get(user_profile_url)
+        self.assertContains(
+            user_profile_response,
+            '<a href="https://github.com/django/django/commits/main/'
+            f'?author={trac_username}">Commits: 2.</a>',
+            html=True,
+        )
 
     def test_stat_tickets(self):
         Ticket.objects.create(status="new", reporter="user1")
@@ -177,6 +200,47 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             html=True,
         )
 
+    def test_stat_tickets_for_custom_trac_username(self):
+        djangoproject_username = "djangoproject_user"
+        trac_username = "trac_user"
+        user = User.objects.create_user(username=djangoproject_username)
+        Profile.objects.create(user=user, trac_username=trac_username)
+
+        Ticket.objects.create(status="new", reporter=trac_username)
+        Ticket.objects.create(status="new", reporter="user2")
+        Ticket.objects.create(
+            status="closed",
+            reporter=trac_username,
+            owner=trac_username,
+            resolution="fixed",
+        )
+        Ticket.objects.create(
+            status="closed", reporter="user2", owner=trac_username, resolution="fixed"
+        )
+        Ticket.objects.create(
+            status="closed", reporter="user2", owner="user2", resolution="fixed"
+        )
+        Ticket.objects.create(
+            status="closed", reporter="user2", owner=trac_username, resolution="wontfix"
+        )
+
+        user_profile_url = reverse("user_profile", args=[djangoproject_username])
+        user_profile_response = self.client.get(user_profile_url)
+        self.assertContains(
+            user_profile_response,
+            '<a href="https://code.djangoproject.com/query?'
+            f'owner={trac_username}&resolution=fixed&desc=1&order=changetime">'
+            "Tickets fixed: 2.</a>",
+            html=True,
+        )
+        self.assertContains(
+            user_profile_response,
+            '<a href="https://code.djangoproject.com/query?'
+            f'reporter={trac_username}&desc=1&order=changetime">'
+            "Tickets opened: 2.</a>",
+            html=True,
+        )
+
     def test_stat_tickets_triaged(self):
         # Possible values are from trac.ini in code.djangoproject.com.
         initial_ticket_values = {
@@ -211,6 +275,41 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
 
         response = self.client.get(self.user1_url)
         self.assertContains(response, "New tickets triaged: 3.")
+
+    def test_stat_tickets_triaged_for_custom_trac_username(self):
+        djangoproject_username = "djangoproject_user"
+        trac_username = "trac_user"
+        user = User.objects.create_user(username=djangoproject_username)
+        Profile.objects.create(user=user, trac_username=trac_username)
+
+        # Possible values are from trac.ini in code.djangoproject.com.
+        initial_ticket_values = {
+            "field": "stage",
+            "oldvalue": "Unreviewed",
+            "_time": 1731669560,
+        }
+        TicketChange.objects.create(
+            author=trac_username,
+            newvalue="Accepted",
+            ticket=Ticket.objects.create(),
+            **initial_ticket_values,
+        )
+        TicketChange.objects.create(
+            author=trac_username,
+            newvalue="Someday/Maybe",
+            ticket=Ticket.objects.create(),
+            **initial_ticket_values,
+        )
+        TicketChange.objects.create(
+            author=trac_username,
+            newvalue="Ready for checkin",
+            ticket=Ticket.objects.create(),
+            **initial_ticket_values,
+        )
+
+        user_profile_url = reverse("user_profile", args=[djangoproject_username])
+        user_profile_response = self.client.get(user_profile_url)
+        self.assertContains(user_profile_response, "New tickets triaged: 3.")
 
     def test_stat_tickets_triaged_unaccepted_not_counted(self):
         common_ticket_values = {
