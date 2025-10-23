@@ -37,7 +37,7 @@ RUN apt-get update \
 # copy project
 COPY . .
 
-RUN python -m django compilemessages
+RUN python -m django compilemessages --ignore .venv
 
 # ENTRYPOINT is specified only in the local docker-compose.yml to avoid
 # accidentally running it in deployed environments.
