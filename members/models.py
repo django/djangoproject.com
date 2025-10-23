@@ -141,7 +141,6 @@ class IndividualMember(models.Model):
                 mail_content,
                 settings.INDIVIDUAL_MEMBER_ACCOUNT_INVITE_DEFAULT_FROM_EMAIL,
                 [
-                    settings.INDIVIDUAL_MEMBER_ACCOUNT_INVITE_DEFAULT_FROM_EMAIL,
                     self.email,
                 ],
             )
