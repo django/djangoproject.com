@@ -2,6 +2,7 @@ from datetime import date, timedelta
 from random import randint
 
 from django.contrib.auth import get_user_model
+from django.core import mail
 from django.test import TestCase
 
 from members.models import (
@@ -10,6 +11,7 @@ from members.models import (
     SILVER_MEMBERSHIP,
     CorporateMember,
     IndividualMember,
+    IndividualMemberAccountInviteSendMailStatus,
     Team,
 )
 
@@ -73,6 +75,34 @@ class IndividualMemberTests(TestCase):
                 individual_member.email,
                 user_pk_to_email_mapping[individual_member.user_id],
             )
+
+    def test_send_account_invite_mails(self):
+        individual_members_count = randint(1, 5)
+        individual_member_pks = set()
+        for i in range(individual_members_count):
+            username = f"user{i}"
+            email = f"{username}@example.com"
+            individual_member = IndividualMember.objects.create(
+                name=f"User {i}",
+                email=email,
+            )
+            individual_member_pks.add(individual_member.pk)
+        self.assertEqual(len(mail.outbox), 0)
+        results = IndividualMember.send_account_invite_mails(
+            IndividualMember.objects.filter(
+                pk__in=individual_member_pks,
+            )
+        )
+        self.assertEqual(len(results), 1)
+        self.assertEqual(
+            next(iter(results.keys())),
+            IndividualMemberAccountInviteSendMailStatus.SENT,
+        )
+        self.assertEqual(
+            results[IndividualMemberAccountInviteSendMailStatus.SENT],
+            individual_members_count,
+        )
+        self.assertEqual(len(mail.outbox), individual_members_count)
 
 
 class CorporateMemberTests(TestCase):
