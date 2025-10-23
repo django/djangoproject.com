@@ -1,8 +1,8 @@
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import ExitStack
 from datetime import date, timedelta
-from random import randint
 from multiprocessing import cpu_count as get_cpu_count
+from random import randint
 
 from django.contrib.auth import get_user_model
 from django.core import mail
