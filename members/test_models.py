@@ -107,7 +107,7 @@ class IndividualMemberTests(TestCase):
 
     def test_send_account_invite_mail(self):
         individual_member = IndividualMember.objects.create(
-            name=f"Member 1",
+            name="Member 1",
             email="member1@example.com",
         )
         self.assertEqual(len(mail.outbox), 0)
