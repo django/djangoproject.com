@@ -6,7 +6,42 @@ from django.core.management import call_command
 from django.test import TestCase
 from django.utils.formats import localize
 
-from members.models import SILVER_MEMBERSHIP, CorporateMember
+from members.models import SILVER_MEMBERSHIP, CorporateMember, IndividualMember
+
+
+class IndividualMemberTests(TestCase):
+    def test_send_individual_member_account_invite_mails(self):
+        IndividualMember.objects.create(
+            name="Member 1",
+            email="member1@example.com",
+        )
+        IndividualMember.objects.create(
+            name="Member 2",
+            email="member2@example.com",
+            member_until=date.today() - timedelta(days=7),
+        )
+        call_command(
+            "send_individual_member_account_invite_mails",
+            "--no-logging",
+        )
+        self.assertEqual(len(mail.outbox), 1)
+
+    def test_send_individual_member_account_invite_mails_including_former_members(self):
+        IndividualMember.objects.create(
+            name="Member 1",
+            email="member1@example.com",
+        )
+        IndividualMember.objects.create(
+            name="Member 2",
+            email="member2@example.com",
+            member_until=date.today() - timedelta(days=7),
+        )
+        call_command(
+            "send_individual_member_account_invite_mails",
+            "--include-former-members",
+            "--no-logging",
+        )
+        self.assertEqual(len(mail.outbox), 2)
 
 
 class CorporateMemberTests(TestCase):
