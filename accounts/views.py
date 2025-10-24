@@ -8,21 +8,43 @@ from django.core.cache import cache
 from django.shortcuts import get_object_or_404, redirect, render
 
 from tracdb import stats as trac_stats
-from tracdb.utils import get_user_trac_username
+from tracdb.utils import (
+    check_if_public_trac_stats_are_renderable_for_user,
+    get_user_trac_username,
+)
 
 from .forms import DeleteProfileForm, ProfileForm
 from .models import Profile
 
 
+def get_public_user_trac_stats(user):
+    trac_username = get_user_trac_username(user)
+    encoded_trac_username = trac_username.encode("ascii", "ignore")
+    key = "trac_user_vital_status:%s" % hashlib.md5(encoded_trac_username).hexdigest()
+    info = cache.get(key)
+    if info is None:
+        info = {}
+        if check_if_public_trac_stats_are_renderable_for_user(user):
+            info = trac_stats.get_user_stats(trac_username)
+        # Hide any stat with a value = 0 so that we don't accidentally insult
+        # non-contributors.
+        for k, v in list(info.items()):
+            if v.count == 0:
+                info.pop(k)
+        cache.set(key, info, 60 * 60)
+    return info
+
+
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
+    stats = get_public_user_trac_stats(user)
     return render(
         request,
         "accounts/user_profile.html",
         {
             "user_obj": user,
             "email_hash": hashlib.md5(user.email.encode("ascii", "ignore")).hexdigest(),
-            "stats": get_user_stats(user),
+            "stats": stats,
         },
     )
 
@@ -70,19 +92,3 @@ def delete_profile(request):
 
 def delete_profile_success(request):
     return render(request, "accounts/delete_profile_success.html")
-
-
-def get_user_stats(user):
-    trac_username = get_user_trac_username(user)
-    encoded_trac_username = trac_username.encode("ascii", "ignore")
-    key = "trac_user_vital_status:%s" % hashlib.md5(encoded_trac_username).hexdigest()
-    info = cache.get(key)
-    if info is None:
-        info = trac_stats.get_user_stats(trac_username)
-        # Hide any stat with a value = 0 so that we don't accidentally insult
-        # non-contributors.
-        for k, v in list(info.items()):
-            if v.count == 0:
-                info.pop(k)
-        cache.set(key, info, 60 * 60)
-    return info

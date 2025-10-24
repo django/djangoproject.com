@@ -84,6 +84,15 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             html=True,
         )
 
+    def test_same_trac_username_can_be_used_for_multiple_users(self):
+        # For the rare/temporal cases of when multiple accounts belong to
+        # the same user.
+        #
+        # Please also see the comment in the function:
+        # `tracdb.utils.check_if_public_trac_stats_are_renderable_for_user`
+
+        self.assertFalse(Profile._meta.get_field("trac_username").unique)
+
     def test_stat_commits(self):
         Revision.objects.create(
             author="user1",
@@ -136,6 +145,31 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             f'?author={trac_username}">Commits: 2.</a>',
             html=True,
         )
+
+    def test_stat_commits_for_custom_trac_username_used_by_another_user(self):
+        djangoproject_username1 = "djangoproject_user1"
+        trac_username1 = "trac_user1"
+        user1 = User.objects.create_user(username=djangoproject_username1)
+        Profile.objects.create(user=user1, trac_username=trac_username1)
+
+        djangoproject_username2 = trac_username1
+        user2 = User.objects.create_user(username=djangoproject_username2)
+        Profile.objects.create(user=user2)
+
+        Revision.objects.create(
+            author=trac_username1,
+            rev="91c879eda595c12477bbfa6f51115e88b75ddf88",
+            _time=1731669560,
+        )
+        Revision.objects.create(
+            author=trac_username1,
+            rev="da2432cccae841f0d7629f17a5d79ec47ed7b7cb",
+            _time=1731669560,
+        )
+
+        user_profile_url2 = reverse("user_profile", args=[djangoproject_username2])
+        user_profile_response2 = self.client.get(user_profile_url2)
+        self.assertNotContains(user_profile_response2, "Commits")
 
     def test_stat_tickets(self):
         Ticket.objects.create(status="new", reporter="user1")
@@ -225,6 +259,41 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             html=True,
         )
 
+    def test_stat_tickets_for_custom_trac_username_used_by_another_user(self):
+        djangoproject_username1 = "djangoproject_user1"
+        trac_username1 = "trac_user1"
+        user1 = User.objects.create_user(username=djangoproject_username1)
+        Profile.objects.create(user=user1, trac_username=trac_username1)
+
+        djangoproject_username2 = trac_username1
+        user2 = User.objects.create_user(username=djangoproject_username2)
+        Profile.objects.create(user=user2)
+
+        Ticket.objects.create(status="new", reporter=trac_username1)
+        Ticket.objects.create(status="new", reporter="user2")
+        Ticket.objects.create(
+            status="closed",
+            reporter=trac_username1,
+            owner=trac_username1,
+            resolution="fixed",
+        )
+        Ticket.objects.create(
+            status="closed", reporter="user2", owner=trac_username1, resolution="fixed"
+        )
+        Ticket.objects.create(
+            status="closed", reporter="user2", owner="user2", resolution="fixed"
+        )
+        Ticket.objects.create(
+            status="closed",
+            reporter="user2",
+            owner=trac_username1,
+            resolution="wontfix",
+        )
+
+        user_profile_url2 = reverse("user_profile", args=[djangoproject_username2])
+        user_profile_response2 = self.client.get(user_profile_url2)
+        self.assertNotContains(user_profile_response2, "Tickets fixed:")
+
     def test_stat_tickets_triaged(self):
         # Possible values are from trac.ini in code.djangoproject.com.
         initial_ticket_values = {
@@ -294,6 +363,45 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
         user_profile_url = reverse("user_profile", args=[djangoproject_username])
         user_profile_response = self.client.get(user_profile_url)
         self.assertContains(user_profile_response, "New tickets triaged: 3.")
+
+    def test_stat_tickets_triaged_for_custom_trac_username_used_by_another_user(self):
+        djangoproject_username1 = "djangoproject_user1"
+        trac_username1 = "trac_user1"
+        user1 = User.objects.create_user(username=djangoproject_username1)
+        Profile.objects.create(user=user1, trac_username=trac_username1)
+
+        djangoproject_username2 = trac_username1
+        user2 = User.objects.create_user(username=djangoproject_username2)
+        Profile.objects.create(user=user2)
+
+        # Possible values are from trac.ini in code.djangoproject.com.
+        initial_ticket_values = {
+            "field": "stage",
+            "oldvalue": "Unreviewed",
+            "_time": 1731669560,
+        }
+        TicketChange.objects.create(
+            author=trac_username1,
+            newvalue="Accepted",
+            ticket=Ticket.objects.create(),
+            **initial_ticket_values,
+        )
+        TicketChange.objects.create(
+            author=trac_username1,
+            newvalue="Someday/Maybe",
+            ticket=Ticket.objects.create(),
+            **initial_ticket_values,
+        )
+        TicketChange.objects.create(
+            author=trac_username1,
+            newvalue="Ready for checkin",
+            ticket=Ticket.objects.create(),
+            **initial_ticket_values,
+        )
+
+        user_profile_url2 = reverse("user_profile", args=[djangoproject_username2])
+        user_profile_response2 = self.client.get(user_profile_url2)
+        self.assertNotContains(user_profile_response2, "New tickets triaged:")
 
     def test_stat_tickets_triaged_unaccepted_not_counted(self):
         common_ticket_values = {
