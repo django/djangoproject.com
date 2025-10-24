@@ -26,12 +26,12 @@ def get_public_user_trac_stats(user):
         info = {}
         if check_if_public_trac_stats_are_renderable_for_user(user):
             info = trac_stats.get_user_stats(trac_username)
-        # Hide any stat with a value = 0 so that we don't accidentally insult
-        # non-contributors.
-        for k, v in list(info.items()):
-            if v.count == 0:
-                info.pop(k)
-        cache.set(key, info, 60 * 60)
+            # Hide any stat with a value = 0 so that we don't accidentally insult
+            # non-contributors.
+            for k, v in list(info.items()):
+                if v.count == 0:
+                    info.pop(k)
+            cache.set(key, info, 60 * 60)
     return info
 
 
