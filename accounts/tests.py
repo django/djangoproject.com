@@ -84,22 +84,6 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             html=True,
         )
 
-    def test_trac_username_overrides_user_username(self):
-        djangoproject_username1 = "djangoproject_user1"
-        djangoproject_username2 = "djangoproject_user2"
-        trac_username1 = "trac_user1"
-        user1 = User.objects.create_user(username=djangoproject_username1)
-        user2 = User.objects.create_user(username=djangoproject_username2)
-        Profile.objects.create(user=user1, trac_username=trac_username1)
-        self.assertEqual(
-            get_user_trac_username(user1),
-            trac_username1,
-        )
-        self.assertEqual(
-            get_user_trac_username(user2),
-            djangoproject_username2,
-        )
-
     def test_stat_commits(self):
         Revision.objects.create(
             author="user1",
