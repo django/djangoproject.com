@@ -21,7 +21,7 @@ def check_if_trac_username_is_overridden_for_user(user):
     return False
 
 
-def check_if_trac_username_is_overridden_for_another_user(user):
+def check_if_user_username_is_used_as_trac_username_by_another_user(user):
     return (
         Profile.objects.exclude(user_id=user.pk)
         .filter(trac_username=user.username)
@@ -37,4 +37,4 @@ def check_if_public_trac_stats_are_renderable_for_user(user):
     # case, please set the same `trac_username` for both users).
     return check_if_trac_username_is_overridden_for_user(
         user
-    ) or not check_if_trac_username_is_overridden_for_another_user(user)
+    ) or not check_if_user_username_is_used_as_trac_username_by_another_user(user)
