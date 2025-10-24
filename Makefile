@@ -1,6 +1,6 @@
 .PHONY: all ci clean collectstatics compile-scss compile-scss-debug install run test watch-scss
 
-APP_LIST ?= accounts aggregator blog contact dashboard djangoproject docs foundation fundraising legacy members releases svntogit tracdb
+APP_LIST ?= accounts aggregator blog contact contrib.django.forms dashboard djangoproject docs foundation fundraising legacy members releases svntogit tracdb
 SCSS = djangoproject/scss
 STATIC = djangoproject/static
 
