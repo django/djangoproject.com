@@ -11,7 +11,6 @@ from accounts.models import Profile
 from foundation import models as foundationmodels
 from tracdb.models import Revision, Ticket, TicketChange
 from tracdb.testutils import TracDBCreateDatabaseMixin
-from tracdb.utils import get_user_trac_username
 
 from .forms import ProfileForm
 from .views import edit_profile
