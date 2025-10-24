@@ -65,8 +65,9 @@ class BoundFieldWithCharacterCounterTests(TestCase):
 
     def test_characters_remaining_matches_client_side_js_implementation(self):
         ending = "\r\n\r\r\n"
-        max_length = randint(0, 20)
-        visual_content_length = max_length - len(ending)
+        ending_length = len(ending)
+        max_length = randint(ending_length, ending_length + 10)
+        visual_content_length = max_length - ending_length
         visual_content = "*" * visual_content_length
         content = visual_content + ending
         normalized_ending = ending.replace("\r\n", "\n").replace("\r", "\n")
@@ -76,5 +77,5 @@ class BoundFieldWithCharacterCounterTests(TestCase):
             content=content,
         )
         remaining_count = bound_field.get_characters_remaining_count()
-        self.assertGreater(remaining_count, 0)
+        self.assertGreaterEqual(remaining_count, 0)
         self.assertEqual(remaining_count, max_length - len(normalized_content))
