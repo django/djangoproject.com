@@ -679,10 +679,14 @@ header {
     a, h1 a {
         color: $black;
         font-weight: bold;
-        text-decoration: underline;
+        text-decoration: none;
         &:hover {
             text-decoration: underline;
         }
+    }
+
+    #pycharm-discount {
+        text-decoration: underline;
     }
 }
 
