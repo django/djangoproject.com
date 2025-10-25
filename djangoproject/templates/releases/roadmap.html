@@ -32,7 +32,7 @@
   </section>
 
   <section id="how-to-help">
-    <h3>How you can help</h3>
+    <h2>How you can help</h2>
     <p>Community effort is key. You can help by:</p>
     <ul>
       <li>Reading the <a href="http://docs.djangoproject.com/en/dev/internals/contributing/">guide to contributing</a>
@@ -78,42 +78,41 @@
         </tbody>
       </table>
     </div>
-  </section>
+    <section id="process">
+      <h3>Process</h3>
+      <p>Any features not completed by the feature freeze date won't make it into {{ series }}.</p>
+      <p>The release manager will keep the schedule updated and ensure efficient
+        routing of issues and reminders for deadlines.</p>
 
-  <section id="process">
-    <h2>Process</h2>
-    <p>Any features not completed by the feature freeze date won't make it into {{ series }}.</p>
-    <p>The release manager will keep the schedule updated and ensure efficient
-      routing of issues and reminders for deadlines.</p>
+      <section id="feature-freeze-alpha-1">
+        <h3>Feature freeze / Alpha 1</h3>
+        <p>All major and minor features must be merged by the Alpha 1 deadline. Any
+          features not done by this point will be deferred or dropped. At this time, we
+          will fork <code>stable/{{ series }}.x</code> from <code>main</code>.</p>
+        <p>After the alpha, non-release blocking bug fixes may be backported at the
+          mergers' discretion.</p>
+      </section>
 
-    <section id="feature-freeze-alpha-1">
-      <h3>Feature freeze / Alpha 1</h3>
-      <p>All major and minor features must be merged by the Alpha 1 deadline. Any
-        features not done by this point will be deferred or dropped. At this time, we
-        will fork <code>stable/{{ series }}.x</code> from <code>main</code>.</p>
-      <p>After the alpha, non-release blocking bug fixes may be backported at the
-        mergers' discretion.</p>
-    </section>
+      <section id="beta-1">
+        <h3>Beta 1</h3>
+        <p>Beta 1 marks the end of changes that aren't release blocking bugs. Only release
+          blocking bug fixes will be allowed to be backported after the beta.</p>
+      </section>
 
-    <section id="beta-1">
-      <h3>Beta 1</h3>
-      <p>Beta 1 marks the end of changes that aren't release blocking bugs. Only release
-        blocking bug fixes will be allowed to be backported after the beta.</p>
-    </section>
+      <section id="rc-1">
+        <h3>RC 1</h3>
+        <p>If release blockers are still coming in at the planned release candidate date,
+          we'll release beta 2 to encourage further testing. RC 1 marks the freeze for
+          translation strings; translators will have two weeks to submit updates. Release
+          blocking bug fixes may continue to be backported.</p>
+      </section>
 
-    <section id="rc-1">
-      <h3>RC 1</h3>
-      <p>If release blockers are still coming in at the planned release candidate date,
-        we'll release beta 2 to encourage further testing. RC 1 marks the freeze for
-        translation strings; translators will have two weeks to submit updates. Release
-        blocking bug fixes may continue to be backported.</p>
-    </section>
-
-    <section id="final">
-      <h3>Final</h3>
-      <p>Django {{ series }} final will ideally ship two weeks after the last RC. If no major bugs
-        are found by then, {{ series }} final will be issued; otherwise, the timeline will be
-        adjusted as needed.</p>
+      <section id="final">
+        <h3>Final</h3>
+        <p>Django {{ series }} final will ideally ship two weeks after the last RC. If no major bugs
+          are found by then, {{ series }} final will be issued; otherwise, the timeline will be
+          adjusted as needed.</p>
+      </section>
     </section>
   </section>
 
