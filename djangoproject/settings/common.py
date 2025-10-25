@@ -94,6 +94,9 @@ INSTALLED_APPS = [
     "_sphinx_13448_workaround",
 ]
 
+if os.getenv("DJANGO_SPOOKY_MODE"):
+    INSTALLED_APPS.insert(0, "django_admin_dracula")  # spooky 👻
+
 LANGUAGE_CODE = "en-us"
 
 LOGGING = {
