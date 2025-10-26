@@ -182,6 +182,12 @@ class Entry(models.Model):
     def pub_date_localized(self):
         return date_format(self.pub_date)
 
+    @property
+    def description(self):
+        return _("Posted by {author} on {pub_date}").format(
+            author=self.author, pub_date=self.pub_date_localized
+        )
+
     def save(self, *args, **kwargs):
         self.summary_html = ContentFormat.to_html(self.content_format, self.summary)
         self.body_html = ContentFormat.to_html(self.content_format, self.body)
@@ -208,9 +214,7 @@ class Entry(models.Model):
         tags = {
             "og:type": "article",
             "og:title": self.headline,
-            "og:description": _("Posted by {author} on {pub_date}").format(
-                author=self.author, pub_date=self.pub_date_localized
-            ),
+            "og:description": self.description,
             "og:article:published_time": self.pub_date.isoformat(),
             "og:article:author": self.author,
             "og:image": static("img/logos/django-logo-negative.png"),
