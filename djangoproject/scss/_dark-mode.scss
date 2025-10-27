@@ -144,7 +144,7 @@ html[data-theme="light"],
             &:active,
             &:focus,
             &:hover {
-                color: $gray-medium;
+                color: var(--table-link-hover);
             }
         }
     }
@@ -237,7 +237,7 @@ html[data-theme="dark"] {
     table.django-supported-versions,
     table.django-unsupported-versions {
         a {
-            color: $black;
+            color: var(--table-color);
 
             &:active,
             &:focus,
