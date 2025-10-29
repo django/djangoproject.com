@@ -190,6 +190,41 @@ class EventTestCase(DateTimeMixin, TestCase):
 
 
 class ViewsTestCase(DateTimeMixin, TestCase):
+    def test_detail_view_html_meta(self):
+        headline = "Pride and Prejudice - Review"
+        author = "Jane Austen"
+        pub_date = date(2005, 7, 21)
+        blog_entry = Entry.objects.create(
+            pub_date=pub_date,
+            is_active=True,
+            headline=headline,
+            slug="a",
+            author=author,
+        )
+        blog_description = "Posted by Jane Austen on July 21, 2005"
+        self.assertEqual(blog_entry.description, blog_description)
+
+        blog_url = blog_entry.get_absolute_url()
+        response = self.client.get(blog_url)
+        self.assertEqual(response.status_code, 200)
+
+        expected_html_meta_tags = [
+            f'<meta name="description" content="{blog_description}" />',
+            '<meta property="og:type" content="article" />',
+            f'<meta property="og:title" content="{headline}" />',
+            f'<meta property="og:description" content="{blog_description}" />',
+            '<meta property="og:article:published_time" content="2005-07-21T00:00:00" />',
+            f'<meta property="og:article:author" content="{author}" />',
+            '<meta property="og:image:alt" content="Django logo" />',
+            f'<meta property="og:url" content="{blog_url}" />',
+            '<meta property="og:site_name" content="Django Project" />',
+            '<meta property="twitter:card" content="summary" />',
+            '<meta property="twitter:creator" content="djangoproject" />',
+            '<meta property="twitter:site" content="djangoproject" />',
+        ]
+        for expected_html_meta_tag in expected_html_meta_tags:
+            self.assertContains(response, expected_html_meta_tag, html=True)
+
     def test_staff_with_change_permission_can_see_unpublished_detail_view(self):
         """
         Staff users with change permission on BlogEntry can't see unpublished entries
