@@ -1,13 +1,15 @@
+import unittest
 from http import HTTPStatus
 
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse, set_urlconf
 from django.utils.translation import activate, gettext as _
 from django_hosts.resolvers import reverse as reverse_with_host, reverse_host
 
-from djangoproject.urls import www as www_urls
+from djangoproject.urls import docs as docs_urls, www as www_urls
 from releases.models import Release
 
 from ..models import Document, DocumentRelease
@@ -39,6 +41,146 @@ class RedirectsTests(SimpleTestCase):
             status_code=HTTPStatus.MOVED_PERMANENTLY,
             fetch_redirect_response=False,
         )
+
+    def test_redirect_index_view(self):
+        response = self.client.get(
+            "/en/dev/index/",  # Route without name
+            headers={"host": reverse_host("docs")},
+        )
+        self.assertRedirects(response, "/en/dev/", fetch_redirect_response=False)
+
+
+class LangAndReleaseRedirectTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.release = Release.objects.create(version="5.2")
+        cls.doc_release = DocumentRelease.objects.create(
+            release=cls.release, is_default=True
+        )
+
+    def test_index_view_redirect_to_current_document_release(self):
+        response = self.client.get(
+            reverse_with_host("homepage", host="docs"),
+            headers={"host": reverse_host("docs")},
+        )
+        self.assertRedirects(
+            response, self.doc_release.get_absolute_url(), fetch_redirect_response=False
+        )
+
+    def test_language_view_redirect_to_current_document_release_with_the_same_language(
+        self,
+    ):
+        fr_doc_release = DocumentRelease.objects.create(release=self.release, lang="fr")
+        response = self.client.get(
+            "/fr/",  # Route without name
+            headers={"host": reverse_host("docs")},
+        )
+        self.assertRedirects(
+            response, fr_doc_release.get_absolute_url(), fetch_redirect_response=False
+        )
+
+    def test_stable_view_redirect_to_current_document_release(self):
+        response = self.client.get(
+            reverse_with_host(
+                # The stable view doesn't have a name but it's basically
+                # the document-detail route with a version set to "stable"
+                "document-detail",
+                kwargs={
+                    "version": "stable",
+                    "lang": self.doc_release.lang,
+                    "url": "intro",
+                },
+                host="docs",
+            ),
+            headers={"host": reverse_host("docs")},
+        )
+        # Using Django's `reverse()` over django-hosts's `reverse_host()` as the later
+        # one return an absolute URL but the view redirect only using the path component
+        expected_url = reverse(
+            # The stable view route doesn't have a name but it's basically
+            # the `document-detail` route with a version set to "stable"
+            "document-detail",
+            kwargs={
+                "version": self.doc_release.version,
+                "lang": self.doc_release.lang,
+                "url": "intro",
+            },
+            urlconf=docs_urls,
+        )
+        self.assertRedirects(response, expected_url, fetch_redirect_response=False)
+
+
+class DocumentViewTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.doc_release = DocumentRelease.objects.create(is_default=True)
+
+    def test_document_index_view(self):
+        # Set up a release so we aren't in `dev` version
+        self.doc_release.release = Release.objects.create(version="5.2")
+        self.doc_release.save(update_fields=["release"])
+
+        response = self.client.get(
+            reverse_with_host(
+                "document-index",
+                kwargs={
+                    "lang": self.doc_release.lang,
+                    "version": self.doc_release.version,
+                },
+                host="docs",
+            ),
+            headers={"host": reverse_host("docs")},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context.get("docurl"), "")
+        self.assertEqual(
+            response.context.get("rtd_version"), f"{self.doc_release.version}.x"
+        )
+        # Check the header used for Fastly
+        self.assertEqual(response.headers.get("Surrogate-Control"), "max-age=604800")
+
+    def test_document_index_view_with_dev_version(self):
+        response = self.client.get(
+            reverse_with_host(
+                "document-index",
+                kwargs={"lang": self.doc_release.lang, "version": "dev"},
+                host="docs",
+            ),
+            headers={"host": reverse_host("docs")},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context.get("rtd_version"), "latest")
+
+    @unittest.expectedFailure
+    def test_document_index_view_with_stable_version(self):
+        response = self.client.get(
+            reverse_with_host(
+                "document-index",
+                kwargs={"lang": self.doc_release.lang, "version": "stable"},
+                host="docs",
+            ),
+            headers={"host": reverse_host("docs")},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context.get("rtd_version"), "latest")
+
+    def test_document_detail_view(self):
+        response = self.client.get(
+            reverse_with_host(
+                "document-detail",
+                kwargs={
+                    "lang": self.doc_release.lang,
+                    "version": "dev",
+                    "url": "intro",
+                },
+                host="docs",
+            ),
+            headers={"host": reverse_host("docs")},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context.get("docurl"), "intro")
+        # Check the header used for Fastly
+        self.assertEqual(response.headers.get("Surrogate-Control"), "max-age=604800")
 
 
 class SearchFormTestCase(TestCase):
@@ -278,6 +420,31 @@ class SearchFormTestCase(TestCase):
                 self.assertContains(response, expected_code_links, html=True)
 
 
+class SearchRedirectTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.doc_release = DocumentRelease.objects.create(is_default=True)
+
+    def test_redirect_search_view(self):
+        # With a `q` parameters
+        response = self.client.get(
+            "/search/?q=django", headers={"host": reverse_host("docs")}
+        )
+        self.assertRedirects(
+            response,
+            "http://" + reverse_host("docs") + "/en/dev/search/?q=django",
+            fetch_redirect_response=False,
+        )
+
+        # Without a `q` parameters
+        response = self.client.get("/search/", headers={"host": reverse_host("docs")})
+        self.assertRedirects(
+            response,
+            "http://" + reverse_host("docs") + "/en/dev/search/",
+            fetch_redirect_response=False,
+        )
+
+
 class SitemapTests(TestCase):
     fixtures = ["doc_test_fixtures"]
 
@@ -324,3 +491,104 @@ class SitemapTests(TestCase):
         self.assertEqual(
             response.context["exception"], "No sitemap available for section: 'xx'"
         )
+
+
+class OpenSearchTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.doc_release = DocumentRelease.objects.create(
+            release=Release.objects.create(version="5.2"), is_default=True
+        )
+
+    def test_search_suggestions_view(self):
+        # Without `q` parameter
+        response = self.client.get(
+            reverse_with_host(
+                "document-search-suggestions",
+                kwargs={
+                    "lang": self.doc_release.lang,
+                    "version": self.doc_release.version,
+                },
+                host="docs",
+            ),
+            headers={"host": reverse_host("docs")},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["Content-Type"], "application/json")
+        self.assertEqual(response.json(), [])
+
+        # With `q` parameter but no Document
+        response = self.client.get(
+            reverse_with_host(
+                "document-search-suggestions",
+                kwargs={
+                    "lang": self.doc_release.lang,
+                    "version": self.doc_release.version,
+                },
+                host="docs",
+            )
+            + "?q=test",
+            headers={"host": reverse_host("docs")},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["Content-Type"], "application/json")
+        self.assertEqual(response.json(), ["test", [], [], []])
+
+        # # With `q` parameter and a Document
+        document = Document.objects.create(
+            release=self.doc_release,
+            path="test-document",
+            title="test title",
+        )
+        response = self.client.get(
+            reverse_with_host(
+                "document-search-suggestions",
+                kwargs={
+                    "lang": self.doc_release.lang,
+                    "version": self.doc_release.version,
+                },
+                host="docs",
+            )
+            + "?q=test",
+            headers={"host": reverse_host("docs")},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["Content-Type"], "application/json")
+        self.assertEqual(
+            response.json(),
+            [
+                "test",
+                ["test title"],
+                [],
+                [
+                    reverse_with_host(
+                        "contenttypes-shortcut",
+                        kwargs={
+                            "content_type_id": ContentType.objects.get_for_model(
+                                Document
+                            ).pk,
+                            "object_id": document.id,
+                        },
+                    )
+                ],
+            ],
+        )
+
+    def test_search_description(self):
+        response = self.client.get(
+            reverse_with_host(
+                "document-search-description",
+                kwargs={
+                    "lang": self.doc_release.lang,
+                    "version": self.doc_release.version,
+                },
+                host="docs",
+            ),
+            headers={"host": reverse_host("docs")},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.headers["Content-Type"], "application/opensearchdescription+xml"
+        )
+        self.assertTemplateUsed("docs/search_description.html")
+        self.assertContains(response, f"<Language>{self.doc_release.lang}</Language>")
