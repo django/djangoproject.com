@@ -1,0 +1,51 @@
+[
+  {
+    "version": "4.2",
+    "release_date": "2023-04-03",
+    "bugfix_end": "2023-12-04",
+    "security_end": "2026-04-01",
+    "is_lts": true
+  },
+  {
+    "version": "5.1",
+    "release_date": "2024-08-07",
+    "bugfix_end": "2025-04-02",
+    "security_end": "2025-12-01",
+    "is_lts": false
+  },
+  {
+    "version": "5.2",
+    "release_date": "2025-04-01",
+    "bugfix_end": "2025-12-01",
+    "security_end": "2028-04-01",
+    "is_lts": true
+  },
+  {
+    "version": "6.0",
+    "release_date": "2025-12-01",
+    "bugfix_end": "2026-08-01",
+    "security_end": "2027-04-01",
+    "is_lts": false
+  },
+  {
+    "version": "6.1",
+    "release_date": "2026-08-01",
+    "bugfix_end": "2027-04-01",
+    "security_end": "2027-12-01",
+    "is_lts": false
+  },
+  {
+    "version": "6.2",
+    "release_date": "2027-04-01",
+    "bugfix_end": "2027-12-01",
+    "security_end": "2030-04-01",
+    "is_lts": true
+  },
+  {
+    "version": "7.0",
+    "release_date": "2027-12-01",
+    "bugfix_end": "2028-08-01",
+    "security_end": "2029-04-01",
+    "is_lts": false
+  }
+]
