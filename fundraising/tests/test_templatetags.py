@@ -17,6 +17,7 @@ from ..models import (
 from ..templatetags.fundraising_extras import (
     display_django_heroes,
     donation_form_with_heart,
+    gold_corporate_members,
     top_corporate_members,
 )
 
@@ -167,3 +168,51 @@ class TestTopCorporateMembers(TestCase):
         expected = [member_5, member_4, member_6, member_2, member_1, member_3]
 
         self.assertEqual(members, expected)
+
+
+class TestGoldCorporateMembers(TestCase):
+    past_date = date(2000, 1, 1)
+    future_date = date(3000, 1, 1)
+
+    def test_with_no_gold_members(self):
+        members = gold_corporate_members()["members"]
+        self.assertEqual(members, [])
+
+    def test_with_gold_members(self):
+        member_1 = CorporateMember.objects.create(membership_level=3)
+        member_2 = CorporateMember.objects.create(membership_level=3)
+        member_3 = CorporateMember.objects.create(membership_level=3)
+
+        member_1.invoice_set.create(amount=4, expiration_date=self.future_date)
+        member_2.invoice_set.create(amount=8, expiration_date=self.future_date)
+        member_3.invoice_set.create(amount=2, expiration_date=self.future_date)
+
+        members = gold_corporate_members()["members"]
+
+        self.assertEqual(members, [member_2, member_1, member_3])
+
+    def test_with_gold_members_and_other_members(self):
+        member_1 = CorporateMember.objects.create(membership_level=3)
+        member_2 = CorporateMember.objects.create(membership_level=3)
+        member_3 = CorporateMember.objects.create(membership_level=4)
+
+        member_1.invoice_set.create(amount=4, expiration_date=self.future_date)
+        member_2.invoice_set.create(amount=8, expiration_date=self.future_date)
+        member_3.invoice_set.create(amount=2, expiration_date=self.future_date)
+
+        members = gold_corporate_members()["members"]
+        self.assertEqual(members, [member_2, member_1])
+        self.assertNotIn(member_3, members)
+
+    def test_with_gold_members_and_expired_invoice(self):
+        member_1 = CorporateMember.objects.create(membership_level=3)
+        member_2 = CorporateMember.objects.create(membership_level=3)
+        member_3 = CorporateMember.objects.create(membership_level=4)
+
+        member_1.invoice_set.create(amount=4, expiration_date=self.future_date)
+        member_2.invoice_set.create(amount=8, expiration_date=self.future_date)
+        member_3.invoice_set.create(amount=2, expiration_date=self.past_date)
+
+        members = gold_corporate_members()["members"]
+        self.assertEqual(members, [member_2, member_1])
+        self.assertNotIn(member_3, members)

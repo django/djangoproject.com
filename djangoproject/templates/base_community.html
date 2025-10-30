@@ -23,6 +23,9 @@
 {% block content-related %}
   <div role="complementary">
     <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
+
+    {% block content-related-extra %}{% endblock %}
+
     {% donation_snippet %}
 
     <h3>{% translate "More Help" %}</h3>
