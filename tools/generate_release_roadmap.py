@@ -124,10 +124,14 @@ def generate_svg(
 
     # SVG header
     parts = [
-        f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {width} {height}' width='{width}' height='{height}' role='img' aria-labelledby='title desc'>",
+        f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {width} {height}' "
+        f"width='{width}' height='{height}' role='img' aria-labelledby='title desc'>",
         "<title id='title'>Django release roadmap</title>",
         "<desc id='desc'>Shows bugfix and security-only support windows for Django releases</desc>",
-        "<style>\n        text { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; fill: #111; font-size: 12px; }\n        .label { font-weight: 600; }\n        .bugfix { fill: #44b78b; } /* Django green */\n        .security { fill: #f0ad4e; } /* amber */\n        .lts { stroke: #2c9c74; stroke-width: 2; }\n        .axis line { stroke: #ccc; }\n        .grid { stroke: #eee; }\n        .legend text { font-size: 12px; }\n        .legend rect { stroke: #999; fill-opacity: 0.9; }\n        </style>",
+        (
+            "<style>\n        text { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; fill: #111; font-size: 12px; }\n"
+            "        .label { font-weight: 600; }\n        .bugfix { fill: #44b78b; } /* Django green */\n        .security { fill: #f0ad4e; } /* amber */\n        .lts { stroke: #2c9c74; stroke-width: 2; }\n        .axis line { stroke: #ccc; }\n        .grid { stroke: #eee; }\n        .legend text { font-size: 12px; }\n        .legend rect { stroke: #999; fill-opacity: 0.9; }\n        </style>"
+        ),
     ]
 
     # axis and month grid
@@ -159,11 +163,15 @@ def generate_svg(
     parts.append(
         f"<rect x='{legend_x}' y='{legend_y - 12}' width='24' height='12' class='bugfix' />"
     )
-    parts.append(f"<text x='{legend_x + 30}' y='{legend_y - 2}'>Bugfix support</text>")
+    parts.append(
+        f"<text x='{legend_x + 30}' y='{legend_y - 2}'>Bugfix support</text>"
+    )
     parts.append(
         f"<rect x='{legend_x + 130}' y='{legend_y - 12}' width='24' height='12' class='security' />"
     )
-    parts.append(f"<text x='{legend_x + 160}' y='{legend_y - 2}'>Security-only</text>")
+    parts.append(
+        f"<text x='{legend_x + 160}' y='{legend_y - 2}'>Security-only</text>"
+    )
     parts.append("</g>")
 
     # rows for cycles
@@ -174,19 +182,27 @@ def generate_svg(
         parts.append(
             f"<text class='label' x='10' y='{y + row_h * 0.7:.1f}'>{label}</text>"
         )
+        parts.append(
+            f"<text class='label' x='10' y='{y + row_h * 0.7:.1f}'>{label}</text>"
+        )
         # bars
         x1 = x_for(c.release_date)
         x2 = x_for(c.bugfix_end)
         x3 = x_for(c.security_end)
         # bugfix bar
         parts.append(
-            f"<rect x='{x1:.1f}' y='{y:.1f}' width='{max(0.5, x2 - x1):.1f}' height='{row_h}' class='bugfix {'lts' if c.is_lts else ''}' />"
+            f"<rect x='{x1:.1f}' y='{y:.1f}' width='{max(0.5, x2 - x1):.1f}' height='{row_h}' "
+            f"class='bugfix {'lts' if c.is_lts else ''}' />"
         )
         # security bar
         parts.append(
-            f"<rect x='{x2:.1f}' y='{y:.1f}' width='{max(0.5, x3 - x2):.1f}' height='{row_h}' class='security {'lts' if c.is_lts else ''}' />"
+            f"<rect x='{x2:.1f}' y='{y:.1f}' width='{max(0.5, x3 - x2):.1f}' height='{row_h}' "
+            f"class='security {'lts' if c.is_lts else ''}' />"
         )
         # end markers
+        parts.append(
+            f"<text x='{x3 + 4:.1f}' y='{y + row_h * 0.7:.1f}' fill='#555'>{c.security_end.strftime('%b %Y')}</text>"
+        )
         parts.append(
             f"<text x='{x3 + 4:.1f}' y='{y + row_h * 0.7:.1f}' fill='#555'>{c.security_end.strftime('%b %Y')}</text>"
         )
