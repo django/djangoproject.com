@@ -33,7 +33,7 @@ class Cycle:
     is_lts: bool
 
     @classmethod
-    def from_dict(cls, d: dict) -> "Cycle":
+    def from_dict(cls, d: dict) -> Cycle:
         return cls(
             version=str(d["version"]),
             release_date=dt.date.fromisoformat(d["release_date"]),
@@ -43,8 +43,8 @@ class Cycle:
         )
 
 
-def load_cycles(path: str) -> List[Cycle]:
-    with open(path, "r", encoding="utf-8") as f:
+def load_cycles(path: str) -> list[Cycle]:
+    with open(path, encoding="utf-8") as f:
         data = json.load(f)
     cycles = [Cycle.from_dict(x) for x in data]
     # sort newest first for display
@@ -59,11 +59,36 @@ def month_floor(d: dt.date) -> dt.date:
 def month_add(d: dt.date, months: int) -> dt.date:
     y = d.year + (d.month - 1 + months) // 12
     m = (d.month - 1 + months) % 12 + 1
-    day = min(d.day, [31, 29 if y % 4 == 0 and (y % 100 != 0 or y % 400 == 0) else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1])
+    day = min(
+        d.day,
+        [
+            31,
+            29 if y % 4 == 0 and (y % 100 != 0 or y % 400 == 0) else 28,
+            31,
+            30,
+            31,
+            30,
+            31,
+            31,
+            30,
+            31,
+            30,
+            31,
+        ][m - 1],
+    )
     return dt.date(y, m, day)
 
 
-def generate_svg(cycles: List[Cycle], width=1100, row_h=24, row_gap=14, left_margin=150, right_margin=20, top_margin=60, bottom_margin=30) -> str:
+def generate_svg(
+    cycles: list[Cycle],
+    width=1100,
+    row_h=24,
+    row_gap=14,
+    left_margin=150,
+    right_margin=20,
+    top_margin=60,
+    bottom_margin=30,
+) -> str:
     # Determine time bounds
     min_start = min(c.release_date for c in cycles)
     max_end = max(c.security_end for c in cycles)
@@ -83,10 +108,16 @@ def generate_svg(cycles: List[Cycle], width=1100, row_h=24, row_gap=14, left_mar
 
     def x_for(date: dt.date) -> float:
         # linear mapping by months
-        total_months = (max_end.year - min_start.year) * 12 + (max_end.month - min_start.month)
+        total_months = (max_end.year - min_start.year) * 12 + (
+            max_end.month - min_start.month
+        )
         if total_months == 0:
             return left_margin
-        months_from_start = (date.year - min_start.year) * 12 + (date.month - min_start.month) + (date.day - 1) / 31.0
+        months_from_start = (
+            (date.year - min_start.year) * 12
+            + (date.month - min_start.month)
+            + (date.day - 1) / 31.0
+        )
         return left_margin + inner_w * (months_from_start / total_months)
 
     height = top_margin + bottom_margin + len(cycles) * (row_h + row_gap) - row_gap
@@ -102,7 +133,9 @@ def generate_svg(cycles: List[Cycle], width=1100, row_h=24, row_gap=14, left_mar
     # axis and month grid
     axis_y = top_margin - 25
     parts.append(f"<g class='axis'>")
-    parts.append(f"<line x1='{left_margin}' y1='{axis_y}' x2='{width - right_margin}' y2='{axis_y}' />")
+    parts.append(
+        f"<line x1='{left_margin}' y1='{axis_y}' x2='{width - right_margin}' y2='{axis_y}' />"
+    )
     parts.append("</g>")
 
     # month tick labels for Jan of each year
@@ -110,7 +143,9 @@ def generate_svg(cycles: List[Cycle], width=1100, row_h=24, row_gap=14, left_mar
     for tick in ticks:
         x = x_for(tick)
         if tick.month == 1:
-            parts.append(f"<line x1='{x:.1f}' y1='{axis_y}' x2='{x:.1f}' y2='{height - bottom_margin}' stroke='#ddd' />")
+            parts.append(
+                f"<line x1='{x:.1f}' y1='{axis_y}' x2='{x:.1f}' y2='{height - bottom_margin}' stroke='#ddd' />"
+            )
             parts.append(f"<text x='{x + 3:.1f}' y='{axis_y - 6}'>{tick.year}</text>")
     parts.append("</g>")
 
@@ -118,10 +153,16 @@ def generate_svg(cycles: List[Cycle], width=1100, row_h=24, row_gap=14, left_mar
     legend_x = left_margin
     legend_y = 20
     parts.append("<g class='legend'>")
-    parts.append(f"<rect x='{legend_x - 10}' y='{legend_y - 16}' width='260' height='22' rx='4' ry='4' fill='#fff' stroke='#ccc' />")
-    parts.append(f"<rect x='{legend_x}' y='{legend_y - 12}' width='24' height='12' class='bugfix' />")
+    parts.append(
+        f"<rect x='{legend_x - 10}' y='{legend_y - 16}' width='260' height='22' rx='4' ry='4' fill='#fff' stroke='#ccc' />"
+    )
+    parts.append(
+        f"<rect x='{legend_x}' y='{legend_y - 12}' width='24' height='12' class='bugfix' />"
+    )
     parts.append(f"<text x='{legend_x + 30}' y='{legend_y - 2}'>Bugfix support</text>")
-    parts.append(f"<rect x='{legend_x + 130}' y='{legend_y - 12}' width='24' height='12' class='security' />")
+    parts.append(
+        f"<rect x='{legend_x + 130}' y='{legend_y - 12}' width='24' height='12' class='security' />"
+    )
     parts.append(f"<text x='{legend_x + 160}' y='{legend_y - 2}'>Security-only</text>")
     parts.append("</g>")
 
@@ -130,7 +171,9 @@ def generate_svg(cycles: List[Cycle], width=1100, row_h=24, row_gap=14, left_mar
     for c in cycles:
         # label
         label = f"{c.version}{' LTS' if c.is_lts else ''}"
-        parts.append(f"<text class='label' x='10' y='{y + row_h * 0.7:.1f}'>{label}</text>")
+        parts.append(
+            f"<text class='label' x='10' y='{y + row_h * 0.7:.1f}'>{label}</text>"
+        )
         # bars
         x1 = x_for(c.release_date)
         x2 = x_for(c.bugfix_end)
@@ -144,7 +187,9 @@ def generate_svg(cycles: List[Cycle], width=1100, row_h=24, row_gap=14, left_mar
             f"<rect x='{x2:.1f}' y='{y:.1f}' width='{max(0.5, x3 - x2):.1f}' height='{row_h}' class='security {'lts' if c.is_lts else ''}' />"
         )
         # end markers
-        parts.append(f"<text x='{x3 + 4:.1f}' y='{y + row_h * 0.7:.1f}' fill='#555'>{c.security_end.strftime('%b %Y')}</text>")
+        parts.append(
+            f"<text x='{x3 + 4:.1f}' y='{y + row_h * 0.7:.1f}' fill='#555'>{c.security_end.strftime('%b %Y')}</text>"
+        )
         y += row_h + row_gap
 
     parts.append("</svg>")
@@ -162,7 +207,9 @@ def main() -> None:
     # simple validation
     for c in cycles:
         if not (c.release_date <= c.bugfix_end <= c.security_end):
-            raise SystemExit(f"Invalid dates for {c.version}: release <= bugfix_end <= security_end is required")
+            raise SystemExit(
+                f"Invalid dates for {c.version}: release <= bugfix_end <= security_end is required"
+            )
 
     svg = generate_svg(cycles)
 
