@@ -6,7 +6,7 @@
 {% block layout_class %}sidebar-right{% endblock %}
 
 {% block og_title %}Download Django{% endblock %}
-{% block og_image %}{% static "img/release-roadmap.png" %}{% endblock %}
+{% block og_image %}{% static "img/release-roadmap.svg" %}{% endblock %}
 {% block og_image_alt %}Django's release roadmap{% endblock %}
 {% block og_description %}The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}{% endblock %}
 {% block og_image_width %}1030{% endblock %}
@@ -25,14 +25,19 @@
       the FAQ</a> for the Python versions supported by each version of Django.
     Here’s how to get it:</p>
 
+
   <h2>Option {% cycle '1' '2' '3' as options %}: Get the latest official version</h2>
-  <p>The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}. Read the
-    {% release_notes current.version show_version=True %}, then install it with
-    <a href="https://pip.pypa.io/en/latest/">pip</a>:</p>
-  <p>Linux / macOS:</p>
-  <pre class="literal-block"><code>python -m pip install Django=={{ current.version }}</code></pre>
-  <p>Windows:</p>
-  <pre class="literal-block"><code>py -m pip install Django=={{ current.version }}</code></pre>
+  {% if current and current.version %}
+    <p>The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}. Read the
+      {% release_notes current.version show_version=True %}, then install it with
+      <a href="https://pip.pypa.io/en/latest/">pip</a>:</p>
+    <p>Linux / macOS:</p>
+    <pre class="literal-block"><code>python -m pip install Django=={{ current.version }}</code></pre>
+    <p>Windows:</p>
+    <pre class="literal-block"><code>py -m pip install Django=={{ current.version }}</code></pre>
+  {% else %}
+    <p><strong>Note:</strong> No current release is set in the database. Please add a supported Release object to see the latest version here.</p>
+  {% endif %}
 
   {% if preview %}
     {% with preview.version|slice:":3" as major_version %}
