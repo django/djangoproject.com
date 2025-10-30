@@ -139,7 +139,9 @@ class EntryTestCase(DateTimeMixin, TestCase):
         )
         self.assertHTMLEqual(
             entry.body_html,
-            '<h3 id="s-this-is-it">this is it</h3><p><img alt="dilbert_alt" loading="lazy" src="/m/blog/images/2025/10/Dilbert.gif"></p>',
+            '<h3 id="s-this-is-it">this is it</h3>'
+            '<p><img alt="dilbert_alt" loading="lazy"'
+            ' src="/m/blog/images/2025/10/Dilbert.gif"></p>',
         )
 
     def test_image_lazy_loader_reST(self):
@@ -151,7 +153,8 @@ class EntryTestCase(DateTimeMixin, TestCase):
         )
         self.assertHTMLEqual(
             entry.body_html,
-            '<img alt="dilbert_alt" loading="lazy" src="/m/blog/images/2025/10/Dilbert.gif">',
+            '<img alt="dilbert_alt" loading="lazy"'
+            ' src="/m/blog/images/2025/10/Dilbert.gif">',
         )
 
     def test_pub_date_localized(self):
