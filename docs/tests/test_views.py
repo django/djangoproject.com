@@ -3,7 +3,7 @@ from http import HTTPStatus
 from django.contrib.sites.models import Site
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse, set_urlconf
-from django_hosts.resolvers import reverse as reverse_with_host
+from django_hosts.resolvers import reverse as reverse_with_host, reverse_host
 
 from djangoproject.urls import www as www_urls
 from releases.models import Release
@@ -29,7 +29,7 @@ class RedirectsTests(SimpleTestCase):
     def test_internals_team(self):
         response = self.client.get(
             "/en/dev/internals/team/",
-            headers={"host": "docs.djangoproject.localhost:8000"},
+            headers={"host": reverse_host("docs")},
         )
         self.assertRedirects(
             response,
@@ -80,14 +80,14 @@ class SearchFormTestCase(TestCase):
 
     def test_empty_get(self):
         response = self.client.get(
-            "/en/dev/search/", headers={"host": "docs.djangoproject.localhost:8000"}
+            "/en/dev/search/", headers={"host": reverse_host("docs")}
         )
         self.assertEqual(response.status_code, 200)
 
     def test_search_type_filter_all(self):
         response = self.client.get(
             "/en/5.1/search/?q=generic",
-            headers={"host": "docs.djangoproject.localhost:8000"},
+            headers={"host": reverse_host("docs")},
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(
@@ -101,7 +101,7 @@ class SearchFormTestCase(TestCase):
             with self.subTest(category=category):
                 response = self.client.get(
                     f"/en/5.1/search/?q=generic&category={category.value}",
-                    headers={"host": "docs.djangoproject.localhost:8000"},
+                    headers={"host": reverse_host("docs")},
                 )
                 self.assertEqual(response.status_code, 200)
                 self.assertContains(
@@ -118,7 +118,7 @@ class SearchFormTestCase(TestCase):
     def test_search_category_filter_invalid_doc_categories(self):
         response = self.client.get(
             "/en/5.1/search/?q=generic&category=invalid-so-ignored",
-            headers={"host": "docs.djangoproject.localhost:8000"},
+            headers={"host": reverse_host("docs")},
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(
@@ -130,7 +130,7 @@ class SearchFormTestCase(TestCase):
     def test_search_category_filter_no_results(self):
         response = self.client.get(
             "/en/5.1/search/?q=potato&category=ref",
-            headers={"host": "docs.djangoproject.localhost:8000"},
+            headers={"host": reverse_host("docs")},
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.active_filter, count=1)
@@ -220,7 +220,7 @@ class SearchFormTestCase(TestCase):
             with self.subTest(query=query):
                 response = self.client.get(
                     f"/en/5.1/search/?q={query}",
-                    headers={"host": "docs.djangoproject.localhost:8000"},
+                    headers={"host": reverse_host("docs")},
                 )
                 self.assertEqual(response.status_code, 200)
                 self.assertContains(
@@ -242,7 +242,7 @@ class SitemapTests(TestCase):
 
     def test_sitemap_index(self):
         response = self.client.get(
-            "/sitemap.xml", headers={"host": "docs.djangoproject.localhost:8000"}
+            "/sitemap.xml", headers={"host": reverse_host("docs")}
         )
         self.assertContains(response, "<sitemap>", count=2)
         en_sitemap_url = reverse_with_host(
@@ -261,7 +261,7 @@ class SitemapTests(TestCase):
 
     def test_sitemap_404(self):
         response = self.client.get(
-            "/sitemap-xx.xml", headers={"host": "docs.djangoproject.localhost:8000"}
+            "/sitemap-xx.xml", headers={"host": reverse_host("docs")}
         )
         self.assertEqual(response.status_code, 404)
         self.assertEqual(
