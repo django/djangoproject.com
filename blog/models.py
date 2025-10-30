@@ -12,8 +12,13 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from django_hosts.resolvers import get_host, reverse, reverse_host
 from docutils.core import publish_parts
-from markdown import markdown
+from docutils.nodes import document
+from docutils.writers.html4css1 import HTMLTranslator, Writer
+
+from markdown import markdown, Markdown
 from markdown.extensions.toc import TocExtension, slugify as _md_title_slugify
+import markdown.treeprocessors
+import xml.etree.ElementTree as etree
 
 BLOG_DOCUTILS_SETTINGS = {
     "doctitle_xform": False,
@@ -37,6 +42,36 @@ class EntryQuerySet(models.QuerySet):
     def active(self):
         return self.filter(is_active=True)
 
+_IMG_LAZY_ATTRIBUTES = {"loading":"lazy"}
+
+class LazyImageHTMLTranslator(HTMLTranslator):
+    """Alter the img tags to include the lazy attribute."""
+    def __init__(self, document: document, img_attributes: dict[str,str]|None=None) -> None:
+        super().__init__(document)
+        self._img_attributes=img_attributes or _IMG_LAZY_ATTRIBUTES
+    
+    def emptytag(self, node, tagname, suffix='\n', **attributes):
+        """Construct and return an XML-compatible empty tag."""
+        if tagname=="img":
+            attributes.update(self._img_attributes)
+        return super().emptytag(node,tagname,suffix,**attributes)
+
+class LazyImageTreeprocessor(markdown.treeprocessors.Treeprocessor):
+    """
+    `Treeprocessor`s are run on the `ElementTree` object before serialization.
+
+    This processor will add loading=lazy attribute on img tags
+
+    """
+    def __init__(self, img_attributes: dict[str,str]|None=None, md: Markdown | None = None) -> None:
+        super().__init__(md)
+        self._img_attributes=img_attributes or _IMG_LAZY_ATTRIBUTES
+
+    def run(self, root: etree.Element) -> etree.Element | None:
+        """Alter img tags with the supplemental attributes."""
+        for img_elem in root.iter('img'):
+            img_elem.attrib.update(self._img_attributes)
+
 
 class ContentFormat(models.TextChoices):
     REST = "reST", "reStructuredText"
@@ -51,20 +86,24 @@ class ContentFormat(models.TextChoices):
         if not fmt or fmt == cls.HTML:
             return source
         if fmt == cls.REST:
+            writer=Writer()
+            writer.translator_class=LazyImageHTMLTranslator
+
             return publish_parts(
                 source=source,
-                writer_name="html",
+                writer=writer,
                 settings_overrides=BLOG_DOCUTILS_SETTINGS,
             )["fragment"]
         if fmt == cls.MARKDOWN:
-            return markdown(
-                source,
+            md = Markdown(
                 output_format="html",
                 extensions=[
                     # baselevel matches `initial_header_level` from BLOG_DOCUTILS_SETTINGS
                     TocExtension(baselevel=3, slugify=_md_slugify),
                 ],
             )
+            md.treeprocessors.register(LazyImageTreeprocessor(),"lazyimage",0.3)
+            return md.convert(source)
         raise ValueError(f"Unsupported format {fmt}")
 
     def img(self, url, alt_text):
