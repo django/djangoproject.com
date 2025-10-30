@@ -163,15 +163,11 @@ def generate_svg(
     parts.append(
         f"<rect x='{legend_x}' y='{legend_y - 12}' width='24' height='12' class='bugfix' />"
     )
-    parts.append(
-        f"<text x='{legend_x + 30}' y='{legend_y - 2}'>Bugfix support</text>"
-    )
+    parts.append(f"<text x='{legend_x + 30}' y='{legend_y - 2}'>Bugfix support</text>")
     parts.append(
         f"<rect x='{legend_x + 130}' y='{legend_y - 12}' width='24' height='12' class='security' />"
     )
-    parts.append(
-        f"<text x='{legend_x + 160}' y='{legend_y - 2}'>Security-only</text>"
-    )
+    parts.append(f"<text x='{legend_x + 160}' y='{legend_y - 2}'>Security-only</text>")
     parts.append("</g>")
 
     # rows for cycles
