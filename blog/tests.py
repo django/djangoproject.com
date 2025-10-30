@@ -4,6 +4,7 @@ from io import StringIO
 
 import time_machine
 from django.conf import settings
+from django.contrib import admin
 from django.contrib.auth.models import Permission, User
 from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
@@ -619,3 +620,18 @@ class ImageUploadTestCase(TestCase):
                     ContentFormat.to_html(cf, img_tag),
                     expected,
                 )
+
+    def test_copy_button(self):
+        i = ImageUpload.objects.create(
+            title="test",
+            alt_text='Alt text "here"',
+            image=ContentFile(b".", name="test.png"),
+        )
+        self.assertInHTML(
+            '<button type="button" data-clipboard-content='
+            f'"&lt;img src=&quot;/m/{i.image}&quot; '
+            'alt=&quot;Alt text &amp;quot;here&amp;quot;&quot;&gt;">'
+            "Raw HTML"
+            "</button>",
+            admin.site.get_model_admin(ImageUpload).copy_buttons(i),
+        )
