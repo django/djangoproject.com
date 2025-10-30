@@ -1,7 +1,6 @@
 import xml.etree.ElementTree as etree
 from urllib.parse import urlparse
 
-import markdown.treeprocessors
 from django.conf import settings
 from django.core.cache import caches
 from django.db import models
@@ -16,8 +15,9 @@ from django_hosts.resolvers import get_host, reverse, reverse_host
 from docutils.core import publish_parts
 from docutils.nodes import document
 from docutils.writers.html4css1 import HTMLTranslator, Writer
-from markdown import Markdown, markdown
+from markdown import Markdown
 from markdown.extensions.toc import TocExtension, slugify as _md_title_slugify
+from markdown.treeprocessors import Treeprocessor
 
 BLOG_DOCUTILS_SETTINGS = {
     "doctitle_xform": False,
@@ -61,7 +61,7 @@ class LazyImageHTMLTranslator(HTMLTranslator):
         return super().emptytag(node, tagname, suffix, **attributes)
 
 
-class LazyImageTreeprocessor(markdown.treeprocessors.Treeprocessor):
+class LazyImageTreeprocessor(Treeprocessor):
     """
     `Treeprocessor`s are run on the `ElementTree` object before serialization.
 

@@ -134,7 +134,7 @@ class EntryTestCase(DateTimeMixin, TestCase):
         entry = Entry.objects.create(
             pub_date=self.now,
             slug="a",
-            body="# this is it![dilbert_alt](/m/blog/images/2025/10/Dilbert.gif)",
+            body="# this is it\n![dilbert_alt](/m/blog/images/2025/10/Dilbert.gif)",
             content_format=ContentFormat.MARKDOWN,
         )
         self.assertHTMLEqual(
@@ -608,33 +608,34 @@ class ImageUploadTestCase(TestCase):
         )
 
     def test_alt_text_html_escape(self):
+        common_img_tag = '<img src="." loading="lazy" '
         testdata = [
             (ContentFormat.HTML, 'te"st', '<img src="." alt="te&quot;st">'),
             (ContentFormat.HTML, "te<st>", '<img src="." alt="te&lt;st&gt;">'),
-            (ContentFormat.MARKDOWN, 'te"st', '<img src="." alt="te&quot;st">'),
-            (ContentFormat.MARKDOWN, "te[st]", '<img src="." alt="te[st]">'),
-            (ContentFormat.MARKDOWN, "te{st}", '<img src="." alt="te{st}">'),
-            (ContentFormat.MARKDOWN, "te<st>", '<img src="." alt="te&lt;st&gt;">'),
-            (ContentFormat.MARKDOWN, "test*", '<img src="." alt="test*">'),
-            (ContentFormat.MARKDOWN, "test_", '<img src="." alt="test_">'),
-            (ContentFormat.MARKDOWN, "test`", '<img src="." alt="test`">'),
-            (ContentFormat.MARKDOWN, "test+", '<img src="." alt="test+">'),
-            (ContentFormat.MARKDOWN, "test-", '<img src="." alt="test-">'),
-            (ContentFormat.MARKDOWN, "test.", '<img src="." alt="test.">'),
-            (ContentFormat.MARKDOWN, "test!", '<img src="." alt="test!">'),
-            (ContentFormat.MARKDOWN, "te\nst", '<img src="." alt="te\nst">'),
-            (ContentFormat.REST, 'te"st', '<img src="." alt="te&quot;st">'),
-            (ContentFormat.REST, "te[st]", '<img src="." alt="te[st]">'),
-            (ContentFormat.REST, "te{st}", '<img src="." alt="te{st}">'),
-            (ContentFormat.REST, "te<st>", '<img src="." alt="te&lt;st&gt;">'),
-            (ContentFormat.REST, "te:st", '<img src="." alt="te:st">'),
-            (ContentFormat.REST, "test*", '<img src="." alt="test*">'),
-            (ContentFormat.REST, "test_", '<img src="." alt="test_">'),
-            (ContentFormat.REST, "test`", '<img src="." alt="test`">'),
-            (ContentFormat.REST, "test+", '<img src="." alt="test+">'),
-            (ContentFormat.REST, "test-", '<img src="." alt="test-">'),
-            (ContentFormat.REST, "test.", '<img src="." alt="test.">'),
-            (ContentFormat.REST, "test!", '<img src="." alt="test!">'),
+            (ContentFormat.MARKDOWN, 'te"st', common_img_tag + 'alt="te&quot;st">'),
+            (ContentFormat.MARKDOWN, "te[st]", common_img_tag + 'alt="te[st]">'),
+            (ContentFormat.MARKDOWN, "te{st}", common_img_tag + 'alt="te{st}">'),
+            (ContentFormat.MARKDOWN, "te<st>", common_img_tag + 'alt="te&lt;st&gt;">'),
+            (ContentFormat.MARKDOWN, "test*", common_img_tag + 'alt="test*">'),
+            (ContentFormat.MARKDOWN, "test_", common_img_tag + 'alt="test_">'),
+            (ContentFormat.MARKDOWN, "test`", common_img_tag + 'alt="test`">'),
+            (ContentFormat.MARKDOWN, "test+", common_img_tag + 'alt="test+">'),
+            (ContentFormat.MARKDOWN, "test-", common_img_tag + 'alt="test-">'),
+            (ContentFormat.MARKDOWN, "test.", common_img_tag + 'alt="test.">'),
+            (ContentFormat.MARKDOWN, "test!", common_img_tag + 'alt="test!">'),
+            (ContentFormat.MARKDOWN, "te\nst", common_img_tag + 'alt="te\nst">'),
+            (ContentFormat.REST, 'te"st', common_img_tag + 'alt="te&quot;st">'),
+            (ContentFormat.REST, "te[st]", common_img_tag + 'alt="te[st]">'),
+            (ContentFormat.REST, "te{st}", common_img_tag + 'alt="te{st}">'),
+            (ContentFormat.REST, "te<st>", common_img_tag + 'alt="te&lt;st&gt;">'),
+            (ContentFormat.REST, "te:st", common_img_tag + 'alt="te:st">'),
+            (ContentFormat.REST, "test*", common_img_tag + 'alt="test*">'),
+            (ContentFormat.REST, "test_", common_img_tag + 'alt="test_">'),
+            (ContentFormat.REST, "test`", common_img_tag + 'alt="test`">'),
+            (ContentFormat.REST, "test+", common_img_tag + 'alt="test+">'),
+            (ContentFormat.REST, "test-", common_img_tag + 'alt="test-">'),
+            (ContentFormat.REST, "test.", common_img_tag + 'alt="test.">'),
+            (ContentFormat.REST, "test!", common_img_tag + 'alt="test!">'),
         ]
         for cf, alt_text, expected in testdata:
             # RST doesn't like an empty src, so we use . instead
