@@ -130,6 +130,30 @@ class EntryTestCase(DateTimeMixin, TestCase):
         )
         self.assertHTMLEqual(entry.body_html, '<h3 id="s-test">test</h3>')
 
+    def test_image_lazy_loader_markdown(self):
+        entry = Entry.objects.create(
+            pub_date=self.now,
+            slug="a",
+            body="# this is it![dilbert_alt](/m/blog/images/2025/10/Dilbert.gif)",
+            content_format=ContentFormat.MARKDOWN,
+        )
+        self.assertHTMLEqual(
+            entry.body_html,
+            '<h3 id="s-this-is-it">this is it</h3><p><img alt="dilbert_alt" loading="lazy" src="/m/blog/images/2025/10/Dilbert.gif"></p>',
+        )
+
+    def test_image_lazy_loader_reST(self):
+        entry = Entry.objects.create(
+            pub_date=self.now,
+            slug="a",
+            body=".. image:: /m/blog/images/2025/10/Dilbert.gif\n   :alt: dilbert_alt",
+            content_format=ContentFormat.REST,
+        )
+        self.assertHTMLEqual(
+            entry.body_html,
+            '<img alt="dilbert_alt" loading="lazy" src="/m/blog/images/2025/10/Dilbert.gif">',
+        )
+
     def test_pub_date_localized(self):
         entry = Entry(pub_date=date(2005, 7, 21))
         self.assertEqual(entry.pub_date_localized, "July 21, 2005")
