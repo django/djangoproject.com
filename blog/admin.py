@@ -2,7 +2,7 @@ from pathlib import Path
 
 from django.contrib import admin
 from django.urls import reverse
-from django.utils.html import format_html, format_html_join
+from django.utils.html import escape, format_html, format_html_join
 from django.utils.translation import gettext as _, gettext_lazy
 from sorl.thumbnail import get_thumbnail
 
@@ -80,7 +80,7 @@ class ImageUploadAdmin(admin.ModelAdmin):
         source = contentformat.img(obj.image.url, obj.alt_text)
         return format_html(
             '<button type="button" data-clipboard-content="{}">{}</button>',
-            source,
+            escape(source),
             contentformat.label,
         )
 
