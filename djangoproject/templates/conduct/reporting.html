@@ -113,14 +113,14 @@
 
   {% url 'members:teams' as teams_url %}
   {% with coc_teams_url=teams_url|add:'#code-of-conduct-team' %}
-  <p>
-    {% blocktranslate trimmed %}
-      In that case, you can make a report directly to any or all of the current
-      (vice/co) chairs of the Code of Conduct committee. Their e-mail addresses are
-      listed on the <a href="{{ coc_teams_url }}">Code of Conduct Committee</a>
-      page. The chairs will follow the usual enforcement process with the other
-      members, but will exclude the member(s) that the report concerns from any
-      discussion or decision making.{% endblocktranslate %}</p>
+    <p>
+      {% blocktranslate trimmed %}
+        In that case, you can make a report directly to any or all of the current
+        (vice/co) chairs of the Code of Conduct committee. Their e-mail addresses are
+        listed on the <a href="{{ coc_teams_url }}">Code of Conduct Committee</a>
+        page. The chairs will follow the usual enforcement process with the other
+        members, but will exclude the member(s) that the report concerns from any
+        discussion or decision making.{% endblocktranslate %}</p>
   {% endwith %}
 
   <p>
