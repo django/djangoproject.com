@@ -21,11 +21,13 @@
 
 
   {% url 'members:teams' as teams_url %}
+  {% with coc_teams_url=teams_url|add:'#code-of-conduct-team' %}
   <p>
     {% blocktranslate trimmed %}
       All responses to reports of conduct violations will be managed by a
-      <a href="{{ teams_url }}#code-of-conduct-team">Code of Conduct Committee</a> ("the committee").
+      <a href="{{ coc_teams_url }}">Code of Conduct Committee</a> ("the committee").
     {% endblocktranslate %}</p>
+  {% endwith %}
 
   <p>
     {% blocktranslate trimmed %}
