@@ -18,20 +18,31 @@ class CustomViewTests(TestCase):
         self.client.force_login(self.super_user)
 
     def test_download_donor_report(self):
-        a_hero = DjangoHero.objects.create(approved=True, is_visible=True)
-        donation = a_hero.donation_set.create(interval="onetime")
-        donation.payment_set.create(
-            amount=42,
-            stripe_charge_id=get_random_string(length=12),
+        heroes = []
+        for _ in range(3):
+            a_hero = DjangoHero.objects.create(approved=True, is_visible=True)
+            donation = a_hero.donation_set.create(interval="onetime")
+            donation.payment_set.create(
+                amount=42,
+                stripe_charge_id=get_random_string(length=12),
+            )
+            heroes.append(a_hero)
+        num_queries = (
+            1  # SELECT "django_session"
+            + 1  # SELECT "auth_user"
+            + 2  # COUNT("fundraising_djangohero")
+            + 1  # SELECT "fundraising_djangohero"
+            + 3  # SELECT "fundraising_payment". FIXME: N+1 queries
         )
-        response = self.client.post(
-            reverse("admin:fundraising_djangohero_changelist"),
-            {
-                "action": "download_donor_report",
-                helpers.ACTION_CHECKBOX_NAME: [a_hero.pk],
-            },
-            follow=True,
-        )
+        with self.assertNumQueries(num_queries):
+            response = self.client.post(
+                reverse("admin:fundraising_djangohero_changelist"),
+                {
+                    "action": "download_donor_report",
+                    helpers.ACTION_CHECKBOX_NAME: [h.pk for h in heroes],
+                },
+                follow=True,
+            )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             response.content,
@@ -39,6 +50,8 @@ class CustomViewTests(TestCase):
                 [
                     "name,email,alternate email,last gift date,gift amount (US$),"
                     "interval,recurring active?,location",
+                    f",,,{timezone.now():%Y-%m-%d},42.00,One-time,,",
+                    f",,,{timezone.now():%Y-%m-%d},42.00,One-time,,",
                     f",,,{timezone.now():%Y-%m-%d},42.00,One-time,,",
                     "",  # empty end line
                 ]
