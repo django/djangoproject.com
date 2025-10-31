@@ -39,7 +39,7 @@ class CustomViewTests(TestCase):
                 [
                     "name,email,alternate email,last gift date,gift amount (US$),"
                     "interval,recurring active?,location",
-                    f",,,{timezone.now():%Y-%m-%d},42.00,One-time ,,",
+                    f",,,{timezone.now():%Y-%m-%d},42.00,One-time,,",
                     "",  # empty end line
                 ]
             ).encode(),
