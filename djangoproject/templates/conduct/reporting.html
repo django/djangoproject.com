@@ -111,11 +111,12 @@
       may not feel comfortable sending your report to the committee, as all members will
       see the report.{% endblocktranslate %}</p>
 
+  {% url 'members:teams' as teams_url %}
   <p>
     {% blocktranslate trimmed %}
       In that case, you can make a report directly to any or all of the current
       (vice/co) chairs of the Code of Conduct committee. Their e-mail addresses are
-      listed on the <a href="/foundation/committees/">Code of Conduct Committee</a>
+      listed on the <a href="{{ teams_url }}#code-of-conduct-team">Code of Conduct Committee</a>
       page. The chairs will follow the usual enforcement process with the other
       members, but will exclude the member(s) that the report concerns from any
       discussion or decision making.{% endblocktranslate %}</p>
