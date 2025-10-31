@@ -1,0 +1,27 @@
+{% spaceless %}
+{% comment %}
+This file is served under the well-known URIs
+
+- https://www.djangoproject.com/.well-known/security.txt
+- https://docs.djangoproject.com/.well-known/security.txt
+
+See https://securitytxt.org/ for more information about the security.txt standard.
+{% endcomment %}
+{% endspaceless %}# Hello security researcher!
+# We appreciate your help in keeping Django & djangoproject.com secure.
+
+# Please report security issues that concern this website (djangoproject.com)
+# to the website working group: website-wg@djangoproject.com
+# This helps us make sure your report is directed to the right people.
+# You can find guidelines for reporting website security issues here: https://github.com/django/djangoproject.com/blob/main/.github/SECURITY.md
+
+# DO NOT USE security@djangoproject.com FOR ISSUES THAT CONCERN THE WEBSITE.
+
+# If your report concerns Django itself (the Python package, not this website), please follow the Django security reporting process:
+Policy: https://www.djangoproject.com/security/
+Contact: https://www.djangoproject.com/security/
+Expires: 2026-12-31T00:00:00.000Z
+Preferred-Languages: en
+
+# If you would like to encrypt your report, you can use the following PGP key:
+Encryption: https://keys.openpgp.org/vks/v1/by-fingerprint/AF3516D27D0621171E0CCE25FCB84B8D1D17F80B
