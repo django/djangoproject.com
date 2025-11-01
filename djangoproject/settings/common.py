@@ -53,6 +53,7 @@ DATABASE_ROUTERS = ["tracdb.db_router.TracRouter"]
 
 DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
 FUNDRAISING_DEFAULT_FROM_EMAIL = "fundraising@djangoproject.com"
+INDIVIDUAL_MEMBER_ACCOUNT_INVITE_DEFAULT_FROM_EMAIL = DEFAULT_FROM_EMAIL
 
 FIXTURE_DIRS = [str(PROJECT_PACKAGE.joinpath("fixtures"))]
 
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
     "aggregator",
     "blog",
     "contact",
+    "contrib.django.forms",
     "dashboard",
     "docs",
     "foundation",
