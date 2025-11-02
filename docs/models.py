@@ -178,9 +178,7 @@ class DocumentRelease(models.Model):
         self.documents.all().delete()
 
         # Read excluded paths from robots.docs.txt.
-        robots_path = settings.BASE_DIR.joinpath(
-            "djangoproject", "static", "robots.docs.txt"
-        )
+        robots_path = settings.BASE_DIR / "djangoproject" / "static" / "robots.docs.txt"
         with open(str(robots_path)) as fh:
             excluded_paths = [
                 line.strip().split("/")[-1]

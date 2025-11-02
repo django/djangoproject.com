@@ -27,14 +27,14 @@ CSRF_COOKIE_SECURE = False
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-MEDIA_ROOT = str(DATA_DIR.joinpath("media_root"))
+MEDIA_ROOT = DATA_DIR / "media_root"
 
 SESSION_COOKIE_SECURE = False
 
-STATIC_ROOT = str(DATA_DIR.joinpath("static_root"))
+STATIC_ROOT = DATA_DIR / "static_root"
 
 # Docs settings
-DOCS_BUILD_ROOT = DATA_DIR.joinpath("djangodocs")
+DOCS_BUILD_ROOT = DATA_DIR / "djangodocs"
 
 # django-hosts settings
 
