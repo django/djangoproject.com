@@ -8,18 +8,17 @@ DATABASES = {
         "PASSWORD": os.environ.get("SQL_PASSWORD"),
         "HOST": os.environ.get("SQL_HOST"),
         "PORT": os.environ.get("SQL_PORT"),
-    }
+    },
+    "trac": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("TRAC_DATABASE", "code.djangoproject"),
+        "USER": os.environ.get("TRAC_USER", "code.djangoproject"),
+        "PASSWORD": os.environ.get("TRAC_PASSWORD", ""),
+        "HOST": os.environ.get("TRAC_HOST", "db"),
+        "PORT": os.environ.get("TRAC_PORT", "5432"),
+    },
 }
 
-# Trac connection
-DATABASES["trac"] = {
-    "ENGINE": "django.db.backends.postgresql",
-    "NAME": os.environ.get("TRAC_DATABASE", "code.djangoproject"),
-    "USER": os.environ.get("TRAC_USER", "code.djangoproject"),
-    "PASSWORD": os.environ.get("TRAC_PASSWORD", ""),
-    "HOST": os.environ.get("TRAC_HOST", "db"),
-    "PORT": os.environ.get("TRAC_PORT", "5432"),
-}
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
