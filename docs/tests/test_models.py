@@ -570,10 +570,8 @@ class UpdateDocTests(TestCase):
         from robots indexing.
         """
         # Read the first Disallow line of robots.txt.
-        robots_path = settings.BASE_DIR.joinpath(
-            "djangoproject", "static", "robots.docs.txt"
-        )
-        with open(str(robots_path)) as fh:
+        robots_path = settings.BASE_DIR / "djangoproject" / "static" / "robots.docs.txt"
+        with robots_path.open() as fh:
             for line in fh:
                 if line.startswith("Disallow:"):
                     break

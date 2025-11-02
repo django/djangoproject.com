@@ -15,7 +15,7 @@ DATA_DIR = (
 )
 
 try:
-    with DATA_DIR.joinpath("conf", "secrets.json").open() as handle:
+    with (DATA_DIR / "conf" / "secrets.json").open() as handle:
         SECRETS = json.load(handle)
 except OSError:
     SECRETS = {
@@ -54,7 +54,7 @@ DATABASE_ROUTERS = ["tracdb.db_router.TracRouter"]
 DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
 FUNDRAISING_DEFAULT_FROM_EMAIL = "fundraising@djangoproject.com"
 
-FIXTURE_DIRS = [str(PROJECT_PACKAGE.joinpath("fixtures"))]
+FIXTURE_DIRS = [PROJECT_PACKAGE / "fixtures"]
 
 INSTALLED_APPS = [
     "accounts",
@@ -184,7 +184,7 @@ SILENCED_SYSTEM_CHECKS = [
 
 SITE_ID = 1
 
-STATICFILES_DIRS = [str(PROJECT_PACKAGE.joinpath("static"))]
+STATICFILES_DIRS = [PROJECT_PACKAGE / "static"]
 
 STATIC_URL = "/s/"
 
@@ -196,7 +196,7 @@ STATICFILES_FINDERS = (
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [str(PROJECT_PACKAGE.joinpath("templates"))],
+        "DIRS": [PROJECT_PACKAGE / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "builtins": [
