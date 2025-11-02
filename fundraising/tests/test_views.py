@@ -262,7 +262,7 @@ class TestWebhooks(ReleaseMixin, TestCase):
         )
 
     def stripe_data(self, filename):
-        file_path = settings.BASE_DIR.joinpath(f"fundraising/test_data/{filename}.json")
+        file_path = settings.BASE_DIR / f"fundraising/test_data/{filename}.json"
         with file_path.open() as f:
             data = json.load(f)
             return stripe.convert_to_stripe_object(data, stripe.api_key, None)
