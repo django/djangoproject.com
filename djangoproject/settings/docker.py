@@ -12,7 +12,8 @@ DATABASES = {
     "trac": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ["TRAC_DATABASE"],
-        "USER": os.environ["TRAC_USER"],
+        # "code.djangoproject" value is hardcoded in trac.sql
+        "USER": "code.djangoproject",
         "PASSWORD": os.environ["TRAC_PASSWORD"],
         "HOST": os.environ["TRAC_HOST"],
         "PORT": os.environ["TRAC_PORT"],
