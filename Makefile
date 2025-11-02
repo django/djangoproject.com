@@ -4,8 +4,11 @@ APP_LIST ?= accounts aggregator blog contact dashboard djangoproject docs founda
 SCSS = djangoproject/scss
 STATIC = djangoproject/static
 
-ci: test
+ci: compilemessages test
 	@python -m coverage report
+
+compilemessages:
+	python -m manage compilemessages
 
 collectstatics: compile-scss
 	python -m manage collectstatic --noinput
@@ -19,12 +22,6 @@ compile-scss-debug:
 install:
 	python -m pip install --requirement requirements/dev.txt
 
-isort:
-	python -m isort $(APP_LIST)
-
-isort-check:
-	python -m isort --check $(APP_LIST)
-
 migrations-check:
 	python -m manage makemigrations --check --dry-run
 
@@ -36,3 +33,10 @@ test:
 
 watch-scss:
 	watchmedo shell-command --patterns=*.scss --recursive --command="make compile-scss-debug" $(SCSS)
+
+reset-local-db:
+	python -m manage flush --no-input
+	python -m manage loaddata dev_sites
+	python -m manage loaddata doc_releases
+	python -m manage loaddata dashboard_production_metrics
+	python -m manage update_metrics

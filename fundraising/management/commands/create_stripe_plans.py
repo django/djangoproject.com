@@ -11,7 +11,7 @@ class Command(BaseCommand):
         try:
             stripe.Plan.retrieve("monthly")
             print("Monthly plan exists, not creating!")
-        except stripe.error.InvalidRequestError:
+        except stripe.InvalidRequestError:
             name = "Monthly donation"
             logger.info(f"Creating plan: {name}")
             stripe.Plan.create(
@@ -25,7 +25,7 @@ class Command(BaseCommand):
         try:
             stripe.Plan.retrieve("quarterly")
             print("Quarterly plan exists, not creating!")
-        except stripe.error.InvalidRequestError:
+        except stripe.InvalidRequestError:
             name = "Quarterly donation"
             logger.info(f"Creating plan: {name}")
             stripe.Plan.create(
@@ -40,7 +40,7 @@ class Command(BaseCommand):
         try:
             stripe.Plan.retrieve("yearly")
             print("Yearly plan exists, not creating!")
-        except stripe.error.InvalidRequestError:
+        except stripe.InvalidRequestError:
             name = "Yearly donation"
             logger.info(f"Creating plan: {name}")
             stripe.Plan.create(

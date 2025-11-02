@@ -263,7 +263,7 @@ class TestWebhooks(TestCase):
         file_path = settings.BASE_DIR.joinpath(f"fundraising/test_data/{filename}.json")
         with file_path.open() as f:
             data = json.load(f)
-            return stripe.util.convert_to_stripe_object(data, stripe.api_key, None)
+            return stripe.convert_to_stripe_object(data, stripe.api_key, None)
 
     def post_event(self, data):
         return self.client.post(

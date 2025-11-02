@@ -9,7 +9,7 @@
   <p>Django's <em>Secret Sauce</em> is its ecosystem of third-party apps and add-ons.</p>
   <p>No matter your need, there'll be a package you can use or take ideas from.</p>
 
-  <h2>Resources</h2>
+  <h2 id="resources">Resources</h2>
 
     <!-- Name, Short Description, Link — Roughly this order       -->
   <ul>
@@ -55,11 +55,11 @@
       &mdash; An aggregator for in-print books and courses on Django.
     </li>
     <li>
-      <a href="https://www.youtube.com/@DjangoConUS">DCUS YouTube</a>
+      <a href="https://www.youtube.com/@DjangoConUS">YouTube DjangoCon US</a>
       &mdash; Django Conference US YouTube channel.
     </li>
     <li>
-      <a href="https://www.youtube.com/@DjangoConEurope">DCEU YouTube</a>
+      <a href="https://www.youtube.com/@DjangoConEurope">YouTube DjangoCon Europe</a>
       &mdash; Django Conference Europe YouTube channel.
     </li>
     <li>
@@ -79,47 +79,56 @@
       &mdash;  A great tutorial you can do in addition to the <a href="/en/dev/intro/tutorial/01/">official tutorial</a>.
     </li>
 
-    <li>Follow Django on Social Media &mdash; <a href="https://bsky.app/profile/djangoproject.com">Bluesky</a>, <a href="https://www.linkedin.com/company/django-software-foundation/">LinkedIn</a>, <a href="https://x.com/djangoproject">Twitter</a></li>
+    <li>Follow Django on Social Media &mdash; <a href="https://bsky.app/profile/djangoproject.com">Bluesky</a>, <a href="https://fosstodon.org/@django">Mastodon</a>, <a href="https://www.linkedin.com/company/django-software-foundation/">LinkedIn</a>, <a href="https://x.com/djangoproject">Twitter</a></li>
   </ul>
 
 
   <p>Explore! A whole world awaits you.</p>
 
 
-  <h2>Packages - use community solutions</h2>
+  <h2 id="packages">Packages - use community solutions</h2>
 
   <p>We could never list everything but here are some packages that the Steering Council all agree are
     incredibly useful and well supported. We use many of these in all of our projects.</p>
 
   <p>We will refresh this list at least yearly to keep up to date.</p>
 
-  <h3>Debugging & Development Tools</h3>
+  <hr />
+  <h3 id="exploratory-packages">Exploratory packages needing feedback</h3>
+  <p>The Steering Council is exploring the viability of these packages and would benefit from your help. Please try them out and open an issue with your feedback!</p>
+  <ul>
+    <li><a href="https://github.com/RealOrangeOne/django-tasks">Django Tasks</a> &mdash; A lightweight task queue for Django applications, suitable for simple background task processing. We want to know if the API is a quality interface for task queues across a variety of brokers.</li>
+    <li><a href="https://github.com/khanxmetu/django-admin-keyshortcuts">Django Admin with Keyboard Shortcuts</a> &mdash; A Django package that adds keyboard shortcuts to the Django Admin interface for improved accessibility. We want to know how the tool works for users to identify improvements.</li>
+  </ul>
+  <hr />
+
+  <h3 id="debugging-and-development-tools">Debugging & Development Tools</h3>
   <ul>
     <li><a href="https://github.com/jazzband/django-debug-toolbar">Django Debug Toolbar</a> &mdash; A configurable set of panels that display various debug information about the current request/response.</li>
-    <li><a href="https://github.com/django-browser-reload/django-browser-reload">django-browser-reload</a> &mdash; Enables automatic browser reloading during development when code changes are detected.</li>
+    <li><a href="https://github.com/adamchainz/django-browser-reload">django-browser-reload</a> &mdash; Enables automatic browser reloading during development when code changes are detected.</li>
     <li><a href="https://github.com/django-extensions/django-extensions">Django Extensions</a> &mdash; A collection of custom extensions for Django, including management commands, model field types, and more.</li>
   </ul>
 
-  <h3>Storage & Static Files</h3>
+  <h3 id="storage-and-static-files">Storage & Static Files</h3>
   <ul>
     <li><a href="https://github.com/jschneier/django-storages">django-storages</a> &mdash; Provides a variety of storage backends for Django, including S3, Azure, and more. <a href="#django-storages">Learn More...</a></li>
     <li><a href="https://github.com/evansd/whitenoise">Whitenoise</a> &mdash; Serves static files directly from Django without the need for a separate web server.</li>
   </ul>
 
-  <h3>API Development</h3>
+  <h3 id="api-development">API Development</h3>
   <ul>
     <li><a href="https://github.com/encode/django-rest-framework">Django REST Framework (DRF)</a> &mdash; A powerful and flexible toolkit for building Web APIs in Django.</li>
     <li><a href="https://github.com/vitalik/django-ninja">Django Ninja</a> &mdash; A fast, asynchronous-ready web framework for building APIs with Django and Python type hints.</li>
   </ul>
 
-  <h3>Content Management Systems (CMS)</h3>
+  <h3 id="cms">Content Management Systems (CMS)</h3>
   <ul>
     <li><a href="https://github.com/wagtail/wagtail">Wagtail</a> &mdash; An open-source Django CMS focused on flexibility and user experience.</li>
     <li><a href="https://github.com/django-cms/django-cms">Django CMS</a> &mdash; A user-friendly and developer-friendly CMS for Django, offering multilingual support and a plugin architecture.</li>
     <li><a href="https://github.com/feincms/feincms">FeinCMS</a> &mdash; A Django-based CMS with a focus on extensibility and minimalism.</li>
   </ul>
 
-  <h3>Authentication & Authorization</h3>
+  <h3 id="authentication-and-authorization">Authentication & Authorization</h3>
   <ul>
     <li><a href="https://github.com/pennersr/django-allauth">Django Allauth</a> &mdash; Integrated set of Django applications addressing authentication, registration, account management, and third-party (social) account authentication.</li>
     <li><a href="https://github.com/python-social-auth/social-app-django">Python Social Auth - Django</a> &mdash; Easy-to-setup social authentication/registration mechanism with support for several frameworks and auth providers.</li>
@@ -129,56 +138,56 @@
     <li><a href="https://github.com/skorokithakis/django-loginas">django-loginas</a> &mdash; Adds a "Log in as user" button in the Django admin interface for easy user impersonation.</li>
   </ul>
 
-  <h3>Forms &amp; Views</h3>
+  <h3 id="forms-and-views">Forms &amp; Views</h3>
   <ul>
     <li><a href="https://github.com/django-crispy-forms/django-crispy-forms">django-crispy-forms</a> &mdash; Helps to manage Django forms in a DRY way, allowing control over form rendering behavior.</li>
     <li><a href="https://github.com/AndrewIngram/django-extra-views">django-extra-views</a> &mdash; Provides additional class-based views to complement Django's built-in generic views.</li>
   </ul>
 
-  <h3>Templates</h3>
+  <h3 id="templates">Templates</h3>
   <ul>
     <li><a href="https://github.com/carltongibson/django-template-partials">django-template-partials</a> &mdash; Reusable named inline partials for Django Templates.</li>
   </ul>
 
-  <h3>Environment Configuration</h3>
+  <h3 id="environment-configuration">Environment Configuration</h3>
   <ul>
     <li><a href="https://github.com/theskumar/python-dotenv">python-dotenv</a> &mdash; Reads key-value pairs from a .env file and can set them as environment variables, aiding in development and deployment.</li>
     <li><a href="https://github.com/joke2k/django-environ">django-environ</a> &mdash; Allows you to utilize 12-factor methodology to configure your Django application with environment variables.</li>
   </ul>
 
-  <h3>Security & Middleware</h3>
+  <h3 id="security-and-middleware">Security & Middleware</h3>
   <ul>
     <li><a href="https://github.com/adamchainz/django-cors-headers">Django CORS Headers</a> &mdash; Adds Cross-Origin Resource Sharing (CORS) headers to Django responses, allowing or blocking cross-origin requests.</li>
     <li><a href="https://github.com/mozilla/django-csp">Django CSP</a> &mdash; Implements Content Security Policy for Django applications to prevent XSS and other code injection attacks.</li>
   </ul>
 
-  <h3>Testing & Fixtures</h3>
+  <h3 id="testing-and-fixtures">Testing & Fixtures</h3>
   <ul>
     <li><a href="https://github.com/model-bakers/model_bakery">Model Bakery</a> &mdash; A tool for creating model instances for testing purposes, focusing on simplicity and speed.</li>
     <li><a href="https://github.com/FactoryBoy/factory_boy">Factory Boy</a> &mdash; A test fixtures replacement that provides a powerful way to create test data.</li>
     <li><a href="https://github.com/adamchainz/time-machine">time-machine</a> &mdash; A tool for mocking time in tests.</li>
   </ul>
 
-  <h3>Admin Interface Enhancements</h3>
+  <h3 id="admin">Admin Interface Enhancements</h3>
   <ul>
     <li><a href="https://github.com/jrief/django-admin-sortable2">django-admin-sortable2</a> &mdash; Adds drag-and-drop sorting functionality to the Django admin interface.</li>
     <li><a href="https://github.com/django-import-export/django-import-export">Django Import Export</a> &mdash; Allows importing and exporting of data through the Django admin interface using various formats.</li>
   </ul>
 
-  <h3>Internationalization & Localization</h3>
+  <h3 id="internationalization-and-localization">Internationalization & Localization</h3>
   <ul>
     <li><a href="https://github.com/deschler/django-modeltranslation">django-modeltranslation</a> &mdash; Translates dynamic content of existing models to different languages without having to change the original model structure.</li>
     <li><a href="https://github.com/zostera/django-modeltrans/">django-modeltrans</a> &mdash; Provides a simple way to translate Django models using a JSONField.</li>
     <li><a href="https://github.com/mbi/django-rosetta">django-rosetta</a> &mdash; Simplifies the translation process of Django projects by providing a web-based interface to edit .po files.</li>
   </ul>
 
-  <h3>Email & Notifications</h3>
+  <h3 id="email-and-notifications">Email & Notifications</h3>
   <ul>
     <li><a href="https://anymail.dev">django-anymail</a> &mdash; Integrates various transactional email services (like Mailgun, SendGrid) with Django's email backend.</li>
     <li><a href="https://github.com/ambient-innovation/django-pony-express/">Django Pony Express</a> &mdash; A simple email queuing and sending system for Django applications.</li>
   </ul>
 
-  <h3>Utilities & Miscellaneous</h3>
+  <h3 id="utilities-and-miscellaneous">Utilities & Miscellaneous</h3>
   <ul>
     <li><a href="https://github.com/RealOrangeOne/django-tasks">Django Tasks</a> &mdash; A lightweight task queue for Django applications, suitable for simple background task processing.</li>
     <li><a href="https://github.com/django-waffle/django-waffle">django-waffle</a> &mdash; Feature flipper for Django, allowing for easy rollout and testing of new features.</li>
@@ -192,12 +201,12 @@
   <h3 id="django-storages">django-storages</h3>
 
   <p>
-    This package is perfect when deploying Django in situations that do include a shared filesystem. For either uploaded files from
-    users and/or you static media if is often necessary to store files using "object storage" such as Amazon S3.
+    This package is perfect when deploying Django in situations that do not include a shared filesystem. For either uploaded files from
+    users and/or your static media, it is often necessary to store files using "object storage" such as Amazon S3.
   </p>
 
   <p>
-    Keep in mind there are many S3 compatible object storage systems.  Most cloud providers you may have an option and if not you can run your own MinIO instance.
+    Keep in mind there are many S3 compatible object storage systems. Most cloud providers have an option, and if not, you can run your own MinIO instance.
     Get more information which options are supported <a href="https://django-storages.readthedocs.io/en/latest/">in the django-storages docs</a>.
   </p>
 {% endblock %}

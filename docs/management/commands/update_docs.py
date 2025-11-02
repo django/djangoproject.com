@@ -48,13 +48,6 @@ class Command(BaseCommand):
             help="Ask before building each version",
         )
         parser.add_argument(
-            "--update-index",
-            action="store_true",
-            dest="update_index",
-            default=False,
-            help="Also update the search vector field.",
-        )
-        parser.add_argument(
             "--purge-cache",
             action="store_true",
             dest="purge_cache",
@@ -98,7 +91,6 @@ class Command(BaseCommand):
 
     def handle(self, *versions, **kwargs):
         self.verbosity = kwargs["verbosity"]
-        self.update_index = kwargs["update_index"]
         self.purge_cache = kwargs["purge_cache"]
 
         self.default_builders = ["json", "djangohtml"]
@@ -106,16 +98,11 @@ class Command(BaseCommand):
         # Keep track of which Git sources have been updated, e.g.,
         # {'1.8': True} if the 1.8 docs updated.
         self.release_docs_changed = {}
-        # Only update the index if some docs rebuild.
-        self.update_index_required = False
 
         for release in self._get_doc_releases(versions, kwargs):
             self.build_doc_release(
                 release, force=kwargs["force"], interactive=kwargs["interactive"]
             )
-
-        if self.update_index_required:
-            call_command("update_index", **{"verbosity": self.verbosity})
 
         if self.purge_cache:
             changed_versions = {
@@ -171,8 +158,6 @@ class Command(BaseCommand):
                     "No docs changes for %s, skipping docs building." % release
                 )
             return
-
-        self.update_index_required = self.update_index
 
         source_dir = checkout_dir.joinpath("docs")
 
@@ -287,15 +272,6 @@ class Command(BaseCommand):
 
         if release.is_default:
             self._setup_stable_symlink(release, built_dir)
-
-        #
-        # Rebuild the imported document list and search index.
-        #
-        if not self.update_index:
-            return
-
-        if self.verbosity >= 2:
-            self.stdout.write("  reindexing...")
 
         json_built_dir = parent_build_dir.joinpath("_built", "json")
         documents = gen_decoded_documents(json_built_dir)

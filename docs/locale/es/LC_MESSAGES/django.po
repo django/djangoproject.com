@@ -3,26 +3,30 @@
 # source files.
 #
 # Translators:
-# Claude Paroz <claude@2xlibre.net>, 2019
 # Sebastián Magrí, 2019
-# LECbg, 2019
-# Ignacio José Lizarán Rus <ilizaran@gmail.com>, 2019
-# Ernesto Rico-Schmidt <e.rico.schmidt@gmail.com>, 2019
+# Ernesto Rico Schmidt <ernesto@rico-schmidt.name>, 2019
+# LECbg, 2020
+# Uriel Medina <urimeba511@gmail.com>, 2021
+# Samuel David Ramirez Mantione <venezuelapoliglota@hotmail.com>, 2025
+# Ignacio José Lizarán Rus <ilizaran@gmail.com>, 2025
+# Claude Paroz <claude@2xlibre.net>, 2025
+# JUAN DAVID JARAMILLO ORTIZ <juanda097@protonmail.ch>, 2025
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-11 20:38-0500\n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
 "PO-Revision-Date: 2019-02-19 01:18+0000\n"
-"Last-Translator: Ernesto Rico-Schmidt <e.rico.schmidt@gmail.com>, 2019\n"
-"Language-Team: Spanish (https://www.transifex.com/django/teams/17080/es/)\n"
+"Last-Translator: JUAN DAVID JARAMILLO ORTIZ <juanda097@protonmail.ch>, 2025\n"
+"Language-Team: Spanish (https://app.transifex.com/django/teams/17080/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
 
 msgid "Documentation"
 msgstr "Documentación"
@@ -33,6 +37,18 @@ msgstr "Buscar documentación sobre %s "
 
 msgid "Search"
 msgstr "Buscar"
+
+msgid "API Reference"
+msgstr ""
+
+msgid "Using Django"
+msgstr ""
+
+msgid "How-to guides"
+msgstr ""
+
+msgid "Release notes"
+msgstr ""
 
 msgid "Django Documentation"
 msgstr "Documentación de Django"
@@ -51,11 +67,20 @@ msgstr ""
 "inferior derecha de esta página."
 
 msgid ""
+"This document is for a preview release of Django, which can be significantly "
+"different from previous releases. For older releases, use the version "
+"selector floating in the bottom right corner of this page."
+msgstr ""
+
+msgid ""
 "This document is for an insecure version of Django that is no longer "
 "supported. Please upgrade to a newer release!"
 msgstr ""
-"Este documento es para una versión insegura de Django que ya no será "
-"soportado. ¡Por favor, actualice a una versión más reciente!"
+"Este documento es para una versión insegura de Django que ya no es "
+"compatible. ¡Por favor, actualice a una versión más reciente!"
+
+msgid "Getting Help"
+msgstr ""
 
 msgid "Click on the links on the left to switch to another language."
 msgstr "Haga clic en los enlaces de la izquierda para cambiar a otro idioma."
@@ -72,13 +97,16 @@ msgstr ""
 
 #, python-format
 msgid "This document describes Django %(version)s."
-msgstr "Este documento describes Django %(version)s."
+msgstr "Este documento describe Django %(version)s."
 
 msgid "Click on the links on the left to see other versions."
 msgstr "Haga clic en los enlaces de la izquierda para ver otras versiones."
 
 msgid "Documentation version:"
 msgstr "Versión de la documentación:"
+
+msgid "Previous page and next page"
+msgstr ""
 
 msgid "Additional Information"
 msgstr "Información Adicional"
@@ -87,7 +115,7 @@ msgid "Contents"
 msgstr "Contenidos"
 
 msgid "Browse"
-msgstr "Mostrar"
+msgstr "Navegar"
 
 msgid "Prev:"
 msgstr "Previo:"
@@ -99,7 +127,7 @@ msgid "Table of contents"
 msgstr "Tabla de contenidos"
 
 msgid "You are here:"
-msgstr "Está aquí:"
+msgstr "Usted está aquí:"
 
 #, python-format
 msgid "Django %(version)s documentation"
@@ -107,6 +135,9 @@ msgstr "Documentación de Django %(version)s "
 
 msgid "Getting help"
 msgstr "Obtener ayuda"
+
+msgid "FAQ"
+msgstr "FAQ"
 
 msgid "Try the FAQ — it's got answers to many common questions."
 msgstr ""
@@ -124,19 +155,20 @@ msgstr "Tabla de Contenidos"
 msgid "Handy when looking for specific information."
 msgstr "Práctico cuando se busca información específica."
 
-msgid ""
-"Search for information in the archives of the django-users mailing list, or "
-"post a question."
+msgid "Django Discord Server"
 msgstr ""
-"Busque información en los archivos de la lista de correos django-users o "
-"plantee una pregunta."
 
-msgid ""
-"Ask a question in the #django IRC channel, or search the IRC logs to see if "
-"it’s been asked before."
+msgid "Join the Django Discord Community."
 msgstr ""
-"Haga una pregunta en el canal #django IRC, o busque los registros del IRC "
-"para ver si ya la han hecho antes."
+
+msgid "Official Django Forum"
+msgstr ""
+
+msgid "Join the community on the Django Forum."
+msgstr ""
+
+msgid "Ticket tracker"
+msgstr ""
 
 msgid "Report bugs with Django or Django documentation in our ticket tracker."
 msgstr ""
@@ -147,16 +179,16 @@ msgid "Download:"
 msgstr "Descarga:"
 
 msgid "Offline (development version):"
-msgstr "Desconectado (versión de desarrollo):"
+msgstr "Fuera de línea (versión de desarrollo):"
 
 #, python-format
 msgid "Offline (Django %(version)s):"
-msgstr "Desconectado (Django %(version)s):"
+msgstr "Fuera de línea (Django %(version)s):"
 
 msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
 msgstr ""
-"Proporcionado por <a href=\"https://readthedocs.org/\"></a>Lea los "
-"documentos.\n"
+"Proporcionado por <a href=\"https://readthedocs.org/\">Lea los documentos.</"
+"a>\n"
 " "
 
 msgid "General Index | Django Documentation"
@@ -171,50 +203,60 @@ msgstr "[Link]"
 msgid "Module Index | Django Documentation"
 msgstr "Índice del módulo | Documentación Django"
 
+msgid "Submit"
+msgstr "Enviar"
+
 msgid "Search | Django documentation"
 msgstr "Búsqueda | Documentación de django"
 
-#, python-format
-msgid ""
-"\n"
-"    Only 1 result for <em>%(query)s</em> in the development version\n"
-"  "
-msgid_plural ""
-"\n"
-"    %(num_results)s results for <em>%(query)s</em> in the development "
-"version\n"
-"  "
-msgstr[0] ""
-msgstr[1] ""
+msgid "Filter the current search results by documentation category"
+msgstr ""
+
+msgctxt "all documentation categories"
+msgid "All"
+msgstr "Todo"
 
 #, python-format
-msgid ""
-"\n"
-"    Only 1 result for <em>%(query)s</em> in version %(version)s\n"
-"  "
+msgid "Only 1 result for <em>%(query)s</em> in the development version"
 msgid_plural ""
-"\n"
-"    %(num_results)s results for <em>%(query)s</em> in version %(version)s\n"
-"  "
+"%(num_results)s results for <em>%(query)s</em> in the development version"
 msgstr[0] ""
+"Sólo 1 resultado para <em>%(query)s</em> en la versión de desarrollo"
 msgstr[1] ""
+"%(num_results)s resultados para <em>%(query)s</em> en la versión de "
+"desarrollo"
+msgstr[2] ""
+"%(num_results)s resultados para <em>%(query)s</em> en la versión de "
+"desarrollo"
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in version %(version)s"
+msgstr[0] "Sólo 1 resultado para <em>%(query)s</em> en la versión %(version)s"
+msgstr[1] ""
+"%(num_results)s resultados para <em>%(query)s</em> en la versión %(version)s"
+msgstr[2] ""
+"%(num_results)s resultados para <em>%(query)s</em> en la versión %(version)s"
 
 msgid "No search query given"
-msgstr "No hay consulta de búsqueda"
+msgstr "No se proporcionó ninguna consulta de búsqueda"
 
+#, python-format
+msgid ""
+"Please try searching <a href=\"%(all_search)s\">all documentation results</"
+"a>."
+msgstr ""
+
+msgctxt "pagination"
 msgid "Previous"
 msgstr "Anterior"
 
 #, python-format
-msgid ""
-"\n"
-"        Page %(page_number)s of %(num_pages)s\n"
-"      "
-msgstr ""
-"\n"
-"        Página %(page_number)s de %(num_pages)s\n"
-"      "
+msgid "Page %(page_number)s of %(num_pages)s"
+msgstr "Página %(page_number)s de %(num_pages)s"
 
+msgctxt "pagination"
 msgid "Next"
 msgstr "Siguiente"
 

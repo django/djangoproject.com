@@ -12,19 +12,6 @@ define(function () {
     mods.push('mod/list-collapsing');
   }
 
-  //fundraising heart
-  if (hasClass('fundraising-heart')) {
-    mods.push('mod/fundraising-heart');
-  }
-
-  if (hasClass('dashboard-index')) {
-    mods.push('dashboard/index');
-  }
-
-  if (hasClass('dashboard-detail')) {
-    mods.push('dashboard/detail');
-  }
-
   if (hasClass('stripe-donation')) {
     mods.push('mod/stripe-donation');
   }

@@ -1,0 +1,256 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# rodin <romihardiyanto@gmail.com>, 2019
+# Patricia Rusli <patricia.rusli@gmail.com>, 2019
+# Adiyat Mubarak <adiyatmubarak@gmail.com>, 2019
+# Zaky Hermawan <zaky.hermawan9615@gmail.com>, 2019
+# sag​e <laymonage@gmail.com>, 2025
+# Claude Paroz <claude@2xlibre.net>, 2025
+# Fery Setiawan <gembelweb@gmail.com>, 2025
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
+"PO-Revision-Date: 2019-02-19 01:18+0000\n"
+"Last-Translator: Fery Setiawan <gembelweb@gmail.com>, 2025\n"
+"Language-Team: Indonesian (https://app.transifex.com/django/teams/17080/"
+"id/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Documentation"
+msgstr "Dokumentasi"
+
+#, python-format
+msgid "Search %s documentation"
+msgstr "Cari dokumentasi %s"
+
+msgid "Search"
+msgstr "Cari"
+
+msgid "API Reference"
+msgstr "Acuan API"
+
+msgid "Using Django"
+msgstr "Menggunakan Django"
+
+msgid "How-to guides"
+msgstr "Panduan Cara-cara"
+
+msgid "Release notes"
+msgstr "Catatan terbitan"
+
+msgid "Django Documentation"
+msgstr "Dokumentasi Django"
+
+msgid "Django documentation"
+msgstr "Dokumentasi Django"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases. For older releases, use the "
+"version selector floating in the bottom right corner of this page."
+msgstr ""
+"Dokumen ini adalah untuk versi pengembangan Django, yang mungkin berbeda "
+"secara signifikan dari yang dirilis sebelumnya. Untuk yang dirilis lebih "
+"lama, gunakan pemilih versi yang berada pada sudut kanan bawah halaman."
+
+msgid ""
+"This document is for a preview release of Django, which can be significantly "
+"different from previous releases. For older releases, use the version "
+"selector floating in the bottom right corner of this page."
+msgstr ""
+
+msgid ""
+"This document is for an insecure version of Django that is no longer "
+"supported. Please upgrade to a newer release!"
+msgstr ""
+"Dokumen ini adalah untuk versi Django yang tidak lagi di support. Harap "
+"tingkatkan ke versi yang baru!"
+
+msgid "Getting Help"
+msgstr ""
+
+msgid "Click on the links on the left to switch to another language."
+msgstr "Klik link di kiri untuk mengganti bahasa lain."
+
+msgid "Language:"
+msgstr "Bahasa:"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases."
+msgstr ""
+"Dokumen ini untuk versi pengembangan Django, yang mungkin berbeda secara "
+"signifikan dari yang di rilis sebelumnya."
+
+#, python-format
+msgid "This document describes Django %(version)s."
+msgstr "Dokumen ini mendeskripsikan Django %(version)s."
+
+msgid "Click on the links on the left to see other versions."
+msgstr "Klik link di sebelah kiri untuk melihat versi lain"
+
+msgid "Documentation version:"
+msgstr "Versi dokumentasi:"
+
+msgid "Previous page and next page"
+msgstr ""
+
+msgid "Additional Information"
+msgstr "Informasi Tambahan"
+
+msgid "Contents"
+msgstr "Isi"
+
+msgid "Browse"
+msgstr "Cari"
+
+msgid "Prev:"
+msgstr "Sebelumnya:"
+
+msgid "Next:"
+msgstr "Selanjutnya:"
+
+msgid "Table of contents"
+msgstr "Daftar isi"
+
+msgid "You are here:"
+msgstr "Anda berada di:"
+
+#, python-format
+msgid "Django %(version)s documentation"
+msgstr "Dokumentasi Django %(version)s"
+
+msgid "Getting help"
+msgstr "Mendapatkan bantuan"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "Try the FAQ — it's got answers to many common questions."
+msgstr "Coba FAQ -- yang menjawab banyak pertanyaan-pertanyaan umum."
+
+msgid "Index"
+msgstr "Indeks"
+
+msgid "Module Index"
+msgstr "Indeks Modul"
+
+msgid "Table of Contents"
+msgstr "Daftar Isi"
+
+msgid "Handy when looking for specific information."
+msgstr "Mudah digunakan untuk mencari informasi yang lebih spesifik."
+
+msgid "Django Discord Server"
+msgstr ""
+
+msgid "Join the Django Discord Community."
+msgstr ""
+
+msgid "Official Django Forum"
+msgstr ""
+
+msgid "Join the community on the Django Forum."
+msgstr ""
+
+msgid "Ticket tracker"
+msgstr ""
+
+msgid "Report bugs with Django or Django documentation in our ticket tracker."
+msgstr ""
+"Laporkan kesalahan pada Django atau Dokumentasi Django pada pelacak tiket "
+"kami."
+
+msgid "Download:"
+msgstr "Unduh:"
+
+msgid "Offline (development version):"
+msgstr "Luring (versi pengembangan):"
+
+#, python-format
+msgid "Offline (Django %(version)s):"
+msgstr "Offline(Django %(version)s):"
+
+msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+msgstr ""
+"Disediakan oleh <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+
+msgid "General Index | Django Documentation"
+msgstr "Index Umum | Dokumentasi Django"
+
+msgid "General Index"
+msgstr "Index Umum"
+
+msgid "[Link]"
+msgstr "[Link]"
+
+msgid "Module Index | Django Documentation"
+msgstr "Index Modul | Dokumentasi Django"
+
+msgid "Submit"
+msgstr "Ajukan"
+
+msgid "Search | Django documentation"
+msgstr "Cari | Dokumentasi Django"
+
+msgid "Filter the current search results by documentation category"
+msgstr ""
+
+msgctxt "all documentation categories"
+msgid "All"
+msgstr "Semua"
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in the development version"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in the development version"
+msgstr[0] ""
+"%(num_results)s hasil untuk <em>%(query)s</em> dalam versi pengembangan"
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in version %(version)s"
+msgstr[0] ""
+"%(num_results)s hasil untuk <em>%(query)s</em> dalam versi %(version)s"
+
+msgid "No search query given"
+msgstr "Tidak ada permintaan pencarian yang diberikan"
+
+#, python-format
+msgid ""
+"Please try searching <a href=\"%(all_search)s\">all documentation results</"
+"a>."
+msgstr ""
+
+msgctxt "pagination"
+msgid "Previous"
+msgstr "Sebelumnya"
+
+#, python-format
+msgid "Page %(page_number)s of %(num_pages)s"
+msgstr "Halaman%(page_number)s dari %(num_pages)s"
+
+msgctxt "pagination"
+msgid "Next"
+msgstr "Selanjutnya"
+
+msgid "Page is not 'last', nor can it be converted to an int."
+msgstr ""
+"Laman bukan yang 'terakhir' atau juga tidak dapat dikonversikan ke bilangan "
+"bulat."
+
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "Laman tidak valid (%(page_number)s): %(message)s"

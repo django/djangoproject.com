@@ -1,0 +1,250 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# Chyngyz Monokbaev <monokbaev@gmail.com>, 2025
+# Soyuzbek orozbek uulu <soyuzbek196.kg@gmail.com>, 2025
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
+"PO-Revision-Date: 2019-02-19 01:18+0000\n"
+"Last-Translator: Soyuzbek orozbek uulu <soyuzbek196.kg@gmail.com>, 2025\n"
+"Language-Team: Kyrgyz (https://app.transifex.com/django/teams/17080/ky/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ky\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Documentation"
+msgstr "Түшүндүрмө"
+
+#, python-format
+msgid "Search %s documentation"
+msgstr "Түшүндүрмөндөн %s издөө"
+
+msgid "Search"
+msgstr "издөө"
+
+msgid "API Reference"
+msgstr ""
+
+msgid "Using Django"
+msgstr ""
+
+msgid "How-to guides"
+msgstr ""
+
+msgid "Release notes"
+msgstr ""
+
+msgid "Django Documentation"
+msgstr "Жанго Түшүндүрмөсү"
+
+msgid "Django documentation"
+msgstr "Жанго түшүндүрмөсү"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases. For older releases, use the "
+"version selector floating in the bottom right corner of this page."
+msgstr ""
+"Бул түшүндүрмө Жангонун жасалып аткан чыгарылышы үчүн, ошол себептен мурдагы "
+"чыгарылыштардан олуттуу айырмаланышы мүмкүн. Эскирээк чыгарылыштар үчүн "
+"ылдыйкы оң бурчта калкыган чыгарылыш тандоосун колдонуңуз."
+
+msgid ""
+"This document is for a preview release of Django, which can be significantly "
+"different from previous releases. For older releases, use the version "
+"selector floating in the bottom right corner of this page."
+msgstr ""
+
+msgid ""
+"This document is for an insecure version of Django that is no longer "
+"supported. Please upgrade to a newer release!"
+msgstr ""
+"Бул түшүндүрмө Жангонун кооптуу болуп колдоого алынбай калган чыгарылышы "
+"үчүн. Сураныч чыгарылышты жаңылаңыз!"
+
+msgid "Getting Help"
+msgstr ""
+
+msgid "Click on the links on the left to switch to another language."
+msgstr "Башка тилге өтүү үчүн сол жаккы шилтемелерди басыңыз."
+
+msgid "Language:"
+msgstr "Тил:"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases."
+msgstr ""
+"Бул түшүндүрмө Жангонун жасалып аткан чыгарылышы үчүн, ошол себептен мурдагы "
+"чыгарылыштардан олуттуу айырмаланышы мүмкүн."
+
+#, python-format
+msgid "This document describes Django %(version)s."
+msgstr "Бул түшүндүрмө Жанго %(version)sчыгарылышын ачыктайт."
+
+msgid "Click on the links on the left to see other versions."
+msgstr "Башка чыгарылыштарды көрүү үчүн сол жакта шилтемелерди басыңыз."
+
+msgid "Documentation version:"
+msgstr "Түшүндүрмө чыгарылышы:"
+
+msgid "Previous page and next page"
+msgstr ""
+
+msgid "Additional Information"
+msgstr "Кошумча маалымат."
+
+msgid "Contents"
+msgstr "Мазмуну"
+
+msgid "Browse"
+msgstr "Көрсөтүү"
+
+msgid "Prev:"
+msgstr "Мур:"
+
+msgid "Next:"
+msgstr "Кийнк:"
+
+msgid "Table of contents"
+msgstr "Мазмун жадыбалы"
+
+msgid "You are here:"
+msgstr "Сиз бул жердесиз:"
+
+#, python-format
+msgid "Django %(version)s documentation"
+msgstr "Жанго %(version)sтүшүндүрмөсү"
+
+msgid "Getting help"
+msgstr "Жардам алуу"
+
+msgid "FAQ"
+msgstr ""
+
+msgid "Try the FAQ — it's got answers to many common questions."
+msgstr "С/Ж карап көрүңүз — бул көптөгөн жалпы суроолор үчүн жооптор камтыйт."
+
+msgid "Index"
+msgstr "Индекс"
+
+msgid "Module Index"
+msgstr "Модул Индекси"
+
+msgid "Table of Contents"
+msgstr "Мазмун Жадыбалы"
+
+msgid "Handy when looking for specific information."
+msgstr "Кээ бир маалыматты издөөдө ыңгайлуу"
+
+msgid "Django Discord Server"
+msgstr ""
+
+msgid "Join the Django Discord Community."
+msgstr ""
+
+msgid "Official Django Forum"
+msgstr ""
+
+msgid "Join the community on the Django Forum."
+msgstr ""
+
+msgid "Ticket tracker"
+msgstr ""
+
+msgid "Report bugs with Django or Django documentation in our ticket tracker."
+msgstr ""
+"Жанго жана Жанго түшүндүрмөсүндө багдарды биздин карта көзөмөлгө билдириңиз."
+
+msgid "Download:"
+msgstr "Жүктөп алуу:"
+
+msgid "Offline (development version):"
+msgstr "Офлайн (жасоодогу чыгарылышы):"
+
+#, python-format
+msgid "Offline (Django %(version)s):"
+msgstr "Офлайн (Жанго %(version)s):"
+
+msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+msgstr ""
+"<a href=\"https://readthedocs.org/\">Түшүндүрмө Окуу</a> тарабынан "
+"камсыздалган."
+
+msgid "General Index | Django Documentation"
+msgstr "Жалпы Индекс | Жанго Түшүндүрмөсү"
+
+msgid "General Index"
+msgstr "Жалпы Индекс"
+
+msgid "[Link]"
+msgstr "[Шилтеме]"
+
+msgid "Module Index | Django Documentation"
+msgstr "Модул Индекси | Жанго Түшүндүрмөсү"
+
+msgid "Submit"
+msgstr "Жөнөтүү"
+
+msgid "Search | Django documentation"
+msgstr "Издөө | Жанго Түшүндүрмөсү"
+
+msgid "Filter the current search results by documentation category"
+msgstr ""
+
+msgctxt "all documentation categories"
+msgid "All"
+msgstr "Баары"
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in the development version"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in the development version"
+msgstr[0] ""
+"жасоодогу чыгарылышта <em>%(query)s</em> издөөдөн %(num_results)s жыйынтык "
+"табылды."
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in version %(version)s"
+msgstr[0] ""
+"%(version)s чыгарылышта <em>%(query)s</em> издөөдөн %(num_results)s жыйынтык "
+"табылды."
+
+msgid "No search query given"
+msgstr "Издөө суроосу берилген эмес"
+
+#, python-format
+msgid ""
+"Please try searching <a href=\"%(all_search)s\">all documentation results</"
+"a>."
+msgstr ""
+
+msgctxt "pagination"
+msgid "Previous"
+msgstr "Мурдакы"
+
+#, python-format
+msgid "Page %(page_number)s of %(num_pages)s"
+msgstr "%(num_pages)sбарактан %(page_number)s барагы"
+
+msgctxt "pagination"
+msgid "Next"
+msgstr "Кийинки"
+
+msgid "Page is not 'last', nor can it be converted to an int."
+msgstr "Барак же \"акыркы\" эмес же натурал санга айланбайт."
+
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "Туура эмес барак (%(page_number)s): %(message)s"

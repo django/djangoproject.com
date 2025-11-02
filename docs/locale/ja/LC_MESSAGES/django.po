@@ -3,22 +3,27 @@
 # source files.
 #
 # Translators:
-# Claude Paroz <claude@2xlibre.net>, 2019
 # Shinya Okano <tokibito@gmail.com>, 2019
 # Hiroki KIYOHARA <hirokiky@gmail.com>, 2019
 # Tobias McNulty <tobias+dsf@caktusgroup.com>, 2019
 # Masashi SHIBATA <contact@c-bata.link>, 2019
-# Shuuji TAKAHASHI (shuuji3) <shuuji3@gmail.com>, 2019
+# Takuya N <takninnovationresearch@gmail.com>, 2020
+# Pawllo2 <pawllothesecond@gmail.com>, 2025
+# Shuuji TAKAHASHI (shuuji3) <shuuji3@gmail.com>, 2025
+# Claude Paroz <claude@2xlibre.net>, 2025
+# xiu1 <d84ea@hotmail.co.jp>, 2025
+# Akio Ogasahara <libratechwriter@gmail.com>, 2025
+# TANIGUCHI Taichi, 2025
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-11 20:38-0500\n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
 "PO-Revision-Date: 2019-02-19 01:18+0000\n"
-"Last-Translator: Shuuji TAKAHASHI (shuuji3) <shuuji3@gmail.com>, 2019\n"
-"Language-Team: Japanese (https://www.transifex.com/django/teams/17080/ja/)\n"
+"Last-Translator: TANIGUCHI Taichi, 2025\n"
+"Language-Team: Japanese (https://app.transifex.com/django/teams/17080/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,6 +39,18 @@ msgstr "%s ドキュメントを検索"
 
 msgid "Search"
 msgstr "検索"
+
+msgid "API Reference"
+msgstr "API リファレンス"
+
+msgid "Using Django"
+msgstr "Django を使う"
+
+msgid "How-to guides"
+msgstr "How-to ガイド"
+
+msgid "Release notes"
+msgstr "リリースノート"
 
 msgid "Django Documentation"
 msgstr "Django ドキュメント"
@@ -51,12 +68,24 @@ msgstr ""
 "下のバージョンセレクターを使用してください。"
 
 msgid ""
+"This document is for a preview release of Django, which can be significantly "
+"different from previous releases. For older releases, use the version "
+"selector floating in the bottom right corner of this page."
+msgstr ""
+"このドキュメントは将来の Django のリリースを対象としており、これまでのリリー"
+"スとは大きく異なる場合があります。過去のリリースについては、このページの右下"
+"端に追尾するバージョンセレクタから確認してください。"
+
+msgid ""
 "This document is for an insecure version of Django that is no longer "
 "supported. Please upgrade to a newer release!"
 msgstr ""
 "このドキュメントの Django のバージョンにはセキュリティ上の脆弱性があるため、"
 "すでにサポートが終了されています。新しいバージョンにアップグレードしてくださ"
 "い！"
+
+msgid "Getting Help"
+msgstr "助けを求める"
 
 msgid "Click on the links on the left to switch to another language."
 msgstr "他の言語に変更するためには、左側のリンクをクリックしてください。"
@@ -68,8 +97,8 @@ msgid ""
 "This document is for Django's development version, which can be "
 "significantly different from previous releases."
 msgstr ""
-"この文書は開発版Djangoに関するものです。以前のリリースから、特に異なるところ"
-"を示しています。"
+"このドキュメントは Django 開発版に関するものです。以前のリリースから、特に異"
+"なるところを示しています。"
 
 #, python-format
 msgid "This document describes Django %(version)s."
@@ -82,6 +111,9 @@ msgstr ""
 
 msgid "Documentation version:"
 msgstr "ドキュメントのバージョン:"
+
+msgid "Previous page and next page"
+msgstr "前のページと次のページ"
 
 msgid "Additional Information"
 msgstr "追加的な情報"
@@ -111,6 +143,9 @@ msgstr "Django %(version)s ドキュメント"
 msgid "Getting help"
 msgstr "助けを求める"
 
+msgid "FAQ"
+msgstr "FAQ"
+
 msgid "Try the FAQ — it's got answers to many common questions."
 msgstr "FAQ では、よくある質問とそれに対する答えが読めます。"
 
@@ -126,19 +161,20 @@ msgstr "目次"
 msgid "Handy when looking for specific information."
 msgstr "特定の情報を見つけたい場合に便利です。"
 
-msgid ""
-"Search for information in the archives of the django-users mailing list, or "
-"post a question."
-msgstr ""
-"django-users メーリングリストのアーカイブから情報を検索したり、新しい質問を投"
-"稿できます。"
+msgid "Django Discord Server"
+msgstr "Django Discord サーバ"
 
-msgid ""
-"Ask a question in the #django IRC channel, or search the IRC logs to see if "
-"it’s been asked before."
-msgstr ""
-"#django IRC チャンネルで質問したり、過去になされた回答を読むために IRC ログを"
-"検索できます。"
+msgid "Join the Django Discord Community."
+msgstr "Django Discord コミュニティに参加しましょう。"
+
+msgid "Official Django Forum"
+msgstr "公式 Django フォーラム"
+
+msgid "Join the community on the Django Forum."
+msgstr "Django フォーラムのコミュニティに参加しましょう。"
+
+msgid "Ticket tracker"
+msgstr "チケットトラッカー"
 
 msgid "Report bugs with Django or Django documentation in our ticket tracker."
 msgstr ""
@@ -172,56 +208,54 @@ msgstr "[リンク]"
 msgid "Module Index | Django Documentation"
 msgstr "モジュールの目次 | Django ドキュメント"
 
+msgid "Submit"
+msgstr "送信"
+
 msgid "Search | Django documentation"
 msgstr "検索 | Django ドキュメント"
 
-#, python-format
-msgid ""
-"\n"
-"    Only 1 result for <em>%(query)s</em> in the development version\n"
-"  "
-msgid_plural ""
-"\n"
-"    %(num_results)s results for <em>%(query)s</em> in the development "
-"version\n"
-"  "
-msgstr[0] ""
-"\n"
-"    <em>%(query)s</em> に対して、開発版ドキュメント中に %(num_results)s 件の"
-"結果が見つかりました\n"
-"  "
+msgid "Filter the current search results by documentation category"
+msgstr "ドキュメントのカテゴリによって検索結果をフィルターする"
+
+msgctxt "all documentation categories"
+msgid "All"
+msgstr "全て"
 
 #, python-format
-msgid ""
-"\n"
-"    Only 1 result for <em>%(query)s</em> in version %(version)s\n"
-"  "
+msgid "Only 1 result for <em>%(query)s</em> in the development version"
 msgid_plural ""
-"\n"
-"    %(num_results)s results for <em>%(query)s</em> in version %(version)s\n"
-"  "
+"%(num_results)s results for <em>%(query)s</em> in the development version"
 msgstr[0] ""
-"\n"
-"    <em>%(query)s</em> に対して、バージョン %(version)s のドキュメント中に "
-"%(num_results)s 件の結果が見つかりました\n"
-"  "
+"開発版ドキュメント中に、<em>%(query)s</em> の%(num_results)s 件の結果が見つか"
+"りました"
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in version %(version)s"
+msgstr[0] ""
+"バージョン %(version)s のドキュメント中に、<em>%(query)s</em> "
+"の%(num_results)s 件の結果が見つかりました"
 
 msgid "No search query given"
 msgstr "検索クエリが指定されていません"
 
+#, python-format
+msgid ""
+"Please try searching <a href=\"%(all_search)s\">all documentation results</"
+"a>."
+msgstr ""
+"<a href=\"%(all_search)s\">すべてのドキュメントで検索</a> を試してください。"
+
+msgctxt "pagination"
 msgid "Previous"
 msgstr "前へ"
 
 #, python-format
-msgid ""
-"\n"
-"        Page %(page_number)s of %(num_pages)s\n"
-"      "
-msgstr ""
-"\n"
-"        %(page_number)s / %(num_pages)s ページ\n"
-"      "
+msgid "Page %(page_number)s of %(num_pages)s"
+msgstr "%(page_number)s / %(num_pages)s ページ"
 
+msgctxt "pagination"
 msgid "Next"
 msgstr "次へ"
 

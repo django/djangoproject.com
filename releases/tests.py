@@ -1,9 +1,13 @@
 import datetime
 import re
+import shutil
+import tempfile
+from pathlib import Path
 
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
+from django.template.defaultfilters import date as datefilter
 from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils.safestring import SafeString
@@ -216,6 +220,7 @@ class ReleaseTestCase(TestCase):
         other_release = Release.objects.create(version="5.1.7", is_active=True)
         today = datetime.date.today()
         cases = [
+            ("5.1.1", "5.2a1"),
             ("5.2a1", "5.2a2"),
             ("5.2a2", "5.2b1"),
             ("5.2b1", "5.2rc1"),
@@ -229,10 +234,14 @@ class ReleaseTestCase(TestCase):
                     is_active=True,
                 )
                 self.assertIsNone(previous_release.eol_date)
-                Release.objects.create(version=next_version, is_active=True)
+                next_release = Release.objects.create(
+                    version=next_version, is_active=True
+                )
                 previous_release.refresh_from_db()
                 other_release.refresh_from_db()
-                self.assertEqual(previous_release.eol_date, today)
+                if next_release.version_tuple[-2:] != ("alpha", 1):
+                    self.assertEqual(previous_release.eol_date, today)
+                self.assertIsNone(next_release.eol_date)
                 self.assertIsNone(other_release.eol_date)
 
 
@@ -418,7 +427,7 @@ class ReleaseAdminFormTestCase(TestCase):
         form = self.form_class(auto_id=None)  # auto_id=None makes testing easier
         self.assertHTMLEqual(
             form["tarball"].as_widget(),
-            '<input type="file" name="tarball" accept=".tar.gz">',
+            '<input type="file" name="tarball" accept=".gz">',
         )
         self.assertHTMLEqual(
             form["wheel"].as_widget(), '<input type="file" name="wheel" accept=".whl">'
@@ -444,6 +453,42 @@ class ReleaseAdminFormTestCase(TestCase):
             release.wheel.name, "releases/1.2/django-1.2.3-py3-none-any.whl"
         )
         self.assertEqual(release.checksum.name, "pgp/Django-1.2.3.checksum.txt")
+
+    def test_clearing_also_deletes_file(self, commit_save=True):
+        tempdir = Path(tempfile.mkdtemp(prefix="djangoprojectcom_"))
+        self.addCleanup(shutil.rmtree, tempdir, ignore_errors=True)
+
+        files = {
+            "checksum": tempdir / "checksum.txt",
+            "tarball": tempdir / "tarball.tar.gz",
+            "wheel": tempdir / "wheel.whl",
+        }
+        # Create the files on disk:
+        for f in files.values():
+            f.touch()
+
+        with override_settings(MEDIA_ROOT=tempdir):
+            release = Release.objects.create(
+                version="1.0", **{a: f.name for a, f in files.items()}
+            )
+            data = {"version": "2.0", **{f"{a}-clear": True for a in files.keys()}}
+            form = self.form_class(instance=release, data=data)
+            self.assertTrue(form.is_valid(), form.errors)
+            form.save(commit=commit_save)
+            if not commit_save:
+                for artifact, tmpfile in files.items():
+                    with self.subTest(artifact=artifact):
+                        self.assertTrue(tmpfile.exists())
+                release.save()
+                form.save_m2m()
+
+        for artifact, tmpfile in files.items():
+            with self.subTest(artifact=artifact):
+                self.assertFalse(getattr(release, artifact))
+                self.assertFalse(tmpfile.exists())
+
+    def test_clearing_also_deletes_file_commit_false(self):
+        self.test_clearing_also_deletes_file(commit_save=False)
 
 
 class RedirectViewTestCase(TestCase):
@@ -562,3 +607,89 @@ class CorporateMembersTestCase(TestCase):
             self.assertNotContains(response, member.display_name)
             self.assertNotContains(response, member.url)
             self.assertNotContains(response, member.description)
+
+
+class RoadmapViewTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        # Define release schedule for 5.2, 6.0, and 6.1 series.
+        cls.release_schedule = {
+            "5.2": [
+                ("a1", datetime.date(2025, 1, 15)),
+                ("b1", datetime.date(2025, 2, 19)),
+                ("rc1", datetime.date(2025, 3, 19)),
+                ("", datetime.date(2025, 4, 2)),  # final
+            ],
+            "6.0": [
+                ("a1", datetime.date(2025, 9, 17)),
+                ("b1", datetime.date(2025, 10, 22)),
+                ("rc1", datetime.date(2025, 11, 19)),
+                ("", datetime.date(2025, 12, 3)),  # final
+            ],
+            "6.1": [
+                ("a1", datetime.date(2026, 5, 20)),
+                ("b1", datetime.date(2026, 6, 24)),
+                ("rc1", datetime.date(2026, 7, 22)),
+                ("", datetime.date(2026, 8, 5)),  # final
+            ],
+        }
+        for series, milestones in cls.release_schedule.items():
+            for milestone, date in milestones:
+                version = f"{series}{milestone}" if milestone else series
+                Release.objects.create(
+                    version=version,
+                    is_active=True,
+                    date=date,
+                    is_lts=series.endswith(".2"),
+                )
+
+    def test_roadmap_page_renders_series_title(self):
+        for series in self.release_schedule.keys():
+            url = reverse("roadmap", kwargs={"series": series})
+            response = self.client.get(url)
+            self.assertContains(response, f"Django {series} Roadmap", html=True)
+
+    def test_roadmap_page_contains_milestones(self):
+        for series, releases in self.release_schedule.items():
+            with self.subTest(series=series):
+                url = reverse("roadmap", kwargs={"series": series})
+                response = self.client.get(url)
+                for detail, date in [
+                    (f"Django {series} alpha; feature freeze.", releases[0][1]),
+                    (
+                        f"Django {series} beta; non-release blocking bug fix freeze.",
+                        releases[1][1],
+                    ),
+                    (
+                        f"Django {series} RC 1; translation string freeze.",
+                        releases[2][1],
+                    ),
+                    (f"Django {series} final.", releases[3][1]),
+                ]:
+                    expected = f"<tr><td>{datefilter(date)}</td><td>{detail}</td></tr>"
+                    self.assertContains(response, expected, html=True)
+
+    def test_series_non_digits(self):
+        for series in (0, "", "a.b", "2.2.0"):
+            with self.subTest(series=series):
+                response = self.client.get(f"/download/{series}/roadmap/")
+                self.assertEqual(response.status_code, 404)
+
+    def test_major_lower_bound(self):
+        for minor in (0, 1, 2, 3, 11):
+            with self.subTest(minor=minor):
+                response = self.client.get(f"/download/1.{minor}/roadmap/")
+                self.assertEqual(response.status_code, 404)
+
+    def test_links_to_contributing_and_release_process_present(self):
+        url = reverse("roadmap", kwargs={"series": "20.0"})
+        response = self.client.get(url)
+        self.assertContains(
+            response,
+            'href="http://docs.djangoproject.com/en/dev/internals/contributing/"',
+        )
+        self.assertContains(
+            response,
+            'href="http://docs.djangoproject.com/en/dev/internals/release-process/"',
+        )

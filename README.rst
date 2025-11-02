@@ -4,9 +4,6 @@ djangoproject.com source code
 .. image:: https://github.com/django/djangoproject.com/workflows/Tests/badge.svg?branch=main
     :target: https://github.com/django/djangoproject.com/actions
 
-.. image:: https://coveralls.io/repos/django/djangoproject.com/badge.svg?branch=main
-    :target: https://coveralls.io/r/django/djangoproject.com?branch=main
-
 To run locally, you can either:
 
 - Install and run from a virtual environment
@@ -84,10 +81,17 @@ Install and run locally from a virtual environment
 
     python -m manage loaddata dev_sites
 
+#. Compile .po files to .mo files for translations::
+
+    make compilemessages
+
+    This only needs to happen once to support running the locale tests
+    locally.
+
 #. For docs (next step requires ``gettext``)::
 
     python -m manage loaddata doc_releases
-    python -m manage update_docs --update-index
+    python -m manage update_docs
 
 #. For dashboard:
 
@@ -130,17 +134,13 @@ Our test results can be found here:
 
 * https://github.com/django/djangoproject.com/actions
 
-For local development don't hesitate to install
-`tox <https://tox.readthedocs.io/>`_ to run the website's test suite.
-
 Then in the root directory (next to the ``manage.py`` file) run::
 
-    tox
+    make test
 
 Behind the scenes, this will run the usual ``python -m manage test`` management
-command with a preset list of apps that we want to test as well as
-`flake8 <https://flake8.readthedocs.io/>`_ for code quality checks. We
-collect test coverage data as part of that tox run, to show the result
+command with a preset list of apps that we want to test. We
+collect test coverage data as part of that test run, to show the result
 simply run::
 
     python -m coverage report
@@ -240,16 +240,8 @@ minified version of it to this directory.
 Documentation search
 --------------------
 
-When running ``python -m manage update_docs --update-index`` to build all
-documents it will also automatically index every document it builds in the
-search engine as well. In case you've already built the documents and would like
-to reindex the search index, run the command::
-
-    python -m manage update_index
-
-This is also the right command to run when you work on the search feature
-itself. You can pass the ``-d`` option to try to drop the search index
-first before indexing all the documents.
+When running ``python -m manage update_docs`` to build all documents it will
+also automatically index every document it builds in the search engine as well.
 
 Updating metrics from production
 --------------------------------
@@ -326,28 +318,25 @@ Updating translations from Transifex
 Anytime translations on Transifex have been updated, someone should update
 our translation files as follows:
 
-1. Review the translations in Transifex and add to the space-delimited
-   ``LANGUAGES`` list in ``update-translations.sh``, any new languages that have
-   reached 100% translation.
-
-2. Pull the updated translation files::
+1. Pull the updated translation files::
 
     ./update-translations.sh
 
-3. Use ``git diff`` to see if any translations have actually changed. If not,
+2. Use ``git diff`` to see if any translations have actually changed. If not,
    you can just revert the .po file changes and stop here.
 
-4. Compile the messages::
+3. Compile the messages::
 
     python -m manage compilemessages
 
-5. Run the test suite one more time::
+4. Run the test suite one more time::
 
     python -m manage test
 
-6. Commit and push the changes to GitHub::
+5. Commit and push the changes to GitHub::
 
-    git commit -m "Updated translations" locale/*/LC_MESSAGES/*
+    git add dashboard/locale/ docs/locale/ locale/
+    git commit -m "Updated translations"
     git push
 
 Running Locally with Docker
@@ -361,12 +350,25 @@ Running Locally with Docker
 
     docker compose up
 
-3. View the site at http://localhost:8000/
+3. Run the tests::
 
-4. Run the tests::
-
-    docker compose run --rm web tox
     docker compose run --rm web python -m manage test
+
+4. Load the sample / local dev data::
+
+    docker compose run --rm web make reset-local-db
+
+   If preferred, refer to the "Install and run locally from a virtual environment"
+   for more granular management commands to load specific data sets.
+
+5. View the site at http://www.djangoproject.localhost:8000/
+   or http://dashboard.djangoproject.localhost:8000/.
+
+6. For docs, download the documentation (takes awhile)::
+
+    docker compose exec -it web python -m manage update_docs
+
+7. View the docs at http://docs.djangoproject.localhost:8000/.
 
 Pre-commit checks
 -----------------

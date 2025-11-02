@@ -3,9 +3,13 @@ from datetime import date, timedelta
 from io import StringIO
 
 import time_machine
-from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib import admin
+from django.contrib.auth.models import Permission, User
+from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
 from django.test import TestCase
+from django.test.utils import override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
 
@@ -187,6 +191,107 @@ class EventTestCase(DateTimeMixin, TestCase):
 
 
 class ViewsTestCase(DateTimeMixin, TestCase):
+    def test_detail_view_html_meta(self):
+        headline = "Pride and Prejudice - Review"
+        author = "Jane Austen"
+        pub_date = date(2005, 7, 21)
+        blog_entry = Entry.objects.create(
+            pub_date=pub_date,
+            is_active=True,
+            headline=headline,
+            slug="a",
+            author=author,
+        )
+        blog_description = "Posted by Jane Austen on July 21, 2005"
+        self.assertEqual(blog_entry.description, blog_description)
+
+        blog_url = blog_entry.get_absolute_url()
+        response = self.client.get(blog_url)
+        self.assertEqual(response.status_code, 200)
+
+        expected_html_meta_tags = [
+            f'<meta name="description" content="{blog_description}" />',
+            '<meta property="og:type" content="article" />',
+            f'<meta property="og:title" content="{headline}" />',
+            f'<meta property="og:description" content="{blog_description}" />',
+            '<meta property="og:article:published_time" content="2005-07-21T00:00:00" />',
+            f'<meta property="og:article:author" content="{author}" />',
+            '<meta property="og:image:alt" content="Django logo" />',
+            f'<meta property="og:url" content="{blog_url}" />',
+            '<meta property="og:site_name" content="Django Project" />',
+            '<meta property="twitter:card" content="summary" />',
+            '<meta property="twitter:creator" content="djangoproject" />',
+            '<meta property="twitter:site" content="djangoproject" />',
+        ]
+        for expected_html_meta_tag in expected_html_meta_tags:
+            self.assertContains(response, expected_html_meta_tag, html=True)
+
+    def test_staff_with_change_permission_can_see_unpublished_detail_view(self):
+        """
+        Staff users with change permission on BlogEntry can't see unpublished entries
+        in the list, but can view the detail page
+        """
+        e1 = Entry.objects.create(
+            pub_date=self.yesterday, is_active=False, headline="inactive", slug="a"
+        )
+        user = User.objects.create(username="staff", is_staff=True)
+        # Add blog entry change permission
+
+        content_type = ContentType.objects.get_for_model(Entry)
+        change_permission = Permission.objects.get(
+            content_type=content_type, codename="change_entry"
+        )
+        user.user_permissions.add(change_permission)
+        self.client.force_login(user)
+        self.assertEqual(Entry.objects.all().count(), 1)
+        response = self.client.get(reverse("weblog:index"))
+        self.assertEqual(response.status_code, 404)
+
+        response = self.client.get(
+            reverse(
+                "weblog:entry",
+                kwargs={
+                    "year": e1.pub_date.year,
+                    "month": e1.pub_date.strftime("%b").lower(),
+                    "day": e1.pub_date.day,
+                    "slug": e1.slug,
+                },
+            )
+        )
+        request = response.context["request"]
+        self.assertTrue(request.user.is_staff)
+        self.assertTrue(request.user.has_perm("blog.change_entry"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_staff_without_change_permission_cannot_see_unpublished_detail_view(self):
+        """
+        Staff users without change permission on BlogEntry can't see unpublished entries
+        """
+        e1 = Entry.objects.create(
+            pub_date=self.yesterday, is_active=False, headline="inactive", slug="a"
+        )
+        user = User.objects.create(username="staff-no-perm", is_staff=True)
+        # No permissions added
+        self.client.force_login(user)
+        self.assertEqual(Entry.objects.all().count(), 1)
+
+        # Test detail view for unpublished entry - should return 404
+        response = self.client.get(
+            reverse(
+                "weblog:entry",
+                kwargs={
+                    "year": e1.pub_date.year,
+                    "month": e1.pub_date.strftime("%b").lower(),
+                    "day": e1.pub_date.day,
+                    "slug": e1.slug,
+                },
+            )
+        )
+        request = response.context["request"]
+        self.assertTrue(request.user.is_staff)
+        self.assertFalse(request.user.has_perm("blog.change_entry"))
+        self.assertEqual(response.status_code, 404)
+
     def test_no_past_upcoming_events(self):
         """
         Make sure there are no past event in the "upcoming events" sidebar (#399)
@@ -231,6 +336,184 @@ class ViewsTestCase(DateTimeMixin, TestCase):
             with self.subTest(user=user):
                 self.assertEqual(response.status_code, 200)
                 self.assertQuerySetEqual(response.context["events"], [])
+
+    def test_anonymous_user_cannot_see_unpublished_entries(self):
+        """
+        Anonymous users can't see unpublished entries at all (list or detail view)
+        """
+        # Create a published entry to ensure the list view works
+        published_entry = Entry.objects.create(
+            pub_date=self.yesterday,
+            is_active=True,
+            headline="published",
+            slug="published",
+        )
+
+        # Create an unpublished entry
+        unpublished_entry = Entry.objects.create(
+            pub_date=self.tomorrow,
+            is_active=True,
+            headline="unpublished",
+            slug="unpublished",
+        )
+
+        # Test list view - should return 200 but not include the unpublished entry
+        response = self.client.get(reverse("weblog:index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "published")
+        self.assertNotContains(response, "unpublished")
+
+        # Test detail view for unpublished entry - should return 404
+        unpublished_url = reverse(
+            "weblog:entry",
+            kwargs={
+                "year": unpublished_entry.pub_date.year,
+                "month": unpublished_entry.pub_date.strftime("%b").lower(),
+                "day": unpublished_entry.pub_date.day,
+                "slug": unpublished_entry.slug,
+            },
+        )
+        response = self.client.get(unpublished_url)
+        self.assertEqual(response.status_code, 404)
+
+        # Test detail view for published entry - should return 200
+        published_url = reverse(
+            "weblog:entry",
+            kwargs={
+                "year": published_entry.pub_date.year,
+                "month": published_entry.pub_date.strftime("%b").lower(),
+                "day": published_entry.pub_date.day,
+                "slug": published_entry.slug,
+            },
+        )
+        response = self.client.get(published_url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_user_cannot_see_unpublished_entries(self):
+        """
+        Non-staff users can't see unpublished entries at all (list or detail view)
+        """
+        user = User.objects.create(username="non-staff", is_staff=False)
+        self.client.force_login(user)
+
+        # Create a published entry to ensure the list view works
+        published_entry = Entry.objects.create(
+            pub_date=self.yesterday,
+            is_active=True,
+            headline="published",
+            slug="published",
+        )
+
+        # Create an unpublished entry
+        unpublished_entry = Entry.objects.create(
+            pub_date=self.tomorrow,
+            is_active=True,
+            headline="unpublished",
+            slug="unpublished",
+        )
+
+        # Test list view - should return 200 but not include the unpublished entry
+        response = self.client.get(reverse("weblog:index"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "published")
+        self.assertNotContains(response, "unpublished")
+
+        # Test detail view for unpublished entry - should return 404
+        unpublished_url = reverse(
+            "weblog:entry",
+            kwargs={
+                "year": unpublished_entry.pub_date.year,
+                "month": unpublished_entry.pub_date.strftime("%b").lower(),
+                "day": unpublished_entry.pub_date.day,
+                "slug": unpublished_entry.slug,
+            },
+        )
+        response = self.client.get(unpublished_url)
+        self.assertEqual(response.status_code, 404)
+
+        # Test detail view for published entry - should return 200
+        published_url = reverse(
+            "weblog:entry",
+            kwargs={
+                "year": published_entry.pub_date.year,
+                "month": published_entry.pub_date.strftime("%b").lower(),
+                "day": published_entry.pub_date.day,
+                "slug": published_entry.slug,
+            },
+        )
+        response = self.client.get(published_url)
+        self.assertEqual(response.status_code, 200)
+
+
+@override_settings(
+    # Caching middleware is added in the production settings file;
+    # simulate that here for the tests.
+    MIDDLEWARE=(
+        ["django.middleware.cache.UpdateCacheMiddleware"]
+        + settings.MIDDLEWARE
+        + ["django.middleware.cache.FetchFromCacheMiddleware"]
+    ),
+)
+class ViewsCachingTestCase(DateTimeMixin, TestCase):
+    def test_drafts_have_no_cache_headers(self):
+        """
+        Draft (unpublished) entries have no-cache headers.
+        """
+        user = User.objects.create(username="staff", is_staff=True)
+        content_type = ContentType.objects.get_for_model(Entry)
+        change_permission = Permission.objects.get(
+            content_type=content_type, codename="change_entry"
+        )
+        user.user_permissions.add(change_permission)
+        self.client.force_login(user)
+
+        unpublished_entry = Entry.objects.create(
+            pub_date=self.tomorrow,
+            is_active=True,
+            headline="unpublished",
+            slug="unpublished",
+        )
+        unpublished_url = reverse(
+            "weblog:entry",
+            kwargs={
+                "year": unpublished_entry.pub_date.year,
+                "month": unpublished_entry.pub_date.strftime("%b").lower(),
+                "day": unpublished_entry.pub_date.day,
+                "slug": unpublished_entry.slug,
+            },
+        )
+
+        response = self.client.get(unpublished_url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Cache-Control", response.headers)
+        self.assertEqual(
+            response.headers["Cache-Control"],
+            "max-age=0, no-cache, no-store, must-revalidate, private",
+        )
+
+    def test_published_blogs_have_cache_control_headers(self):
+        """
+        Published blog posts has Cache-Control header.
+        """
+        entry = Entry.objects.create(
+            pub_date=self.yesterday,
+            is_active=True,
+            headline="published",
+            slug="published",
+        )
+        url = reverse(
+            "weblog:entry",
+            kwargs={
+                "year": entry.pub_date.year,
+                "month": entry.pub_date.strftime("%b").lower(),
+                "day": entry.pub_date.day,
+                "slug": entry.slug,
+            },
+        )
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["Cache-Control"], "max-age=300")
 
 
 class SitemapTests(DateTimeMixin, TestCase):
@@ -337,3 +620,18 @@ class ImageUploadTestCase(TestCase):
                     ContentFormat.to_html(cf, img_tag),
                     expected,
                 )
+
+    def test_copy_button(self):
+        i = ImageUpload.objects.create(
+            title="test",
+            alt_text='Alt text "here"',
+            image=ContentFile(b".", name="test.png"),
+        )
+        self.assertInHTML(
+            '<button type="button" data-clipboard-content='
+            f'"&lt;img src=&quot;/m/{i.image}&quot; '
+            'alt=&quot;Alt text &amp;quot;here&amp;quot;&quot;&gt;">'
+            "Raw HTML"
+            "</button>",
+            admin.site.get_model_admin(ImageUpload).copy_buttons(i),
+        )

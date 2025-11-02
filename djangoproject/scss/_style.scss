@@ -13,7 +13,7 @@ CSS rendered with Libsass 0.7.0
 
 //------------------- Globals
 body {
-    @include serif;
+    @include sans-serif;
     @include font-size(18);
     background: var(--sidebar-bg);
     color: var(--body-fg);
@@ -636,7 +636,6 @@ header {
     }
 
     p {
-        @include serif;
         @include font-size(18);
         color: var(--white-color);
         left: -9999px;
@@ -673,6 +672,9 @@ header {
             margin: 0.35em 0 0.35em;
             line-height: 1.3;
             padding: 1px 0 6px;
+        }
+        .underlined {
+          text-decoration: underline;
         }
     }
 
@@ -1343,6 +1345,18 @@ label[for] {
   background-color: var(--error-light-l10);
   border-radius: .3em;
   margin: 10px 0;
+}
+
+.cta.arrow {
+  height: auto;
+  &::after {
+    content: " →" / "";
+  }
+  &:dir(rtl) {
+    &::after {
+      content: " ←" / "";
+    }
+  }
 }
 
 .callout-right {
@@ -2518,14 +2532,48 @@ dl.data {
     white-space: normal;
 }
 
+table {
+    th {
+        background: var(--sidebar-bg);
+        font-weight: bold;
+        text-align: left;
+    }
+
+    td {
+        border-bottom: 1px solid var(--hairline-color);
+    }
+
+    td,
+    th {
+        padding: 0.5em 1em;
+    }
+}
+
 table.foundation td {
-    border-bottom: 1px solid var(--hairline-color);
     padding: 0 5px;
 }
 
-table.docutils td,
-table.docutils th {
-    border-bottom: 1px solid var(--hairline-color);
+table.django-supported-versions,
+table.django-unsupported-versions {
+    border: 1px solid var(--hairline-color);
+    color: var(--table-color);
+
+    th,
+    td {
+        border-bottom: none;
+        padding: 5px;
+        text-align: center;
+    }
+}
+
+table.django-supported-versions th,
+table.django-supported-versions tr {
+    background-color: var(--secondary-accent);
+}
+
+table.django-unsupported-versions th,
+table.django-unsupported-versions tr {
+    background-color: var(--error-light);
 }
 
 .list-links {
@@ -3407,26 +3455,6 @@ form .footnote {
         display: inline-block;
         margin-left: 1em;
     }
-}
-
-table.django-supported-versions,
-table.django-unsupported-versions {
-    border: 1px solid black;
-    text-align: center;
-    color: var(--table-color);
-
-    th,
-    td {
-        padding: 5px;
-    }
-}
-
-table.django-supported-versions tr {
-    background-color: var(--secondary-accent);
-}
-
-table.django-unsupported-versions tr {
-    background-color: var(--error-light);
 }
 
 /* Corporate membership list page */

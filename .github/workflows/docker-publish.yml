@@ -2,7 +2,7 @@ name: Create and publish a Docker image
 
 on:
     push:
-        branches: ["main"]
+        branches: ["main", "preview"]
 
 env:
     REGISTRY: ghcr.io
@@ -31,9 +31,9 @@ jobs:
               uses: docker/metadata-action@v5
               with:
                   images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-                  flavor: |
-                      latest=true
                   tags: |
+                      # set latest tag for main branch only
+                      type=raw,value=latest,enable={{is_default_branch}}
                       type=ref,event=branch
                       type=sha
 

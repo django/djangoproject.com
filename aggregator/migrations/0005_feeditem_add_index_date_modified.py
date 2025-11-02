@@ -6,12 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('aggregator', '0004_add_local_django_community'),
+        ("aggregator", "0004_add_local_django_community"),
     ]
 
     operations = [
         migrations.AddIndex(
-            model_name='feeditem',
-            index=models.Index(fields=['-date_modified'], name='aggregator__date_mo_d6dfa1_idx'),
+            model_name="feeditem",
+            index=models.Index(
+                fields=["-date_modified"], name="aggregator__date_mo_d6dfa1_idx"
+            ),
         ),
     ]

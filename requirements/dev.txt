@@ -1,5 +1,6 @@
 -r common.txt
-django-debug-toolbar==5.2.0
-isort==6.0.1
-pre-commit~=4.2.0
+black==25.9.0  # Used by Django's find_formatters and run_formatters
+django-debug-toolbar==6.0.0
+pre-commit~=4.3.0
+psycopg[binary]==3.2.10
 watchdog==6.0.0

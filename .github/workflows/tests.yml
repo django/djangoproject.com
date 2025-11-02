@@ -7,19 +7,16 @@ on:
             - main
     pull_request:
 
+env:
+    PYTHON_VERSION: 3.12
+
 jobs:
     tests:
         runs-on: ubuntu-24.04
-        strategy:
-            fail-fast: false
-            matrix:
-                # tox-gh-actions will only run the tox environments which match the currently
-                # running python-version. See [gh-actions] in tox.ini for the mapping.
-                python-version: ["3.12"]
 
         services:
             postgres:
-                image: postgres:14-alpine
+                image: postgres:17-trixie
                 env:
                     POSTGRES_PASSWORD: postgres
                 options: >-
@@ -35,10 +32,13 @@ jobs:
             - name: Set up Python
               uses: actions/setup-python@v5
               with:
-                  python-version: "${{ matrix.python-version }}"
+                  python-version: ${{ env.PYTHON_VERSION }}
+            - name: Install gettext
+              run: sudo apt-get update && sudo apt-get install -y gettext
             - name: Install dependencies
               run: |
-                  python -m pip install --upgrade pip setuptools coveralls "tox<5" "tox-gh-actions<4"
+                  python -m pip install --upgrade pip setuptools
+                  python -m pip install -r requirements/tests.txt
             - name: Set up databases
               run: |
                   PGPASSWORD="postgres" createuser -U postgres -d djangoproject --superuser -h localhost
@@ -59,15 +59,6 @@ jobs:
                   echo '"trac_db_host": "localhost", ' >> conf/secrets.json
                   echo '"trac_db_password": "secret", ' >> conf/secrets.json
                   echo '"secret_key": "a"}' >> conf/secrets.json
-            - name: Run tox
+            - name: Run tests
               run: |
-                  python -m tox
-            - name: Coveralls
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  COVERALLS_PARALLEL: true
-                  COVERALLS_FLAG_NAME: "${{ matrix.python-version }}"
-                  COVERALLS_SERVICE_NAME: github
-                  COVERALLS_SERVICE_JOB_ID: "${{ github.run_id }}"
-                  COVERALLS_SERVICE_NUMBER: "${{ github.workflow }}-${{ github.run_number }}"
-              run: coveralls --service=github
+                  make ci

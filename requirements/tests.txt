@@ -1,5 +1,4 @@
 -r dev.txt
-coverage==7.9.1
+coverage==7.11.0
 requests-mock==1.12.1
 tblib>=3.0.0
-tox<5.0.0

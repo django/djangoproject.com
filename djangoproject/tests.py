@@ -4,9 +4,47 @@ from io import StringIO
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import NoReverseMatch, get_resolver
+from django.utils.translation import activate, gettext as _
 from django_hosts.resolvers import reverse
 
 from docs.models import DocumentRelease, Release
+
+
+class LocaleSmokeTests(TestCase):
+    """
+    Smoke test a translated string from each of the 3 locale directories
+    (one defined in settings.LOCALE_PATHS, plus the dashboard and docs apps).
+    """
+
+    def test_dashboard_locale(self):
+        """dashboard/locale/ should contain translations for 'Development dashboard'"""
+        activate("fr")
+        translated = _("Development dashboard")
+        self.assertEqual(
+            translated,
+            "Tableau de bord de développement",
+            msg="dashboard/locale/ translation not loaded or incorrect",
+        )
+
+    def test_docs_locale(self):
+        """docs/locale/ should contain translations for 'Using Django'"""
+        activate("fr")
+        translated = _("Using Django")
+        self.assertEqual(
+            translated,
+            "Utilisation de Django",
+            msg="docs/locale/ translation not loaded or incorrect",
+        )
+
+    def test_project_locale(self):
+        """locale/ should contain translations for 'Fundraising'"""
+        activate("fr")
+        translated = _("Fundraising")
+        self.assertEqual(
+            translated,
+            "Levée de fonds",
+            msg="project-level locale/ translation not loaded or incorrect",
+        )
 
 
 class TemplateViewTests(TestCase):
@@ -63,10 +101,11 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
         DocumentRelease.objects.create(lang="en", release=r2, is_default=True)
 
     def test_docs_host_excluded(self):
-        "We get no Content-Language or Vary headers when docs host is excluded"
+        """We get no Content-Language or Vary headers when docs host is excluded"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
             resp = self.client.get("/", headers={"host": self.docs_host})
-        self.assertEqual(resp.status_code, HTTPStatus.FOUND)
+
+        self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertNotIn("Content-Language", resp)
         self.assertNotIn("Vary", resp)
 
@@ -90,20 +129,22 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
             LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host], USE_X_FORWARDED_HOST=True
         ):
             resp = self.client.get("/", headers={"x-forwarded-host": self.docs_host})
-        self.assertEqual(resp.status_code, HTTPStatus.FOUND)
+
+        self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertNotIn("Content-Language", resp)
         self.assertNotIn("Vary", resp)
 
     def test_docs_host_not_excluded(self):
-        "We still get Content-Language when docs host is not excluded"
+        """We still get Content-Language when docs host is not excluded"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[]):
             resp = self.client.get("/", headers={"host": self.docs_host})
-        self.assertEqual(resp.status_code, HTTPStatus.FOUND)
+
+        self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn("Content-Language", resp)
         self.assertIn("Vary", resp)
 
     def test_www_host(self):
-        "www should still use LocaleMiddleware"
+        """www should still use LocaleMiddleware"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
             resp = self.client.get("/", headers={"host": self.www_host})
         self.assertEqual(resp.status_code, HTTPStatus.OK)
@@ -111,7 +152,7 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
         self.assertIn("Vary", resp)
 
     def test_www_host_with_port(self):
-        "www (with a port) should still use LocaleMiddleware"
+        """www (with a port) should still use LocaleMiddleware"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
             resp = self.client.get("/", headers={"host": "%s:8000" % self.www_host})
         self.assertEqual(resp.status_code, HTTPStatus.OK)

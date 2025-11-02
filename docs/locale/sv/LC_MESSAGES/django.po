@@ -1,0 +1,256 @@
+# Copyright (C) Django Software Foundation and contributors
+# This file is distributed under the same license as the djangoproject.com
+# source files.
+#
+# Translators:
+# Petter Strandmark <petter.strandmark@gmail.com>, 2019
+# Alexander Blomberg, 2025
+# Claude Paroz <claude@2xlibre.net>, 2025
+# Jonathan Lindén, 2025
+# Daniel Nylander <po@danielnylander.se>, 2025
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-04 10:04-0500\n"
+"PO-Revision-Date: 2019-02-19 01:18+0000\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>, 2025\n"
+"Language-Team: Swedish (https://app.transifex.com/django/teams/17080/sv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#, python-format
+msgid "Search %s documentation"
+msgstr "Sök i %s-dokumentation"
+
+msgid "Search"
+msgstr "Sök"
+
+msgid "API Reference"
+msgstr "API-referens"
+
+msgid "Using Django"
+msgstr "Använda Django"
+
+msgid "How-to guides"
+msgstr "Hur man gör-guider"
+
+msgid "Release notes"
+msgstr "Versionsinformation"
+
+msgid "Django Documentation"
+msgstr "Djangodokumentation"
+
+msgid "Django documentation"
+msgstr "Dokumentation för Django"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases. For older releases, use the "
+"version selector floating in the bottom right corner of this page."
+msgstr ""
+"Det här dokumentet är för Djangos utvecklingsversion, som kan skilja sig "
+"betydligt från tidigare utgåvor. För äldre versioner, använd "
+"versionsväljaren som flyter i det nedre högra hörnet på denna sida."
+
+msgid ""
+"This document is for a preview release of Django, which can be significantly "
+"different from previous releases. For older releases, use the version "
+"selector floating in the bottom right corner of this page."
+msgstr ""
+"Detta dokument gäller en förhandsutgåva av Django, som kan skilja sig "
+"avsevärt från tidigare utgåvor. För äldre utgåvor, använd versionsväljaren "
+"som finns i det nedre högra hörnet på denna sida."
+
+msgid ""
+"This document is for an insecure version of Django that is no longer "
+"supported. Please upgrade to a newer release!"
+msgstr ""
+"Detta dokument är för en osäker version av Django som inte längre stöds. "
+"Vänligen uppgradera till en nyare version!"
+
+msgid "Getting Help"
+msgstr "Få hjälp"
+
+msgid "Click on the links on the left to switch to another language."
+msgstr "Klicka på länkarna till vänster för att byta till ett annat språk."
+
+msgid "Language:"
+msgstr "Språk:"
+
+msgid ""
+"This document is for Django's development version, which can be "
+"significantly different from previous releases."
+msgstr ""
+"Det här dokumentet är för Djangos utvecklingsversion, som kan skilja sig "
+"betydligt från tidigare utgåvor."
+
+#, python-format
+msgid "This document describes Django %(version)s."
+msgstr "Detta dokument beskriver Django %(version)s."
+
+msgid "Click on the links on the left to see other versions."
+msgstr "Klicka på länkarna till vänster för att se andra versioner."
+
+msgid "Documentation version:"
+msgstr "Dokumentationsversion:"
+
+msgid "Previous page and next page"
+msgstr "Föregående sida och nästa sida"
+
+msgid "Additional Information"
+msgstr "Ytterligare information"
+
+msgid "Contents"
+msgstr "Innehåll"
+
+msgid "Browse"
+msgstr "Bläddra"
+
+msgid "Prev:"
+msgstr "Föregående:"
+
+msgid "Next:"
+msgstr "Nästa:"
+
+msgid "Table of contents"
+msgstr "Innehållsförteckning"
+
+msgid "You are here:"
+msgstr "Du är här:"
+
+#, python-format
+msgid "Django %(version)s documentation"
+msgstr "Django %(version)s dokumentation"
+
+msgid "Getting help"
+msgstr "Få hjälp"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "Try the FAQ — it's got answers to many common questions."
+msgstr "Prova FAQ — där finns svar på många vanliga frågor."
+
+msgid "Index"
+msgstr "Index"
+
+msgid "Module Index"
+msgstr "Modulindex"
+
+msgid "Table of Contents"
+msgstr "Innehållsförteckning"
+
+msgid "Handy when looking for specific information."
+msgstr "Praktiskt när du letar efter specifik information."
+
+msgid "Django Discord Server"
+msgstr "Djangos Discord-server"
+
+msgid "Join the Django Discord Community."
+msgstr "Gå med i Djangos Discord-gemenskap."
+
+msgid "Official Django Forum"
+msgstr "Officiellt Django-forum"
+
+msgid "Join the community on the Django Forum."
+msgstr "Gå med i gemenskapen på Djangos forum."
+
+msgid "Ticket tracker"
+msgstr "Ärendehantering"
+
+msgid "Report bugs with Django or Django documentation in our ticket tracker."
+msgstr ""
+"Rapportera fel med Django- eller Django-dokumentation i vår biljettspårare."
+
+msgid "Download:"
+msgstr "Ladda ner:"
+
+msgid "Offline (development version):"
+msgstr "Offline (utvecklingsversion):"
+
+#, python-format
+msgid "Offline (Django %(version)s):"
+msgstr "Offline  (Django %(version)s):"
+
+msgid "Provided by <a href=\"https://readthedocs.org/\">Read the Docs</a>."
+msgstr ""
+"Tillhandahålls av<a href=\"https://readthedocs.org/\"> Läs dokumenten </a>."
+
+msgid "General Index | Django Documentation"
+msgstr "Allmänt index | Django-dokumentation"
+
+msgid "General Index"
+msgstr "Allmänt index"
+
+msgid "[Link]"
+msgstr "[Länk]"
+
+msgid "Module Index | Django Documentation"
+msgstr "Modulindex | Django-dokumentation"
+
+msgid "Submit"
+msgstr "Skicka"
+
+msgid "Search | Django documentation"
+msgstr "Sök | Django-dokumentation"
+
+msgid "Filter the current search results by documentation category"
+msgstr "Filtrera aktuella sökresultat efter dokumentationskategori"
+
+msgctxt "all documentation categories"
+msgid "All"
+msgstr "Alla"
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in the development version"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in the development version"
+msgstr[0] "Endast 1 resultat för <em>%(query)s</em> i utvecklingsversionen"
+msgstr[1] ""
+"%(num_results)s resultat för <em>%(query)s</em> i utvecklingsversionen"
+
+#, python-format
+msgid "Only 1 result for <em>%(query)s</em> in version %(version)s"
+msgid_plural ""
+"%(num_results)s results for <em>%(query)s</em> in version %(version)s"
+msgstr[0] "Endast 1 resultat för <em>%(query)s</em> i version %(version)s"
+msgstr[1] ""
+"%(num_results)s resultat för <em>%(query)s</em> i version %(version)s"
+
+msgid "No search query given"
+msgstr "Ingen sökfråga angiven"
+
+#, python-format
+msgid ""
+"Please try searching <a href=\"%(all_search)s\">all documentation results</"
+"a>."
+msgstr ""
+"Prova att söka i <a href=\"%(all_search)s\">alla dokumentationsresultat</a>."
+
+msgctxt "pagination"
+msgid "Previous"
+msgstr "Föregående"
+
+#, python-format
+msgid "Page %(page_number)s of %(num_pages)s"
+msgstr "Sida %(page_number)s av %(num_pages)s"
+
+msgctxt "pagination"
+msgid "Next"
+msgstr "Nästa"
+
+msgid "Page is not 'last', nor can it be converted to an int."
+msgstr "Sidan är inte 'last', och kan inte heller omvandlas till en int."
+
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "Ogiltig sida (%(page_number)s): %(message)s"

@@ -7,7 +7,7 @@ from django.test import TestCase
 
 from releases.models import Release
 
-from ..models import DOCUMENT_SEARCH_VECTOR, Document, DocumentRelease
+from ..models import Document, DocumentRelease
 
 
 class ModelsTests(TestCase):
@@ -350,9 +350,6 @@ class DocumentManagerTest(TestCase):
         ]
         Document.objects.bulk_create(Document(**doc) for doc in documents)
 
-    def setUp(self):
-        Document.objects.search_update()
-
     def test_search(self):
         expected_list = [
             (
@@ -415,29 +412,17 @@ class DocumentManagerTest(TestCase):
             ],
         )
 
-    def test_search_reset(self):
-        self.assertEqual(Document.objects.exclude(search=None).count(), 6)
-        self.assertEqual(Document.objects.search_reset(), 6)
-        self.assertEqual(Document.objects.exclude(search=None).count(), 0)
-
-    def test_search_update(self):
-        self.assertEqual(Document.objects.exclude(search=None).count(), 6)
-        self.assertEqual(Document.objects.search_update(), 6)
-        self.assertEqual(Document.objects.exclude(search=None).count(), 6)
-
     def test_search_highlight_stemmed(self):
         # The issue only manifests itself when the defaut search config is not english
         with connection.cursor() as cursor:
             cursor.execute("SET default_text_search_config TO 'simple'", [])
 
-        doc = self.release.documents.create(
+        self.release.documents.create(
             config="english",
             path="/",
             title="triaging tickets",
             metadata={"body": "text containing the word triaging", "breadcrumbs": []},
         )
-        doc.search = DOCUMENT_SEARCH_VECTOR
-        doc.save(update_fields=["search"])
 
         self.assertQuerySetEqual(
             Document.objects.search("triaging", self.release),

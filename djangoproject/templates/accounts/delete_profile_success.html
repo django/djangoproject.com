@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h2>{% translate "Account deleted" %}</h2>
+    <p>
+        {% translate "Your account and its data were successfully deleted, and you've been logged out." %}
+    </p>
+    <p>
+        {% url "community-index" as community_index_url %}
+        {% blocktranslate trimmed %}
+            Thanks for spending your time with us, we hope we'll still see you
+            around on our <a href="{{ community_index_url }}">various community spaces</a>, online and off.
+        {% endblocktranslate %}
+    </p>
+{% endblock %}

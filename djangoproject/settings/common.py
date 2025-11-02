@@ -94,6 +94,9 @@ INSTALLED_APPS = [
     "_sphinx_13448_workaround",
 ]
 
+if os.getenv("DJANGO_SPOOKY_MODE"):
+    INSTALLED_APPS.insert(0, "django_admin_dracula")  # spooky 👻
+
 LANGUAGE_CODE = "en-us"
 
 LOGGING = {
@@ -217,8 +220,13 @@ TEMPLATES = [
 
 TIME_ZONE = "America/Chicago"
 
+# Internationalization settings
+
 USE_I18N = True
 
+# Django discovers locale directories in the installed apps on its own,
+# but the main project locale directory needs to be listed explicitly.
+LOCALE_PATHS = (BASE_DIR / "locale",)
 
 USE_TZ = False
 
