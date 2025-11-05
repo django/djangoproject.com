@@ -20,7 +20,7 @@ compile-scss-debug:
 	python -m pysassc $(SCSS)/output.scss $(STATIC)/css/output.css --sourcemap
 
 install:
-	python -m pip install --requirement requirements/dev.txt
+	uv sync --group dev
 
 migrations-check:
 	python -m manage makemigrations --check --dry-run

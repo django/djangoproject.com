@@ -21,9 +21,6 @@ repos:
           - id: end-of-file-fixer
             exclude: '(^djangoproject\/static\/js\/lib\/.*$)'
             exclude_types: [json, sql]
-          - id: file-contents-sorter
-            files: ^(requirements/\w*.txt)$
-            args: ["--ignore-case"]
           - id: fix-byte-order-marker
           - id: mixed-line-ending
           - id: trailing-whitespace
@@ -64,3 +61,16 @@ repos:
       rev: 0.2.2
       hooks:
           - id: checkmake
+
+    - repo: https://github.com/tox-dev/pyproject-fmt
+      rev: v2.11.0
+      hooks:
+          - id: pyproject-fmt
+            args:
+                [
+                    "--indent",
+                    "4",
+                    "--keep-full-version",
+                    "--max-supported-python",
+                    "3.12",
+                ]

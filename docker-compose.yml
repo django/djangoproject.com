@@ -4,7 +4,7 @@ services:
             context: ./
             dockerfile: Dockerfile
             args:
-                - REQ_FILE=requirements/tests.txt
+                - DEPENDENCY_GROUPS=tests
                 - BUILD_DEPENDENCIES=g++ gcc
         entrypoint: ./docker-entrypoint.dev.sh
         command: python manage.py runserver 0.0.0.0:8000
