@@ -21,9 +21,6 @@ repos:
           - id: end-of-file-fixer
             exclude: '(^djangoproject\/static\/js\/lib\/.*$)'
             exclude_types: [json, sql]
-          - id: file-contents-sorter
-            files: ^(requirements/\w*.txt)$
-            args: ["--ignore-case"]
           - id: fix-byte-order-marker
           - id: mixed-line-ending
           - id: trailing-whitespace
@@ -73,3 +70,13 @@ repos:
       rev: 0.2.2
       hooks:
           - id: checkmake
+
+    - repo: https://github.com/tox-dev/pyproject-fmt
+      rev: v2.11.1
+      hooks:
+          - id: pyproject-fmt
+
+    - repo: https://github.com/astral-sh/uv-pre-commit
+      rev: 0.9.24
+      hooks:
+          - id: uv-lock

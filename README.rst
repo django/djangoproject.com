@@ -16,7 +16,7 @@ Install and run locally from a virtual environment
 
 #. Install dependencies::
 
-    python3 -m pip install -r requirements/dev.txt
+    uv sync --group dev
 
    Alternatively, use the make task::
 
@@ -153,7 +153,7 @@ or for a HTML-based report::
 tests manually using the ``test`` task of the ``Makefile``. Don't forget to
 install the test requirements with the following command first though::
 
-    python -m pip install -r requirements/tests.txt
+    uv sync --group tests
 
 Then run::
 

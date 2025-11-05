@@ -1,4 +1,0 @@
--r dev.txt
-coverage==7.13.1
-requests-mock==1.12.1
-tblib>=3.0.0

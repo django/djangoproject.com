@@ -5,38 +5,38 @@ SCSS = djangoproject/scss
 STATIC = djangoproject/static
 
 ci: compilemessages test
-	@python -m coverage report
+	@uv run coverage report
 
 compilemessages:
-	python -m manage compilemessages
+	uv run python manage.py compilemessages --ignore .venv
 
 collectstatics: compile-scss
-	python -m manage collectstatic --noinput
+	uv run python manage.py collectstatic --noinput
 
 compile-scss:
-	python -m pysassc $(SCSS)/output.scss $(STATIC)/css/output.css --style=compressed
+	uv run pysassc $(SCSS)/output.scss $(STATIC)/css/output.css --style=compressed
 
 compile-scss-debug:
-	python -m pysassc $(SCSS)/output.scss $(STATIC)/css/output.css --sourcemap
+	uv run pysassc $(SCSS)/output.scss $(STATIC)/css/output.css --sourcemap
 
 install:
-	python -m pip install --requirement requirements/dev.txt
+	uv sync
 
 migrations-check:
-	python -m manage makemigrations --check --dry-run
+	uv run python manage.py makemigrations --check --dry-run
 
 run:
-	python -m manage runserver 0.0.0.0:8000
+	uv run python manage.py runserver 0.0.0.0:8000
 
 test:
-	@python -m coverage run --source=. --module manage test --verbosity 2 $(APP_LIST)
+	@uv run coverage run --source=. --module manage test --verbosity 2 $(APP_LIST)
 
 watch-scss:
 	watchmedo shell-command --patterns=*.scss --recursive --command="make compile-scss-debug" $(SCSS)
 
 reset-local-db:
-	python -m manage flush --no-input
-	python -m manage loaddata dev_sites
-	python -m manage loaddata doc_releases
-	python -m manage loaddata dashboard_production_metrics
-	python -m manage update_metrics
+	uv run python manage.py flush --no-input
+	uv run python manage.py loaddata dev_sites
+	uv run python manage.py loaddata doc_releases
+	uv run python manage.py loaddata dashboard_production_metrics
+	uv run python manage.py update_metrics

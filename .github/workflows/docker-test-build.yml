@@ -16,29 +16,29 @@ jobs:
 
         strategy:
             matrix:
-                req_file:
-                    - prod.txt
-                    - tests.txt
+                dependency_groups:
+                    - prod
+                    - tests
 
         # steps taken (and trimmed) from docker-publish.yml
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - if: matrix.req_file != 'tests.txt'
-              name: Test docker image build (${{ matrix.req_file }})
+            - if: matrix.dependency_groups != 'tests'
+              name: Test docker image build (${{ matrix.dependency_groups }})
               uses: docker/build-push-action@v6
               with:
                   context: .
                   push: false
                   build-args: |
-                      REQ_FILE=requirements/${{ matrix.req_file }}
+                      DEPENDENCY_GROUPS=${{ matrix.dependency_groups }}
 
-            - if: matrix.req_file == 'tests.txt'
+            - if: matrix.dependency_groups == 'tests'
               name: Set up Docker Compose
               uses: docker/setup-compose-action@v1
 
-            - if: matrix.req_file == 'tests.txt'
+            - if: matrix.dependency_groups == 'tests'
               name: Run the tests via Docker
               run: |
                   docker compose build
