@@ -111,25 +111,25 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             author="user1",
             newvalue="Accepted",
             ticket=Ticket.objects.create(),
-            **initial_ticket_values
+            **initial_ticket_values,
         )
         TicketChange.objects.create(
             author="user1",
             newvalue="Someday/Maybe",
             ticket=Ticket.objects.create(),
-            **initial_ticket_values
+            **initial_ticket_values,
         )
         TicketChange.objects.create(
             author="user1",
             newvalue="Ready for checkin",
             ticket=Ticket.objects.create(),
-            **initial_ticket_values
+            **initial_ticket_values,
         )
         TicketChange.objects.create(
             author="user2",
             newvalue="Accepted",
             ticket=Ticket.objects.create(),
-            **initial_ticket_values
+            **initial_ticket_values,
         )
 
         response = self.client.get(self.user1_url)
@@ -145,13 +145,13 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             oldvalue="Unreviewed",
             newvalue="Accepted",
             ticket=Ticket.objects.create(),
-            **common_ticket_values
+            **common_ticket_values,
         )
         TicketChange.objects.create(
             oldvalue="Accepted",
             newvalue="Unreviewed",
             ticket=Ticket.objects.create(),
-            **common_ticket_values
+            **common_ticket_values,
         )
 
         response = self.client.get(self.user1_url)
