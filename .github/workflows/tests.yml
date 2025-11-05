@@ -37,8 +37,7 @@ jobs:
               run: sudo apt-get update && sudo apt-get install -y gettext
             - name: Install dependencies
               run: |
-                  python -m pip install --upgrade pip setuptools
-                  python -m pip install -r requirements/tests.txt
+                  python -m uv sync --group tests
             - name: Set up databases
               run: |
                   PGPASSWORD="postgres" createuser -U postgres -d djangoproject --superuser -h localhost
