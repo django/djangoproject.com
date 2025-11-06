@@ -1,5 +1,8 @@
 import datetime
 import re
+import shutil
+import tempfile
+from pathlib import Path
 
 from django.contrib import admin
 from django.core.exceptions import ValidationError
@@ -424,7 +427,7 @@ class ReleaseAdminFormTestCase(TestCase):
         form = self.form_class(auto_id=None)  # auto_id=None makes testing easier
         self.assertHTMLEqual(
             form["tarball"].as_widget(),
-            '<input type="file" name="tarball" accept=".tar.gz">',
+            '<input type="file" name="tarball" accept=".gz">',
         )
         self.assertHTMLEqual(
             form["wheel"].as_widget(), '<input type="file" name="wheel" accept=".whl">'
@@ -450,6 +453,42 @@ class ReleaseAdminFormTestCase(TestCase):
             release.wheel.name, "releases/1.2/django-1.2.3-py3-none-any.whl"
         )
         self.assertEqual(release.checksum.name, "pgp/Django-1.2.3.checksum.txt")
+
+    def test_clearing_also_deletes_file(self, commit_save=True):
+        tempdir = Path(tempfile.mkdtemp(prefix="djangoprojectcom_"))
+        self.addCleanup(shutil.rmtree, tempdir, ignore_errors=True)
+
+        files = {
+            "checksum": tempdir / "checksum.txt",
+            "tarball": tempdir / "tarball.tar.gz",
+            "wheel": tempdir / "wheel.whl",
+        }
+        # Create the files on disk:
+        for f in files.values():
+            f.touch()
+
+        with override_settings(MEDIA_ROOT=tempdir):
+            release = Release.objects.create(
+                version="1.0", **{a: f.name for a, f in files.items()}
+            )
+            data = {"version": "2.0", **{f"{a}-clear": True for a in files.keys()}}
+            form = self.form_class(instance=release, data=data)
+            self.assertTrue(form.is_valid(), form.errors)
+            form.save(commit=commit_save)
+            if not commit_save:
+                for artifact, tmpfile in files.items():
+                    with self.subTest(artifact=artifact):
+                        self.assertTrue(tmpfile.exists())
+                release.save()
+                form.save_m2m()
+
+        for artifact, tmpfile in files.items():
+            with self.subTest(artifact=artifact):
+                self.assertFalse(getattr(release, artifact))
+                self.assertFalse(tmpfile.exists())
+
+    def test_clearing_also_deletes_file_commit_false(self):
+        self.test_clearing_also_deletes_file(commit_save=False)
 
 
 class RedirectViewTestCase(TestCase):

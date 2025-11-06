@@ -57,21 +57,18 @@
       </div>
     </section>
 
-    {% comment %}
-    Replace the div#billboard below with banner using the skeleton here to
-    add a site banner for surveys/promotions/etc
-
-    <div id="billboard">{% block billboard %}
-      <div class="banner">
-        <p> Banner content goes here </p>
-      </div>
-        {% endblock %}
+    <div id="billboard">
+      {% block billboard %}
+        <div class="banner">
+          <p>
+            <a href="https://www.jetbrains.com/pycharm/promo/support-django/?utm_campaign=pycharm&utm_content=django25&utm_medium=referral&utm_source=dsf-banner">
+              Until November 11, 2025, <em class="underlined">get PyCharm for 30% off</em>.
+              All money goes to the <em>Django Software Foundation</em>!
+            </a>
+          </p>
+        </div>
+      {% endblock %}
     </div>
-    The CSS targets the `#billboard` selector and expects nested `div and `p` elements.
-    elements.
-    {% endcomment %}
-
-    <div id="billboard">{% block billboard %}{% endblock %}</div>
 
     <div class="container {% block layout_class %}{% endblock %}">
       <main id="main-content">

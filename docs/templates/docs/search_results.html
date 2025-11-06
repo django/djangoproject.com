@@ -21,13 +21,13 @@
     <h2>
       {% if release.is_dev %}
         {% blocktranslate count num_results=paginator.count trimmed %}
-          Only 1 result for <em>{{ query }}</em> in the development version
+          {{ num_results }} result for <em>{{ query }}</em> in the development version
         {% plural %}
           {{ num_results }} results for <em>{{ query }}</em> in the development version
         {% endblocktranslate %}
       {% else %}
         {% blocktranslate count num_results=paginator.count trimmed %}
-          Only 1 result for <em>{{ query }}</em> in version {{ version }}
+          {{ num_results }} result for <em>{{ query }}</em> in version {{ version }}
         {% plural %}
           {{ num_results }} results for <em>{{ query }}</em> in version {{ version }}
         {% endblocktranslate %}

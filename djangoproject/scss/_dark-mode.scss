@@ -139,12 +139,12 @@ html[data-theme="light"],
     body table.django-supported-versions,
     body table.django-unsupported-versions {
         a {
-            color: $black;
+            color: var(--table-color);
 
             &:active,
             &:focus,
             &:hover {
-                color: $gray-medium;
+                color: var(--table-link-hover);
             }
         }
     }
@@ -198,6 +198,7 @@ html[data-theme="dark"] {
     --error-dark: #{$red-medium};
 
     --table-color: var(--body-bg);
+    --table-link-hover: #09422C;
     --cta-color-accent: #{$black};
     --white-color: #{$black};
 
@@ -236,12 +237,12 @@ html[data-theme="dark"] {
     table.django-supported-versions,
     table.django-unsupported-versions {
         a {
-            color: $black;
+            color: var(--table-color);
 
             &:active,
             &:focus,
             &:hover {
-                color: $gray-medium;
+                color: var(--table-link-hover);
             }
         }
     }
