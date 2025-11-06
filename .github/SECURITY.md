@@ -13,7 +13,7 @@ The Django website working group is committed to responsible reporting and
 disclosure of security-related issue on our website. We appreciate your efforts
 and responsible disclosure.
 
-Report security bugs and issue by creating a
+Report security bugs and issues by creating a
 [new vulnerability report](https://github.com/django/djangoproject.com/security/advisories/new)
 in the djangoproject.com repository.
 
