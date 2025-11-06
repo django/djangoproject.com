@@ -59,6 +59,13 @@ jobs:
                   echo '"trac_db_host": "localhost", ' >> conf/secrets.json
                   echo '"trac_db_password": "secret", ' >> conf/secrets.json
                   echo '"secret_key": "a"}' >> conf/secrets.json
+
             - name: Run tests
               run: |
                   make ci
+                  coverage xml
+
+            - name: Upload coverage reports to Codecov
+              uses: codecov/codecov-action@v5.5.1
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}
