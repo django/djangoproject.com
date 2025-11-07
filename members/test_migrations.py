@@ -11,6 +11,11 @@ User = get_user_model()
 
 class IndividualMemberTests(TestCase):
     def test_migration_members_0012_link_individual_members_to_users_by_email(self):
+        # Once the related changes are deployed and the database has been
+        # migrated, we might consider removing this test. If you do remove it,
+        # please remember to mark the corresponding migration code so that it's
+        # excluded from the coverage rates (pragma: no cover).
+
         stdout = StringIO()
         stderr = StringIO()
 
