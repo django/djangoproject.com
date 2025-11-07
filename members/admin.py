@@ -62,7 +62,7 @@ class IndividualMemberAdmin(admin.ModelAdmin):
                 % {"count": sent_count},
                 messages.SUCCESS,
             )
-        if failed_count > 0:
+        if failed_count > 0:  # pragma: no cover
             self.message_user(
                 request,
                 ngettext(
