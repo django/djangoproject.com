@@ -1,5 +1,4 @@
 from io import StringIO
-from random import randint
 
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
@@ -24,7 +23,7 @@ class IndividualMemberTests(TestCase):
             stderr=stderr,
         )
 
-        members_count = randint(2, 4)
+        members_count = 4
         user_pk_to_email_mapping = {}
         for i in range(members_count):
             username = f"user{i}"
