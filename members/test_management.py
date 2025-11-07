@@ -117,12 +117,36 @@ class IndividualMemberTests(TestCase):
             email="member2@example.com",
             member_until=date.today() - timedelta(days=7),
         )
+        stdout = StringIO()
+        stderr = StringIO()
         call_command(
             "send_individual_member_account_invite_mails",
             "--include-former-members",
-            "--no-logging",
+            stdout=stdout,
+            stderr=stderr,
         )
         self.assertEqual(len(mail.outbox), 2)
+        stdout_output = stdout.getvalue()
+        stderr_output = stderr.getvalue()
+        self.assertGreater(len(stdout_output), 0)
+        self.assertEqual(len(stderr_output), 0)
+        stdout_output_lines = stdout_output.splitlines()
+        self.assertIn(
+            f"{IndividualMemberAccountInviteSendMailStatus.SENT}: 2",
+            stdout_output_lines,
+        )
+
+    def test_send_individual_member_account_invite_mails_with_option_no_logging(self):
+        stdout = StringIO()
+        stderr = StringIO()
+        call_command(
+            "send_individual_member_account_invite_mails",
+            no_logging=True,
+            stdout=stdout,
+            stderr=stderr,
+        )
+        self.assertEqual(len(stdout.getvalue()), 0)
+        self.assertEqual(len(stderr.getvalue()), 0)
 
 
 class CorporateMemberTests(TestCase):
