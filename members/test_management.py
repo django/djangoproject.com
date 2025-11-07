@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from io import StringIO
 
 from django.conf import settings
 from django.core import mail
@@ -6,7 +7,12 @@ from django.core.management import call_command
 from django.test import TestCase
 from django.utils.formats import localize
 
-from members.models import SILVER_MEMBERSHIP, CorporateMember, IndividualMember
+from members.models import (
+    SILVER_MEMBERSHIP,
+    CorporateMember,
+    IndividualMember,
+    IndividualMemberAccountInviteSendMailStatus,
+)
 
 
 class IndividualMemberTests(TestCase):
@@ -20,11 +26,23 @@ class IndividualMemberTests(TestCase):
             email="member2@example.com",
             member_until=date.today() - timedelta(days=7),
         )
+        stdout = StringIO()
+        stderr = StringIO()
         call_command(
             "send_individual_member_account_invite_mails",
-            "--no-logging",
+            stdout=stdout,
+            stderr=stderr,
         )
         self.assertEqual(len(mail.outbox), 1)
+        stdout_output = stdout.getvalue()
+        stderr_output = stderr.getvalue()
+        self.assertGreater(len(stdout_output), 0)
+        self.assertEqual(len(stderr_output), 0)
+        stdout_output_lines = stdout_output.splitlines()
+        self.assertIn(
+            f"{IndividualMemberAccountInviteSendMailStatus.SENT}: 1",
+            stdout_output_lines,
+        )
 
     def test_send_individual_member_account_invite_mails_including_former_members(self):
         IndividualMember.objects.create(

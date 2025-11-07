@@ -40,6 +40,6 @@ class Command(BaseCommand):
             if (
                 status_enum_value == IndividualMemberAccountInviteSendMailStatus.FAILED
                 and count > 0
-            ):
+            ):  # pragma: no cover
                 writer = self.stderr
             writer.write(f"{status_enum_member}: {count}")
