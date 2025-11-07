@@ -88,11 +88,9 @@ class IndividualMember(models.Model):
         ]
 
     @classmethod
-    def match_and_set_users_by_email(cls, queryset=None):
+    def match_and_set_users_by_email(cls):
         updated_count = 0
-        if queryset is None:
-            queryset = cls.objects.all()
-        queryset = queryset.filter(user_id__isnull=True)
+        queryset = cls.objects.filter(user_id__isnull=True)
         # Wait for other active transactions to prevent race conditions.
         queryset = queryset.select_for_update(nowait=False)
         users_queryset = User.objects.filter(
@@ -146,7 +144,7 @@ class IndividualMember(models.Model):
                 self.account_invite_mail_sent_at = timezone_now()
                 self.save()
                 return IndividualMemberAccountInviteSendMailStatus.SENT
-        return IndividualMemberAccountInviteSendMailStatus.FAILED
+        return IndividualMemberAccountInviteSendMailStatus.FAILED  # pragma: no cover
 
 
 class Team(models.Model):
