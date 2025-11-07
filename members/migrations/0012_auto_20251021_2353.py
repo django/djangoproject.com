@@ -25,7 +25,7 @@ def link_individual_members_to_users_by_email(apps, schema_editor):
             IndividualMember.objects.filter(email=user.email).update(user=user)
 
 
-def noop(apps, schema_editor):
+def noop(apps, schema_editor):  # pragma: no cover
     pass
 
 
