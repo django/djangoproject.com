@@ -246,4 +246,3 @@ def render_svg():
 
 if __name__ == "__main__":
     render_svg()
-
