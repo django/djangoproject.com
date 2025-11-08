@@ -29,7 +29,7 @@ COLORS = {
     "grid": "#333333",
     "text": "#FFFFFF",
     "text_lts": "#0C4B33",
-    "bg": "transparent",
+    "bg": "#000000",
 }
 
 CONFIG = {
@@ -246,3 +246,4 @@ def render_svg():
 
 if __name__ == "__main__":
     render_svg()
+
