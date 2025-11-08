@@ -1,0 +1,84 @@
+<svg width="{{ svg_width }}" height="{{ svg_height }}" version="1.1" xmlns="http://www.w3.org/2000/svg" profile="tiny">
+    <style>
+        .version-text {
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size }}px;
+            font-weight: {{ config.font_weight }};
+            fill: {{ colors.text }};
+        }
+        .lts-text {
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size }}px;
+            font-weight: {{ config.font_weight_lts }};
+            font-style: {{ config.font_style_lts }};
+            fill: {{ colors.text_lts }};
+        }
+        .year-label {
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size_small }}px;
+            fill: {{ colors.text }};
+        }
+        .legend-text {
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size }}px;
+            fill: {{ colors.text }};
+        }
+    </style>
+    <defs>
+        <linearGradient id="fade-right" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0.0" stop-color="{{ colors.bg }}" stop-opacity="0.0" />
+            <stop offset="1.0" stop-color="{{ colors.bg }}" stop-opacity="1.0" />
+        </linearGradient>
+    </defs>
+
+    <rect width="100%" height="100%" fill="{{ colors.bg }}" />
+
+    {% for line in grid_lines %}
+        <line x1="{{ line.x }}" y1="{{ config.padding_top - 10 }}" x2="{{ line.x }}" y2="{{ svg_height - config.padding_bottom }}"
+              stroke="{{ colors.grid }}" stroke-width="{{ line.width }}" />
+        {% if line.label %}
+            <text x="{{ line.x + 5 }}" y="{{ config.padding_top - 15 }}" class="year-label">{{ line.label }}</text>
+        {% endif %}
+    {% endfor %}
+
+    {% for release in releases %}
+        {% if release.mainstream_bar.width > 0 %}
+            <rect x="{{ release.mainstream_bar.x }}" y="{{ release.mainstream_bar.y }}"
+                  width="{{ release.mainstream_bar.width }}" height="{{ release.mainstream_bar.height }}"
+                  fill="{{ release.mainstream_bar.fill }}" />
+        {% endif %}
+        
+        {% if release.extended_bar.width > 0 %}
+            <rect x="{{ release.extended_bar.x }}" y="{{ release.extended_bar.y }}"
+                  width="{{ release.extended_bar.width }}" height="{{ release.extended_bar.height }}"
+                  fill="{{ release.extended_bar.fill }}" />
+        {% endif %}
+        
+        <text x="{{ release.version_text.x }}" y="{{ release.version_text.y }}" class="version-text">
+            {{ release.version_text.text }}
+        </text>
+        
+        {% if release.lts_text %}
+            <text x="{{ release.lts_text.x }}" y="{{ release.lts_text.y }}" class="lts-text">
+                {{ release.lts_text.text }}
+            </text>
+        {% endif %}
+    {% endfor %}
+
+    <rect x="{{ legend.mainstream_box.x }}" y="{{ legend.mainstream_box.y }}"
+          width="{{ legend.mainstream_box.size }}" height="{{ legend.mainstream_box.size }}"
+          fill="{{ legend.mainstream_box.fill }}" />
+    <text x="{{ legend.mainstream_text.x }}" y="{{ legend.mainstream_text.y }}" class="legend-text">
+        {{ legend.mainstream_text.text }}
+    </text>
+    
+    <rect x="{{ legend.extended_box.x }}" y="{{ legend.extended_box.y }}"
+          width="{{ legend.extended_box.size }}" height="{{ legend.extended_box.size }}"
+          fill="{{ legend.extended_box.fill }}" />
+    <text x="{{ legend.extended_text.x }}" y="{{ legend.extended_text.y }}" class="legend-text">
+        {{ legend.extended_text.text }}
+    </text>
+
+    
+
+</svg>
