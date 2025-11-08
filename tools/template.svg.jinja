@@ -47,17 +47,17 @@
                   width="{{ release.mainstream_bar.width }}" height="{{ release.mainstream_bar.height }}"
                   fill="{{ release.mainstream_bar.fill }}" />
         {% endif %}
-        
+
         {% if release.extended_bar.width > 0 %}
             <rect x="{{ release.extended_bar.x }}" y="{{ release.extended_bar.y }}"
                   width="{{ release.extended_bar.width }}" height="{{ release.extended_bar.height }}"
                   fill="{{ release.extended_bar.fill }}" />
         {% endif %}
-        
+
         <text x="{{ release.version_text.x }}" y="{{ release.version_text.y }}" class="version-text">
             {{ release.version_text.text }}
         </text>
-        
+
         {% if release.lts_text %}
             <text x="{{ release.lts_text.x }}" y="{{ release.lts_text.y }}" class="lts-text">
                 {{ release.lts_text.text }}
@@ -71,7 +71,7 @@
     <text x="{{ legend.mainstream_text.x }}" y="{{ legend.mainstream_text.y }}" class="legend-text">
         {{ legend.mainstream_text.text }}
     </text>
-    
+
     <rect x="{{ legend.extended_box.x }}" y="{{ legend.extended_box.y }}"
           width="{{ legend.extended_box.size }}" height="{{ legend.extended_box.size }}"
           fill="{{ legend.extended_box.fill }}" />
@@ -79,6 +79,6 @@
         {{ legend.extended_text.text }}
     </text>
 
-    
+
 
 </svg>
