@@ -3,6 +3,8 @@
 
 {% block title %}{{ object.headline|escape }} | Weblog{% endblock %}
 
+{% block description %}{{ object.description }}{% endblock %}
+
 {% block og_tags %}
     {% for property, content in object.opengraph_tags.items %}
         <meta property="{{ property }}" content="{{ content }}" />

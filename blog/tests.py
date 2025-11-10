@@ -4,6 +4,7 @@ from io import StringIO
 
 import time_machine
 from django.conf import settings
+from django.contrib import admin
 from django.contrib.auth.models import Permission, User
 from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
@@ -64,6 +65,26 @@ class EntryTestCase(DateTimeMixin, TestCase):
         self.assertQuerySetEqual(
             Entry.objects.published(),
             ["past active"],
+            transform=lambda entry: entry.headline,
+        )
+
+    def test_manager_searchable(self):
+        """
+        Make sure that the Entry manager's `searchable` method works
+        """
+        Entry.objects.create(
+            pub_date=self.yesterday,
+            is_searchable=False,
+            headline="not searchable",
+            slug="a",
+        )
+        Entry.objects.create(
+            pub_date=self.yesterday, is_searchable=True, headline="searchable", slug="b"
+        )
+
+        self.assertQuerySetEqual(
+            Entry.objects.searchable(),
+            ["searchable"],
             transform=lambda entry: entry.headline,
         )
 
@@ -190,6 +211,41 @@ class EventTestCase(DateTimeMixin, TestCase):
 
 
 class ViewsTestCase(DateTimeMixin, TestCase):
+    def test_detail_view_html_meta(self):
+        headline = "Pride and Prejudice - Review"
+        author = "Jane Austen"
+        pub_date = date(2005, 7, 21)
+        blog_entry = Entry.objects.create(
+            pub_date=pub_date,
+            is_active=True,
+            headline=headline,
+            slug="a",
+            author=author,
+        )
+        blog_description = "Posted by Jane Austen on July 21, 2005"
+        self.assertEqual(blog_entry.description, blog_description)
+
+        blog_url = blog_entry.get_absolute_url()
+        response = self.client.get(blog_url)
+        self.assertEqual(response.status_code, 200)
+
+        expected_html_meta_tags = [
+            f'<meta name="description" content="{blog_description}" />',
+            '<meta property="og:type" content="article" />',
+            f'<meta property="og:title" content="{headline}" />',
+            f'<meta property="og:description" content="{blog_description}" />',
+            '<meta property="og:article:published_time" content="2005-07-21T00:00:00" />',
+            f'<meta property="og:article:author" content="{author}" />',
+            '<meta property="og:image:alt" content="Django logo" />',
+            f'<meta property="og:url" content="{blog_url}" />',
+            '<meta property="og:site_name" content="Django Project" />',
+            '<meta property="twitter:card" content="summary" />',
+            '<meta property="twitter:creator" content="djangoproject" />',
+            '<meta property="twitter:site" content="djangoproject" />',
+        ]
+        for expected_html_meta_tag in expected_html_meta_tags:
+            self.assertContains(response, expected_html_meta_tag, html=True)
+
     def test_staff_with_change_permission_can_see_unpublished_detail_view(self):
         """
         Staff users with change permission on BlogEntry can't see unpublished entries
@@ -584,3 +640,18 @@ class ImageUploadTestCase(TestCase):
                     ContentFormat.to_html(cf, img_tag),
                     expected,
                 )
+
+    def test_copy_button(self):
+        i = ImageUpload.objects.create(
+            title="test",
+            alt_text='Alt text "here"',
+            image=ContentFile(b".", name="test.png"),
+        )
+        self.assertInHTML(
+            '<button type="button" data-clipboard-content='
+            f'"&lt;img src=&quot;/m/{i.image}&quot; '
+            'alt=&quot;Alt text &amp;quot;here&amp;quot;&quot;&gt;">'
+            "Raw HTML"
+            "</button>",
+            admin.site.get_model_admin(ImageUpload).copy_buttons(i),
+        )

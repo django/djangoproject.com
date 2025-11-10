@@ -37,6 +37,9 @@ class EntryQuerySet(models.QuerySet):
     def active(self):
         return self.filter(is_active=True)
 
+    def searchable(self):
+        return self.filter(is_searchable=True)
+
 
 class ContentFormat(models.TextChoices):
     REST = "reST", "reStructuredText"
@@ -126,6 +129,12 @@ class Entry(models.Model):
         ),
         default=False,
     )
+    is_searchable = models.BooleanField(
+        default=False,
+        help_text=_(
+            "Tick to make this entry appear in the Django documentation search."
+        ),
+    )
     pub_date = models.DateTimeField(
         verbose_name=_("Publication date"),
         help_text=_(
@@ -168,7 +177,7 @@ class Entry(models.Model):
             "day": self.pub_date.strftime("%d").lower(),
             "slug": self.slug,
         }
-        return reverse("weblog:entry", kwargs=kwargs)
+        return reverse("weblog:entry", kwargs=kwargs, host="www")
 
     def is_published(self):
         """
@@ -181,6 +190,12 @@ class Entry(models.Model):
     @property
     def pub_date_localized(self):
         return date_format(self.pub_date)
+
+    @property
+    def description(self):
+        return _("Posted by {author} on {pub_date}").format(
+            author=self.author, pub_date=self.pub_date_localized
+        )
 
     def save(self, *args, **kwargs):
         self.summary_html = ContentFormat.to_html(self.content_format, self.summary)
@@ -208,9 +223,7 @@ class Entry(models.Model):
         tags = {
             "og:type": "article",
             "og:title": self.headline,
-            "og:description": _("Posted by {author} on {pub_date}").format(
-                author=self.author, pub_date=self.pub_date_localized
-            ),
+            "og:description": self.description,
             "og:article:published_time": self.pub_date.isoformat(),
             "og:article:author": self.author,
             "og:image": static("img/logos/django-logo-negative.png"),

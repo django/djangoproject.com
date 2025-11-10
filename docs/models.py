@@ -26,16 +26,24 @@ from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django_hosts.resolvers import reverse
 
+from blog.models import Entry
 from releases.models import Release
 
 from . import utils
 from .search import (
     DEFAULT_TEXT_SEARCH_CONFIG,
+    SEARCHABLE_VIEWS,
     START_SEL,
     STOP_SEL,
     TSEARCH_CONFIG_LANGUAGES,
+    DocumentationCategory,
     get_document_search_vector,
 )
+
+
+def get_search_config(lang):
+    """Determine the PostgreSQL search language"""
+    return TSEARCH_CONFIG_LANGUAGES.get(lang[:2], DEFAULT_TEXT_SEARCH_CONFIG)
 
 
 class DocumentReleaseQuerySet(models.QuerySet):
@@ -206,15 +214,83 @@ class DocumentRelease(models.Model):
                 path=document_path,
                 title=html.unescape(strip_tags(document["title"])),
                 metadata=document,
-                config=TSEARCH_CONFIG_LANGUAGES.get(
-                    self.lang[:2], DEFAULT_TEXT_SEARCH_CONFIG
-                ),
+                config=get_search_config(self.lang),
             )
         for document in self.documents.all():
             document.metadata["breadcrumbs"] = list(
                 Document.objects.breadcrumbs(document).values("title", "path")
             )
             document.save(update_fields=("metadata",))
+
+        self._sync_blog_to_db()
+        self._sync_views_to_db()
+
+    def _sync_blog_to_db(self):
+        """
+        Sync the blog entries into search based on the release documents
+        support end date.
+        """
+        if self.lang != "en":
+            return  # The blog is only written in English currently
+
+        entries = Entry.objects.published().searchable()
+        Document.objects.bulk_create(
+            [
+                Document(
+                    release=self,
+                    path=entry.get_absolute_url(),
+                    title=entry.headline,
+                    metadata={
+                        "body": entry.body_html,
+                        "breadcrumbs": [
+                            {
+                                "path": DocumentationCategory.WEBSITE,
+                                "title": "News",
+                            },
+                        ],
+                        "parents": DocumentationCategory.WEBSITE,
+                        "slug": entry.slug,
+                        "title": entry.headline,
+                        "toc": "",
+                    },
+                    config=get_search_config(self.lang),
+                )
+                for entry in entries
+            ]
+        )
+
+    def _sync_views_to_db(self):
+        """
+        Sync the specific views into search based on the release documents
+        support end date.
+        """
+        if self.lang != "en":
+            return  # The searchable views are only written in English currently
+
+        Document.objects.bulk_create(
+            [
+                Document(
+                    release=self,
+                    path=searchable_view.www_absolute_url,
+                    title=searchable_view.page_title,
+                    metadata={
+                        "body": searchable_view.html,
+                        "breadcrumbs": [
+                            {
+                                "path": DocumentationCategory.WEBSITE,
+                                "title": "Website",
+                            },
+                        ],
+                        "parents": DocumentationCategory.WEBSITE,
+                        "slug": searchable_view.url_name,
+                        "title": searchable_view.page_title,
+                        "toc": "",
+                    },
+                    config=get_search_config(self.lang),
+                )
+                for searchable_view in SEARCHABLE_VIEWS
+            ]
+        )
 
 
 def _clean_document_path(path):
@@ -228,7 +304,9 @@ def _clean_document_path(path):
 
 
 def document_url(doc):
-    if doc.path:
+    if doc.metadata.get("parents") == DocumentationCategory.WEBSITE:
+        return doc.path
+    elif doc.path:
         kwargs = {
             "lang": doc.release.lang,
             "version": doc.release.version,

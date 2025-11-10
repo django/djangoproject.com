@@ -43,11 +43,11 @@
         {% for result in page.object_list %}
           <dt>
             <h2 class="result-title">
-              <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}{% if not start_sel in result.headline %}{{ result.highlight|fragment }}{% endif %}">{{ result.headline|safe }}</a>
+              <a href="{{ result.get_absolute_url }}{% if not start_sel in result.headline %}{{ result.highlight|fragment }}{% endif %}">{{ result.headline|safe }}</a>
             </h2>
             <span class="meta breadcrumbs">
               {% for breadcrumb in result.breadcrumbs %}
-                <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=breadcrumb.path host 'docs' %}">{{ breadcrumb.title }}</a>{% if not forloop.last %} <span class="arrow">»</span>{% endif %}
+                <a href="{{ result.get_absolute_url }}">{{ breadcrumb.title }}</a>{% if not forloop.last %} <span class="arrow">»</span>{% endif %}
               {% endfor %}
             </span>
           </dt>
@@ -60,7 +60,7 @@
               <ul class="code-links">
                 {% for name, value in result_code_links.items %}
                   <li>
-                    <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}#{{ value.full_path }}">
+                    <a href="{{ result.get_absolute_url }}#{{ value.full_path }}">
                       <div>
                         <code>{{ name }}</code>
                         {% if value.module_path %}<div class="meta">{{ value.module_path }}</div>{% endif %}
