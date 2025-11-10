@@ -28,7 +28,7 @@ repos:
           - id: mixed-line-ending
           - id: trailing-whitespace
     - repo: https://github.com/asottile/pyupgrade
-      rev: "v3.21.0"
+      rev: "v3.21.1"
       hooks:
           - id: pyupgrade
             args: [--py312]
@@ -38,7 +38,7 @@ repos:
           - id: django-upgrade
             args: [--target-version, "5.2"]
     - repo: https://github.com/psf/black-pre-commit-mirror
-      rev: 25.9.0
+      rev: 25.11.0
       hooks:
           - id: black
     - repo: https://github.com/rbubley/mirrors-prettier
