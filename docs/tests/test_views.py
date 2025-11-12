@@ -1,5 +1,6 @@
 from http import HTTPStatus
 
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse, set_urlconf
@@ -91,7 +92,7 @@ class SearchFormTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(
-            response, "4 results for <em>generic</em> in version 5.1", html=True
+            response, "5 results for <em>generic</em> in version 5.1", html=True
         )
         self.assertContains(response, self.active_filter, count=1)
         self.assertContains(response, f"{self.active_filter}All</a>", html=True)
@@ -122,7 +123,7 @@ class SearchFormTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(
-            response, "4 results for <em>generic</em> in version 5.1", html=True
+            response, "5 results for <em>generic</em> in version 5.1", html=True
         )
         self.assertContains(response, self.active_filter, count=1)
         self.assertContains(response, f"{self.active_filter}All</a>", html=True)
@@ -252,8 +253,16 @@ class SitemapTests(TestCase):
 
     def test_sitemap(self):
         doc_release = DocumentRelease.objects.create()
-        document = Document.objects.create(release=doc_release)
-        sitemap = DocsSitemap("en")
+        document = Document.objects.create(
+            release=doc_release,
+            metadata={"parents": DocumentationCategory.TOPICS},
+        )
+        Document.objects.create(
+            release=doc_release,
+            metadata={"parents": DocumentationCategory.WEBSITE},
+            path="example",
+        )
+        sitemap = DocsSitemap(settings.DEFAULT_LANGUAGE_CODE)
         urls = sitemap.get_urls()
         self.assertEqual(len(urls), 1)
         url_info = urls[0]
