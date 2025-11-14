@@ -13,6 +13,8 @@ from django.test.utils import override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
 
+from djangoproject.tests import ReleaseMixin
+
 from .models import ContentFormat, Entry, Event, ImageUpload
 from .sitemaps import WeblogSitemap
 
@@ -210,7 +212,7 @@ class EventTestCase(DateTimeMixin, TestCase):
         )
 
 
-class ViewsTestCase(DateTimeMixin, TestCase):
+class ViewsTestCase(ReleaseMixin, DateTimeMixin, TestCase):
     def test_detail_view_html_meta(self):
         headline = "Pride and Prejudice - Review"
         author = "Jane Austen"
@@ -474,7 +476,7 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         + ["django.middleware.cache.FetchFromCacheMiddleware"]
     ),
 )
-class ViewsCachingTestCase(DateTimeMixin, TestCase):
+class ViewsCachingTestCase(ReleaseMixin, DateTimeMixin, TestCase):
     def test_drafts_have_no_cache_headers(self):
         """
         Draft (unpublished) entries have no-cache headers.

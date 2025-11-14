@@ -347,20 +347,28 @@ html[data-theme="light"] .theme-toggle .theme-label-when-light {
     background-color: var(--body-bg);
 }
 
-.mobile-toggle {
-    width: 45px;
-    height: 45px;
+// Section of the header that is only visible on mobile.
+.header-mobile-only {
     line-height: 45px;
     text-align: center;
-    margin: 4px 10px;
+    display: flex;
+    align-items: center;
 
-    @include respond-min(768px) {
+    @include respond-min(1080px) {
         display: none;
+    }
+
+    .light-dark-mode-toggle {
+      height: 45px;
+      width: 45px;
+      margin: 2px;
     }
 }
 
-header nav li:last-child {
-    @include respond-max(768px) {
+// The last 2 items of the nav list are the searchbar and the light/dark mode toggle.
+// These are not visible on mobile as they are within the .header-mobile-only section.
+header nav li:nth-last-child(-n+2) {
+    @include respond-max(1080px) {
         display: none;
     }
 }

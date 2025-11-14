@@ -5,12 +5,15 @@ from django.test import TestCase
 from django.urls import reverse
 from djmoney.money import Money
 
+from djangoproject.tests import ReleaseMixin
+
 from .models import ApprovedGrant, BoardMember, Business, Meeting, Office, Term
 
 
-class MeetingTestCase(TestCase):
+class MeetingTestCase(ReleaseMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
+        super().setUpTestData()
         cls.user = User.objects.create_superuser(
             "admin", "admin@example.com", "password"
         )

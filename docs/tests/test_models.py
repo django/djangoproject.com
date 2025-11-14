@@ -122,9 +122,9 @@ class ManagerTests(TestCase):
         DocumentRelease.objects.bulk_create(
             DocumentRelease(lang=lang, release=release)
             for lang, release in [
-                ("en", None),
-                ("en", r1),
-                ("en", r2),
+                (settings.DEFAULT_LANGUAGE_CODE, None),
+                (settings.DEFAULT_LANGUAGE_CODE, r1),
+                (settings.DEFAULT_LANGUAGE_CODE, r2),
                 ("sv", r1),
                 ("ar", r1),
             ]
@@ -133,7 +133,7 @@ class ManagerTests(TestCase):
     def test_by_version(self):
         self.assertQuerySetEqual(
             DocumentRelease.objects.by_version("1.0"),
-            [("en", "1.0"), ("sv", "1.0"), ("ar", "1.0")],
+            [(settings.DEFAULT_LANGUAGE_CODE, "1.0"), ("sv", "1.0"), ("ar", "1.0")],
             transform=attrgetter("lang", "version"),
             ordered=False,
         )
@@ -141,7 +141,7 @@ class ManagerTests(TestCase):
     def test_by_version_dev(self):
         self.assertQuerySetEqual(
             DocumentRelease.objects.by_version("dev"),
-            [("en", "dev")],
+            [(settings.DEFAULT_LANGUAGE_CODE, "dev")],
             transform=attrgetter("lang", "version"),
             ordered=False,
         )
@@ -149,7 +149,12 @@ class ManagerTests(TestCase):
     def test_by_versions(self):
         self.assertQuerySetEqual(
             DocumentRelease.objects.by_versions("1.0", "dev"),
-            [("en", "dev"), ("en", "1.0"), ("sv", "1.0"), ("ar", "1.0")],
+            [
+                (settings.DEFAULT_LANGUAGE_CODE, "dev"),
+                (settings.DEFAULT_LANGUAGE_CODE, "1.0"),
+                ("sv", "1.0"),
+                ("ar", "1.0"),
+            ],
             transform=attrgetter("lang", "version"),
             ordered=False,
         )
@@ -159,9 +164,11 @@ class ManagerTests(TestCase):
             DocumentRelease.objects.by_versions()
 
     def test_get_by_version_and_lang_exists(self):
-        doc = DocumentRelease.objects.get_by_version_and_lang("1.0", "en")
+        doc = DocumentRelease.objects.get_by_version_and_lang(
+            "1.0", settings.DEFAULT_LANGUAGE_CODE
+        )
         self.assertEqual(doc.release.version, "1.0")
-        self.assertEqual(doc.lang, "en")
+        self.assertEqual(doc.lang, settings.DEFAULT_LANGUAGE_CODE)
 
     def test_get_by_version_and_lang_missing(self):
         with self.assertRaises(DocumentRelease.DoesNotExist):
@@ -169,8 +176,8 @@ class ManagerTests(TestCase):
 
     def test_get_available_languages_by_version(self):
         get = DocumentRelease.objects.get_available_languages_by_version
-        self.assertEqual(list(get("1.0")), ["ar", "en", "sv"])
-        self.assertEqual(list(get("2.0")), ["en"])
+        self.assertEqual(list(get("1.0")), ["ar", settings.DEFAULT_LANGUAGE_CODE, "sv"])
+        self.assertEqual(list(get("2.0")), [settings.DEFAULT_LANGUAGE_CODE])
         self.assertEqual(list(get("3.0")), [])
 
 
@@ -444,7 +451,7 @@ class DocumentManagerTest(TestCase):
         with self.assertNumQueries(1):
             self.assertQuerySetEqual(
                 misspelled_query,
-                [("Generic views", "en", "1.2.3")],
+                [("Generic views", settings.DEFAULT_LANGUAGE_CODE, "1.2.3")],
                 transform=attrgetter(
                     "headline", "release.lang", "release.release.version"
                 ),

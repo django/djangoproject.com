@@ -47,9 +47,9 @@ def get_search_config(lang):
 
 
 class DocumentReleaseQuerySet(models.QuerySet):
-    def current(self, lang="en"):
+    def current(self, lang=settings.DEFAULT_LANGUAGE_CODE):
         current = self.get(is_default=True)
-        if lang != "en":
+        if lang != settings.DEFAULT_LANGUAGE_CODE:
             try:
                 return self.get(lang=lang, release=current.release)
             except DocumentRelease.DoesNotExist:
@@ -99,7 +99,9 @@ class DocumentRelease(models.Model):
 
     DEFAULT_CACHE_KEY = "%s_docs_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
 
-    lang = models.CharField(max_length=7, choices=settings.LANGUAGES, default="en")
+    lang = models.CharField(
+        max_length=7, choices=settings.LANGUAGES, default=settings.DEFAULT_LANGUAGE_CODE
+    )
     release = models.ForeignKey(
         Release,
         null=True,
