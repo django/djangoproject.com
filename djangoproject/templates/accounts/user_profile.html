@@ -15,7 +15,7 @@
 
         <p>{% translate "Need to edit something? Here's how:" %}</p>
         <ul>
-            <li><a href="{% url 'edit_profile' %}">{% translate "Edit your name and email here." %}</a></li>
+            <li><a href="{% url 'edit_profile' %}">{% translate "Edit your name, email and bio here." %}</a></li>
             <li>{% blocktranslate trimmed %}
                 The image is the <a href="https://en.gravatar.com/">Gravatar</a> linked
                 to the email address you signed up with. You can change the image over
@@ -37,9 +37,15 @@
         <img class='avatar' width='150' height='150'
              src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=150&amp;d=https%3A%2F%2Frobohash.org%2F{{ email_hash }}%3Fset%3Dset3%26size%3D150x150">
 
-        <h1>
+        <h1 class="name">
             {% firstof user_obj.profile.name user_obj.username %}
         </h1>
+
+        {% if user_obj.profile.bio %}
+            <p class="bio">
+                {{ user_obj.profile.bio|urlize }}
+            </p>
+        {% endif %}
 
         {% if stats %}
             <h2>{% translate "Statistics on Django core contributions:" %}</h2>
