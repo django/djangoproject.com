@@ -27,8 +27,8 @@ class TemplateTagTests(TestCase):
     def test_get_all_doc_versions(self):
         tmp_docs_build_root = Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, tmp_docs_build_root)
-        os.makedirs(tmp_docs_build_root.joinpath("en", "1.8", "_built", "json"))
-        os.makedirs(tmp_docs_build_root.joinpath("en", "1.11", "_built", "json"))
+        os.makedirs(tmp_docs_build_root / "en" / "1.8" / "_built" / "json")
+        os.makedirs(tmp_docs_build_root / "en" / "1.11" / "_built" / "json")
         with self.settings(DOCS_BUILD_ROOT=tmp_docs_build_root):
             self.assertEqual(get_all_doc_versions({}), ["1.8", "1.11", "dev"])
 
