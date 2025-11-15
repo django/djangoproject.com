@@ -7,7 +7,7 @@
 
 {% block content %}
 
-  <h1>{% blocktranslate %}{{ month|date:"YEAR_MONTH_FORMAT" }} archive{% endblocktranslate %}</h1>
+  <h1>{{ month|date:"F Y" }} {% translate "archive" %}</h1>
 
   <ul class="list-news">
 
