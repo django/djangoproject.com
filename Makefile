@@ -5,6 +5,7 @@ SCSS = djangoproject/scss
 STATIC = djangoproject/static
 
 ci: compilemessages test
+	@python tools/generate_release_roadmap.py
 	@python -m coverage report
 
 compilemessages:
