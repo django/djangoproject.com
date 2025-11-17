@@ -36,8 +36,18 @@
     {% for line in grid_lines %}
         <line x1="{{ line.x }}" y1="{{ config.padding_top - 10 }}" x2="{{ line.x }}" y2="{{ svg_height - config.padding_bottom }}"
               stroke="{{ colors.grid }}" stroke-width="{{ line.width }}" />
-        {% if line.label %}
-            <text x="{{ line.x + 5 }}" y="{{ config.padding_top - 15 }}" class="year-label">{{ line.label }}</text>
+        {% if line.top_label %}
+            <!-- Year label (top) -->
+            <text x="{{ line.x + 5 }}" y="{{ config.padding_top - 15 }}" class="year-label">
+                {{ line.top_label }}
+            </text>
+        {% endif %}
+
+        {% if line.bottom_label %}
+            <!-- Month label (bottom) -->
+            <text x="{{ line.x + 5 }}" y="{{ svg_height - config.padding_bottom + 15 }}" class="year-label">
+                {{ line.bottom_label }}
+            </text>
         {% endif %}
     {% endfor %}
 
