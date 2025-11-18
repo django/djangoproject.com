@@ -1,7 +1,37 @@
+"""
+Generates an SVG roadmap of Django releases, showing mainstream and extended support periods.
+
+Usage:
+    python generate_release_roadmap.py --first-release <VERSION> --date <YYYY-MM>
+
+Arguments:
+    --first-release    The first release number in Django versioning style, e.g., "4.2"
+    --date             The release date of the first release in YYYY-MM format, e.g., "2023-04"
+
+Behavior:
+    - Automatically generates 8 consecutive Django releases:
+        X.0, X.1, X.2 (LTS), X+1.0, X+1.1, X+1.2 (LTS), X+2.0, X+2.1
+    - Mainstream support: 8 months per release
+    - Extended support:
+        - LTS releases (*.2) have 28 months total extended support
+        - Non-LTS releases have 8 months of extended support beyond mainstream
+    - Produces an SVG at: ../djangoproject/static/img/release-roadmap.svg
+"""
+
+import argparse
 import datetime as dtime
 import json
+import os
+import calendar
 
 from jinja2 import Environment, FileSystemLoader
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATE_DIR = BASE_DIR
+OUTPUT_FILE = os.path.join(
+    BASE_DIR, "..", "djangoproject", "static", "img", "release-roadmap.svg"
+)
 
 
 def load_release_data(json_file):
