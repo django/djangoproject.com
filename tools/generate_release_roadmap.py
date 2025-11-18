@@ -19,13 +19,12 @@ Behavior:
 """
 
 import argparse
+import calendar
 import datetime as dtime
 import json
 import os
-import calendar
 
 from jinja2 import Environment, FileSystemLoader
-
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = BASE_DIR
