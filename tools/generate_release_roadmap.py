@@ -1,12 +1,13 @@
 """
-Generates an SVG roadmap of Django releases, showing mainstream and extended support periods.
+Generates an SVG roadmap of Django releases,
+showing mainstream and extended support periods.
 
 Usage:
     python generate_release_roadmap.py --first-release <VERSION> --date <YYYY-MM>
 
 Arguments:
-    --first-release    The first release number in Django versioning style, e.g., "4.2"
-    --date             The release date of the first release in YYYY-MM format, e.g., "2023-04"
+    --first-release  First release number in Django versioning style,e.g.,"4.2"
+    --date           Release date of the first release in YYYY-MM format,e.g.,"2023-04"
 
 Behavior:
     - Automatically generates 8 consecutive Django releases:
@@ -326,3 +327,4 @@ def render_svg():
 
 if __name__ == "__main__":
     render_svg()
+
