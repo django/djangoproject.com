@@ -45,7 +45,7 @@
 
         {% if line.bottom_label %}
             <!-- Month label (bottom) -->
-            <text x="{{ line.x + 5 }}" y="{{ svg_height - config.padding_bottom + 15 }}" class="year-label">
+            <text x="{{ line.x - 10  }}" y="{{ svg_height - config.padding_bottom + 15 }}" class="year-label">
                 {{ line.bottom_label }}
             </text>
         {% endif %}

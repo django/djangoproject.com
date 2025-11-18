@@ -21,36 +21,17 @@ Behavior:
 import argparse
 import calendar
 import datetime as dtime
-import json
 import os
-
 from jinja2 import Environment, FileSystemLoader
 
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 TEMPLATE_DIR = BASE_DIR
+
 OUTPUT_FILE = os.path.join(
     BASE_DIR, "..", "djangoproject", "static", "img", "release-roadmap.svg"
 )
-
-
-def load_release_data(json_file):
-    with open(json_file, encoding="utf-8") as f:
-        data = json.load(f)
-
-    processed_data = []
-    for item in data:
-        item["release_date"] = dtime.datetime.strptime(
-            item["release_date"], "%Y-%m-%d"
-        ).date()
-        item["mainstream_end"] = dtime.datetime.strptime(
-            item["mainstream_end"], "%Y-%m-%d"
-        ).date()
-        item["extended_end"] = dtime.datetime.strptime(
-            item["extended_end"], "%Y-%m-%d"
-        ).date()
-        processed_data.append(item)
-    return processed_data
-
 
 COLORS = {
     "mainstream": "#0C4B33",
@@ -83,7 +64,7 @@ CONFIG = {
 }
 
 
-def get_chart_timeline(data, config):
+def get_chart_timeline(data :list, config:dict) :
 
     start_year = data[0]["release_date"].year
 
@@ -98,7 +79,7 @@ def get_chart_timeline(data, config):
     return start_year, end_year, int(svg_width)
 
 
-def calculate_dimensions(config, num_releases):
+def calculate_dimensions(config :dict, num_releases:int) -> int:
 
     chart_height = (
         config["padding_top"]
@@ -109,7 +90,7 @@ def calculate_dimensions(config, num_releases):
     return int(chart_height)
 
 
-def date_to_x(date, start_year, config):
+def date_to_x(date :dtime.date, start_year :int , config :dict ) -> float:
 
     pixels_per_year = config["pixels_per_year"]
     pixels_per_block = pixels_per_year / 3.0
@@ -132,31 +113,91 @@ def date_to_x(date, start_year, config):
     return start_x + block_x_end
 
 
-def generate_grids(start_year, end_year, config):
+def generate_grids(start_year:int, end_year:int, config:dict) -> list:
 
     grid_lines = []
     pixels_per_year = config["pixels_per_year"]
     pixels_per_block = pixels_per_year / 3.0
 
-    for i, year in enumerate(range(start_year, end_year + 1)):
-        year_x_start = config["padding_left"] + (i * pixels_per_year)
+     # Month labels only for the VERY FIRST set of lines
+    FIRST_YEAR_MONTH_LABELS = {
+        0: None,
+        1: "April",
+        2: "August",
+        3: "December",
+    }
+    for year_index, year in enumerate(range(start_year, end_year)):
+        year_x_start = config["padding_left"] + (year_index * pixels_per_year)
 
-        for i in range(3):
+        for line_index in range(4):
+            x = year_x_start + (line_index * pixels_per_block)
+            # Year label always on first line of each year
+            top_label = str(year) if line_index == 0 else None
+            # Month labels ONLY for the first year block
+            if year_index == 0:
+                bottom_label = FIRST_YEAR_MONTH_LABELS[line_index]
+            else:
+                bottom_label = None
             grid_lines.append(
                 {
-                    "x": year_x_start + (i * pixels_per_block),
+                    "x": x,
                     "width": (
                         config["year_line_width"]
-                        if i == 0
+                        if line_index == 0
                         else config["month_line_width"]
                     ),
-                    "label": str(year) if i == 0 else None,
+                    "top_label": top_label,
+                    "bottom_label": bottom_label,
                 }
             )
     return grid_lines
 
 
-def generate_releases(data, start_year, config):
+def add_months(date: dtime.date, months: int) -> dtime.date:
+    year = date.year + (date.month - 1 + months) // 12
+    month = (date.month - 1 + months) % 12 + 1
+    day = min(date.day, calendar.monthrange(year, month)[1])
+    return dtime.date(year, month, day)
+
+def generate_release_data(first_release: str, first_release_ym: str)->list :
+    """
+    Generate 8 Django-style releases starting from a given first release.
+    first_release: "4.2"
+    first_release_ym: "2023-04"
+    """
+    major, minor = map(int, first_release.split("."))
+    # Parse YYYY-MM → date
+    release_date = dtime.datetime.strptime(first_release_ym, "%Y-%m").date()
+    releases = []
+    for i in range(8):
+        curr_major = major + ((minor + i) // 3)
+        curr_minor = (minor + i) % 3
+        version = f"{curr_major}.{curr_minor}"
+        is_lts = curr_minor == 2
+        # Mainstream support lasts 8 months
+        mainstream_end = add_months(release_date, 8)
+        # Extended support
+        if is_lts:
+            # LTS = 28 months from release date
+            extended_end = add_months(release_date, 28)
+        else:
+            # Non-LTS = 8 months after mainstream ends
+            extended_end = add_months(mainstream_end, 8)
+        releases.append(
+            {
+                "name": version,
+                "is_lts": is_lts,
+                "release_date": release_date,
+                "mainstream_end": mainstream_end,
+                "extended_end": extended_end,
+            }
+        )
+        # Next release starts 8 months later
+        release_date = add_months(release_date, 8)
+    return releases
+
+
+def generate_releases(data:list , start_year:int, config:dict)-> list:
 
     releases_processed = []
     for i, release in enumerate(data):
@@ -210,9 +251,9 @@ def generate_releases(data, start_year, config):
     return releases_processed
 
 
-def generate_legend(config, svg_height):
+def generate_legend(config:dict )-> dict:
 
-    legend_y = svg_height - (config["padding_bottom"] / 2)
+    legend_y =  config["padding_top"] + 200  # Fixed position for legend so that it doesn't conflict with month labels
     legend2_x = config["padding_left"] + config["legend_spacing"]
 
     legend = {
@@ -239,12 +280,21 @@ def generate_legend(config, svg_height):
             "text": "Extended Support",
         },
     }
+
     return legend
 
 
 def render_svg():
 
-    data = load_release_data("release-data.json")
+    parser = argparse.ArgumentParser(description="Generate Django release roadmap SVG.")
+    parser.add_argument(
+        "--first-release", required=True, help="First release number, e.g., 4.2"
+    )
+    parser.add_argument(
+        "--date", required=True, help="Release date in YYYY-MM format, e.g., 2023-04"
+    )
+    args = parser.parse_args()
+    data = generate_release_data(args.first_release, args.date)
 
     start_year, end_year, svg_width = get_chart_timeline(data, CONFIG)
     svg_height = calculate_dimensions(CONFIG, len(data))
@@ -252,9 +302,9 @@ def render_svg():
     grid_lines = generate_grids(start_year, end_year, CONFIG)
     releases_processed = generate_releases(data, start_year, CONFIG)
 
-    legend = generate_legend(CONFIG, svg_height)
+    legend = generate_legend(CONFIG)
 
-    env = Environment(loader=FileSystemLoader("."))
+    env = Environment(loader=FileSystemLoader(TEMPLATE_DIR))
     template = env.get_template("template.svg.jinja")
 
     output_svg = template.render(
@@ -267,9 +317,7 @@ def render_svg():
         legend=legend,
     )
 
-    outfile = "../djangoproject/static/img/release-roadmap.svg"
-
-    with open(outfile, "w", encoding="utf-8") as f:
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output_svg)
 
 
