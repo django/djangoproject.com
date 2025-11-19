@@ -14,7 +14,7 @@ Behavior:
         X.0, X.1, X.2 (LTS), X+1.0, X+1.1, X+1.2 (LTS), X+2.0, X+2.1
     - Mainstream support: 8 months per release
     - Extended support:
-        - LTS releases (*.2) have 28 months total extended support
+        - LTS releases (*.2) have 28 months of extended support beyond mainstream
         - Non-LTS releases have 8 months of extended support beyond mainstream
     - Produces an SVG at: ../djangoproject/static/img/release-roadmap.svg
 """
