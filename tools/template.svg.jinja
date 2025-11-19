@@ -1,4 +1,4 @@
-<svg width="{{ svg_width }}" height="{{ svg_height }}" version="1.1" xmlns="http://www.w3.org/2000/svg" profile="tiny">
+<svg width="{{ svg_width - (config.pixels_per_year//2) }}" height="{{ svg_height }}" version="1.1" xmlns="http://www.w3.org/2000/svg" profile="tiny">
     <style>
         .version-text {
             font-family: {{ config.font_family }};
@@ -27,7 +27,6 @@
     <defs>
         <linearGradient id="fade-right" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0.0" stop-color="#ffffff" stop-opacity="0.3" />
-            <stop offset="0.5" stop-color="#ffffff" stop-opacity="1.0" />
             <stop offset="1.0" stop-color="#ffffff" stop-opacity="1.0" />
         </linearGradient>
     </defs>
@@ -138,9 +137,9 @@
 
     <!--fade-->
     <rect
-        x="{{ svg_width - 180 }}"
+        x="{{ svg_width - 150 }}"
         y="0"
-        width="180"
+        width="150"
         height="100%"
         fill="url(#fade-right)"
     />
