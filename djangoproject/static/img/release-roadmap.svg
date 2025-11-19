@@ -1,4 +1,4 @@
-<svg width="810" height="376" version="1.1" xmlns="http://www.w3.org/2000/svg" profile="tiny">
+<svg width="930" height="376" version="1.1" xmlns="http://www.w3.org/2000/svg" profile="tiny">
     <style>
         .version-text {
             font-family: 'Segoe UI', 'Arial';
@@ -252,6 +252,35 @@
 
         
     
+        <line x1="860.0" y1="20" x2="860.0" y2="356"
+              stroke="#000000" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="850.0" y="15" class="legend-text">
+                2030
+            </text>
+        
+
+        
+    
+        <line x1="900.0" y1="20" x2="900.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+        
+    
+        <line x1="940.0" y1="20" x2="940.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+        
+    
+        <line x1="980.0" y1="20" x2="980.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+        
+    
 
     
         
@@ -270,7 +299,7 @@
             <rect
                 x="140.0"
                 y="30"
-                width="200.0"
+                width="280.0"
                 height="32"
                 fill="#CBFDE9"
                 stroke="#0C4B33"
@@ -364,7 +393,7 @@
             <rect
                 x="380.0"
                 y="156"
-                width="200.0"
+                width="280.0"
                 height="32"
                 fill="#CBFDE9"
                 stroke="#0C4B33"
@@ -458,7 +487,7 @@
             <rect
                 x="620.0"
                 y="282"
-                width="200.0"
+                width="280.0"
                 height="32"
                 fill="#CBFDE9"
                 stroke="#0C4B33"
@@ -571,7 +600,7 @@
 
     <!--fade-->
     <rect
-        x="750"
+        x="870"
         y="0"
         width="120"
         height="100%"
