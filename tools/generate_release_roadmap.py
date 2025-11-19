@@ -22,8 +22,8 @@ import argparse
 import calendar
 import datetime as dtime
 import os
-from jinja2 import Environment, FileSystemLoader
 
+from jinja2 import Environment, FileSystemLoader
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -64,7 +64,8 @@ CONFIG = {
     "month_line_width": 1,
 }
 
-def get_chart_timeline(data :list, config:dict) :
+
+def get_chart_timeline(data: list, config: dict):
 
     start_year = data[0]["release_date"].year
 
@@ -78,7 +79,8 @@ def get_chart_timeline(data :list, config:dict) :
 
     return start_year, end_year, int(svg_width)
 
-def calculate_dimensions(config :dict, num_releases:int) -> int:
+
+def calculate_dimensions(config: dict, num_releases: int) -> int:
 
     chart_height = (
         config["padding_top"]
@@ -88,7 +90,8 @@ def calculate_dimensions(config :dict, num_releases:int) -> int:
     )
     return int(chart_height)
 
-def date_to_x(date :dtime.date, start_year :int , config :dict ) -> float:
+
+def date_to_x(date: dtime.date, start_year: int, config: dict) -> float:
 
     pixels_per_year = config["pixels_per_year"]
     pixels_per_block = pixels_per_year / 3.0
@@ -110,13 +113,14 @@ def date_to_x(date :dtime.date, start_year :int , config :dict ) -> float:
 
     return start_x + block_x_end
 
-def generate_grids(start_year:int, end_year:int, config:dict) -> list:
+
+def generate_grids(start_year: int, end_year: int, config: dict) -> list:
 
     grid_lines = []
     pixels_per_year = config["pixels_per_year"]
     pixels_per_block = pixels_per_year / 3.0
 
-     # Month labels only for the VERY FIRST set of lines
+    # Month labels only for the VERY FIRST set of lines
     FIRST_YEAR_MONTH_LABELS = {
         0: None,
         1: "Apr.",
@@ -145,10 +149,13 @@ def generate_grids(start_year:int, end_year:int, config:dict) -> list:
                     ),
                     "top_label": top_label,
                     "bottom_label": bottom_label,
-                    "line-color": COLORS["grid"] if line_index == 0 else COLORS["month-grid"],
+                    "line-color": (
+                        COLORS["grid"] if line_index == 0 else COLORS["month-grid"]
+                    ),
                 }
             )
     return grid_lines
+
 
 def add_months(date: dtime.date, months: int) -> dtime.date:
     year = date.year + (date.month - 1 + months) // 12
@@ -156,7 +163,8 @@ def add_months(date: dtime.date, months: int) -> dtime.date:
     day = min(date.day, calendar.monthrange(year, month)[1])
     return dtime.date(year, month, day)
 
-def generate_release_data(first_release: str, first_release_ym: str)->list :
+
+def generate_release_data(first_release: str, first_release_ym: str) -> list:
     """
     Generate 8 Django-style releases starting from a given first release.
     first_release: "4.2"
@@ -193,7 +201,8 @@ def generate_release_data(first_release: str, first_release_ym: str)->list :
         release_date = add_months(release_date, 8)
     return releases
 
-def generate_releases(data:list , start_year:int, config:dict)-> list:
+
+def generate_releases(data: list, start_year: int, config: dict) -> list:
 
     releases_processed = []
     for i, release in enumerate(data):
@@ -246,12 +255,15 @@ def generate_releases(data:list , start_year:int, config:dict)-> list:
         )
     return releases_processed
 
-def generate_legend(config:dict )-> dict:
 
-    legend_y =  config["padding_top"] + 200  # Fixed position for legend so that it doesn't conflict with month labels
+def generate_legend(config: dict) -> dict:
 
-    width=config["legend_box_size"] + 100 
-    height=config["legend_box_size"] + 24
+    legend_y = (
+        config["padding_top"] + 200
+    )  # Fixed position for legend so that it doesn't conflict with month labels
+
+    width = config["legend_box_size"] + 100
+    height = config["legend_box_size"] + 24
 
     legend = {
         "mainstream_box": {
@@ -265,8 +277,8 @@ def generate_legend(config:dict )-> dict:
         "mainstream_text": {
             "x": config["padding_left"] + config["legend_box_size"] + 5,
             "y": legend_y,
-            "fill" : "#ffffff",
-            "text": ["Mainstream" , "Support"],
+            "fill": "#ffffff",
+            "text": ["Mainstream", "Support"],
         },
         "extended_box": {
             "x": config["padding_left"] + width,
@@ -279,12 +291,13 @@ def generate_legend(config:dict )-> dict:
         "extended_text": {
             "x": config["padding_left"] + config["legend_box_size"] + width + 8,
             "y": legend_y,
-            "fill" : "#000000",
-            "text": ["Extended" ,"Support"],
+            "fill": "#000000",
+            "text": ["Extended", "Support"],
         },
     }
 
     return legend
+
 
 def render_svg():
 
@@ -318,9 +331,10 @@ def render_svg():
         releases=releases_processed,
         legend=legend,
     )
-    
+
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output_svg)
+
 
 if __name__ == "__main__":
     render_svg()
