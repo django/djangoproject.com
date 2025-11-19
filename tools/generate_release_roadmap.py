@@ -184,8 +184,8 @@ def generate_release_data(first_release: str, first_release_ym: str) -> list:
         mainstream_end = add_months(release_date, 8)
         # Extended support
         if is_lts:
-            # LTS = 28 months from release date
-            extended_end = add_months(release_date, 28)
+            # LTS = 28 months after mainstream ends
+            extended_end = add_months(mainstream_end, 28)
         else:
             # Non-LTS = 8 months after mainstream ends
             extended_end = add_months(mainstream_end, 8)
