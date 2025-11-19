@@ -13,21 +13,22 @@
             font-style: {{ config.font_style_lts }};
             fill: {{ colors.text_lts }};
         }
-        .year-label {
-            font-family: {{ config.font_family }};
-            font-size: {{ config.font_size_small }}px;
-            fill: {{ colors.text }};
-        }
         .legend-text {
             font-family: {{ config.font_family }};
             font-size: {{ config.font_size }}px;
-            fill: {{ colors.text }};
+            fill: {{ colors.legend_text }};
+        }
+        .release-text{
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size -2 }}px;
         }
     </style>
+
     <defs>
         <linearGradient id="fade-right" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0.0" stop-color="{{ colors.bg }}" stop-opacity="0.0" />
-            <stop offset="1.0" stop-color="{{ colors.bg }}" stop-opacity="1.0" />
+            <stop offset="0.0" stop-color="#ffffff" stop-opacity="0.3" />
+            <stop offset="0.5" stop-color="#ffffff" stop-opacity="1.0" />
+            <stop offset="1.0" stop-color="#ffffff" stop-opacity="1.0" />
         </linearGradient>
     </defs>
 
@@ -38,14 +39,14 @@
               stroke="{{ colors.grid }}" stroke-width="{{ line.width }}" />
         {% if line.top_label %}
             <!-- Year label (top) -->
-            <text x="{{ line.x + 5 }}" y="{{ config.padding_top - 15 }}" class="year-label">
+            <text x="{{ line.x - 10 }}" y="{{ config.padding_top - 15 }}" class="legend-text">
                 {{ line.top_label }}
             </text>
         {% endif %}
 
         {% if line.bottom_label %}
             <!-- Month label (bottom) -->
-            <text x="{{ line.x - 10  }}" y="{{ svg_height - config.padding_bottom + 15 }}" class="year-label">
+            <text x="{{ line.x - 10  }}" y="{{ svg_height - config.padding_bottom + 15 }}" class="legend-text">
                 {{ line.bottom_label }}
             </text>
         {% endif %}
@@ -53,15 +54,27 @@
 
     {% for release in releases %}
         {% if release.mainstream_bar.width > 0 %}
-            <rect x="{{ release.mainstream_bar.x }}" y="{{ release.mainstream_bar.y }}"
-                  width="{{ release.mainstream_bar.width }}" height="{{ release.mainstream_bar.height }}"
-                  fill="{{ release.mainstream_bar.fill }}" />
+             <rect
+                x="{{ release.mainstream_bar.x }}"
+                y="{{ release.mainstream_bar.y }}"
+                width="{{ release.mainstream_bar.width }}"
+                height="{{ release.mainstream_bar.height }}"
+                fill="{{ release.mainstream_bar.fill }}"
+                stroke="{{ colors.mainstream }}"
+                stroke-width="2"
+            />
         {% endif %}
 
         {% if release.extended_bar.width > 0 %}
-            <rect x="{{ release.extended_bar.x }}" y="{{ release.extended_bar.y }}"
-                  width="{{ release.extended_bar.width }}" height="{{ release.extended_bar.height }}"
-                  fill="{{ release.extended_bar.fill }}" />
+            <rect
+                x="{{ release.extended_bar.x }}"
+                y="{{ release.extended_bar.y }}"
+                width="{{ release.extended_bar.width }}"
+                height="{{ release.extended_bar.height }}"
+                fill="{{ release.extended_bar.fill }}"
+                stroke="{{ colors.mainstream }}"
+                stroke-width="2"
+            />
         {% endif %}
 
         <text x="{{ release.version_text.x }}" y="{{ release.version_text.y }}" class="version-text">
@@ -75,20 +88,60 @@
         {% endif %}
     {% endfor %}
 
-    <rect x="{{ legend.mainstream_box.x }}" y="{{ legend.mainstream_box.y }}"
-          width="{{ legend.mainstream_box.size }}" height="{{ legend.mainstream_box.size }}"
-          fill="{{ legend.mainstream_box.fill }}" />
-    <text x="{{ legend.mainstream_text.x }}" y="{{ legend.mainstream_text.y }}" class="legend-text">
-        {{ legend.mainstream_text.text }}
+    <!-- Legend -->
+    <rect
+        x="{{ legend.mainstream_box.x + config.legend_padding }}"
+        y="{{ legend.mainstream_box.y }}"
+        width="{{ legend.mainstream_box.width }}"
+        height="{{ legend.mainstream_box.height}}"
+        fill="{{ legend.mainstream_box.fill }}"
+        stroke="{{ colors.mainstream }}" stroke-width="2"
+    />
+    <text
+        y="{{ legend.mainstream_text.y + 6 }}"
+        fill="{{ legend.mainstream_text.fill }}"
+        class="release-text"
+    >
+        {% for line in legend.mainstream_text.text %}
+            <tspan
+                x="{{ legend.mainstream_text.x + config.legend_padding }}"
+                dy="{{ '-0.3em' if loop.first else '1.2em' }}"
+            >
+                {{ line }}
+            </tspan>
+        {% endfor %}
+
     </text>
 
-    <rect x="{{ legend.extended_box.x }}" y="{{ legend.extended_box.y }}"
-          width="{{ legend.extended_box.size }}" height="{{ legend.extended_box.size }}"
-          fill="{{ legend.extended_box.fill }}" />
-    <text x="{{ legend.extended_text.x }}" y="{{ legend.extended_text.y }}" class="legend-text">
-        {{ legend.extended_text.text }}
+    <rect
+        x="{{ legend.extended_box.x + config.legend_padding}}"
+        y="{{ legend.extended_box.y }}"
+        width="{{ legend.extended_box.width}}"
+        height="{{ legend.extended_box.height}}"
+        fill="{{ legend.extended_box.fill }}"
+        stroke="{{ colors.mainstream }}" stroke-width="2"
+    />
+    <text
+        y="{{ legend.mainstream_text.y + 6 }}"
+        fill="{{ legend.extended_text.fill }}"
+        class="release-text"
+    >
+        {% for line in legend.extended_text.text %}
+            <tspan
+                x="{{ legend.extended_text.x + config.legend_padding }}"
+                dy="{{ '-0.3em' if loop.first else '1.2em' }}"
+            >
+                {{ line }}
+            </tspan>
+        {% endfor %}
     </text>
 
-
-
+    <!--fade-->
+    <rect
+        x="{{ svg_width - 180 }}"
+        y="0"
+        width="180"
+        height="100%"
+        fill="url(#fade-right)"
+    />
 </svg>
