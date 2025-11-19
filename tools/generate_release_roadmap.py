@@ -46,8 +46,8 @@ COLORS = {
 }
 
 CONFIG = {
-    "pixels_per_year": 180,
-    "bar_height": 28,
+    "pixels_per_year": 120,
+    "bar_height": 32,
     "bar_v_spacing": 10,
     "padding_top": 30,
     "padding_bottom": 20,
@@ -260,7 +260,7 @@ def generate_releases(data: list, start_year: int, config: dict) -> list:
 def generate_legend(config: dict) -> dict:
 
     legend_y = (
-        config["padding_top"] + 200
+        config["padding_top"] + 230
     )  # Fixed position for legend so that it doesn't conflict with month labels
 
     width = config["legend_box_size"] + 100

@@ -1,4 +1,4 @@
-<svg width="1200" height="344" version="1.1" xmlns="http://www.w3.org/2000/svg" profile="tiny">
+<svg width="810" height="376" version="1.1" xmlns="http://www.w3.org/2000/svg" profile="tiny">
     <style>
         .version-text {
             font-family: 'Segoe UI', 'Arial';
@@ -34,7 +34,7 @@
     <rect width="100%" height="100%" fill="none" />
 
     
-        <line x1="20.0" y1="20" x2="20.0" y2="324"
+        <line x1="20.0" y1="20" x2="20.0" y2="356"
               stroke="#000000" stroke-width="3" />
         
             <!-- Year label (top) -->
@@ -45,208 +45,208 @@
 
         
     
-        <line x1="80.0" y1="20" x2="80.0" y2="324"
+        <line x1="60.0" y1="20" x2="60.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
             <!-- Month label (bottom) -->
-            <text x="70.0" y="339" class="legend-text">
+            <text x="50.0" y="371" class="legend-text">
                 Apr.
             </text>
         
     
-        <line x1="140.0" y1="20" x2="140.0" y2="324"
+        <line x1="100.0" y1="20" x2="100.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
             <!-- Month label (bottom) -->
-            <text x="130.0" y="339" class="legend-text">
+            <text x="90.0" y="371" class="legend-text">
                 Aug.
             </text>
         
     
-        <line x1="200.0" y1="20" x2="200.0" y2="324"
+        <line x1="140.0" y1="20" x2="140.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
             <!-- Month label (bottom) -->
-            <text x="190.0" y="339" class="legend-text">
+            <text x="130.0" y="371" class="legend-text">
                 Dec.
             </text>
         
     
-        <line x1="200.0" y1="20" x2="200.0" y2="324"
+        <line x1="140.0" y1="20" x2="140.0" y2="356"
               stroke="#000000" stroke-width="3" />
         
             <!-- Year label (top) -->
-            <text x="190.0" y="15" class="legend-text">
+            <text x="130.0" y="15" class="legend-text">
                 2024
             </text>
         
 
         
     
-        <line x1="260.0" y1="20" x2="260.0" y2="324"
+        <line x1="180.0" y1="20" x2="180.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="320.0" y1="20" x2="320.0" y2="324"
+        <line x1="220.0" y1="20" x2="220.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="380.0" y1="20" x2="380.0" y2="324"
+        <line x1="260.0" y1="20" x2="260.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="380.0" y1="20" x2="380.0" y2="324"
+        <line x1="260.0" y1="20" x2="260.0" y2="356"
               stroke="#000000" stroke-width="3" />
         
             <!-- Year label (top) -->
-            <text x="370.0" y="15" class="legend-text">
+            <text x="250.0" y="15" class="legend-text">
                 2025
             </text>
         
 
         
     
-        <line x1="440.0" y1="20" x2="440.0" y2="324"
+        <line x1="300.0" y1="20" x2="300.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="500.0" y1="20" x2="500.0" y2="324"
+        <line x1="340.0" y1="20" x2="340.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="560.0" y1="20" x2="560.0" y2="324"
+        <line x1="380.0" y1="20" x2="380.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="560.0" y1="20" x2="560.0" y2="324"
+        <line x1="380.0" y1="20" x2="380.0" y2="356"
               stroke="#000000" stroke-width="3" />
         
             <!-- Year label (top) -->
-            <text x="550.0" y="15" class="legend-text">
+            <text x="370.0" y="15" class="legend-text">
                 2026
             </text>
         
 
         
     
-        <line x1="620.0" y1="20" x2="620.0" y2="324"
+        <line x1="420.0" y1="20" x2="420.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="680.0" y1="20" x2="680.0" y2="324"
+        <line x1="460.0" y1="20" x2="460.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="740.0" y1="20" x2="740.0" y2="324"
+        <line x1="500.0" y1="20" x2="500.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="740.0" y1="20" x2="740.0" y2="324"
+        <line x1="500.0" y1="20" x2="500.0" y2="356"
               stroke="#000000" stroke-width="3" />
         
             <!-- Year label (top) -->
-            <text x="730.0" y="15" class="legend-text">
+            <text x="490.0" y="15" class="legend-text">
                 2027
             </text>
         
 
         
     
-        <line x1="800.0" y1="20" x2="800.0" y2="324"
+        <line x1="540.0" y1="20" x2="540.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="860.0" y1="20" x2="860.0" y2="324"
+        <line x1="580.0" y1="20" x2="580.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="920.0" y1="20" x2="920.0" y2="324"
+        <line x1="620.0" y1="20" x2="620.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="920.0" y1="20" x2="920.0" y2="324"
+        <line x1="620.0" y1="20" x2="620.0" y2="356"
               stroke="#000000" stroke-width="3" />
         
             <!-- Year label (top) -->
-            <text x="910.0" y="15" class="legend-text">
+            <text x="610.0" y="15" class="legend-text">
                 2028
             </text>
         
 
         
     
-        <line x1="980.0" y1="20" x2="980.0" y2="324"
+        <line x1="660.0" y1="20" x2="660.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="1040.0" y1="20" x2="1040.0" y2="324"
+        <line x1="700.0" y1="20" x2="700.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="1100.0" y1="20" x2="1100.0" y2="324"
+        <line x1="740.0" y1="20" x2="740.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="1100.0" y1="20" x2="1100.0" y2="324"
+        <line x1="740.0" y1="20" x2="740.0" y2="356"
               stroke="#000000" stroke-width="3" />
         
             <!-- Year label (top) -->
-            <text x="1090.0" y="15" class="legend-text">
+            <text x="730.0" y="15" class="legend-text">
                 2029
             </text>
         
 
         
     
-        <line x1="1160.0" y1="20" x2="1160.0" y2="324"
+        <line x1="780.0" y1="20" x2="780.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="1220.0" y1="20" x2="1220.0" y2="324"
+        <line x1="820.0" y1="20" x2="820.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
         
     
-        <line x1="1280.0" y1="20" x2="1280.0" y2="324"
+        <line x1="860.0" y1="20" x2="860.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
@@ -256,10 +256,10 @@
     
         
              <rect
-                x="80.0"
+                x="60.0"
                 y="30"
-                width="120.0"
-                height="28"
+                width="80.0"
+                height="32"
                 fill="#0C4B33"
                 stroke="#0C4B33"
                 stroke-width="2"
@@ -268,32 +268,32 @@
 
         
             <rect
-                x="200.0"
+                x="140.0"
                 y="30"
-                width="300.0"
-                height="28"
+                width="200.0"
+                height="32"
                 fill="#CBFDE9"
                 stroke="#0C4B33"
                 stroke-width="2"
             />
         
 
-        <text x="90.0" y="50.0" class="version-text">
+        <text x="70.0" y="52.0" class="version-text">
             4.2
         </text>
 
         
-            <text x="210.0" y="50.0" class="lts-text">
+            <text x="150.0" y="52.0" class="lts-text">
                 LTS
             </text>
         
     
         
              <rect
-                x="200.0"
-                y="68"
-                width="120.0"
-                height="28"
+                x="140.0"
+                y="72"
+                width="80.0"
+                height="32"
                 fill="#0C4B33"
                 stroke="#0C4B33"
                 stroke-width="2"
@@ -302,17 +302,17 @@
 
         
             <rect
-                x="320.0"
-                y="68"
-                width="120.0"
-                height="28"
+                x="220.0"
+                y="72"
+                width="80.0"
+                height="32"
                 fill="#CBFDE9"
                 stroke="#0C4B33"
                 stroke-width="2"
             />
         
 
-        <text x="210.0" y="88.0" class="version-text">
+        <text x="150.0" y="94.0" class="version-text">
             5.0
         </text>
 
@@ -320,10 +320,10 @@
     
         
              <rect
-                x="320.0"
-                y="106"
-                width="120.0"
-                height="28"
+                x="220.0"
+                y="114"
+                width="80.0"
+                height="32"
                 fill="#0C4B33"
                 stroke="#0C4B33"
                 stroke-width="2"
@@ -332,17 +332,17 @@
 
         
             <rect
-                x="440.0"
-                y="106"
-                width="120.0"
-                height="28"
+                x="300.0"
+                y="114"
+                width="80.0"
+                height="32"
                 fill="#CBFDE9"
                 stroke="#0C4B33"
                 stroke-width="2"
             />
         
 
-        <text x="330.0" y="126.0" class="version-text">
+        <text x="230.0" y="136.0" class="version-text">
             5.1
         </text>
 
@@ -350,10 +350,10 @@
     
         
              <rect
-                x="440.0"
-                y="144"
-                width="120.0"
-                height="28"
+                x="300.0"
+                y="156"
+                width="80.0"
+                height="32"
                 fill="#0C4B33"
                 stroke="#0C4B33"
                 stroke-width="2"
@@ -362,32 +362,32 @@
 
         
             <rect
-                x="560.0"
-                y="144"
-                width="300.0"
-                height="28"
+                x="380.0"
+                y="156"
+                width="200.0"
+                height="32"
                 fill="#CBFDE9"
                 stroke="#0C4B33"
                 stroke-width="2"
             />
         
 
-        <text x="450.0" y="164.0" class="version-text">
+        <text x="310.0" y="178.0" class="version-text">
             5.2
         </text>
 
         
-            <text x="570.0" y="164.0" class="lts-text">
+            <text x="390.0" y="178.0" class="lts-text">
                 LTS
             </text>
         
     
         
              <rect
-                x="560.0"
-                y="182"
-                width="120.0"
-                height="28"
+                x="380.0"
+                y="198"
+                width="80.0"
+                height="32"
                 fill="#0C4B33"
                 stroke="#0C4B33"
                 stroke-width="2"
@@ -396,17 +396,17 @@
 
         
             <rect
-                x="680.0"
-                y="182"
-                width="120.0"
-                height="28"
+                x="460.0"
+                y="198"
+                width="80.0"
+                height="32"
                 fill="#CBFDE9"
                 stroke="#0C4B33"
                 stroke-width="2"
             />
         
 
-        <text x="570.0" y="202.0" class="version-text">
+        <text x="390.0" y="220.0" class="version-text">
             6.0
         </text>
 
@@ -414,10 +414,10 @@
     
         
              <rect
-                x="680.0"
-                y="220"
-                width="120.0"
-                height="28"
+                x="460.0"
+                y="240"
+                width="80.0"
+                height="32"
                 fill="#0C4B33"
                 stroke="#0C4B33"
                 stroke-width="2"
@@ -426,17 +426,17 @@
 
         
             <rect
-                x="800.0"
-                y="220"
-                width="120.0"
-                height="28"
+                x="540.0"
+                y="240"
+                width="80.0"
+                height="32"
                 fill="#CBFDE9"
                 stroke="#0C4B33"
                 stroke-width="2"
             />
         
 
-        <text x="690.0" y="240.0" class="version-text">
+        <text x="470.0" y="262.0" class="version-text">
             6.1
         </text>
 
@@ -444,10 +444,10 @@
     
         
              <rect
-                x="800.0"
-                y="258"
-                width="120.0"
-                height="28"
+                x="540.0"
+                y="282"
+                width="80.0"
+                height="32"
                 fill="#0C4B33"
                 stroke="#0C4B33"
                 stroke-width="2"
@@ -456,32 +456,32 @@
 
         
             <rect
-                x="920.0"
-                y="258"
-                width="300.0"
-                height="28"
+                x="620.0"
+                y="282"
+                width="200.0"
+                height="32"
                 fill="#CBFDE9"
                 stroke="#0C4B33"
                 stroke-width="2"
             />
         
 
-        <text x="810.0" y="278.0" class="version-text">
+        <text x="550.0" y="304.0" class="version-text">
             6.2
         </text>
 
         
-            <text x="930.0" y="278.0" class="lts-text">
+            <text x="630.0" y="304.0" class="lts-text">
                 LTS
             </text>
         
     
         
              <rect
-                x="920.0"
-                y="296"
-                width="120.0"
-                height="28"
+                x="620.0"
+                y="324"
+                width="80.0"
+                height="32"
                 fill="#0C4B33"
                 stroke="#0C4B33"
                 stroke-width="2"
@@ -490,17 +490,17 @@
 
         
             <rect
-                x="1040.0"
-                y="296"
-                width="120.0"
-                height="28"
+                x="700.0"
+                y="324"
+                width="80.0"
+                height="32"
                 fill="#CBFDE9"
                 stroke="#0C4B33"
                 stroke-width="2"
             />
         
 
-        <text x="930.0" y="316.0" class="version-text">
+        <text x="630.0" y="346.0" class="version-text">
             7.0
         </text>
 
@@ -510,14 +510,14 @@
     <!-- Legend -->
     <rect
         x="70"
-        y="216"
+        y="246"
         width="116"
         height="40"
         fill="#0C4B33"
         stroke="#0C4B33" stroke-width="2"
     />
     <text
-        y="236"
+        y="266"
         fill="#ffffff"
         class="release-text"
     >
@@ -541,14 +541,14 @@
 
     <rect
         x="186"
-        y="216"
+        y="246"
         width="116"
         height="40"
         fill="#CBFDE9"
         stroke="#0C4B33" stroke-width="2"
     />
     <text
-        y="236"
+        y="266"
         fill="#000000"
         class="release-text"
     >
@@ -571,9 +571,9 @@
 
     <!--fade-->
     <rect
-        x="1140"
+        x="750"
         y="0"
-        width="150"
+        width="120"
         height="100%"
         fill="url(#fade-right)"
     />
