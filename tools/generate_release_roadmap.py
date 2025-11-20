@@ -22,15 +22,18 @@ Behavior:
 import argparse
 import calendar
 import datetime as dtime
-from dateutil.relativedelta import relativedelta
 from pathlib import Path
+
+from dateutil.relativedelta import relativedelta
 from jinja2 import Environment, FileSystemLoader
 
 BASE_DIR = Path(__file__).resolve().parent
 
 TEMPLATE_DIR = BASE_DIR
 
-OUTPUT_FILE = BASE_DIR.parent / "djangoproject" / "static" / "img" / "release-roadmap.svg"
+OUTPUT_FILE = (
+    BASE_DIR.parent / "djangoproject" / "static" / "img" / "release-roadmap.svg"
+)
 
 COLORS = {
     "mainstream": "#0C4B33",
@@ -155,7 +158,8 @@ def generate_grids(start_year: int, end_year: int, config: dict) -> list:
             )
     return grid_lines
 
-def generate_release_data(first_release: str, release_date : dtime.date) -> list:
+
+def generate_release_data(first_release: str, release_date: dtime.date) -> list:
     """
     Generate 8 Django-style releases starting from a given first release.
     first_release: "4.2"
@@ -189,7 +193,7 @@ def generate_release_data(first_release: str, release_date : dtime.date) -> list
             }
         )
         # Next release starts 8 months later
-        release_date = release_date+ relativedelta(months=8)
+        release_date = release_date + relativedelta(months=8)
     return releases
 
 
@@ -297,9 +301,10 @@ def render_svg():
         "--first-release", required=True, help="First release number, e.g., 4.2"
     )
     parser.add_argument(
-        "--date", 
+        "--date",
         type=lambda str: dtime.datetime.strptime(str, "%Y-%m").date(),
-        required=True, help="Release date in YYYY-MM format, e.g., 2023-04"
+        required=True,
+        help="Release date in YYYY-MM format, e.g., 2023-04",
     )
     args = parser.parse_args()
     data = generate_release_data(args.first_release, args.date)
