@@ -23,11 +23,9 @@ import datetime as dtime
 from pathlib import Path
 
 from dateutil.relativedelta import relativedelta
-from jinja2 import Environment, FileSystemLoader
-
 from django.conf import settings
 from django.core.management.base import BaseCommand
-
+from jinja2 import Environment, FileSystemLoader
 
 TEMPLATE_DIR = Path(__file__).resolve().parent
 
@@ -66,11 +64,12 @@ CONFIG = {
     "month_line_width": 1,
 }
 
+
 class Command(BaseCommand):
 
-    help="Generate Django release roadmap SVG."
+    help = "Generate Django release roadmap SVG."
 
-    def add_arguments(self,parser):
+    def add_arguments(self, parser):
         parser.add_argument(
             "--first-release", required=True, help="First release number, e.g., 4.2"
         )
@@ -81,8 +80,8 @@ class Command(BaseCommand):
             help="Release date in YYYY-MM format, e.g., 2023-04",
         )
 
-    def handle(self,*args,**options):
-        render_svg(options["first_release"],options["date"])
+    def handle(self, *args, **options):
+        render_svg(options["first_release"], options["date"])
 
 
 def get_chart_timeline(data: list, config: dict):
@@ -312,7 +311,7 @@ def generate_legend(config: dict) -> dict:
     return legend
 
 
-def render_svg(first_release :str, date :dtime.date):
+def render_svg(first_release: str, date: dtime.date):
 
     data = generate_release_data(first_release, date)
 
@@ -339,5 +338,3 @@ def render_svg(first_release :str, date :dtime.date):
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output_svg)
-
-
