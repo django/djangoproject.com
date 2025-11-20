@@ -3,7 +3,7 @@ Generates an SVG roadmap of Django releases,
 showing mainstream and extended support periods.
 
 Usage:
-    python -m manage generate_release_roadmap.py --first-release <VERSION> --date <YYYY-MM>
+  python -m manage generate_release_roadmap.py --first-release <VERSION> --date <YYYY-MM>
 
 Arguments:
     --first-release   First release number in Django versioning style, e.g.,"4.2"

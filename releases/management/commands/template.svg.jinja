@@ -123,7 +123,7 @@
     >
         {% for line in legend.mainstream_text.text %}
             <tspan
-                x="{{ legend.mainstream_text.x + config.legend_padding + 3 }}"
+                x="{{ legend.mainstream_text.x + config.legend_padding + (0 if loop.first else 8) }}"
                 dy="{{ '-0.3em' if loop.first else '1.2em' }}"
             >
                 {{ line }}
@@ -147,7 +147,7 @@
     >
         {% for line in legend.extended_text.text %}
             <tspan
-                x="{{ legend.extended_text.x + config.legend_padding + 4 }}"
+                x="{{ legend.extended_text.x + config.legend_padding + (3 if loop.first else 7) }}"
                 dy="{{ '-0.3em' if loop.first else '1.2em' }}"
             >
                 {{ line }}
