@@ -1,0 +1,166 @@
+<svg width="{{ svg_width - (config.pixels_per_year//2) }}" height="{{ svg_height }}" version="1.1" xmlns="http://www.w3.org/2000/svg" profile="tiny">
+    <style>
+        .version-text {
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size }}px;
+            font-weight: {{ config.font_weight }};
+            fill: {{ colors.text }};
+        }
+        .lts-text {
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size }}px;
+            font-weight: {{ config.font_weight_lts }};
+            font-style: {{ config.font_style_lts }};
+            fill: {{ colors.text_lts }};
+        }
+        .month-text {
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size }}px;
+            fill: {{ colors.legend_text }};
+            stroke: #ffffff;
+            stroke-width: 20px;
+            paint-order: stroke;
+            stroke-linecap: butt;
+            stroke-linejoin: miter;
+        }
+        .year-text{
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size }}px;
+            fill: {{ colors.legend_text }};
+            margin-bottom: 4px;
+        }
+        .release-text{
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size -2 }}px;
+        }
+    </style>
+
+    <defs>
+        <linearGradient id="fade-right" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0.0" stop-color="#ffffff" stop-opacity="0.3" />
+            <stop offset="1.0" stop-color="#ffffff" stop-opacity="1.0" />
+        </linearGradient>
+    </defs>
+
+    <rect width="100%" height="100%" fill="{{ colors.bg }}" />
+
+    {% for line in grid_lines| reverse%}
+
+        <line x1="{{ line.x }}" y1="{{ config.padding_top - 10 }}" x2="{{ line.x }}" y2="{{ svg_height - config.padding_bottom }}"
+              stroke="{{ colors.grid }}" stroke-width="{{ line.width }}" />
+        {% if line.top_label %}
+            <!-- Year label (top) -->
+            <text x="{{ line.x - 10 }}" y="{{ config.padding_top - 15 }}" class="year-text">
+                {{ line.top_label }}
+            </text>
+        {% endif %}
+
+         {% if line.bottom_label %}
+            <!-- Month label -->
+            <text
+                x="{{ line.x - 6 }}"
+                y="{{ svg_height / 2 + 6}}"
+                transform="rotate(-90, {{ line.x - 6 }}, {{ svg_height / 2 }})"
+                class="month-text"
+                text-anchor="middle"
+                dominant-baseline="middle"
+            >
+                {{ line.bottom_label }}
+            </text>
+        {% endif %}
+
+    {% endfor %}
+
+    {% for release in releases %}
+        {% if release.mainstream_bar.width > 0 %}
+             <rect
+                x="{{ release.mainstream_bar.x }}"
+                y="{{ release.mainstream_bar.y }}"
+                width="{{ release.mainstream_bar.width }}"
+                height="{{ release.mainstream_bar.height }}"
+                fill="{{ release.mainstream_bar.fill }}"
+                stroke="{{ colors.mainstream }}"
+                stroke-width="2"
+            />
+        {% endif %}
+
+        {% if release.extended_bar.width > 0 %}
+            <rect
+                x="{{ release.extended_bar.x }}"
+                y="{{ release.extended_bar.y }}"
+                width="{{ release.extended_bar.width }}"
+                height="{{ release.extended_bar.height }}"
+                fill="{{ release.extended_bar.fill }}"
+                stroke="{{ colors.mainstream }}"
+                stroke-width="2"
+            />
+        {% endif %}
+
+        <text x="{{ release.version_text.x }}" y="{{ release.version_text.y }}" class="version-text">
+            {{ release.version_text.text }}
+        </text>
+
+        {% if release.lts_text %}
+            <text x="{{ release.lts_text.x }}" y="{{ release.lts_text.y }}" class="lts-text">
+                {{ release.lts_text.text }}
+            </text>
+        {% endif %}
+    {% endfor %}
+
+    <!-- Legend -->
+    <rect
+        x="{{ legend.mainstream_box.x + config.legend_padding }}"
+        y="{{ legend.mainstream_box.y }}"
+        width="{{ legend.mainstream_box.width }}"
+        height="{{ legend.mainstream_box.height}}"
+        fill="{{ legend.mainstream_box.fill }}"
+        stroke="{{ colors.mainstream }}" stroke-width="2"
+    />
+    <text
+        y="{{ legend.mainstream_text.y + 6 }}"
+        fill="{{ legend.mainstream_text.fill }}"
+        class="release-text"
+    >
+        {% for line in legend.mainstream_text.text %}
+            <tspan
+                x="{{ legend.mainstream_text.x + config.legend_padding + 3 }}"
+                dy="{{ '-0.3em' if loop.first else '1.2em' }}"
+            >
+                {{ line }}
+            </tspan>
+        {% endfor %}
+
+    </text>
+
+    <rect
+        x="{{ legend.extended_box.x + config.legend_padding}}"
+        y="{{ legend.extended_box.y }}"
+        width="{{ legend.extended_box.width}}"
+        height="{{ legend.extended_box.height}}"
+        fill="{{ legend.extended_box.fill }}"
+        stroke="{{ colors.mainstream }}" stroke-width="2"
+    />
+    <text
+        y="{{ legend.mainstream_text.y + 6 }}"
+        fill="{{ legend.extended_text.fill }}"
+        class="release-text"
+    >
+        {% for line in legend.extended_text.text %}
+            <tspan
+                x="{{ legend.extended_text.x + config.legend_padding + 4 }}"
+                dy="{{ '-0.3em' if loop.first else '1.2em' }}"
+            >
+                {{ line }}
+            </tspan>
+        {% endfor %}
+    </text>
+
+    <!--fade-->
+    <rect
+        x="{{ svg_width - 120 }}"
+        y="0"
+        width="120"
+        height="100%"
+        fill="url(#fade-right)"
+    />
+</svg>

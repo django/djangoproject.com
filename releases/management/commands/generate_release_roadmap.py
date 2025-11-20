@@ -3,7 +3,7 @@ Generates an SVG roadmap of Django releases,
 showing mainstream and extended support periods.
 
 Usage:
-    python generate_release_roadmap.py --first-release <VERSION> --date <YYYY-MM>
+    python -m manage generate_release_roadmap.py --first-release <VERSION> --date <YYYY-MM>
 
 Arguments:
     --first-release   First release number in Django versioning style, e.g.,"4.2"
@@ -19,19 +19,20 @@ Behavior:
     - Produces an SVG at: ../djangoproject/static/img/release-roadmap.svg
 """
 
-import argparse
 import datetime as dtime
 from pathlib import Path
 
 from dateutil.relativedelta import relativedelta
 from jinja2 import Environment, FileSystemLoader
 
-BASE_DIR = Path(__file__).resolve().parent
+from django.conf import settings
+from django.core.management.base import BaseCommand
 
-TEMPLATE_DIR = BASE_DIR
+
+TEMPLATE_DIR = Path(__file__).resolve().parent
 
 OUTPUT_FILE = (
-    BASE_DIR.parent / "djangoproject" / "static" / "img" / "release-roadmap.svg"
+    settings.BASE_DIR / "djangoproject" / "static" / "img" / "release-roadmap.svg"
 )
 
 COLORS = {
@@ -64,6 +65,24 @@ CONFIG = {
     "year_line_width": 3,
     "month_line_width": 1,
 }
+
+class Command(BaseCommand):
+
+    help="Generate Django release roadmap SVG."
+
+    def add_arguments(self,parser):
+        parser.add_argument(
+            "--first-release", required=True, help="First release number, e.g., 4.2"
+        )
+        parser.add_argument(
+            "--date",
+            type=lambda str: dtime.datetime.strptime(str, "%Y-%m").date(),
+            required=True,
+            help="Release date in YYYY-MM format, e.g., 2023-04",
+        )
+
+    def handle(self,*args,**options):
+        render_svg(options["first_release"],options["date"])
 
 
 def get_chart_timeline(data: list, config: dict):
@@ -293,20 +312,9 @@ def generate_legend(config: dict) -> dict:
     return legend
 
 
-def render_svg():
+def render_svg(first_release :str, date :dtime.date):
 
-    parser = argparse.ArgumentParser(description="Generate Django release roadmap SVG.")
-    parser.add_argument(
-        "--first-release", required=True, help="First release number, e.g., 4.2"
-    )
-    parser.add_argument(
-        "--date",
-        type=lambda str: dtime.datetime.strptime(str, "%Y-%m").date(),
-        required=True,
-        help="Release date in YYYY-MM format, e.g., 2023-04",
-    )
-    args = parser.parse_args()
-    data = generate_release_data(args.first_release, args.date)
+    data = generate_release_data(first_release, date)
 
     start_year, end_year, svg_width = get_chart_timeline(data, CONFIG)
     svg_height = calculate_dimensions(CONFIG, len(data))
@@ -333,5 +341,3 @@ def render_svg():
         f.write(output_svg)
 
 
-if __name__ == "__main__":
-    render_svg()
