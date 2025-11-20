@@ -13,10 +13,21 @@
             font-style: {{ config.font_style_lts }};
             fill: {{ colors.text_lts }};
         }
-        .legend-text {
+        .month-text {
             font-family: {{ config.font_family }};
             font-size: {{ config.font_size }}px;
             fill: {{ colors.legend_text }};
+            stroke: #ffffff;
+            stroke-width: 20px;
+            paint-order: stroke;
+            stroke-linecap: butt;
+            stroke-linejoin: miter;
+        }
+        .year-text{
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size }}px;
+            fill: {{ colors.legend_text }};
+            margin-bottom: 4px;
         }
         .release-text{
             font-family: {{ config.font_family }};
@@ -33,22 +44,31 @@
 
     <rect width="100%" height="100%" fill="{{ colors.bg }}" />
 
-    {% for line in grid_lines %}
+    {% for line in grid_lines| reverse%}
+
         <line x1="{{ line.x }}" y1="{{ config.padding_top - 10 }}" x2="{{ line.x }}" y2="{{ svg_height - config.padding_bottom }}"
               stroke="{{ colors.grid }}" stroke-width="{{ line.width }}" />
         {% if line.top_label %}
             <!-- Year label (top) -->
-            <text x="{{ line.x - 10 }}" y="{{ config.padding_top - 15 }}" class="legend-text">
+            <text x="{{ line.x - 10 }}" y="{{ config.padding_top - 15 }}" class="year-text">
                 {{ line.top_label }}
             </text>
         {% endif %}
 
-        {% if line.bottom_label %}
-            <!-- Month label (bottom) -->
-            <text x="{{ line.x - 10  }}" y="{{ svg_height - config.padding_bottom + 15 }}" class="legend-text">
+         {% if line.bottom_label %}
+            <!-- Month label -->
+            <text
+                x="{{ line.x - 6 }}"
+                y="{{ svg_height / 2 + 6}}"
+                transform="rotate(-90, {{ line.x - 6 }}, {{ svg_height / 2 }})"
+                class="month-text"
+                text-anchor="middle"
+                dominant-baseline="middle"
+            >
                 {{ line.bottom_label }}
             </text>
         {% endif %}
+
     {% endfor %}
 
     {% for release in releases %}
@@ -103,7 +123,7 @@
     >
         {% for line in legend.mainstream_text.text %}
             <tspan
-                x="{{ legend.mainstream_text.x + config.legend_padding }}"
+                x="{{ legend.mainstream_text.x + config.legend_padding + 3 }}"
                 dy="{{ '-0.3em' if loop.first else '1.2em' }}"
             >
                 {{ line }}
@@ -127,7 +147,7 @@
     >
         {% for line in legend.extended_text.text %}
             <tspan
-                x="{{ legend.extended_text.x + config.legend_padding }}"
+                x="{{ legend.extended_text.x + config.legend_padding + 4 }}"
                 dy="{{ '-0.3em' if loop.first else '1.2em' }}"
             >
                 {{ line }}

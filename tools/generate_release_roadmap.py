@@ -22,17 +22,15 @@ Behavior:
 import argparse
 import calendar
 import datetime as dtime
-import os
-
+from dateutil.relativedelta import relativedelta
+from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = Path(__file__).resolve().parent
 
 TEMPLATE_DIR = BASE_DIR
 
-OUTPUT_FILE = os.path.join(
-    BASE_DIR, "..", "djangoproject", "static", "img", "release-roadmap.svg"
-)
+OUTPUT_FILE = BASE_DIR.parent / "djangoproject" / "static" / "img" / "release-roadmap.svg"
 
 COLORS = {
     "mainstream": "#0C4B33",
@@ -124,9 +122,9 @@ def generate_grids(start_year: int, end_year: int, config: dict) -> list:
     # Month labels only for the VERY FIRST set of lines
     FIRST_YEAR_MONTH_LABELS = {
         0: None,
-        1: "Apr.",
-        2: "Aug.",
-        3: "Dec.",
+        1: "April",
+        2: "August",
+        3: "December",
     }
     for year_index, year in enumerate(range(start_year, end_year)):
         year_x_start = config["padding_left"] + (year_index * pixels_per_year)
@@ -157,15 +155,7 @@ def generate_grids(start_year: int, end_year: int, config: dict) -> list:
             )
     return grid_lines
 
-
-def add_months(date: dtime.date, months: int) -> dtime.date:
-    year = date.year + (date.month - 1 + months) // 12
-    month = (date.month - 1 + months) % 12 + 1
-    day = min(date.day, calendar.monthrange(year, month)[1])
-    return dtime.date(year, month, day)
-
-
-def generate_release_data(first_release: str, first_release_ym: str) -> list:
+def generate_release_data(first_release: str, release_date : dtime.date) -> list:
     """
     Generate 8 Django-style releases starting from a given first release.
     first_release: "4.2"
@@ -173,7 +163,7 @@ def generate_release_data(first_release: str, first_release_ym: str) -> list:
     """
     major, minor = map(int, first_release.split("."))
     # Parse YYYY-MM → date
-    release_date = dtime.datetime.strptime(first_release_ym, "%Y-%m").date()
+
     releases = []
     for i in range(8):
         curr_major = major + ((minor + i) // 3)
@@ -181,14 +171,14 @@ def generate_release_data(first_release: str, first_release_ym: str) -> list:
         version = f"{curr_major}.{curr_minor}"
         is_lts = curr_minor == 2
         # Mainstream support lasts 8 months
-        mainstream_end = add_months(release_date, 8)
+        mainstream_end = release_date + relativedelta(months=8)
         # Extended support
         if is_lts:
             # LTS = 28 months after mainstream ends
-            extended_end = add_months(mainstream_end, 28)
+            extended_end = mainstream_end + relativedelta(months=28)
         else:
             # Non-LTS = 8 months after mainstream ends
-            extended_end = add_months(mainstream_end, 8)
+            extended_end = mainstream_end + relativedelta(months=8)
         releases.append(
             {
                 "name": version,
@@ -199,7 +189,7 @@ def generate_release_data(first_release: str, first_release_ym: str) -> list:
             }
         )
         # Next release starts 8 months later
-        release_date = add_months(release_date, 8)
+        release_date = release_date+ relativedelta(months=8)
     return releases
 
 
@@ -260,7 +250,7 @@ def generate_releases(data: list, start_year: int, config: dict) -> list:
 def generate_legend(config: dict) -> dict:
 
     legend_y = (
-        config["padding_top"] + 230
+        config["padding_top"] + 260
     )  # Fixed position for legend so that it doesn't conflict with month labels
 
     width = config["legend_box_size"] + 100
@@ -307,7 +297,9 @@ def render_svg():
         "--first-release", required=True, help="First release number, e.g., 4.2"
     )
     parser.add_argument(
-        "--date", required=True, help="Release date in YYYY-MM format, e.g., 2023-04"
+        "--date", 
+        type=lambda str: dtime.datetime.strptime(str, "%Y-%m").date(),
+        required=True, help="Release date in YYYY-MM format, e.g., 2023-04"
     )
     args = parser.parse_args()
     data = generate_release_data(args.first_release, args.date)

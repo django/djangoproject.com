@@ -13,10 +13,21 @@
             font-style: italic;
             fill: #0C4B33;
         }
-        .legend-text {
+        .month-text {
             font-family: 'Segoe UI', 'Arial';
             font-size: 18px;
             fill: #000000;
+            stroke: #ffffff;
+            stroke-width: 20px;
+            paint-order: stroke;
+            stroke-linecap: butt;
+            stroke-linejoin: miter;
+        }
+        .year-text{
+            font-family: 'Segoe UI', 'Arial';
+            font-size: 18px;
+            fill: #000000;
+            margin-bottom: 4px;
         }
         .release-text{
             font-family: 'Segoe UI', 'Arial';
@@ -34,252 +45,337 @@
     <rect width="100%" height="100%" fill="none" />
 
     
-        <line x1="20.0" y1="20" x2="20.0" y2="356"
-              stroke="#000000" stroke-width="3" />
-        
-            <!-- Year label (top) -->
-            <text x="10.0" y="15" class="legend-text">
-                2023
-            </text>
-        
 
-        
-    
-        <line x1="60.0" y1="20" x2="60.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-            <!-- Month label (bottom) -->
-            <text x="50.0" y="371" class="legend-text">
-                Apr.
-            </text>
-        
-    
-        <line x1="100.0" y1="20" x2="100.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-            <!-- Month label (bottom) -->
-            <text x="90.0" y="371" class="legend-text">
-                Aug.
-            </text>
-        
-    
-        <line x1="140.0" y1="20" x2="140.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-            <!-- Month label (bottom) -->
-            <text x="130.0" y="371" class="legend-text">
-                Dec.
-            </text>
-        
-    
-        <line x1="140.0" y1="20" x2="140.0" y2="356"
-              stroke="#000000" stroke-width="3" />
-        
-            <!-- Year label (top) -->
-            <text x="130.0" y="15" class="legend-text">
-                2024
-            </text>
-        
-
-        
-    
-        <line x1="180.0" y1="20" x2="180.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="220.0" y1="20" x2="220.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="260.0" y1="20" x2="260.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="260.0" y1="20" x2="260.0" y2="356"
-              stroke="#000000" stroke-width="3" />
-        
-            <!-- Year label (top) -->
-            <text x="250.0" y="15" class="legend-text">
-                2025
-            </text>
-        
-
-        
-    
-        <line x1="300.0" y1="20" x2="300.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="340.0" y1="20" x2="340.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="380.0" y1="20" x2="380.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="380.0" y1="20" x2="380.0" y2="356"
-              stroke="#000000" stroke-width="3" />
-        
-            <!-- Year label (top) -->
-            <text x="370.0" y="15" class="legend-text">
-                2026
-            </text>
-        
-
-        
-    
-        <line x1="420.0" y1="20" x2="420.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="460.0" y1="20" x2="460.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="500.0" y1="20" x2="500.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="500.0" y1="20" x2="500.0" y2="356"
-              stroke="#000000" stroke-width="3" />
-        
-            <!-- Year label (top) -->
-            <text x="490.0" y="15" class="legend-text">
-                2027
-            </text>
-        
-
-        
-    
-        <line x1="540.0" y1="20" x2="540.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="580.0" y1="20" x2="580.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="620.0" y1="20" x2="620.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="620.0" y1="20" x2="620.0" y2="356"
-              stroke="#000000" stroke-width="3" />
-        
-            <!-- Year label (top) -->
-            <text x="610.0" y="15" class="legend-text">
-                2028
-            </text>
-        
-
-        
-    
-        <line x1="660.0" y1="20" x2="660.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="700.0" y1="20" x2="700.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="740.0" y1="20" x2="740.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="740.0" y1="20" x2="740.0" y2="356"
-              stroke="#000000" stroke-width="3" />
-        
-            <!-- Year label (top) -->
-            <text x="730.0" y="15" class="legend-text">
-                2029
-            </text>
-        
-
-        
-    
-        <line x1="780.0" y1="20" x2="780.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="820.0" y1="20" x2="820.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="860.0" y1="20" x2="860.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="860.0" y1="20" x2="860.0" y2="356"
-              stroke="#000000" stroke-width="3" />
-        
-            <!-- Year label (top) -->
-            <text x="850.0" y="15" class="legend-text">
-                2030
-            </text>
-        
-
-        
-    
-        <line x1="900.0" y1="20" x2="900.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
-        <line x1="940.0" y1="20" x2="940.0" y2="356"
-              stroke="#000000" stroke-width="1" />
-        
-
-        
-    
         <line x1="980.0" y1="20" x2="980.0" y2="356"
               stroke="#000000" stroke-width="1" />
         
 
+         
+
+    
+
+        <line x1="940.0" y1="20" x2="940.0" y2="356"
+              stroke="#000000" stroke-width="1" />
         
+
+         
+
+    
+
+        <line x1="900.0" y1="20" x2="900.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="860.0" y1="20" x2="860.0" y2="356"
+              stroke="#000000" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="850.0" y="15" class="year-text">
+                2030
+            </text>
+        
+
+         
+
+    
+
+        <line x1="860.0" y1="20" x2="860.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="820.0" y1="20" x2="820.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="780.0" y1="20" x2="780.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="740.0" y1="20" x2="740.0" y2="356"
+              stroke="#000000" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="730.0" y="15" class="year-text">
+                2029
+            </text>
+        
+
+         
+
+    
+
+        <line x1="740.0" y1="20" x2="740.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="700.0" y1="20" x2="700.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="660.0" y1="20" x2="660.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="620.0" y1="20" x2="620.0" y2="356"
+              stroke="#000000" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="610.0" y="15" class="year-text">
+                2028
+            </text>
+        
+
+         
+
+    
+
+        <line x1="620.0" y1="20" x2="620.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="580.0" y1="20" x2="580.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="540.0" y1="20" x2="540.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="500.0" y1="20" x2="500.0" y2="356"
+              stroke="#000000" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="490.0" y="15" class="year-text">
+                2027
+            </text>
+        
+
+         
+
+    
+
+        <line x1="500.0" y1="20" x2="500.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="460.0" y1="20" x2="460.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="420.0" y1="20" x2="420.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="380.0" y1="20" x2="380.0" y2="356"
+              stroke="#000000" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="370.0" y="15" class="year-text">
+                2026
+            </text>
+        
+
+         
+
+    
+
+        <line x1="380.0" y1="20" x2="380.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="340.0" y1="20" x2="340.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="300.0" y1="20" x2="300.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="260.0" y1="20" x2="260.0" y2="356"
+              stroke="#000000" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="250.0" y="15" class="year-text">
+                2025
+            </text>
+        
+
+         
+
+    
+
+        <line x1="260.0" y1="20" x2="260.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="220.0" y1="20" x2="220.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="180.0" y1="20" x2="180.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+
+    
+
+        <line x1="140.0" y1="20" x2="140.0" y2="356"
+              stroke="#000000" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="130.0" y="15" class="year-text">
+                2024
+            </text>
+        
+
+         
+
+    
+
+        <line x1="140.0" y1="20" x2="140.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+            <!-- Month label -->
+            <text
+                x="134.0"
+                y="194.0"
+                transform="rotate(-90, 134.0, 188.0)"
+                class="month-text"
+                text-anchor="middle"
+                dominant-baseline="middle"
+            >
+                December
+            </text>
+        
+
+    
+
+        <line x1="100.0" y1="20" x2="100.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+            <!-- Month label -->
+            <text
+                x="94.0"
+                y="194.0"
+                transform="rotate(-90, 94.0, 188.0)"
+                class="month-text"
+                text-anchor="middle"
+                dominant-baseline="middle"
+            >
+                August
+            </text>
+        
+
+    
+
+        <line x1="60.0" y1="20" x2="60.0" y2="356"
+              stroke="#000000" stroke-width="1" />
+        
+
+         
+            <!-- Month label -->
+            <text
+                x="54.0"
+                y="194.0"
+                transform="rotate(-90, 54.0, 188.0)"
+                class="month-text"
+                text-anchor="middle"
+                dominant-baseline="middle"
+            >
+                April
+            </text>
+        
+
+    
+
+        <line x1="20.0" y1="20" x2="20.0" y2="356"
+              stroke="#000000" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="10.0" y="15" class="year-text">
+                2023
+            </text>
+        
+
+         
+
     
 
     
@@ -539,27 +635,27 @@
     <!-- Legend -->
     <rect
         x="70"
-        y="246"
+        y="276"
         width="116"
         height="40"
         fill="#0C4B33"
         stroke="#0C4B33" stroke-width="2"
     />
     <text
-        y="266"
+        y="296"
         fill="#ffffff"
         class="release-text"
     >
         
             <tspan
-                x="91"
+                x="94"
                 dy="-0.3em"
             >
                 Mainstream
             </tspan>
         
             <tspan
-                x="91"
+                x="94"
                 dy="1.2em"
             >
                 Support
@@ -570,27 +666,27 @@
 
     <rect
         x="186"
-        y="246"
+        y="276"
         width="116"
         height="40"
         fill="#CBFDE9"
         stroke="#0C4B33" stroke-width="2"
     />
     <text
-        y="266"
+        y="296"
         fill="#000000"
         class="release-text"
     >
         
             <tspan
-                x="210"
+                x="214"
                 dy="-0.3em"
             >
                 Extended
             </tspan>
         
             <tspan
-                x="210"
+                x="214"
                 dy="1.2em"
             >
                 Support
