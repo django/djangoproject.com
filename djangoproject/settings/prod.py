@@ -40,7 +40,7 @@ LOGGING["handlers"]["syslog"] = {
 }
 LOGGING["loggers"]["django.request"]["handlers"].append("syslog")
 
-MEDIA_ROOT = str(DATA_DIR.joinpath("media"))
+MEDIA_ROOT = DATA_DIR / "media"
 
 MEDIA_URL = f"https://media.{DOMAIN_NAME}/"
 
@@ -61,12 +61,12 @@ STORAGES = {
     },
 }
 
-STATIC_ROOT = str(DATA_DIR.joinpath("static"))
+STATIC_ROOT = DATA_DIR / "static"
 
 STATIC_URL = f"https://static.{DOMAIN_NAME}/"
 
 # Docs settings
-DOCS_BUILD_ROOT = DATA_DIR.joinpath("data", "docbuilds")
+DOCS_BUILD_ROOT = DATA_DIR / "data" / "docbuilds"
 
 # django-hosts settings
 

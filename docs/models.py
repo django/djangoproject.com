@@ -188,10 +188,8 @@ class DocumentRelease(models.Model):
         self.documents.all().delete()
 
         # Read excluded paths from robots.docs.txt.
-        robots_path = settings.BASE_DIR.joinpath(
-            "djangoproject", "static", "robots.docs.txt"
-        )
-        with open(str(robots_path)) as fh:
+        robots_path = settings.BASE_DIR / "djangoproject" / "static" / "robots.docs.txt"
+        with robots_path.open() as fh:
             excluded_paths = [
                 line.strip().split("/")[-1]
                 for line in fh
@@ -472,6 +470,6 @@ class Document(models.Model):
     @cached_property
     def body(self):
         """The document's body"""
-        with open(str(self.full_path)) as fp:
+        with self.full_path.open() as fp:
             doc = json.load(fp)
         return doc["body"]

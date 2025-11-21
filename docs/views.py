@@ -81,7 +81,7 @@ def document(request, lang, version, url):
 
     context = {
         "doc": load_json_file(doc_path),
-        "env": load_json_file(docroot.joinpath("globalcontext.json")),
+        "env": load_json_file(docroot / "globalcontext.json"),
         "lang": lang,
         "version": version,
         "canonical_version": canonical_version,
@@ -91,7 +91,7 @@ def document(request, lang, version, url):
         "rtd_version": rtd_version,
         "docurl": url,
         "update_date": datetime.datetime.fromtimestamp(
-            (docroot.joinpath("last_build")).stat().st_mtime
+            (docroot / "last_build").stat().st_mtime
         ),
         "redirect_from": request.GET.get("from", None),
     }

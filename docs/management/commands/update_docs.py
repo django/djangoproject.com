@@ -135,10 +135,8 @@ class Command(BaseCommand):
             self.stdout.write(f"Starting update for {release} at {datetime.now()}...")
 
         # checkout_dir is shared for all languages.
-        checkout_dir = settings.DOCS_BUILD_ROOT.joinpath("sources", release.version)
-        parent_build_dir = settings.DOCS_BUILD_ROOT.joinpath(
-            release.lang, release.version
-        )
+        checkout_dir = settings.DOCS_BUILD_ROOT / "sources" / release.version
+        parent_build_dir = settings.DOCS_BUILD_ROOT / release.lang / release.version
         if not checkout_dir.exists():
             checkout_dir.mkdir(parents=True)
         if not parent_build_dir.exists():
@@ -161,20 +159,21 @@ class Command(BaseCommand):
                 )
             return
 
-        source_dir = checkout_dir.joinpath("docs")
+        source_dir = checkout_dir / "docs"
 
         if release.lang != settings.DEFAULT_LANGUAGE_CODE:
             scm_url = release.scm_url.replace(
                 "django.git", "django-docs-translations.git"
             )
-            trans_dir = checkout_dir.joinpath("django-docs-translation")
+            trans_dir = checkout_dir / "django-docs-translation"
             if not trans_dir.exists():
                 trans_dir.mkdir()
             self.update_git(scm_url, trans_dir)
-            if not source_dir.joinpath("locale").exists():
-                source_dir.joinpath("locale").symlink_to(
-                    trans_dir.joinpath("translations")
-                )
+
+            locale_dir = source_dir / "locale"
+            if not locale_dir.exists():
+                locale_dir.symlink_to(trans_dir / "translations")
+
             extra_kwargs = {"stdout": subprocess.DEVNULL} if self.verbosity == 0 else {}
             subprocess.check_call(
                 "cd %s && make translations" % trans_dir, shell=True, **extra_kwargs
@@ -191,7 +190,7 @@ class Command(BaseCommand):
         #
         for builder in builders:
             # Wipe and re-create the build directory. See #18930.
-            build_dir = parent_build_dir.joinpath("_build", builder)
+            build_dir = parent_build_dir / "_build" / builder
             if build_dir.exists():
                 shutil.rmtree(str(build_dir))
             build_dir.mkdir(parents=True)
@@ -209,7 +208,7 @@ class Command(BaseCommand):
                         srcdir=source_dir,
                         confdir=source_dir,
                         outdir=build_dir,
-                        doctreedir=build_dir.joinpath(".doctrees"),
+                        doctreedir=build_dir / ".doctrees",
                         buildername=builder,
                         # Translated docs builds generate a lot of warnings, so send
                         # stderr to stdout to be logged (rather than generating an email)
@@ -234,9 +233,9 @@ class Command(BaseCommand):
         # Create a zip file of the HTML build for offline reading.
         # This gets moved into MEDIA_ROOT for downloading.
         #
-        html_build_dir = parent_build_dir.joinpath("_build", "djangohtml")
+        html_build_dir = parent_build_dir / "_build" / "djangohtml"
         zipfile_name = f"django-docs-{release.version}-{release.lang}.zip"
-        zipfile_path = Path(settings.MEDIA_ROOT).joinpath("docs", zipfile_name)
+        zipfile_path = settings.MEDIA_ROOT / "docs" / zipfile_name
         if not zipfile_path.parent.exists():
             zipfile_path.parent.mkdir(parents=True)
         if self.verbosity >= 2:
@@ -259,8 +258,8 @@ class Command(BaseCommand):
         # Copy the build results to the directory used for serving
         # the documentation in the least disruptive way possible.
         #
-        build_dir = parent_build_dir.joinpath("_build")
-        built_dir = parent_build_dir.joinpath("_built")
+        build_dir = parent_build_dir / "_build"
+        built_dir = parent_build_dir / "_built"
         subprocess.check_call(
             [
                 "rsync",
@@ -275,7 +274,7 @@ class Command(BaseCommand):
         if release.is_default:
             self._setup_stable_symlink(release, built_dir)
 
-        json_built_dir = parent_build_dir.joinpath("_built", "json")
+        json_built_dir = parent_build_dir / "_built" / "json"
         documents = gen_decoded_documents(json_built_dir)
         release.sync_to_db(documents)
 
@@ -289,7 +288,7 @@ class Command(BaseCommand):
             repo, branch = url.rsplit("@", 1)
         else:
             repo, branch = url, "main"
-        if destdir.joinpath(".git").exists():
+        if (destdir / ".git").exists():
             remote = "origin"
             branch_with_remote = f"{remote}/{branch}"
             try:
