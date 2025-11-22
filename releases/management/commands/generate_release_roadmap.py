@@ -337,6 +337,3 @@ def render_svg(first_release: str, date: dtime.date):
     )
 
     OUTPUT_FILE.write_text(output_svg)
-
-    """with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(output_svg)"""
