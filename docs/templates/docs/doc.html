@@ -62,6 +62,9 @@
       </li>
     </ul>
     <ul id="doc-languages" class="language-switcher doc-switcher">
+      <li class="current">
+        <button>{% trans "Language:" %} <strong>{{ lang }}</strong></button>
+      </li>
       {% for available_lang in available_languages %}
         {% if lang != available_lang %}
           <li class="other">
@@ -74,14 +77,15 @@
           </li>
         {% endif %}
       {% endfor %}
-      <li class="current"
-          title="{% blocktrans %}Click on the links on the left to switch to another language.{% endblocktrans %}">
-        <span>{% trans "Language:" %} <strong>{{ lang }}</strong></span>
-      </li>
     </ul>
 
     {% get_all_doc_versions docurl as other_versions %}
     <ul id="doc-versions" class="version-switcher doc-switcher">
+      <li class="current {% if release.is_dev %}dev{% endif %}">
+        <button>{% trans "Documentation version:" %}
+          <strong>{% if release.is_dev %}development{% else %}{{ version }}{% endif %}</strong>
+        </button>
+      </li>
       {% for other_version in other_versions %}
         {% if version != other_version %}
           <li class="other">
@@ -94,18 +98,6 @@
           </li>
         {% endif %}
       {% endfor %}
-      <li class="current{% if release.is_dev %} dev{% endif %}"
-          title="{% if release.is_dev %}{% blocktrans trimmed %}
-                   This document is for Django's development version, which can be significantly different from previous releases.
-                 {% endblocktrans %}{% else %}{% blocktrans trimmed %}
-                   This document describes Django {{ version }}.
-                 {% endblocktrans %}{% endif %} {% blocktrans trimmed %}
-                   Click on the links on the left to see other versions.
-                 {% endblocktrans %}">
-        <span>{% trans "Documentation version:" %}
-          <strong>{% if release.is_dev %}development{% else %}{{ version }}{% endif %}</strong>
-        </span>
-      </li>
     </ul>
     <ul id="backtotop-link">
       <li class="current-link">
