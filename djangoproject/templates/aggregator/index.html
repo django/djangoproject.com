@@ -1,5 +1,5 @@
 {% extends "base_community.html" %}
-{% load i18n %}
+{% load fundraising_extras i18n %}
 
 {% block layout_class %}column-container sidebar-right{% endblock %}
 
@@ -96,4 +96,8 @@
       </li>
     {% endfor %}
   </ul>
+{% endblock %}
+
+{% block content-related-extra %}
+  {% gold_corporate_members %}
 {% endblock %}
