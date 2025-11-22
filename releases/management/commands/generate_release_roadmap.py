@@ -27,7 +27,7 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 from jinja2 import Environment, FileSystemLoader
 
-TEMPLATE_DIR = Path(__file__).resolve().parent
+TEMPLATE_DIR = Path(__file__).parent.resolve()
 
 OUTPUT_FILE = (
     settings.BASE_DIR / "djangoproject" / "static" / "img" / "release-roadmap.svg"
@@ -336,5 +336,7 @@ def render_svg(first_release: str, date: dtime.date):
         legend=legend,
     )
 
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(output_svg)
+    OUTPUT_FILE.write_text(output_svg)
+
+    """with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write(output_svg)"""
