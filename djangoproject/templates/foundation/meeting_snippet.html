@@ -23,3 +23,13 @@
     </li>
   {% endfor %}
 </ul>
+<p>
+  {% blocktranslate trimmed %}
+    Board meetings are generally the second Thursday of the month but are
+    occasionally rescheduled for attendance.
+  {% endblocktranslate %}
+  {% if next_meeting_date %}
+    {% translate "The next meeting is scheduled for: " context "Following meetings schedule" %}{{next_meeting_date|date:"DATE_FORMAT"}}
+  {% endif %}
+
+</p>
