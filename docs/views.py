@@ -144,6 +144,7 @@ def search_results(request, lang, version, per_page=10, orphans=3):
 
     activate(lang)
 
+    doc_category = DocumentationCategory.parse(request.GET.get("category"))
     form = DocSearchForm(request.GET or None, release=release)
 
     # Get available languages for the language switcher
@@ -158,6 +159,7 @@ def search_results(request, lang, version, per_page=10, orphans=3):
         "release": release,
         "available_languages": available_languages,
         "searchparams": request.GET.urlencode(),
+        "active_category": doc_category or "",
     }
 
     if form.is_valid():
@@ -169,7 +171,6 @@ def search_results(request, lang, version, per_page=10, orphans=3):
             if exact is not None:
                 return redirect(exact)
 
-            doc_category = DocumentationCategory.parse(request.GET.get("category"))
             results = Document.objects.search(
                 q, release, document_category=doc_category
             )
@@ -201,7 +202,6 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                     "page": page,
                     "paginator": paginator,
                     "start_sel": START_SEL,
-                    "active_category": doc_category,
                     "DocumentationCategory": DocumentationCategory,
                 }
             )

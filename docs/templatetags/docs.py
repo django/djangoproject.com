@@ -34,6 +34,7 @@ def search_form(context):
 
     request = context["request"]
     lang = context.get("lang", settings.DEFAULT_LANGUAGE_CODE)
+    active_category = context.get("active_category", "")
 
     if "version" in context:
         release = DocumentRelease.objects.select_related(
@@ -46,6 +47,7 @@ def search_form(context):
         "form": DocSearchForm(request.GET, release=release),
         "version": release.version,
         "lang": lang,
+        "active_category": active_category,
     }
 
 
