@@ -20,19 +20,36 @@ from ..utils import get_doc_path, get_doc_root, get_module_path
 register = CachedLibrary()
 
 
-@register.cached_context_inclusion_tag("search_form.html")
-def search_form(context):
-    if "request" not in context:
+@register.inclusion_tag("search_form.html", takes_context=True)
+def search_form(context, *, prefix, cached_search_context=None):
+    return {
+        "prefix": prefix,
+        "request": context.get("request"),
+        "cached_search_context": cached_search_context,
+    }
+
+
+@register.simple_tag(takes_context=True)
+def build_search_form(context, release, prefix=None):
+    request = context.get("request")
+    return DocSearchForm(
+        request.GET if request else None, release=release, prefix=prefix
+    )
+
+
+@register.cached_context_simple_tag()
+def search_context(context):
+    if context.get("request") is None:
         # Django's built-in error views (like django.views.defaults.server_error)
         # render templates without attaching a RequestContext — meaning the 'request'
         # variable is not present in the template context.
         return {
-            "form": DocSearchForm(release=None),
             "version": "dev",
             "lang": settings.DEFAULT_LANGUAGE_CODE,
+            "release": None,
+            "active_category": "",
         }
 
-    request = context["request"]
     lang = context.get("lang", settings.DEFAULT_LANGUAGE_CODE)
     active_category = context.get("active_category", "")
 
@@ -44,10 +61,10 @@ def search_form(context):
         release = DocumentRelease.objects.select_related("release").current()
 
     return {
-        "form": DocSearchForm(request.GET, release=release),
         "version": release.version,
         "lang": lang,
         "active_category": active_category,
+        "release": release,
     }
 
 
