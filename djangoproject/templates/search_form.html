@@ -1,9 +1,10 @@
-{% load i18n %}
+{% load i18n docs %}
 <search class="search form-input" aria-labelledby="docs-search-label">
-  <form action="{% url 'document-search' version=version lang=lang host 'docs' %}">
+  <form action="{% url 'document-search' version=cached_search_context.version lang=cached_search_context.lang host 'docs' %}">
+    {% build_search_form cached_search_context.release prefix as form %}
     <label id="docs-search-label" class="visuallyhidden" for="{{ form.q.id_for_label }}">{{ form.q.field.widget.attrs.placeholder }}</label>
     {{ form.q }}
-    <input type="hidden" name="category" value="{{ active_category }}">
+    <input type="hidden" name="category" value="{{ cached_search_context.active_category }}">
 
     <button type="submit">
       <i class="icon icon-search" aria-hidden="true"></i>

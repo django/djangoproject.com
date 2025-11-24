@@ -1,4 +1,5 @@
 -r dev.txt
 coverage==7.11.3
+playwright==1.56.0
 requests-mock==1.12.1
 tblib>=3.0.0

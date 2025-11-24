@@ -4,7 +4,7 @@ APP_LIST ?= accounts aggregator blog contact dashboard djangoproject docs founda
 SCSS = djangoproject/scss
 STATIC = djangoproject/static
 
-ci: compilemessages test
+ci: compilemessages collectstatics test
 	@python -m coverage report
 
 compilemessages:

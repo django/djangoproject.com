@@ -16,3 +16,8 @@ class DocSearchForm(forms.Form):
                 "placeholder": search_label_placeholder,
             }
         )
+        q_with_prefix = super().add_prefix("q")
+        self.fields["q"].widget.attrs["id"] = f"id_{q_with_prefix}"
+
+    def add_prefix(self, field_name):
+        return field_name

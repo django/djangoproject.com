@@ -31,6 +31,10 @@ COPY ./requirements ./requirements
 RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends ${BUILD_DEPENDENCIES} \
     && python3 -m pip install --no-cache-dir -r ${REQ_FILE} \
+    && if [ "${REQ_FILE}" = "requirements/tests.txt" ]; then \
+        echo "Installing Playwright browsers..."; \
+        playwright install --with-deps; \
+    fi \
     && apt-get purge --assume-yes --auto-remove ${BUILD_DEPENDENCIES} \
     && apt-get distclean
 
