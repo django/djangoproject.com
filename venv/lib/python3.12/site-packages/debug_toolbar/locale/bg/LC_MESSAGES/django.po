@@ -1,0 +1,705 @@
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+#
+# Translators:
+# arneatec <arneatec@gmail.com>, 2022
+msgid ""
+msgstr ""
+"Project-Id-Version: Django Debug Toolbar\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-06 07:12-0500\n"
+"PO-Revision-Date: 2010-11-30 00:00+0000\n"
+"Last-Translator: arneatec <arneatec@gmail.com>, 2022\n"
+"Language-Team: Bulgarian (http://app.transifex.com/django-debug-toolbar/django-debug-toolbar/language/bg/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps.py:18
+msgid "Debug Toolbar"
+msgstr "Debug Toolbar"
+
+#: panels/alerts.py:67
+#, python-brace-format
+msgid ""
+"Form with id \"{form_id}\" contains file input, but does not have the "
+"attribute enctype=\"multipart/form-data\"."
+msgstr ""
+
+#: panels/alerts.py:70
+msgid ""
+"Form contains file input, but does not have the attribute "
+"enctype=\"multipart/form-data\"."
+msgstr ""
+
+#: panels/alerts.py:73
+#, python-brace-format
+msgid ""
+"Input element references form with id \"{form_id}\", but the form does not "
+"have the attribute enctype=\"multipart/form-data\"."
+msgstr ""
+
+#: panels/alerts.py:77
+msgid "Alerts"
+msgstr ""
+
+#: panels/cache.py:168
+msgid "Cache"
+msgstr "Кеш"
+
+#: panels/cache.py:174
+#, python-format
+msgid "%(cache_calls)d call in %(time).2fms"
+msgid_plural "%(cache_calls)d calls in %(time).2fms"
+msgstr[0] "%(cache_calls)d извикване за %(time).2fms"
+msgstr[1] "%(cache_calls)d извиквания за %(time).2fms"
+
+#: panels/cache.py:183
+#, python-format
+msgid "Cache calls from %(count)d backend"
+msgid_plural "Cache calls from %(count)d backends"
+msgstr[0] "Извиквания на кеша от %(count)d бекенд"
+msgstr[1] "Извиквания на кеша от %(count)d бекенда"
+
+#: panels/headers.py:31
+msgid "Headers"
+msgstr "Хедъри"
+
+#: panels/history/panel.py:19 panels/history/panel.py:20
+msgid "History"
+msgstr "История"
+
+#: panels/profiling.py:140
+msgid "Profiling"
+msgstr "Профилиране"
+
+#: panels/redirects.py:17
+msgid "Intercept redirects"
+msgstr "Прехвани пренасочвания"
+
+#: panels/request.py:16
+msgid "Request"
+msgstr "Заявка"
+
+#: panels/request.py:38
+msgid "<no view>"
+msgstr "<no view>"
+
+#: panels/request.py:55
+msgid "<unavailable>"
+msgstr "<unavailable>"
+
+#: panels/settings.py:17
+msgid "Settings"
+msgstr "Настройки"
+
+#: panels/settings.py:20
+#, python-format
+msgid "Settings from %s"
+msgstr "Настройки от %s"
+
+#: panels/signals.py:57
+#, python-format
+msgid "%(num_receivers)d receiver of 1 signal"
+msgid_plural "%(num_receivers)d receivers of 1 signal"
+msgstr[0] "%(num_receivers)d получател на 1 сигнал"
+msgstr[1] "%(num_receivers)d получатели на 1 сигнал"
+
+#: panels/signals.py:62
+#, python-format
+msgid "%(num_receivers)d receiver of %(num_signals)d signals"
+msgid_plural "%(num_receivers)d receivers of %(num_signals)d signals"
+msgstr[0] "%(num_receivers)d приемник на %(num_signals)d сигнала"
+msgstr[1] "%(num_receivers)d приемника на %(num_signals)d сигнала"
+
+#: panels/signals.py:67
+msgid "Signals"
+msgstr "Сигнали"
+
+#: panels/sql/panel.py:30 panels/sql/panel.py:41
+msgid "Read uncommitted"
+msgstr "Read uncommitted"
+
+#: panels/sql/panel.py:31 panels/sql/panel.py:43
+msgid "Read committed"
+msgstr "Read committed"
+
+#: panels/sql/panel.py:32 panels/sql/panel.py:45
+msgid "Repeatable read"
+msgstr "Repeatable read"
+
+#: panels/sql/panel.py:33 panels/sql/panel.py:47
+msgid "Serializable"
+msgstr "Serializable"
+
+#: panels/sql/panel.py:39
+msgid "Autocommit"
+msgstr "Autocommit"
+
+#: panels/sql/panel.py:61 panels/sql/panel.py:71
+msgid "Idle"
+msgstr "Незает"
+
+#: panels/sql/panel.py:62 panels/sql/panel.py:72
+msgid "Active"
+msgstr "Активен"
+
+#: panels/sql/panel.py:63 panels/sql/panel.py:73
+msgid "In transaction"
+msgstr "В транзакция"
+
+#: panels/sql/panel.py:64 panels/sql/panel.py:74
+msgid "In error"
+msgstr "В грешка"
+
+#: panels/sql/panel.py:65 panels/sql/panel.py:75
+msgid "Unknown"
+msgstr "Непознато"
+
+#: panels/sql/panel.py:162
+msgid "SQL"
+msgstr "SQL"
+
+#: panels/sql/panel.py:168
+#, python-format
+msgid "%(query_count)d query in %(sql_time).2fms"
+msgid_plural "%(query_count)d queries in %(sql_time).2fms"
+msgstr[0] "%(query_count)d заявка за %(sql_time).2fms"
+msgstr[1] "%(query_count)d заявки за %(sql_time).2fms"
+
+#: panels/sql/panel.py:180
+#, python-format
+msgid "SQL queries from %(count)d connection"
+msgid_plural "SQL queries from %(count)d connections"
+msgstr[0] "SQL заявки от %(count)d връзка"
+msgstr[1] "SQL заявки от %(count)d връзки"
+
+#: panels/staticfiles.py:82
+#, python-format
+msgid "Static files (%(num_found)s found, %(num_used)s used)"
+msgstr "Статични файлове (%(num_found)s открити, %(num_used)s използвани)"
+
+#: panels/staticfiles.py:103
+msgid "Static files"
+msgstr "Статични файлове"
+
+#: panels/staticfiles.py:109
+#, python-format
+msgid "%(num_used)s file used"
+msgid_plural "%(num_used)s files used"
+msgstr[0] "%(num_used)s файл използван"
+msgstr[1] "%(num_used)s файла са използвани"
+
+#: panels/templates/panel.py:101
+msgid "Templates"
+msgstr "Шаблони"
+
+#: panels/templates/panel.py:106
+#, python-format
+msgid "Templates (%(num_templates)s rendered)"
+msgstr "Шаблони (%(num_templates)s рендерирани)"
+
+#: panels/templates/panel.py:195
+msgid "No origin"
+msgstr "Няма произход"
+
+#: panels/timer.py:27
+#, python-format
+msgid "CPU: %(cum)0.2fms (%(total)0.2fms)"
+msgstr "Процесор: %(cum)0.2fms (%(total)0.2fms)"
+
+#: panels/timer.py:32
+#, python-format
+msgid "Total: %0.2fms"
+msgstr "Общо: %0.2fms"
+
+#: panels/timer.py:38 templates/debug_toolbar/panels/history.html:9
+#: templates/debug_toolbar/panels/sql_explain.html:11
+#: templates/debug_toolbar/panels/sql_profile.html:12
+#: templates/debug_toolbar/panels/sql_select.html:11
+msgid "Time"
+msgstr "Време"
+
+#: panels/timer.py:46
+msgid "User CPU time"
+msgstr "Потребителско процесорно време "
+
+#: panels/timer.py:46
+#, python-format
+msgid "%(utime)0.3f msec"
+msgstr "%(utime)0.3f msec"
+
+#: panels/timer.py:47
+msgid "System CPU time"
+msgstr "Системно процесорно време"
+
+#: panels/timer.py:47
+#, python-format
+msgid "%(stime)0.3f msec"
+msgstr "%(stime)0.3f msec"
+
+#: panels/timer.py:48
+msgid "Total CPU time"
+msgstr "Общо процесорно време"
+
+#: panels/timer.py:48
+#, python-format
+msgid "%(total)0.3f msec"
+msgstr "%(total)0.3f msec"
+
+#: panels/timer.py:49
+msgid "Elapsed time"
+msgstr "Изминало време"
+
+#: panels/timer.py:49
+#, python-format
+msgid "%(total_time)0.3f msec"
+msgstr "%(total_time)0.3f msec"
+
+#: panels/timer.py:51
+msgid "Context switches"
+msgstr "Контекстни превключвания"
+
+#: panels/timer.py:52
+#, python-format
+msgid "%(vcsw)d voluntary, %(ivcsw)d involuntary"
+msgstr "%(vcsw)d волеви, %(ivcsw)d неволеви"
+
+#: panels/versions.py:19
+msgid "Versions"
+msgstr "Версии"
+
+#: templates/debug_toolbar/base.html:23
+msgid "Hide toolbar"
+msgstr "Скрий лента с инструменти "
+
+#: templates/debug_toolbar/base.html:23
+msgid "Hide"
+msgstr "Скрий"
+
+#: templates/debug_toolbar/base.html:25 templates/debug_toolbar/base.html:26
+msgid "Toggle Theme"
+msgstr ""
+
+#: templates/debug_toolbar/base.html:35
+msgid "Show toolbar"
+msgstr "Покажи лента с инструменти"
+
+#: templates/debug_toolbar/includes/panel_button.html:4
+msgid "Disable for next and successive requests"
+msgstr "Деактивирай за следващо и всички последващи заявки"
+
+#: templates/debug_toolbar/includes/panel_button.html:4
+msgid "Enable for next and successive requests"
+msgstr "Активирай за следващо и всички последващи заявки"
+
+#: templates/debug_toolbar/panels/alerts.html:4
+msgid "Alerts found"
+msgstr ""
+
+#: templates/debug_toolbar/panels/alerts.html:11
+msgid "No alerts found"
+msgstr ""
+
+#: templates/debug_toolbar/panels/cache.html:2
+msgid "Summary"
+msgstr "Обобщение"
+
+#: templates/debug_toolbar/panels/cache.html:6
+msgid "Total calls"
+msgstr "Общо извиквания"
+
+#: templates/debug_toolbar/panels/cache.html:7
+msgid "Total time"
+msgstr "Общо време"
+
+#: templates/debug_toolbar/panels/cache.html:8
+msgid "Cache hits"
+msgstr "Кеш успехи"
+
+#: templates/debug_toolbar/panels/cache.html:9
+msgid "Cache misses"
+msgstr "Кеш неуспехи"
+
+#: templates/debug_toolbar/panels/cache.html:21
+msgid "Commands"
+msgstr "Команди"
+
+#: templates/debug_toolbar/panels/cache.html:39
+msgid "Calls"
+msgstr "Извиквания"
+
+#: templates/debug_toolbar/panels/cache.html:43
+#: templates/debug_toolbar/panels/sql.html:36
+msgid "Time (ms)"
+msgstr "Време (ms)"
+
+#: templates/debug_toolbar/panels/cache.html:44
+msgid "Type"
+msgstr "Вид"
+
+#: templates/debug_toolbar/panels/cache.html:45
+#: templates/debug_toolbar/panels/request.html:8
+msgid "Arguments"
+msgstr "Аргументи"
+
+#: templates/debug_toolbar/panels/cache.html:46
+#: templates/debug_toolbar/panels/request.html:9
+msgid "Keyword arguments"
+msgstr "Аргументи с ключови думи"
+
+#: templates/debug_toolbar/panels/cache.html:47
+msgid "Backend"
+msgstr "Бекенд"
+
+#: templates/debug_toolbar/panels/headers.html:3
+msgid "Request headers"
+msgstr "Хедъри на заявката"
+
+#: templates/debug_toolbar/panels/headers.html:8
+#: templates/debug_toolbar/panels/headers.html:27
+#: templates/debug_toolbar/panels/headers.html:48
+msgid "Key"
+msgstr "Ключ"
+
+#: templates/debug_toolbar/panels/headers.html:9
+#: templates/debug_toolbar/panels/headers.html:28
+#: templates/debug_toolbar/panels/headers.html:49
+#: templates/debug_toolbar/panels/history_tr.html:23
+#: templates/debug_toolbar/panels/request_variables.html:12
+#: templates/debug_toolbar/panels/settings.html:6
+#: templates/debug_toolbar/panels/timer.html:11
+msgid "Value"
+msgstr "Стойност"
+
+#: templates/debug_toolbar/panels/headers.html:22
+msgid "Response headers"
+msgstr "Хедъри на отговора"
+
+#: templates/debug_toolbar/panels/headers.html:41
+msgid "WSGI environ"
+msgstr "WSGI environ"
+
+#: templates/debug_toolbar/panels/headers.html:43
+msgid ""
+"Since the WSGI environ inherits the environment of the server, only a "
+"significant subset is shown below."
+msgstr "Понеже WSGI environ наследява средата на сървъра, е показана само важната част от него по-долу."
+
+#: templates/debug_toolbar/panels/history.html:10
+msgid "Method"
+msgstr "Метод"
+
+#: templates/debug_toolbar/panels/history.html:11
+#: templates/debug_toolbar/panels/staticfiles.html:43
+msgid "Path"
+msgstr "Път"
+
+#: templates/debug_toolbar/panels/history.html:12
+msgid "Request Variables"
+msgstr "Променливи на зявката"
+
+#: templates/debug_toolbar/panels/history.html:13
+msgid "Status"
+msgstr "Състояние"
+
+#: templates/debug_toolbar/panels/history.html:14
+#: templates/debug_toolbar/panels/sql.html:37
+msgid "Action"
+msgstr "Действие"
+
+#: templates/debug_toolbar/panels/history_tr.html:22
+#: templates/debug_toolbar/panels/request_variables.html:11
+msgid "Variable"
+msgstr "Променлива"
+
+#: templates/debug_toolbar/panels/profiling.html:5
+msgid "Call"
+msgstr "Извикване"
+
+#: templates/debug_toolbar/panels/profiling.html:6
+msgid "CumTime"
+msgstr "КумулативноВреме"
+
+#: templates/debug_toolbar/panels/profiling.html:7
+#: templates/debug_toolbar/panels/profiling.html:9
+msgid "Per"
+msgstr "За"
+
+#: templates/debug_toolbar/panels/profiling.html:8
+msgid "TotTime"
+msgstr "ОбщоВреме"
+
+#: templates/debug_toolbar/panels/profiling.html:10
+msgid "Count"
+msgstr "Брой"
+
+#: templates/debug_toolbar/panels/request.html:3
+msgid "View information"
+msgstr "Информация за изгледа"
+
+#: templates/debug_toolbar/panels/request.html:7
+msgid "View function"
+msgstr "Функция на изгледа"
+
+#: templates/debug_toolbar/panels/request.html:10
+msgid "URL name"
+msgstr "Име на URL"
+
+#: templates/debug_toolbar/panels/request.html:24
+msgid "Cookies"
+msgstr "Бисквитки"
+
+#: templates/debug_toolbar/panels/request.html:27
+msgid "No cookies"
+msgstr "Няма бисквитки"
+
+#: templates/debug_toolbar/panels/request.html:31
+msgid "Session data"
+msgstr "Данни на сесията"
+
+#: templates/debug_toolbar/panels/request.html:34
+msgid "No session data"
+msgstr "Няма данни от сесията"
+
+#: templates/debug_toolbar/panels/request.html:38
+msgid "GET data"
+msgstr "GET данни"
+
+#: templates/debug_toolbar/panels/request.html:41
+msgid "No GET data"
+msgstr "Няма GET данни"
+
+#: templates/debug_toolbar/panels/request.html:45
+msgid "POST data"
+msgstr "POST данни"
+
+#: templates/debug_toolbar/panels/request.html:48
+msgid "No POST data"
+msgstr "Няма POST данни"
+
+#: templates/debug_toolbar/panels/settings.html:5
+msgid "Setting"
+msgstr "Настройка"
+
+#: templates/debug_toolbar/panels/signals.html:5
+msgid "Signal"
+msgstr "Сигнал"
+
+#: templates/debug_toolbar/panels/signals.html:6
+msgid "Receivers"
+msgstr "Получатели"
+
+#: templates/debug_toolbar/panels/sql.html:6
+#, python-format
+msgid "%(num)s query"
+msgid_plural "%(num)s queries"
+msgstr[0] "%(num)s заявка"
+msgstr[1] "%(num)s заявки"
+
+#: templates/debug_toolbar/panels/sql.html:8
+#, python-format
+msgid ""
+"including <abbr title=\"Similar queries are queries with the same SQL, but "
+"potentially different parameters.\">%(count)s similar</abbr>"
+msgstr "Включва <abbr title=\"Similar queries are queries with the same SQL, but potentially different parameters.\">%(count)s подобни</abbr>"
+
+#: templates/debug_toolbar/panels/sql.html:12
+#, python-format
+msgid ""
+"and <abbr title=\"Duplicate queries are identical to each other: they "
+"execute exactly the same SQL and parameters.\">%(dupes)s duplicates</abbr>"
+msgstr "и <abbr title=\"Duplicate queries are identical to each other: they execute exactly the same SQL and parameters.\">%(dupes)s повторени</abbr>"
+
+#: templates/debug_toolbar/panels/sql.html:34
+msgid "Query"
+msgstr "Заявка"
+
+#: templates/debug_toolbar/panels/sql.html:35
+#: templates/debug_toolbar/panels/timer.html:36
+msgid "Timeline"
+msgstr "Във времето"
+
+#: templates/debug_toolbar/panels/sql.html:52
+#, python-format
+msgid "%(count)s similar queries."
+msgstr "%(count)s подобни заявки."
+
+#: templates/debug_toolbar/panels/sql.html:58
+#, python-format
+msgid "Duplicated %(dupes)s times."
+msgstr "Повторени %(dupes)s пъти."
+
+#: templates/debug_toolbar/panels/sql.html:95
+msgid "Connection:"
+msgstr "Връзка:"
+
+#: templates/debug_toolbar/panels/sql.html:97
+msgid "Isolation level:"
+msgstr "Изолационно ниво:"
+
+#: templates/debug_toolbar/panels/sql.html:100
+msgid "Transaction status:"
+msgstr "Статус на транзакцията:"
+
+#: templates/debug_toolbar/panels/sql.html:114
+msgid "(unknown)"
+msgstr "(неясен)"
+
+#: templates/debug_toolbar/panels/sql.html:123
+msgid "No SQL queries were recorded during this request."
+msgstr "Не са записани никакви SQL заявки по време на тази заявка."
+
+#: templates/debug_toolbar/panels/sql_explain.html:4
+msgid "SQL explained"
+msgstr "SQL разяснен"
+
+#: templates/debug_toolbar/panels/sql_explain.html:9
+#: templates/debug_toolbar/panels/sql_profile.html:10
+#: templates/debug_toolbar/panels/sql_select.html:9
+msgid "Executed SQL"
+msgstr "Изпълнен SQL"
+
+#: templates/debug_toolbar/panels/sql_explain.html:13
+#: templates/debug_toolbar/panels/sql_profile.html:14
+#: templates/debug_toolbar/panels/sql_select.html:13
+msgid "Database"
+msgstr "База данни"
+
+#: templates/debug_toolbar/panels/sql_profile.html:4
+msgid "SQL profiled"
+msgstr "SQL профилиран"
+
+#: templates/debug_toolbar/panels/sql_profile.html:37
+msgid "Error"
+msgstr "Грешка"
+
+#: templates/debug_toolbar/panels/sql_select.html:4
+msgid "SQL selected"
+msgstr "Избран SQL"
+
+#: templates/debug_toolbar/panels/sql_select.html:36
+msgid "Empty set"
+msgstr "Празно множество"
+
+#: templates/debug_toolbar/panels/staticfiles.html:3
+msgid "Static file path"
+msgid_plural "Static file paths"
+msgstr[0] "Път към статичен файл"
+msgstr[1] "Пътища към статични файлове"
+
+#: templates/debug_toolbar/panels/staticfiles.html:7
+#, python-format
+msgid "(prefix %(prefix)s)"
+msgstr "(префикс %(prefix)s)"
+
+#: templates/debug_toolbar/panels/staticfiles.html:11
+#: templates/debug_toolbar/panels/staticfiles.html:22
+#: templates/debug_toolbar/panels/staticfiles.html:34
+#: templates/debug_toolbar/panels/templates.html:10
+#: templates/debug_toolbar/panels/templates.html:30
+#: templates/debug_toolbar/panels/templates.html:47
+msgid "None"
+msgstr "None"
+
+#: templates/debug_toolbar/panels/staticfiles.html:14
+msgid "Static file app"
+msgid_plural "Static file apps"
+msgstr[0] "Приложение статичен файл"
+msgstr[1] "Приложения статично файлове"
+
+#: templates/debug_toolbar/panels/staticfiles.html:25
+msgid "Static file"
+msgid_plural "Static files"
+msgstr[0] "Статичен файл"
+msgstr[1] "Статични файлове"
+
+#: templates/debug_toolbar/panels/staticfiles.html:39
+#, python-format
+msgid "%(payload_count)s file"
+msgid_plural "%(payload_count)s files"
+msgstr[0] "%(payload_count)s файл"
+msgstr[1] "%(payload_count)s файла"
+
+#: templates/debug_toolbar/panels/staticfiles.html:44
+msgid "Location"
+msgstr "Местоположение"
+
+#: templates/debug_toolbar/panels/template_source.html:4
+msgid "Template source:"
+msgstr "Произход на шаблона:"
+
+#: templates/debug_toolbar/panels/templates.html:2
+msgid "Template path"
+msgid_plural "Template paths"
+msgstr[0] "Път към шаблон"
+msgstr[1] "Пътища към шаблони"
+
+#: templates/debug_toolbar/panels/templates.html:13
+msgid "Template"
+msgid_plural "Templates"
+msgstr[0] "Шаблон"
+msgstr[1] "Шаблони"
+
+#: templates/debug_toolbar/panels/templates.html:22
+#: templates/debug_toolbar/panels/templates.html:40
+msgid "Toggle context"
+msgstr "Превключи контекста"
+
+#: templates/debug_toolbar/panels/templates.html:33
+msgid "Context processor"
+msgid_plural "Context processors"
+msgstr[0] "Контекстен процесор"
+msgstr[1] "Контекстни процесори"
+
+#: templates/debug_toolbar/panels/timer.html:2
+msgid "Resource usage"
+msgstr "Използване на ресурси"
+
+#: templates/debug_toolbar/panels/timer.html:10
+msgid "Resource"
+msgstr "Ресурс"
+
+#: templates/debug_toolbar/panels/timer.html:26
+msgid "Browser timing"
+msgstr "Време в браузъра"
+
+#: templates/debug_toolbar/panels/timer.html:35
+msgid "Timing attribute"
+msgstr "Атрибут на измерването"
+
+#: templates/debug_toolbar/panels/timer.html:37
+msgid "Milliseconds since navigation start (+length)"
+msgstr "Милисекунди от началото на навигацията (+дължината)"
+
+#: templates/debug_toolbar/panels/versions.html:10
+msgid "Package"
+msgstr "Пакет"
+
+#: templates/debug_toolbar/panels/versions.html:11
+msgid "Name"
+msgstr "Име"
+
+#: templates/debug_toolbar/panels/versions.html:12
+msgid "Version"
+msgstr "Версия"
+
+#: templates/debug_toolbar/redirect.html:10
+msgid "Location:"
+msgstr "Местоположение:"
+
+#: templates/debug_toolbar/redirect.html:12
+msgid ""
+"The Django Debug Toolbar has intercepted a redirect to the above URL for "
+"debug viewing purposes. You can click the above link to continue with the "
+"redirect as normal."
+msgstr "Django Debug Toolbar прехвана пренасочване към горния URL с цел преглед за отстраняване на грешки /дебъг/. Можете да кликнете върху връзката по-горе, за да продължите с пренасочването по нормалния начин."
+
+#: views.py:16
+msgid ""
+"Data for this panel isn't available anymore. Please reload the page and "
+"retry."
+msgstr "Данните за този панел вече не са налични. Моля, презаредете страницата и опитайте отново. "

@@ -1,0 +1,13 @@
+{% load i18n %}
+{% blocktrans %}
+Your account is now approved. You can log in using the following link
+{% endblocktrans %}
+http://{{site.domain}}{% url 'auth_login' %}
+
+{% comment %}
+**registration/admin_approve_complete_email.txt**
+
+Used after successful account activation. This template has no context
+variables of its own, and should simply inform the user that their
+account is now active.
+{% endcomment %}

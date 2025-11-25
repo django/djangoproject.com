@@ -1,0 +1,23 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Django-recapcha\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-26 08:32-0500\n"
+"PO-Revision-Date: 2014-09-15 16:47-0300\n"
+"Last-Translator: Yousef Almutairi <yda93@hotmail.com>\n"
+"Language-Team: \n"
+"Language: Arabic\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: fields.py:20 fields.py:21
+msgid "Error verifying reCAPTCHA, please try again."
+msgstr "تعذر التحقق من reCAPTCHA، يرجى المحاولة مرة أخرى."

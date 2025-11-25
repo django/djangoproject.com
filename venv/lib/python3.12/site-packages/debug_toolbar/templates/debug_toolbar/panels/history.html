@@ -1,0 +1,22 @@
+{% load i18n static %}
+<form method="get" action="{% url 'djdt:history_refresh' %}">
+    {{ refresh_form.as_div }}
+    <button class="refreshHistory">Refresh</button>
+</form>
+<table class="djdt-max-height-100">
+    <thead>
+        <tr>
+            <th>{% translate "Time" %}</th>
+            <th>{% translate "Method" %}</th>
+            <th>{% translate "Path" %}</th>
+            <th>{% translate "Request Variables" %}</th>
+            <th>{% translate "Status" %}</th>
+            <th>{% translate "Action" %}</th>
+        </tr>
+    </thead>
+    <tbody id="djdtHistoryRequests">
+        {% for request_id, history_context in toolbar_history.items %}
+            {% include "debug_toolbar/panels/history_tr.html" %}
+        {% endfor %}
+    </tbody>
+</table>

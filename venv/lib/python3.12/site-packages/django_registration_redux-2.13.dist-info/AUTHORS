@@ -1,0 +1,43 @@
+The authors of django-registration (redux) can be found at
+<https://github.com/macropin/django-registration/network/members>
+
+-------------------------------------------------
+
+The original author of django-registration was James Bennett
+<james@b-list.org>, who may be found online at
+<http://www.b-list.org/>.
+
+
+Others who have contributed to the application:
+
+* Samuel Adam (French translation)
+* Jannis Leidel (German translation)
+* Rapahel Hertzog (helpful suggestions on packaging and distribution)
+* Panos Laganakos (Greek translation)
+* Ilya Filippov and Andy Mikhailenko (Russian translation)
+* Jarek Zgoda (Polish translation)
+* Meir Kriheli (Hebrew translation)
+* Italo Maia (Brazilian Portuguese translation)
+* Shinya Okano (Japanese translation)
+* A. Al-Ibrahim (Arabic translation)
+* Ernesto Rico Schmidt (Spanish translation)
+* Vladislav Mitov (Bulgarian translation)
+* Leonardo Manuel Rocha (Argentinean Spanish translation)
+* Emil Stenström (Swedish translation)
+* Liang Feng (Chinese translations)
+* Nebojsa Djordjevic (Serbian translation)
+* Nicola Larosa (Italian translation)
+* Joost Cassee (Dutch translation)
+* Björn Kristinsson (Icelandic translation)
+* Rune Bromer (Danish translation)
+* Domen Kožar (Slovenian translation)
+* Young Gyu Park (Korean translation)
+* Flavio Curella (updated Italian translation)
+* Jon Lønne (Bokmål translation)
+* Carles Barrobés (Catalan translation)
+* Nuno Mariz (Portuguese translation)
+* Patrick Samson (French translation)
+* Recep Kirmizi (Turkish translation)
+* Mohsen Mansouryar (Persian translation)
+* Jeffrey Long (Testing templates)
+* Ilya Baryshev (Test app / config)

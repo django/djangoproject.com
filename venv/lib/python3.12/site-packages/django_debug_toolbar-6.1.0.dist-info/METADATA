@@ -1,0 +1,98 @@
+Metadata-Version: 2.4
+Name: django-debug-toolbar
+Version: 6.1.0
+Summary: A configurable set of panels that display various debug information about the current request/response.
+Project-URL: Changelog, https://django-debug-toolbar.readthedocs.io/en/latest/changes.html
+Project-URL: Documentation, https://django-debug-toolbar.readthedocs.io/
+Project-URL: Download, https://pypi.org/project/django-debug-toolbar/
+Project-URL: Homepage, https://github.com/django-commons/django-debug-toolbar
+Project-URL: Issues, https://github.com/django-commons/django-debug-toolbar/issues
+Project-URL: Source, https://github.com/django-commons/django-debug-toolbar
+Author: Rob Hudson
+License: BSD-3-Clause
+License-File: LICENSE
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 4.2
+Classifier: Framework :: Django :: 5.0
+Classifier: Framework :: Django :: 5.1
+Classifier: Framework :: Django :: 5.2
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Programming Language :: Python :: 3.14
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.9
+Requires-Dist: django>=4.2.9
+Requires-Dist: sqlparse>=0.2
+Description-Content-Type: text/x-rst
+
+=====================================
+Django Debug Toolbar |latest-version|
+=====================================
+
+|build-status| |coverage| |docs| |python-support| |django-support|
+
+.. |latest-version| image:: https://img.shields.io/pypi/v/django-debug-toolbar.svg
+   :target: https://pypi.org/project/django-debug-toolbar/
+   :alt: Latest version on PyPI
+
+.. |build-status| image:: https://github.com/django-commons/django-debug-toolbar/workflows/Test/badge.svg
+   :target: https://github.com/django-commons/django-debug-toolbar/actions/workflows/test.yml
+   :alt: Build Status
+
+.. |coverage| image:: https://img.shields.io/badge/Coverage-94%25-green
+   :target: https://github.com/django-commons/django-debug-toolbar/actions/workflows/test.yml?query=branch%3Amain
+   :alt: Test coverage status
+
+.. |docs| image:: https://img.shields.io/readthedocs/django-debug-toolbar/latest.svg
+   :target: https://readthedocs.org/projects/django-debug-toolbar/
+   :alt: Documentation status
+
+.. |python-support| image:: https://img.shields.io/pypi/pyversions/django-debug-toolbar
+   :target: https://pypi.org/project/django-debug-toolbar/
+   :alt: Supported Python versions
+
+.. |django-support| image:: https://img.shields.io/pypi/djversions/django-debug-toolbar
+   :target: https://pypi.org/project/django-debug-toolbar/
+   :alt: Supported Django versions
+
+The Django Debug Toolbar is a configurable set of panels that display various
+debug information about the current request/response and when clicked, display
+more details about the panel's content.
+
+Here's a screenshot of the toolbar in action:
+
+.. image:: https://raw.github.com/django-commons/django-debug-toolbar/main/example/django-debug-toolbar.png
+   :alt: Django Debug Toolbar screenshot
+
+In addition to the built-in panels, a number of third-party panels are
+contributed by the community.
+
+The current stable version of the Debug Toolbar is 6.1.0. It works on
+Django ≥ 4.2.0.
+
+The Debug Toolbar has experimental support for `Django's asynchronous views
+<https://docs.djangoproject.com/en/dev/topics/async/>`_. Please note that
+the Debug Toolbar still lacks the capability for handling concurrent requests.
+If you find any issues, please report them on the `issue tracker`_.
+
+Documentation, including installation and configuration instructions, is
+available at https://django-debug-toolbar.readthedocs.io/.
+
+The Django Debug Toolbar is released under the BSD license, like Django
+itself. If you like it, please consider contributing!
+
+The Django Debug Toolbar was originally created by Rob Hudson <rob@cogit8.org>
+in August 2008 and was further developed by many contributors_.
+
+.. _contributors: https://github.com/django-commons/django-debug-toolbar/graphs/contributors
+.. _issue tracker: https://github.com/django-commons/django-debug-toolbar/issues

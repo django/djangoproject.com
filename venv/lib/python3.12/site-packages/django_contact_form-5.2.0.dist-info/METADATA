@@ -1,0 +1,72 @@
+Metadata-Version: 2.1
+Name: django-contact-form
+Version: 5.2.0
+Summary: A generic contact-form application for Django.
+Keywords: django,email,contact-form
+Author: James Bennett
+Maintainer: James Bennett
+License: BSD-3-Clause
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 4.2
+Classifier: Framework :: Django :: 5.1
+Classifier: Framework :: Django :: 5.2
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Utilities
+Project-URL: Documentation, https://django-contact-form.readthedocs.io/
+Project-URL: Source Code, https://github.com/ubernostrum/django-contact-form
+Requires-Python: >=3.9
+Requires-Dist: Django!=5.0.*,>=4.2
+Provides-Extra: akismet
+Requires-Dist: akismet>=24.5.0; extra == "akismet"
+Description-Content-Type: text/x-rst
+
+.. -*-restructuredtext-*-
+
+.. image:: https://github.com/ubernostrum/django-contact-form/workflows/CI/badge.svg
+   :alt: CI status image
+   :target: https://github.com/ubernostrum/django-contact-form/actions?query=workflow%3ACI
+
+``django-contact-form`` provides customizable contact-form
+functionality for `Django <https://www.djangoproject.com/>`_-powered
+sites.
+
+This application includes:
+
+* An extensible base contact-form class which is also usable as-is for
+  basic functionality (collecting a name, email address, and message)
+
+* A subclass of the base form which uses the Akismet spam-filtering
+  service to detect and reject spam submissions
+
+* A class-based Django view which can be used with either of the
+  built-in contact form classes, or your own customized form
+
+For the default contact-form functionality, add
+``"django_contact_form"`` to your Django site's ``INSTALLED_APPS``
+setting, add the following line to your site's root URLConf, and
+create the templates specified in `the usage guide
+<https://django-contact-form.readthedocs.io/en/latest/usage.html#default-templates>`_:
+
+.. code-block:: python
+
+    from django.urls import include, path
+
+
+    urlpatterns = [
+        # ... other URL patterns for your site ...
+        path("contact/", include("django_contact_form.urls")),
+    ]
+
+Full documentation for all functionality is `available online
+<http://django-contact-form.readthedocs.io/>`_.

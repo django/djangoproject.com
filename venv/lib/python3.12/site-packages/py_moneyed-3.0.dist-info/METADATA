@@ -1,0 +1,88 @@
+Metadata-Version: 2.1
+Name: py-moneyed
+Version: 3.0
+Summary: Provides Currency and Money classes for use in your Python code.
+Author: Kai
+Author-email: k@limist.com
+Maintainer: Dmitry Dygalo
+Maintainer-email: dadygalo@gmail.com
+License: BSD
+Project-URL: Homepage, http://github.com/py-moneyed/py-moneyed
+Project-URL: Documentation, https://py-moneyed.readthedocs.io/en/latest/
+Keywords: money currency class abstraction
+Platform: any
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Development Status :: 6 - Mature
+Classifier: Environment :: Other Environment
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Office/Business :: Financial
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.7
+Description-Content-Type: text/x-rst
+License-File: LICENSE
+Requires-Dist: babel (>=2.8.0)
+Requires-Dist: typing-extensions (>=3.7.4.3)
+Provides-Extra: tests
+Requires-Dist: pytest (>=2.3.0) ; extra == 'tests'
+Requires-Dist: tox (>=1.6.0) ; extra == 'tests'
+Provides-Extra: type-tests
+Requires-Dist: pytest (>=2.3.0) ; extra == 'type-tests'
+Requires-Dist: pytest-mypy-plugins ; extra == 'type-tests'
+Requires-Dist: mypy (>=0.812) ; extra == 'type-tests'
+
+.. image:: https://github.com/py-moneyed/py-moneyed/workflows/build/badge.svg
+    :target: https://github.com/py-moneyed/py-moneyed/actions?query=workflow%3Abuild
+    :alt: Build Status
+
+.. image:: https://badge.fury.io/py/py-moneyed.svg
+    :target: https://pypi.org/project/py-moneyed/
+    :alt: Latest PyPI version
+
+.. image:: https://readthedocs.org/projects/py-moneyed/badge/?version=latest
+   :target: http://py-moneyed.readthedocs.io/en/latest/?badge=latest
+
+Overview
+========
+
+The need to represent instances of money frequently arises in software
+development, particularly any financial/economics software. To address that
+need, the py-moneyed package provides the classes of Money and Currency, at a
+level more useful than just using Python's Decimal class, or ($DEITY forbid) the
+float primitive. The package is meant to be stand-alone and used directly, or
+be subclassed further. py-moneyed is BSD-licensed.
+
+Quick start
+-----------
+
+To install::
+
+    pip install py-moneyed
+
+Use:
+
+.. sourcecode:: python
+
+    from moneyed import Money, USD
+
+    five_dollars = Money(5, USD)
+
+You then use ``Money`` objects as if they were numbers, and they behave
+sensibly. See `docs <https://py-moneyed.readthedocs.io/en/latest/>`_ for more
+information (or the ``docs/`` folder).
+
+History
+-------
+
+Some of the py-moneyed code was first derived from python-money
+available via this URL: http://code.google.com/p/python-money/
+Due to inactivity, it was forked by @limist in 2010 and later
+moved to the py-moneyed organization.

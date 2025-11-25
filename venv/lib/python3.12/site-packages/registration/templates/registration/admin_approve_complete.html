@@ -1,0 +1,33 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Account Approved" %}{% endblock %}
+
+{% block content %}
+<p>
+    {% trans "The user's account is now approved." %}
+</p>
+{% endblock %}
+
+
+{% comment %}
+**registration/admin_approve_complete.html**
+
+Used to generate the html body of the admin activation email. Should display a
+link for an admin to approve activation of the account. This template has the
+following context:
+
+``site``
+    An object representing the site on which the user registered;
+    depending on whether ``django.contrib.sites`` is installed, this
+    may be an instance of either ``django.contrib.sites.models.Site``
+    (if the sites application is installed) or
+    ``django.contrib.sites.requests.RequestSite`` (if not). Consult `the
+    documentation for the Django sites framework
+    <http://docs.djangoproject.com/en/dev/ref/contrib/sites/>`_ for
+    details regarding these objects' interfaces.
+
+``user``
+    The new user account
+
+{% endcomment %}

@@ -1,0 +1,22 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: django-recaptcha\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-21 09:40+0200\n"
+"PO-Revision-Date: 2015-05-28 10:28-0400\n"
+"Last-Translator: Kevin Zhang <kevin@kevinzhang.me>\n"
+"Language-Team: Kevin Zhang <kevin@kevinzhang.me>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: fields.py:20 fields.py:21
+#, fuzzy
+#| msgid "Error verifying input, please try again."
+msgid "Error verifying reCAPTCHA, please try again."
+msgstr "无法验证输入，请重试。"
+
+#~ msgid "Incorrect, please try again."
+#~ msgstr "不正确，请重试。"

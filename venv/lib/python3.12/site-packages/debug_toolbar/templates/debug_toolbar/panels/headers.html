@@ -1,0 +1,60 @@
+{% load i18n %}
+
+<h4>{% translate "Request headers" %}</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>{% translate "Key" %}</th>
+      <th>{% translate "Value" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for key, value in request_headers.items %}
+      <tr>
+        <td>{{ key|escape }}</td>
+        <td>{{ value|escape }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h4>{% translate "Response headers" %}</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>{% translate "Key" %}</th>
+      <th>{% translate "Value" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for key, value in response_headers.items %}
+      <tr>
+        <td>{{ key|escape }}</td>
+        <td>{{ value|escape }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h4>{% translate "WSGI environ" %}</h4>
+
+<p>{% translate "Since the WSGI environ inherits the environment of the server, only a significant subset is shown below." %}</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>{% translate "Key" %}</th>
+      <th>{% translate "Value" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for key, value in environ.items %}
+      <tr>
+        <td>{{ key|escape }}</td>
+        <td>{{ value|escape }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

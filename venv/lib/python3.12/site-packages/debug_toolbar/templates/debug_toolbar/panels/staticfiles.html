@@ -1,0 +1,56 @@
+{% load i18n %}
+
+<h4>{% blocktranslate count dirs_count=staticfiles_dirs|length %}Static file path{% plural %}Static file paths{% endblocktranslate %}</h4>
+{% if staticfiles_dirs %}
+  <ol>
+    {% for prefix, staticfiles_dir in staticfiles_dirs %}
+      <li>{{ staticfiles_dir }}{% if prefix %} {% blocktranslate %}(prefix {{ prefix }}){% endblocktranslate %}{% endif %}</li>
+    {% endfor %}
+  </ol>
+{% else %}
+  <p>{% translate "None" %}</p>
+{% endif %}
+
+<h4>{% blocktranslate count apps_count=staticfiles_apps|length %}Static file app{% plural %}Static file apps{% endblocktranslate %}</h4>
+{% if staticfiles_apps %}
+  <ol>
+    {% for static_app in staticfiles_apps %}
+      <li>{{ static_app }}</li>
+    {% endfor %}
+  </ol>
+{% else %}
+  <p>{% translate "None" %}</p>
+{% endif %}
+
+<h4>{% blocktranslate count staticfiles_count=staticfiles|length %}Static file{% plural %}Static files{% endblocktranslate %}</h4>
+{% if staticfiles %}
+  <dl>
+    {% for path, url, real_path in staticfiles %}
+      <dt><strong><a class="toggleTemplate" href="{{ url }}" target="_blank" rel="noopener">{{ path }}</a></strong></dt>
+      <dd><samp>{{ real_path }}</samp></dd>
+    {% endfor %}
+  </dl>
+{% else %}
+  <p>{% translate "None" %}</p>
+{% endif %}
+
+
+{% for finder, payload in staticfiles_finders.items %}
+  <h4>{{ finder }} ({% blocktranslate count payload_count=payload|length %}{{ payload_count }} file{% plural %}{{ payload_count }} files{% endblocktranslate %})</h4>
+  <table>
+    <thead>
+      <tr>
+        <th>{% translate 'Path' %}</th>
+        <th>{% translate 'Location' %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for path, real_path in payload %}
+        <tr>
+          <td>{{ path }}</td>
+          <td>{{ real_path }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endfor %}

@@ -1,0 +1,167 @@
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary: var(--dracula-comment-darker);
+        --primary-fg: #f7f7f7;
+  
+        --body-fg: var(--dracula-foreground);
+        --body-bg: var(--dracula-background);
+        --body-quiet-color: #d0d0d0;
+        --body-medium-color: #e0e0e0;
+        --body-loud-color: #ffffff;
+  
+        --breadcrumbs-link-fg: #e0e0e0;
+        --breadcrumbs-fg: var(--dracula-green);
+  
+        --link-fg: var(--dracula-cyan);
+        --link-hover-color: #4ac1f7;
+        --link-selected-fg: #6f94c6;
+  
+        --hairline-color: #272727;
+        --border-color: #353535;
+  
+        --message-success-bg: var(--dracula-background-dark);
+        --message-warning-bg: var(--dracula-background-dark);
+        --message-error-bg: var(--dracula-background-dark);
+  
+        --darkened-bg: var(--dracula-background-light);
+        --selected-bg: var(--dracula-comment-dark);
+        --selected-row: var(--dracula-comment-dark);
+
+      color-scheme: dark;
+    }
+}
+
+
+html[data-theme="dark"] {
+    --primary: var(--dracula-comment-darker);
+    --primary-fg: #f7f7f7;
+    --secondary: var(--dracula-comment);
+
+    --body-fg: var(--dracula-foreground);
+    --body-bg: var(--dracula-background);
+    --body-quiet-color: #d0d0d0;
+    --body-medium-color: #e0e0e0;
+    --body-loud-color: #ffffff;
+
+    --breadcrumbs-link-fg: #e0e0e0;
+    --breadcrumbs-fg: var(--dracula-green);
+
+    --link-fg: var(--dracula-cyan);
+    --link-hover-color: #4ac1f7;
+    --link-selected-fg: #6f94c6;
+
+    --hairline-color: var(--dracula-current-line);
+    --border-color: var(--dracula-selection);
+
+    --message-success-bg: var(--dracula-background-dark);
+    --message-warning-bg: var(--dracula-background-dark);
+    --message-error-bg: var(--dracula-background-dark);
+
+    --darkened-bg: var(--dracula-background-light);
+    --selected-bg: var(--dracula-comment-dark);
+    --selected-row: var(--dracula-comment-dark);
+
+    color-scheme: dark;
+}
+
+/* dracula theme */
+html[data-theme="dark"] body {
+    ::selection {
+        background: var(--dracula-purple);
+      }
+}
+
+/* THEME SWITCH */
+.theme-toggle {
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    background: transparent;
+    vertical-align: middle;
+    margin-inline-start: 5px;
+    margin-top: -1px;
+}
+
+.theme-toggle svg {
+    vertical-align: middle;
+    height: 1rem;
+    width: 1rem;
+    display: none;
+}
+
+/*
+Fully hide screen reader text so we only show the one matching the current
+theme.
+*/
+.theme-toggle .visually-hidden {
+    display: none;
+}
+
+html[data-theme="auto"] .theme-toggle .theme-label-when-auto {
+    display: block;
+}
+
+html[data-theme="dark"] .theme-toggle .theme-label-when-dark {
+    display: block;
+}
+
+html[data-theme="light"] .theme-toggle .theme-label-when-light {
+    display: block;
+}
+
+/* ICONS */
+.theme-toggle svg.theme-icon-when-auto,
+.theme-toggle svg.theme-icon-when-dark,
+.theme-toggle svg.theme-icon-when-light {
+    fill: var(--header-link-color);
+    color: var(--header-bg);
+}
+
+html[data-theme="auto"] .theme-toggle svg.theme-icon-when-auto {
+    display: block;
+}
+
+html[data-theme="dark"] .theme-toggle svg.theme-icon-when-dark {
+    display: block;
+}
+
+html[data-theme="light"] .theme-toggle svg.theme-icon-when-light {
+    display: block;
+}
+
+/* dracula theme */
+html[data-theme="dark"] #nav-filter:focus {
+    border-color: var(--dracula-green);
+}
+
+/* dracula theme */
+html[data-theme="dark"] #nav-filter:focus-visible {
+    outline: 1px solid var(--dracula-green);
+}
+
+/* dracula theme */
+html[data-theme="dark"] #changelist .actions select:focus {
+    border-color: var(--dracula-green);
+}
+
+/* dracula theme */
+html[data-theme="dark"] input:not([type]):focus, html[data-theme="dark"] input[type=text]:focus,
+html[data-theme="dark"] input[type=password]:focus,
+html[data-theme="dark"] input[type=email]:focus, html[data-theme="dark"] input[type=url]:focus,
+html[data-theme="dark"] input[type=number]:focus,
+html[data-theme="dark"] input[type=tel]:focus, html[data-theme="dark"] textarea:focus,
+html[data-theme="dark"] select:focus, html[data-theme="dark"] .vTextField:focus {
+    border-color: var(--dracula-green);
+    outline: none;
+}
+
+/* dracula theme */
+html[data-theme="dark"] input:not([type]):focus-visible, html[data-theme="dark"] input[type=text]:focus-visible,
+html[data-theme="dark"] input[type=password]:focus-visible,
+html[data-theme="dark"] input[type=email]:focus-visible, html[data-theme="dark"] input[type=url]:focus-visible,
+html[data-theme="dark"] input[type=number]:focus-visible,
+html[data-theme="dark"] input[type=tel]:focus-visible, html[data-theme="dark"] input[type=search]:focus-visible,
+html[data-theme="dark"] textarea:focus-visible, html[data-theme="dark"] select:focus-visible,
+html[data-theme="dark"] .vTextField:focus-visible {
+    outline: 1px solid var(--dracula-green);
+}

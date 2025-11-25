@@ -1,0 +1,8 @@
+{# The provided implementation caters for only one reCAPTCHA on a page. Override this template and its logic as needed. #}
+<script src="https://{{ recaptcha_domain }}/recaptcha/api.js{% if api_params %}?{{ api_params }}{% endif %}"></script>
+<script>
+    // Submit function to be called, after reCAPTCHA was successful.
+    var onSubmit_{{ widget_uuid }} = function(token) {
+        console.log("reCAPTCHA validated for 'data-widget-uuid=\"{{ widget_uuid }}\"'")
+    };
+</script>

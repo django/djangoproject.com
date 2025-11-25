@@ -1,0 +1,24 @@
+{% load i18n %}
+<table>
+  <colgroup>
+    <col class="djdt-width-20">
+    <col class="djdt-width-20">
+    <col>
+  </colgroup>
+  <thead>
+    <tr>
+      <th>{% translate "Package" %}</th>
+      <th>{% translate "Name" %}</th>
+      <th>{% translate "Version" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for package, name, version in versions %}
+      <tr>
+        <td>{{ package }}</td>
+        <td>{{ name }}</td>
+        <td>{{ version }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

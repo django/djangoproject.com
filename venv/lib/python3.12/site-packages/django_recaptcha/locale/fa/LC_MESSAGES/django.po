@@ -1,0 +1,22 @@
+# Persian translation of django-recaptcha package.
+# This file is distributed under the same license as the django-recaptcha
+# package.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Django-recaptcha\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-23 02:31-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: Persian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: django_recaptcha/fields.py:20 django_recaptcha/fields.py:21
+msgid "Error verifying reCAPTCHA, please try again."
+msgstr "در بررسی یا تایید reCAPTCHA خطایی رخ داده است، لطفا دوباره تلاش کنید"

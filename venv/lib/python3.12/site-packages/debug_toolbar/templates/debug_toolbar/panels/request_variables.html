@@ -1,0 +1,26 @@
+{% load i18n %}
+
+{% if variables.list %}
+<table>
+  <colgroup>
+    <col class="djdt-width-20">
+    <col>
+  </colgroup>
+  <thead>
+    <tr>
+      <th>{% translate "Variable" %}</th>
+      <th>{% translate "Value" %}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for key, value in variables.list %}
+      <tr>
+        <td><code>{{ key|pprint }}</code></td>
+        <td><code>{{ value|pprint }}</code></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% elif variables.raw %}
+<code class="djdt-raw">{{ variables.raw|pprint }}</code>
+{% endif %}

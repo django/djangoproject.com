@@ -1,0 +1,10 @@
+{% load i18n %}
+<div class="djDebugPanelTitle">
+  <h3>{% translate "Template source:" %} <code>{{ template_name }}</code></h3>
+  <button type="button" class="djDebugClose">»</button>
+</div>
+<div class="djDebugPanelContent">
+  <div class="djdt-scroll">
+    {{ source }}
+  </div>
+</div>

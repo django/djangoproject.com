@@ -1,0 +1,22 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Kira <kiraware@github.com>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Django-recaptcha\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-11 20:36+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Kira <kiraware@github.com>\n"
+"Language-Team: id\n"
+"Language: Indonesian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: .\fields.py:20 .\fields.py:21
+msgid "Error verifying reCAPTCHA, please try again."
+msgstr "Kesalahan saat memverifikasi reCAPTCHA, silakan coba lagi."

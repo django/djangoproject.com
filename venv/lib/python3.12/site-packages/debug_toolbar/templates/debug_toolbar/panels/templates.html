@@ -1,0 +1,48 @@
+{% load i18n %}
+<h4>{% blocktranslate count template_count=template_dirs|length %}Template path{% plural %}Template paths{% endblocktranslate %}</h4>
+{% if template_dirs %}
+  <ol>
+    {% for template in template_dirs %}
+      <li>{{ template }}</li>
+    {% endfor %}
+  </ol>
+{% else %}
+  <p>{% translate "None" %}</p>
+{% endif %}
+
+<h4>{% blocktranslate count template_count=templates|length %}Template{% plural %}Templates{% endblocktranslate %}</h4>
+{% if templates %}
+  <dl>
+    {% for template in templates %}
+      <dt><strong><a class="remoteCall toggleTemplate" href="{% url 'djdt:template_source' %}?template={{ template.template.name }}&amp;template_origin={{ template.template.origin_hash }}">{{ template.template.name|addslashes }}</a></strong></dt>
+      <dd><samp>{{ template.template.origin_name|addslashes }}</samp></dd>
+      {% if template.context %}
+        <dd>
+          <details>
+            <summary>{% translate "Toggle context" %}</summary>
+            <code class="djTemplateContext">{{ template.context }}</code>
+          </details>
+        </dd>
+      {% endif %}
+    {% endfor %}
+  </dl>
+{% else %}
+  <p>{% translate "None" %}</p>
+{% endif %}
+
+<h4>{% blocktranslate count context_processors_count=context_processors|length %}Context processor{% plural %}Context processors{% endblocktranslate %}</h4>
+{% if context_processors %}
+  <dl>
+    {% for key, value in context_processors.items %}
+      <dt><strong>{{ key|escape }}</strong></dt>
+      <dd>
+        <details>
+          <summary>{% translate "Toggle context" %}</summary>
+          <code class="djTemplateContext">{{ value|escape }}</code>
+        </details>
+      </dd>
+    {% endfor %}
+  </dl>
+{% else %}
+  <p>{% translate "None" %}</p>
+{% endif %}
