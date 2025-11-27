@@ -17,7 +17,7 @@ from ..models import (
 from ..templatetags.fundraising_extras import (
     display_django_heroes,
     donation_form_with_heart,
-    gold_corporate_members,
+    top_and_gold_corporate_members,
     top_corporate_members,
 )
 
@@ -170,12 +170,12 @@ class TestTopCorporateMembers(TestCase):
         self.assertEqual(members, expected)
 
 
-class TestGoldCorporateMembers(TestCase):
+class TestTopAndGoldCorporateMembers(TestCase):
     past_date = date(2000, 1, 1)
     future_date = date(3000, 1, 1)
 
     def test_with_no_gold_members(self):
-        members = gold_corporate_members()["members"]
+        members = top_and_gold_corporate_members()["members"]
         self.assertEqual(members, [])
 
     def test_with_gold_members(self):
@@ -187,7 +187,7 @@ class TestGoldCorporateMembers(TestCase):
         member_2.invoice_set.create(amount=8, expiration_date=self.future_date)
         member_3.invoice_set.create(amount=2, expiration_date=self.future_date)
 
-        members = gold_corporate_members()["members"]
+        members = top_and_gold_corporate_members()["members"]
 
         self.assertEqual(members, [member_2, member_1, member_3])
 
@@ -195,14 +195,18 @@ class TestGoldCorporateMembers(TestCase):
         member_1 = CorporateMember.objects.create(membership_level=3)
         member_2 = CorporateMember.objects.create(membership_level=3)
         member_3 = CorporateMember.objects.create(membership_level=4)
+        member_4 = CorporateMember.objects.create(membership_level=5)
+        member_5 = CorporateMember.objects.create(membership_level=2)
 
         member_1.invoice_set.create(amount=4, expiration_date=self.future_date)
         member_2.invoice_set.create(amount=8, expiration_date=self.future_date)
         member_3.invoice_set.create(amount=2, expiration_date=self.future_date)
+        member_4.invoice_set.create(amount=2, expiration_date=self.future_date)
+        member_5.invoice_set.create(amount=2, expiration_date=self.future_date)
 
-        members = gold_corporate_members()["members"]
-        self.assertEqual(members, [member_2, member_1])
-        self.assertNotIn(member_3, members)
+        members = top_and_gold_corporate_members()["members"]
+        self.assertEqual(members, [member_4, member_3, member_2, member_1])
+        self.assertNotIn(member_5, members)
 
     def test_with_gold_members_and_expired_invoice(self):
         member_1 = CorporateMember.objects.create(membership_level=3)
@@ -213,6 +217,6 @@ class TestGoldCorporateMembers(TestCase):
         member_2.invoice_set.create(amount=8, expiration_date=self.future_date)
         member_3.invoice_set.create(amount=2, expiration_date=self.past_date)
 
-        members = gold_corporate_members()["members"]
+        members = top_and_gold_corporate_members()["members"]
         self.assertEqual(members, [member_2, member_1])
         self.assertNotIn(member_3, members)

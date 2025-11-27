@@ -120,8 +120,8 @@ def top_corporate_members():
     return {"members": members["diamond"] + members["platinum"]}
 
 
-@register.inclusion_tag("fundraising/includes/gold_corporate_members.html")
-def gold_corporate_members():
+@register.inclusion_tag("fundraising/includes/top_and_gold_corporate_members.html")
+def top_and_gold_corporate_members():
     members = CorporateMember.objects.by_membership_level()
 
-    return {"members": members["gold"]}
+    return {"members": members["diamond"] + members["platinum"] + members["gold"]}
