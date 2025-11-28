@@ -1,5 +1,5 @@
 {% extends "base_community.html" %}
-{% load i18n %}
+{% load i18n hosts %}
 
 {% block content %}
 
@@ -139,7 +139,7 @@
   <ul>
     <li>
       <a href="https://tutorial.djangogirls.org/">DjangoGirls Tutorial</a>
-      &mdash; A great tutorial you can do in addition to the <a href="/en/dev/intro/tutorial/01/">official tutorial</a>.
+      &mdash; A great tutorial you can do in addition to the <a href="{% url 'document-detail' lang='en' version='stable' url='intro/tutorial/01/' host 'docs' %}">official tutorial</a>.
     </li>
   </ul>
 
@@ -152,10 +152,10 @@
       <a href="https://builtwithdjango.com/projects/" rel="nofollow">Django-powered sites</a>
     </li>
     <li>
-      <a href="/community/badges/">Show your support with badges</a>
+      <a href="{% host_url "homepage" host "www" %}community/badges/">Show your support with badges</a>
     </li>
     <li>
-      <a href="/community/logos/">Download official logos</a>
+      <a href="{% host_url "homepage" host "www" %}community/logos/">Download official logos</a>
     </li>
   </ul>
 

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load fundraising_extras i18n %}
+{% load fundraising_extras i18n hosts %}
 
 {% block og_title %}{% translate "Django Community" %}{% endblock %}
 {% block og_description %}{% translate "Building the Django Community. Come join us!" %}{% endblock %}
@@ -45,7 +45,7 @@
     <dl class="list-links">
       <dt><a href="https://code.djangoproject.com/">{% translate "Ticket System" %}</a></dt>
       <dd>{% translate "View and update bug reports" %}</dd>
-      <dt><a href="https://dashboard.djangoproject.com/">{% translate "Development Dashboard" %}</a></dt>
+      <dt><a href="{% host_url 'dashboard-index' host 'dashboard' %}">{% translate "Development Dashboard" %}</a></dt>
       <dd>{% translate "Statistics about Django development" %}</dd>
       <dt><a href="https://groups.google.com/group/django-updates">{% translate "django-updates Mailing List" %}</a></dt>
       <dd>{% translate "Get updated for each code and ticket change" %}</dd>
@@ -57,9 +57,9 @@
       <dd>{% translate "Find third-party packages to supercharge your project" %}</dd>
       <dt><a href="https://builtwithdjango.com/projects/" rel="nofollow">{% translate "Django-powered Sites" %}</a></dt>
       <dd>{% translate "Add your site to the list" %}</dd>
-      <dt><a href="/community/badges/">{% translate "Django Badges" %}</a></dt>
+      <dt><a href="{% host_url "homepage" host "www" %}community/badges/">{% translate "Django Badges" %}</a></dt>
       <dd>{% translate "Show your support (or wish longingly)" %}</dd>
-      <dt><a href="/community/logos/">{% translate "Django Logos" %}</a></dt>
+      <dt><a href="{% host_url "homepage" host "www" %}community/logos/">{% translate "Django Logos" %}</a></dt>
       <dd>{% translate "Download official logos" %}</dd>
     </dl>
   </div>
