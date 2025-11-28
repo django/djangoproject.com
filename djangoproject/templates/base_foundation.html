@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load fundraising_extras meetings i18n %}
+{% load fundraising_extras meetings i18n hosts %}
 
 {% block og_title %}Django Software Foundation{% endblock %}
 
@@ -22,11 +22,11 @@
 
     <h3>About the foundation</h3>
     <ul class="list-links">
-      <li><a href="/foundation/faq/">FAQ</a></li>
-      <li><a href="/foundation/records/">Records</a></li>
+      <li><a href="{% host_url 'homepage' host 'www' %}foundation/faq/">FAQ</a></li>
+      <li><a href="{% host_url 'homepage' host 'www' %}foundation/records/">Records</a></li>
       <li><a href="{% url 'contact_foundation' %}">Contact us</a></li>
-      <li><a href="/foundation/cla/">Contributor license agreements</a></li>
-      <li><a href="/foundation/conferences/">Organizing a Django conference</a></li>
+      <li><a href="{% host_url 'homepage' host 'www' %}foundation/cla/">Contributor license agreements</a></li>
+      <li><a href="{% host_url 'homepage' host 'www' %}foundation/conferences/">Organizing a Django conference</a></li>
     </ul>
     <h3>{% translate "Latest DSF meeting minutes" %}</h3>
     <p> {% translate "The minutes from May 2025 onwards are stored in the repo" %}
