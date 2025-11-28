@@ -30,8 +30,9 @@
 {% block content %}
   <h1>{% translate "Corporate member badges" %}</h1>
   <p>
+    {% url 'members:corporate-members' as corporate_members_url %}
     {% blocktranslate trimmed %}
-      <a href="/foundation/corporate-membership/">Corporate members</a> of the Django Software Foundation may display
+      <a href="{{ corporate_members_url }}">Corporate members</a> of the Django Software Foundation may display
       these badges on their site to show their support.
     {% endblocktranslate %}
   </p>
