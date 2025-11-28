@@ -1,5 +1,5 @@
 {% extends "base_3col.html" %}
-{% load fundraising_extras i18n weblog %}
+{% load fundraising_extras i18n weblog hosts %}
 
 {% block sectionid %}homepage{% endblock %}
 {% block body_class %}homepage{% endblock %}
@@ -141,7 +141,7 @@
       <dd>
         {% translate "Report bugs and make feature requests" %}
       </dd>
-      <dt><a href="https://dashboard.djangoproject.com/">{% translate "Development dashboard" %}</a></dt>
+      <dt><a href="{% host_url 'dashboard-index' host 'dashboard' %}">{% translate "Development dashboard" %}</a></dt>
       <dd>
         {% translate "see what's currently being worked on" %}
       </dd>
@@ -163,20 +163,20 @@
 
     <h3>{% translate "The Django Software Foundation" %}</h3>
     <dl class="list-links-small">
-      <dt><a href="/foundation/">{% translate "About the Foundation" %}</a></dt>
+      <dt><a href="{% host_url "homepage" host "www" %}foundation/">{% translate "About the Foundation" %}</a></dt>
       <dd>
         {% translate "Our non-profit supports the project" %}
       </dd>
 
-      <dt><a href="/foundation/donate/">{% translate "Support Django" %}</a></dt>
+      <dt><a href="{% url 'fundraising:index' %}">{% translate "Support Django" %}</a></dt>
       <dd>
         {% translate "Your contribution makes Django stronger" %}
       </dd>
 
-      <dt><a href="/contact/foundation/">{% translate "Contact the Django Software Foundation" %}</a></dt>
+      <dt><a href="{% host_url "homepage" host "www" %}contact/foundation/">{% translate "Contact the Django Software Foundation" %}</a></dt>
       <dd></dd>
     </dl>
-    <a href="/foundation/" class="link-readmore">{% translate "More about the DSF" %}</a>
+    <a href="{% host_url "homepage" host "www" %}foundation/" class="link-readmore">{% translate "More about the DSF" %}</a>
       {% comment %}
       <h3>Upcoming Events</h3>
       <dl class="list-links-small news-list">

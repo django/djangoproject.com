@@ -191,7 +191,7 @@
           <dt><a href="{% url 'document-detail' lang=lang version=version url="faq" host 'docs' %}">{% trans "FAQ" %}</a></dt>
           <dd>{% blocktrans %}Try the FAQ — it's got answers to many common questions.{% endblocktrans %}</dd>
 
-          <dt><a href="/en/stable/genindex/">{% trans "Index" %}</a>, <a href="/en/stable/py-modindex/">{% trans "Module Index" %}</a>, or <a href="/en/stable/contents/">{% trans "Table of Contents" %}</a></dt>
+          <dt><a href="{% url 'document-detail' lang='en' version='stable' url='genindex' host 'docs' %}">{% trans "Index" %}</a>, <a href="{% url 'document-detail' lang='en' version='stable' url='py-modindex' host 'docs' %}">{% trans "Module Index" %}</a>, or <a href="{% url 'document-detail' lang='en' version='stable' url='contents' host 'docs' %}">{% trans "Table of Contents" %}</a></dt>
           <dd>{% blocktrans %}Handy when looking for specific information.{% endblocktrans %}</dd>
 
           <dt><a href="https://chat.djangoproject.com">{% trans "Django Discord Server" %}</a></dt>
