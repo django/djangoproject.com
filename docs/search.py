@@ -1,11 +1,8 @@
-from dataclasses import dataclass
-
+import requests
 from django.contrib.postgres.search import SearchVector
 from django.db.models import TextChoices
 from django.db.models.fields.json import KeyTextTransform
-from django.template.loader import get_template
 from django.utils.translation import gettext_lazy as _
-from django_hosts import reverse
 
 # Imported from
 # https://github.com/postgres/postgres/blob/REL_14_STABLE/src/bin/initdb/initdb.c#L659
@@ -81,25 +78,31 @@ class DocumentationCategory(TextChoices):
             return None
 
 
-@dataclass
-class SearchableView:
-    page_title: str
-    url_name: str
-    template: str
+def fetch_html(url, timeout=10):
+    """
+    Fetch the HTML of a page if status code is 200.
+    Simulates a human browser and accepts only text/html.
+    """
 
-    @property
-    def html(self):
-        return get_template(self.template).render()
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/123.0.0.0 Safari/537.36 Edg/123.0.0.0"
+        ),
+        "Accept": "text/html",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
 
-    @property
-    def www_absolute_url(self):
-        return reverse(self.url_name, host="www")
+    response = requests.get(url, headers=headers, timeout=timeout)
 
-
-SEARCHABLE_VIEWS = [
-    SearchableView(
-        page_title="Django's Ecosystem",
-        url_name="community-ecosystem",
-        template="aggregator/ecosystem.html",
-    ),
-]
+    if response.status_code == 200:
+        content_type = response.headers.get("Content-Type", "")
+        if "text/html" in content_type:
+            return response.text
+        else:
+            raise requests.RequestException(f"Unexpected Content-Type: {content_type}")
+    else:
+        raise requests.RequestException(
+            f"Failed to fetch {url}, status code: {response.status_code}"
+        )
