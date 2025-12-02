@@ -535,6 +535,41 @@ header {
         }
     }
 
+    form.search {
+        display:flex;
+        flex-direction:row;
+        background: var(--white-color);
+        border-radius: 4px;
+
+        input[type="search"] {
+            flex-grow:2;
+            border:none;
+            margin: 0;
+            padding: 8px;
+        }
+
+        button {
+            background: none;
+            border: none;
+            color: var(--primary);
+            width: 45px;
+            height: inherit;
+
+            .icon {
+                @include font-size(20);
+                line-height: 1;
+            }
+
+            &:hover,
+            &:focus,
+            &:active {
+                background: none;
+                color: $green-dark;
+                outline: none;
+            }
+        }
+    }
+
     nav {
         width: 100%;
         background: $green-dark;
@@ -3050,19 +3085,6 @@ form {
             i {
                 @include font-size(20);
             }
-        }
-    }
-
-    &.search {
-        width: 20%;
-        min-width: 200px;
-        margin: 10px;
-        margin-left: 0;
-        input {
-          margin: 0;
-          @include respond-min(1080px) {
-            margin: 0 10px;
-          }
         }
     }
 }

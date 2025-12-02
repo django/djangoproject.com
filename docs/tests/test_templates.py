@@ -241,16 +241,13 @@ class TemplateTagTestCase(TestCase):
         """
         template = Template("{% load docs %}{% search_form %}")
         rendered = template.render(Context({}))
-        self.assertIn(
-            '<search class="search form-input" aria-labelledby="docs-search-label">',
-            rendered,
-        )
+        self.assertIn('<search aria-labelledby="docs-search-label">', rendered)
         docs_search_url = reverse_with_host(
             "document-search",
             host="docs",
             kwargs={"lang": settings.DEFAULT_LANGUAGE_CODE, "version": "dev"},
         )
-        self.assertIn(f'<form action="{docs_search_url}">', rendered)
+        self.assertIn(f'<form action="{docs_search_url}" class="search">', rendered)
 
     def test_search_form_queries_multiple_renders(self):
         r2 = Release.objects.create(version="2.0")
@@ -266,4 +263,6 @@ class TemplateTagTestCase(TestCase):
             host="docs",
             kwargs={"lang": settings.DEFAULT_LANGUAGE_CODE, "version": "2.0"},
         )
-        self.assertEqual(rendered.count(f'<form action="{docs_search_url}">'), 2)
+        self.assertEqual(
+            rendered.count(f'<form action="{docs_search_url}" class="search">'), 2
+        )
