@@ -91,16 +91,16 @@
       <td>April 2026</td>
     </tr>
     <tr>
-      <td>5.1</td>
-      <td>{% get_latest_micro_release '5.1' %}</td>
-      <td>April 2, 2025</td>
-      <td>December 2025</td>
-    </tr>
-    <tr>
       <td>5.2 LTS</td>
       <td>{% get_latest_micro_release '5.2' %}</td>
-      <td>December 2025</td>
+      <td>December 3, 2025</td>
       <td>April 2028</td>
+    </tr>
+    <tr>
+      <td>6.0</td>
+      <td>{% get_latest_micro_release '6.0' %}</td>
+      <td>August 2026</td>
+      <td>April 2027</td>
     </tr>
   </table>
 
@@ -112,12 +112,6 @@
       <th>Release Date</th>
       <th>End of mainstream support<sup><a href="#ft1">1</a></sup></th>
       <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
-    </tr>
-    <tr>
-      <td><a href="{% url 'roadmap' '6.0' %}">6.0</a></td>
-      <td>December 2025</td>
-      <td>August 2026</td>
-      <td>April 2027</td>
     </tr>
     <tr>
       <td><a href="{% url 'roadmap' '6.1' %}">6.1</a></td>
@@ -137,6 +131,12 @@
       <td>August 2028</td>
       <td>April 2029</td>
     </tr>
+    <tr>
+      <td><a href="{% url 'roadmap' '7.1' %}">7.1</a></td>
+      <td>August 2028</td>
+      <td>April 2029</td>
+      <td>December 2029</td>
+    </tr>
   </table>
 
   <h2 id="unsupported-versions">Unsupported previous releases</h2>
@@ -148,6 +148,12 @@
       <th>Latest Release</th>
       <th>End of mainstream support<sup><a href="#ft1">1</a></sup></th>
       <th>End of extended support<sup><a href="#ft2">2</a></sup></th>
+    </tr>
+    <tr>
+      <td>5.1</td>
+      <td>{% get_latest_micro_release '5.1' %}</td>
+      <td>April 2, 2025</td>
+      <td>December 3, 2025</td>
     </tr>
     <tr>
       <td>5.0</td>
