@@ -40,6 +40,72 @@ class RedirectsTests(SimpleTestCase):
             fetch_redirect_response=False,
         )
 
+    def test_foundation_redirects_to_www(self):
+        """Foundation pages on docs subdomain should redirect to www."""
+        response = self.client.get(
+            "/foundation/",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertRedirects(
+            response,
+            "http://www.djangoproject.localhost:8000/foundation/",
+            status_code=HTTPStatus.MOVED_PERMANENTLY,
+            fetch_redirect_response=False,
+        )
+
+    def test_foundation_subpage_redirects_to_www(self):
+        """Foundation subpages on docs subdomain should redirect to www."""
+        response = self.client.get(
+            "/foundation/records/minutes/2017-02-09/",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertRedirects(
+            response,
+            "http://www.djangoproject.localhost:8000"
+            "/foundation/records/minutes/2017-02-09/",
+            status_code=HTTPStatus.MOVED_PERMANENTLY,
+            fetch_redirect_response=False,
+        )
+
+    def test_community_redirects_to_www(self):
+        """Community pages on docs subdomain should redirect to www."""
+        response = self.client.get(
+            "/community/",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertRedirects(
+            response,
+            "http://www.djangoproject.localhost:8000/community/",
+            status_code=HTTPStatus.MOVED_PERMANENTLY,
+            fetch_redirect_response=False,
+        )
+
+    def test_community_subpage_redirects_to_www(self):
+        """Community subpages on docs subdomain should redirect to www."""
+        response = self.client.get(
+            "/community/logos/",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertRedirects(
+            response,
+            "http://www.djangoproject.localhost:8000/community/logos/",
+            status_code=HTTPStatus.MOVED_PERMANENTLY,
+            fetch_redirect_response=False,
+        )
+
+    def test_redirect_preserves_query_string(self):
+        """Redirects should preserve query strings."""
+        response = self.client.get(
+            "/foundation/?page=2&sort=date",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertRedirects(
+            response,
+            "http://www.djangoproject.localhost:8000/foundation/?page=2&sort=date",
+            status_code=HTTPStatus.MOVED_PERMANENTLY,
+            fetch_redirect_response=False,
+        )
+
 
 class SearchFormTestCase(TestCase):
     fixtures = ["doc_test_fixtures"]
