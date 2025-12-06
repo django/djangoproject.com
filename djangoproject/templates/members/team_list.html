@@ -15,6 +15,7 @@
 
   <h2>{% translate "Teams" %}</h2>
   <p>
+    {% url 'document-detail' lang='en' version='dev' url='internals/organization' host 'docs'  as organization_url %}
     {% blocktranslate trimmed %}
       The following teams are groups of people who support the Django project
       and the Django Software Foundation. Apart from the Django Fellows, who
@@ -24,7 +25,7 @@
       individuals with elevated permissions rather than formal teams. For an
       overview of how the Django Project is organized and the principles that
       guide it, see the
-      <a href="https://docs.djangoproject.com/en/dev/internals/organization/#organization-of-the-django-project">
+      <a href="{{ organization_url }}#organization-of-the-django-project">
         organization and principles
       </a> page.
     {% endblocktranslate %}

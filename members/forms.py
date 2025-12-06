@@ -53,7 +53,7 @@ class CorporateMemberSignUpForm(forms.ModelForm):
         )
         self.fields["description"].help_text = _(
             """We'll use this text on the
-            <a href="/foundation/corporate-members/">
+            <a href="https://www.djangoproject.com/foundation/corporate-members/">
             corporate membership page</a>; you can use the existing descriptions
             as a guide for flavor we're looking for."""
         )
@@ -68,8 +68,8 @@ class CorporateMemberSignUpForm(forms.ModelForm):
             """Enter an amount above and the appropriate membership level will
             be automatically selected. Or select a membership level below and
             the minimum donation will be entered for you. See
-            <a href="/foundation/corporate-membership/#dues">dues</a> for
-            details on the levels."""
+            <a href="https://www.djangoproject.com/foundation/corporate-membership/
+            #dues">dues</a> for details on the levels."""
         )
 
     class Meta:
