@@ -488,6 +488,44 @@ class ViewsTestCase(ReleaseMixin, DateTimeMixin, TestCase):
         response = self.client.get(published_url)
         self.assertEqual(response.status_code, 200)
 
+    def test_archive_view_titles(self):
+        headline = "Pride and Prejudice - Review"
+        pub_date = date(2005, 7, 21)
+        Entry.objects.create(
+            pub_date=pub_date,
+            is_active=True,
+            headline=headline,
+            slug="a",
+            author="Jane Austen",
+        )
+        year = pub_date.strftime("%Y")
+        month = pub_date.strftime("%b").lower()
+        day = pub_date.strftime("%d")
+        for testcase in [
+            {
+                "view": "weblog:archive-year",
+                "kwargs": {"year": year},
+                "header": "<h1>2005 archive</h1>",
+            },
+            {
+                "view": "weblog:archive-month",
+                "kwargs": {"year": year, "month": month},
+                "header": "<h1>July 2005 archive</h1>",
+            },
+            {
+                "view": "weblog:archive-day",
+                "kwargs": {"year": year, "month": month, "day": day},
+                "header": "<h1>July 21 archive</h1>",
+            },
+        ]:
+            with self.subTest(view=testcase["view"]):
+                response = self.client.get(
+                    reverse(testcase["view"], kwargs=testcase["kwargs"])
+                )
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(response, testcase["header"])
+                self.assertContains(response, headline)
+
 
 @override_settings(
     # Caching middleware is added in the production settings file;
