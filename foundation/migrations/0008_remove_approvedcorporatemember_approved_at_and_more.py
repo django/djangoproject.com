@@ -6,78 +6,78 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('foundation', '0007_boardmember_account_protect'),
+        ("foundation", "0007_boardmember_account_protect"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='approvedcorporatemember',
-            name='approved_at',
+            model_name="approvedcorporatemember",
+            name="approved_at",
         ),
         migrations.RemoveField(
-            model_name='approvedgrant',
-            name='approved_at',
+            model_name="approvedgrant",
+            name="approved_at",
         ),
         migrations.RemoveField(
-            model_name='approvedindividualmember',
-            name='approved_at',
+            model_name="approvedindividualmember",
+            name="approved_at",
         ),
         migrations.RemoveField(
-            model_name='boardmember',
-            name='account',
+            model_name="boardmember",
+            name="account",
         ),
         migrations.RemoveField(
-            model_name='boardmember',
-            name='office',
+            model_name="boardmember",
+            name="office",
         ),
         migrations.RemoveField(
-            model_name='boardmember',
-            name='term',
+            model_name="boardmember",
+            name="term",
         ),
         migrations.RemoveField(
-            model_name='meeting',
-            name='board_attendees',
+            model_name="meeting",
+            name="board_attendees",
         ),
         migrations.RemoveField(
-            model_name='meeting',
-            name='leader',
+            model_name="meeting",
+            name="leader",
         ),
         migrations.RemoveField(
-            model_name='business',
-            name='meeting',
+            model_name="business",
+            name="meeting",
         ),
         migrations.RemoveField(
-            model_name='meeting',
-            name='non_board_attendees',
+            model_name="meeting",
+            name="non_board_attendees",
         ),
         migrations.DeleteModel(
-            name='ActionItem',
+            name="ActionItem",
         ),
         migrations.DeleteModel(
-            name='ApprovedCorporateMember',
+            name="ApprovedCorporateMember",
         ),
         migrations.DeleteModel(
-            name='ApprovedGrant',
+            name="ApprovedGrant",
         ),
         migrations.DeleteModel(
-            name='ApprovedIndividualMember',
+            name="ApprovedIndividualMember",
         ),
         migrations.DeleteModel(
-            name='Office',
+            name="Office",
         ),
         migrations.DeleteModel(
-            name='Term',
+            name="Term",
         ),
         migrations.DeleteModel(
-            name='BoardMember',
+            name="BoardMember",
         ),
         migrations.DeleteModel(
-            name='Business',
+            name="Business",
         ),
         migrations.DeleteModel(
-            name='Meeting',
+            name="Meeting",
         ),
         migrations.DeleteModel(
-            name='NonBoardAttendee',
+            name="NonBoardAttendee",
         ),
     ]
