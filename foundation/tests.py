@@ -9,7 +9,6 @@ from djangoproject.tests import ReleaseMixin
 
 class MeetingTestCase(ReleaseMixin, TestCase):
 
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
