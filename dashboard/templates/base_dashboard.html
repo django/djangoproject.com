@@ -1,17 +1,18 @@
 {% extends "base.html" %}
-{% load i18n %}
-{% load static %}
+{% load i18n static %}
 
 {% block sectionid %}dashboard{% endblock %}
 
 {% block title %}{% translate 'Development dashboard' %}{% endblock %}
+
 {% block layout_class %}full-width{% endblock %}
+
 {% block header %}
   <h1>Development <em>dashboard</em></h1>
-{% endblock %}
+{% endblock header %}
 
 {% block javascript %}
   <script src="{% static "js/lib/jquery.min.js" %}"></script>
   <script src="{% static "js/lib/jquery.flot.min.js" %}"></script>
   <script src="{% static "js/dashboard/utils.js" %}"></script>
-{% endblock %}
+{% endblock javascript %}

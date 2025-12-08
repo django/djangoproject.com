@@ -2,7 +2,9 @@
 {% load i18n %}
 
 {% block title %}{% translate "Django overview" %}{% endblock %}
+
 {% block layout_class %}full-width{% endblock %}
+
 {% block og_title %}{% translate "Django overview" %}{% endblock %}
 
 {% block header %}
@@ -12,7 +14,7 @@
       requirements of <em>experienced web developers</em>.
     {% endblocktranslate %}
   </p>
-{% endblock %}
+{% endblock header %}
 
 {% block content %}
   <h1>{% translate "Why Django?" %}</h1>
@@ -80,7 +82,7 @@
   <div class="section">
     <a href="{% url 'start' %}" class="cta">{% translate "Get started <em>with Django</em>" %}</a>
   </div>
-{% endblock %}
+{% endblock content %}
 
 {% block content-related %}
 
@@ -116,7 +118,7 @@
 </div>
 {% endcomment %}
 
-{% endblock %}
+{% endblock content-related %}
 
 {% block content-extra %}
 
@@ -137,4 +139,4 @@
       </ul>
     </div>
   </div>
-{% endblock %}
+{% endblock content-extra %}
