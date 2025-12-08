@@ -4,8 +4,11 @@ from django.contrib.sites.models import Site
 from django.test import TestCase
 from django.urls import reverse
 
+from djangoproject.tests import ReleaseMixin
 
-class MeetingTestCase(TestCase):
+
+class MeetingTestCase(ReleaseMixin, TestCase):
+
 
     @classmethod
     def setUpTestData(cls):
