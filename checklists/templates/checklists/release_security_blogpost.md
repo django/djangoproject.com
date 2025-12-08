@@ -5,7 +5,7 @@ the Django team is issuing releases for
 These releases address the security issues detailed below. We encourage all
 users of Django to upgrade as soon as possible.
 {% for cve in cves %}
-## {{cve.headline_for_blogpost }}
+## {{ cve.headline_for_blogpost }}
 
 {{ cve.blogdescription|safe|default:cve.description }}
 {% if cve.reporter %}

@@ -1,6 +1,5 @@
 {% extends "base_dashboard.html" %}
-{% load i18n %}
-{% load static %}
+{% load i18n static %}
 
 {% block content %}
   <div>
@@ -23,10 +22,10 @@
       {% blocktranslate with timestamp=data.0.latest.timestamp|timesince %}Updated {{ timestamp }} ago.{% endblocktranslate %}
     </p>
   </div>
-{% endblock %}
+{% endblock content %}
 
 {% block javascript %}
   {{ block.super }}
 
   <script src="{% static "js/dashboard/index.js" %}"></script>
-{% endblock %}
+{% endblock javascript %}

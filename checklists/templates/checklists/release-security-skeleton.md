@@ -1,5 +1,4 @@
-{% load checklist_extras %}
-{% load tz %}
+{% load checklist_extras tz %}
 {% with cves=instance.cves versions=instance.versions cves_length=instance.cves|length %}
 # Django Security Release: {{ versions|enumerate_items }} ({{ when }})
 
