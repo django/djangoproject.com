@@ -12,7 +12,7 @@ To run locally, you can either:
 Install and run locally from a virtual environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Create a `Python Python 3.12 virtualenv and activate it <https://docs.python.org/3/library/venv.html>`_
+#. Create a `Python 3.12 virtualenv and activate it <https://docs.python.org/3/library/venv.html>`_
 
 #. Install dependencies::
 
