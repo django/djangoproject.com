@@ -2,7 +2,9 @@
 {% load fundraising_extras i18n weblog hosts %}
 
 {% block sectionid %}homepage{% endblock %}
+
 {% block body_class %}homepage{% endblock %}
+
 {% block layout_class %}column-container sidebar-right{% endblock %}
 
 {% block header %}
@@ -12,7 +14,7 @@
   <p>
     <a href="{% url 'start' %}" class="cta">{% translate "Get started with Django" %}</a>
   </p>
-{% endblock %}
+{% endblock header %}
 
 {% block content %}
   <div class="section">
@@ -100,7 +102,7 @@
     {% endcomment %}
 
     <!-- END #content-secondary -->
-{% endblock %}
+{% endblock content %}
 
 {% block content-related %}
   <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
@@ -192,7 +194,7 @@
       {% endcomment %}
   </div>
 
-{% endblock %}
+{% endblock content-related %}
 
 {% block alert %}
   {% comment %}
@@ -211,4 +213,4 @@
     </div>
   </div>
   {% endcomment %}
-{% endblock %}
+{% endblock alert %}

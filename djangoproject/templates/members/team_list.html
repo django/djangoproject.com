@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block og_title %}{% translate "Meet the Teams | Django Software Foundation" %}{% endblock %}
+
 {% block og_description %}{% spaceless %}
   {% blocktranslate trimmed %}
     Get to know the teams behind the Django Software Foundation,
@@ -9,7 +10,7 @@
     their roles and responsibilities in advancing the development and
     adoption of the Django web framework.
   {% endblocktranslate %}
-{% endspaceless %}{% endblock %}
+{% endspaceless %}{% endblock og_description %}
 
 {% block content %}
 
@@ -43,4 +44,4 @@
     </div>
   {% endfor %}
 
-{% endblock %}
+{% endblock content %}

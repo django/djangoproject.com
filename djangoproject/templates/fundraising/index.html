@@ -2,9 +2,11 @@
 {% load fundraising_extras humanize i18n static hosts %}
 
 {% block title %}{% translate "Support Django" %}{% endblock %}
+
 {% block layout_class %}full-width{% endblock %}
 
 {% block og_title %}{% translate "Support Django" %}{% endblock %}
+
 {% block og_description %}{% translate "Support Django development by donating to the Django Software Foundation" %}{% endblock %}
 
 {% block header %}
@@ -13,7 +15,7 @@
       <em>Support Django development</em> by donating to the <em>Django Software Foundation</em>.
     {% endblocktranslate %}
   </p>
-{% endblock %}
+{% endblock header %}
 
 {% block messages %}
 
@@ -24,7 +26,7 @@
     <hr>
   {% endif %}
 
-{% endblock %}
+{% endblock messages %}
 
 {% block billboard %}{% endblock %}
 
@@ -247,7 +249,7 @@
 
     {% display_django_heroes %}
   </div>
-{% endblock %}
+{% endblock content %}
 
 {% block content-extra %}
   <div class="layout-tertiary" id="about">
@@ -349,4 +351,4 @@
       </p>
     </div>
   </div>
-{% endblock %}
+{% endblock content-extra %}

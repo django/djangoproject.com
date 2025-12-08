@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load fundraising_extras i18n weblog hosts %}
 {% block layout_class %}sidebar-right{% endblock %}
+
 {% block title %}{% translate "News &amp; Events" %}{% endblock %}
 
 {% block og_title %}{% translate "News &amp; Events" %}{% endblock %}
@@ -9,11 +10,11 @@
   {% if banner_is_title %}<h1>{% else %}<p>{% endif %}
   <a href="{% url 'weblog:index' %}">{% translate "News &amp; Events" %}</a>
   {% if banner_is_title %}</h1>{% else %}</p>{% endif %}
-{% endblock %}
+{% endblock header %}
 
 {% block head_extra %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url 'weblog-feed' %}" />
-{% endblock %}
+{% endblock head_extra %}
 
 {% block body_class %}blog{% endblock %}
 
@@ -57,4 +58,4 @@
       <li><a href="https://code.djangoproject.com/timeline?daysback=90&max=50&wiki=on&ticket=on&changeset=on&milestone=on&format=rss">{% translate "Recent code changes" %}</a></li>
     </ul>
   </div>
-{% endblock %}
+{% endblock content-related %}

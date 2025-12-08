@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block og_title %}{% translate "Meeting minutes archive" %}{% endblock %}
+
 {% block og_description %}{% blocktranslate with year=year|date:"Y" %}View meeting minutes for {{ year }}{% endblocktranslate %}{% endblock %}
 
 {% block content %}
@@ -12,4 +13,4 @@
       <li><a href="{{ meeting.get_absolute_url }}">{{ meeting }}</a></li>
     {% endfor %}
   </ul>
-{% endblock %}
+{% endblock content %}

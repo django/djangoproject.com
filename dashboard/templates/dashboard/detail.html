@@ -11,10 +11,10 @@
     </div>
     <a class="link-readmore back-link" href="{% url "dashboard-index" host "dashboard" %}">{% translate "All metrics" %}</a>
   </div>
-{% endblock %}
+{% endblock content %}
 
 {% block javascript %}
   {{ block.super }}
 
   <script src="{% static "js/dashboard/detail.js" %}"></script>
-{% endblock %}
+{% endblock javascript %}

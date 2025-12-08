@@ -2,11 +2,12 @@
 {% load i18n %}
 
 {% block og_title %}{% translate "Meeting minutes archive" %}{% endblock %}
+
 {% block og_description %}{% translate "View meeting minutes" %}{% endblock %}
 
 {% block head_extra %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url 'foundation-minutes-feed' %}" />
-{% endblock %}
+{% endblock head_extra %}
 
 {% block content %}
   <h1>{% translate "Meeting minutes archive" %}</h1>
@@ -22,4 +23,4 @@
       <li><a href="{% url 'foundation_meeting_archive_year' year=year.year %}">{{ year.year }}</a></li>
     {% endfor %}
   </ul>
-{% endblock %}
+{% endblock content %}

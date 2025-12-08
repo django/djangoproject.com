@@ -2,6 +2,7 @@
 {% load humanize i18n hosts %}
 
 {% block og_title %}{% translate "Corporate members" %}{% endblock %}
+
 {% block og_description %}{% translate "The following organizations are corporate members of the Django Software Foundation." %}{% endblock %}
 
 {% block content %}
@@ -66,4 +67,4 @@
     </ul>
   {% endif %}
 
-{% endblock %}
+{% endblock content %}
