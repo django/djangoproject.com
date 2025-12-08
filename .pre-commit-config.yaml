@@ -38,11 +38,11 @@ repos:
           - id: django-upgrade
             args: [--target-version, "5.2"]
     - repo: https://github.com/psf/black-pre-commit-mirror
-      rev: 25.11.0
+      rev: 25.12.0
       hooks:
           - id: black
     - repo: https://github.com/rbubley/mirrors-prettier
-      rev: "v3.7.3"
+      rev: "v3.7.4"
       hooks:
           - id: prettier
             exclude_types: [html, json, scss]
