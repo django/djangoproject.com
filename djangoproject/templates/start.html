@@ -2,8 +2,11 @@
 {% load docs i18n %}
 
 {% block layout_class %}full-width{% endblock %}
+
 {% block title %}{% translate "Getting started with Django" %}{% endblock %}
+
 {% block og_title %}{% translate "Getting started with Django" %}{% endblock %}
+
 {% block og_description %}{% translate "It's quick & easy to get up and running with Django" %}{% endblock %}
 
 {% block header %}
@@ -17,7 +20,7 @@
       </a>
     </div>
   </div>
-{% endblock %}
+{% endblock header %}
 
 {% block content %}
 
@@ -345,4 +348,4 @@ def homepage(request):
         </li>
       </ul>
 
-{% endblock %}
+{% endblock content %}
