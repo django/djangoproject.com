@@ -65,7 +65,7 @@ repos:
       hooks:
           - id: checkmake
     - repo: https://github.com/adamchainz/djade-pre-commit
-      rev: 1.6.0
+      rev: 1.7.0
       hooks:
           - id: djade
-            args: [--target-version, "5.2"]
+            args: [--target-version, "6.0"]

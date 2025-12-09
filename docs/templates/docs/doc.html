@@ -64,7 +64,7 @@
     </ul>
     <ul id="doc-languages" class="language-switcher doc-switcher">
       <li class="current">
-        <button>{% trans "Language:" %} <strong>{{ lang }}</strong></button>
+        <button>{% translate "Language:" %} <strong>{{ lang }}</strong></button>
       </li>
       {% for available_lang in available_languages reversed %}
         {% if lang != available_lang %}
@@ -83,7 +83,7 @@
     {% get_all_doc_versions docurl as other_versions %}
     <ul id="doc-versions" class="version-switcher doc-switcher">
       <li class="current {% if release.is_dev %}dev{% endif %}">
-        <button>{% trans "Documentation version:" %}
+        <button>{% translate "Documentation version:" %}
           <strong>{% if release.is_dev %}development{% else %}{{ version }}{% endif %}</strong>
         </button>
       </li>
@@ -183,8 +183,8 @@
           <dt><a href="{% url 'document-detail' lang=lang version=version url="faq" host 'docs' %}">{% translate "FAQ" %}</a></dt>
           <dd>{% blocktranslate %}Try the FAQ — it's got answers to many common questions.{% endblocktranslate %}</dd>
 
-          <dt><a href="{% url 'document-detail' lang='en' version='stable' url='genindex' host 'docs' %}">{% trans "Index" %}</a>, <a href="{% url 'document-detail' lang='en' version='stable' url='py-modindex' host 'docs' %}">{% trans "Module Index" %}</a>, or <a href="{% url 'document-detail' lang='en' version='stable' url='contents' host 'docs' %}">{% trans "Table of Contents" %}</a></dt>
-          <dd>{% blocktrans %}Handy when looking for specific information.{% endblocktrans %}</dd>
+          <dt><a href="{% url 'document-detail' lang='en' version='stable' url='genindex' host 'docs' %}">{% translate "Index" %}</a>, <a href="{% url 'document-detail' lang='en' version='stable' url='py-modindex' host 'docs' %}">{% translate "Module Index" %}</a>, or <a href="{% url 'document-detail' lang='en' version='stable' url='contents' host 'docs' %}">{% translate "Table of Contents" %}</a></dt>
+          <dd>{% blocktranslate %}Handy when looking for specific information.{% endblocktranslate %}</dd>
 
           <dt><a href="https://chat.djangoproject.com">{% translate "Django Discord Server" %}</a></dt>
           <dd>{% blocktranslate %}Join the Django Discord Community.{% endblocktranslate %}</dd>
