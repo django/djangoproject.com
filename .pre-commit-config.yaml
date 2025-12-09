@@ -68,4 +68,4 @@ repos:
       rev: 1.6.0
       hooks:
           - id: djade
-            args: [--target-version, "4.2"]
+            args: [--target-version, "5.2"]
