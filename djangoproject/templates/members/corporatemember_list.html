@@ -7,10 +7,11 @@
 {% block content %}
   <h1>{% translate "Corporate members" %}</h1>
   <p>
+    {% url 'members:corporate-members' as corporate_members_url %}
     {% blocktranslate trimmed %}
       The following organizations are corporate members of the Django Software
       Foundation. If you are interested in becoming a corporate member of the
-      DSF, you can find out more on our <a href="/foundation/corporate-membership/">
+      DSF, you can find out more on our <a href="{{ corporate_members_url }}">
         corporate membership page</a>.
     {% endblocktranslate %}
   </p>
