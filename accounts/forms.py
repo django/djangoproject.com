@@ -64,13 +64,6 @@ class DeleteProfileForm(forms.Form):
             raise forms.ValidationError(_("Staff users cannot be deleted"))
         return cleaned_data
 
-    def add_errors_from_protectederror(self, exception):
-        """
-        Convert the given ProtectedError exception object into validation
-        errors on the instance.
-        """
-        self.add_error(None, _("User has protected data and cannot be deleted"))
-
     @transaction.atomic()
     def delete(self):
         """
