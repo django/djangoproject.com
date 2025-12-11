@@ -368,7 +368,7 @@ html[data-theme="light"] .theme-toggle .theme-label-when-light {
 // The last 2 items of the nav list are the searchbar and the light/dark mode toggle.
 // These are not visible on mobile as they are within the .header-mobile-only section.
 header nav li:nth-last-child(-n+2) {
-    @include respond-max(1080px) {
+    @include respond-max(1079px) {
         display: none;
     }
 }
