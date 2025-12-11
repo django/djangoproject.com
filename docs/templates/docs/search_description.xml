@@ -1,14 +1,14 @@
 {% load i18n static %}<?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
                        xmlns:moz="http://www.mozilla.org/2006/browser/search/">
-  <ShortName>{% blocktrans with version=release.human_version %}Django {{ version }} documentation{% endblocktrans %}</ShortName>
-  <Description>{% blocktrans with version=release.human_version %}Search Django {{ version }} documentation{% endblocktrans %}</Description>
+  <ShortName>{% blocktranslate with version=release.human_version %}Django {{ version }} documentation{% endblocktranslate %}</ShortName>
+  <Description>{% blocktranslate with version=release.human_version %}Search Django {{ version }} documentation{% endblocktranslate %}</Description>
   <InputEncoding>UTF-8</InputEncoding>
   <OutputEncoding>UTF-8</OutputEncoding>
   <Image width="16" height="16" type="image/x-icon">{% static "img/favicon.ico" %}</Image>
   <Image width="32" height="32" type="image/x-icon">{% static "img/favicon.ico" %}</Image>
   <Query role="example" searchTerms="testing" />
-  <Developer>{% trans "Django team" %}</Developer>
+  <Developer>{% translate "Django team" %}</Developer>
   <SyndicationRight>open</SyndicationRight>
   <AdultContent>false</AdultContent>
   <Language>{{ release.lang }}</Language>

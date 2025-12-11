@@ -30,7 +30,7 @@
             </li>
         </ul>
     </div>
-{% endblock %}
+{% endblock content-related %}
 
 {% block content %}
     <div class="user-info">
@@ -54,7 +54,7 @@
             </ul>
         {% endif %}
 
-        {% with user_obj.owned_feeds.all as feeds %}
+        {% with feeds=user_obj.owned_feeds.all %}
             {% if feeds %}
                 <h2>{% translate "Community feeds:" %}</h2>
                 <ul>
