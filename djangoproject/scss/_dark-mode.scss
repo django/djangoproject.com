@@ -287,6 +287,7 @@ html[data-theme="dark"] .img-release {
     vertical-align: middle;
     padding: 0;
     color: var(--menu);
+    border-radius: 4px;
 }
 
 .theme-toggle svg {
@@ -371,6 +372,10 @@ header nav li:nth-last-child(-n+2) {
     @include respond-max(1080px) {
         display: none;
     }
+}
+
+header nav li:last-child {
+    margin-left: 8px;
 }
 
 html[data-theme="light"] .admonition {

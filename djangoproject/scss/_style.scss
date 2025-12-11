@@ -553,7 +553,7 @@ header {
 
         ul {
             margin: 10px 0 0;
-            padding: 0;
+            padding: 0 8px;
 
             @include respond-min(1080px) {
                 display: flex;
@@ -595,6 +595,7 @@ header {
             color: var(--menu);
             display: block;
             text-decoration: none;
+            border-radius: 4px;
 
             &:visited {
               color: var(--menu);
