@@ -164,6 +164,31 @@ class SearchFormTestCase(TestCase):
             html=True,
         )
 
+    def test_search_category_filter_preserved(self):
+        response = self.client.get(
+            "/en/5.1/search/?q=potato&category=ref",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response, '<input type="hidden" name="category" value="ref">'
+        )
+        self.assertContains(
+            response, f"{self.active_filter}API Reference</a>", html=True
+        )
+        response = self.client.post(
+            "/en/5.1/search/?q=potato&category=ref",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+            data={"category": "ref", "q": "fish"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response, '<input type="hidden" name="category" value="ref">'
+        )
+        self.assertContains(
+            response, f"{self.active_filter}API Reference</a>", html=True
+        )
+
     def test_code_links(self):
         queryset_data = {
             "metadata": {

@@ -581,7 +581,7 @@ header {
                 border: 0;
                 float: left;
                 text-align: left;
-                > :not(.search){
+                > :not(.search) {
                   padding: 10px;
                 }
             }
@@ -3057,12 +3057,9 @@ form {
         width: 20%;
         min-width: 200px;
         margin: 10px;
-        margin-left: 0;
+
         input {
           margin: 0;
-          @include respond-min(1080px) {
-            margin: 0 10px;
-          }
         }
     }
 }
