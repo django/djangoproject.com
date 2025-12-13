@@ -145,15 +145,12 @@ def search_results(request, lang, version, per_page=10, orphans=3):
     activate(lang)
 
     doc_category = DocumentationCategory.parse(request.GET.get("category"))
-    form = DocSearchForm(request.GET or None, release=release)
-
     # Get available languages for the language switcher
     available_languages = DocumentRelease.objects.get_available_languages_by_version(
         version
     )
 
     context = {
-        "form": form,
         "lang": release.lang,
         "version": release.version,
         "release": release,
@@ -162,8 +159,16 @@ def search_results(request, lang, version, per_page=10, orphans=3):
         "active_category": doc_category or "",
     }
 
-    if form.is_valid():
-        q = form.cleaned_data.get("q")
+    mobile_form = DocSearchForm(request.GET or None, release=release, prefix="mobile")
+    desktop_form = DocSearchForm(request.GET or None, release=release, prefix="desktop")
+    submitted_form = None
+    if desktop_form.is_valid():
+        submitted_form = desktop_form
+    elif mobile_form.is_valid():
+        submitted_form = mobile_form
+
+    if submitted_form:
+        q = submitted_form.cleaned_data.get("q")
 
         if q:
             # catch queries that are coming from browser search bars
