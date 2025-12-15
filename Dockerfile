@@ -14,6 +14,7 @@ RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends \
         gettext \
         git \
+        libatomic1 \
         libpq5 \
         postgresql-common \
         make \
@@ -38,6 +39,7 @@ RUN apt-get update \
 COPY . .
 
 RUN python -m django compilemessages
+RUN git config --global --add safe.directory /usr/src/app
 
 # ENTRYPOINT is specified only in the local docker-compose.yml to avoid
 # accidentally running it in deployed environments.
