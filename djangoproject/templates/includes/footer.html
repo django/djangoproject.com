@@ -60,7 +60,7 @@
           <h3>Support Us</h3>
           <ul>
             <li><a href="{% url "fundraising:index" %}">Sponsor Django</a></li>
-            <li><a href="{% host_url "homepage" host "www" %}foundation/corporate-membership/">Corporate membership</a></li>
+            <li><a href="{% host_url "foundation:corporate-membership" host "www" %}">Corporate membership</a></li>
             <li><a href="https://django.threadless.com/" target="_blank">Official merchandise store</a></li>
             <li><a href="{% host_url "homepage" host "www" %}foundation/donate/#benevity-giving">Benevity Workplace Giving Program</a></li>
           </ul>
@@ -82,9 +82,9 @@
           <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
       </ul>
       <p class="copyright">&copy; 2005-{% now "Y" %}
-        <a href="{% url 'homepage' %}foundation/"> Django Software
+        <a href="{% host_url 'foundation' host 'www' %}"> Django Software
           Foundation</a> and individual contributors. Django is a
-        <a href="{% url 'homepage' %}trademarks/">registered
+        <a href="{% host_url 'trademarks' host 'www' %}">registered
           trademark</a> of the Django Software Foundation.
       </p>
     </div>
