@@ -15,6 +15,9 @@ from docutils.core import publish_parts
 from markdown import markdown
 from markdown.extensions.toc import TocExtension, slugify as _md_title_slugify
 
+from markdown.extensions.tables import TableExtension
+
+
 BLOG_DOCUTILS_SETTINGS = {
     "doctitle_xform": False,
     "initial_header_level": 3,
@@ -66,6 +69,8 @@ class ContentFormat(models.TextChoices):
                 extensions=[
                     # baselevel matches `initial_header_level` from BLOG_DOCUTILS_SETTINGS
                     TocExtension(baselevel=3, slugify=_md_slugify),
+                    "markdown.extensions.tables",
+                    TableExtension(),
                 ],
             )
         raise ValueError(f"Unsupported format {fmt}")
