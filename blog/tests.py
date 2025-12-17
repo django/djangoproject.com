@@ -159,6 +159,28 @@ class EntryTestCase(DateTimeMixin, TestCase):
         with translation.override("nn"):
             self.assertEqual(entry.pub_date_localized, "21. juli 2005")
 
+    def test_markdown_table_conversion(self):
+        body = (
+            "| Framework | Language |\n"
+            "|-----------|----------|\n"
+            "| Django    | Python   |\n"
+            "| Flask     | Python   |"
+        )
+
+        entry = Entry.objects.create(
+            pub_date=self.now,
+            slug="markdown-table",
+            body=body,
+            content_format=ContentFormat.MARKDOWN,
+        )
+        expected_html = (
+            "<table>\n"
+            "<thead>\n<tr>\n<th>Framework</th>\n<th>Language</th>\n</tr>\n</thead>\n"
+            "<tbody>\n<tr>\n<td>Django</td>\n<td>Python</td>\n</tr>\n"
+            "<tr>\n<td>Flask</td>\n<td>Python</td>\n</tr>\n</tbody>\n</table>"
+        )
+        self.assertInHTML(expected_html, entry.body_html)
+
 
 class EventTestCase(DateTimeMixin, TestCase):
     def test_manager_past_future(self):
