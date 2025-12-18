@@ -65,7 +65,7 @@
       <li class="current">
         <button>{% trans "Language:" %} <strong>{{ lang }}</strong></button>
       </li>
-      {% for available_lang in available_languages %}
+      {% for available_lang in available_languages reversed %}
         {% if lang != available_lang %}
           <li class="other">
             {% if docurl %}
@@ -86,7 +86,7 @@
           <strong>{% if release.is_dev %}development{% else %}{{ version }}{% endif %}</strong>
         </button>
       </li>
-      {% for other_version in other_versions %}
+      {% for other_version in other_versions reversed %}
         {% if version != other_version %}
           <li class="other">
             {% if docurl %}
