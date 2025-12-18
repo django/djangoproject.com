@@ -2348,6 +2348,11 @@ h2+.list-link-soup {
     flex-direction: row-reverse;
     pointer-events: auto;
 
+    @include respond-max(768px) {
+        flex-wrap: wrap;
+        max-width: calc(100vw - 33px);
+    }
+
     li {
         display: inline-block;
         padding: 0;
