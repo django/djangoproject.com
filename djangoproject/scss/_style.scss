@@ -2345,6 +2345,8 @@ h2+.list-link-soup {
 #doc-languages,
 #doc-versions {
     position: relative;
+    flex-direction: row-reverse;
+    pointer-events: auto;
 
     li {
         display: inline-block;
@@ -2364,9 +2366,6 @@ h2+.list-link-soup {
 
         &.other {
             display: none;
-            position: absolute;
-            right: 100%;
-            top: 0;
             margin-right: 2px;
             white-space: nowrap;
             z-index: 2;
