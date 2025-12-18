@@ -15,8 +15,6 @@ from docutils.core import publish_parts
 from markdown import markdown
 from markdown.extensions.toc import TocExtension, slugify as _md_title_slugify
 
-from markdown.extensions.tables import TableExtension
-
 
 BLOG_DOCUTILS_SETTINGS = {
     "doctitle_xform": False,
