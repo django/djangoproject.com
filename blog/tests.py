@@ -515,7 +515,7 @@ class ViewsTestCase(ReleaseMixin, DateTimeMixin, TestCase):
             {
                 "view": "weblog:archive-day",
                 "kwargs": {"year": year, "month": month, "day": day},
-                "header": "<h1>July 21 archive</h1>",
+                "header": "<h1>July 21, 2005 archive</h1>",
             },
         ]:
             with self.subTest(view=testcase["view"]):
