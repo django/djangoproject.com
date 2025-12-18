@@ -542,7 +542,7 @@ header {
         max-height: 0; // hide mobile menu by default
         overflow: hidden;
         padding: 0 2px;
-        
+
         &.active {
             max-height: 580px;
         }
