@@ -654,7 +654,7 @@ header {
 
 /* banner for billboard */
 #billboard {
-    background-color: $green-medium;
+    background-color: $green-light;
     border-top: 1px solid $black;
 
     * {
@@ -2345,6 +2345,13 @@ h2+.list-link-soup {
 #doc-languages,
 #doc-versions {
     position: relative;
+    flex-direction: row-reverse;
+    pointer-events: auto;
+
+    @include respond-max(768px) {
+        flex-wrap: wrap;
+        max-width: calc(100vw - 33px);
+    }
 
     li {
         display: inline-block;
@@ -2364,9 +2371,6 @@ h2+.list-link-soup {
 
         &.other {
             display: none;
-            position: absolute;
-            right: 100%;
-            top: 0;
             margin-right: 2px;
             white-space: nowrap;
             z-index: 2;

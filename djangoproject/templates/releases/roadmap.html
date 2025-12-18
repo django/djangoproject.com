@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load date_format fundraising_extras %}
+{% load date_format fundraising_extras hosts %}
 
 {% block sectionid %}roadmap{% endblock %}
 {% block title %}Django {{ series }} Roadmap{% endblock %}
@@ -21,11 +21,11 @@
       that miss the deadline won't.</p>
     <p>If you have a major feature you'd like to contribute, please propose it on
       <a href="https://github.com/orgs/django/projects/24/">new feature ideas GitHub project</a> and review the
-      <a href="https://docs.djangoproject.com/en/dev/internals/contributing/bugs-and-features/#requesting-features">requesting features documentation</a>.</p>
+      <a href="{% url 'document-detail' lang='en' version='dev' url='internals/contributing/bugs-and-features' host 'docs' %}#requesting-features">requesting features documentation</a>.</p>
     <p>Minor features and bug fixes will be merged as they are completed. If you
       have submitted a patch, ensure the flags on the Trac ticket are correct so it
       appears in the "Patches needing review" filter of the
-      <a href="https://dashboard.djangoproject.com/">Django Development Dashboard</a>.
+      <a href="{% host_url 'dashboard-index' host 'dashboard' %}">Django Development Dashboard</a>.
       Better yet, find someone to review your patch and mark the ticket as
       "Ready for checkin". Tickets marked "Ready for checkin" are regularly reviewed
       by mergers.</p>
@@ -35,9 +35,9 @@
     <h2>How you can help</h2>
     <p>Community effort is key. You can help by:</p>
     <ul>
-      <li>Reading the <a href="http://docs.djangoproject.com/en/dev/internals/contributing/">guide to contributing</a>
-        and <a href="http://docs.djangoproject.com/en/dev/internals/release-process/">Django's release process</a>.</li>
-      <li>Working on patches and <a href="https://docs.djangoproject.com/en/dev/internals/contributing/triaging-tickets/">triaging tickets</a>.</li>
+      <li>Reading the <a href="{% url 'document-detail' lang='en' version='dev' url='internals/contributing' host 'docs' %}">guide to contributing</a>
+        and <a href="{% url 'document-detail' lang='en' version='dev' url='internals/release-process' host 'docs' %}">Django's release process</a>.</li>
+      <li>Working on patches and <a href="{% url 'document-detail' lang='en' version='dev' url='internals/contributing/triaging-tickets' host 'docs' %}">triaging tickets</a>.</li>
       <li>Attending sprints.</li>
       <li>Testing release snapshots (alphas, betas) against your code and reporting bugs.</li>
       <li>Providing as many testers as possible to ensure a bug-free release.</li>

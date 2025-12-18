@@ -65,7 +65,7 @@
       <li class="current">
         <button>{% trans "Language:" %} <strong>{{ lang }}</strong></button>
       </li>
-      {% for available_lang in available_languages %}
+      {% for available_lang in available_languages reversed %}
         {% if lang != available_lang %}
           <li class="other">
             {% if docurl %}
@@ -86,7 +86,7 @@
           <strong>{% if release.is_dev %}development{% else %}{{ version }}{% endif %}</strong>
         </button>
       </li>
-      {% for other_version in other_versions %}
+      {% for other_version in other_versions reversed %}
         {% if version != other_version %}
           <li class="other">
             {% if docurl %}
@@ -183,7 +183,7 @@
           <dt><a href="{% url 'document-detail' lang=lang version=version url="faq" host 'docs' %}">{% trans "FAQ" %}</a></dt>
           <dd>{% blocktrans %}Try the FAQ — it's got answers to many common questions.{% endblocktrans %}</dd>
 
-          <dt><a href="/en/stable/genindex/">{% trans "Index" %}</a>, <a href="/en/stable/py-modindex/">{% trans "Module Index" %}</a>, or <a href="/en/stable/contents/">{% trans "Table of Contents" %}</a></dt>
+          <dt><a href="{% url 'document-detail' lang='en' version='stable' url='genindex' host 'docs' %}">{% trans "Index" %}</a>, <a href="{% url 'document-detail' lang='en' version='stable' url='py-modindex' host 'docs' %}">{% trans "Module Index" %}</a>, or <a href="{% url 'document-detail' lang='en' version='stable' url='contents' host 'docs' %}">{% trans "Table of Contents" %}</a></dt>
           <dd>{% blocktrans %}Handy when looking for specific information.{% endblocktrans %}</dd>
 
           <dt><a href="https://chat.djangoproject.com">{% trans "Django Discord Server" %}</a></dt>
@@ -215,6 +215,6 @@
       </section>
     {% endblock links-wrapper %}
 
-    {% top_corporate_members %}
+    {% top_corporate_members "diamond" "platinum" header="Diamond and Platinum Members" %}
   </div>
 {% endblock content-related %}
