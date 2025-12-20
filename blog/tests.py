@@ -14,6 +14,14 @@ from django.urls import reverse
 from django.utils import timezone, translation
 
 from djangoproject.tests import ReleaseMixin
+from members.models import (
+    BRONZE_MEMBERSHIP,
+    DIAMOND_MEMBERSHIP,
+    GOLD_MEMBERSHIP,
+    PLATINUM_MEMBERSHIP,
+    SILVER_MEMBERSHIP,
+    CorporateMember,
+)
 
 from .models import ContentFormat, Entry, Event, ImageUpload
 from .sitemaps import WeblogSitemap
@@ -380,6 +388,78 @@ class ViewsTestCase(ReleaseMixin, DateTimeMixin, TestCase):
             with self.subTest(user=user):
                 self.assertEqual(response.status_code, 200)
                 self.assertQuerySetEqual(response.context["events"], [])
+
+    def test_corporate_sponsors_displayed(self):
+        objs = CorporateMember.objects.bulk_create(
+            [
+                CorporateMember(
+                    display_name="Platinum company",
+                    membership_level=PLATINUM_MEMBERSHIP,
+                ),
+                CorporateMember(
+                    display_name="Diamond company", membership_level=DIAMOND_MEMBERSHIP
+                ),
+                CorporateMember(
+                    display_name="Gold company", membership_level=GOLD_MEMBERSHIP
+                ),
+                CorporateMember(
+                    display_name="Silver company", membership_level=SILVER_MEMBERSHIP
+                ),
+                CorporateMember(
+                    display_name="Bronze company", membership_level=BRONZE_MEMBERSHIP
+                ),
+            ]
+        )
+        for obj in objs:
+            obj.invoice_set.create(amount=4, expiration_date=date(3000, 1, 1))
+
+        blog_entry = Entry.objects.create(
+            pub_date=date(2005, 7, 21),
+            is_active=True,
+            headline="Django election results",
+            slug="a",
+            author="DSF Board",
+        )
+        urls = [
+            reverse("weblog:index"),
+            reverse(
+                "weblog:entry",
+                kwargs={
+                    "year": blog_entry.pub_date.year,
+                    "month": blog_entry.pub_date.strftime("%b").lower(),
+                    "day": blog_entry.pub_date.day,
+                    "slug": blog_entry.slug,
+                },
+            ),
+            reverse(
+                "weblog:archive-year",
+                kwargs={"year": blog_entry.pub_date.year},
+            ),
+            reverse(
+                "weblog:archive-month",
+                kwargs={
+                    "year": blog_entry.pub_date.year,
+                    "month": blog_entry.pub_date.strftime("%b").lower(),
+                },
+            ),
+            reverse(
+                "weblog:archive-day",
+                kwargs={
+                    "year": blog_entry.pub_date.year,
+                    "month": blog_entry.pub_date.strftime("%b").lower(),
+                    "day": blog_entry.pub_date.day,
+                },
+            ),
+        ]
+        for url in urls:
+            with self.subTest(url=url):
+                response = self.client.get(url)
+                self.assertContains(response, "Diamond and Platinum Members")
+                self.assertContains(response, "Platinum company")
+                self.assertContains(response, "Diamond company")
+                self.assertNotContains(response, "Gold company")
+                self.assertNotContains(response, "Silver company")
+                self.assertNotContains(response, "Bronze company")
 
     def test_anonymous_user_cannot_see_unpublished_entries(self):
         """
