@@ -2383,13 +2383,13 @@ h2+.list-link-soup {
     }
 }
 
-@include respond-max(674px) {
+@include respond-max(767px) {
     body:has(.doc-floating-warning) [id] {
-        scroll-margin-top: 8.4rem;
+        scroll-margin-top: 0;
     }
 }
 
-@include respond-min(675px) {
+@include respond-min(768px) {
     body:has(.doc-floating-warning) [id] {
         scroll-margin-top: 6.3rem;
     }
@@ -2402,7 +2402,6 @@ h2+.list-link-soup {
 }
 
 .doc-floating-warning {
-    position: sticky;
     top: 0;
     width: 100%;
     padding: 8px 20px 8px;
@@ -2414,6 +2413,7 @@ h2+.list-link-soup {
     z-index: 1;
 
     @include respond-min(768px) {
+        position: sticky;
         min-width: 768px;
     }
 }
