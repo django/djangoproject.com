@@ -374,7 +374,7 @@ git hooks
 ---------
     `pre-commit <https://pre-commit.com>`_ is a framework to run hooks written in many languages, and it manages the language toolchain and dependencies for running the hooks.
 
-    prek is a reimagined version of pre-commit, built in Rust. It is designed to be a faster, dependency-free and drop-in alternative for it, while also providing some additional long-requested features.
+    `prek <https://prek.j178.dev/>`_ is a reimagined version of pre-commit, built in Rust. It is designed to be a faster, dependency-free and drop-in alternative for it, while also providing some additional long-requested features.
 
 \- quoted from `prek's README.md <https://github.com/j178/prek/blob/ee7110b49bb1aa8d7b3ccee51c5241550cb0aec2/README.md>`_
 
