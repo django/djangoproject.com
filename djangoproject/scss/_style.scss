@@ -517,7 +517,6 @@ header {
         cursor: pointer;
         display: block;
         height: 45px;
-        margin: 2px;
         text-align: center;
         text-decoration: none;
         width: 45px;
@@ -3070,7 +3069,10 @@ form {
     &.search {
         width: 20%;
         min-width: 200px;
-        margin: 10px;
+        margin: 10px 8px 10px 0;
+        @include respond-min(768px) {
+            margin-left: 10px;
+        }
 
         input {
           margin: 0;
