@@ -4,6 +4,7 @@
 {% block title %}{% translate "Django Code of Conduct - Enforcement Manual" %}{% endblock %}
 
 {% block og_title %}{% translate "Django Code of Conduct - Enforcement Manual" %}{% endblock %}
+
 {% block og_description %}{% translate "This is the enforcement manual followed by Django's Code of Conduct working group" %}{% endblock %}
 
 {% block content %}
@@ -165,7 +166,7 @@
     {% endblocktranslate %}</p>
 
   <h3>{% translate "Conflicts of Interest" %}</h3>
-  {% url 'conduct_reporting' as url%}
+  {% url 'conduct_reporting' as url %}
   <p>
     {% blocktranslate trimmed %}
       In the event of any conflict of interest a working group member must immediately
@@ -192,4 +193,4 @@
       and ideals.{% endblocktranslate %}</i>
   </p>
 
-{% endblock %}
+{% endblock content %}

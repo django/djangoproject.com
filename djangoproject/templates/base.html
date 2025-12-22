@@ -10,7 +10,7 @@
     <meta name="keywords" content="Python, Django, framework, open-source" />
     <meta name="description" content="{% block description %}{% endblock %}" />
     <meta name="fediverse:creator" content="@django@fosstodon.org" />
-    {% block link_rel_tags %}{% endblock link_rel_tags %}
+    {% block link_rel_tags %}{% endblock %}
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="{% static "img/icon-touch.png" %}">
     <link rel="icon" sizes="192x192" href="{% static "img/icon-touch.png" %}">
@@ -23,12 +23,12 @@
       <meta property="og:title" content="{% block og_title %}Django{% endblock %}" />
       <meta property="og:description" content="{% block og_description %}{% spaceless %}
                                                  The web framework for perfectionists with deadlines.
-                                               {% endspaceless %}{% endblock %}" />
+                                               {% endspaceless %}{% endblock og_description %}" />
       <meta property="og:image" content="{% block og_image %}{% static "img/logos/django-logo-negative.png" %}{% endblock %}" />
       <meta property="og:image:alt" content="{% block og_image_alt %}Django logo{% endblock %}" />
       <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}" />
       <meta property="og:image:height" content="{% block og_image_height %}546{% endblock %}" />
-      <meta property="og:image:type" content="{% block og_image_type%}image/png{% endblock %}"/>
+      <meta property="og:image:type" content="{% block og_image_type %}image/png{% endblock %}"/>
       <meta property="og:url" content="{{ request.build_absolute_uri }}" />
       <meta property="og:site_name" content="Django Project" />
 
@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="{% static "css/output.css" %}" >
 
     <script src="{% static "js/mod/switch-dark-mode.js" %}"></script>
-    {% block head_extra %}{% endblock head_extra %}
+    {% block head_extra %}{% endblock %}
   </head>
 
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
@@ -67,7 +67,7 @@
           </small>
           <a class="cta" href="{% url 'fundraising:index' %}">Donate today</a>
         </div>
-      {% endblock %}
+      {% endblock billboard %}
     </div>
 
     <div class="container {% block layout_class %}{% endblock %}">
@@ -84,7 +84,7 @@
               {% endfor %}
             </ul>
           {% endif %}
-        {% endblock %}
+        {% endblock messages %}
 
         {% block content %}{% endblock %}
         <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
@@ -100,7 +100,7 @@
 
     {# Used to display urgent news, events, and alerts #}
     {% block alert %}
-    {% endblock %}
+    {% endblock alert %}
 
     <!-- SVGs -->
     <svg xmlns="http://www.w3.org/2000/svg">
@@ -112,9 +112,9 @@
 
     {% block footer %}
       {% include "includes/footer.html" %}
-    {% endblock %}
+    {% endblock footer %}
 
-    {% block body_extra %}{% endblock body_extra %}
+    {% block body_extra %}{% endblock %}
 
     {% block javascript %}
       {# Require JS #}
@@ -141,6 +141,6 @@
       </script>
       <script data-main="{% static "js/main.js" %}" src="{% static "js/lib/require.js" %}"></script>
       <script src="{% static "js/djangoproject.js" %}"></script>
-    {% endblock %}
+    {% endblock javascript %}
   </body>
 </html>

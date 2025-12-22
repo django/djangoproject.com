@@ -2,19 +2,28 @@
 {% load fundraising_extras release_notes static %}
 
 {% block sectionid %}download{% endblock %}
+
 {% block title %}Download Django{% endblock %}
+
 {% block layout_class %}sidebar-right{% endblock %}
 
 {% block og_title %}Download Django{% endblock %}
+
 {% block og_image %}{% static "img/release-roadmap.svg" %}{% endblock %}
+
 {% block og_image_alt %}Django's release roadmap{% endblock %}
+
 {% block og_description %}The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}{% endblock %}
+
 {% block og_image_width %}1030{% endblock %}
+
 {% block og_image_height %}480{% endblock %}
+
 {% block og_image_type %}image/svg+xml{% endblock %}
+
 {% block header %}
   <p>Download</p>
-{% endblock %}
+{% endblock header %}
 
 {% block content %}
   <h1>How to get Django</h1>
@@ -35,7 +44,7 @@
   <pre class="literal-block"><code>py -m pip install Django=={{ current.version }}</code></pre>
 
   {% if preview %}
-    {% with preview.version|slice:":3" as major_version %}
+    {% with major_version=preview.version|slice:":3" %}
       <h2>Option {% cycle options %}: Get the {{ preview.get_status_display }} for {{ major_version }}</h2>
       <p>As part of the
         <a href="https://code.djangoproject.com/wiki/Version{{ major_version }}Roadmap">
@@ -272,7 +281,7 @@
     <sup id="ft3">[3] Last version to support Python 2.7.</sup>
   </p>
 
-{% endblock %}
+{% endblock content %}
 
 {% block content-related %}
 
@@ -323,4 +332,4 @@
 
   </div>
 
-{% endblock %}
+{% endblock content-related %}
