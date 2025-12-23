@@ -34,7 +34,7 @@
         title="{% trans "Django documentation" %}">
 {% endblock link_rel_tags %}
 
-{% block body_extra %}
+{% block before_header %}
   {% if release.is_dev %}
     {% if "internals" not in docurl %}{# The dev version is canonical for internals/. #}
       <div id="dev-warning" class="doc-floating-warning">
@@ -50,7 +50,7 @@
       {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
     </div>
   {% endif %}
-{% endblock body_extra %}
+{% endblock before_header %}
 
 {% block content %}
   <div id="version-switcher">

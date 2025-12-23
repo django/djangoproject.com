@@ -46,6 +46,7 @@
   </head>
 
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
+    {% block before_header %}{% endblock %}
 
     <a href="#main-content" class="skip-link">Skip to main content</a>
     {% include "includes/header.html" %}
@@ -113,8 +114,6 @@
     {% block footer %}
       {% include "includes/footer.html" %}
     {% endblock %}
-
-    {% block body_extra %}{% endblock body_extra %}
 
     {% block javascript %}
       {# Require JS #}
