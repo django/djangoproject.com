@@ -16,3 +16,13 @@ class DocSearchForm(forms.Form):
                 "placeholder": search_label_placeholder,
             }
         )
+        # Give each form instance a unique HTML id for its search field, while keeping
+        # the name attribute the same. This allows multiple forms with different
+        # prefixes (e.g., mobile/desktop) to coexist on the same page without id
+        # collisions, but still submit the query parameter as ?q=... regardless of
+        # which form was used.
+        q_with_prefix = super().add_prefix("q")
+        self.fields["q"].widget.attrs["id"] = f"id_{q_with_prefix}"
+
+    def add_prefix(self, field_name):
+        return field_name
