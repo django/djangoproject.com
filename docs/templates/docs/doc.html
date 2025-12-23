@@ -62,7 +62,10 @@
       </li>
     </ul>
     <ul id="doc-languages" class="language-switcher doc-switcher">
-      {% for available_lang in available_languages %}
+      <li class="current">
+        <button>{% trans "Language:" %} <strong>{{ lang }}</strong></button>
+      </li>
+      {% for available_lang in available_languages reversed %}
         {% if lang != available_lang %}
           <li class="other">
             {% if docurl %}
@@ -74,15 +77,16 @@
           </li>
         {% endif %}
       {% endfor %}
-      <li class="current"
-          title="{% blocktrans %}Click on the links on the left to switch to another language.{% endblocktrans %}">
-        <span>{% trans "Language:" %} <strong>{{ lang }}</strong></span>
-      </li>
     </ul>
 
     {% get_all_doc_versions docurl as other_versions %}
     <ul id="doc-versions" class="version-switcher doc-switcher">
-      {% for other_version in other_versions %}
+      <li class="current {% if release.is_dev %}dev{% endif %}">
+        <button>{% trans "Documentation version:" %}
+          <strong>{% if release.is_dev %}development{% else %}{{ version }}{% endif %}</strong>
+        </button>
+      </li>
+      {% for other_version in other_versions reversed %}
         {% if version != other_version %}
           <li class="other">
             {% if docurl %}
@@ -94,18 +98,6 @@
           </li>
         {% endif %}
       {% endfor %}
-      <li class="current{% if release.is_dev %} dev{% endif %}"
-          title="{% if release.is_dev %}{% blocktrans trimmed %}
-                   This document is for Django's development version, which can be significantly different from previous releases.
-                 {% endblocktrans %}{% else %}{% blocktrans trimmed %}
-                   This document describes Django {{ version }}.
-                 {% endblocktrans %}{% endif %} {% blocktrans trimmed %}
-                   Click on the links on the left to see other versions.
-                 {% endblocktrans %}">
-        <span>{% trans "Documentation version:" %}
-          <strong>{% if release.is_dev %}development{% else %}{{ version }}{% endif %}</strong>
-        </span>
-      </li>
     </ul>
     <ul id="backtotop-link">
       <li class="current-link">
@@ -191,7 +183,7 @@
           <dt><a href="{% url 'document-detail' lang=lang version=version url="faq" host 'docs' %}">{% trans "FAQ" %}</a></dt>
           <dd>{% blocktrans %}Try the FAQ — it's got answers to many common questions.{% endblocktrans %}</dd>
 
-          <dt><a href="/en/stable/genindex/">{% trans "Index" %}</a>, <a href="/en/stable/py-modindex/">{% trans "Module Index" %}</a>, or <a href="/en/stable/contents/">{% trans "Table of Contents" %}</a></dt>
+          <dt><a href="{% url 'document-detail' lang='en' version='stable' url='genindex' host 'docs' %}">{% trans "Index" %}</a>, <a href="{% url 'document-detail' lang='en' version='stable' url='py-modindex' host 'docs' %}">{% trans "Module Index" %}</a>, or <a href="{% url 'document-detail' lang='en' version='stable' url='contents' host 'docs' %}">{% trans "Table of Contents" %}</a></dt>
           <dd>{% blocktrans %}Handy when looking for specific information.{% endblocktrans %}</dd>
 
           <dt><a href="https://chat.djangoproject.com">{% trans "Django Discord Server" %}</a></dt>
@@ -223,6 +215,6 @@
       </section>
     {% endblock links-wrapper %}
 
-    {% top_corporate_members %}
+    {% top_corporate_members "diamond" "platinum" header="Diamond and Platinum Members" %}
   </div>
 {% endblock content-related %}

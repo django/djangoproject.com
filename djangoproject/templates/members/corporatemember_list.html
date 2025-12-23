@@ -1,5 +1,5 @@
 {% extends "base_foundation.html" %}
-{% load humanize i18n %}
+{% load humanize i18n hosts %}
 
 {% block og_title %}{% translate "Corporate members" %}{% endblock %}
 {% block og_description %}{% translate "The following organizations are corporate members of the Django Software Foundation." %}{% endblock %}
@@ -7,10 +7,11 @@
 {% block content %}
   <h1>{% translate "Corporate members" %}</h1>
   <p>
+    {% host_url 'homepage' host 'www' as base_url %}
     {% blocktranslate trimmed %}
       The following organizations are corporate members of the Django Software
       Foundation. If you are interested in becoming a corporate member of the
-      DSF, you can find out more on our <a href="/foundation/corporate-membership/">
+      DSF, you can find out more on our <a href="{{ base_url }}foundation/corporate-membership/">
         corporate membership page</a>.
     {% endblocktranslate %}
   </p>

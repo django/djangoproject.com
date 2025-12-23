@@ -3,11 +3,11 @@
 
 {% block title %}{{ month|date:"YEAR_MONTH_FORMAT" }} | {% translate "Weblog" %}{% endblock %}
 
-{% block og_title %}{% blocktranslate %}Django news: {{ month|date:"YEAR_MONTH_FORMAT" }} archive{% endblocktranslate %}{% endblock %}
+{% block og_title %}{% blocktranslate with month=month|date:"YEAR_MONTH_FORMAT" %}Django news: {{ month }} archive{% endblocktranslate %}{% endblock %}
 
 {% block content %}
 
-  <h1>{% blocktranslate %}{{ month|date:"YEAR_MONTH_FORMAT" }} archive{% endblocktranslate %}</h1>
+  <h1>{% blocktranslate with month=month|date:"YEAR_MONTH_FORMAT" %}{{ month }} archive{% endblocktranslate %}</h1>
 
   <ul class="list-news">
 

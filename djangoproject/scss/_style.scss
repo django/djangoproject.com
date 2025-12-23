@@ -541,6 +541,7 @@ header {
         transition: max-height 0.3s ease-out;
         max-height: 0; // hide mobile menu by default
         overflow: hidden;
+        padding: 0 2px;
 
         &.active {
             max-height: 580px;
@@ -654,7 +655,7 @@ header {
 
 /* banner for billboard */
 #billboard {
-    background-color: $green-medium;
+    background-color: $green-light;
     border-top: 1px solid $black;
 
     * {
@@ -2286,88 +2287,101 @@ h2+.list-link-soup {
     z-index: 1;
     pointer-events: none;
 
-    list-style: none;
-
-    .icon {
-        margin-right: 4px;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.6em;
 
     ul {
         text-align: right;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 3px;
     }
 }
 
-#doc-versions,
-#doc-languages,
-#faq-link,
-#backtotop-link {
-    margin: 0;
-    padding-top: 0.25em;
-    padding-bottom: 0.25em;
+#doc-versions li,
+#doc-languages li,
+#faq-link li,
+#backtotop-link li {
+    margin: 0 3px;
+    background: var(--body-bg);
+    border: 1px solid var(--hairline-color);
+    border-radius: 4px;
+    cursor: pointer;
+    pointer-events: auto;
 
-    &.open {
-        li {
-            display: inline-block;
+    a,
+    button {
+        display: inline-block;
+        background: var(--body-bg);
+        padding: 8px 15px;
+        border-radius: 4px;
+        border: none;
+        @include sans-serif;
+        font-size: 12px;
+        line-height: inherit;
+        color: var(--body-fg);
+    }
 
-            &.current {
-                border: 1px solid $green-light;
-            }
+    a {
+        text-decoration: none;
+        font-weight: 700;
+        color: var(--primary);
+    }
+
+    &:hover,
+    &:focus-within {
+        border-color: $green-light;
+        a {
+            color: var(--secondary);
         }
+    }
+}
+
+#doc-languages,
+#doc-versions {
+    position: relative;
+    flex-direction: row-reverse;
+    pointer-events: auto;
+
+    @include respond-max(768px) {
+        flex-wrap: wrap;
+        max-width: calc(100vw - 33px);
     }
 
     li {
-        display: none;
-        margin: 0 3px;
-        @include sans-serif;
-        color: var(--body-fg);
-        @include font-size(12);
-        pointer-events: auto;
+        display: inline-block;
+        padding: 0;
+        position: relative;
 
         &.current {
-            display: inline-block;
-            background: var(--body-bg);
-            padding: 8px 15px;
-            border: 1px solid var(--hairline-color);
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        &.current-link {
-            display: inline-block;
-        }
-
-        a {
-            display: inline-block;
-            background: var(--body-bg);
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 700;
-            padding: 8px 15px;
-            border: 1px solid var(--hairline-color);
-            border-radius: 4px;
-
-            &:hover {
-                color: var(--secondary);
-                border: 1px solid $green-light;
+            &::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -8px;
+                width: 8px;
+                height: 100%;
             }
         }
 
-        a.icon-chevron-up-align {
-            // Should be removed when icon-chevron-up image have the same black space on both sides.
-            padding-right: 11px;
+        &.other {
+            display: none;
+            margin-right: 2px;
+            white-space: nowrap;
+            z-index: 2;
         }
     }
 
-    &:hover {
-        pointer-events: auto;
-        padding: 2em 0;
-        margin: -1.75em 0;
-
-        li {
-            display: inline-block;
-        }
+    &:hover li.other,
+    &.open li.other {
+        display: inline-block;
     }
-
 }
 
 #dev-warning,
