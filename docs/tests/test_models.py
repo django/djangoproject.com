@@ -1,13 +1,16 @@
 import datetime
 from operator import attrgetter
+from unittest import mock
 
+import requests_mock
 from django.conf import settings
 from django.db import connection
 from django.test import TestCase
 from django.utils import timezone
 from django_hosts import reverse
 
-from blog.models import Entry
+from blog.models import ContentFormat, Entry
+from djangoproject.sitemaps import StaticViewSitemap
 from releases.models import Release
 
 from ..models import Document, DocumentRelease
@@ -184,6 +187,9 @@ class ManagerTests(TestCase):
 class DocumentManagerTest(TestCase):
     @classmethod
     def setUpTestData(cls):
+        cls.dev_release = DocumentRelease.objects.create(
+            lang=settings.DEFAULT_LANGUAGE_CODE
+        )
         cls.release = DocumentRelease.objects.create(
             release=Release.objects.create(version="1.2.3"),
         )
@@ -358,6 +364,20 @@ class DocumentManagerTest(TestCase):
                 "release": cls.release_fr,
                 "title": "Notes de publication de Django 1.9.4",
             },
+            {
+                "metadata": {
+                    "body": "Main 1",
+                    "breadcrumbs": [
+                        {"path": DocumentationCategory.WEBSITE, "title": "Website"}
+                    ],
+                    "parents": DocumentationCategory.WEBSITE,
+                    "title": "Title 1",
+                    "toc": "",
+                },
+                "path": "example",
+                "release": cls.dev_release,
+                "title": "Blog post",
+            },
         ]
         Document.objects.bulk_create(Document(**doc) for doc in documents)
 
@@ -457,28 +477,21 @@ class DocumentManagerTest(TestCase):
                 ),
             )
 
+    def test_website_document_items_included_english(self):
+        self.assertQuerySetEqual(
+            Document.objects.search("Main", self.release),
+            ["Blog post"],
+            transform=attrgetter("title"),
+        )
+
+    def test_website_document_items_excluded_non_english(self):
+        self.assertEqual(Document.objects.search("Main", self.release_fr).count(), 0)
+
 
 class UpdateDocTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        now = timezone.now()
-        cls.release = DocumentRelease.objects.create(
-            release=Release.objects.create(
-                version="1.0.0",
-                eol_date=now + datetime.timedelta(days=1),
-            )
-        )
-        cls.entry = Entry.objects.create(
-            pub_date=now,
-            is_active=True,
-            is_searchable=True,
-            headline="Searchable post",
-            slug="a",
-            body_html="<h1>Searchable Blog Post</h1>",
-        )
-        cls.docs_documents = cls.release.documents.exclude(
-            metadata__parents=DocumentationCategory.WEBSITE
-        )
+        cls.release = DocumentRelease.objects.create()
 
     def test_sync_to_db(self):
         self.release.sync_to_db(
@@ -490,24 +503,8 @@ class UpdateDocTests(TestCase):
                 }
             ]
         )
-        self.assertQuerySetEqual(
-            self.release.documents.all(),
-            [
-                "foo/bar",
-                reverse("community-ecosystem", host="www"),
-                self.entry.get_absolute_url(),
-            ],
-            ordered=False,
-            transform=attrgetter("path"),
-        )
-
-    def test_sync_to_db_skip_non_english(self):
-        """
-        Releases must be English to include the blog and website results in search.
-        """
-        non_english = DocumentRelease.objects.create(lang="es")
-        non_english.sync_to_db([])
-        self.assertQuerySetEqual(non_english.documents.all(), [])
+        document = self.release.documents.get()
+        self.assertEqual(document.path, "foo/bar")
 
     def test_clean_path(self):
         self.release.sync_to_db(
@@ -519,7 +516,7 @@ class UpdateDocTests(TestCase):
                 }
             ]
         )
-        document = self.docs_documents.get()
+        document = self.release.documents.get()
         self.assertEqual(document.path, "foo/bar")
 
     def test_title_strip_tags(self):
@@ -533,7 +530,7 @@ class UpdateDocTests(TestCase):
             ]
         )
         self.assertQuerySetEqual(
-            self.docs_documents.all(),
+            self.release.documents.all(),
             ["This is the title"],
             transform=attrgetter("title"),
         )
@@ -549,7 +546,7 @@ class UpdateDocTests(TestCase):
             ]
         )
         self.assertQuerySetEqual(
-            self.docs_documents,
+            self.release.documents.all(),
             ["Title & title"],
             transform=attrgetter("title"),
         )
@@ -562,7 +559,7 @@ class UpdateDocTests(TestCase):
                 {"current_page_name": "foo/3"},
             ]
         )
-        self.assertQuerySetEqual(self.docs_documents, [])
+        self.assertQuerySetEqual(self.release.documents.all(), [])
 
     def test_excluded_documents(self):
         """
@@ -589,6 +586,172 @@ class UpdateDocTests(TestCase):
         )
         document = release.documents.get()
         self.assertEqual(document.path, "nonexcluded/bar")
+
+    def test_sync_to_db_not_delete_website_docs(self):
+        Document.objects.create(
+            release=self.release,
+            path="example_path",
+            title="Title 1",
+            metadata={
+                "body": "Main 1",
+                "breadcrumbs": [
+                    {"path": DocumentationCategory.WEBSITE, "title": "Website"}
+                ],
+                "parents": DocumentationCategory.WEBSITE,
+                "title": "Title 1",
+                "toc": "",
+            },
+        )
+        self.release.sync_to_db([])
+        self.assertEqual(Document.objects.filter(release=self.release).count(), 1)
+
+    def test_sync_from_sitemap_skip_non_en_dev_release(self):
+        release = Release.objects.create(version="5.2")
+        blog_entry = Entry.objects.create(
+            pub_date=timezone.now() - datetime.timedelta(days=2),
+            slug="a",
+            body="<strong>test</strong>",
+            content_format=ContentFormat.HTML,
+            is_active=True,
+        )
+        for lang, release_obj in [
+            ("fr", None),
+            ("fr", release),
+            (settings.DEFAULT_LANGUAGE_CODE, release),
+        ]:
+            doc_release = DocumentRelease.objects.create(
+                lang=lang,
+                release=release_obj,
+            )
+            with self.subTest(lang=lang, release=release_obj):
+                doc_release.sync_from_sitemap()
+                self.assertFalse(
+                    Document.objects.filter(path=blog_entry.get_absolute_url()).exists()
+                )
+
+    @staticmethod
+    def _mock_static_sitemap_urls(mocker):
+        sitemap = StaticViewSitemap()
+        for item in sitemap.items():
+            url = reverse(item.name, host=item.host)
+            mocker.get(url, text="", headers={"Content-Type": "text/html"})
+
+    @requests_mock.mock()
+    def test_sync_from_sitemap(self, mocker):
+        blog_entry = Entry.objects.create(
+            pub_date=timezone.now() - datetime.timedelta(days=2),
+            slug="a",
+            body="<strong>test</strong>",
+            content_format=ContentFormat.HTML,
+            is_active=True,
+        )
+        self._mock_static_sitemap_urls(mocker)
+        mocker.get(
+            blog_entry.get_absolute_url(),
+            text="<html><main>Main 1</main><h1>Title 1</h1></html>",
+            headers={"Content-Type": "text/html"},
+        )
+        self.release.sync_from_sitemap()
+
+        document = Document.objects.get(
+            release=self.release, path=blog_entry.get_absolute_url()
+        )
+        self.assertEqual(
+            document.title,
+            "Title 1",
+        )
+        self.assertEqual(
+            document.metadata,
+            {
+                "body": "Main 1",
+                "breadcrumbs": [
+                    {"path": DocumentationCategory.WEBSITE, "title": "Website"}
+                ],
+                "parents": DocumentationCategory.WEBSITE,
+                "title": "Title 1",
+                "toc": "",
+            },
+        )
+
+    @mock.patch("docs.search.fetch_html")
+    def test_sync_from_sitemap_only_requests_non_existing(self, mock_fetch_html):
+        blog_entry = Entry.objects.create(
+            pub_date=timezone.now() - datetime.timedelta(days=2),
+            slug="a",
+            body="<strong>test</strong>",
+            content_format=ContentFormat.HTML,
+            is_active=True,
+        )
+        Document.objects.create(
+            release=self.release,
+            metadata={"parents": DocumentationCategory.WEBSITE},
+            path=blog_entry.get_absolute_url(),
+        )
+        self.release.sync_from_sitemap()
+
+        mock_fetch_html.assert_not_called()
+
+        document = Document.objects.get(
+            release=self.release, path=blog_entry.get_absolute_url()
+        )
+        # Confirm Document has not been updated.
+        self.assertEqual(
+            document.metadata,
+            {"parents": DocumentationCategory.WEBSITE},
+        )
+
+    @requests_mock.mock()
+    def test_sync_from_sitemap_force(self, mocker):
+        Document.objects.create(
+            release=self.release,
+            metadata={"parents": DocumentationCategory.WEBSITE},
+            path="some_path",
+        )
+        blog_entry = Entry.objects.create(
+            pub_date=timezone.now() - datetime.timedelta(days=2),
+            slug="a",
+            body="<strong>test</strong>",
+            content_format=ContentFormat.HTML,
+            is_active=True,
+        )
+        blog_url = blog_entry.get_absolute_url()
+        Document.objects.create(
+            release=self.release,
+            metadata={"parents": DocumentationCategory.WEBSITE},
+            path=blog_url,
+        )
+        self._mock_static_sitemap_urls(mocker)
+        mocker.get(
+            blog_url,
+            text="<html><main>Main 1</main><h1>Title 1</h1></html>",
+            headers={"Content-Type": "text/html"},
+        )
+        self.release.sync_from_sitemap(force=True)
+
+        self.assertEqual(Document.objects.count(), 1)
+
+        document = Document.objects.get(release=self.release, path=blog_url)
+        # Confirm Document has been updated.
+        self.assertEqual(
+            document.path,
+            blog_url,
+        )
+        self.assertEqual(
+            document.title,
+            "Title 1",
+        )
+        self.assertEqual(
+            document.metadata,
+            {
+                "body": "Main 1",
+                "breadcrumbs": [
+                    {"path": DocumentationCategory.WEBSITE, "title": "Website"}
+                ],
+                "parents": DocumentationCategory.WEBSITE,
+                "title": "Title 1",
+                "toc": "",
+            },
+        )
 
 
 class DocumentUrlTests(TestCase):
@@ -622,12 +785,4 @@ class DocumentUrlTests(TestCase):
                 "topics/http/generic-views/",
             ],
             transform=lambda doc: doc.get_absolute_url(),
-        )
-
-    def test_document_url_documentation_category_website(self):
-        self.release._sync_views_to_db()
-        document_view = self.release.documents.get()
-        self.assertEqual(
-            document_view.get_absolute_url(),
-            "http://www.djangoproject.localhost:8000/community/ecosystem/",
         )
