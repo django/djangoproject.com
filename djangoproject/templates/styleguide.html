@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}Django Web Styleguide{% endblock %}
+
 {% block body_class %}styleguide{% endblock %}
 
 {% block header %}<p>Style Guide</p>{% endblock %}
@@ -408,7 +409,7 @@
     </div>
   </div>
 
-{% endblock %}
+{% endblock content %}
 
 {% block content-related %} {# Always include <h1> label and <div> with aria role. #}
   <div role="complementary">
@@ -445,4 +446,4 @@
       </li>
     </ul>
   </div>
-{% endblock %}
+{% endblock content-related %}

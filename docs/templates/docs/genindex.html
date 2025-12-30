@@ -1,12 +1,14 @@
 {% extends "docs/doc.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "General Index | Django Documentation" %}{% endblock %}
+{% block title %}{% translate "General Index | Django Documentation" %}{% endblock %}
+
 {% block toc-wrapper %}{% endblock %}
-{% block current-page-title %}{% trans "General Index" %}{% endblock %}
+
+{% block current-page-title %}{% translate "General Index" %}{% endblock %}
 
 {% block body %}
-  <h1>{% trans "General Index" %}</h1>
+  <h1>{% translate "General Index" %}</h1>
 
   <p class="indexletters">
     {% for letter, _ in doc.genindexentries %}
@@ -36,11 +38,11 @@
           {% for subname, sublinks in contents.1 %}
             <dd>
               <a href="{{ sublinks.0.1 }}">{{ subname }}</a>
-              {% for link in sublinks|slice:"1:" %}, <a href="{{ link.1 }}">{% trans "[Link]" %}</a>{% endfor %}
+              {% for link in sublinks|slice:"1:" %}, <a href="{{ link.1 }}">{% translate "[Link]" %}</a>{% endfor %}
             </dd>
           {% endfor %}
         {% endif %}
       {% endfor %}
     </dl>
   {% endfor %}
-{% endblock %}
+{% endblock body %}

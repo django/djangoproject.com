@@ -2,11 +2,12 @@
 {% load i18n %}
 
 {% block og_title %}{% translate "Django Community Diversity Statement" %}{% endblock %}
+
 {% block og_description %}{% translate "We welcome you." %}{% endblock %}
 
 {% block header %}
   <p>{% translate "Community Diversity Statement" %}</p>
-{% endblock %}
+{% endblock header %}
 
 {% block content-related %}
   <div role="complementary">
@@ -31,6 +32,6 @@
       </a>
     </p>
   </div>
-{% endblock %}
+{% endblock content-related %}
 
 {% block title %}{% translate "Django Community Diversity Statement" %}{% endblock %}
