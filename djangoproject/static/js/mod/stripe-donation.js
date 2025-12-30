@@ -20,7 +20,7 @@ define([
       data: data,
       dataType: 'json',
       success: (data) => {
-        console.info(data);
+        console.debug(data);
         if (data.success) {
           const stripe = Stripe($donationForm.data('stripeKey'));
           return stripe.redirectToCheckout({ sessionId: data.sessionId });
@@ -54,7 +54,7 @@ define([
     // NOTE: the `action` key must match the one defined on the widget.
     grecaptcha.execute(public_key, { action: 'form' }).then((token) => {
       captcha_input.value = token;
-      console.info('reCAPTCHA validated. Posting to stripe...');
+      console.debug('reCAPTCHA validated. Posting to stripe...');
       postToStripe(token);
     });
   });
