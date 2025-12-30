@@ -162,11 +162,10 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
 
   // This element will dynamically enforce the correct amount of top spacing
   const warning_el_copy = warning_el.cloneNode(true);
-warning_el_copy.setAttribute('aria-hidden', 'true');
-warning_el_copy.style.position = 'relative';
+  warning_el_copy.setAttribute('aria-hidden', 'true');
+  warning_el_copy.style.position = 'relative';
 
-document.body.prepend(warning_el_copy);
-
+  document.body.prepend(warning_el_copy);
 
   function scroll_to_hash(e) {
     const target_el = document.querySelector(window.location.hash || null);
