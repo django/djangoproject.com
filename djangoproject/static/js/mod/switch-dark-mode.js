@@ -56,7 +56,7 @@ function setCookie(cname, cvalue, domain) {
   d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000); // 1 year
   let expires = `expires=${d.toUTCString()}`;
   // change the SameSite attribute if it's on development or production
-  sameSiteAttribute =
+  const sameSiteAttribute =
     domain == 'localhost'
       ? 'SameSite=Lax;'
       : `Domain=${domain}; SameSite=None; Secure;`;
@@ -82,9 +82,7 @@ function getCookie(cname) {
 
 initTheme();
 
-document.addEventListener('DOMContentLoaded', () => {
-  setupTheme();
-});
+document.addEventListener('DOMContentLoaded', setupTheme);
 
 // reset theme and release image if auto mode activated and os preferences have changed
 globalThis

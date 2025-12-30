@@ -41,7 +41,7 @@ $(() => {
         align: 'center',
       };
     }
-    const plot = $.plot(element, [response.data], options);
+    $.plot(element, [response.data], options);
 
     function format_message(timestamp, measurement) {
       const unit = measurement == 1 ? response.unit : response.unit_plural;
