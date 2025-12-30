@@ -4,7 +4,7 @@ define([
 ], ($) => {
   const $heroForm = $('.django-hero-form');
   $heroForm.on('click', '.change-card', function () {
-    $this = $(this);
+    const $this = $(this);
     const donationId = $this.data('donationId');
     const handler = StripeCheckout.configure({
       key: $heroForm.data('stripeKey'),

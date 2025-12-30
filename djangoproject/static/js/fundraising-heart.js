@@ -57,17 +57,15 @@
       });
       this.fadePixels();
       this.draw();
-      const heart = this;
     }
 
     fadePixels() {
-      let pixels;
       const percent = this.heart.dataset.percent;
       const fadedCount = Math.ceil(
         (this.pixels.length * (100 - percent)) / 100,
       );
       for (let i = 0; i < fadedCount; i++) {
-        pixels = this.visiblePixels();
+        const pixels = this.visiblePixels();
         pixels[0].hide();
       }
     }
