@@ -688,11 +688,5 @@ class RoadmapViewTestCase(ReleaseMixin, TestCase):
     def test_links_to_contributing_and_release_process_present(self):
         url = reverse("roadmap", kwargs={"series": "20.0"})
         response = self.client.get(url)
-        self.assertContains(
-            response,
-            'href="http://docs.djangoproject.com/en/dev/internals/contributing/"',
-        )
-        self.assertContains(
-            response,
-            'href="http://docs.djangoproject.com/en/dev/internals/release-process/"',
-        )
+        self.assertContains(response, 'en/dev/internals/contributing/"')
+        self.assertContains(response, 'en/dev/internals/release-process/"')

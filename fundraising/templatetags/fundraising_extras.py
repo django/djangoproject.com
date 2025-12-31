@@ -114,7 +114,16 @@ def display_django_heroes():
 
 
 @register.inclusion_tag("fundraising/includes/top_corporate_members.html")
-def top_corporate_members():
-    members = CorporateMember.objects.by_membership_level()
+def top_corporate_members(*levels, header=None):
+    """
+    Usage:
+    {% top_corporate_members "diamond" "platinum" header="Diamond and Platinum Members" %}
+    """
 
-    return {"members": members["diamond"] + members["platinum"]}
+    all_members: dict = CorporateMember.objects.by_membership_level()
+
+    members = []
+    for level in levels:
+        members.extend(all_members.get(level, []))
+
+    return {"header": header, "members": members}

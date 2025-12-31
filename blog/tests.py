@@ -14,6 +14,14 @@ from django.urls import reverse
 from django.utils import timezone, translation
 
 from djangoproject.tests import ReleaseMixin
+from members.models import (
+    BRONZE_MEMBERSHIP,
+    DIAMOND_MEMBERSHIP,
+    GOLD_MEMBERSHIP,
+    PLATINUM_MEMBERSHIP,
+    SILVER_MEMBERSHIP,
+    CorporateMember,
+)
 
 from .models import ContentFormat, Entry, Event, ImageUpload
 from .sitemaps import WeblogSitemap
@@ -158,6 +166,28 @@ class EntryTestCase(DateTimeMixin, TestCase):
         self.assertEqual(entry.pub_date_localized, "July 21, 2005")
         with translation.override("nn"):
             self.assertEqual(entry.pub_date_localized, "21. juli 2005")
+
+    def test_markdown_table_conversion(self):
+        body = (
+            "| Framework | Language |\n"
+            "|-----------|----------|\n"
+            "| Django    | Python   |\n"
+            "| Flask     | Python   |"
+        )
+
+        entry = Entry.objects.create(
+            pub_date=self.now,
+            slug="markdown-table",
+            body=body,
+            content_format=ContentFormat.MARKDOWN,
+        )
+        expected_html = (
+            "<table>\n"
+            "<thead>\n<tr>\n<th>Framework</th>\n<th>Language</th>\n</tr>\n</thead>\n"
+            "<tbody>\n<tr>\n<td>Django</td>\n<td>Python</td>\n</tr>\n"
+            "<tr>\n<td>Flask</td>\n<td>Python</td>\n</tr>\n</tbody>\n</table>"
+        )
+        self.assertInHTML(expected_html, entry.body_html)
 
 
 class EventTestCase(DateTimeMixin, TestCase):
@@ -359,6 +389,78 @@ class ViewsTestCase(ReleaseMixin, DateTimeMixin, TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertQuerySetEqual(response.context["events"], [])
 
+    def test_corporate_sponsors_displayed(self):
+        objs = CorporateMember.objects.bulk_create(
+            [
+                CorporateMember(
+                    display_name="Platinum company",
+                    membership_level=PLATINUM_MEMBERSHIP,
+                ),
+                CorporateMember(
+                    display_name="Diamond company", membership_level=DIAMOND_MEMBERSHIP
+                ),
+                CorporateMember(
+                    display_name="Gold company", membership_level=GOLD_MEMBERSHIP
+                ),
+                CorporateMember(
+                    display_name="Silver company", membership_level=SILVER_MEMBERSHIP
+                ),
+                CorporateMember(
+                    display_name="Bronze company", membership_level=BRONZE_MEMBERSHIP
+                ),
+            ]
+        )
+        for obj in objs:
+            obj.invoice_set.create(amount=4, expiration_date=date(3000, 1, 1))
+
+        blog_entry = Entry.objects.create(
+            pub_date=date(2005, 7, 21),
+            is_active=True,
+            headline="Django election results",
+            slug="a",
+            author="DSF Board",
+        )
+        urls = [
+            reverse("weblog:index"),
+            reverse(
+                "weblog:entry",
+                kwargs={
+                    "year": blog_entry.pub_date.year,
+                    "month": blog_entry.pub_date.strftime("%b").lower(),
+                    "day": blog_entry.pub_date.day,
+                    "slug": blog_entry.slug,
+                },
+            ),
+            reverse(
+                "weblog:archive-year",
+                kwargs={"year": blog_entry.pub_date.year},
+            ),
+            reverse(
+                "weblog:archive-month",
+                kwargs={
+                    "year": blog_entry.pub_date.year,
+                    "month": blog_entry.pub_date.strftime("%b").lower(),
+                },
+            ),
+            reverse(
+                "weblog:archive-day",
+                kwargs={
+                    "year": blog_entry.pub_date.year,
+                    "month": blog_entry.pub_date.strftime("%b").lower(),
+                    "day": blog_entry.pub_date.day,
+                },
+            ),
+        ]
+        for url in urls:
+            with self.subTest(url=url):
+                response = self.client.get(url)
+                self.assertContains(response, "Diamond and Platinum Members")
+                self.assertContains(response, "Platinum company")
+                self.assertContains(response, "Diamond company")
+                self.assertNotContains(response, "Gold company")
+                self.assertNotContains(response, "Silver company")
+                self.assertNotContains(response, "Bronze company")
+
     def test_anonymous_user_cannot_see_unpublished_entries(self):
         """
         Anonymous users can't see unpublished entries at all (list or detail view)
@@ -465,6 +567,44 @@ class ViewsTestCase(ReleaseMixin, DateTimeMixin, TestCase):
         )
         response = self.client.get(published_url)
         self.assertEqual(response.status_code, 200)
+
+    def test_archive_view_titles(self):
+        headline = "Pride and Prejudice - Review"
+        pub_date = date(2005, 7, 21)
+        Entry.objects.create(
+            pub_date=pub_date,
+            is_active=True,
+            headline=headline,
+            slug="a",
+            author="Jane Austen",
+        )
+        year = pub_date.strftime("%Y")
+        month = pub_date.strftime("%b").lower()
+        day = pub_date.strftime("%d")
+        for testcase in [
+            {
+                "view": "weblog:archive-year",
+                "kwargs": {"year": year},
+                "header": "<h1>2005 archive</h1>",
+            },
+            {
+                "view": "weblog:archive-month",
+                "kwargs": {"year": year, "month": month},
+                "header": "<h1>July 2005 archive</h1>",
+            },
+            {
+                "view": "weblog:archive-day",
+                "kwargs": {"year": year, "month": month, "day": day},
+                "header": "<h1>July 21, 2005 archive</h1>",
+            },
+        ]:
+            with self.subTest(view=testcase["view"]):
+                response = self.client.get(
+                    reverse(testcase["view"], kwargs=testcase["kwargs"])
+                )
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(response, testcase["header"])
+                self.assertContains(response, headline)
 
 
 @override_settings(

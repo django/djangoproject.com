@@ -66,6 +66,7 @@ class ContentFormat(models.TextChoices):
                 extensions=[
                     # baselevel matches `initial_header_level` from BLOG_DOCUTILS_SETTINGS
                     TocExtension(baselevel=3, slugify=_md_slugify),
+                    "tables",
                 ],
             )
         raise ValueError(f"Unsupported format {fmt}")

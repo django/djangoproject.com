@@ -517,7 +517,6 @@ header {
         cursor: pointer;
         display: block;
         height: 45px;
-        margin: 2px;
         text-align: center;
         text-decoration: none;
         width: 45px;
@@ -541,6 +540,7 @@ header {
         transition: max-height 0.3s ease-out;
         max-height: 0; // hide mobile menu by default
         overflow: hidden;
+        padding: 0 2px;
 
         &.active {
             max-height: 580px;
@@ -654,7 +654,7 @@ header {
 
 /* banner for billboard */
 #billboard {
-    background-color: $green-medium;
+    background-color: $green-light;
     border-top: 1px solid $black;
 
     * {
@@ -2345,6 +2345,13 @@ h2+.list-link-soup {
 #doc-languages,
 #doc-versions {
     position: relative;
+    flex-direction: row-reverse;
+    pointer-events: auto;
+
+    @include respond-max(768px) {
+        flex-wrap: wrap;
+        max-width: calc(100vw - 33px);
+    }
 
     li {
         display: inline-block;
@@ -2364,9 +2371,6 @@ h2+.list-link-soup {
 
         &.other {
             display: none;
-            position: absolute;
-            right: 100%;
-            top: 0;
             margin-right: 2px;
             white-space: nowrap;
             z-index: 2;
@@ -2379,9 +2383,25 @@ h2+.list-link-soup {
     }
 }
 
-#dev-warning,
-#outdated-warning {
-    position: absolute;
+@include respond-max(767px) {
+    body:has(.doc-floating-warning) [id] {
+        scroll-margin-top: 0;
+    }
+}
+
+@include respond-min(768px) {
+    body:has(.doc-floating-warning) [id] {
+        scroll-margin-top: 6.3rem;
+    }
+}
+
+@include respond-min(1300px) {
+    body:has(.doc-floating-warning) [id] {
+        scroll-margin-top: 4.2rem;
+    }
+}
+
+.doc-floating-warning {
     top: 0;
     width: 100%;
     padding: 8px 20px 8px;
@@ -2390,13 +2410,17 @@ h2+.list-link-soup {
     @include sans-serif;
     font-size: 14px;
     text-align: center;
-    background-color: $warning-bg;
-    color: $text;
+    z-index: 1;
 
     @include respond-min(768px) {
-        position: fixed;
+        position: sticky;
         min-width: 768px;
     }
+}
+
+#dev-warning {
+    background-color: $warning-bg;
+    color: $text;
 }
 
 #outdated-warning {
@@ -3065,7 +3089,10 @@ form {
     &.search {
         width: 20%;
         min-width: 200px;
-        margin: 10px;
+        margin: 10px 8px 10px 0;
+        @include respond-min(768px) {
+            margin-left: 10px;
+        }
 
         input {
           margin: 0;
