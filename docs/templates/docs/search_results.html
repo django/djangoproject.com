@@ -1,7 +1,8 @@
 {% extends "docs/doc.html" %}
 {% load i18n docs %}
 
-{% block title %}{% translate "Search | Django documentation" %}{% endblock %}
+{% block title %}{% translate "Search" %}{% endblock %}
+{% block header %}<h1>{% translate "Search" %}</h1>{% endblock %}
 
 {% block toc-wrapper %}{% endblock %}
 {% block breadcrumbs-wrapper %}{% endblock %}
@@ -19,19 +20,11 @@
       {% endfor %}
     </search>
     <h2>
-      {% if release.is_dev %}
-        {% blocktranslate count num_results=paginator.count trimmed %}
-          {{ num_results }} result for <em>{{ query }}</em> in the development version
-        {% plural %}
-          {{ num_results }} results for <em>{{ query }}</em> in the development version
-        {% endblocktranslate %}
-      {% else %}
-        {% blocktranslate count num_results=paginator.count trimmed %}
-          {{ num_results }} result for <em>{{ query }}</em> in version {{ version }}
-        {% plural %}
-          {{ num_results }} results for <em>{{ query }}</em> in version {{ version }}
-        {% endblocktranslate %}
-      {% endif %}
+      {% blocktranslate count num_results=paginator.count trimmed %}
+        {{ num_results }} result for <em>{{ query }}</em>
+      {% plural %}
+        {{ num_results }} results for <em>{{ query }}</em>
+      {% endblocktranslate %}
     </h2>
   {% else %}
     <h2>{% translate "No search query given" %}</h2>
@@ -43,11 +36,11 @@
         {% for result in page.object_list %}
           <dt>
             <h2 class="result-title">
-              <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}{% if not start_sel in result.headline %}{{ result.highlight|fragment }}{% endif %}">{{ result.headline|safe }}</a>
+              <a href="{{ result.get_absolute_url }}{% if not start_sel in result.headline %}{{ result.highlight|fragment }}{% endif %}">{{ result.headline|safe }}</a>
             </h2>
             <span class="meta breadcrumbs">
               {% for breadcrumb in result.breadcrumbs %}
-                <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=breadcrumb.path host 'docs' %}">{{ breadcrumb.title }}</a>{% if not forloop.last %} <span class="arrow">»</span>{% endif %}
+                <a href="{{ result.get_absolute_url }}">{{ breadcrumb.title }}</a>{% if not forloop.last %} <span class="arrow">»</span>{% endif %}
               {% endfor %}
             </span>
           </dt>
@@ -60,7 +53,7 @@
               <ul class="code-links">
                 {% for name, value in result_code_links.items %}
                   <li>
-                    <a href="{% url 'document-detail' lang=result.release.lang version=result.release.version url=result.path host 'docs' %}#{{ value.full_path }}">
+                    <a href="{{ result.get_absolute_url }}#{{ value.full_path }}">
                       <div>
                         <code>{{ name }}</code>
                         {% if value.module_path %}<div class="meta">{{ value.module_path }}</div>{% endif %}
@@ -74,9 +67,12 @@
         {% empty %}
           {% if active_category %}
             <dt>
+              {% if active_category == "website" and lang != "en" %}
+                <p>{% blocktranslate trimmed %}The website content can only be searched in English.{% endblocktranslate %}</p>
+              {% endif %}
               <p>
                 {% querystring category=None page=None as all_search %}
-                {% blocktranslate trimmed %}Please try searching <a href="{{ all_search }}">all documentation results</a>.{% endblocktranslate %}
+                {% blocktranslate trimmed %}Please try searching <a href="{{ all_search }}">all results</a>.{% endblocktranslate %}
               </p>
             </dt>
           {% endif %}

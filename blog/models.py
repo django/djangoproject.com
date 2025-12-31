@@ -37,6 +37,9 @@ class EntryQuerySet(models.QuerySet):
     def active(self):
         return self.filter(is_active=True)
 
+    def searchable(self):
+        return self.filter(is_searchable=True)
+
 
 class ContentFormat(models.TextChoices):
     REST = "reST", "reStructuredText"
@@ -63,6 +66,7 @@ class ContentFormat(models.TextChoices):
                 extensions=[
                     # baselevel matches `initial_header_level` from BLOG_DOCUTILS_SETTINGS
                     TocExtension(baselevel=3, slugify=_md_slugify),
+                    "tables",
                 ],
             )
         raise ValueError(f"Unsupported format {fmt}")
@@ -126,6 +130,12 @@ class Entry(models.Model):
         ),
         default=False,
     )
+    is_searchable = models.BooleanField(
+        default=False,
+        help_text=_(
+            "Tick to make this entry appear in the Django documentation search."
+        ),
+    )
     pub_date = models.DateTimeField(
         verbose_name=_("Publication date"),
         help_text=_(
@@ -168,7 +178,7 @@ class Entry(models.Model):
             "day": self.pub_date.strftime("%d").lower(),
             "slug": self.slug,
         }
-        return reverse("weblog:entry", kwargs=kwargs)
+        return reverse("weblog:entry", kwargs=kwargs, host="www")
 
     def is_published(self):
         """
@@ -202,7 +212,7 @@ class Entry(models.Model):
         )
         is_secure = url.scheme == "https"
         request = rf.get(url.path, secure=is_secure)
-        request.LANGUAGE_CODE = "en"
+        request.LANGUAGE_CODE = settings.DEFAULT_LANGUAGE_CODE
         cache = caches[settings.CACHE_MIDDLEWARE_ALIAS]
         cache_key = _generate_cache_header_key(
             settings.CACHE_MIDDLEWARE_KEY_PREFIX, request

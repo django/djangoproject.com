@@ -1,12 +1,13 @@
 import re
 import unicodedata
+from pathlib import Path
 
 from django.conf import settings
 from django.http import Http404
 
 
 def get_doc_root(lang, version, builder="json"):
-    return settings.DOCS_BUILD_ROOT.joinpath(lang, version, "_built", builder)
+    return settings.DOCS_BUILD_ROOT / lang / version / "_built" / builder
 
 
 def get_doc_root_or_404(lang, version, builder="json"):
@@ -22,7 +23,7 @@ def get_doc_path(docroot, subpath):
         bits = subpath.strip("/").split("/") + ["index.fjson"]
     except AttributeError:
         bits = []
-    doc = docroot.joinpath(*bits)
+    doc = docroot / Path(*bits)
     try:
         if doc.exists():
             return doc
@@ -30,7 +31,7 @@ def get_doc_path(docroot, subpath):
         pass  # we get here if doc + subpath (without /index.fjson) is a file
 
     bits = bits[:-2] + ["%s.fjson" % bits[-2]]
-    doc = docroot.joinpath(*bits)
+    doc = docroot / Path(*bits)
     if doc.exists():
         return doc
 

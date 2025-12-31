@@ -2,6 +2,7 @@ import re
 from urllib.parse import quote
 
 from django import template
+from django.conf import settings
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.utils.version import get_version_tuple
@@ -9,25 +10,44 @@ from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 
+from djangoproject.utils import CachedLibrary
+
 from ..forms import DocSearchForm
 from ..models import DocumentRelease
 from ..search import START_SEL, STOP_SEL
 from ..utils import get_doc_path, get_doc_root, get_module_path
 
-register = template.Library()
+register = CachedLibrary()
 
 
-@register.inclusion_tag("docs/search_form.html", takes_context=True)
+@register.cached_context_inclusion_tag("search_form.html")
 def search_form(context):
+    if "request" not in context:
+        # Django's built-in error views (like django.views.defaults.server_error)
+        # render templates without attaching a RequestContext — meaning the 'request'
+        # variable is not present in the template context.
+        return {
+            "form": DocSearchForm(release=None),
+            "version": "dev",
+            "lang": settings.DEFAULT_LANGUAGE_CODE,
+        }
+
     request = context["request"]
-    release = DocumentRelease.objects.get_by_version_and_lang(
-        context["version"],
-        context["lang"],
-    )
+    lang = context.get("lang", settings.DEFAULT_LANGUAGE_CODE)
+    active_category = context.get("active_category", "")
+
+    if "version" in context:
+        release = DocumentRelease.objects.select_related(
+            "release"
+        ).get_by_version_and_lang(context["version"], lang)
+    else:
+        release = DocumentRelease.objects.select_related("release").current()
+
     return {
         "form": DocSearchForm(request.GET, release=release),
-        "version": context["version"],
-        "lang": context["lang"],
+        "version": release.version,
+        "lang": lang,
+        "active_category": active_category,
     }
 
 
@@ -38,7 +58,7 @@ def get_all_doc_versions(context, url=None):
 
     Usage: {% get_all_doc_versions <url> as "varname" %}
     """
-    lang = context.get("lang", "en")
+    lang = context.get("lang", settings.DEFAULT_LANGUAGE_CODE)
     versions = []
 
     # Look for each version of the docs.

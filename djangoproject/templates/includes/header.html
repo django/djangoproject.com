@@ -1,3 +1,4 @@
+{% load docs %}
 {% if 'preview.djangoproject.com' in request.get_host %}
   <div class="copy-banner" style="background: #fff78e; padding: 10px;"></div>
 {% endif %}
@@ -5,8 +6,11 @@
   <div class="container container--flex--wrap--mobile">
     <a class="logo" href="{% url 'homepage' %}">Django</a>
     <p class="meta">The web framework for perfectionists with deadlines.</p>
-    <div class="mobile-toggle">
-      {% include "includes/toggle_theme.html" %}
+    <div class="header-mobile-only">
+      {% search_form %}
+      <div class="light-dark-mode-toggle">
+        {% include "includes/toggle_theme.html" %}
+      </div>
     </div>
     <button class="menu-button">
       <i class="icon icon-reorder"></i>
@@ -21,14 +25,11 @@
         <li{% if 'download' in request.path %} class="active"{% endif %}>
           <a href="{% url 'download' %}">Download</a>
         </li>
-        <li{% if request.host.name == 'docs' %} class="active"{% endif %}>
+        <li{% if request.host.name == 'docs' and 'search' not in request.path %} class="active"{% endif %}>
           <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}">Documentation</a>
         </li>
         <li{% if 'weblog' in request.path %} class="active"{% endif %}>
           <a href="{% url 'weblog:index' %}">News</a>
-        </li>
-        <li{% if 'community' in request.path or 'conduct' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'community-index' %}">Community</a>
         </li>
         <li>
           <a href="https://github.com/django/django" target="_blank" rel="noopener">Code</a>
@@ -36,11 +37,17 @@
         <li>
           <a href="https://code.djangoproject.com/">Issues</a>
         </li>
+        <li{% if 'community' in request.path or 'conduct' in request.path %} class="active"{% endif %}>
+          <a href="{% url 'community-index' %}">Community</a>
+        </li>
         <li{% if 'foundation' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'homepage' %}foundation/">About</a>
+          <a href="{% url 'homepage' %}foundation/">Foundation</a>
         </li>
         <li{% if 'fundraising' in request.path %} class="active"{% endif %}>
           <a href="{% url 'fundraising:index' %}">&#9829; Donate</a>
+        </li>
+        <li>
+          {% search_form %}
         </li>
         <li>
           {% include "includes/toggle_theme.html" %}

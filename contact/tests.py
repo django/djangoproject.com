@@ -6,6 +6,8 @@ from django.http import HttpRequest
 from django.test import TestCase
 from django.test.utils import override_settings
 
+from djangoproject.tests import ReleaseMixin
+
 from .views import FoundationContactForm
 
 
@@ -21,7 +23,7 @@ has_network_connection = check_network_connection()
 
 
 @override_settings(AKISMET_TESTING=True)
-class ContactFormTests(TestCase):
+class ContactFormTests(ReleaseMixin, TestCase):
     def setUp(self):
         self.url = "/contact/foundation/"
 

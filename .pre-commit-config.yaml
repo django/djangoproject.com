@@ -3,7 +3,7 @@ default_language_version:
     python: python3
 repos:
     - repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: "v6.0.0"
+      rev: v6.0.0
       hooks:
           - id: check-added-large-files
             args: ["--maxkb=1024"]
@@ -27,39 +27,47 @@ repos:
           - id: fix-byte-order-marker
           - id: mixed-line-ending
           - id: trailing-whitespace
+
     - repo: https://github.com/asottile/pyupgrade
-      rev: "v3.21.0"
+      rev: v3.21.2
       hooks:
           - id: pyupgrade
             args: [--py312]
+
     - repo: https://github.com/adamchainz/django-upgrade
-      rev: "1.29.1"
+      rev: 1.29.1
       hooks:
           - id: django-upgrade
-            args: [--target-version, "5.2"]
+            args: [--target-version, "6.0"]
+
     - repo: https://github.com/psf/black-pre-commit-mirror
-      rev: 25.9.0
+      rev: 25.12.0
       hooks:
           - id: black
+
     - repo: https://github.com/rbubley/mirrors-prettier
-      rev: "v3.6.2"
+      rev: v3.7.4
       hooks:
           - id: prettier
             exclude_types: [html, json, scss]
             exclude: '(^djangoproject\/static\/js\/lib\/.*$)'
+
     - repo: https://github.com/pycqa/isort
-      rev: "7.0.0"
+      rev: 7.0.0
       hooks:
           - id: isort
+
     - repo: https://github.com/pycqa/flake8
-      rev: "7.3.0"
+      rev: 7.3.0
       hooks:
           - id: flake8
+
     - repo: https://github.com/rtts/djhtml
-      rev: "3.0.10"
+      rev: 3.0.10
       hooks:
           - id: djhtml
             files: .*/templates/.*\.html$
+
     - repo: https://github.com/mrtazz/checkmake.git
       rev: 0.2.2
       hooks:

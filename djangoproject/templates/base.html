@@ -28,7 +28,7 @@
       <meta property="og:image:alt" content="{% block og_image_alt %}Django logo{% endblock %}" />
       <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}" />
       <meta property="og:image:height" content="{% block og_image_height %}546{% endblock %}" />
-      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:type" content="{% block og_image_type%}image/png{% endblock %}"/>
       <meta property="og:url" content="{{ request.build_absolute_uri }}" />
       <meta property="og:site_name" content="Django Project" />
 
@@ -46,6 +46,7 @@
   </head>
 
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
+    {% block before_header %}{% endblock %}
 
     <a href="#main-content" class="skip-link">Skip to main content</a>
     {% include "includes/header.html" %}
@@ -60,12 +61,12 @@
     <div id="billboard">
       {% block billboard %}
         <div class="banner">
-          <p>
-            <a href="https://www.jetbrains.com/pycharm/promo/support-django/?utm_campaign=pycharm&utm_content=django25&utm_medium=referral&utm_source=dsf-banner">
-              Until November 9, 2025, <em>get PyCharm for 30% off</em>.
-              All money goes to the <em>Django Software Foundation</em>!
-            </a>
-          </p>
+          <p>Help us reach our 2025 fundraising goal!</p>
+          <small>
+            Donate to the <em>Django Software Foundation</em> to fund Django's development, security, and community events!<br/>
+            If you got value out of using Django this year, please consider making a donation &#9829;
+          </small>
+          <a class="cta" href="{% url 'fundraising:index' %}">Donate today</a>
         </div>
       {% endblock %}
     </div>
@@ -113,8 +114,6 @@
     {% block footer %}
       {% include "includes/footer.html" %}
     {% endblock %}
-
-    {% block body_extra %}{% endblock body_extra %}
 
     {% block javascript %}
       {# Require JS #}

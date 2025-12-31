@@ -1,5 +1,5 @@
 {% extends "base_community.html" %}
-{% load i18n %}
+{% load fundraising_extras i18n %}
 
 {% block layout_class %}column-container sidebar-right{% endblock %}
 
@@ -39,7 +39,7 @@
 
   <h2 class="community-title">{% translate "Get Involved" %}</h2>
   <div class="community-cta-wrapper">
-    <a href="https://docs.djangoproject.com/en/dev/internals/contributing/bugs-and-features/#reporting-bugs" class="community-cta-a">
+    <a href="{% url 'document-detail' lang='en' version='dev' url='internals/contributing/bugs-and-features' host 'docs' %}#reporting-bugs" class="community-cta-a">
       <div class="community-cta">
         <div>
           {% include "svg_logos/bug.html" %}
@@ -47,7 +47,7 @@
         <h3>{% translate "Report an issue" %}</h3>
       </div>
     </a>
-    <a href="https://docs.djangoproject.com/en/dev/internals/contributing/" class="community-cta-a">
+    <a href="{% url 'document-detail' lang='en' version='dev' url='internals/contributing' host 'docs' %}" class="community-cta-a">
       <div class="community-cta">
         <div>
           {% include "svg_logos/notepad.html" %}
@@ -96,4 +96,8 @@
       </li>
     {% endfor %}
   </ul>
+{% endblock %}
+
+{% block content-related-extra %}
+  {% top_corporate_members "diamond" "platinum" "gold" header="Diamond, Platinum and Gold Members" %}
 {% endblock %}
