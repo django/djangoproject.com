@@ -59,16 +59,7 @@
     </section>
 
     <div id="billboard">
-      {% block billboard %}
-        <div class="banner">
-          <p>Help us reach our 2025 fundraising goal!</p>
-          <small>
-            Donate to the <em>Django Software Foundation</em> to fund Django's development, security, and community events!<br/>
-            If you got value out of using Django this year, please consider making a donation &#9829;
-          </small>
-          <a class="cta" href="{% url 'fundraising:index' %}">Donate today</a>
-        </div>
-      {% endblock %}
+      {% block billboard %}{% endblock %}
     </div>
 
     <div class="container {% block layout_class %}{% endblock %}">
