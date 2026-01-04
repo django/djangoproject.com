@@ -33,7 +33,6 @@ urlpatterns = [
             permanent=True,
         ),
     ),
-
     path(
         "start/overview/",
         TemplateView.as_view(template_name="overview.html"),
