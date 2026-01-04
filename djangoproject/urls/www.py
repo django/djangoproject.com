@@ -28,8 +28,12 @@ urlpatterns = [
     path("", TemplateView.as_view(template_name="homepage.html"), name="homepage"),
     path(
         "about/",
-        RedirectView.as_view(url="/foundation/", permanent=True),
+        RedirectView.as_view(
+            pattern_name="members:developer-members",
+            permanent=True,
+        ),
     ),
+
     path(
         "start/overview/",
         TemplateView.as_view(template_name="overview.html"),
