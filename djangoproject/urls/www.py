@@ -95,6 +95,7 @@ urlpatterns = [
         name="diversity_changes",
     ),
     path("contact/", include("contact.urls")),
+    path("about/", RedirectView.as_view(url="/foundation/", permanent=True)),
     path("foundation/django_core/", CoreDevelopers.as_view()),
     path("foundation/minutes/", include("foundation.urls.meetings")),
     path("foundation/", include("members.urls")),
