@@ -102,7 +102,7 @@ window.addEventListener('keydown', function (e) {
   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 });
 
-// Add copy buttons to code snippets
+// Add copy buttons to code snippets and console tabs
 (function () {
   const button_el = document.createElement('span');
 
@@ -110,14 +110,18 @@ window.addEventListener('keydown', function (e) {
   button_el.setAttribute('title', 'Copy this code');
   button_el.innerHTML = '<i class="icon icon-clipboard"></i>';
 
-  const selector = '.snippet-filename, .code-block-caption';
+  document
+    .querySelectorAll('.snippet-filename, .code-block-caption')
+    .forEach(function (el) {
+      el.insertBefore(button_el.cloneNode(true), null);
+    });
 
-  document.querySelectorAll(selector).forEach(function (el) {
-    el.insertBefore(button_el.cloneNode(true), null);
+  document.querySelectorAll('.console-block > section').forEach(function (el) {
+    el.insertBefore(button_el.cloneNode(true), el.firstChild);
   });
 })();
 
-// Attach copy functionality to dynamically-created buttons
+// Attach copy functionality to clipboard buttons
 document.querySelectorAll('.btn-clipboard').forEach(function (el) {
   el.addEventListener('click', function () {
     const success_el = document.createElement('span');
@@ -130,7 +134,7 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
       this.remove();
     });
 
-    function on_success(el) {
+    function on_success() {
       success_el.innerText = 'Copied!';
 
       setTimeout(function () {
@@ -138,7 +142,7 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
       }, 1000);
     }
 
-    function on_error(el) {
+    function on_error() {
       success_el.innerText = 'Could not copy!';
 
       setTimeout(function () {
@@ -146,9 +150,30 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
       }, 5000);
     }
 
-    const text = this.parentElement.nextElementSibling.textContent.trim();
+    let text;
+    const console_section = this.closest('.console-block > section');
 
-    navigator.clipboard.writeText(text).then(on_success, on_error);
+    if (console_section) {
+      // Console tabs: extract text excluding prompts (.gp) and output (.go)
+      const pre_el = console_section.querySelector('.highlight pre');
+      text = '';
+      pre_el.childNodes.forEach(function (node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          text += node.textContent;
+        } else if (
+          node.nodeType === Node.ELEMENT_NODE &&
+          !node.classList.contains('gp') &&
+          !node.classList.contains('go')
+        ) {
+          text += node.textContent;
+        }
+      });
+    } else {
+      // Code snippets: get text from next sibling
+      text = this.parentElement.nextElementSibling.textContent;
+    }
+
+    navigator.clipboard.writeText(text.trim()).then(on_success, on_error);
   });
 });
 
