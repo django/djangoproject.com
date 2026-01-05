@@ -7,3 +7,5 @@ updates:
           day: "monday"
           time: "12:00"
           timezone: "Europe/Oslo" # hipp hipp hurra
+      cooldown:
+          default-days: 7
