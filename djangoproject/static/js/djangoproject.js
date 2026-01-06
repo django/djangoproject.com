@@ -67,8 +67,12 @@ document.querySelector('.menu-button').addEventListener('click', function () {
 
 // Update search input placeholder text based on the user's operating system
 (function () {
-  const el = document.getElementById('id_q');
+  const inputs = [
+    document.getElementById('id_desktop-q'),
+    document.getElementById('id_mobile-q'),
+  ];
 
+  const el = inputs.find((el) => el.checkVisibility());
   if (!el) {
     return;
   }
@@ -94,7 +98,13 @@ window.addEventListener('keydown', function (e) {
 
   e.preventDefault();
 
-  const el = document.querySelector('#id_q');
+  const inputs = [
+    document.getElementById('id_desktop-q'),
+    document.getElementById('id_mobile-q'),
+  ];
+
+  const el = inputs.find((el) => el.checkVisibility());
+  if (!el) return;
 
   el.select();
   el.focus();

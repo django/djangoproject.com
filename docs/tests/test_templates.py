@@ -239,7 +239,11 @@ class TemplateTagTestCase(TestCase):
         Ensures the tag doesn't crash when rendered inside a template that
         lacks a 'request' variable e.g. during Django's built-in error views.
         """
-        template = Template("{% load docs %}{% search_form %}")
+        template = Template(
+            "{% load docs %}"
+            "{% search_context as cached %}"
+            '{% search_form prefix="desktop" cached_search_context=cached %}'
+        )
         rendered = template.render(Context({}))
         self.assertIn(
             '<search class="search form-input" aria-labelledby="docs-search-label">',
@@ -257,7 +261,12 @@ class TemplateTagTestCase(TestCase):
         DocumentRelease.objects.create(
             lang=settings.DEFAULT_LANGUAGE_CODE, release=r2, is_default=True
         )
-        template = Template("{% load docs %}{% search_form %}{% search_form %}")
+        template = Template(
+            "{% load docs %}"
+            "{% search_context as cached %}"
+            '{% search_form prefix="mobile" cached_search_context=cached %}'
+            '{% search_form prefix="desktop" cached_search_context=cached %}'
+        )
         with self.assertNumQueries(1):
             rendered = template.render(Context({"request": Mock()}))
 
