@@ -195,13 +195,8 @@ class Command(BaseCommand):
                 shutil.rmtree(build_dir)
             build_dir.mkdir(parents=True)
 
-            #NEW: isolate doctrees per language + builder
-            doctreedir = (
-                parent_build_dir
-                / "_doctrees"
-                / release.lang
-                / builder
-            )
+            # NEW: isolate doctrees per language + builder
+            doctreedir = parent_build_dir / "_doctrees" / release.lang / builder
             if doctreedir.exists():
                 shutil.rmtree(doctreedir)
             doctreedir.mkdir(parents=True)
