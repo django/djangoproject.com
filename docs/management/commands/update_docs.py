@@ -18,7 +18,9 @@ from django.core.management import BaseCommand, call_command
 from django.db.models import Q
 from django.utils.translation import to_locale
 from sphinx.config import Config
+
 from ...models import DocumentRelease
+
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
@@ -258,7 +260,7 @@ class Command(BaseCommand):
         json_built_dir = parent_build_dir / "_built" / "json"
         documents = gen_decoded_documents(json_built_dir)
         release.sync_to_db(documents)
-        
+
     def run_sphinx_build(
         self,
         *,
