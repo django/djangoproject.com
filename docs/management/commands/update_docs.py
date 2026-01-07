@@ -4,6 +4,7 @@ app.
 """
 
 import json
+
 # import multiprocessing
 import os
 import shutil
@@ -18,13 +19,16 @@ from django.conf import settings
 from django.core.management import BaseCommand, call_command
 from django.db.models import Q
 from django.utils.translation import to_locale
+
 # from sphinx.application import Sphinx
 from sphinx.config import Config
+
+from ...models import DocumentRelease
+
 # from sphinx.errors import SphinxError
 # from sphinx.testing.util import _clean_up_global_state
 # from sphinx.util.docutils import docutils_namespace, patch_docutils
 
-from ...models import DocumentRelease
 
 
 class Command(BaseCommand):
@@ -274,21 +278,22 @@ class Command(BaseCommand):
                 ]
             )
             subprocess.check_call(
-                    [
+                [
                     sys.executable,
                     "-m",
                     "sphinx",
                     "-b",
                     builder,
                     "-c",
-                    str(source_dir),  
+                    str(source_dir),
                     "-d",
                     str(doctreedir),
-                    str(source_dir),      
-                    str(build_dir),     
+                    str(source_dir),
+                    str(build_dir),
                 ],
                 env=env,
             )
+
     def update_git(self, url, destdir, changed_dir="."):
         """
         Update a source checkout and return True if any docs were changed,
