@@ -265,7 +265,7 @@ class Command(BaseCommand):
         json_built_dir = parent_build_dir / "_built" / "json"
         documents = gen_decoded_documents(json_built_dir)
         release.sync_to_db(documents)
-        def run_sphinx_build(self,*,source_dir,build_dir,doctreedir,builder,language,extensions,):
+    def run_sphinx_build(self,*,source_dir,build_dir,doctreedir,builder,language,extensions,):
             env = os.environ.copy()
             env["SPHINXOPTS"] = " ".join(
                 [
