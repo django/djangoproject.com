@@ -10,17 +10,15 @@ from pygments import highlight
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import get_lexer_by_name
 
-from djangoproject.utils import CachedLibrary
-
 from ..forms import DocSearchForm
 from ..models import DocumentRelease
 from ..search import START_SEL, STOP_SEL
 from ..utils import get_doc_path, get_doc_root, get_module_path
 
-register = CachedLibrary()
+register = template.Library()
 
 
-@register.cached_context_inclusion_tag("search_form.html")
+@register.inclusion_tag("search_form.html", takes_context=True)
 def search_form(context):
     if "request" not in context:
         # Django's built-in error views (like django.views.defaults.server_error)
