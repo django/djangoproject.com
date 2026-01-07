@@ -4,7 +4,7 @@ app.
 """
 
 import json
-import multiprocessing
+# import multiprocessing
 import os
 import shutil
 import subprocess
@@ -18,11 +18,11 @@ from django.conf import settings
 from django.core.management import BaseCommand, call_command
 from django.db.models import Q
 from django.utils.translation import to_locale
-from sphinx.application import Sphinx
+# from sphinx.application import Sphinx
 from sphinx.config import Config
-from sphinx.errors import SphinxError
-from sphinx.testing.util import _clean_up_global_state
-from sphinx.util.docutils import docutils_namespace, patch_docutils
+# from sphinx.errors import SphinxError
+# from sphinx.testing.util import _clean_up_global_state
+# from sphinx.util.docutils import docutils_namespace, patch_docutils
 
 from ...models import DocumentRelease
 
