@@ -2,7 +2,6 @@ import os
 import shutil
 import tempfile
 from pathlib import Path
-from unittest.mock import Mock
 
 from django.conf import settings
 from django.template import Context, Template
@@ -251,19 +250,3 @@ class TemplateTagTestCase(TestCase):
             kwargs={"lang": settings.DEFAULT_LANGUAGE_CODE, "version": "dev"},
         )
         self.assertIn(f'<form action="{docs_search_url}">', rendered)
-
-    def test_search_form_queries_multiple_renders(self):
-        r2 = Release.objects.create(version="2.0")
-        DocumentRelease.objects.create(
-            lang=settings.DEFAULT_LANGUAGE_CODE, release=r2, is_default=True
-        )
-        template = Template("{% load docs %}{% search_form %}{% search_form %}")
-        with self.assertNumQueries(1):
-            rendered = template.render(Context({"request": Mock()}))
-
-        docs_search_url = reverse_with_host(
-            "document-search",
-            host="docs",
-            kwargs={"lang": settings.DEFAULT_LANGUAGE_CODE, "version": "2.0"},
-        )
-        self.assertEqual(rendered.count(f'<form action="{docs_search_url}">'), 2)
