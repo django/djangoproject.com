@@ -258,30 +258,41 @@ class Command(BaseCommand):
         json_built_dir = parent_build_dir / "_built" / "json"
         documents = gen_decoded_documents(json_built_dir)
         release.sync_to_db(documents)
-    def run_sphinx_build(self,*,source_dir,build_dir,doctreedir,builder,language,extensions,):
-            env = os.environ.copy()
-            env["SPHINXOPTS"] = " ".join(
-                [
-                    f"-D language={language}",
-                    f"-D extensions={extensions}",
-                ]
-            )
-            subprocess.check_call(
-                [
-                    sys.executable,
-                    "-m",
-                    "sphinx",
-                    "-b",
-                    builder,
-                    "-c",
-                    str(source_dir),
-                    "-d",
-                    str(doctreedir),
-                    str(source_dir),
-                    str(build_dir),
-                ],
-                env=env,
-            )
+        
+    def run_sphinx_build(
+        self,
+        *,
+        source_dir,
+        build_dir,
+        doctreedir,
+        builder,
+        language,
+        extensions,
+    ):
+        env = os.environ.copy()
+        env["SPHINXOPTS"] = " ".join(
+            [
+                f"-D language={language}",
+                f"-D extensions={extensions}",
+            ]
+        )
+
+        subprocess.check_call(
+            [
+                sys.executable,
+                "-m",
+                "sphinx",
+                "-b",
+                builder,
+                "-c",
+                str(source_dir),
+                "-d",
+                str(doctreedir),
+                str(source_dir),
+                str(build_dir),
+            ],
+            env=env,
+        )
 
     def update_git(self, url, destdir, changed_dir="."):
         """
