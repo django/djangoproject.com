@@ -15,9 +15,6 @@ from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
 from foundation.feeds import FoundationMinutesFeed
 from foundation.views import CoreDevelopers
-from django.urls import path
-from django.views.generic import RedirectView
-
 
 admin.autodiscover()
 
@@ -144,13 +141,12 @@ urlpatterns = [
     path("svntogit/", include("svntogit.urls")),
     path("", include("legacy.urls")),
     path(
-    "foundation/individual-membership-nomination/",
-    RedirectView.as_view(
-        url="https://docs.google.com/forms/d/e/1FAIpQLSd5lbWxAO-sylEEjHVKBNIpmHlhdJRf0_LCo8glnLUWd-Q2Sw/viewform",
-        permanent=False,
+        "foundation/individual-membership-nomination/",
+        RedirectView.as_view(
+            url="https://docs.google.com/forms/d/e/1FAIpQLSd5lbWxAO-sylEEjHVKBNIpmHlhdJRf0_LCo8glnLUWd-Q2Sw/viewform",
+            permanent=False,
+        ),
     ),
-),
-
 ]
 
 if settings.DEBUG:
