@@ -143,7 +143,7 @@ urlpatterns = [
     path(
         "foundation/individual-membership-nomination/",
         RedirectView.as_view(
-            url="https://docs.google.com/forms/d/e/1FAIpQLSd5lbWxAO-sylEEjHVKBNIpmHlhdJRf0_LCo8glnLUWd-Q2Sw/viewform",
+            url="https://forms.gle/xKaZQqYswbMu2K5q6",
             permanent=False,
         ),
     ),
