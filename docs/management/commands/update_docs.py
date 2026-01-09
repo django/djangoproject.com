@@ -194,8 +194,8 @@ class Command(BaseCommand):
                 shutil.rmtree(doctreedir)
             doctreedir.mkdir(parents=True)
 
-            conf_extensions = Config.read(source_dir.resolve()).extensions
-            extensions = ",".join([*conf_extensions, "docs.builder"])
+            # conf_extensions = Config.read(source_dir.resolve()).extensions
+            # extensions = ",".join([*conf_extensions, "docs.builder"])
 
             try:
                 self.run_sphinx_build(
@@ -204,7 +204,6 @@ class Command(BaseCommand):
                     doctreedir=doctreedir,
                     builder=builder,
                     language=to_locale(release.lang),
-                    extensions=extensions,
                 )
             except subprocess.CalledProcessError as e:
                 self.stderr.write(
@@ -269,15 +268,9 @@ class Command(BaseCommand):
         doctreedir,
         builder,
         language,
-        extensions,
     ):
         env = os.environ.copy()
-        env["SPHINXOPTS"] = " ".join(
-            [
-                f"-D language={language}",
-                f"-D extensions={extensions}",
-            ]
-        )
+        env["SPHINXOPTS"] = f"-D language={language}"
 
         subprocess.check_call(
             [
@@ -295,6 +288,7 @@ class Command(BaseCommand):
             ],
             env=env,
         )
+
 
     def update_git(self, url, destdir, changed_dir="."):
         """
