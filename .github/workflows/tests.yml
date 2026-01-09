@@ -9,6 +9,7 @@ on:
 
 env:
     PYTHON_VERSION: 3.12
+    UV_VERSION: 0.9.22
 
 jobs:
     tests:
@@ -29,16 +30,18 @@ jobs:
 
         steps:
             - uses: actions/checkout@v4
-            - name: Set up Python
-              uses: actions/setup-python@v5
+            - name: Install uv ${{ env.UV_VERSION }} & Python ${{ env.PYTHON_VERSION }}
+              uses: astral-sh/setup-uv@v7
               with:
+                  activate-environment: true
+                  enable-cache: true
                   python-version: ${{ env.PYTHON_VERSION }}
+                  version: ${{ env.UV_VERSION }}
             - name: Install gettext
               run: sudo apt-get update && sudo apt-get install -y gettext
             - name: Install dependencies
               run: |
-                  python -m pip install --upgrade pip setuptools
-                  python -m pip install -r requirements/tests.txt
+                  uv sync --group tests
             - name: Set up databases
               run: |
                   PGPASSWORD="postgres" createuser -U postgres -d djangoproject --superuser -h localhost

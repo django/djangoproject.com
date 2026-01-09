@@ -8,7 +8,7 @@ ci: compilemessages test
 	@python -m coverage report
 
 compilemessages:
-	python -m manage compilemessages
+	python -m manage compilemessages --ignore .venv
 
 collectstatics: compile-scss
 	python -m manage collectstatic --noinput
@@ -20,7 +20,7 @@ compile-scss-debug:
 	python -m pysassc $(SCSS)/output.scss $(STATIC)/css/output.css --sourcemap
 
 install:
-	python -m pip install --requirement requirements/dev.txt
+	uv sync
 
 migrations-check:
 	python -m manage makemigrations --check --dry-run
