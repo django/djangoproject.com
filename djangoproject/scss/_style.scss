@@ -465,8 +465,6 @@ header {
         align-items: center;
     }
 
-    .header-mobile-only {margin-left: auto}
-
     .meta {
         @include font-size(13);
         color: var(--primary);
@@ -475,7 +473,7 @@ header {
         margin: 8px 0 0 10px;
         display: none;
 
-        @include respond-min(1080px) {
+        @include respond-min(1500px) {
             width: 200px;
             display: block;
         }
@@ -509,6 +507,22 @@ header {
         }
     }
 
+    .header-tools {
+        display: flex;
+        align-items: center;
+        order: 1;
+        margin-left: auto;
+
+        .search {
+            flex: 0 1 240px;
+        }
+
+        @include respond-min(1280px) {
+            order: 3;
+            margin-left: 0;
+        }
+    }
+
     .menu-button {
         @include font-size(20);
         background: $green-dark;
@@ -520,8 +534,9 @@ header {
         text-align: center;
         text-decoration: none;
         width: 45px;
+        order: 2;
 
-        @include respond-min(1080px) {
+        @include respond-min(1280px) {
             display: none;
         }
 
@@ -535,19 +550,24 @@ header {
     }
 
     nav {
+        order: 4;
         width: 100%;
         background: $green-dark;
         transition: max-height 0.3s ease-out;
         max-height: 0; // hide mobile menu by default
         overflow: hidden;
         padding: 0 2px;
+        flex-basis: 100%;
 
         &.active {
             max-height: 580px;
         }
 
-        @include respond-min(1080px) {
+        @include respond-min(1280px) {
             width: auto;
+            order: 2;
+            margin-left: auto;
+            flex-basis: auto;
             max-height: none; // always show menu on a desktop width
         }
 
@@ -555,10 +575,10 @@ header {
             margin: 10px 0 0;
             padding: 0;
 
-            @include respond-min(1080px) {
+            @include respond-min(1280px) {
                 display: flex;
                 align-items: center;
-                margin: 0;
+                margin: 2px 0;
             }
         }
 
@@ -576,7 +596,7 @@ header {
               padding: 20px 0px;
             }
 
-            @include respond-min(1080px) {
+            @include respond-min(1280px) {
                 margin: 0;
                 border: 0;
                 float: left;
@@ -616,7 +636,7 @@ header {
                 color: var(--secondary-accent);
             }
 
-            @include respond-min(1080px) {
+            @include respond-min(1280px) {
                 padding: 20px 10px;
             }
         }
