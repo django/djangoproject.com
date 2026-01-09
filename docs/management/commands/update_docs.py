@@ -289,7 +289,6 @@ class Command(BaseCommand):
             env=env,
         )
 
-
     def update_git(self, url, destdir, changed_dir="."):
         """
         Update a source checkout and return True if any docs were changed,
