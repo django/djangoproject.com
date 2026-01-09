@@ -17,6 +17,7 @@ from django.conf import settings
 from django.core.management import BaseCommand, call_command
 from django.db.models import Q
 from django.utils.translation import to_locale
+
 from ...models import DocumentRelease
 
 
@@ -282,6 +283,7 @@ class Command(BaseCommand):
             ],
             env=env,
         )
+
     def update_git(self, url, destdir, changed_dir="."):
         """
         Update a source checkout and return True if any docs were changed,
