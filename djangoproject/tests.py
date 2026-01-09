@@ -1,12 +1,15 @@
+import os
 from http import HTTPStatus
 from io import StringIO
 
 from django.conf import settings
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import NoReverseMatch, get_resolver
 from django.utils.translation import activate, gettext as _
 from django_hosts.resolvers import reverse
+from playwright.sync_api import expect, sync_playwright
 
 from docs.models import DocumentRelease, Release
 
@@ -211,3 +214,53 @@ class Header1Tests(ReleaseMixin, TestCase):
                     response = self.client.get(url)
                     self.assertEqual(response.status_code, 200)
                     self.assertContains(response, "<h1", count=1)
+
+
+class EndToEndTests(ReleaseMixin, StaticLiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+        super().setUpClass()
+        cls.playwright = sync_playwright().start()
+        cls.browser = cls.playwright.chromium.launch()
+        cls.mac_user_agent = "Mozilla/5.0 (Macintosh) AppleWebKit"
+        cls.windows_user_agent = "Mozilla/5.0 (Windows NT 10.0)"
+        cls.mobile_linux_user_agent = "Mozilla/5.0 (Linux; Android 10; Mobile)"
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        cls.browser.close()
+        cls.playwright.stop()
+
+    def setUp(self):
+        super().setUp()
+        self.setUpTestData()
+
+    def test_search_ctrl_k_hotkey(self):
+        page1 = self.browser.new_page(user_agent=self.windows_user_agent)
+        page2 = self.browser.new_page(
+            user_agent=self.mobile_linux_user_agent,
+            viewport={"width": 375, "height": 812},
+        )
+        for page in [page1, page2]:
+            with self.subTest(page=page):
+                page.goto(self.live_server_url)
+                search_bar = page.locator("#id_q")
+                expect(search_bar).to_have_attribute("placeholder", "Search (Ctrl+K)")
+                is_focused = page.evaluate("document.activeElement.id === 'id_q'")
+                self.assertFalse(is_focused)
+
+                page.keyboard.press("Control+KeyK")
+                is_focused = page.evaluate("document.activeElement.id === 'id_q'")
+                self.assertTrue(is_focused)
+                page.close()
+
+    def test_search_placeholder_mac_mode(self):
+        page = self.browser.new_page(user_agent=self.mac_user_agent)
+        page.goto(self.live_server_url)
+
+        desktop_search_bar = page.locator("#id_q")
+        expect(desktop_search_bar).to_have_attribute("placeholder", "Search (⌘\u200aK)")
+
+        page.close()
