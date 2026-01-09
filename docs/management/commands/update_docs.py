@@ -17,8 +17,6 @@ from django.conf import settings
 from django.core.management import BaseCommand, call_command
 from django.db.models import Q
 from django.utils.translation import to_locale
-from sphinx.config import Config
-
 from ...models import DocumentRelease
 
 
@@ -193,10 +191,6 @@ class Command(BaseCommand):
             if doctreedir.exists():
                 shutil.rmtree(doctreedir)
             doctreedir.mkdir(parents=True)
-
-            # conf_extensions = Config.read(source_dir.resolve()).extensions
-            # extensions = ",".join([*conf_extensions, "docs.builder"])
-
             try:
                 self.run_sphinx_build(
                     source_dir=source_dir,
@@ -288,8 +282,6 @@ class Command(BaseCommand):
             ],
             env=env,
         )
-
-
     def update_git(self, url, destdir, changed_dir="."):
         """
         Update a source checkout and return True if any docs were changed,
