@@ -35,17 +35,17 @@ def populate_artifacts(apps, schema_editor):
         # releases/{major}.{minor}/Django-{version}.tar.gz
         tarball=Case(
             *(When(version=k, then=Value(v)) for k, v in VERSION_TO_TARBALL.items()),
-            default=default_artifact(".tar.gz")
+            default=default_artifact(".tar.gz"),
         ),
         # releases/{major}.{minor}/Django-{version}-py3-none-any.whl
         wheel=Case(
             *(When(version=k, then=Value(v)) for k, v in VERSION_TO_WHEEL.items()),
-            default=default_artifact("-py3-none-any.whl")
+            default=default_artifact("-py3-none-any.whl"),
         ),
         # pgp/Django-{version}.checksum.txt
         checksum=Case(
             *(When(version=k, then=Value(v)) for k, v in VERSION_TO_CHECKSUM.items()),
-            default=Concat(Value("pgp/Django-"), F("version"), Value(".checksum.txt"))
+            default=Concat(Value("pgp/Django-"), F("version"), Value(".checksum.txt")),
         ),
     )
 
