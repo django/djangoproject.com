@@ -178,6 +178,12 @@ class Command(BaseCommand):
             builders = self.default_builders[:] + ["gettext"]
         else:
             builders = self.default_builders
+        if release.lang != settings.DEFAULT_LANGUAGE_CODE:
+            os.environ["LANGUAGE"] = release.lang
+            os.environ["LC_ALL"] = release.lang
+        else:
+            os.environ.pop("LANGUAGE", None)
+            os.environ.pop("LC_ALL", None)
 
         #
         # Use Sphinx to build the release docs into JSON and HTML documents.
@@ -264,9 +270,6 @@ class Command(BaseCommand):
         builder,
         language,
     ):
-        env = os.environ.copy()
-        env["SPHINXOPTS"] = f"-D language={language}"
-
         subprocess.check_call(
             [
                 sys.executable,
@@ -274,14 +277,15 @@ class Command(BaseCommand):
                 "sphinx",
                 "-b",
                 builder,
+                "-D",
+                f"language={language}",
                 "-c",
                 str(source_dir),
                 "-d",
                 str(doctreedir),
                 str(source_dir),
                 str(build_dir),
-            ],
-            env=env,
+            ]
         )
 
     def update_git(self, url, destdir, changed_dir="."):
