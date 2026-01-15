@@ -164,12 +164,12 @@ class ExcludeHostsLocaleMiddlewareTests(ReleaseMixin, TestCase):
         self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn("Content-Language", resp)
         self.assertIn("Vary", resp)
-    
+
     class Disable404CachingMiddlewareTests(TestCase):
-     def test_404_responses_are_not_cached(self):
-        response = self.client.get("/this-page-does-not-exist/")
-        self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
-        self.assertIn("no-store", response["Cache-Control"])
+        def test_404_responses_are_not_cached(self):
+            response = self.client.get("/this-page-does-not-exist/")
+            self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
+            self.assertIn("no-store", response["Cache-Control"])
 
 
 # https://adamj.eu/tech/2024/06/23/django-test-pending-migrations/
