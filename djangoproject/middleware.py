@@ -50,3 +50,18 @@ class ExcludeHostsLocaleMiddleware(LocaleMiddleware):
         if self._is_host_included(request.get_host()):
             return super().process_response(request, response)
         return response
+
+class Disable404CachingMiddleware:
+    """
+    Prevent caching of 404 responses so that missing pages
+    are not served from cache.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        if response.status_code == 404:
+            response["Cache-Control"] = "no-store, no-cache, must-revalidate"
+        return response
