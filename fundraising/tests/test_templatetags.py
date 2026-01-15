@@ -1,6 +1,8 @@
 from datetime import date, datetime, timedelta
 from decimal import Decimal
+from unittest.mock import patch
 
+import time_machine
 from django.test import TestCase
 from django.utils.crypto import get_random_string
 
@@ -15,10 +17,30 @@ from ..models import (
     Payment,
 )
 from ..templatetags.fundraising_extras import (
+    as_percentage,
     display_django_heroes,
     donation_form_with_heart,
     top_corporate_members,
 )
+
+
+class TestAsPercentage(TestCase):
+    def test_floor_rounding(self):
+        with self.subTest(case="2.8% should show as 2%, not 3%"):
+            self.assertEqual(as_percentage(Decimal("8400"), Decimal("300000")), "2")
+        with self.subTest(case="99.9% should show as 99%, not 100%"):
+            self.assertEqual(as_percentage(Decimal("299700"), Decimal("300000")), "99")
+        with self.subTest(case="Exact percentage should remain the same"):
+            self.assertEqual(as_percentage(Decimal("150000"), Decimal("300000")), "50")
+
+    def test_zero_and_none_values(self):
+        self.assertEqual(as_percentage(None, Decimal("300000")), "0")
+        self.assertEqual(as_percentage(Decimal("0"), Decimal("300000")), "0")
+        self.assertEqual(as_percentage(Decimal("100"), None), "0")
+        self.assertEqual(as_percentage(Decimal("100"), Decimal("0")), "0")
+
+    def test_over_100_percent(self):
+        self.assertEqual(as_percentage(Decimal("350000"), Decimal("300000")), "116")
 
 
 class TestDonationFormWithHeart(TestCase):
@@ -41,6 +63,21 @@ class TestDonationFormWithHeart(TestCase):
         response = donation_form_with_heart({"user": None})
         self.assertEqual(response["total_donors"], 1)
         self.assertEqual(response["donated_amount"], Decimal("8.00"))
+
+    @patch("fundraising.templatetags.fundraising_extras.GOAL_AMOUNT", 500000)
+    def test_expected_amount_calculation(self):
+        test_cases = [
+            # (date, expected_amount)
+            ("2026-01-01", Decimal("1370")),  # Day 1: 500000 * 1/365
+            ("2026-07-02", Decimal("250685")),  # Day 183: 500000 * 183/365
+            ("2026-12-31", Decimal("500000")),  # Day 365: 500000 * 365/365
+            ("2024-01-01", Decimal("1366")),  # Day 1 leap year: 500000 * 1/366
+        ]
+        for date_str, expected in test_cases:
+            with self.subTest(date=date_str):
+                with time_machine.travel(date_str):
+                    response = donation_form_with_heart({"user": None})
+                    self.assertEqual(response["expected_amount"], expected)
 
 
 class TestDisplayDjangoHeroes(TestCase):
