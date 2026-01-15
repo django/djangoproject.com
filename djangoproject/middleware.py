@@ -51,6 +51,7 @@ class ExcludeHostsLocaleMiddleware(LocaleMiddleware):
             return super().process_response(request, response)
         return response
 
+
 class Disable404CachingMiddleware:
     """
     Prevent caching of 404 responses so that missing pages
