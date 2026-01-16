@@ -1,6 +1,7 @@
 from datetime import date, datetime, timedelta
 from decimal import Decimal
 
+import time_machine
 from django.test import TestCase
 from django.utils.crypto import get_random_string
 
@@ -72,6 +73,28 @@ class TestDonationFormWithHeart(TestCase):
         self.assertIsInstance(response["expected_amount"], Decimal)
         # Expected amount should be a positive value based on day of year
         self.assertGreater(response["expected_amount"], 0)
+
+    def test_expected_amount_calculation(self):
+        """Test expected amount is correctly calculated based on day of year."""
+        # GOAL_AMOUNT = 300000, test various dates in a non-leap year (2026)
+        test_cases = [
+            # (date, expected_amount)
+            ("2026-01-01", Decimal("822")),  # Day 1: 300000 * 1/365
+            ("2026-07-02", Decimal("150411")),  # Day 183: 300000 * 183/365
+            ("2026-12-31", Decimal("300000")),  # Day 365: 300000 * 365/365
+        ]
+        for date_str, expected in test_cases:
+            with self.subTest(date=date_str):
+                with time_machine.travel(date_str):
+                    response = donation_form_with_heart({"user": None})
+                    self.assertEqual(response["expected_amount"], expected)
+
+    @time_machine.travel("2024-01-01")
+    def test_expected_amount_leap_year(self):
+        """Test expected amount accounts for leap years (366 days)."""
+        response = donation_form_with_heart({"user": None})
+        # Day 1 of leap year: 300000 * 1/366 = 820
+        self.assertEqual(response["expected_amount"], Decimal("820"))
 
 
 class TestDisplayDjangoHeroes(TestCase):
