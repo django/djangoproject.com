@@ -1,14 +1,14 @@
 define([
   'jquery', //requires
   'stripe',
-], function ($) {
-  var $donationForm = $('.stripe-donation');
+], ($) => {
+  const $donationForm = $('.stripe-donation');
 
   function postToStripe(recaptchaToken) {
-    var interval = $donationForm.find('[name=interval]').val();
-    var amount = $donationForm.find('[name=amount]').val();
-    var csrfToken = $donationForm.find('[name=csrfmiddlewaretoken]').val();
-    var data = {
+    const interval = $donationForm.find('[name=interval]').val();
+    const amount = $donationForm.find('[name=amount]').val();
+    const csrfToken = $donationForm.find('[name=csrfmiddlewaretoken]').val();
+    const data = {
       interval: interval,
       amount: amount,
       captcha: recaptchaToken,
@@ -19,10 +19,10 @@ define([
       url: $donationForm.attr('action-for-donation-session'),
       data: data,
       dataType: 'json',
-      success: function (data) {
-        console.log(data);
+      success: (data) => {
+        console.info(data);
         if (data.success) {
-          var stripe = Stripe($donationForm.data('stripeKey'));
+          const stripe = Stripe($donationForm.data('stripeKey'));
           return stripe.redirectToCheckout({ sessionId: data.sessionId });
         } else {
           msg = 'There was an error setting up your donation. ';
@@ -40,18 +40,21 @@ define([
   // django-recaptcha==4.0.0 adds a `submit` event listener to the form that
   // ends up calling form.submit(), therefore bypassing our own event listener.
   // As a workaround, we remove their event listener and replace it with our own.
-  if (window.recaptchaFormSubmit !== undefined) {
-    $donationForm[0].removeEventListener('submit', window.recaptchaFormSubmit);
+  if (globalThis.recaptchaFormSubmit !== undefined) {
+    $donationForm[0].removeEventListener(
+      'submit',
+      globalThis.recaptchaFormSubmit,
+    );
   }
-  $donationForm.on('submit', function (e) {
+  $donationForm.on('submit', (e) => {
     e.preventDefault();
     let captcha_input = document.getElementById('id_captcha'),
       public_key = captcha_input.getAttribute('data-sitekey');
     // Validate token on form submit.
     // NOTE: the `action` key must match the one defined on the widget.
-    grecaptcha.execute(public_key, { action: 'form' }).then(function (token) {
+    grecaptcha.execute(public_key, { action: 'form' }).then((token) => {
       captcha_input.value = token;
-      console.log('reCAPTCHA validated. Posting to stripe...');
+      console.info('reCAPTCHA validated. Posting to stripe...');
       postToStripe(token);
     });
   });

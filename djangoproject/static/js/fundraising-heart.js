@@ -1,10 +1,10 @@
-(function () {
-  var maroon = '#ad1d45';
-  var amaranth = '#d9195c';
-  var cerise = '#d62d75';
-  var razzmatazz = '#ee2178';
-  var illusion = '#f7b0cf';
-  var pixels = [
+(() => {
+  const maroon = '#ad1d45';
+  const amaranth = '#d9195c';
+  const cerise = '#d62d75';
+  const razzmatazz = '#ee2178';
+  const illusion = '#f7b0cf';
+  const pixels = [
     // Row 1
     { x: 1, y: 0, color: maroon },
     { x: 2, y: 0, color: amaranth },
@@ -45,75 +45,84 @@
     { x: 3, y: 5, color: razzmatazz },
   ];
 
-  var Heart = function (selector) {
-    this.heart = document.querySelector(selector);
-    this.init();
-  };
+  class Heart {
+    constructor(selector) {
+      this.heart = document.querySelector(selector);
+      this.init();
+    }
 
-  Heart.prototype = {
-    init: function () {
-      this.pixels = pixels.map(function (pixel) {
+    init() {
+      this.pixels = pixels.map((pixel) => {
         return new Rectangle(pixel);
       });
       this.fadePixels();
       this.draw();
-      var heart = this;
-    },
-    fadePixels: function () {
-      var pixels;
-      var percent = this.heart.dataset.percent;
-      var fadedCount = Math.ceil((this.pixels.length * (100 - percent)) / 100);
-      for (var i = 0; i < fadedCount; i++) {
+      const heart = this;
+    }
+
+    fadePixels() {
+      let pixels;
+      const percent = this.heart.dataset.percent;
+      const fadedCount = Math.ceil(
+        (this.pixels.length * (100 - percent)) / 100,
+      );
+      for (let i = 0; i < fadedCount; i++) {
         pixels = this.visiblePixels();
         pixels[0].hide();
       }
-    },
-    hiddenPixels: function () {
-      return this.pixels.filter(function (p) {
+    }
+
+    hiddenPixels() {
+      return this.pixels.filter((p) => {
         return p.isHidden;
       });
-    },
-    visiblePixels: function () {
-      return this.pixels.filter(function (p) {
+    }
+
+    visiblePixels() {
+      return this.pixels.filter((p) => {
         return !p.isHidden;
       });
-    },
-    draw: function () {
-      this.pixels.forEach(function (p) {
+    }
+
+    draw() {
+      this.pixels.forEach((p) => {
         document.getElementById('pixels').appendChild(p.element);
       });
-    },
-  };
+    }
+  }
 
-  var Rectangle = function (opts) {
-    var namespace = 'http://www.w3.org/2000/svg';
-    this.element = document.createElementNS(namespace, 'rect');
-    this.size = 71;
-    this.init(opts);
-  };
+  class Rectangle {
+    constructor(opts) {
+      const namespace = 'http://www.w3.org/2000/svg';
+      this.element = document.createElementNS(namespace, 'rect');
+      this.size = 71;
+      this.init(opts);
+    }
 
-  Rectangle.prototype = {
-    init: function (opts) {
+    init(opts) {
       this.isHidden = false;
       this.setAttr('x', opts.x * this.size);
       this.setAttr('y', opts.y * this.size);
       this.setAttr('width', this.size);
       this.setAttr('height', this.size);
       this.setAttr('fill', opts.color);
-      this.element.style.animationDelay = 3 * Math.random() + 's';
-    },
-    setAttr: function (name, value) {
+      this.element.style.animationDelay = `${3 * Math.random()}s`;
+    }
+
+    setAttr(name, value) {
       this.element.setAttributeNS(null, name, value);
-    },
-    hide: function () {
+    }
+
+    hide() {
       this.isHidden = true;
       this.setAttr('class', 'faded');
-    },
-    show: function () {
+    }
+
+    show() {
       this.isHidden = false;
       this.setAttr('class', '');
-    },
-  };
+    }
+  }
 
   new Heart('.fundraising-heart');
 })();

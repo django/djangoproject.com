@@ -1,24 +1,24 @@
-$(function () {
-  var element = $('#graph');
-  var url = element.data('path') + element.data('metric') + '.json?days=365';
-  var hover = {
-    show: function (x, y, message) {
+$(() => {
+  const element = $('#graph');
+  const url = `${element.data('path') + element.data('metric')}.json?days=365`;
+  const hover = {
+    show: (x, y, message) => {
       $('<div id="hover">')
         .html(message)
         .css({ top: y, left: x })
         .appendTo('body')
         .show();
     },
-    hide: function () {
+    hide: () => {
       $('#hover').remove();
     },
   };
 
-  $.getJSON(url, function (response) {
-    for (var i = 0; i < response.data.length; i++) {
+  $.getJSON(url, (response) => {
+    for (let i = 0; i < response.data.length; i++) {
       response.data[i][0] = response.data[i][0] * 1000;
     }
-    var options = {
+    const options = {
       xaxis: {
         mode: 'time',
         tickColor: 'rgba(0,0,0,0)',
@@ -41,27 +41,22 @@ $(function () {
         align: 'center',
       };
     }
-    var plot = $.plot(element, [response.data], options);
+    const plot = $.plot(element, [response.data], options);
 
-    var format_message = function (timestamp, measurement) {
-      var unit = measurement == 1 ? response.unit : response.unit_plural;
-      return (
-        formatTimestamp(timestamp, response.period) +
-        '<br>' +
-        measurement +
-        ' ' +
-        unit
-      );
-    };
+    function format_message(timestamp, measurement) {
+      const unit = measurement == 1 ? response.unit : response.unit_plural;
+      return `${formatTimestamp(timestamp, response.period)}<br>${measurement} ${unit}`;
+    }
 
-    var previousPoint = null;
-    element.bind('plothover', function (event, pos, item) {
+    let previousPoint = null;
+    element.bind('plothover', (event, pos, item) => {
       if (item) {
         if (previousPoint != item.dataIndex) {
           previousPoint = item.dataIndex;
           hover.hide();
-          var x, y;
-          var message = format_message.apply(null, item.datapoint);
+          let x;
+          let y;
+          const message = format_message.apply(null, item.datapoint);
           if (response.period == 'instant') {
             x = item.pageX + 10;
             y = item.pageY + 10;
