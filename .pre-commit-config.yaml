@@ -40,6 +40,12 @@ repos:
           - id: django-upgrade
             args: [--target-version, "6.0"]
 
+    - repo: https://github.com/codingjoe/esupgrade
+      rev: 2025.14.3
+      hooks:
+          - id: esupgrade
+            exclude: '(^djangoproject\/static\/js\/lib\/.*$)'
+
     - repo: https://github.com/psf/black-pre-commit-mirror
       rev: 25.12.0
       hooks:
