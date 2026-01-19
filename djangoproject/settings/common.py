@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "accounts",
     "aggregator",
     "blog",
+    "checklists",
     "contact",
     "dashboard",
     "docs",
