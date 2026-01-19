@@ -1,0 +1,7 @@
+- [ ] Update manpage
+    - `cd docs`
+    - `make man`
+    - `man _build/man/django-admin.1`  # do a quick sanity check
+    - `cp _build/man/django-admin.1 man/django-admin.1`
+    - `git commit -a -m '{{ release.commit_prefix }} Updated man page for Django {{ release.version_verbose }}.'`
+    - e.g. https://github.com/django/django/commit/3eb7051161f7e574a8489d998312cce8d92d03d0
