@@ -6,11 +6,12 @@
 {% block content %}
   <h1>{% translate "Create an account" %}</h1>
 
-  <p>
-    {% blocktranslate trimmed %}
-      Or, <a href="https://code.djangoproject.com/github/login">login with GitHub</a>.
-    {% endblocktranslate %}
-  </p>
+ <p>
+  {% blocktranslate trimmed %}
+    GitHub login is currently unavailable.
+  {% endblocktranslate %}
+</p>
+
 
   {% if form.errors %}
     <p class="errors">{% translate "Please correct the errors below:" %} {{ form.non_field_errors }}</p>
