@@ -21,9 +21,6 @@ repos:
           - id: end-of-file-fixer
             exclude: '(^djangoproject\/static\/js\/lib\/.*$)'
             exclude_types: [json, sql]
-          - id: file-contents-sorter
-            files: ^(requirements/\w*.txt)$
-            args: ["--ignore-case"]
           - id: fix-byte-order-marker
           - id: mixed-line-ending
           - id: trailing-whitespace
@@ -81,4 +78,38 @@ repos:
     - repo: https://github.com/astral-sh/uv-pre-commit
       rev: 0.9.24
       hooks:
-          - id: uv-lock
+          - name: Check lock file
+            id: uv-lock
+          - name: Check requirements/dev.txt
+            id: uv-export
+            args:
+                [
+                    "--frozen",
+                    "--quiet",
+                    "--group",
+                    "dev",
+                    "--output-file=requirements/dev.txt",
+                    "--no-hashes",
+                ]
+          - name: Check requirements/tests.txt
+            id: uv-export
+            args:
+                [
+                    "--frozen",
+                    "--quiet",
+                    "--group",
+                    "tests",
+                    "--output-file=requirements/tests.txt",
+                    "--no-hashes",
+                ]
+          - name: Check requirements/prod.txt
+            id: uv-export
+            args:
+                [
+                    "--frozen",
+                    "--quiet",
+                    "--group",
+                    "prod",
+                    "--output-file=requirements/prod.txt",
+                    "--no-hashes",
+                ]
