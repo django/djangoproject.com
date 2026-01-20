@@ -21,9 +21,6 @@ repos:
           - id: end-of-file-fixer
             exclude: '(^djangoproject\/static\/js\/lib\/.*$)'
             exclude_types: [json, sql]
-          - id: file-contents-sorter
-            files: ^(requirements/\w*.txt)$
-            args: ["--ignore-case"]
           - id: fix-byte-order-marker
           - id: mixed-line-ending
           - id: trailing-whitespace
@@ -44,7 +41,6 @@ repos:
       rev: 25.12.0
       hooks:
           - id: black
-            args: ["--target-version=py312"]
 
     - repo: https://github.com/rbubley/mirrors-prettier
       rev: v3.7.4
@@ -73,3 +69,47 @@ repos:
       rev: 0.2.2
       hooks:
           - id: checkmake
+
+    - repo: https://github.com/tox-dev/pyproject-fmt
+      rev: v2.11.1
+      hooks:
+          - id: pyproject-fmt
+
+    - repo: https://github.com/astral-sh/uv-pre-commit
+      rev: 0.9.24
+      hooks:
+          - name: Check lock file
+            id: uv-lock
+          - name: Check requirements/dev.txt
+            id: uv-export
+            args:
+                [
+                    "--frozen",
+                    "--quiet",
+                    "--group",
+                    "dev",
+                    "--output-file=requirements/dev.txt",
+                    "--no-hashes",
+                ]
+          - name: Check requirements/tests.txt
+            id: uv-export
+            args:
+                [
+                    "--frozen",
+                    "--quiet",
+                    "--group",
+                    "tests",
+                    "--output-file=requirements/tests.txt",
+                    "--no-hashes",
+                ]
+          - name: Check requirements/prod.txt
+            id: uv-export
+            args:
+                [
+                    "--frozen",
+                    "--quiet",
+                    "--group",
+                    "prod",
+                    "--output-file=requirements/prod.txt",
+                    "--no-hashes",
+                ]
