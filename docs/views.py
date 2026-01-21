@@ -50,6 +50,9 @@ def document(request, lang, version, url):
 
     canonical_version = DocumentRelease.objects.current_version()
     canonical = version == canonical_version
+    # FIXME: I think it's dead code.
+    #  The stable view route is higher than document-* ones,
+    #  and test_document_index_view_with_stable_version failed with a 302
     if version == "stable":
         version = canonical_version
 
