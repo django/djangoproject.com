@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load fundraising_extras i18n release_notes static %}
+{% load date_format fundraising_extras i18n release_notes static %}
 
 {% block sectionid %}download{% endblock %}
 {% block title %}{% translate "Download Django" %}{% endblock %}
@@ -18,12 +18,16 @@
 
 {% block content %}
   <h1>{% translate "How to get Django" %}</h1>
-  <p>Django is available open-source under the
+  {% url 'document-detail' lang='en' version='dev' url='faq/install' host 'docs' as faq_install_url %}
+  <p>{% blocktranslate trimmed %}
+    Django is available open-source under the
     <a href="https://github.com/django/django/blob/main/LICENSE">BSD license</a>.
     We recommend using the latest version of Python.
-    See <a href="{% url 'document-detail' lang='en' version='dev' url='faq/install' host 'docs' %}#what-python-version-can-i-use-with-django">
+    See <a href="{{ faq_install_url }}#what-python-version-can-i-use-with-django">
       the FAQ</a> for the Python versions supported by each version of Django.
-    Here’s how to get it:</p>
+    Here's how to get it:
+  {% endblocktranslate %}
+  </p>
 
   {% release_notes current.version show_version=True as current_release_version %}
   <h2>{% translate "Option" %} {% cycle '1' '2' '3' as options %}: {% translate "Get the latest official version" %}</h2>
@@ -104,7 +108,7 @@
       fix bugs and/or security issues. These releases will be 100% compatible with
       the associated feature release, unless this is impossible for security
       reasons or to prevent data loss. So the answer to "should I upgrade to the
-      latest patch release?” will always be "yes."
+      latest patch release?" will always be "yes."
     {% endblocktranslate %}
   </p>
   <p>
@@ -135,20 +139,20 @@
     <tr>
       <td>4.2 LTS</td>
       <td>{% get_latest_micro_release '4.2' %}</td>
-      <td>December 4, 2023</td>
-      <td>April 2026</td>
+      <td>{% isodate '2023-12-04' 'N j, Y' %}</td>
+      <td>{% isodate '2026-04-01' 'F Y' %}</td>
     </tr>
     <tr>
       <td>5.2 LTS</td>
       <td>{% get_latest_micro_release '5.2' %}</td>
-      <td>December 3, 2025</td>
-      <td>April 2028</td>
+      <td>{% isodate '2025-12-03' 'N j, Y' %}</td>
+      <td>{% isodate '2028-04-01' 'F Y' %}</td>
     </tr>
     <tr>
       <td>6.0</td>
       <td>{% get_latest_micro_release '6.0' %}</td>
-      <td>August 2026</td>
-      <td>April 2027</td>
+      <td>{% isodate '2026-08-01' 'F Y' %}</td>
+      <td>{% isodate '2027-04-01' 'F Y' %}</td>
     </tr>
   </table>
 
@@ -163,27 +167,27 @@
     </tr>
     <tr>
       <td><a href="{% url 'roadmap' '6.1' %}">6.1</a></td>
-      <td>August 2026</td>
-      <td>April 2027</td>
-      <td>December 2027</td>
+      <td>{% isodate '2026-08-01' 'F Y' %}</td>
+      <td>{% isodate '2027-04-01' 'F Y' %}</td>
+      <td>{% isodate '2027-12-01' 'F Y' %}</td>
     </tr>
     <tr>
       <td><a href="{% url 'roadmap' '6.2' %}">6.2 LTS</a></td>
-      <td>April 2027</td>
-      <td>December 2027</td>
-      <td>April 2030</td>
+      <td>{% isodate '2027-04-01' 'F Y' %}</td>
+      <td>{% isodate '2027-12-01' 'F Y' %}</td>
+      <td>{% isodate '2030-04-01' 'F Y' %}</td>
     </tr>
     <tr>
       <td><a href="{% url 'roadmap' '7.0' %}">7.0</a></td>
-      <td>December 2027</td>
-      <td>August 2028</td>
-      <td>April 2029</td>
+      <td>{% isodate '2027-12-01' 'F Y' %}</td>
+      <td>{% isodate '2028-08-01' 'F Y' %}</td>
+      <td>{% isodate '2029-04-01' 'F Y' %}</td>
     </tr>
     <tr>
       <td><a href="{% url 'roadmap' '7.1' %}">7.1</a></td>
-      <td>August 2028</td>
-      <td>April 2029</td>
-      <td>December 2029</td>
+      <td>{% isodate '2028-08-01' 'F Y' %}</td>
+      <td>{% isodate '2029-04-01' 'F Y' %}</td>
+      <td>{% isodate '2029-12-01' 'F Y' %}</td>
     </tr>
   </table>
 
@@ -200,116 +204,116 @@
     <tr>
       <td>5.1</td>
       <td>{% get_latest_micro_release '5.1' %}</td>
-      <td>April 2, 2025</td>
-      <td>December 3, 2025</td>
+      <td>{% isodate '2025-04-02' 'N j, Y' %}</td>
+      <td>{% isodate '2025-12-03' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>5.0</td>
       <td>{% get_latest_micro_release '5.0' %}</td>
-      <td>August 7, 2024</td>
-      <td>April 2, 2025</td>
+      <td>{% isodate '2024-08-07' 'N j, Y' %}</td>
+      <td>{% isodate '2025-04-02' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>4.1</td>
       <td>{% get_latest_micro_release '4.1' %}</td>
-      <td>April 5, 2023</td>
-      <td>December 1, 2023</td>
+      <td>{% isodate '2023-04-05' 'N j, Y' %}</td>
+      <td>{% isodate '2023-12-01' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>4.0</td>
       <td>{% get_latest_micro_release '4.0' %}</td>
-      <td>August 3, 2022</td>
-      <td>April 1, 2023</td>
+      <td>{% isodate '2022-08-03' 'N j, Y' %}</td>
+      <td>{% isodate '2023-04-01' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>3.2 LTS</td>
       <td>{% get_latest_micro_release '3.2' %}</td>
-      <td>December 7, 2021</td>
-      <td>April 1, 2024</td>
+      <td>{% isodate '2021-12-07' 'N j, Y' %}</td>
+      <td>{% isodate '2024-04-01' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>3.1</td>
       <td>{% get_latest_micro_release '3.1' %}</td>
-      <td>April 6, 2021</td>
-      <td>December 7, 2021</td>
+      <td>{% isodate '2021-04-06' 'N j, Y' %}</td>
+      <td>{% isodate '2021-12-07' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>3.0</td>
       <td>{% get_latest_micro_release '3.0' %}</td>
-      <td>August 3, 2020</td>
-      <td>April 6, 2021</td>
+      <td>{% isodate '2020-08-03' 'N j, Y' %}</td>
+      <td>{% isodate '2021-04-06' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>2.2 LTS</td>
       <td>{% get_latest_micro_release '2.2' %}</td>
-      <td>December 2, 2019</td>
-      <td>April 11, 2022</td>
+      <td>{% isodate '2019-12-02' 'N j, Y' %}</td>
+      <td>{% isodate '2022-04-11' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>2.1</td>
       <td>{% get_latest_micro_release '2.1' %}</td>
-      <td>April 1, 2019</td>
-      <td>December 2, 2019</td>
+      <td>{% isodate '2019-04-01' 'N j, Y' %}</td>
+      <td>{% isodate '2019-12-02' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>2.0</td>
       <td>{% get_latest_micro_release '2.0' %}</td>
-      <td>August 1, 2018</td>
-      <td>April 1, 2019</td>
+      <td>{% isodate '2018-08-01' 'N j, Y' %}</td>
+      <td>{% isodate '2019-04-01' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>1.11 LTS <sup><a href="#ft3">3</a></sup></td>
       <td>{% get_latest_micro_release '1.11' %}</td>
-      <td>December 2, 2017</td>
-      <td>April 1, 2020</td>
+      <td>{% isodate '2017-12-02' 'N j, Y' %}</td>
+      <td>{% isodate '2020-04-01' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>1.10</td>
       <td>{% get_latest_micro_release '1.10' %}</td>
-      <td>April 4, 2017</td>
-      <td>December 2, 2017</td>
+      <td>{% isodate '2017-04-04' 'N j, Y' %}</td>
+      <td>{% isodate '2017-12-02' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>1.9</td>
       <td>{% get_latest_micro_release '1.9' %}</td>
-      <td>August 1, 2016</td>
-      <td>April 4, 2017</td>
+      <td>{% isodate '2016-08-01' 'N j, Y' %}</td>
+      <td>{% isodate '2017-04-04' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>1.8 LTS</td>
       <td>{% get_latest_micro_release '1.8' %}</td>
-      <td>December 1, 2015</td>
-      <td>April 1, 2018</td>
+      <td>{% isodate '2015-12-01' 'N j, Y' %}</td>
+      <td>{% isodate '2018-04-01' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>1.7</td>
       <td>{% get_latest_micro_release '1.7' %}</td>
-      <td>April 1, 2015</td>
-      <td>December 1, 2015</td>
+      <td>{% isodate '2015-04-01' 'N j, Y' %}</td>
+      <td>{% isodate '2015-12-01' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>1.6</td>
       <td>{% get_latest_micro_release '1.6' %}</td>
-      <td>September 2, 2014</td>
-      <td>April 1, 2015</td>
+      <td>{% isodate '2014-09-02' 'N j, Y' %}</td>
+      <td>{% isodate '2015-04-01' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>1.5</td>
       <td>{% get_latest_micro_release '1.5' %}</td>
-      <td>November 6, 2013</td>
-      <td>September 2, 2014</td>
+      <td>{% isodate '2013-11-06' 'N j, Y' %}</td>
+      <td>{% isodate '2014-09-02' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>1.4 LTS</td>
       <td>{% get_latest_micro_release '1.4' %}</td>
-      <td>February 26, 2013</td>
-      <td>October 1, 2015</td>
+      <td>{% isodate '2013-02-26' 'N j, Y' %}</td>
+      <td>{% isodate '2015-10-01' 'N j, Y' %}</td>
     </tr>
     <tr>
       <td>1.3</td>
       <td>{% get_latest_micro_release '1.3' %}</td>
-      <td>March 23, 2012</td>
-      <td>February 26, 2013</td>
+      <td>{% isodate '2012-03-23' 'N j, Y' %}</td>
+      <td>{% isodate '2013-02-26' 'N j, Y' %}</td>
     </tr>
   </table>
 
@@ -317,7 +321,8 @@
     <sup id="ft1">
       {% blocktranslate trimmed %}
         [1] Security fixes, data loss bugs, crashing bugs, major functionality
-        bugs in newly-introduced features, and regressions from older versions of Django.{% endblocktranslate %}
+        bugs in newly-introduced features, and regressions from older versions of Django.
+      {% endblocktranslate %}
     </sup><br>
     <sup id="ft2">{% translate "[2] Security fixes and data loss bugs." %}</sup><br>
     <sup id="ft3">{% translate "[3] Last version to support Python 2.7." %}</sup>
@@ -328,7 +333,7 @@
 {% block content-related %}
 
   <div role="complementary">
-    <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
+    <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
 
     {% top_corporate_members "diamond" "platinum" header="Diamond and Platinum Members" %}
 
