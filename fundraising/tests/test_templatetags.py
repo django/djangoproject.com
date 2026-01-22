@@ -76,12 +76,12 @@ class TestDonationFormWithHeart(TestCase):
 
     def test_expected_amount_calculation(self):
         """Test expected amount is correctly calculated based on day of year."""
-        # GOAL_AMOUNT = 300000, test various dates in a non-leap year (2026)
+        # GOAL_AMOUNT = 500000, test various dates in a non-leap year (2026)
         test_cases = [
             # (date, expected_amount)
-            ("2026-01-01", Decimal("822")),  # Day 1: 300000 * 1/365
-            ("2026-07-02", Decimal("150411")),  # Day 183: 300000 * 183/365
-            ("2026-12-31", Decimal("300000")),  # Day 365: 300000 * 365/365
+            ("2026-01-01", Decimal("1370")),  # Day 1: 500000 * 1/365
+            ("2026-07-02", Decimal("250685")),  # Day 183: 500000 * 183/365
+            ("2026-12-31", Decimal("500000")),  # Day 365: 500000 * 365/365
         ]
         for date_str, expected in test_cases:
             with self.subTest(date=date_str):
@@ -93,8 +93,8 @@ class TestDonationFormWithHeart(TestCase):
     def test_expected_amount_leap_year(self):
         """Test expected amount accounts for leap years (366 days)."""
         response = donation_form_with_heart({"user": None})
-        # Day 1 of leap year: 300000 * 1/366 = 820
-        self.assertEqual(response["expected_amount"], Decimal("820"))
+        # Day 1 of leap year: 500000 * 1/366 = 1366
+        self.assertEqual(response["expected_amount"], Decimal("1366"))
 
 
 class TestDisplayDjangoHeroes(TestCase):
