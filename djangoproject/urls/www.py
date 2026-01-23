@@ -13,6 +13,7 @@ from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
+from djangoproject.sitemaps import StaticViewSitemap
 from foundation.feeds import FoundationMinutesFeed
 from foundation.views import CoreDevelopers
 
@@ -21,6 +22,7 @@ admin.autodiscover()
 sitemaps = {
     "weblog": WeblogSitemap,
     "flatpages": FlatPageSitemap,
+    "static": StaticViewSitemap,
 }
 
 
@@ -135,6 +137,7 @@ urlpatterns = [
         "sitemap.xml",
         cache_page(60 * 60 * 6)(sitemap_views.sitemap),
         {"sitemaps": sitemaps},
+        name="sitemap",
     ),
     path("weblog/", include("blog.urls")),
     path("download/", include("releases.urls")),
