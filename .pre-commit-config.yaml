@@ -46,6 +46,18 @@ repos:
           - id: black
             args: ["--target-version=py312"]
 
+    - repo: https://github.com/pre-commit/mirrors-eslint
+      rev: v9.39.1
+      hooks:
+          - id: eslint
+            args: ["--fix"]
+            exclude: '(^djangoproject\/static\/js\/lib\/.*$)'
+            require_serial: true
+            additional_dependencies:
+                - "@eslint/js@9.39.2"
+                - "eslint@9.39.2"
+                - "globals@17.0.0"
+
     - repo: https://github.com/rbubley/mirrors-prettier
       rev: v3.7.4
       hooks:
