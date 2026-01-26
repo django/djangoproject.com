@@ -134,7 +134,7 @@ class Migration(migrations.Migration):
                         default="L",
                         help_text="Conditions beyond attacker control required to exploit (AC)",
                         max_length=8,
-                        verbose_name="CVSS Attack Complecity",
+                        verbose_name="CVSS Attack Complexity",
                     ),
                 ),
                 (
