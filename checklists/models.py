@@ -584,7 +584,7 @@ class SecurityIssue(models.Model):
         help_text="The context by which vulnerability exploitation is possible (AV)",
     )
     attack_complexity = models.CharField(
-        "CVSS Attack Complecity",
+        "CVSS Attack Complexity",
         max_length=8,
         choices=CVSS_ATTACK_COMPLEXITY_CHOICES,
         default="L",
