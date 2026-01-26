@@ -147,6 +147,13 @@ urlpatterns = [
     path("download/", include("releases.urls")),
     path("svntogit/", include("svntogit.urls")),
     path("", include("legacy.urls")),
+    path(
+        "foundation/individual-membership-nomination/",
+        RedirectView.as_view(
+            url="https://forms.gle/xKaZQqYswbMu2K5q6",
+            permanent=False,
+        ),
+    ),
 ]
 
 if settings.DEBUG:
