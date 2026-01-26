@@ -1,5 +1,6 @@
 import json
 import re
+import zoneinfo
 from datetime import UTC, date, datetime
 
 from django.db import IntegrityError
@@ -357,7 +358,8 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             self.factory.make_release(version="5.1.8", date=date(2025, 4, 2)),
             self.factory.make_release(version="5.2rc1", date=date(2025, 3, 19)),
         ]
-        when = datetime(2025, 5, 7, 11, 18, 23, tzinfo=UTC)
+        tz = zoneinfo.ZoneInfo("America/Chicago")
+        when = datetime(2025, 5, 7, 11, 18, 23, tzinfo=tz)
         checklist = self.make_checklist(releases=[], when=when)
         self.factory.make_security_issue(
             checklist, releases, cve_year_number="CVE-2025-11111"
@@ -383,7 +385,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         prenotification = [
             "Create a new text file `prenotification-email.txt` with content",
             "a set of security releases will be issued on Wednesday, May 7, 2025 "
-            "around 11:18 UTC",
+            "around 16:18 UTC",
             *(cve.headline_for_blogpost for cve in cves),
             "Affected supported versions =========================== "
             + " ".join(f"* Django {branch}" for branch in checklist.affected_branches),
