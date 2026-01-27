@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.views.decorators.cache import never_cache
 from markdown import markdown
 
 from releases.models import Release
@@ -14,6 +15,7 @@ from .models import (
 )
 
 
+@never_cache
 def render_checklist(request, instance):
     raw_markdown = instance.render_to_string(request=request)
     markdown_content = markdown(
@@ -43,6 +45,7 @@ def render_checklist(request, instance):
     )
 
 
+@never_cache
 def release_checklist(request, version):
     release = get_object_or_404(Release, version=version)
     if release.is_pre_release:
@@ -55,6 +58,7 @@ def release_checklist(request, version):
     return render_checklist(request, instance)
 
 
+@never_cache
 @login_required
 @permission_required(
     ["checklists.view_securityrelease", "checklists.view_securityissue"],
@@ -65,6 +69,7 @@ def securityrelease_checklist(request, pk):
     return render_checklist(request, instance)
 
 
+@never_cache
 @login_required
 @permission_required("checklists.view_securityissue", raise_exception=True)
 def cve_json_record(request, cve_id):
