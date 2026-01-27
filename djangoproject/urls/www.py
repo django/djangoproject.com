@@ -137,6 +137,12 @@ urlpatterns = [
         cache_page(60 * 60 * 6)(sitemap_views.sitemap),
         {"sitemaps": sitemaps},
     ),
+    path(
+        ".well-known/security.txt",
+        TemplateView.as_view(
+            template_name="well-known/security.txt", content_type="text/plain"
+        ),
+    ),
     path("weblog/", include("blog.urls")),
     path("download/", include("releases.urls")),
     path("svntogit/", include("svntogit.urls")),
