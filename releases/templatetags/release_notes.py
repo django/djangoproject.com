@@ -43,7 +43,7 @@ def get_latest_micro_release(version):
     """
     major, minor = version.split(".")
     release = (
-        Release.objects.filter(major=major, minor=minor, status="f")
+        Release.objects.filter(major=major, minor=minor, status="f", is_active=True)
         .order_by("-micro")
         .first()
     )

@@ -22,11 +22,37 @@ from .templatetags.release_notes import get_latest_micro_release, release_notes
 
 class TestTemplateTags(TestCase):
     def test_get_latest_micro_release(self):
-        Release.objects.create(major=1, minor=8, micro=0, is_lts=True, version="1.8")
-        Release.objects.create(major=1, minor=8, micro=1, is_lts=True, version="1.8.1")
+        Release.objects.create(
+            major=1, minor=8, micro=0, is_lts=True, version="1.8", is_active=True
+        )
+        Release.objects.create(
+            major=1, minor=8, micro=1, is_lts=True, version="1.8.1", is_active=True
+        )
 
         self.assertEqual(get_latest_micro_release("1.8"), "1.8.1")
         self.assertEqual(get_latest_micro_release("1.4"), None)
+
+    def test_get_latest_micro_release_excludes_inactive(self):
+        Release.objects.create(major=5, minor=2, micro=0, version="5.2", is_active=True)
+        Release.objects.create(
+            major=5, minor=2, micro=1, version="5.2.1", is_active=True
+        )
+        # Create a newer release that is not yet active.
+        Release.objects.create(
+            major=5, minor=2, micro=2, version="5.2.2", is_active=False
+        )
+
+        self.assertEqual(get_latest_micro_release("5.2"), "5.2.1")
+
+    def test_get_latest_micro_release_no_active_releases(self):
+        Release.objects.create(
+            major=4, minor=1, micro=0, version="4.1", is_active=False
+        )
+        Release.objects.create(
+            major=4, minor=1, micro=1, version="4.1.1", is_active=False
+        )
+
+        self.assertIsNone(get_latest_micro_release("4.1"))
 
     def test_release_notes(self):
         output = release_notes("1.8")
