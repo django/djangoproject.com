@@ -396,6 +396,14 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             with self.subTest(detail=detail):
                 self.assertInChecklistContent(detail, checklist_content, flat=True)
 
+        announce = [
+            "Wednesday, May 7 around 16:18 UTC.",
+            "They will fix 2 security defects",
+        ]
+        for detail in announce:
+            with self.subTest(detail=detail):
+                self.assertInChecklistContent(detail, checklist_content, flat=True)
+
     def test_render_checklist_blogdescription_display(self):
         checklist = self.make_checklist(releases=[])
         blog = (
