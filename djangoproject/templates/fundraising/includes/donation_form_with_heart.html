@@ -10,7 +10,7 @@
             <g transform="translate(4, 2)" id="pixels">
               <path d="M 71 0 L 213 0 L 213 71 L 284 71 L 284 0 L 426 0 L 426 71 L 497 71 L 497 213 L 426 213 L 426 284 L 355 284 L 355 355 L 284 355 L 284 426 L 213 426 L 213 355 L 142 355 L 142 284 L 71 284 L 71 213 L 0 213 L 0 71 L 71 71 L 71 0" fill="#f8f8f8" stroke="#c0c0c0" stroke-width="1" />
             </g>
-            <text x="50%" y="43%" alignment-baseline="middle" text-anchor="middle">{{ goal_percent|floatformat:'0' }}%</text>
+            <text x="50%" y="43%" alignment-baseline="middle" text-anchor="middle">{{ goal_percent }}%</text>
           </g>
           <foreignObject>
             <img src="{% static 'img/fundraising-heart.svg' %}" />
@@ -24,7 +24,12 @@
         <li><strong>{% blocktranslate trimmed %}{{ goal_percent }}% funded{% endblocktranslate %}</strong></li>
         <li>
           {% blocktranslate trimmed with amount=donated_amount|intcomma goal=goal_amount|intcomma start_date=goal_start_date|date:"Y" %}
-            <strong>${{ amount }} donated</strong> of US&nbsp;${{ goal }} goal for {{ start_date }}
+            <strong>${{ amount }} donated</strong> of a ${{ goal }} USD goal for {{ start_date }}
+          {% endblocktranslate %}
+        </li>
+        <li>
+          {% blocktranslate trimmed with expected=expected_amount|intcomma %}
+            To reach our goal, we should have raised ${{ expected }} by this point
           {% endblocktranslate %}
         </li>
         <li>
@@ -36,6 +41,9 @@
           {% endblocktranslate %}
         </li>
       </ul>
+      <progress class="visually-hidden" value="{{ donated_amount }}" max="{{ goal_amount }}" aria-label="{% translate 'Donation progress' %}">
+        {{ goal_percent }}%
+      </progress>
 
       <div class="donate">
         <form
