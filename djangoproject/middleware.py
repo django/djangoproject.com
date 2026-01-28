@@ -5,6 +5,7 @@ from django.utils.functional import cached_property
 from django.utils.http import is_same_domain
 from django.http import HttpResponsePermanentRedirect
 import re
+from django.urls import resolve, Resolver404
 
 
 class CORSMiddleware:
@@ -59,9 +60,15 @@ class NormalizeSlashesMiddleware:
 
     def __call__(self, request):
         path = request.path
-        normalized = re.sub(r'/{2,}', '/', path)
+        if "//" in path[1:]:
+            normalized_path = "/" + "/".join(filter(None, path.split("/"))) + "/"
 
-        if path != normalized:
-            return HttpResponsePermanentRedirect(normalized)
+            if normalized_path != path:
+                try:
+                    resolve(normalized_path)
+                except Resolver404:
+                    pass
+                else:
+                    return HttpResponsePermanentRedirect(normalized_path)
 
-        return self.get_response(request)
+        return self.get_response(request) 
