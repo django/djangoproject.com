@@ -3,7 +3,8 @@ from django.http.request import split_domain_port
 from django.middleware.locale import LocaleMiddleware
 from django.utils.functional import cached_property
 from django.utils.http import is_same_domain
-
+from django.http import HttpResponsePermanentRedirect
+from django.urls import resolve, Resolver404
 
 class CORSMiddleware:
     """
@@ -50,3 +51,23 @@ class ExcludeHostsLocaleMiddleware(LocaleMiddleware):
         if self._is_host_included(request.get_host()):
             return super().process_response(request, response)
         return response
+
+class NormalizeSlashesMiddleware:
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        path = request.path
+        if "//" in path[1:]:
+            normalized_path = "/" + "/".join(filter(None, path.split("/"))) + "/"
+
+            if normalized_path != path:
+                try:
+                    resolve(normalized_path)
+                except Resolver404:
+                    pass
+                else:
+                    return HttpResponsePermanentRedirect(normalized_path)
+
+        return self.get_response(request)
