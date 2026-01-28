@@ -1,11 +1,12 @@
+import re
+
 from django.conf import settings
+from django.http import HttpResponsePermanentRedirect
 from django.http.request import split_domain_port
 from django.middleware.locale import LocaleMiddleware
+from django.urls import Resolver404, resolve
 from django.utils.functional import cached_property
 from django.utils.http import is_same_domain
-from django.http import HttpResponsePermanentRedirect
-import re
-from django.urls import resolve, Resolver404
 
 
 class CORSMiddleware:
@@ -54,6 +55,7 @@ class ExcludeHostsLocaleMiddleware(LocaleMiddleware):
             return super().process_response(request, response)
         return response
 
+
 class NormalizeSlashesMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -71,4 +73,4 @@ class NormalizeSlashesMiddleware:
                 else:
                     return HttpResponsePermanentRedirect(normalized_path)
 
-        return self.get_response(request) 
+        return self.get_response(request)
