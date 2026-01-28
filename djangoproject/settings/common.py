@@ -158,6 +158,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "djangoproject.middleware.NormalizeSlashesMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.contrib.flatpages.middleware.FlatpageFallbackMiddleware",
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
