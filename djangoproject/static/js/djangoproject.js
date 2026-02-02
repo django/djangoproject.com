@@ -117,13 +117,24 @@ window.addEventListener('keydown', function (e) {
     });
 
   document.querySelectorAll('.console-block > section').forEach(function (el) {
-    el.insertBefore(button_el.cloneNode(true), el.firstChild);
+    const highlight_el = el.querySelector('.highlight');
+
+    if (highlight_el) {
+      highlight_el.appendChild(button_el.cloneNode(true));
+    }
   });
 })();
 
 // Attach copy functionality to clipboard buttons
 document.querySelectorAll('.btn-clipboard').forEach(function (el) {
   el.addEventListener('click', function () {
+    // Remove any existing success message first
+    const existing = this.querySelector('.clipboard-success');
+
+    if (existing) {
+      existing.remove();
+    }
+
     const success_el = document.createElement('span');
 
     success_el.classList.add('clipboard-success');
@@ -154,20 +165,9 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
     const console_section = this.closest('.console-block > section');
 
     if (console_section) {
-      // Console tabs: extract text excluding prompts (.gp) and output (.go)
+      // Console tabs: extract text excluding prompts
       const pre_el = console_section.querySelector('.highlight pre');
-      text = '';
-      pre_el.childNodes.forEach(function (node) {
-        if (node.nodeType === Node.TEXT_NODE) {
-          text += node.textContent;
-        } else if (
-          node.nodeType === Node.ELEMENT_NODE &&
-          !node.classList.contains('gp') &&
-          !node.classList.contains('go')
-        ) {
-          text += node.textContent;
-        }
-      });
+      text = pre_el.textContent.replace(/^\$ |^\.\.\.\\>/gm, '');
     } else {
       // Code snippets: get text from next sibling
       text = this.parentElement.nextElementSibling.textContent;
