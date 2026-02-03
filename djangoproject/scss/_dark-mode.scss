@@ -64,6 +64,7 @@ html[data-theme="light"],
 
 @media (prefers-color-scheme: dark) {
     html:not([data-theme="light"]) {
+        color-scheme: dark;
         --body-fg: #C1CAD2;
         --body-bg: #{$black};
         --logo-bg: #{$logo-bg-dark};
@@ -162,6 +163,7 @@ html[data-theme="light"],
 }
 
 html[data-theme="dark"] {
+    color-scheme: dark;
     --body-fg: #C1CAD2;
     --body-bg: #{$black};
     --logo-bg: #{$logo-bg-dark};
