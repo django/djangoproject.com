@@ -16,4 +16,3 @@ djangoproject/cache
 djangoproject/static/css/*.map
 djangoproject/static/css/*.css
 venv/
-
