@@ -1,4 +1,4 @@
-{% load static %}<!DOCTYPE html>
+{% load static i18n %}<!DOCTYPE html>
 <html lang="{% block html_language_code %}en{% endblock %}">
   <head>
     <meta charset="utf-8">
@@ -22,8 +22,9 @@
     {% block og_tags %}
       <meta property="og:title" content="{% block og_title %}Django{% endblock %}" />
       <meta property="og:description" content="{% block og_description %}{% spaceless %}
-                                                 The web framework for perfectionists with deadlines.
-                                               {% endspaceless %}{% endblock %}" />
+        {% trans "The web framework for perfectionists with deadlines." %}
+      {% endspaceless %}{% endblock %}" />
+
       <meta property="og:image" content="{% block og_image %}{% static "img/logos/django-logo-negative.png" %}{% endblock %}" />
       <meta property="og:image:alt" content="{% block og_image_alt %}Django logo{% endblock %}" />
       <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}" />
@@ -37,7 +38,10 @@
       <meta property="twitter:card" content="{% block twitter_card %}summary{% endblock %}">
     {% endblock og_tags %}
 
-    <title>{% block title %}The web framework for perfectionists with deadlines{% endblock %} | Django</title>
+    <title>
+      {% block title %}{% trans "The web framework for perfectionists with deadlines" %}{% endblock %} | Django
+    </title>
+
 
     <link rel="stylesheet" href="{% static "css/output.css" %}" >
 
@@ -48,7 +52,7 @@
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
     {% block before_header %}{% endblock %}
 
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="skip-link">{% trans "Skip to main content" %}</a>
     {% include "includes/header.html" %}
     {% block banner %}{% endblock %}
 
@@ -79,7 +83,9 @@
         {% endblock %}
 
         {% block content %}{% endblock %}
-        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+        <a href="#top" class="backtotop">
+          <i class="icon icon-chevron-up"></i> {% trans "Back to Top" %}
+        </a>
       </main>
 
       {% block content-related %}{% endblock %}
