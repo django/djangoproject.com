@@ -47,12 +47,13 @@ At this point, most of the larger features planned for {{ release.feature_versio
 ## Release Day
 
 - [ ] Polish and make cosmetic edits to release notes on `main` and backport
-    {% if not release.is_pre_release %}
+    {% if release.is_pre_release %}
+    - Mention the anticipated end of mainstream and extended support dates
+    {% else %}
     - Remove the `Expected` prefix and update the release date if necessary
     {% endif %}
     {% if release.is_dot_zero %}- Remove the `UNDER DEVELOPMENT` header at the top of the release notes:
         - e.g. https://github.com/django/django/commit/1994a2643881a9e3f9fa8d3e0794c1a9933a1831{% endif %}
-    - Mention the ancticipated end of mainstream and extended support dates.
 
 - [ ] Check Jenkins (https://djangoci.com/job/django-{{ release.feature_version }}/) is green for the version(s) you're putting out.
     - You probably shouldn't issue a release until it's green.
