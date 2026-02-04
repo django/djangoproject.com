@@ -46,8 +46,10 @@ At this point, most of the larger features planned for {{ release.feature_versio
 
 ## Release Day
 
-- [ ] Polish and  make cosmetic edits to release notes on `main` and backport
-    {% if not release.is_pre_release %}
+- [ ] Polish and make cosmetic edits to release notes on `main` and backport
+    {% if release.is_pre_release %}
+    - Mention the anticipated end of mainstream and extended support dates
+    {% else %}
     - Remove the `Expected` prefix and update the release date if necessary
     {% endif %}
     {% if release.is_dot_zero %}- Remove the `UNDER DEVELOPMENT` header at the top of the release notes:
