@@ -51,7 +51,6 @@ def populate_artifacts(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("releases", "0001_squashed_0004_make_release_date_nullable"),
     ]

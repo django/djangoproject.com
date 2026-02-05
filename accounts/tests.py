@@ -178,7 +178,6 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
 
 
 class ViewsTests(ReleaseMixin, TestCase):
-
     def test_login_redirect(self):
         credentials = {"username": "a-user", "password": "password"}
         User.objects.create_user(**credentials)

@@ -2,10 +2,10 @@ line-length = 90
 
 [lint]
 select = [
-    "E",  
-    "F",  
-    "W",  
-    "I", 
+    "E",
+    "F",
+    "W",
+    "I",
 ]
 
 ignore = [

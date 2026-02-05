@@ -3,7 +3,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("foundation", "0002_coreaward_coreawardcohort"),
     ]
