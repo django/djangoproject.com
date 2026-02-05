@@ -34,9 +34,7 @@ class TestTemplateTags(TestCase):
 
     def test_get_latest_micro_release_excludes_inactive(self):
         Release.objects.create(major=5, minor=2, micro=0, version="5.2", is_active=True)
-        Release.objects.create(
-            major=5, minor=2, micro=1, version="5.2.1", is_active=True
-        )
+        Release.objects.create(major=5, minor=2, micro=1, version="5.2.1", is_active=True)
         # Create a newer release that is not yet active.
         Release.objects.create(
             major=5, minor=2, micro=2, version="5.2.2", is_active=False
@@ -45,9 +43,7 @@ class TestTemplateTags(TestCase):
         self.assertEqual(get_latest_micro_release("5.2"), "5.2.1")
 
     def test_get_latest_micro_release_no_active_releases(self):
-        Release.objects.create(
-            major=4, minor=1, micro=0, version="4.1", is_active=False
-        )
+        Release.objects.create(major=4, minor=1, micro=0, version="4.1", is_active=False)
         Release.objects.create(
             major=4, minor=1, micro=1, version="4.1.1", is_active=False
         )
@@ -148,18 +144,14 @@ class TestReleaseManager(TestCase):
             version="1.8.1", is_active=True, is_lts=True, date=today, eol_date=None
         )
         Release.objects.create(version="1.9", is_active=True, date=None, eol_date=None)
-        Release.objects.create(
-            version="1.10", is_active=False, date=today, eol_date=None
-        )
+        Release.objects.create(version="1.10", is_active=False, date=today, eol_date=None)
 
     def test_published(self):
         active_versions = Release.objects.published().values_list("version", flat=True)
         self.assertEqual(list(active_versions), ["1.8.1", "1.7", "1.4"])
 
     def test_supported(self):
-        supported_versions = Release.objects.supported().values_list(
-            "version", flat=True
-        )
+        supported_versions = Release.objects.supported().values_list("version", flat=True)
         self.assertEqual(list(supported_versions), ["1.8.1", "1.7", "1.4"])
 
     def test_unsupported(self):
@@ -631,9 +623,7 @@ class ReleaseAdminFormTestCase(TestCase):
         self.assertTrue(form.is_valid(), form.errors.as_json())
         release = form.save()
         self.assertEqual(release.tarball.name, "releases/1.2/django-1.2.3.tar.gz")
-        self.assertEqual(
-            release.wheel.name, "releases/1.2/django-1.2.3-py3-none-any.whl"
-        )
+        self.assertEqual(release.wheel.name, "releases/1.2/django-1.2.3-py3-none-any.whl")
         self.assertEqual(release.checksum.name, "pgp/Django-1.2.3.checksum.txt")
 
     def test_clearing_also_deletes_file(self, commit_save=True):
@@ -758,8 +748,7 @@ class CorporateMembersTestCase(ReleaseMixin, TestCase):
 
     def test_diamond_and_platinum_members_shown(self):
         members = [
-            self.make_member(level, level_name)
-            for level, level_name in MEMBERSHIP_LEVELS
+            self.make_member(level, level_name) for level, level_name in MEMBERSHIP_LEVELS
         ]
 
         response = self.client.get(reverse("download"))
@@ -793,7 +782,6 @@ class CorporateMembersTestCase(ReleaseMixin, TestCase):
 
 
 class RoadmapViewTestCase(ReleaseMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()

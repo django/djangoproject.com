@@ -66,7 +66,6 @@ CONFIG = {
 
 
 class Command(BaseCommand):
-
     help = "Generate Django release roadmap SVG."
 
     def add_arguments(self, parser):
@@ -85,7 +84,6 @@ class Command(BaseCommand):
 
 
 def get_chart_timeline(data: list, config: dict):
-
     start_year = data[0]["release_date"].year
 
     max_end_date = max(d["extended_end"] for d in data)
@@ -100,7 +98,6 @@ def get_chart_timeline(data: list, config: dict):
 
 
 def calculate_dimensions(config: dict, num_releases: int) -> int:
-
     chart_height = (
         config["padding_top"]
         + config["padding_bottom"]
@@ -111,7 +108,6 @@ def calculate_dimensions(config: dict, num_releases: int) -> int:
 
 
 def date_to_x(date: dtime.date, start_year: int, config: dict) -> float:
-
     pixels_per_year = config["pixels_per_year"]
     pixels_per_block = pixels_per_year / 3.0
     start_x = config["padding_left"]
@@ -119,13 +115,10 @@ def date_to_x(date: dtime.date, start_year: int, config: dict) -> float:
     year_offset = (date.year - start_year) * pixels_per_year
 
     if 1 <= date.month <= 4:
-
         block_num = 0
     elif 5 <= date.month <= 8:
-
         block_num = 1
     else:
-
         block_num = 2
 
     block_x_end = year_offset + ((block_num + 1) * pixels_per_block)
@@ -134,7 +127,6 @@ def date_to_x(date: dtime.date, start_year: int, config: dict) -> float:
 
 
 def generate_grids(start_year: int, end_year: int, config: dict) -> list:
-
     grid_lines = []
     pixels_per_year = config["pixels_per_year"]
     pixels_per_block = pixels_per_year / 3.0
@@ -215,7 +207,6 @@ def generate_release_data(first_release: str, release_date: dtime.date) -> list:
 
 
 def generate_releases(data: list, start_year: int, config: dict) -> list:
-
     releases_processed = []
     for i, release in enumerate(data):
         bar_y = config["padding_top"] + (
@@ -269,7 +260,6 @@ def generate_releases(data: list, start_year: int, config: dict) -> list:
 
 
 def generate_legend(config: dict) -> dict:
-
     legend_y = (
         config["padding_top"] + 260
     )  # Fixed position for legend so that it doesn't conflict with month labels
@@ -312,7 +302,6 @@ def generate_legend(config: dict) -> dict:
 
 
 def render_svg(first_release: str, date: dtime.date):
-
     data = generate_release_data(first_release, date)
 
     start_year, end_year, svg_width = get_chart_timeline(data, CONFIG)

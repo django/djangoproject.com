@@ -43,9 +43,7 @@ class ViewTests(ReleaseMixin, TestCase):
         self.assertEqual(response.content.count(b"42"), 13)
 
     def test_metric(self):
-        TracTicketMetric.objects.get(slug="new-tickets-week").data.create(
-            measurement=42
-        )
+        TracTicketMetric.objects.get(slug="new-tickets-week").data.create(measurement=42)
         request = self.factory.get(
             reverse("metric-detail", args=["new-tickets-week"], host="dashboard")
         )
@@ -60,9 +58,7 @@ class ViewTests(ReleaseMixin, TestCase):
             metric_detail(request, "404")
 
     def test_metric_json(self):
-        TracTicketMetric.objects.get(slug="new-tickets-week").data.create(
-            measurement=42
-        )
+        TracTicketMetric.objects.get(slug="new-tickets-week").data.create(measurement=42)
         request = self.factory.get(
             reverse("metric-json", args=["new-tickets-week"], host="dashboard")
         )
@@ -141,9 +137,7 @@ class GitHubSearchCountMetricTestCase(TestCase, MetricMixin):
             self.api_url % today.isoformat(),
             text=json.dumps({"total_count": 4, "items": []}),
         )
-        metric = GitHubSearchCountMetric.objects.filter(
-            period=METRIC_PERIOD_DAILY
-        ).last()
+        metric = GitHubSearchCountMetric.objects.filter(period=METRIC_PERIOD_DAILY).last()
         self.assertEqual(metric.fetch(), 4)
         # Faking a weekly JSON output with 23 items.
         mocker.get(

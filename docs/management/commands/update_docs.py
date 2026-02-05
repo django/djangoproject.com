@@ -126,9 +126,7 @@ class Command(BaseCommand):
         if not release.is_supported and not force:
             return
         if interactive:
-            prompt = (
-                f"About to start building docs for release {release}. Continue? Y/n "
-            )
+            prompt = f"About to start building docs for release {release}. Continue? Y/n "
             if input(prompt).upper() not in {"", "Y", "YES", "OUI"}:
                 return
         if self.verbosity >= 1:
@@ -146,9 +144,7 @@ class Command(BaseCommand):
         # Update the release from SCM.
         #
         # Make a git checkout/update into the destination directory.
-        git_changed = self.update_git(
-            release.scm_url, checkout_dir, changed_dir="docs/"
-        )
+        git_changed = self.update_git(release.scm_url, checkout_dir, changed_dir="docs/")
         if git_changed:
             self.release_docs_changed[release.version] = True
         version_changed = git_changed or self.release_docs_changed.get(release.version)
@@ -299,9 +295,7 @@ class Command(BaseCommand):
                 subprocess.check_call(
                     ["git", "reset", "--hard", "HEAD", quiet], stderr=sys.stdout
                 )
-                subprocess.check_call(
-                    ["git", "clean", "-fdx", quiet], stderr=sys.stdout
-                )
+                subprocess.check_call(["git", "clean", "-fdx", quiet], stderr=sys.stdout)
                 subprocess.check_call(
                     [
                         "git",
