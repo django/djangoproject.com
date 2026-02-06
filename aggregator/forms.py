@@ -20,7 +20,7 @@ class FeedModelForm(forms.ModelForm):
             attrs={
                 "class": "required",
                 "placeholder": _(
-                    "Link to the RSS/Atom feed. Please only use " "Django-specific feeds."
+                    "Link to the RSS/Atom feed. Please only use Django-specific feeds."
                 ),
             }
         ),
