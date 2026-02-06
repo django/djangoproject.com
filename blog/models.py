@@ -8,7 +8,6 @@ from django.test import RequestFactory
 from django.utils import timezone
 from django.utils.cache import _generate_cache_header_key
 from django.utils.formats import date_format
-from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from django_hosts.resolvers import get_host, reverse, reverse_host
 from docutils.core import publish_parts
@@ -78,7 +77,7 @@ class ContentFormat(models.TextChoices):
         CF = type(self)
         return {
             CF.REST: f".. image:: {url}\n   :alt: {alt_text}",
-            CF.HTML: format_html('<img src="{}" alt="{}">', url, alt_text),
+            CF.HTML: f'<img src="{url}" alt="{alt_text}">',
             CF.MARKDOWN: f"![{alt_text}]({url})",
         }[self]
 
