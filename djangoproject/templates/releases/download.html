@@ -30,7 +30,8 @@
   </p>
 
   {% release_notes current.version show_version=True as current_release_version %}
-  <h2>{% translate "Option" %} {% cycle '1' '2' '3' as options %}: {% translate "Get the latest official version" %}</h2>
+  {% cycle 1 2 3 as options silent %}
+  <h2>{% blocktranslate %}Option {{ options }}: Get the latest official version{% endblocktranslate %}</h2>
   <p>
     {% blocktranslate trimmed with version=current.version %}
       The latest official version is {{ current.version }}{% endblocktranslate %}{% if current.is_lts %} (LTS){% endif %}.
@@ -46,8 +47,11 @@
 
   {% if preview %}
     {% release_notes preview.version show_version=True as previous_release %}
+    {% cycle options %}
     {% with preview.version|slice:":3" as major_version %}
-      <h2>{% translate "Option" %} {% cycle options %}: Get the {{ preview.get_status_display }} for {{ major_version }}</h2>
+      <h2>{% blocktranslate trimmed with version_display=preview.get_status_display %}
+        Option {{ options }}: Get the latest official version {{ version_display }} for {{ major_version }}
+      {% endblocktranslate %}}</h2>
       <p>
         {% blocktranslate trimmed with preview_version=preview.version preview_status=preview.get_status_display %}
           As part of the
@@ -63,7 +67,8 @@
     {% endwith %}
   {% endif %}
 
-  <h2>{% translate "Option" %} {% cycle options %}: {% translate "Get the latest development version" %}</h2>
+  {% cycle options %}
+  <h2>{% blocktranslate %}Option {{ options }}: Get the latest development version{% endblocktranslate %}</h2>
   <p>
     {% blocktranslate trimmed %}
       The latest and greatest Django version is the one that’s in our Git repository (our revision-control system).
@@ -339,7 +344,7 @@
 
     {% donation_snippet %}
 
-    <h2>{% translate "For the impatient:" %}</h2>
+    <h3>{% translate "For the impatient:" %}</h3>
     <ul>
       <li>{% translate "Latest release:" %}
         {% include "releases/_download_links.html" with release=current %}
@@ -364,8 +369,8 @@
       {% endblocktranslate %}
     </p>
 
-    <p>{% translate "If you're just looking for a stable deployment target and don’t mind waiting for the next release, you’ll want to stick with the latest official release (which will always include detailed notes on any changes you’ll need to make while upgrading)." %}</p>
-    <h2>{% translate "Previous releases" %}</h2>
+    <p>{% translate "If you're just looking for a stable deployment target and don't mind waiting for the next release, you'll want to stick with the latest official release (which will always include detailed notes on any changes you'll need to make while upgrading)." %}</p>
+    <h3>{% translate "Previous releases" %}</h3>
     <ul>
       <li>Django {{ previous.version }}{% if previous.is_lts %} (LTS){% endif %}:
         {% include "releases/_download_links.html" with release=previous %}
