@@ -1,68 +1,66 @@
+{% load i18n %}
 {% load hosts %}
 
 <footer>
   <div class="subfooter">
     <div class="container">
-      <h2 class="visuallyhidden">Django Links</h2>
+      <h2 class="visuallyhidden">{% trans "Django Links" %}</h2>
       <div class="column-container">
         <div class="col-learn-more">
-          <h3>Learn More</h3>
+          <h3>{% trans "Learn More" %}</h3>
           <ul>
-            <li><a href="{% url 'overview' %}">About Django</a></li>
+            <li><a href="{% url 'overview' %}">{% trans "About Django" %}</a></li>
             {% comment %}<li><a href="{% url 'case_study_index' %}">Case Studies</a></li>{% endcomment %}
-            <li><a href="{% url 'start' %}">Getting Started with Django</a></li>
-            <li><a href="{% url 'members:teams' %}">Team Organization</a></li>
-            <li><a href="{% url 'homepage' %}foundation/">Django Software Foundation</a></li>
-            <li><a href="{% url 'code_of_conduct' %}">Code of Conduct</a></li>
-            <li><a href="{% url 'diversity' %}">Diversity Statement</a></li>
+            <li><a href="{% url 'start' %}">{% trans "Getting Started with Django" %}</a></li>
+            <li><a href="{% url 'members:teams' %}">{% trans "Team Organization" %}</a></li>
+            <li><a href="{% url 'homepage' %}foundation/">{% trans "Django Software Foundation" %}</a></li>
+            <li><a href="{% url 'code_of_conduct' %}">{% trans "Code of Conduct" %}</a></li>
+            <li><a href="{% url 'diversity' %}">{% trans "Diversity Statement" %}</a></li>
           </ul>
         </div>
 
         <div class="col-get-involved">
-          <h3>Get Involved</h3>
+          <h3>{% trans "Get Involved" %}</h3>
           <ul>
-            <li><a href="{% url 'community-index' %}">Join a Group</a></li>
-            <li><a href="{% url 'document-detail' lang='en' version='dev' url="internals/contributing" host 'docs' %}">Contribute
-              to Django</a></li>
+            <li><a href="{% url 'community-index' %}">{% trans "Join a Group" %}</a></li>
+            <li><a href="{% url 'document-detail' lang='en' version='dev' url="internals/contributing" host 'docs' %}">{% trans "Contribute to Django" %}</a></li>
             <li><a
-              href="{% url 'document-detail' lang='en' version='dev' url="internals/contributing/bugs-and-features" host 'docs' %}">Submit
-              a Bug</a></li>
+              href="{% url 'document-detail' lang='en' version='dev' url="internals/contributing/bugs-and-features" host 'docs' %}">{% trans "Submit a Bug" %}</a></li>
             <li><a
-              href="{% url 'document-detail' lang='en' version='dev' url="internals/security" host 'docs' %}#reporting-security-issues">Report
-              a Security Issue</a></li>
-            <li><a href="{% url 'members:individual-members' %}">Individual membership</a></li>
+              href="{% url 'document-detail' lang='en' version='dev' url="internals/security" host 'docs' %}#reporting-security-issues">{% trans "Report a Security Issue" %}</a></li>
+            <li><a href="{% url 'members:individual-members' %}">{% trans "Individual membership" %}</a></li>
           </ul>
         </div>
 
         <div class="col-get-help">
-          <h3>Get Help</h3>
+          <h3>{% trans "Get Help" %}</h3>
           <ul>
-            <li><a href="{% url 'document-detail' lang='en' version='stable' url='faq' host 'docs' %}">Getting Help FAQ</a>
+            <li><a href="{% url 'document-detail' lang='en' version='stable' url='faq' host 'docs' %}">{% trans "Getting Help FAQ" %}</a>
             </li>
-            <li><a href="https://chat.djangoproject.com" target="_blank">Django Discord</a></li>
-            <li><a href="https://forum.djangoproject.com/" target="_blank">Official Django Forum</a></li>
+            <li><a href="https://chat.djangoproject.com" target="_blank">{% trans "Django Discord" %}</a></li>
+            <li><a href="https://forum.djangoproject.com/" target="_blank">{% trans "Official Django Forum" %}</a></li>
           </ul>
         </div>
 
         <div class="col-follow-us">
-          <h3>Follow Us</h3>
+          <h3>{% trans "Follow Us" %}</h3>
           <ul>
-            <li><a href="https://github.com/django">GitHub</a></li>
-            <li><a href="https://x.com/djangoproject">X</a></li>
-            <li><a href="https://fosstodon.org/@django" rel="me">Fediverse (Mastodon)</a></li>
-            <li><a href="https://bsky.app/profile/djangoproject.com">Bluesky</a></li>
-            <li><a href="https://www.linkedin.com/company/django-software-foundation">LinkedIn</a></li>
-            <li><a href="{% url 'weblog-feed' %}">News RSS</a></li>
+            <li><a href="https://github.com/django">{% trans "GitHub" %}</a></li>
+            <li><a href="https://x.com/djangoproject">{% trans "X" %}</a></li>
+            <li><a href="https://fosstodon.org/@django" rel="me">{% trans "Fediverse (Mastodon)" %}</a></li>
+            <li><a href="https://bsky.app/profile/djangoproject.com">{% trans "Bluesky" %}</a></li>
+            <li><a href="https://www.linkedin.com/company/django-software-foundation">{% trans "LinkedIn" %}</a></li>
+            <li><a href="{% url 'weblog-feed' %}">{% trans "News RSS" %}</a></li>
           </ul>
         </div>
 
         <div class="col-support-us">
-          <h3>Support Us</h3>
+          <h3>{% trans "Support Us" %}</h3>
           <ul>
-            <li><a href="{% url "fundraising:index" %}">Sponsor Django</a></li>
-            <li><a href="{% url 'members:corporate-members' %}">Corporate membership</a></li>
-            <li><a href="https://django.threadless.com/" target="_blank">Official merchandise store</a></li>
-            <li><a href="{% url 'fundraising:index' %}#benevity-giving">Benevity Workplace Giving Program</a></li>
+            <li><a href="{% url "fundraising:index" %}">{% trans "Sponsor Django" %}</a></li>
+            <li><a href="{% url 'members:corporate-members' %}">{% trans "Corporate membership" %}</a></li>
+            <li><a href="https://django.threadless.com/" target="_blank">{% trans "Official merchandise store" %}</a></li>
+            <li><a href="{% url 'fundraising:index' %}#benevity-giving">{% trans "Benevity Workplace Giving Program" %}</a></li>
           </ul>
         </div>
       </div>
@@ -75,19 +73,22 @@
       </div>
       <ul class="thanks">
         <li>
-          <span>Hosting by</span> <a class="in-kind-donors" href="{% url 'fundraising:index' %}#in-kind-donors">In-kind
-            donors</a>
+          <span>{% trans "Hosting by" %}</span> <a class="in-kind-donors" href="{% url 'fundraising:index' %}#in-kind-donors">{% trans "In-kind donors" %}</a>
         </li>
-        <li class="design"><span>Design by</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
+        <li class="design"><span>{% trans "Design by" %}</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
           <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
       </ul>
-      <p class="copyright">&copy; 2005-{% now "Y" %}
-        <a href="{% host_url "homepage" host "www" %}foundation/"> Django Software
-          Foundation</a> and individual contributors. Django is a
-        <a href="{% host_url "homepage" host "www" %}trademarks/">registered
-          trademark</a> of the Django Software Foundation.
+      <p class="copyright">
+        &copy; 2005-{% now "Y" %}
+        <a href="{% host_url "homepage" host "www" %}foundation/">
+          {% trans "Django Software Foundation" %}
+        </a>
+        {% trans "and individual contributors. Django is a" %}
+        <a href="{% host_url "homepage" host "www" %}trademarks/">
+          {% trans "registered trademark" %}
+        </a>
+        {% trans "of the Django Software Foundation." %}
       </p>
     </div>
   </div>
-
 </footer>
