@@ -17,7 +17,7 @@ Markdown==3.10.1
 Pillow==12.1.1
 Pygments==2.19.2
 pykismet3==0.1.1
-pymdown-extensions==10.20
+pymdown-extensions==10.20.1
 python-dateutil==2.9.0.post0
 requests==2.32.5
 sorl-thumbnail==12.11.0
