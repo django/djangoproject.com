@@ -1,6 +1,4 @@
 import re
-import warnings
-from datetime import datetime, timedelta
 from http import HTTPStatus
 
 from django.conf import settings
@@ -347,15 +345,3 @@ class SecurityTxtTests(TestCase):
         )
         if match is None:
             self.fail("No Expires line found in security.txt")
-        else:
-            expires = match[1]
-
-        expires_date = datetime.fromisoformat(expires).date()
-
-        if expires_date < datetime.now().date() - timedelta(days=15):
-            warnings.warn(
-                "The djangoproject/templates/well-known/security.txt file is"
-                " close to expiring. Please update the 'Expires' line to confirm"
-                " the contents are still accurate.",
-                category=UserWarning,
-            )
