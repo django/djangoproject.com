@@ -51,9 +51,7 @@ urlpatterns = docs_urlpatterns + [
     ),
     path(
         "google79eabba6bf6fd6d3.html",
-        lambda req: HttpResponse(
-            "google-site-verification: google79eabba6bf6fd6d3.html"
-        ),
+        lambda req: HttpResponse("google-site-verification: google79eabba6bf6fd6d3.html"),
     ),
     # This just exists to make sure we can proof that the error pages work
     # under both hostnames.

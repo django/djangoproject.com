@@ -142,15 +142,11 @@ class FeedItem(models.Model):
 
 
 def feed_updated(sender, notification, **kwargs):
-    log.debug(
-        "Received notification on subscription ID %s (%s)", sender.id, sender.topic
-    )
+    log.debug("Received notification on subscription ID %s (%s)", sender.id, sender.topic)
     try:
         feed = Feed.objects.get(feed_url=sender.topic)
     except Feed.DoesNotExist:
-        log.error(
-            "Subscription ID %s (%s) doesn't have a feed.", sender.id, sender.topic
-        )
+        log.error("Subscription ID %s (%s) doesn't have a feed.", sender.id, sender.topic)
         return
 
     notification = feedparser.parse(notification)
@@ -219,9 +215,7 @@ class LocalDjangoCommunity(models.Model):
     country = CountryField()
     continent = models.CharField(choices=CONTINENTS, max_length=15)
     website_url = models.URLField(max_length=250, default=None, blank=True, null=True)
-    event_site_url = models.URLField(
-        max_length=250, default=None, blank=True, null=True
-    )
+    event_site_url = models.URLField(max_length=250, default=None, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -240,9 +234,7 @@ class LocalDjangoCommunity(models.Model):
 
     def clean(self):
         if not self.website_url and not self.event_site_url:
-            raise ValidationError(
-                "You must provide at least a website or event site URL"
-            )
+            raise ValidationError("You must provide at least a website or event site URL")
 
     def __str__(self):
         return self.name

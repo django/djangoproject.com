@@ -14,9 +14,7 @@ class MeetingTestCase(ReleaseMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        cls.user = User.objects.create_superuser(
-            "admin", "admin@example.com", "password"
-        )
+        cls.user = User.objects.create_superuser("admin", "admin@example.com", "password")
         cls.member = BoardMember.objects.create(
             account=cls.user,
             office=Office.objects.create(name="treasurer"),

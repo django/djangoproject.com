@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("aggregator", "0005_feeditem_add_index_date_modified"),
     ]
