@@ -128,11 +128,10 @@ window.addEventListener('keydown', function (e) {
 // Attach copy functionality to clipboard buttons
 document.querySelectorAll('.btn-clipboard').forEach(function (el) {
   el.addEventListener('click', function () {
-    // Remove any existing success message first
-    const existing = this.querySelector('.clipboard-success');
+    const existing_el = this.querySelector('.clipboard-success');
 
-    if (existing) {
-      existing.remove();
+    if (existing_el) {
+      existing_el.remove();
     }
 
     const success_el = document.createElement('span');
@@ -163,13 +162,12 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
 
     let text;
     const console_section = this.closest('.console-block > section');
+    const prompt_regex = /^\$ |^\.\.\.\\>/gm;
 
     if (console_section) {
-      // Console tabs: extract text excluding prompts
       const pre_el = console_section.querySelector('.highlight pre');
-      text = pre_el.textContent.replace(/^\$ |^\.\.\.\\>/gm, '');
+      text = pre_el.textContent.replace(prompt_regex, '');
     } else {
-      // Code snippets: get text from next sibling
       text = this.parentElement.nextElementSibling.textContent;
     }
 
