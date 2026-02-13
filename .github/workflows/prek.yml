@@ -10,4 +10,4 @@ jobs:
         runs-on: ubuntu-24.04
         steps:
             - uses: actions/checkout@v6.0.1
-            - uses: j178/prek-action@v1.0.11
+            - uses: j178/prek-action@v1.1.1
