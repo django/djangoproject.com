@@ -1,3 +1,4 @@
+import re
 from http import HTTPStatus
 from io import StringIO
 
@@ -211,3 +212,23 @@ class Header1Tests(ReleaseMixin, TestCase):
                     response = self.client.get(url)
                     self.assertEqual(response.status_code, 200)
                     self.assertContains(response, "<h1", count=1)
+
+
+class SecurityTxtTests(TestCase):
+    """
+    Tests for the security.txt file.
+    """
+
+    def test_security_txt(self):
+        """
+        The security.txt file should be reachable at the expected URL.
+        """
+        response = self.client.get("/.well-known/security.txt")
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(response["Content-Type"], "text/plain")
+
+        match = re.search(
+            "^Expires: (.*)$", response.content.decode("utf-8"), flags=re.MULTILINE
+        )
+        if match is None:
+            self.fail("No Expires line found in security.txt")
