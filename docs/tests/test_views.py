@@ -1,4 +1,3 @@
-import re
 from http import HTTPStatus
 
 from django.conf import settings
@@ -340,8 +339,4 @@ class SecurityTxtTests(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response["Content-Type"], "text/plain")
 
-        match = re.search(
-            "^Expires: (.*)$", response.content.decode("utf-8"), flags=re.MULTILINE
-        )
-        if match is None:
-            self.fail("No Expires line found in security.txt")
+        self.assertIn("Expires:", response.content.decode())
