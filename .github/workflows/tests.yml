@@ -28,7 +28,7 @@ jobs:
                     - 5432:5432
 
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v6
             - name: Set up Python
               uses: actions/setup-python@v6
               with:
