@@ -6,17 +6,19 @@ from django.test import TestCase, override_settings
 from django_hosts.resolvers import reverse
 
 from accounts.forms import DeleteProfileForm
+from djangoproject.tests import ReleaseMixin
 from foundation import models as foundationmodels
 from tracdb.models import Revision, Ticket, TicketChange
 from tracdb.testutils import TracDBCreateDatabaseMixin
 
 
 @override_settings(TRAC_URL="https://code.djangoproject.com/")
-class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
+class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
     databases = {"default", "trac"}
 
     @classmethod
     def setUpTestData(cls):
+        super().setUpTestData()
         User.objects.create_user(username="user1", password="password")
         User.objects.create_user(username="user2", password="password")
         cls.user1_url = reverse("user_profile", args=["user1"])
@@ -111,25 +113,25 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             author="user1",
             newvalue="Accepted",
             ticket=Ticket.objects.create(),
-            **initial_ticket_values
+            **initial_ticket_values,
         )
         TicketChange.objects.create(
             author="user1",
             newvalue="Someday/Maybe",
             ticket=Ticket.objects.create(),
-            **initial_ticket_values
+            **initial_ticket_values,
         )
         TicketChange.objects.create(
             author="user1",
             newvalue="Ready for checkin",
             ticket=Ticket.objects.create(),
-            **initial_ticket_values
+            **initial_ticket_values,
         )
         TicketChange.objects.create(
             author="user2",
             newvalue="Accepted",
             ticket=Ticket.objects.create(),
-            **initial_ticket_values
+            **initial_ticket_values,
         )
 
         response = self.client.get(self.user1_url)
@@ -145,13 +147,13 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
             oldvalue="Unreviewed",
             newvalue="Accepted",
             ticket=Ticket.objects.create(),
-            **common_ticket_values
+            **common_ticket_values,
         )
         TicketChange.objects.create(
             oldvalue="Accepted",
             newvalue="Unreviewed",
             ticket=Ticket.objects.create(),
-            **common_ticket_values
+            **common_ticket_values,
         )
 
         response = self.client.get(self.user1_url)
@@ -175,7 +177,7 @@ class UserProfileTests(TracDBCreateDatabaseMixin, TestCase):
         self.assertIsNotNone(cache.get(key))
 
 
-class ViewsTests(TestCase):
+class ViewsTests(ReleaseMixin, TestCase):
 
     def test_login_redirect(self):
         credentials = {"username": "a-user", "password": "password"}
@@ -193,7 +195,7 @@ class ViewsTests(TestCase):
             reverse("user_profile", host="www", args=[username])
 
 
-class UserDeletionTests(TestCase):
+class UserDeletionTests(ReleaseMixin, TestCase):
     def create_user_and_form(self, bound=True, **userkwargs):
         userkwargs.setdefault("username", "test")
         userkwargs.setdefault("email", "test@example.com")

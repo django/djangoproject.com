@@ -70,7 +70,7 @@ class BaseContactForm(ContactForm):
                     # Adding test argument to the request in order to
                     # tell akismet that they should ignore the request
                     # so that test runs affect the heuristics
-                    akismet_data["test"] = 1
+                    akismet_data["is_test"] = 1
                 if akismet_api.check(akismet_data):
                     raise forms.ValidationError("Akismet thinks this message is spam")
             except AkismetServerError:

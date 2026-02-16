@@ -26,7 +26,7 @@ class AggregatorTests(TestCase):
         )
         DocumentRelease.objects.update_or_create(
             release=release,
-            lang="en",
+            lang=settings.DEFAULT_LANGUAGE_CODE,
             defaults={"is_default": True},
         )
 
@@ -92,7 +92,7 @@ class AggregatorTests(TestCase):
     def test_community_index_number_of_queries(self):
         """Intended to prevent an n+1 issue on the community index view"""
         url = reverse("community-index")
-        with self.assertNumQueries(6):
+        with self.assertNumQueries(8):
             self.client.get(url)
 
     def test_empty_feed_type_not_rendered(self):
@@ -119,7 +119,7 @@ class AggregatorTests(TestCase):
         url = reverse(
             "community-feed-list", kwargs={"feed_type_slug": self.feed_type.slug}
         )
-        with self.assertNumQueries(7):
+        with self.assertNumQueries(8):
             self.client.get(url)
 
     def test_management_command_sends_no_email_with_no_pending_feeds(self):
@@ -154,6 +154,28 @@ class AggregatorTests(TestCase):
             ["Approved long URL Item", "Approved Item"],
             transform=attrgetter("title"),
         )
+
+    def test_logged_in_user_can_delete_own_feed(self):
+        user = User.objects.create_user(
+            username="deleter",
+            password="pass123",
+        )
+
+        feed = models.Feed.objects.create(
+            title="My Feed",
+            feed_url="https://example.com/rss/",
+            public_url="https://example.com/",
+            approval_status=models.PENDING_FEED,
+            feed_type=self.feed_type,
+            owner=user,
+        )
+
+        self.client.login(username="deleter", password="pass123")
+
+        response = self.client.post(reverse("community-delete-feed", args=[feed.id]))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(models.Feed.objects.filter(id=feed.id).exists())
 
 
 class TestForms(SimpleTestCase):

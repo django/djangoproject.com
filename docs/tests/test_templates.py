@@ -3,9 +3,11 @@ import shutil
 import tempfile
 from pathlib import Path
 
+from django.conf import settings
 from django.template import Context, Template
 from django.template.loader import render_to_string
 from django.test import RequestFactory, TestCase
+from django_hosts.resolvers import reverse as reverse_with_host
 
 from releases.models import Release
 
@@ -27,8 +29,20 @@ class TemplateTagTests(TestCase):
     def test_get_all_doc_versions(self):
         tmp_docs_build_root = Path(tempfile.mkdtemp())
         self.addCleanup(shutil.rmtree, tmp_docs_build_root)
-        os.makedirs(tmp_docs_build_root.joinpath("en", "1.8", "_built", "json"))
-        os.makedirs(tmp_docs_build_root.joinpath("en", "1.11", "_built", "json"))
+        os.makedirs(
+            tmp_docs_build_root
+            / settings.DEFAULT_LANGUAGE_CODE
+            / "1.8"
+            / "_built"
+            / "json"
+        )
+        os.makedirs(
+            tmp_docs_build_root
+            / settings.DEFAULT_LANGUAGE_CODE
+            / "1.11"
+            / "_built"
+            / "json"
+        )
         with self.settings(DOCS_BUILD_ROOT=tmp_docs_build_root):
             self.assertEqual(get_all_doc_versions({}), ["1.8", "1.11", "dev"])
 
@@ -193,7 +207,7 @@ class TemplateTestCase(TestCase):
     def _assertOGTitleEqual(self, doc, expected):
         output = render_to_string(
             "docs/doc.html",
-            {"doc": doc, "lang": "en", "version": "5.0"},
+            {"doc": doc, "lang": settings.DEFAULT_LANGUAGE_CODE, "version": "5.0"},
             request=RequestFactory().get("/"),
         )
         self.assertInHTML(f'<meta property="og:title" content="{expected}" />', output)
@@ -201,7 +215,7 @@ class TemplateTestCase(TestCase):
     def test_opengraph_title(self):
         doc = Document.objects.create(
             release=DocumentRelease.objects.create(
-                lang="en",
+                lang=settings.DEFAULT_LANGUAGE_CODE,
                 release=Release.objects.create(version="5.0"),
             ),
         )
@@ -216,3 +230,23 @@ class TemplateTestCase(TestCase):
             doc.title = title
             with self.subTest(title=title):
                 self._assertOGTitleEqual(doc, f"{expected} | Django documentation")
+
+
+class TemplateTagTestCase(TestCase):
+    def test_search_form_renders_without_request_in_template(self):
+        """
+        Ensures the tag doesn't crash when rendered inside a template that
+        lacks a 'request' variable e.g. during Django's built-in error views.
+        """
+        template = Template("{% load docs %}{% search_form %}")
+        rendered = template.render(Context({}))
+        self.assertIn(
+            '<search class="search form-input" aria-labelledby="docs-search-label">',
+            rendered,
+        )
+        docs_search_url = reverse_with_host(
+            "document-search",
+            host="docs",
+            kwargs={"lang": settings.DEFAULT_LANGUAGE_CODE, "version": "dev"},
+        )
+        self.assertIn(f'<form action="{docs_search_url}">', rendered)

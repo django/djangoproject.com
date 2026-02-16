@@ -12,7 +12,7 @@ To run locally, you can either:
 Install and run locally from a virtual environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Create a `Python Python 3.12 virtualenv and activate it <https://docs.python.org/3/library/venv.html>`_
+#. Create a `Python 3.12 virtualenv and activate it <https://docs.python.org/3/library/venv.html>`_
 
 #. Install dependencies::
 
@@ -256,6 +256,14 @@ To update this file, run::
 
     python -m manage dumpdata dashboard --exclude dashboard.Datum --indent=4 > dashboard_production_metrics.json
 
+Release Checklists
+------------------
+
+The ``checklists`` app provides assistance for issuing Django releases (feature
+releases, pre-releases (alpha/beta/RC), bugfix releases, and security releases).
+
+For detailed documentation see `checklists/README.md <checklists/README.md>`_.
+
 Translation
 -----------
 
@@ -370,26 +378,20 @@ Running Locally with Docker
 
 7. View the docs at http://docs.djangoproject.localhost:8000/.
 
-Pre-commit checks
------------------
+git hooks
+---------
+    `pre-commit <https://pre-commit.com>`_ is a framework to run hooks written in many languages, and it manages the language toolchain and dependencies for running the hooks.
 
-`pre-commit <https://pre-commit.com>`_ is a framework for managing pre-commit
-hooks. These hooks help to identify simple issues before committing code for
-review. By checking for these issues before code review it allows the reviewer
-to focus on the change itself, and it can also help to reduce the number of CI
-runs.
+    `prek <https://prek.j178.dev/>`_ is a reimagined version of pre-commit, built in Rust. It is designed to be a faster, dependency-free and drop-in alternative for it, while also providing some additional long-requested features.
 
-To use the tool, first install ``pre-commit`` and then the git hooks
+\- quoted from `prek's README.md <https://github.com/j178/prek/blob/ee7110b49bb1aa8d7b3ccee51c5241550cb0aec2/README.md>`_
 
-.. code-block:: console
+To use git hooks locally, first install ``prek`` and then the git hooks:
 
-    $ python3 -m pip install pre-commit
-    $ python3 -m pre_commit install
+* Depending on your choice of platform and tooling, you can use the related installation instructions from https://prek.j178.dev/installation/
+* Install git hooks using ``prek install`` command: https://prek.j178.dev/cli/#prek-install
 
-On the first commit ``pre-commit`` will install the hooks, these are
-installed in their own environments and will take a short while to
-install on the first run. Subsequent checks will be significantly faster.
-If the an error is found an appropriate error message will be displayed.
-If the error was with ``isort`` then the tool will go ahead and fix them for
-you. Review the changes and re-stage for commit if you are happy with
-them.
+The installed hooks will be triggered during each commit, or can be manually triggered via
+``prek run`` command: https://prek.j178.dev/cli/#prek-run If an error is found an appropriate
+error message will be displayed. If the error was with ``isort`` then the tool will go ahead
+and fix them for you. Review the changes and re-stage for commit if you are happy with them.

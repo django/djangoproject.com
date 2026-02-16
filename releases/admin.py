@@ -51,6 +51,7 @@ class ReleaseAdmin(admin.ModelAdmin):
     )
     list_filter = ("status", "is_lts", "is_active")
     ordering = ("-major", "-minor", "-micro", "-status", "-iteration")
+    search_fields = ("version",)
 
     @admin.display(
         description="status",

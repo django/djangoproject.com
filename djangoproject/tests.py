@@ -1,6 +1,7 @@
 from http import HTTPStatus
 from io import StringIO
 
+from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import NoReverseMatch, get_resolver
@@ -8,6 +9,16 @@ from django.utils.translation import activate, gettext as _
 from django_hosts.resolvers import reverse
 
 from docs.models import DocumentRelease, Release
+
+
+class ReleaseMixin:
+    @classmethod
+    def setUpTestData(cls):
+        r2, _ = Release.objects.get_or_create(version="2.0")
+        DocumentRelease.objects.get_or_create(
+            is_default=True,
+            defaults={"lang": settings.DEFAULT_LANGUAGE_CODE, "release": r2},
+        )
 
 
 class LocaleSmokeTests(TestCase):
@@ -47,7 +58,7 @@ class LocaleSmokeTests(TestCase):
         )
 
 
-class TemplateViewTests(TestCase):
+class TemplateViewTests(ReleaseMixin, TestCase):
     """
     Tests for views that are instances of TemplateView.
     """
@@ -83,7 +94,7 @@ class TemplateViewTests(TestCase):
         self.assertView("styleguide")
 
 
-class ExcludeHostsLocaleMiddlewareTests(TestCase):
+class ExcludeHostsLocaleMiddlewareTests(ReleaseMixin, TestCase):
     """
     djangoproject.middleware.ExcludeHostsLocaleMiddleware properly prevents
     the hosts in settings.LOCALE_MIDDLEWARE_EXCLUDED_HOSTS from being
@@ -94,11 +105,6 @@ class ExcludeHostsLocaleMiddlewareTests(TestCase):
 
     docs_host = "docs.djangoproject.localhost"
     www_host = "www.djangoproject.localhost"
-
-    @classmethod
-    def setUpTestData(cls):
-        r2 = Release.objects.create(version="2.0")
-        DocumentRelease.objects.create(lang="en", release=r2, is_default=True)
 
     def test_docs_host_excluded(self):
         """We get no Content-Language or Vary headers when docs host is excluded"""
@@ -175,7 +181,7 @@ class PendingMigrationsTests(TestCase):
             raise AssertionError("Pending migrations:\n" + out.getvalue()) from None
 
 
-class Header1Tests(TestCase):
+class Header1Tests(ReleaseMixin, TestCase):
     def extract_patterns(self, patterns, prefix="", urls=None):
         urls = urls or []
         for pattern in patterns:

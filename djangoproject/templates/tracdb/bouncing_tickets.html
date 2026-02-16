@@ -1,21 +1,22 @@
 {% extends "base_community.html" %}
+{% load i18n %}
 
 {% block content-related %}{% endblock %}
 
-{% block title %}Bouncing Tickets{% endblock %}
+{% block title %}{% translate "Bouncing Tickets" %}{% endblock %}
 
 {% block content %}
 
-  <h1>Bouncing Tickets</h1>
+  <h1>{% translate "Bouncing Tickets" %}</h1>
 
-  <h2 class="deck">Tickets that have been repeatedly reopened.</h2>
+  <h2 class="deck">{% translate "Tickets that have been repeatedly reopened." %}</h2>
 
   <table width="90%" class="docutils">
     <thead>
       <tr>
-        <th>Ticket</th>
-        <th>Times reopened</th>
-        <th>Last reopened</th>
+        <th>{% translate "Ticket" %}</th>
+        <th>{% translate "Times reopened" %}</th>
+        <th>{% translate "Last reopened" %}</th>
       </tr>
     </thead>
     <tbody>

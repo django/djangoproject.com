@@ -4,6 +4,7 @@ from io import StringIO
 
 import time_machine
 from django.conf import settings
+from django.contrib import admin
 from django.contrib.auth.models import Permission, User
 from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
@@ -11,6 +12,16 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
+
+from djangoproject.tests import ReleaseMixin
+from members.models import (
+    BRONZE_MEMBERSHIP,
+    DIAMOND_MEMBERSHIP,
+    GOLD_MEMBERSHIP,
+    PLATINUM_MEMBERSHIP,
+    SILVER_MEMBERSHIP,
+    CorporateMember,
+)
 
 from .models import ContentFormat, Entry, Event, ImageUpload
 from .sitemaps import WeblogSitemap
@@ -64,6 +75,26 @@ class EntryTestCase(DateTimeMixin, TestCase):
         self.assertQuerySetEqual(
             Entry.objects.published(),
             ["past active"],
+            transform=lambda entry: entry.headline,
+        )
+
+    def test_manager_searchable(self):
+        """
+        Make sure that the Entry manager's `searchable` method works
+        """
+        Entry.objects.create(
+            pub_date=self.yesterday,
+            is_searchable=False,
+            headline="not searchable",
+            slug="a",
+        )
+        Entry.objects.create(
+            pub_date=self.yesterday, is_searchable=True, headline="searchable", slug="b"
+        )
+
+        self.assertQuerySetEqual(
+            Entry.objects.searchable(),
+            ["searchable"],
             transform=lambda entry: entry.headline,
         )
 
@@ -136,6 +167,28 @@ class EntryTestCase(DateTimeMixin, TestCase):
         with translation.override("nn"):
             self.assertEqual(entry.pub_date_localized, "21. juli 2005")
 
+    def test_markdown_table_conversion(self):
+        body = (
+            "| Framework | Language |\n"
+            "|-----------|----------|\n"
+            "| Django    | Python   |\n"
+            "| Flask     | Python   |"
+        )
+
+        entry = Entry.objects.create(
+            pub_date=self.now,
+            slug="markdown-table",
+            body=body,
+            content_format=ContentFormat.MARKDOWN,
+        )
+        expected_html = (
+            "<table>\n"
+            "<thead>\n<tr>\n<th>Framework</th>\n<th>Language</th>\n</tr>\n</thead>\n"
+            "<tbody>\n<tr>\n<td>Django</td>\n<td>Python</td>\n</tr>\n"
+            "<tr>\n<td>Flask</td>\n<td>Python</td>\n</tr>\n</tbody>\n</table>"
+        )
+        self.assertInHTML(expected_html, entry.body_html)
+
 
 class EventTestCase(DateTimeMixin, TestCase):
     def test_manager_past_future(self):
@@ -189,7 +242,7 @@ class EventTestCase(DateTimeMixin, TestCase):
         )
 
 
-class ViewsTestCase(DateTimeMixin, TestCase):
+class ViewsTestCase(ReleaseMixin, DateTimeMixin, TestCase):
     def test_detail_view_html_meta(self):
         headline = "Pride and Prejudice - Review"
         author = "Jane Austen"
@@ -336,6 +389,78 @@ class ViewsTestCase(DateTimeMixin, TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertQuerySetEqual(response.context["events"], [])
 
+    def test_corporate_sponsors_displayed(self):
+        objs = CorporateMember.objects.bulk_create(
+            [
+                CorporateMember(
+                    display_name="Platinum company",
+                    membership_level=PLATINUM_MEMBERSHIP,
+                ),
+                CorporateMember(
+                    display_name="Diamond company", membership_level=DIAMOND_MEMBERSHIP
+                ),
+                CorporateMember(
+                    display_name="Gold company", membership_level=GOLD_MEMBERSHIP
+                ),
+                CorporateMember(
+                    display_name="Silver company", membership_level=SILVER_MEMBERSHIP
+                ),
+                CorporateMember(
+                    display_name="Bronze company", membership_level=BRONZE_MEMBERSHIP
+                ),
+            ]
+        )
+        for obj in objs:
+            obj.invoice_set.create(amount=4, expiration_date=date(3000, 1, 1))
+
+        blog_entry = Entry.objects.create(
+            pub_date=date(2005, 7, 21),
+            is_active=True,
+            headline="Django election results",
+            slug="a",
+            author="DSF Board",
+        )
+        urls = [
+            reverse("weblog:index"),
+            reverse(
+                "weblog:entry",
+                kwargs={
+                    "year": blog_entry.pub_date.year,
+                    "month": blog_entry.pub_date.strftime("%b").lower(),
+                    "day": blog_entry.pub_date.day,
+                    "slug": blog_entry.slug,
+                },
+            ),
+            reverse(
+                "weblog:archive-year",
+                kwargs={"year": blog_entry.pub_date.year},
+            ),
+            reverse(
+                "weblog:archive-month",
+                kwargs={
+                    "year": blog_entry.pub_date.year,
+                    "month": blog_entry.pub_date.strftime("%b").lower(),
+                },
+            ),
+            reverse(
+                "weblog:archive-day",
+                kwargs={
+                    "year": blog_entry.pub_date.year,
+                    "month": blog_entry.pub_date.strftime("%b").lower(),
+                    "day": blog_entry.pub_date.day,
+                },
+            ),
+        ]
+        for url in urls:
+            with self.subTest(url=url):
+                response = self.client.get(url)
+                self.assertContains(response, "Diamond and Platinum Members")
+                self.assertContains(response, "Platinum company")
+                self.assertContains(response, "Diamond company")
+                self.assertNotContains(response, "Gold company")
+                self.assertNotContains(response, "Silver company")
+                self.assertNotContains(response, "Bronze company")
+
     def test_anonymous_user_cannot_see_unpublished_entries(self):
         """
         Anonymous users can't see unpublished entries at all (list or detail view)
@@ -443,6 +568,44 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         response = self.client.get(published_url)
         self.assertEqual(response.status_code, 200)
 
+    def test_archive_view_titles(self):
+        headline = "Pride and Prejudice - Review"
+        pub_date = date(2005, 7, 21)
+        Entry.objects.create(
+            pub_date=pub_date,
+            is_active=True,
+            headline=headline,
+            slug="a",
+            author="Jane Austen",
+        )
+        year = pub_date.strftime("%Y")
+        month = pub_date.strftime("%b").lower()
+        day = pub_date.strftime("%d")
+        for testcase in [
+            {
+                "view": "weblog:archive-year",
+                "kwargs": {"year": year},
+                "header": "<h1>2005 archive</h1>",
+            },
+            {
+                "view": "weblog:archive-month",
+                "kwargs": {"year": year, "month": month},
+                "header": "<h1>July 2005 archive</h1>",
+            },
+            {
+                "view": "weblog:archive-day",
+                "kwargs": {"year": year, "month": month, "day": day},
+                "header": "<h1>July 21, 2005 archive</h1>",
+            },
+        ]:
+            with self.subTest(view=testcase["view"]):
+                response = self.client.get(
+                    reverse(testcase["view"], kwargs=testcase["kwargs"])
+                )
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(response, testcase["header"])
+                self.assertContains(response, headline)
+
 
 @override_settings(
     # Caching middleware is added in the production settings file;
@@ -453,7 +616,7 @@ class ViewsTestCase(DateTimeMixin, TestCase):
         + ["django.middleware.cache.FetchFromCacheMiddleware"]
     ),
 )
-class ViewsCachingTestCase(DateTimeMixin, TestCase):
+class ViewsCachingTestCase(ReleaseMixin, DateTimeMixin, TestCase):
     def test_drafts_have_no_cache_headers(self):
         """
         Draft (unpublished) entries have no-cache headers.
@@ -619,3 +782,18 @@ class ImageUploadTestCase(TestCase):
                     ContentFormat.to_html(cf, img_tag),
                     expected,
                 )
+
+    def test_copy_button(self):
+        i = ImageUpload.objects.create(
+            title="test",
+            alt_text='Alt text "here"',
+            image=ContentFile(b".", name="test.png"),
+        )
+        self.assertInHTML(
+            '<button type="button" data-clipboard-content='
+            f'"&lt;img src=&quot;/m/{i.image}&quot; '
+            'alt=&quot;Alt text &amp;quot;here&amp;quot;&quot;&gt;">'
+            "Raw HTML"
+            "</button>",
+            admin.site.get_model_admin(ImageUpload).copy_buttons(i),
+        )

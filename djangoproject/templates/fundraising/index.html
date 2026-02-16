@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load fundraising_extras humanize i18n static %}
+{% load fundraising_extras humanize i18n static hosts %}
 
 {% block title %}{% translate "Support Django" %}{% endblock %}
 {% block layout_class %}full-width{% endblock %}
@@ -42,8 +42,9 @@
     </li>
     <li><a href="https://github.com/sponsors/django" target="_blank">{% translate "Sponsor Django via GitHub Sponsors" %}</a>.</li>
     <li>
+      {% url 'fundraising:index' as fundraising_url %}
       {% blocktranslate trimmed %}
-        <a href="/foundation/donate/#benevity-giving">Benevity Workplace Giving
+        <a href="{{ fundraising_url }}#benevity-giving">Benevity Workplace Giving
           Program</a> - If your employer participates, you can make donations to the
         DSF via payroll deduction.
       {% endblocktranslate %}
@@ -89,7 +90,7 @@
 
   <p>
     {% blocktranslate trimmed %}
-      Still curious? See our <a href="/foundation/donate/">Frequently Asked Questions</a>
+      Still curious? See our <a href="{{ fundraising_url }}">Frequently Asked Questions</a>
       about donations.
     {% endblocktranslate %}
   </p>
@@ -118,12 +119,13 @@
   </p>
 
   <p>
+    {% host_url 'homepage' host 'www' as base_url %}
     {% blocktranslate trimmed %}
       For more details, you can read retrospectives for the
-      <a href="/weblog/2015/jan/21/django-fellowship-retrospective/"> first three
+      <a href="{{ base_url }}weblog/2015/jan/21/django-fellowship-retrospective/"> first three
         months of the program</a>,
-      <a href="/weblog/2015/dec/17/fellowship-2015-retrospective/">2015</a>, and
-      <a href="/weblog/2016/dec/28/fellowship-2016-retrospective/">2016</a>.
+      <a href="{{ base_url }}weblog/2015/dec/17/fellowship-2015-retrospective/">2015</a>, and
+      <a href="{{ base_url }}weblog/2016/dec/28/fellowship-2016-retrospective/">2016</a>.
     {% endblocktranslate %}
   </p>
 
@@ -144,7 +146,7 @@
   <p>
     {% blocktranslate trimmed %}
       <strong>If you use Django on a daily basis and care about the development of Django
-        itself, you should donate today</strong> (may be <a href="/foundation/donate/#tax-deductible">tax deductible</a>).
+        itself, you should donate today</strong> (may be <a href="{{ fundraising_url }}#tax-deductible">tax deductible</a>).
       Only with your support can we make sure that the web framework you base your work on
       can grow to be even better in the coming years.
     {% endblocktranslate %}
@@ -249,15 +251,16 @@
   <div class="layout-tertiary" id="about">
     <div class="container">
       <h2>{% translate "What is the Django Software Foundation?" %}</h2>
+      {% host_url 'homepage' host 'www' as base_url %}
       <p>
         {% blocktranslate trimmed %}
           Development of Django is supported by an independent foundation
           established as a 501(c)(3) non-profit. Like most open-source foundations,
-          the goal of the <a href="/foundation/">Django Software Foundation</a>
+          the goal of the <a href="{{ base_url }}foundation/">Django Software Foundation</a>
           is to promote, support, and advance the Django web framework. If you're
           interested in how the Django Software Foundation supports the Django
           web framework, we published a
-          <a href="/weblog/2015/jan/08/django-software-foundation-2014/">
+          <a href="{{ base_url }}weblog/2015/jan/08/django-software-foundation-2014/">
             Summary of 2014.
           </a>
         {% endblocktranslate %}
@@ -274,7 +277,7 @@
           team since 2021 and a core committer to Python projects such as
           music21, pylint, and <a href="https://archesproject.org/">Arches</a>.
           Jacob
-          <a href="https://www.djangoproject.com/weblog/2025/aug/11/welcome-our-new-fellow-jacob-tyler-walls/">
+          <a href="{{ base_url }}weblog/2025/aug/11/welcome-our-new-fellow-jacob-tyler-walls/">
             began as a full-time Fellow in August 2025</a>.
         {% endblocktranslate %}
       </p>
@@ -285,7 +288,7 @@
             (2024-present)</strong> - an active community member, co-creator of
           <a href="https://djangonaut.space">Djangonaut Space</a> and a member of
           Django's review and triage team since 2023. Sarah
-          <a href="https://www.djangoproject.com/weblog/2024/mar/22/welcome-our-new-fellow-sarah-boyce/">
+          <a href="{{ base_url }}weblog/2024/mar/22/welcome-our-new-fellow-sarah-boyce/">
             began as a full-time Fellow in April 2024</a>.
         {% endblocktranslate %}
       </p>
@@ -297,7 +300,7 @@
           experience in architecting, building, and maintaining scalable web
           services, as well as leading new feature design and development.
           Natalia
-          <a href="https://www.djangoproject.com/weblog/2023/mar/31/welcome-our-new-fellow-natalia-bidart/">
+          <a href="{{ base_url }}weblog/2023/mar/31/welcome-our-new-fellow-natalia-bidart/">
             began as a part-time Fellow in April 2023</a>.
         {% endblocktranslate %}
       </p>

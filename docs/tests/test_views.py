@@ -1,8 +1,10 @@
 from http import HTTPStatus
 
+from django.conf import settings
 from django.contrib.sites.models import Site
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse, set_urlconf
+from django.utils.translation import activate, gettext as _
 from django_hosts.resolvers import reverse as reverse_with_host
 
 from djangoproject.urls import www as www_urls
@@ -83,6 +85,10 @@ class SearchFormTestCase(TestCase):
             "/en/dev/search/", headers={"host": "docs.djangoproject.localhost:8000"}
         )
         self.assertEqual(response.status_code, 200)
+        # No header item is active.
+        self.assertNotContains(response, '<li class="active">')
+        # The search result page does not have the Documentation banner.
+        self.assertNotContains(response, '<div class="copy-banner">')
 
     def test_search_type_filter_all(self):
         response = self.client.get(
@@ -90,9 +96,7 @@ class SearchFormTestCase(TestCase):
             headers={"host": "docs.djangoproject.localhost:8000"},
         )
         self.assertEqual(response.status_code, 200)
-        self.assertContains(
-            response, "4 results for <em>generic</em> in version 5.1", html=True
-        )
+        self.assertContains(response, "5 results for <em>generic</em>", html=True)
         self.assertContains(response, self.active_filter, count=1)
         self.assertContains(response, f"{self.active_filter}All</a>", html=True)
 
@@ -106,7 +110,7 @@ class SearchFormTestCase(TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertContains(
                     response,
-                    "1 result for <em>generic</em> in version 5.1",
+                    "1 result for <em>generic</em>",
                     html=True,
                 )
                 self.assertContains(response, self.active_filter, count=1)
@@ -121,9 +125,7 @@ class SearchFormTestCase(TestCase):
             headers={"host": "docs.djangoproject.localhost:8000"},
         )
         self.assertEqual(response.status_code, 200)
-        self.assertContains(
-            response, "4 results for <em>generic</em> in version 5.1", html=True
-        )
+        self.assertContains(response, "5 results for <em>generic</em>", html=True)
         self.assertContains(response, self.active_filter, count=1)
         self.assertContains(response, f"{self.active_filter}All</a>", html=True)
 
@@ -137,13 +139,54 @@ class SearchFormTestCase(TestCase):
         self.assertContains(
             response, f"{self.active_filter}API Reference</a>", html=True
         )
+        self.assertContains(response, "0 results for <em>potato</em>", html=True)
         self.assertContains(
-            response, "0 results for <em>potato</em> in version 5.1", html=True
+            response,
+            'Please try searching <a href="?q=potato">all results</a>.',
+            html=True,
+        )
+
+    def test_search_website_category_french(self):
+        DocumentRelease.objects.create(release=self.release, lang="fr")
+        response = self.client.get(
+            "/fr/5.1/search/?q=potato&category=website",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, self.active_filter, count=1)
+        activate("fr")
+        self.assertContains(
+            response, f"{self.active_filter}{_('Django Website')}</a>", html=True
         )
         self.assertContains(
             response,
-            'Please try searching <a href="?q=potato">all documentation results</a>.',
+            _("The website content can only be searched in English."),
             html=True,
+        )
+
+    def test_search_category_filter_preserved(self):
+        response = self.client.get(
+            "/en/5.1/search/?q=potato&category=ref",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response, '<input type="hidden" name="category" value="ref">'
+        )
+        self.assertContains(
+            response, f"{self.active_filter}API Reference</a>", html=True
+        )
+        response = self.client.post(
+            "/en/5.1/search/?q=potato&category=ref",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+            data={"category": "ref", "q": "fish"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response, '<input type="hidden" name="category" value="ref">'
+        )
+        self.assertContains(
+            response, f"{self.active_filter}API Reference</a>", html=True
         )
 
     def test_code_links(self):
@@ -198,7 +241,11 @@ class SearchFormTestCase(TestCase):
         base_url = reverse_with_host(
             "document-detail",
             host="docs",
-            kwargs={"lang": "en", "version": "5.1", "url": "refs/query"},
+            kwargs={
+                "lang": settings.DEFAULT_LANGUAGE_CODE,
+                "version": "5.1",
+                "url": "refs/query",
+            },
         )
         for query, expected_code_links in [
             (
@@ -225,7 +272,7 @@ class SearchFormTestCase(TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertContains(
                     response,
-                    f"1 result for <em>{query}</em> in version 5.1",
+                    f"1 result for <em>{query}</em>",
                     html=True,
                 )
                 self.assertContains(response, expected_code_links, html=True)
@@ -246,14 +293,24 @@ class SitemapTests(TestCase):
         )
         self.assertContains(response, "<sitemap>", count=2)
         en_sitemap_url = reverse_with_host(
-            "document-sitemap", host="docs", kwargs={"section": "en"}
+            "document-sitemap",
+            host="docs",
+            kwargs={"section": settings.DEFAULT_LANGUAGE_CODE},
         )
         self.assertContains(response, f"<loc>{en_sitemap_url}</loc>")
 
     def test_sitemap(self):
         doc_release = DocumentRelease.objects.create()
-        document = Document.objects.create(release=doc_release)
-        sitemap = DocsSitemap("en")
+        document = Document.objects.create(
+            release=doc_release,
+            metadata={"parents": DocumentationCategory.TOPICS},
+        )
+        Document.objects.create(
+            release=doc_release,
+            metadata={"parents": DocumentationCategory.WEBSITE},
+            path="example",
+        )
+        sitemap = DocsSitemap(settings.DEFAULT_LANGUAGE_CODE)
         urls = sitemap.get_urls()
         self.assertEqual(len(urls), 1)
         url_info = urls[0]

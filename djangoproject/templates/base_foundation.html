@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load fundraising_extras meetings i18n %}
+{% load fundraising_extras meetings i18n hosts %}
 
 {% block og_title %}Django Software Foundation{% endblock %}
 
@@ -15,17 +15,23 @@
 {# Always include <h2> label and <div> with aria role. #}
   <div role="complementary">
     <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
+
+    {% block content-related-extra %}{% endblock %}
+
     {% donation_snippet %}
 
     <h3>About the foundation</h3>
     <ul class="list-links">
-      <li><a href="/foundation/faq/">FAQ</a></li>
-      <li><a href="/foundation/records/">Records</a></li>
+      <li><a href="{% host_url 'homepage' host 'www' %}foundation/faq/">FAQ</a></li>
+      <li><a href="{% host_url 'homepage' host 'www' %}foundation/records/">Records</a></li>
       <li><a href="{% url 'contact_foundation' %}">Contact us</a></li>
-      <li><a href="/foundation/cla/">Contributor license agreements</a></li>
-      <li><a href="/foundation/conferences/">Organizing a Django conference</a></li>
+      <li><a href="{% host_url 'homepage' host 'www' %}foundation/cla/">Contributor license agreements</a></li>
+      <li><a href="{% host_url 'homepage' host 'www' %}foundation/conferences/">Organizing a Django conference</a></li>
     </ul>
     <h3>{% translate "Latest DSF meeting minutes" %}</h3>
+    <p> {% translate "The minutes from May 2025 onwards are stored in the repo" %}
+      <a href="https://github.com/django/dsf-minutes">https://github.com/django/dsf-minutes</a>
+    </p>
     {% render_latest_meeting_minute_entries 2 %}
     <a href="{% url 'foundation_meeting_archive_index' %}" class="link-readmore">{% translate "More meeting minutes" %}</a>
   </div>

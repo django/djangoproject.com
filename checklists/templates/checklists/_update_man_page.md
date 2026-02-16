@@ -1,0 +1,8 @@
+- [ ] Update manpage
+    - `cd docs`
+    - `make man`
+    - `man _build/man/django-admin.1`
+    - `cp _build/man/django-admin.1 man/django-admin.1`
+    - Do a sanity check: are there meaningful updates other than the new timestamp? If not, revert and move on.
+    - `git commit -a -m '{{ release.commit_prefix }} Updated man page for Django {{ release.version_verbose }}.'`
+    - e.g. https://github.com/django/django/commit/3eb7051161f7e574a8489d998312cce8d92d03d0

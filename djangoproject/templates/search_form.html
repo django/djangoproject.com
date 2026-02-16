@@ -3,6 +3,7 @@
   <form action="{% url 'document-search' version=version lang=lang host 'docs' %}">
     <label id="docs-search-label" class="visuallyhidden" for="{{ form.q.id_for_label }}">{{ form.q.field.widget.attrs.placeholder }}</label>
     {{ form.q }}
+    <input type="hidden" name="category" value="{{ active_category }}">
 
     <button type="submit">
       <i class="icon icon-search" aria-hidden="true"></i>

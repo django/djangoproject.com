@@ -110,12 +110,12 @@ class TestTopCorporateMembers(TestCase):
 
         member_1.invoice_set.create(amount=5, expiration_date=cls.future_date)
         member_2.invoice_set.create(amount=5, expiration_date=cls.future_date)
-        member_3.invoice_set.create(amount=5, expiration_date=cls.future_date)
+        member_3.invoice_set.create(amount=5, expiration_date=cls.past_date)
         member_4.invoice_set.create(amount=5, expiration_date=cls.past_date)
         member_5.invoice_set.create(amount=5, expiration_date=cls.past_date)
 
     def test_with_no_platinum_or_diamond_members(self):
-        members = top_corporate_members()["members"]
+        members = top_corporate_members("diamond", "platinum")["members"]
 
         self.assertEqual(members, [])
 
@@ -128,7 +128,7 @@ class TestTopCorporateMembers(TestCase):
         member_2.invoice_set.create(amount=8, expiration_date=self.future_date)
         member_3.invoice_set.create(amount=2, expiration_date=self.future_date)
 
-        members = top_corporate_members()["members"]
+        members = top_corporate_members("diamond", "platinum")["members"]
 
         self.assertEqual(members, [member_2, member_1, member_3])
 
@@ -141,7 +141,7 @@ class TestTopCorporateMembers(TestCase):
         member_2.invoice_set.create(amount=8, expiration_date=self.future_date)
         member_3.invoice_set.create(amount=2, expiration_date=self.future_date)
 
-        members = top_corporate_members()["members"]
+        members = top_corporate_members("diamond", "platinum")["members"]
 
         self.assertEqual(members, [member_2, member_1, member_3])
 
@@ -162,8 +162,46 @@ class TestTopCorporateMembers(TestCase):
         member_5.invoice_set.create(amount=8, expiration_date=self.future_date)
         member_6.invoice_set.create(amount=2, expiration_date=self.future_date)
 
-        members = top_corporate_members()["members"]
+        members = top_corporate_members("diamond", "platinum")["members"]
 
         expected = [member_5, member_4, member_6, member_2, member_1, member_3]
+
+        self.assertEqual(members, expected)
+
+    def test_with_diamond_platinum_and_gold_members(self):
+        member_1 = CorporateMember.objects.create(membership_level=4)
+        member_2 = CorporateMember.objects.create(membership_level=4)
+        member_3 = CorporateMember.objects.create(membership_level=4)
+
+        member_4 = CorporateMember.objects.create(membership_level=5)
+        member_5 = CorporateMember.objects.create(membership_level=5)
+        member_6 = CorporateMember.objects.create(membership_level=5)
+
+        member_7 = CorporateMember.objects.create(membership_level=3)
+        member_8 = CorporateMember.objects.create(membership_level=3)
+
+        member_1.invoice_set.create(amount=4, expiration_date=self.future_date)
+        member_2.invoice_set.create(amount=8, expiration_date=self.future_date)
+        member_3.invoice_set.create(amount=2, expiration_date=self.future_date)
+
+        member_4.invoice_set.create(amount=4, expiration_date=self.future_date)
+        member_5.invoice_set.create(amount=8, expiration_date=self.future_date)
+        member_6.invoice_set.create(amount=2, expiration_date=self.future_date)
+
+        member_7.invoice_set.create(amount=8, expiration_date=self.future_date)
+        member_8.invoice_set.create(amount=2, expiration_date=self.future_date)
+
+        members = top_corporate_members("diamond", "platinum", "gold")["members"]
+
+        expected = [
+            member_5,
+            member_4,
+            member_6,
+            member_2,
+            member_1,
+            member_3,
+            member_7,
+            member_8,
+        ]
 
         self.assertEqual(members, expected)

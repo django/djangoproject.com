@@ -4,10 +4,14 @@ from operator import attrgetter
 from django.conf import settings
 from django.db import connection
 from django.test import TestCase
+from django.utils import timezone
+from django_hosts import reverse
 
+from blog.models import Entry
 from releases.models import Release
 
 from ..models import Document, DocumentRelease
+from ..search import DocumentationCategory
 
 
 class ModelsTests(TestCase):
@@ -118,9 +122,9 @@ class ManagerTests(TestCase):
         DocumentRelease.objects.bulk_create(
             DocumentRelease(lang=lang, release=release)
             for lang, release in [
-                ("en", None),
-                ("en", r1),
-                ("en", r2),
+                (settings.DEFAULT_LANGUAGE_CODE, None),
+                (settings.DEFAULT_LANGUAGE_CODE, r1),
+                (settings.DEFAULT_LANGUAGE_CODE, r2),
                 ("sv", r1),
                 ("ar", r1),
             ]
@@ -129,7 +133,7 @@ class ManagerTests(TestCase):
     def test_by_version(self):
         self.assertQuerySetEqual(
             DocumentRelease.objects.by_version("1.0"),
-            [("en", "1.0"), ("sv", "1.0"), ("ar", "1.0")],
+            [(settings.DEFAULT_LANGUAGE_CODE, "1.0"), ("sv", "1.0"), ("ar", "1.0")],
             transform=attrgetter("lang", "version"),
             ordered=False,
         )
@@ -137,7 +141,7 @@ class ManagerTests(TestCase):
     def test_by_version_dev(self):
         self.assertQuerySetEqual(
             DocumentRelease.objects.by_version("dev"),
-            [("en", "dev")],
+            [(settings.DEFAULT_LANGUAGE_CODE, "dev")],
             transform=attrgetter("lang", "version"),
             ordered=False,
         )
@@ -145,7 +149,12 @@ class ManagerTests(TestCase):
     def test_by_versions(self):
         self.assertQuerySetEqual(
             DocumentRelease.objects.by_versions("1.0", "dev"),
-            [("en", "dev"), ("en", "1.0"), ("sv", "1.0"), ("ar", "1.0")],
+            [
+                (settings.DEFAULT_LANGUAGE_CODE, "dev"),
+                (settings.DEFAULT_LANGUAGE_CODE, "1.0"),
+                ("sv", "1.0"),
+                ("ar", "1.0"),
+            ],
             transform=attrgetter("lang", "version"),
             ordered=False,
         )
@@ -155,9 +164,11 @@ class ManagerTests(TestCase):
             DocumentRelease.objects.by_versions()
 
     def test_get_by_version_and_lang_exists(self):
-        doc = DocumentRelease.objects.get_by_version_and_lang("1.0", "en")
+        doc = DocumentRelease.objects.get_by_version_and_lang(
+            "1.0", settings.DEFAULT_LANGUAGE_CODE
+        )
         self.assertEqual(doc.release.version, "1.0")
-        self.assertEqual(doc.lang, "en")
+        self.assertEqual(doc.lang, settings.DEFAULT_LANGUAGE_CODE)
 
     def test_get_by_version_and_lang_missing(self):
         with self.assertRaises(DocumentRelease.DoesNotExist):
@@ -165,8 +176,8 @@ class ManagerTests(TestCase):
 
     def test_get_available_languages_by_version(self):
         get = DocumentRelease.objects.get_available_languages_by_version
-        self.assertEqual(list(get("1.0")), ["ar", "en", "sv"])
-        self.assertEqual(list(get("2.0")), ["en"])
+        self.assertEqual(list(get("1.0")), ["ar", settings.DEFAULT_LANGUAGE_CODE, "sv"])
+        self.assertEqual(list(get("2.0")), [settings.DEFAULT_LANGUAGE_CODE])
         self.assertEqual(list(get("3.0")), [])
 
 
@@ -440,7 +451,7 @@ class DocumentManagerTest(TestCase):
         with self.assertNumQueries(1):
             self.assertQuerySetEqual(
                 misspelled_query,
-                [("Generic views", "en", "1.2.3")],
+                [("Generic views", settings.DEFAULT_LANGUAGE_CODE, "1.2.3")],
                 transform=attrgetter(
                     "headline", "release.lang", "release.release.version"
                 ),
@@ -450,7 +461,24 @@ class DocumentManagerTest(TestCase):
 class UpdateDocTests(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.release = DocumentRelease.objects.create()
+        now = timezone.now()
+        cls.release = DocumentRelease.objects.create(
+            release=Release.objects.create(
+                version="1.0.0",
+                eol_date=now + datetime.timedelta(days=1),
+            )
+        )
+        cls.entry = Entry.objects.create(
+            pub_date=now,
+            is_active=True,
+            is_searchable=True,
+            headline="Searchable post",
+            slug="a",
+            body_html="<h1>Searchable Blog Post</h1>",
+        )
+        cls.docs_documents = cls.release.documents.exclude(
+            metadata__parents=DocumentationCategory.WEBSITE
+        )
 
     def test_sync_to_db(self):
         self.release.sync_to_db(
@@ -462,8 +490,24 @@ class UpdateDocTests(TestCase):
                 }
             ]
         )
-        document = self.release.documents.get()
-        self.assertEqual(document.path, "foo/bar")
+        self.assertQuerySetEqual(
+            self.release.documents.all(),
+            [
+                "foo/bar",
+                reverse("community-ecosystem", host="www"),
+                self.entry.get_absolute_url(),
+            ],
+            ordered=False,
+            transform=attrgetter("path"),
+        )
+
+    def test_sync_to_db_skip_non_english(self):
+        """
+        Releases must be English to include the blog and website results in search.
+        """
+        non_english = DocumentRelease.objects.create(lang="es")
+        non_english.sync_to_db([])
+        self.assertQuerySetEqual(non_english.documents.all(), [])
 
     def test_clean_path(self):
         self.release.sync_to_db(
@@ -475,7 +519,7 @@ class UpdateDocTests(TestCase):
                 }
             ]
         )
-        document = self.release.documents.get()
+        document = self.docs_documents.get()
         self.assertEqual(document.path, "foo/bar")
 
     def test_title_strip_tags(self):
@@ -489,7 +533,7 @@ class UpdateDocTests(TestCase):
             ]
         )
         self.assertQuerySetEqual(
-            self.release.documents.all(),
+            self.docs_documents.all(),
             ["This is the title"],
             transform=attrgetter("title"),
         )
@@ -505,7 +549,7 @@ class UpdateDocTests(TestCase):
             ]
         )
         self.assertQuerySetEqual(
-            self.release.documents.all(),
+            self.docs_documents,
             ["Title & title"],
             transform=attrgetter("title"),
         )
@@ -518,7 +562,7 @@ class UpdateDocTests(TestCase):
                 {"current_page_name": "foo/3"},
             ]
         )
-        self.assertQuerySetEqual(self.release.documents.all(), [])
+        self.assertQuerySetEqual(self.docs_documents, [])
 
     def test_excluded_documents(self):
         """
@@ -526,10 +570,8 @@ class UpdateDocTests(TestCase):
         from robots indexing.
         """
         # Read the first Disallow line of robots.txt.
-        robots_path = settings.BASE_DIR.joinpath(
-            "djangoproject", "static", "robots.docs.txt"
-        )
-        with open(str(robots_path)) as fh:
+        robots_path = settings.BASE_DIR / "djangoproject" / "static" / "robots.docs.txt"
+        with robots_path.open() as fh:
             for line in fh:
                 if line.startswith("Disallow:"):
                     break
@@ -547,3 +589,45 @@ class UpdateDocTests(TestCase):
         )
         document = release.documents.get()
         self.assertEqual(document.path, "nonexcluded/bar")
+
+
+class DocumentUrlTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.release = DocumentRelease.objects.create(
+            release=Release.objects.create(version="1.2.3"),
+        )
+
+    def test_document_url(self):
+        documents = [
+            {
+                "metadata": {"parents": "topics http"},
+                "path": "topics/http/generic-views",
+                "release": self.release,
+                "title": "Generic views",
+            },
+            {
+                "metadata": {},
+                "path": "",
+                "release": self.release,
+                "title": "Index",
+            },
+        ]
+        Document.objects.bulk_create(Document(**doc) for doc in documents)
+        self.assertQuerySetEqual(
+            self.release.documents.order_by("path"),
+            [
+                "http://docs.djangoproject.localhost:8000/en/1.2.3/",
+                "http://docs.djangoproject.localhost:8000/en/1.2.3/"
+                "topics/http/generic-views/",
+            ],
+            transform=lambda doc: doc.get_absolute_url(),
+        )
+
+    def test_document_url_documentation_category_website(self):
+        self.release._sync_views_to_db()
+        document_view = self.release.documents.get()
+        self.assertEqual(
+            document_view.get_absolute_url(),
+            "http://www.djangoproject.localhost:8000/community/ecosystem/",
+        )
