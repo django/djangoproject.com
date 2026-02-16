@@ -82,45 +82,45 @@
     <div class="pagination">
       <nav aria-label="{% translate 'Pagination' context 'pagination' %}">
         <ul class="nav-pagination">
-    
+
           {% if page.has_previous %}
             <li>
               <a rel="prev"
                  class="previous"
                  href="{% querystring page=page.previous_page_number %}"
                  aria-label="{% blocktranslate with page_number=page.previous_page_number num_pages=page.paginator.num_pages trimmed %}
-                   Previous page, Page {{ page_number }} of {{ num_pages }}
-                 {% endblocktranslate %}">
+                               Previous page, Page {{ page_number }} of {{ num_pages }}
+                             {% endblocktranslate %}">
                 <i class="icon icon-chevron-left"></i>
                 <span class="visuallyhidden">{% translate "Previous" context "pagination" %}</span>
               </a>
             </li>
           {% endif %}
-    
+
           <li class="page-current">
             {% blocktranslate with page_number=page.number num_pages=page.paginator.num_pages trimmed %}
               Page {{ page_number }} of {{ num_pages }}
             {% endblocktranslate %}
           </li>
-    
+
           {% if page.has_next %}
             <li>
               <a rel="next"
                  class="next"
                  href="{% querystring page=page.next_page_number %}"
                  aria-label="{% blocktranslate with page_number=page.next_page_number num_pages=page.paginator.num_pages trimmed %}
-                   Next page, Page {{ page_number }} of {{ num_pages }}
-                 {% endblocktranslate %}">
+                               Next page, Page {{ page_number }} of {{ num_pages }}
+                             {% endblocktranslate %}">
                 <i class="icon icon-chevron-right"></i>
                 <span class="visuallyhidden">{% translate "Next" context "pagination" %}</span>
               </a>
             </li>
           {% endif %}
-    
+
         </ul>
       </nav>
     </div>
-    
+
 
   {% endif %}
 {% endblock %}
