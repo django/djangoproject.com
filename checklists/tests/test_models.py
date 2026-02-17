@@ -1,8 +1,8 @@
 import json
 import re
-import zoneinfo
 from datetime import UTC, date, datetime
 
+import zoneinfo
 from django.db import IntegrityError
 from django.template.loader import render_to_string
 from django.test import RequestFactory, TestCase, override_settings
@@ -138,9 +138,7 @@ class BugFixReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         release = self.factory.make_release(version="5.2.4")
         checklist = self.make_checklist(release=release)
         self.assertEqual(checklist.slug, "bugfix-releases")
-        self.assertEqual(
-            checklist.blogpost_title, "Django bugfix release issued: 5.2.4"
-        )
+        self.assertEqual(checklist.blogpost_title, "Django bugfix release issued: 5.2.4")
         self.assertEqual(
             checklist.blogpost_summary,
             "Today the Django project issued a bugfix release for the 5.2 release "
@@ -172,9 +170,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         release52 = self.factory.make_release(version="5.2")
         prerelease = self.factory.make_release(version="6.0a1")
         checklist = self.make_checklist(releases=[release51, release52, prerelease])
-        self.assertEqual(
-            checklist.affected_releases, [prerelease, release52, release51]
-        )
+        self.assertEqual(checklist.affected_releases, [prerelease, release52, release51])
 
     def test_blogpost_info(self):
         release42 = self.factory.make_release(version="4.2.13")
@@ -332,14 +328,10 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             )
 
         with self.subTest(task="Stub release notes added"):
-            self.assertStubReleaseNotesAdded(
-                checklist.latest_release, checklist_content
-            )
+            self.assertStubReleaseNotesAdded(checklist.latest_release, checklist_content)
 
         with self.subTest(task="Make release public steps added"):
-            self.assertMakeReleasePublicAdded(
-                checklist.latest_release, checklist_content
-            )
+            self.assertMakeReleasePublicAdded(checklist.latest_release, checklist_content)
 
         with self.subTest(task="Push and announce steps added"):
             self.assertPushAndAnnouncesAdded(checklist, checklist_content)
@@ -856,9 +848,7 @@ class PreReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
                 )
                 assert instance.release is release
                 checklist_content = self.do_render_checklist(instance)
-                self.assertIn(
-                    "- [ ] Update the translation catalogs:", checklist_content
-                )
+                self.assertIn("- [ ] Update the translation catalogs:", checklist_content)
                 if status == "rc":
                     self.assertIn(
                         "- [ ] Create a new topic in the `Internationalization` "

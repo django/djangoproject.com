@@ -1,0 +1,45 @@
+line-length = 90
+
+[lint]
+select = [
+    "E",
+    "F",
+    "W",
+    "I",
+]
+
+ignore = [
+    "E501",
+]
+
+exclude = [
+    "djangodocs",
+    ".direnv",
+    ".venv",
+    "**/migrations/*",
+]
+
+[lint.per-file-ignores]
+"djangoproject/settings/*.py" = ["F405"]
+"docs/tests.py" = ["E501"]
+"**/migrations/*" = ["RUF012"]
+"releases/tests.py" = ["E731"]
+
+[lint.isort]
+combine-as-imports = true
+known-first-party = [
+    "accounts",
+    "aggregator",
+    "blog",
+    "contact",
+    "dashboard",
+    "djangoproject",
+    "docs",
+    "foundation",
+    "fundraising",
+    "legacy",
+    "members",
+    "releases",
+    "svntogit",
+    "tracdb",
+]

@@ -44,9 +44,7 @@ class BoardMember(models.Model):
 
     account = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     office = models.ForeignKey(Office, related_name="holders", on_delete=models.CASCADE)
-    term = models.ForeignKey(
-        Term, related_name="board_members", on_delete=models.CASCADE
-    )
+    term = models.ForeignKey(Term, related_name="board_members", on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.account.get_full_name()} ({self.office} - {self.term.year})"

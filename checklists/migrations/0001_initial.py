@@ -9,7 +9,6 @@ import checklists.models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -62,9 +61,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "summary",
-                    models.CharField(
-                        help_text="Single backticks here.", max_length=1024
-                    ),
+                    models.CharField(help_text="Single backticks here.", max_length=1024),
                 ),
                 (
                     "description",
