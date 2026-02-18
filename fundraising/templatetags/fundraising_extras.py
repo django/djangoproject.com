@@ -1,9 +1,11 @@
+import datetime
+import math
+from calendar import isleap
 from decimal import Decimal
 
 from django import template
 from django.conf import settings
 from django.db import models
-from django.template.defaultfilters import floatformat
 
 from fundraising.forms import DonateForm
 from fundraising.models import (
@@ -24,12 +26,12 @@ register = template.Library()
 @register.filter
 def as_percentage(part, total):
     if total is None or part is None:
-        return "0.00"
+        return "0"
 
     try:
-        return floatformat((part / total) * Decimal("100.0"))
+        return str(math.floor((part / total) * 100))
     except ZeroDivisionError:
-        return "0.00"
+        return "0"
 
 
 @register.inclusion_tag("fundraising/includes/donation_snippet.html")
@@ -79,6 +81,14 @@ def donation_form_with_heart(context):
         }
     )
 
+    # Calculate expected amount based on day of year
+    today = datetime.date.today()
+    day_of_year = today.timetuple().tm_yday
+    days_in_year = 366 if isleap(today.year) else 365
+    expected_amount = (
+        GOAL_AMOUNT * Decimal(day_of_year) / Decimal(days_in_year)
+    ).quantize(Decimal("1"))
+
     return {
         "goal_amount": GOAL_AMOUNT,
         "goal_start_date": GOAL_START_DATE,
@@ -88,6 +98,7 @@ def donation_form_with_heart(context):
         "display_logo_amount": LEADERSHIP_LEVEL_AMOUNT,
         "stripe_publishable_key": settings.STRIPE_PUBLISHABLE_KEY,
         "user": user,
+        "expected_amount": expected_amount,
     }
 
 
