@@ -1,0 +1,25 @@
+{% extends "admin/change_form.html" %} {% load i18n %} \ {% block extrastyle %}
+  {{ block.super }}
+  <style>
+    .meeting-warning {
+      background: #fff3cd;
+      border: 2px solid #ffeeba;
+      border-radius: 4px;
+      color: #856404;
+      margin: 1em 0;
+      padding: 1em;
+      font-size: 1.1em;
+      font-weight: 500;
+    }
+    .meeting-warning::before {
+      content: "⚠️ ";
+    }
+  </style>
+{% endblock %} {% block content %}
+  <div class="messagelist">
+    <div class="meeting-warning">
+      Note: Meeting notes go live and on RSS on Save, make sure to complete all
+      relevant fields.
+    </div>
+  </div>
+  {{ block.super }} {% endblock %}
