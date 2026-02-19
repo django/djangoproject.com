@@ -64,8 +64,8 @@
     Leaders (${{ amount }}+){% endblocktranslate %}</h3>
   <p>
     {% blocktranslate trimmed with amount=display_logo_amount|intcomma %}
-      Leadership-level donors contribute ${{ amount }} or
-      more in a calendar year.
+      Leadership-level donors contribute at least ${{ amount }}
+      and have donated in the last {{ display_donor_days }} days.
     {% endblocktranslate %}
   </p>
   <div>
