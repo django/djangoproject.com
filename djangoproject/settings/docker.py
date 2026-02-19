@@ -2,24 +2,24 @@ from .dev import *  # noqa: F403
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE"),
-        "NAME": os.environ.get("SQL_DATABASE"),
-        "USER": os.environ.get("SQL_USER"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD"),
-        "HOST": os.environ.get("SQL_HOST"),
-        "PORT": os.environ.get("SQL_PORT"),
-    }
+        "ENGINE": os.environ["SQL_ENGINE"],
+        "NAME": os.environ["SQL_DATABASE"],
+        "USER": os.environ["SQL_USER"],
+        "PASSWORD": os.environ["SQL_PASSWORD"],
+        "HOST": os.environ["SQL_HOST"],
+        "PORT": os.environ["SQL_PORT"],
+    },
+    "trac": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ["TRAC_DATABASE"],
+        # "code.djangoproject" value is hardcoded in trac.sql
+        "USER": "code.djangoproject",
+        "PASSWORD": os.environ["TRAC_PASSWORD"],
+        "HOST": os.environ["TRAC_HOST"],
+        "PORT": os.environ["TRAC_PORT"],
+    },
 }
 
-# Trac connection
-DATABASES["trac"] = {
-    "ENGINE": "django.db.backends.postgresql",
-    "NAME": os.environ.get("TRAC_DATABASE", "code.djangoproject"),
-    "USER": os.environ.get("TRAC_USER", "code.djangoproject"),
-    "PASSWORD": os.environ.get("TRAC_PASSWORD", ""),
-    "HOST": os.environ.get("TRAC_HOST", "db"),
-    "PORT": os.environ.get("TRAC_PORT", "5432"),
-}
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
