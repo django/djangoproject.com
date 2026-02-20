@@ -8,7 +8,7 @@
 {% block og_title %}{% translate "Download Django" %}{% endblock %}
 {% block og_image %}{% static "img/release-roadmap.svg" %}{% endblock %}
 {% block og_image_alt %}{% translate "Django's release roadmap" %}{% endblock %}
-{% block og_description %}{% blocktranslate trimmed with version=current.version %}The latest official version is {{ version }}{% endblocktranslate %}{% if current.is_lts %} (LTS){% endif %}{% endblock %}
+{% block og_description %}{% blocktranslate trimmed with version=current.version_with_lts %}The latest official version is {{ version }}{% endblocktranslate %}{% endblock %}
 {% block og_image_width %}1030{% endblock %}
 {% block og_image_height %}480{% endblock %}
 {% block og_image_type %}image/svg+xml{% endblock %}
@@ -19,6 +19,7 @@
 {% block content %}
   <h1>{% translate "How to get Django" %}</h1>
   {% url 'document-detail' lang='en' version='dev' url='faq/install' host 'docs' as faq_install_url %}
+  {% comment %}Translators: The FAQ link is in English, and the hash after the URL should not be translated{% endcomment %}
   <p>{% blocktranslate trimmed %}
     Django is available open-source under the
     <a href="https://github.com/django/django/blob/main/LICENSE">BSD license</a>.
@@ -33,10 +34,11 @@
   {% cycle 1 2 3 as options silent %}
   <h2>{% blocktranslate %}Option {{ options }}: Get the latest official version{% endblocktranslate %}</h2>
   <p>
-    {% blocktranslate trimmed with version=current.version %}
-      The latest official version is {{ current.version }}{% endblocktranslate %}{% if current.is_lts %} (LTS){% endif %}.
-    {% blocktranslate trimmed %}Read the
-      {{ current_release_version }}, then install it with
+    {% blocktranslate trimmed with version=current.version_with_lts %}
+      The latest official version is {{ version }}.
+    {% endblocktranslate %}
+    {% blocktranslate trimmed %}
+      Read the {{ current_release_version }}, then install it with
       <a href="https://pip.pypa.io/en/latest/">pip</a>:
     {% endblocktranslate %}
   </p>
@@ -86,10 +88,10 @@
   </p>
 
   <h2>{% translate "After you get it" %}</h2>
-  {% url 'document-detail' lang='en' version='stable' url='intro/install' host 'docs' as stable_url %}
+  {% url 'document-detail' lang='en' version='stable' url='intro/install' host 'docs' as install_url %}
   <p>
     {% blocktranslate trimmed %}
-      See the <a href="{{ stable_url }}">installation guide</a> for further instructions. Make sure you read the
+      See the <a href="{{ install_url }}">installation guide</a> for further instructions. Make sure you read the
       documentation that corresponds to the version of Django you’ve just installed.
     {% endblocktranslate %}
   </p>
@@ -372,7 +374,7 @@
     <p>{% translate "If you're just looking for a stable deployment target and don't mind waiting for the next release, you'll want to stick with the latest official release (which will always include detailed notes on any changes you'll need to make while upgrading)." %}</p>
     <h3>{% translate "Previous releases" %}</h3>
     <ul>
-      <li>Django {{ previous.version }}{% if previous.is_lts %} (LTS){% endif %}:
+      <li>Django {{ previous.version_with_lts }}:
         {% include "releases/_download_links.html" with release=previous %}
       </li>
       {% if lts %}
