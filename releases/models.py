@@ -1,5 +1,6 @@
 import datetime
 import re
+from functools import total_ordering
 from pathlib import Path
 
 from django.conf import settings
@@ -161,6 +162,7 @@ def upload_to_checksum(release, filename):
     return f"pgp/Django-{version}.checksum.txt"
 
 
+@total_ordering
 class Release(models.Model):
     DEFAULT_CACHE_KEY = "%s_django_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
     STATUS_CHOICES = (
