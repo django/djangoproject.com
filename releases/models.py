@@ -1,6 +1,5 @@
 import datetime
 import re
-from functools import total_ordering
 from pathlib import Path
 
 from django.conf import settings
@@ -10,7 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.functional import cached_property
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 from django.utils.version import get_complete_version, get_main_version
 
 from .utils import get_loose_version_tuple
@@ -316,6 +315,14 @@ class Release(models.Model):
     def is_dot_zero(self):
         """Return True if this is a final X.Y.0 release."""
         return self.status == "f" and self.micro == 0
+
+    @cached_property
+    def version_with_lts(self):
+        if self.is_lts:
+            # Translators: Long Term Support version
+            return gettext("{version} (LTS)").format(version=self.version)
+        else:
+            return self.version
 
     def __lt__(self, other):
         return self.version_tuple < other.version_tuple
