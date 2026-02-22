@@ -152,7 +152,7 @@ class TestCampaign(ReleaseMixin, TemporaryMediaRootMixin, TestCase):
         )
         retrieve_customer.assert_called_once_with("54321", expand=["subscriptions"])
         donation = Donation.objects.get(id=donation.id)
-        self.assertEqual("", donation.stripe_subscription_id)
+        self.assertEqual("cancel12345", donation.stripe_subscription_id)
 
     @patch("stripe.Customer.retrieve")
     def test_cancel_already_cancelled_donation(self, retrieve_customer):
@@ -285,12 +285,15 @@ class TestWebhooks(ReleaseMixin, TestCase):
         self.assertEqual(payment.amount, 10)
 
     def test_subscription_cancelled(self):
+        donation = Donation.objects.get(id=self.donation.id)
+        donation.stripe_subscription_id = "cancel" + donation.stripe_subscription_id
+        donation.save()
         self.post_event(self.stripe_data("subscription_cancelled"))
         donation = Donation.objects.get(id=self.donation.id)
         self.assertEqual(donation.stripe_subscription_id, "")
         self.assertEqual(len(mail.outbox), 1)
         expected_url = django_hosts_reverse("fundraising:index")
-        self.assertTrue(expected_url in mail.outbox[0].body)
+        self.assertIn(expected_url, mail.outbox[0].body)
 
     def test_payment_failed(self):
         self.post_event(self.stripe_data("payment_failed"))
