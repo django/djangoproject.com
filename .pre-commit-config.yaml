@@ -41,20 +41,20 @@ repos:
             args: [--target-version, "6.0"]
 
     - repo: https://github.com/psf/black-pre-commit-mirror
-      rev: 25.12.0
+      rev: 26.1.0
       hooks:
           - id: black
             args: ["--target-version=py312"]
 
     - repo: https://github.com/rbubley/mirrors-prettier
-      rev: v3.7.4
+      rev: v3.8.1
       hooks:
           - id: prettier
             exclude_types: [html, json, scss]
             exclude: '(^djangoproject\/static\/js\/lib\/.*$|^checklists\/templates\/.*$)'
 
     - repo: https://github.com/pycqa/isort
-      rev: 7.0.0
+      rev: 8.0.0
       hooks:
           - id: isort
 
@@ -70,6 +70,6 @@ repos:
             files: .*/templates/.*\.html$
 
     - repo: https://github.com/mrtazz/checkmake.git
-      rev: 0.2.2
+      rev: v0.3.0
       hooks:
           - id: checkmake
