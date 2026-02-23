@@ -9,11 +9,9 @@ from .tractime import timestamp_to_datetime
 
 def bouncing_tickets(request):
     c = db.connections["trac"].cursor()
-    c.execute(
-        """SELECT * FROM bouncing_tickets
+    c.execute("""SELECT * FROM bouncing_tickets
                  WHERE times_reopened >= 3
-                 ORDER BY last_reopen_time DESC"""
-    )
+                 ORDER BY last_reopen_time DESC""")
     tickets = dictfetchall(c)
 
     # Fix timestamps. LOLTrac.

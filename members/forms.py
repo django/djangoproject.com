@@ -51,12 +51,10 @@ class CorporateMemberSignUpForm(forms.ModelForm):
             "activities, written as if the DSF were describing your company "
             "to a third party."
         )
-        self.fields["description"].help_text = _(
-            """We'll use this text on the
+        self.fields["description"].help_text = _("""We'll use this text on the
             <a href="https://www.djangoproject.com/foundation/corporate-members/">
             corporate membership page</a>; you can use the existing descriptions
-            as a guide for flavor we're looking for."""
-        )
+            as a guide for flavor we're looking for.""")
         self.fields["django_usage"].widget.attrs["placeholder"] = _(
             "How does your organization use Django?"
         )
