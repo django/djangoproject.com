@@ -441,13 +441,33 @@ main {
 
 .container--flex--wrap--mobile {
     flex-wrap: wrap;
-
-    @include respond-min(768px) {
-        flex-wrap: no-wrap;
+    @include respond-min(1300px) {
+        flex-wrap: nowrap;
     }
 }
+@media screen and (min-width: 1300px) {
+  header nav ul {
+    display: flex;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+  .container {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 1366px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .logo {
+    margin-left: 1px;
+  }
 
-
+}
+@media screen and (min-width: 1300px) {
+  header nav ul > li:last-child {
+    padding-right: 8px;
+  }
+}
 //-------------------  Site Chrome (Header/Footer)
 
 header {
@@ -2443,7 +2463,7 @@ h2+.list-link-soup {
 
     @include respond-min(768px) {
         position: sticky;
-        min-width: 768px;
+        min-width: 748px;
     }
 }
 
