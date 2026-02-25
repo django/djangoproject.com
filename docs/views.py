@@ -105,9 +105,7 @@ def document(request, lang, version, url):
 if not settings.DEBUG:
     # Specify a dedicated cache for docs pages that need to be purged after
     # docs rebuilds (see docs/management/commands/update_docs.py):
-    document = cache_page(settings.CACHE_MIDDLEWARE_SECONDS, cache="docs-pages")(
-        document
-    )
+    document = cache_page(settings.CACHE_MIDDLEWARE_SECONDS, cache="docs-pages")(document)
 
 
 def redirect_index(request, *args, **kwargs):
@@ -171,9 +169,7 @@ def search_results(request, lang, version, per_page=10, orphans=3):
             if exact is not None:
                 return redirect(exact)
 
-            results = Document.objects.search(
-                q, release, document_category=doc_category
-            )
+            results = Document.objects.search(q, release, document_category=doc_category)
 
             page_number = request.GET.get("page") or 1
             paginator = Paginator(results, per_page=per_page, orphans=orphans)

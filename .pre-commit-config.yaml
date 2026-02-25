@@ -40,12 +40,6 @@ repos:
           - id: django-upgrade
             args: [--target-version, "6.0"]
 
-    - repo: https://github.com/psf/black-pre-commit-mirror
-      rev: 25.12.0
-      hooks:
-          - id: black
-            args: ["--target-version=py312"]
-
     - repo: https://github.com/rbubley/mirrors-prettier
       rev: v3.7.4
       hooks:
@@ -53,15 +47,12 @@ repos:
             exclude_types: [html, json, scss]
             exclude: '(^djangoproject\/static\/js\/lib\/.*$|^checklists\/templates\/.*$)'
 
-    - repo: https://github.com/pycqa/isort
-      rev: 7.0.0
+    - repo: https://github.com/astral-sh/ruff-pre-commit
+      rev: v0.4.10
       hooks:
-          - id: isort
-
-    - repo: https://github.com/pycqa/flake8
-      rev: 7.3.0
-      hooks:
-          - id: flake8
+          - id: ruff
+            args: ["--fix"]
+          - id: ruff-format
 
     - repo: https://github.com/rtts/djhtml
       rev: 3.0.10

@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("aggregator", "0003_increase_url_max_length"),
     ]
@@ -45,15 +44,11 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "website_url",
-                    models.URLField(
-                        blank=True, default=None, max_length=250, null=True
-                    ),
+                    models.URLField(blank=True, default=None, max_length=250, null=True),
                 ),
                 (
                     "event_site_url",
-                    models.URLField(
-                        blank=True, default=None, max_length=250, null=True
-                    ),
+                    models.URLField(blank=True, default=None, max_length=250, null=True),
                 ),
                 ("is_active", models.BooleanField(default=True)),
                 ("created_at", models.DateTimeField(auto_now_add=True)),

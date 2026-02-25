@@ -469,9 +469,7 @@ class SecurityIssueReleasesThrough(models.Model):
         "SecurityIssue", on_delete=models.CASCADE, verbose_name="Security Issue"
     )
     release = models.ForeignKey(Release, on_delete=models.CASCADE)
-    commit_hash = models.CharField(
-        max_length=128, default="", blank=True, db_index=True
-    )
+    commit_hash = models.CharField(max_length=128, default="", blank=True, db_index=True)
 
     objects = SecurityIssueReleasesThroughManager()
 
@@ -744,8 +742,7 @@ class SecurityIssue(models.Model):
     @cached_property
     def cve_html_description(self):
         return "".join(
-            f"<p>{line.strip()}</p>"
-            for line in urlize(self.cve_description).split("\n")
+            f"<p>{line.strip()}</p>" for line in urlize(self.cve_description).split("\n")
         )
 
     @property

@@ -7,7 +7,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("docs", "0006_alter_document_metadata_noop"),
     ]
@@ -56,9 +55,7 @@ class Migration(migrations.Migration):
                                         config="arabic",
                                         weight="B",
                                     ),
-                                    django.contrib.postgres.search.SearchConfig(
-                                        "arabic"
-                                    ),
+                                    django.contrib.postgres.search.SearchConfig("arabic"),
                                 ),
                                 "||",
                                 django.contrib.postgres.search.SearchVector(
@@ -164,9 +161,7 @@ class Migration(migrations.Migration):
                                         config="danish",
                                         weight="B",
                                     ),
-                                    django.contrib.postgres.search.SearchConfig(
-                                        "danish"
-                                    ),
+                                    django.contrib.postgres.search.SearchConfig("danish"),
                                 ),
                                 "||",
                                 django.contrib.postgres.search.SearchVector(
@@ -218,9 +213,7 @@ class Migration(migrations.Migration):
                                         config="german",
                                         weight="B",
                                     ),
-                                    django.contrib.postgres.search.SearchConfig(
-                                        "german"
-                                    ),
+                                    django.contrib.postgres.search.SearchConfig("german"),
                                 ),
                                 "||",
                                 django.contrib.postgres.search.SearchVector(
@@ -272,9 +265,7 @@ class Migration(migrations.Migration):
                                         config="greek",
                                         weight="B",
                                     ),
-                                    django.contrib.postgres.search.SearchConfig(
-                                        "greek"
-                                    ),
+                                    django.contrib.postgres.search.SearchConfig("greek"),
                                 ),
                                 "||",
                                 django.contrib.postgres.search.SearchVector(
@@ -434,9 +425,7 @@ class Migration(migrations.Migration):
                                         config="basque",
                                         weight="B",
                                     ),
-                                    django.contrib.postgres.search.SearchConfig(
-                                        "basque"
-                                    ),
+                                    django.contrib.postgres.search.SearchConfig("basque"),
                                 ),
                                 "||",
                                 django.contrib.postgres.search.SearchVector(
@@ -542,9 +531,7 @@ class Migration(migrations.Migration):
                                         config="french",
                                         weight="B",
                                     ),
-                                    django.contrib.postgres.search.SearchConfig(
-                                        "french"
-                                    ),
+                                    django.contrib.postgres.search.SearchConfig("french"),
                                 ),
                                 "||",
                                 django.contrib.postgres.search.SearchVector(
@@ -596,9 +583,7 @@ class Migration(migrations.Migration):
                                         config="irish",
                                         weight="B",
                                     ),
-                                    django.contrib.postgres.search.SearchConfig(
-                                        "irish"
-                                    ),
+                                    django.contrib.postgres.search.SearchConfig("irish"),
                                 ),
                                 "||",
                                 django.contrib.postgres.search.SearchVector(
@@ -650,9 +635,7 @@ class Migration(migrations.Migration):
                                         config="hindi",
                                         weight="B",
                                     ),
-                                    django.contrib.postgres.search.SearchConfig(
-                                        "hindi"
-                                    ),
+                                    django.contrib.postgres.search.SearchConfig("hindi"),
                                 ),
                                 "||",
                                 django.contrib.postgres.search.SearchVector(
@@ -716,9 +699,7 @@ class Migration(migrations.Migration):
                                     config="hungarian",
                                     weight="C",
                                 ),
-                                django.contrib.postgres.search.SearchConfig(
-                                    "hungarian"
-                                ),
+                                django.contrib.postgres.search.SearchConfig("hungarian"),
                             ),
                             "||",
                             django.contrib.postgres.search.SearchVector(
@@ -826,9 +807,7 @@ class Migration(migrations.Migration):
                                     config="indonesian",
                                     weight="C",
                                 ),
-                                django.contrib.postgres.search.SearchConfig(
-                                    "indonesian"
-                                ),
+                                django.contrib.postgres.search.SearchConfig("indonesian"),
                             ),
                             "||",
                             django.contrib.postgres.search.SearchVector(
@@ -936,9 +915,7 @@ class Migration(migrations.Migration):
                                     config="lithuanian",
                                     weight="C",
                                 ),
-                                django.contrib.postgres.search.SearchConfig(
-                                    "lithuanian"
-                                ),
+                                django.contrib.postgres.search.SearchConfig("lithuanian"),
                             ),
                             "||",
                             django.contrib.postgres.search.SearchVector(
@@ -980,9 +957,7 @@ class Migration(migrations.Migration):
                                         config="nepali",
                                         weight="B",
                                     ),
-                                    django.contrib.postgres.search.SearchConfig(
-                                        "nepali"
-                                    ),
+                                    django.contrib.postgres.search.SearchConfig("nepali"),
                                 ),
                                 "||",
                                 django.contrib.postgres.search.SearchVector(
@@ -1034,9 +1009,7 @@ class Migration(migrations.Migration):
                                         config="dutch",
                                         weight="B",
                                     ),
-                                    django.contrib.postgres.search.SearchConfig(
-                                        "dutch"
-                                    ),
+                                    django.contrib.postgres.search.SearchConfig("dutch"),
                                 ),
                                 "||",
                                 django.contrib.postgres.search.SearchVector(
@@ -1100,9 +1073,7 @@ class Migration(migrations.Migration):
                                     config="norwegian",
                                     weight="C",
                                 ),
-                                django.contrib.postgres.search.SearchConfig(
-                                    "norwegian"
-                                ),
+                                django.contrib.postgres.search.SearchConfig("norwegian"),
                             ),
                             "||",
                             django.contrib.postgres.search.SearchVector(
@@ -1156,9 +1127,7 @@ class Migration(migrations.Migration):
                                     config="portuguese",
                                     weight="C",
                                 ),
-                                django.contrib.postgres.search.SearchConfig(
-                                    "portuguese"
-                                ),
+                                django.contrib.postgres.search.SearchConfig("portuguese"),
                             ),
                             "||",
                             django.contrib.postgres.search.SearchVector(
@@ -1416,9 +1385,7 @@ class Migration(migrations.Migration):
                                         config="tamil",
                                         weight="B",
                                     ),
-                                    django.contrib.postgres.search.SearchConfig(
-                                        "tamil"
-                                    ),
+                                    django.contrib.postgres.search.SearchConfig("tamil"),
                                 ),
                                 "||",
                                 django.contrib.postgres.search.SearchVector(
@@ -1564,9 +1531,7 @@ class Migration(migrations.Migration):
                                         config="simple",
                                         weight="A",
                                     ),
-                                    django.contrib.postgres.search.SearchConfig(
-                                        "simple"
-                                    ),
+                                    django.contrib.postgres.search.SearchConfig("simple"),
                                 ),
                                 "||",
                                 django.contrib.postgres.search.SearchVector(
