@@ -4,12 +4,14 @@ djangoproject.com source code
 .. image:: https://github.com/django/djangoproject.com/workflows/Tests/badge.svg?branch=main
     :target: https://github.com/django/djangoproject.com/actions
 
+Django is a high-level Python web framework.
 To run locally, you can either:
 
 - Install and run from a virtual environment
 - Run with docker compose (see below)
 
 Install and run locally from a virtual environment.
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Create a `Python 3.12 virtualenv and activate it <https://docs.python.org/3/library/venv.html>`_
