@@ -6,8 +6,8 @@ djangoproject.com source code
 
 To run locally, you can either:
 
-- Install and run from a virtual environment
-- Run with docker compose (see below)
+### Install and run from a virtual environment
+###Run with docker compose (see below)
 
 Install and run locally from a virtual environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
