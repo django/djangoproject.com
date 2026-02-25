@@ -9,7 +9,7 @@ To run locally, you can either:
 - Install and run from a virtual environment
 - Run with docker compose (see below)
 
-Install and run locally from a virtual environment
+Install and run locally from a virtual environment.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Create a `Python 3.12 virtualenv and activate it <https://docs.python.org/3/library/venv.html>`_
