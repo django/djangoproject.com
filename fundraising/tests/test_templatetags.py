@@ -1,6 +1,7 @@
 from datetime import date, datetime, timedelta
 from decimal import Decimal
 
+import time_machine
 from django.test import TestCase
 from django.utils.crypto import get_random_string
 
@@ -15,10 +16,33 @@ from ..models import (
     Payment,
 )
 from ..templatetags.fundraising_extras import (
+    as_percentage,
     display_django_heroes,
     donation_form_with_heart,
     top_corporate_members,
 )
+
+
+class TestAsPercentage(TestCase):
+    def test_floor_rounding(self):
+        """Percentage should always round down (floor)."""
+        # 2.8% should show as 2%, not 3%
+        self.assertEqual(as_percentage(Decimal("8400"), Decimal("300000")), "2")
+        # 99.9% should show as 99%, not 100%
+        self.assertEqual(as_percentage(Decimal("299700"), Decimal("300000")), "99")
+        # Exact percentage should remain the same
+        self.assertEqual(as_percentage(Decimal("150000"), Decimal("300000")), "50")
+
+    def test_zero_and_none_values(self):
+        """Handle zero and None values gracefully."""
+        self.assertEqual(as_percentage(None, Decimal("300000")), "0")
+        self.assertEqual(as_percentage(Decimal("0"), Decimal("300000")), "0")
+        self.assertEqual(as_percentage(Decimal("100"), None), "0")
+        self.assertEqual(as_percentage(Decimal("100"), Decimal("0")), "0")
+
+    def test_over_100_percent(self):
+        """Handle over 100% correctly."""
+        self.assertEqual(as_percentage(Decimal("350000"), Decimal("300000")), "116")
 
 
 class TestDonationFormWithHeart(TestCase):
@@ -41,6 +65,36 @@ class TestDonationFormWithHeart(TestCase):
         response = donation_form_with_heart({"user": None})
         self.assertEqual(response["total_donors"], 1)
         self.assertEqual(response["donated_amount"], Decimal("8.00"))
+
+    def test_expected_amount_in_context(self):
+        """Expected amount should be calculated and included in context."""
+        response = donation_form_with_heart({"user": None})
+        self.assertIn("expected_amount", response)
+        self.assertIsInstance(response["expected_amount"], Decimal)
+        # Expected amount should be a positive value based on day of year
+        self.assertGreater(response["expected_amount"], 0)
+
+    def test_expected_amount_calculation(self):
+        """Test expected amount is correctly calculated based on day of year."""
+        # GOAL_AMOUNT = 500000, test various dates in a non-leap year (2026)
+        test_cases = [
+            # (date, expected_amount)
+            ("2026-01-01", Decimal("1370")),  # Day 1: 500000 * 1/365
+            ("2026-07-02", Decimal("250685")),  # Day 183: 500000 * 183/365
+            ("2026-12-31", Decimal("500000")),  # Day 365: 500000 * 365/365
+        ]
+        for date_str, expected in test_cases:
+            with self.subTest(date=date_str):
+                with time_machine.travel(date_str):
+                    response = donation_form_with_heart({"user": None})
+                    self.assertEqual(response["expected_amount"], expected)
+
+    @time_machine.travel("2024-01-01")
+    def test_expected_amount_leap_year(self):
+        """Test expected amount accounts for leap years (366 days)."""
+        response = donation_form_with_heart({"user": None})
+        # Day 1 of leap year: 500000 * 1/366 = 1366
+        self.assertEqual(response["expected_amount"], Decimal("1366"))
 
 
 class TestDisplayDjangoHeroes(TestCase):
