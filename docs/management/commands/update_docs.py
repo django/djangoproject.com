@@ -134,6 +134,8 @@ class Command(BaseCommand):
         if self.verbosity >= 1:
             self.stdout.write(f"Starting update for {release} at {datetime.now()}...")
 
+        release.sync_from_sitemap(force=force)
+
         # checkout_dir is shared for all languages.
         checkout_dir = settings.DOCS_BUILD_ROOT / "sources" / release.version
         parent_build_dir = settings.DOCS_BUILD_ROOT / release.lang / release.version
