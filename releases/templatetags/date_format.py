@@ -12,5 +12,8 @@ def isodate(datestr, dateformat="DATE_FORMAT"):
     Convert the given string to a date object (ISO) then format it using
     the given format (using Django's |date template filter)
     """
-    d = date.fromisoformat(datestr)
+    try:
+        d = date.fromisoformat(datestr)
+    except (ValueError, TypeError):
+        return ""
     return datefilter(d, dateformat)
