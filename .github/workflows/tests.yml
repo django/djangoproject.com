@@ -66,6 +66,6 @@ jobs:
                   coverage xml
 
             - name: Upload coverage reports to Codecov
-              uses: codecov/codecov-action@v5.5.1
+              uses: codecov/codecov-action@v5
               with:
                   token: ${{ secrets.CODECOV_TOKEN }}
