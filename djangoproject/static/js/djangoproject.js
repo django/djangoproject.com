@@ -110,11 +110,11 @@ globalThis.addEventListener('keydown', (e) => {
   button_el.setAttribute('title', 'Copy this code');
   button_el.innerHTML = '<i class="icon icon-clipboard"></i>';
 
-  document
-    .querySelectorAll('.snippet-filename, .code-block-caption')
-    .forEach(function (el) {
-      el.insertBefore(button_el.cloneNode(true), null);
-    });
+  for (const el of document.querySelectorAll(
+    '.snippet-filename, .code-block-caption',
+  )) {
+    el.insertBefore(button_el.cloneNode(true), null);
+  }
 
   for (const el of document.querySelectorAll('.console-block > section')) {
     const highlight_el = el.querySelector('.highlight');
