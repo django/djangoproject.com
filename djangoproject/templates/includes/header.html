@@ -36,7 +36,7 @@
           <a href="{% url 'community-index' %}">{% translate "Community" %}</a>
         </li>
         <li{% if 'foundation' in request.path %} class="active"{% endif %}>
-         <a href="{% url 'homepage' host 'www' %}foundation/">{% translate "Foundation" %}</a>
+          <a href="{% url 'homepage' host 'www' %}foundation/">{% translate "Foundation" %}</a>
         </li>
         <li{% if 'fundraising' in request.path %} class="active"{% endif %}>
           <a href="{% url 'fundraising:index' %}">{% translate "♥ Donate" %}</a>
