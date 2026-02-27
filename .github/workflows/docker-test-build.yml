@@ -23,7 +23,7 @@ jobs:
         # steps taken (and trimmed) from docker-publish.yml
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
 
             - if: matrix.req_file != 'tests.txt'
               name: Test docker image build (${{ matrix.req_file }})
