@@ -1,18 +1,16 @@
 {% load i18n %}
 {% regroup dates by year as dates_by_year %}
 
-<ul class="list-collapsing active">
-  {% for month in dates_by_year %}
-    <li id="year{{ month.grouper }}"{% if forloop.first %} class="active"{% endif %}>
-      <h2><a href="{% url 'weblog:archive-year' month.grouper %}">{{ month.grouper }}</a> <i class="collapsing-icon icon icon-plus"></i></h2>
-      <div class="collapsing-content">
-        <ul class="list-links-small">
-          {% for d in month.list %}
-            <li><a href="{% language "en" %}{% url 'weblog:archive-month' d|date:"Y" d|date:"b" %}{% endlanguage %}">{{ d|date:"YEAR_MONTH_FORMAT" }}</a></li>
-          {% endfor %}
-        </ul>
-        <p></p>
-      </div>
-    </li>
-  {% endfor %}
-</ul>
+{% for month in dates_by_year %}
+  <details>
+    <summary>
+      <h3><a href="{% url 'weblog:archive-year' month.grouper %}">{{ month.grouper }}</a></h3>
+    </summary>
+    <ul class="list-links-small">
+      {% for d in month.list %}
+        <li><a href="{% language "en" %}{% url 'weblog:archive-month' d|date:"Y" d|date:"b" %}{% endlanguage %}">{{ d|date:"YEAR_MONTH_FORMAT" }}</a></li>
+      {% endfor %}
+    </ul>
+    <p></p>
+  </details>
+{% endfor %}
