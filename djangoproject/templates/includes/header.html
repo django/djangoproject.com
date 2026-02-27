@@ -6,40 +6,40 @@
 <header id="top">
   <div class="container container--flex--wrap--mobile">
     <a class="logo" href="{% url 'homepage' %}">Django</a>
-    <p class="meta">{% trans "The web framework for perfectionists with deadlines." %}</p>
+    <p class="meta">{% translate "The web framework for perfectionists with deadlines." %}</p>
     <button class="menu-button">
       <i class="icon icon-reorder"></i>
-      <span class="visuallyhidden">{% trans "Menu" %}</span>
+      <span class="visuallyhidden">{% translate "Menu" %}</span>
     </button>
     <nav aria-labelledby="navigation-header">
-      <span id="navigation-header" class="visuallyhidden">{% trans "Main navigation" %}</span>
+      <span id="navigation-header" class="visuallyhidden">{% translate "Main navigation" %}</span>
       <ul>
         <li{% if 'start' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'overview' %}">{% trans "Overview" %}</a>
+          <a href="{% url 'overview' %}">{% translate "Overview" %}</a>
         </li>
         <li{% if 'download' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'download' %}">{% trans "Download" %}</a>
+          <a href="{% url 'download' %}">{% translate "Download" %}</a>
         </li>
         <li{% if request.host.name == 'docs' and 'search' not in request.path %} class="active"{% endif %}>
-          <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}">{% trans "Documentation" %}</a>
+          <a href="{% block doc_url %}{% host_url 'homepage' host 'docs' %}{% endblock %}">{% translate "Documentation" %}</a>
         </li>
         <li{% if 'weblog' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'weblog:index' %}">{% trans "News" %}</a>
+          <a href="{% url 'weblog:index' %}">{% translate "News" %}</a>
         </li>
         <li>
-          <a href="https://github.com/django/django" target="_blank" rel="noopener">{% trans "Code" %}</a>
+          <a href="https://github.com/django/django" target="_blank" rel="noopener">{% translate "Code" %}</a>
         </li>
         <li>
-          <a href="https://code.djangoproject.com/">{% trans "Issues" %}</a>
+          <a href="https://code.djangoproject.com/">{% translate "Issues" %}</a>
         </li>
         <li{% if 'community' in request.path or 'conduct' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'community-index' %}">{% trans "Community" %}</a>
+          <a href="{% url 'community-index' %}">{% translate "Community" %}</a>
         </li>
         <li{% if 'foundation' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'homepage' %}foundation/">{% trans "Foundation" %}</a>
+          <a href="{% host_url 'homepage' host 'www' %}foundation/">{% translate "Foundation" %}</a>
         </li>
         <li{% if 'fundraising' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'fundraising:index' %}">{% trans "♥ Donate" %}</a>
+          <a href="{% url 'fundraising:index' %}">{% translate "♥ Donate" %}</a>
         </li>
       </ul>
     </nav>
