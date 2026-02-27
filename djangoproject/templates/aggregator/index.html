@@ -66,34 +66,34 @@
   </div>
 
   <h2>{% translate "Django RSS feeds" %}</h2>
-    {% for feedtype, latest_feeds in feedtype_list %}
-      <details>
-        <summary>
-          <h3 class="bullet-icon"><i class="icon icon-rss blue"></i> {{ feedtype.name }}</h3>
-        </summary>
-        <dl class="list-links">
-          {% for item in latest_feeds %}
-            <dt><a href="{{ item.link }}">{{ item.title }}</a></dt>
-            <dd>
-              {% blocktranslate trimmed with modified_date=item.date_modified|date:"DATETIME_FORMAT" public_url=item.feed.public_url title=item.feed.title %}
-                {{ modified_date }} by <a href="{{ public_url }}">{{ title }}</a>
-              {% endblocktranslate %}
-            </dd>
-          {% endfor %}
-        </dl>
-        <p class="meta">
-          {% if latest_feeds %}
-            <a href="{% url 'community-feed-list' feedtype.slug %}">{% translate "View more" %}</a>
-          {% endif %}
-          {% if latest_feeds and feedtype.can_self_add %}
-            {% translate "or" context "view more OR add your feed" %}
-          {% endif %}
-          {% if feedtype.can_self_add %}
-            <a href="{% url 'community-add-feed' feedtype.slug %}">{% translate "Add your feed" %}</a>
-          {% endif %}
-        </p>
-      </details>
-    {% endfor %}
+  {% for feedtype, latest_feeds in feedtype_list %}
+    <details>
+      <summary>
+        <h3 class="bullet-icon"><i class="icon icon-rss blue"></i> {{ feedtype.name }}</h3>
+      </summary>
+      <dl class="list-links">
+        {% for item in latest_feeds %}
+          <dt><a href="{{ item.link }}">{{ item.title }}</a></dt>
+          <dd>
+            {% blocktranslate trimmed with modified_date=item.date_modified|date:"DATETIME_FORMAT" public_url=item.feed.public_url title=item.feed.title %}
+              {{ modified_date }} by <a href="{{ public_url }}">{{ title }}</a>
+            {% endblocktranslate %}
+          </dd>
+        {% endfor %}
+      </dl>
+      <p class="meta">
+        {% if latest_feeds %}
+          <a href="{% url 'community-feed-list' feedtype.slug %}">{% translate "View more" %}</a>
+        {% endif %}
+        {% if latest_feeds and feedtype.can_self_add %}
+          {% translate "or" context "view more OR add your feed" %}
+        {% endif %}
+        {% if feedtype.can_self_add %}
+          <a href="{% url 'community-add-feed' feedtype.slug %}">{% translate "Add your feed" %}</a>
+        {% endif %}
+      </p>
+    </details>
+  {% endfor %}
 {% endblock %}
 
 {% block content-related-extra %}
