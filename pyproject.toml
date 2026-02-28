@@ -1,6 +1,6 @@
 [project]
 name = "djangoproject-com"
-version = "0.0.1"
+version = "0.1.0"
 description = "Source code to djangoproject.com"
 requires-python = "==3.12.*"
 classifiers = [
