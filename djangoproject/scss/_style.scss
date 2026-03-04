@@ -3680,12 +3680,13 @@ ul.corporate-members li {
         gap: 6rem;
         flex-wrap: wrap;
         align-content: center;
+        justify-content: center;
     }
 
     .community-cta-a {
         display: inline-block;
-        width: 300px;
-        height: 300px;
+        width: 400px;
+        height: 400px;
     }
 
     .community-cta {
@@ -3699,6 +3700,11 @@ ul.corporate-members li {
         align-items: center;
         background: var(--community-img-bg);
         border-radius: 20px;
+        transition: background-color 0.1s ease;
+    }
+
+    .community-cta:hover {
+        background-color: var(--secondary);
     }
 
     .community-cta {
