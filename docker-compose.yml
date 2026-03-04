@@ -1,51 +1,50 @@
 services:
-    web:
-        build:
-            context: ./
-            dockerfile: Dockerfile
-            args:
-                - REQ_FILE=requirements/tests.txt
-                - BUILD_DEPENDENCIES=g++ gcc
-        entrypoint: ./docker-entrypoint.dev.sh
-        command: python manage.py runserver 0.0.0.0:8000
-        volumes:
-            - .:/usr/src/app/
-        ports:
-            - 8000:8000
-        environment:
-            - SECRET_KEY=foo
-            - DJANGOPROJECT_DATA_DIR=./data
-            - DJANGO_SETTINGS_MODULE=djangoproject.settings.docker
-            - SQL_ENGINE=django.db.backends.postgresql
-            - SQL_DATABASE=djangoproject
-            - SQL_USER=djangoproject
-            - SQL_PASSWORD=secret
-            - SQL_HOST=db
-            - SQL_PORT=5432
-            - TRAC_DATABASE=code.djangoproject
-            - TRAC_USER=code.djangoproject
-            - TRAC_PASSWORD=secret
-            - TRAC_HOST=db
-            - TRAC_PORT=5432
-
-        depends_on:
-            db:
-                condition: service_healthy
-    db:
-        image: postgres:17-trixie
-        environment:
-            - POSTGRES_USER=djangoproject
-            - POSTGRES_PASSWORD=secret
-            - POSTGRES_DB=djangoproject
-        healthcheck:
-            test: ["CMD", "pg_isready", "--host", "db", "--port", "5432"]
-            interval: 1s
-            timeout: 10s
-            retries: 10
-        volumes:
-            # Mount the Postgres initialization scripts
-            - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-            # This file contains the initial Trac database schema, but needs
-            # to be loaded into the database manually (via 02_trac_schema.sh)
-            # since it applies to the trac database, not the main Django database.
-            - ./tracdb/trac.sql:/trac.sql
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        - REQ_FILE=requirements/tests.txt
+        - BUILD_DEPENDENCIES=g++ gcc
+    entrypoint: ./docker-entrypoint.dev.sh
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app/
+    ports:
+      - 8000:8000
+    environment:
+      - SECRET_KEY=foo
+      - DJANGOPROJECT_DATA_DIR=./data
+      - DJANGO_SETTINGS_MODULE=djangoproject.settings.docker
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=djangoproject
+      - SQL_USER=djangoproject
+      - SQL_PASSWORD=secret
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - TRAC_DATABASE=code.djangoproject
+      - TRAC_USER=code.djangoproject
+      - TRAC_PASSWORD=secret
+      - TRAC_HOST=db
+      - TRAC_PORT=5432
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres:17-trixie
+    environment:
+      - POSTGRES_USER=djangoproject
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=djangoproject
+    healthcheck:
+      test: ["CMD", "pg_isready", "--host", "db", "--port", "5432"]
+      interval: 1s
+      timeout: 10s
+      retries: 10
+    volumes:
+      # Mount the Postgres initialization scripts
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      # This file contains the initial Trac database schema, but needs
+      # to be loaded into the database manually (via 02_trac_schema.sh)
+      # since it applies to the trac database, not the main Django database.
+      - ./tracdb/trac.sql:/trac.sql

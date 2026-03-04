@@ -1,46 +1,39 @@
 name: Create and publish a Docker image
-
 on:
-    push:
-        branches: ["main", "preview"]
-
+  push:
+    branches: ["main", "preview"]
 env:
-    REGISTRY: ghcr.io
-    IMAGE_NAME: ${{ github.repository }}
-
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 jobs:
-    build-and-push-image:
-        runs-on: ubuntu-latest
-        permissions:
-            contents: read
-            packages: write
-
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v6
-
-            - name: Log in to the Container registry
-              uses: docker/login-action@v3
-              with:
-                  registry: ${{ env.REGISTRY }}
-                  username: ${{ github.actor }}
-                  password: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Extract metadata (tags, labels) for Docker
-              id: meta
-              uses: docker/metadata-action@v5
-              with:
-                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-                  tags: |
-                      # set latest tag for main branch only
-                      type=raw,value=latest,enable={{is_default_branch}}
-                      type=ref,event=branch
-                      type=sha
-
-            - name: Build and push Docker image
-              uses: docker/build-push-action@v6
-              with:
-                  context: .
-                  push: true
-                  tags: ${{ steps.meta.outputs.tags }}
-                  labels: ${{ steps.meta.outputs.labels }}
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            # set latest tag for main branch only
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=ref,event=branch
+            type=sha
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
