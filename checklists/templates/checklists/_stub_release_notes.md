@@ -33,4 +33,4 @@ Bugfixes
         - `git commit -a -m 'Added stub release notes for {{ next_version }}.'`
 
     - Backport stub release notes to latest stable branch!
-        - `backport.sh {HASH}`{% endwith %}
+        - `scripts/backport.sh {HASH}`{% endwith %}

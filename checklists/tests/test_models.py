@@ -6,6 +6,7 @@ from datetime import UTC, date, datetime
 from django.db import IntegrityError
 from django.template.loader import render_to_string
 from django.test import RequestFactory, TestCase, override_settings
+from django.urls import reverse
 from django.utils.timezone import make_aware
 
 from checklists.models import (
@@ -352,6 +353,11 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
                 "Disclose report(s) in HackerOne", checklist_content
             )
 
+        with self.subTest(task="Write blogpost author and active status"):
+            releaser_name = checklist.releaser.user.get_full_name()
+            self.assertIn(f"- Author: `{releaser_name}`", checklist_content)
+            self.assertIn("- Active: `False`", checklist_content)
+
     def test_render_checklist_affects_prerelease(self):
         releases = [
             self.factory.make_release(version="5.0.14", date=date(2025, 4, 2)),
@@ -403,6 +409,22 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         for detail in announce:
             with self.subTest(detail=detail):
                 self.assertInChecklistContent(detail, checklist_content, flat=True)
+
+    def test_render_checklist_cve_record_url(self):
+        release = self.factory.make_release(version="5.2.1")
+        checklist = self.make_checklist(releases=[])
+        issue = self.factory.make_security_issue(
+            checklist,
+            [release],
+            cve_year_number="CVE-2025-11111",
+            cna="DSF",
+        )
+        checklist_content = self.do_render_checklist(checklist)
+
+        expected_url = reverse(
+            "checklists:cve_json_record", args=[issue.cve_year_number]
+        )
+        self.assertIn(f"Get CVE Record from {expected_url}", checklist_content)
 
     def test_render_checklist_blogdescription_display(self):
         checklist = self.make_checklist(releases=[])

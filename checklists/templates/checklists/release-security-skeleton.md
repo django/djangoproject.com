@@ -150,6 +150,7 @@
 
         - Store each CVE record in a `.json` file and run:
         {% for cve in cves %}
+            - Get CVE Record from {% url "checklists:cve_json_record" cve %}
             - `cve publish {{ cve }} --cve-json-file {{ cve }}.json`{% endfor %}
 {% endif %}
 - [ ] Send email to the OSS Security mailing list notifying about the release

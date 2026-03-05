@@ -4,6 +4,8 @@
     - Slug: `{{ slug }}`
     - Format: reStructuredText
     - Summary: `{{ instance.blogpost_summary }}`
+    - Author: `{{ instance.releaser.user.get_full_name }}`
+    - Active: `False`
     - Body:
 ```
 {% include instance.blogpost_template %}
