@@ -4,7 +4,6 @@ app.
 """
 
 import json
-import multiprocessing
 import os
 import shutil
 import subprocess
@@ -18,11 +17,6 @@ from django.conf import settings
 from django.core.management import BaseCommand, call_command
 from django.db.models import Q
 from django.utils.translation import to_locale
-from sphinx.application import Sphinx
-from sphinx.config import Config
-from sphinx.errors import SphinxError
-from sphinx.testing.util import _clean_up_global_state
-from sphinx.util.docutils import docutils_namespace, patch_docutils
 
 from ...models import DocumentRelease
 
@@ -184,48 +178,37 @@ class Command(BaseCommand):
             builders = self.default_builders[:] + ["gettext"]
         else:
             builders = self.default_builders
+        if release.lang != settings.DEFAULT_LANGUAGE_CODE:
+            os.environ["LANGUAGE"] = release.lang
+            os.environ["LC_ALL"] = release.lang
+        else:
+            os.environ.pop("LANGUAGE", None)
+            os.environ.pop("LC_ALL", None)
 
         #
         # Use Sphinx to build the release docs into JSON and HTML documents.
         #
         for builder in builders:
-            # Wipe and re-create the build directory. See #18930.
             build_dir = parent_build_dir / "_build" / builder
             if build_dir.exists():
-                shutil.rmtree(str(build_dir))
+                shutil.rmtree(build_dir)
             build_dir.mkdir(parents=True)
 
-            if self.verbosity >= 2:
-                self.stdout.write(f"  building {builder} ({source_dir} -> {build_dir})")
-            # Retrieve the extensions from the conf.py so we can append to them.
-            conf_extensions = Config.read(source_dir.resolve()).extensions
-            extensions = [*conf_extensions, "docs.builder"]
+            doctreedir = parent_build_dir / "_doctrees" / release.lang / builder
+            if doctreedir.exists():
+                shutil.rmtree(doctreedir)
+            doctreedir.mkdir(parents=True)
             try:
-                # Prevent global state persisting between builds
-                # https://github.com/sphinx-doc/sphinx/issues/12130
-                with patch_docutils(source_dir), docutils_namespace():
-                    Sphinx(
-                        srcdir=source_dir,
-                        confdir=source_dir,
-                        outdir=build_dir,
-                        doctreedir=build_dir / ".doctrees",
-                        buildername=builder,
-                        # Translated docs builds generate a lot of warnings, so send
-                        # stderr to stdout to be logged (rather than generating an email)
-                        warning=sys.stdout,
-                        parallel=multiprocessing.cpu_count(),
-                        verbosity=0,
-                        confoverrides={
-                            "language": to_locale(release.lang),
-                            "extensions": extensions,
-                        },
-                    ).build()
-                # Clean up global state after building each language.
-                _clean_up_global_state()
-            except SphinxError as e:
+                self.run_sphinx_build(
+                    source_dir=source_dir,
+                    build_dir=build_dir,
+                    doctreedir=doctreedir,
+                    builder=builder,
+                    language=to_locale(release.lang),
+                )
+            except subprocess.CalledProcessError as e:
                 self.stderr.write(
-                    "sphinx-build returned an error (release %s, builder %s): %s"
-                    % (release, builder, str(e))
+                    f"sphinx-build failed (release={release}, builder={builder}): {e}"
                 )
                 return
 
@@ -277,6 +260,33 @@ class Command(BaseCommand):
         json_built_dir = parent_build_dir / "_built" / "json"
         documents = gen_decoded_documents(json_built_dir)
         release.sync_to_db(documents)
+
+    def run_sphinx_build(
+        self,
+        *,
+        source_dir,
+        build_dir,
+        doctreedir,
+        builder,
+        language,
+    ):
+        subprocess.check_call(
+            [
+                sys.executable,
+                "-m",
+                "sphinx",
+                "-b",
+                builder,
+                "-D",
+                f"language={language}",
+                "-c",
+                str(source_dir),
+                "-d",
+                str(doctreedir),
+                str(source_dir),
+                str(build_dir),
+            ]
+        )
 
     def update_git(self, url, destdir, changed_dir="."):
         """
