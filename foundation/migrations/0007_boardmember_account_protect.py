@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("foundation", "0006_hardcode_currency_choices"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),

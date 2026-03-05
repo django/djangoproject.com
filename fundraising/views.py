@@ -295,9 +295,7 @@ class WebhookHandler:
         """
         session = self.event.data.object
         # TODO: remove stripe_version when updating account settings.
-        customer = stripe.Customer.retrieve(
-            session.customer, stripe_version="2020-08-27"
-        )
+        customer = stripe.Customer.retrieve(session.customer, stripe_version="2020-08-27")
         hero, _created = DjangoHero.objects.get_or_create(
             stripe_customer_id=customer.id,
             defaults={

@@ -56,9 +56,9 @@ def donation_snippet():
 def donation_form_with_heart(context):
     user = context["user"]
     donated_amount = (
-        Payment.objects.filter(date__gte=GOAL_START_DATE).aggregate(
-            models.Sum("amount")
-        )["amount__sum"]
+        Payment.objects.filter(date__gte=GOAL_START_DATE).aggregate(models.Sum("amount"))[
+            "amount__sum"
+        ]
         or 0
     )
     donated_amount += (
