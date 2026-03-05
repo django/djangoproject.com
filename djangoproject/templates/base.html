@@ -42,7 +42,12 @@
     <link rel="stylesheet" href="{% static "css/output.css" %}" >
 
     <script src="{% static "js/mod/switch-dark-mode.js" %}"></script>
-    {% block head_extra %}{% endblock head_extra %}
+    {% block head_extra %}
+      {% if not is_translated %}
+        <meta name="robots" content="noindex">
+      {% endif %}
+    {% endblock head_extra %}
+
   </head>
 
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
