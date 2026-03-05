@@ -20,6 +20,9 @@ trim_trailing_whitespace = false
 indent_style = space
 indent_size = 2
 
+[*.{yml,yaml}]
+indent_size = 2
+
 
 # Customizations for third party libraries
 
