@@ -1010,6 +1010,10 @@ footer {
             background-position: left center;
             margin-right: 0;
             margin-top: 20px;
+
+            &:focus {
+                outline: 2px solid #fff;
+            }
         }
     }
 
@@ -1094,6 +1098,10 @@ footer {
         a.in-kind-donors {
             @include font-size(20);
             color: var(--primary-accent);
+
+            &:focus {
+                outline: 2px solid #fff;
+            }
         }
 
         a.threespot,
