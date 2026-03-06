@@ -1012,7 +1012,7 @@ footer {
             margin-top: 20px;
 
             &:focus {
-                outline: 2px solid #fff;
+                outline: 2px solid var(--menu);
             }
         }
     }
@@ -1100,7 +1100,7 @@ footer {
             color: var(--primary-accent);
 
             &:focus {
-                outline: 2px solid #fff;
+                outline: 2px solid var(--menu);
             }
         }
 
