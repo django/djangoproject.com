@@ -27,7 +27,7 @@ jobs:
 
             - if: matrix.req_file != 'tests.txt'
               name: Test docker image build (${{ matrix.req_file }})
-              uses: docker/build-push-action@v6
+              uses: docker/build-push-action@v7
               with:
                   context: .
                   push: false
