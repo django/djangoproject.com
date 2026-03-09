@@ -1,6 +1,6 @@
 -r common.txt
 black==26.3.0  # Used by Django's find_formatters and run_formatters
 django-debug-toolbar==6.2.0
-prek==0.3.4
+prek==0.3.5
 psycopg[binary]==3.3.3
 watchdog==6.0.0
