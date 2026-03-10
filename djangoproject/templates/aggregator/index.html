@@ -9,7 +9,7 @@
   <div class="community-cta-wrapper">
     <a href="https://forum.djangoproject.com/" class="community-cta-a">
       <div class="community-cta">
-        <div>
+        <div aria-hidden="true">
           {% include "svg_logos/forum.html" %}
         </div>
         <h3>{% translate "Forum - Post a question" %}</h3>
@@ -17,7 +17,7 @@
     </a>
     <a href="https://chat.djangoproject.com" class="community-cta-a">
       <div class="community-cta">
-        <div>
+        <div aria-hidden="true">
           {% include "svg_logos/discord.html" %}
         </div>
         <h3>{% translate "Discord - Chat with us" %}</h3>
@@ -29,7 +29,7 @@
   <div class="community-cta-wrapper">
     <a href="{% url "community-ecosystem" %}" class="community-cta-a">
       <div class="community-cta">
-        <div>
+        <div aria-hidden="true">
           {% include "svg_logos/package.html" %}
         </div>
         <h3>{% translate "Package Ecosystem" %}</h3>
@@ -41,7 +41,7 @@
   <div class="community-cta-wrapper">
     <a href="{% url 'document-detail' lang='en' version='dev' url='internals/contributing/bugs-and-features' host 'docs' %}#reporting-bugs" class="community-cta-a">
       <div class="community-cta">
-        <div>
+        <div aria-hidden="true">
           {% include "svg_logos/bug.html" %}
         </div>
         <h3>{% translate "Report an issue" %}</h3>
@@ -49,7 +49,7 @@
     </a>
     <a href="{% url 'document-detail' lang='en' version='dev' url='internals/contributing' host 'docs' %}" class="community-cta-a">
       <div class="community-cta">
-        <div>
+        <div aria-hidden="true">
           {% include "svg_logos/notepad.html" %}
         </div>
         <h3>{% translate "Contribute to Django" %}</h3>
@@ -57,7 +57,7 @@
     </a>
     <a href="/community/local/" class="community-cta-a">
       <div class="community-cta">
-        <div>
+        <div aria-hidden="true">
           {% include "svg_logos/world.html" %}
         </div>
         <h3>{% translate "Local Django Community" %}</h3>
