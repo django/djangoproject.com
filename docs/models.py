@@ -1,6 +1,7 @@
 import datetime
 import html
 import json
+import logging
 import operator
 from functools import partial, reduce
 from pathlib import Path
@@ -26,19 +27,21 @@ from django.utils.functional import cached_property
 from django.utils.html import strip_tags
 from django_hosts.resolvers import reverse
 
-from blog.models import Entry
 from releases.models import Release
 
 from . import utils
 from .search import (
     DEFAULT_TEXT_SEARCH_CONFIG,
-    SEARCHABLE_VIEWS,
     START_SEL,
     STOP_SEL,
     TSEARCH_CONFIG_LANGUAGES,
     DocumentationCategory,
+    fetch_html,
     get_document_search_vector,
 )
+from .utils import extract_inner_html
+
+logger = logging.getLogger(__name__)
 
 
 def get_search_config(lang):
@@ -185,7 +188,7 @@ class DocumentRelease(models.Model):
         the database. Deletes all the release's documents first then
         reinserts them as needed.
         """
-        self.documents.all().delete()
+        self.documents.exclude(metadata__parents=DocumentationCategory.WEBSITE).delete()
 
         # Read excluded paths from robots.docs.txt.
         robots_path = settings.BASE_DIR / "djangoproject" / "static" / "robots.docs.txt"
@@ -216,65 +219,52 @@ class DocumentRelease(models.Model):
                 metadata=document,
                 config=get_search_config(self.lang),
             )
-        for document in self.documents.all():
+        for document in self.documents.exclude(
+            metadata__parents=DocumentationCategory.WEBSITE
+        ):
             document.metadata["breadcrumbs"] = list(
                 Document.objects.breadcrumbs(document).values("title", "path")
             )
             document.save(update_fields=("metadata",))
 
-        self._sync_blog_to_db()
-        self._sync_views_to_db()
+    def sync_from_sitemap(self, force=False):
+        from djangoproject.urls.www import sitemaps
 
-    def _sync_blog_to_db(self):
-        """
-        Sync the blog entries into search based on the release documents
-        support end date.
-        """
-        if self.lang != "en":
-            return  # The blog is only written in English currently
+        if not self.is_dev:
+            return
 
-        entries = Entry.objects.published().searchable()
-        Document.objects.bulk_create(
-            [
-                Document(
-                    release=self,
-                    path=entry.get_absolute_url(),
-                    title=entry.headline,
-                    metadata={
-                        "body": entry.body_html,
-                        "breadcrumbs": [
-                            {
-                                "path": DocumentationCategory.WEBSITE,
-                                "title": "News",
-                            },
-                        ],
-                        "parents": DocumentationCategory.WEBSITE,
-                        "slug": entry.slug,
-                        "title": entry.headline,
-                        "toc": "",
-                    },
-                    config=get_search_config(self.lang),
-                )
-                for entry in entries
-            ]
+        if force:
+            Document.objects.filter(
+                metadata__parents=DocumentationCategory.WEBSITE
+            ).delete()
+
+        doc_urls = set(
+            Document.objects.filter(
+                metadata__parents=DocumentationCategory.WEBSITE
+            ).values_list("path", flat=True)
         )
 
-    def _sync_views_to_db(self):
-        """
-        Sync the specific views into search based on the release documents
-        support end date.
-        """
-        if self.lang != "en":
-            return  # The searchable views are only written in English currently
-
-        Document.objects.bulk_create(
-            [
-                Document(
+        for sitemap in sitemaps.values():
+            for url in sitemap().get_urls():
+                path = url["location"]
+                if path in doc_urls:
+                    continue
+                try:
+                    page_html = fetch_html(path)
+                except Exception as e:
+                    logger.error(str(e))
+                    continue
+                try:
+                    main_html = extract_inner_html(page_html, tag="main")
+                    title = extract_inner_html(page_html, tag="h1")
+                except ValueError:
+                    continue
+                Document.objects.create(
                     release=self,
-                    path=searchable_view.www_absolute_url,
-                    title=searchable_view.page_title,
+                    path=path,
+                    title=title,
                     metadata={
-                        "body": searchable_view.html,
+                        "body": main_html,
                         "breadcrumbs": [
                             {
                                 "path": DocumentationCategory.WEBSITE,
@@ -282,15 +272,11 @@ class DocumentRelease(models.Model):
                             },
                         ],
                         "parents": DocumentationCategory.WEBSITE,
-                        "slug": searchable_view.url_name,
-                        "title": searchable_view.page_title,
+                        "title": title,
                         "toc": "",
                     },
                     config=get_search_config(self.lang),
                 )
-                for searchable_view in SEARCHABLE_VIEWS
-            ]
-        )
 
 
 def _clean_document_path(path):
@@ -351,6 +337,20 @@ class DocumentQuerySet(models.QuerySet):
                 config=models.F("config"),
             )
             base_filter = Q(release_id=release.id)
+            if release.lang == settings.DEFAULT_LANGUAGE_CODE and not release.is_dev:
+                # Fetch the "dev" release explicitly so we can filter by release_id.
+                # This avoids JOINs in the main query and leverages the indexed FK,
+                # which is more efficient than filtering by release__release__version
+                # and release__lang.
+                dev_release = DocumentRelease.objects.get_by_version_and_lang(
+                    version="dev", lang=settings.DEFAULT_LANGUAGE_CODE
+                )
+                # Website content (non-docs content) is associated with the "dev"
+                # release. This is included in the search results.
+                base_filter |= Q(
+                    release_id=dev_release.id,
+                    metadata__parents=DocumentationCategory.WEBSITE,
+                )
             if document_category:
                 base_filter &= Q(metadata__parents__startswith=document_category)
             base_qs = (
