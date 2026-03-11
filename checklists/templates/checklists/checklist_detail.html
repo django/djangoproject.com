@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Django {{ instance }} Checklist</title>
+    </head>
+    <body>
+        <div class="section">
+            <div>
+                {{ markdown|safe }}
+            </div>
+            <div style="background-color: #F5F5F5; max-width: 150ch; padding: 1em">
+                <h2 id="raw">Raw Markdown</h2>
+                <details>
+                    <summary>Open</summary>
+                    <pre><code>{{ raw_markdown }}</code></pre>
+                </details>
+            </div>
+        </div>
+    </body>
+</html>

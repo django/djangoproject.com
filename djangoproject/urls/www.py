@@ -94,6 +94,7 @@ urlpatterns = [
         TemplateView.as_view(template_name="diversity/changes.html"),
         name="diversity_changes",
     ),
+    path("checklists/", include("checklists.urls")),
     path("contact/", include("contact.urls")),
     path("foundation/django_core/", CoreDevelopers.as_view()),
     path("foundation/minutes/", include("foundation.urls.meetings")),
@@ -136,11 +137,24 @@ urlpatterns = [
         cache_page(60 * 60 * 6)(sitemap_views.sitemap),
         {"sitemaps": sitemaps},
     ),
+    path(
+        ".well-known/security.txt",
+        TemplateView.as_view(
+            template_name="well-known/security.txt", content_type="text/plain"
+        ),
+    ),
     path("weblog/", include("blog.urls")),
     path("download/", include("releases.urls")),
     path("svntogit/", include("svntogit.urls")),
     path("flatpagesextra/", include("flatpages_extra.urls")),
     path("", include("legacy.urls")),
+    path(
+        "foundation/individual-membership-nomination/",
+        RedirectView.as_view(
+            url="https://forms.gle/xKaZQqYswbMu2K5q6",
+            permanent=False,
+        ),
+    ),
 ]
 
 if settings.DEBUG:

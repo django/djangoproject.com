@@ -81,7 +81,7 @@ def document(request, lang, version, url):
 
     context = {
         "doc": load_json_file(doc_path),
-        "env": load_json_file(docroot.joinpath("globalcontext.json")),
+        "env": load_json_file(docroot / "globalcontext.json"),
         "lang": lang,
         "version": version,
         "canonical_version": canonical_version,
@@ -91,7 +91,7 @@ def document(request, lang, version, url):
         "rtd_version": rtd_version,
         "docurl": url,
         "update_date": datetime.datetime.fromtimestamp(
-            (docroot.joinpath("last_build")).stat().st_mtime
+            (docroot / "last_build").stat().st_mtime
         ),
         "redirect_from": request.GET.get("from", None),
     }
@@ -144,14 +144,22 @@ def search_results(request, lang, version, per_page=10, orphans=3):
 
     activate(lang)
 
+    doc_category = DocumentationCategory.parse(request.GET.get("category"))
     form = DocSearchForm(request.GET or None, release=release)
+
+    # Get available languages for the language switcher
+    available_languages = DocumentRelease.objects.get_available_languages_by_version(
+        version
+    )
 
     context = {
         "form": form,
         "lang": release.lang,
         "version": release.version,
         "release": release,
+        "available_languages": available_languages,
         "searchparams": request.GET.urlencode(),
+        "active_category": doc_category or "",
     }
 
     if form.is_valid():
@@ -163,7 +171,6 @@ def search_results(request, lang, version, per_page=10, orphans=3):
             if exact is not None:
                 return redirect(exact)
 
-            doc_category = DocumentationCategory.parse(request.GET.get("category"))
             results = Document.objects.search(
                 q, release, document_category=doc_category
             )
@@ -195,7 +202,6 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                     "page": page,
                     "paginator": paginator,
                     "start_sel": START_SEL,
-                    "active_category": doc_category,
                     "DocumentationCategory": DocumentationCategory,
                 }
             )

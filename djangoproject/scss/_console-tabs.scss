@@ -36,7 +36,45 @@
         text-align: left;
 
         .highlight {
-            margin-top: 0px;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+
+            pre {
+                flex: 1;
+                margin: 0;
+            }
+        }
+
+        .btn-clipboard {
+            cursor: pointer;
+            padding: 8px 12px;
+            flex-shrink: 0;
+
+            i {
+                color: var(--code-fg);
+                opacity: 0.6;
+                transition: opacity 200ms ease;
+
+                &:hover {
+                    opacity: 1;
+                    color: var(--link-color);
+                }
+            }
+
+            .clipboard-success {
+                @include monospace;
+                font-size: 80%;
+                color: var(--link-color);
+                margin-right: 6px;
+                white-space: nowrap;
+                line-height: 1;
+
+                &.fade-out {
+                    opacity: 0;
+                    transition: opacity 400ms;
+                }
+            }
         }
     }
 

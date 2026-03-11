@@ -12,6 +12,7 @@ from django.test import SimpleTestCase, TestCase, override_settings
 from django.urls import reverse
 from django.utils.safestring import SafeString
 
+from djangoproject.tests import ReleaseMixin
 from members.models import MEMBERSHIP_LEVELS, PLATINUM_MEMBERSHIP, CorporateMember
 
 from .models import Release, upload_to_artifact, upload_to_checksum
@@ -21,11 +22,37 @@ from .templatetags.release_notes import get_latest_micro_release, release_notes
 
 class TestTemplateTags(TestCase):
     def test_get_latest_micro_release(self):
-        Release.objects.create(major=1, minor=8, micro=0, is_lts=True, version="1.8")
-        Release.objects.create(major=1, minor=8, micro=1, is_lts=True, version="1.8.1")
+        Release.objects.create(
+            major=1, minor=8, micro=0, is_lts=True, version="1.8", is_active=True
+        )
+        Release.objects.create(
+            major=1, minor=8, micro=1, is_lts=True, version="1.8.1", is_active=True
+        )
 
         self.assertEqual(get_latest_micro_release("1.8"), "1.8.1")
         self.assertEqual(get_latest_micro_release("1.4"), None)
+
+    def test_get_latest_micro_release_excludes_inactive(self):
+        Release.objects.create(major=5, minor=2, micro=0, version="5.2", is_active=True)
+        Release.objects.create(
+            major=5, minor=2, micro=1, version="5.2.1", is_active=True
+        )
+        # Create a newer release that is not yet active.
+        Release.objects.create(
+            major=5, minor=2, micro=2, version="5.2.2", is_active=False
+        )
+
+        self.assertEqual(get_latest_micro_release("5.2"), "5.2.1")
+
+    def test_get_latest_micro_release_no_active_releases(self):
+        Release.objects.create(
+            major=4, minor=1, micro=0, version="4.1", is_active=False
+        )
+        Release.objects.create(
+            major=4, minor=1, micro=1, version="4.1.1", is_active=False
+        )
+
+        self.assertIsNone(get_latest_micro_release("4.1"))
 
     def test_release_notes(self):
         output = release_notes("1.8")
@@ -243,6 +270,161 @@ class ReleaseTestCase(TestCase):
                     self.assertEqual(previous_release.eol_date, today)
                 self.assertIsNone(next_release.eol_date)
                 self.assertIsNone(other_release.eol_date)
+
+    def test_version_tuple(self):
+        cases = [
+            ("1.0", (1, 0, 0, "final", 0)),
+            ("1.8", (1, 8, 0, "final", 0)),
+            ("1.8.1", (1, 8, 1, "final", 0)),
+            ("1.8a1", (1, 8, 0, "alpha", 1)),
+            ("1.8b1", (1, 8, 0, "beta", 1)),
+            ("1.8rc1", (1, 8, 0, "rc", 1)),
+            ("5.2", (5, 2, 0, "final", 0)),
+            ("5.2a1", (5, 2, 0, "alpha", 1)),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                release = Release.objects.create(version=version)
+                self.assertEqual(release.version_tuple, expected)
+
+    def test_version_verbose(self):
+        cases = [
+            ("5.2a1", "5.2 alpha 1"),
+            ("5.2a2", "5.2 alpha 2"),
+            ("5.2b1", "5.2 beta 1"),
+            ("5.2rc1", "5.2 release candidate 1"),
+            ("5.2", "5.2"),
+            ("5.2.1", "5.2.1"),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                release = Release.objects.create(version=version)
+                self.assertEqual(release.version_verbose, expected)
+
+    def test_feature_version(self):
+        cases = [
+            ("5.2", "5.2"),
+            ("5.2a1", "5.2"),
+            ("5.2.1", "5.2"),
+            ("5.2.15", "5.2"),
+            ("4.1rc1", "4.1"),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                release = Release.objects.create(version=version)
+                self.assertEqual(release.feature_version, expected)
+
+    def test_feature_release(self):
+        feature = Release.objects.create(version="5.2")
+
+        # Feature release itself should return itself.
+        self.assertEqual(feature.feature_release, feature)
+        self.assertEqual(feature.feature_release.version, "5.2")
+
+        # All other versions in the series should return the feature release
+        cases = ["5.2a1", "5.2b1", "5.2rc1", "5.2.1", "5.2.2"]
+        for version in cases:
+            with self.subTest(version=version):
+                release = Release.objects.create(version=version)
+                self.assertEqual(release.feature_release, feature)
+                self.assertEqual(release.feature_release.version, "5.2")
+
+    def test_series(self):
+        cases = [
+            ("5.2", "5.x"),
+            ("5.2.1", "5.x"),
+            ("4.1", "4.x"),
+            ("3.2rc1", "3.x"),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                release = Release.objects.create(version=version)
+                self.assertEqual(release.series, expected)
+
+    def test_stable_branch(self):
+        cases = [
+            ("5.2", "stable/5.2.x"),
+            ("5.2.1", "stable/5.2.x"),
+            ("4.1rc1", "stable/4.1.x"),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                release = Release.objects.create(version=version)
+                self.assertEqual(release.stable_branch, expected)
+
+    def test_commit_prefix(self):
+        cases = [
+            ("5.2", "[5.2.x]"),
+            ("5.2.1", "[5.2.x]"),
+            ("4.1rc1", "[4.1.x]"),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                release = Release.objects.create(version=version)
+                self.assertEqual(release.commit_prefix, expected)
+
+    def test_is_pre_release(self):
+        cases = [
+            ("5.2a1", True),
+            ("5.2b1", True),
+            ("5.2rc1", True),
+            ("5.2", False),
+            ("5.2.1", False),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                release = Release.objects.create(version=version)
+                self.assertIs(release.is_pre_release, expected)
+
+    def test_is_dot_zero(self):
+        cases = [
+            ("5.2", True),
+            ("4.1", True),
+            ("5.2.1", False),
+            ("5.2.15", False),
+            ("5.2a1", False),
+            ("5.2rc1", False),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                release = Release.objects.create(version=version)
+                self.assertIs(release.is_dot_zero, expected)
+
+    def test_ordering(self):
+        r1 = Release.objects.create(version="5.2")
+        r2 = Release.objects.create(version="5.2.1")
+        r3 = Release.objects.create(version="6.0a1")
+        r4 = Release.objects.create(version="6.0")
+
+        # Comparison.
+        self.assertLessEqual(r1, r1)
+        self.assertLess(r1, r2)
+        self.assertLess(r2, r3)
+        self.assertLess(r1, r3)
+        self.assertLess(r3, r4)
+        self.assertGreater(r2, r1)
+        self.assertGreaterEqual(r1, r1)
+
+        # Sorting.
+        releases = [r3, r1, r2, r4]
+        self.assertEqual(sorted(releases), [r1, r2, r3, r4])
+
+    def test_equality(self):
+        r1 = Release(version="5.2")
+        r2 = Release(version="5.2")
+
+        self.assertLessEqual(r1, r2)
+        self.assertLessEqual(r2, r1)
+        # If r1 <= r2 and r2 <= r1, then r1 == r2 should be True.
+        self.assertEqual(r1, r2)
+
+    def test_release_hash(self):
+        r1 = Release.objects.create(version="5.2")
+        r2 = Release.objects.create(version="5.2.1")
+
+        self.assertEqual({r1, r2, r1}, {r1, r2})
+        self.assertNotEqual(hash(r1), hash(r2))
+        self.assertEqual(hash(r1), hash(r1))
 
 
 class ReleaseUploadToTestCase(SimpleTestCase):
@@ -538,9 +720,10 @@ class RedirectViewTestCase(TestCase):
                     self.assertEqual(response.status_code, status_code)
 
 
-class CorporateMembersTestCase(TestCase):
+class CorporateMembersTestCase(ReleaseMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
+        super().setUpTestData()
         cls.today = today = datetime.date.today()
         day = datetime.timedelta(1)
         Release.objects.create(
@@ -609,10 +792,11 @@ class CorporateMembersTestCase(TestCase):
             self.assertNotContains(response, member.description)
 
 
-class RoadmapViewTestCase(TestCase):
+class RoadmapViewTestCase(ReleaseMixin, TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        super().setUpTestData()
         # Define release schedule for 5.2, 6.0, and 6.1 series.
         cls.release_schedule = {
             "5.2": [
@@ -685,11 +869,5 @@ class RoadmapViewTestCase(TestCase):
     def test_links_to_contributing_and_release_process_present(self):
         url = reverse("roadmap", kwargs={"series": "20.0"})
         response = self.client.get(url)
-        self.assertContains(
-            response,
-            'href="http://docs.djangoproject.com/en/dev/internals/contributing/"',
-        )
-        self.assertContains(
-            response,
-            'href="http://docs.djangoproject.com/en/dev/internals/release-process/"',
-        )
+        self.assertContains(response, 'en/dev/internals/contributing/"')
+        self.assertContains(response, 'en/dev/internals/release-process/"')

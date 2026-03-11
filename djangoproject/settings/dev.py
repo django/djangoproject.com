@@ -27,14 +27,14 @@ CSRF_COOKIE_SECURE = False
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-MEDIA_ROOT = str(DATA_DIR.joinpath("media_root"))
+MEDIA_ROOT = DATA_DIR / "media_root"
 
 SESSION_COOKIE_SECURE = False
 
-STATIC_ROOT = str(DATA_DIR.joinpath("static_root"))
+STATIC_ROOT = DATA_DIR / "static_root"
 
 # Docs settings
-DOCS_BUILD_ROOT = DATA_DIR.joinpath("djangodocs")
+DOCS_BUILD_ROOT = DATA_DIR / "djangodocs"
 
 # django-hosts settings
 
@@ -44,25 +44,24 @@ PARENT_HOST = "djangoproject.localhost:8000"
 
 PUSH_SSL_CALLBACK = False
 
-# Enable optional components
+# django-debug-toolbar initialization
+try:
+    import debug_toolbar  # NOQA
+except ImportError:
+    pass
+else:
+    INSTALLED_APPS.append("debug_toolbar")
+    INTERNAL_IPS = ["127.0.0.1"]
+    MIDDLEWARE.insert(
+        MIDDLEWARE.index("django.middleware.common.CommonMiddleware") + 1,
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    )
+    MIDDLEWARE.insert(
+        MIDDLEWARE.index("debug_toolbar.middleware.DebugToolbarMiddleware") + 1,
+        "djangoproject.middleware.CORSMiddleware",
+    )
 
-if DEBUG:
-    try:
-        import debug_toolbar  # NOQA
-    except ImportError:
-        pass
-    else:
-        INSTALLED_APPS.append("debug_toolbar")
-        INTERNAL_IPS = ["127.0.0.1"]
-        MIDDLEWARE.insert(
-            MIDDLEWARE.index("django.middleware.common.CommonMiddleware") + 1,
-            "debug_toolbar.middleware.DebugToolbarMiddleware",
-        )
-        MIDDLEWARE.insert(
-            MIDDLEWARE.index("debug_toolbar.middleware.DebugToolbarMiddleware") + 1,
-            "djangoproject.middleware.CORSMiddleware",
-        )
-
+# django-recaptcha settings
 SILENCED_SYSTEM_CHECKS = SILENCED_SYSTEM_CHECKS + [
     # Default test keys for development.
     "django_recaptcha.recaptcha_test_key_error"
