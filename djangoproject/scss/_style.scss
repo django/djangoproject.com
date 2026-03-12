@@ -1010,10 +1010,11 @@ footer {
             background-position: left center;
             margin-right: 0;
             margin-top: 20px;
-
+            
             &:focus {
-                outline: 2px solid var(--menu);
+                outline: 2px solid var(--body-fg);
             }
+         
         }
     }
 
