@@ -17,31 +17,31 @@ class NormalizeSlashesMiddlewareTests(TestCase):
 
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response["Location"], "/community/")
-    
+
     def test_triple_slash_redirects(self):
         response = self.client.get(
-        "/community///",
-        follow=False,
-        headers={"host": "www.djangoproject.localhost"},
-    )
+            "/community///",
+            follow=False,
+            headers={"host": "www.djangoproject.localhost"},
+        )
 
         self.assertEqual(response.status_code, 301)
         self.assertEqual(response["Location"], "/community/")
-    
-    def test_normal_url_no_redirect(self):
-         response = self.client.get(
-        "/community/",
-        follow=False,
-        headers={"host": "www.djangoproject.localhost"},
-    )
 
-         self.assertEqual(response.status_code, 200)
+    def test_normal_url_no_redirect(self):
+        response = self.client.get(
+            "/community/",
+            follow=False,
+            headers={"host": "www.djangoproject.localhost"},
+        )
+
+        self.assertEqual(response.status_code, 200)
 
     def test_invalid_normalized_path_no_redirect(self):
-         response = self.client.get(
-        "/nonexistent//page/",
-        follow=False,
-        headers={"host": "www.djangoproject.localhost"},
-    )
+        response = self.client.get(
+            "/nonexistent//page/",
+            follow=False,
+            headers={"host": "www.djangoproject.localhost"},
+        )
 
-         self.assertNotEqual(response.status_code, 301)
+        self.assertNotEqual(response.status_code, 301)
