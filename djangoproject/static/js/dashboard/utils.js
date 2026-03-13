@@ -1,5 +1,5 @@
 function formatTimestamp(timestamp, period) {
-  var d = new Date(timestamp);
+  const d = new Date(timestamp);
   if (period == 'instant') {
     return $.plot.formatDate(d, '%b %d, %h:%M %p');
   } else if (period == 'daily') {
@@ -8,18 +8,14 @@ function formatTimestamp(timestamp, period) {
     // A bit more complicated than the above: the timestamp is in the
     // middle of the week, so we have to bracket the date. This is
     // something of a fudge here, but it works well enough.
-    var start = new Date(d.getTime() - 3 * 24 * 60 * 60 * 1000);
-    var end = new Date(d.getTime() + 3 * 24 * 60 * 60 * 1000);
-    return (
-      $.plot.formatDate(start, '%b %d') +
-      ' - ' +
-      $.plot.formatDate(end, '%b %d')
-    );
+    const start = new Date(d.getTime() - 3 * 24 * 60 * 60 * 1000);
+    const end = new Date(d.getTime() + 3 * 24 * 60 * 60 * 1000);
+    return `${$.plot.formatDate(start, '%b %d')} - ${$.plot.formatDate(end, '%b %d')}`;
   }
 }
 
 function convertSecondsToMilliseconds(data) {
-  for (var i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     data[i][0] = data[i][0] * 1000;
   }
   return data;
