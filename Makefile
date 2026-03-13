@@ -5,7 +5,7 @@ SCSS = djangoproject/scss
 STATIC = djangoproject/static
 
 ci: compilemessages test
-	@python -m coverage report
+	@python -m coverage report --fail-under=80
 
 compilemessages:
 	python -m manage compilemessages
