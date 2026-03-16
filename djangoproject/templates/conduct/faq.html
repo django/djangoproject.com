@@ -105,10 +105,10 @@
       <a href="{{ reporting_url }}">Reporting Guidelines</a>{% endblocktranslate %}</p>
 
   <h3 id="who-enforces">{% translate "Who enforces the Code of Conduct?" %} <a class="plink" href="#who-enforces">¶</a></h3>
-
+  {% url 'members:teams' as teams_url %}
   <p>
     {% blocktranslate trimmed %}
-      The <a href="{% url 'members:teams' %}#code-of-conduct-team">Code of Conduct
+      The <a href="{{ teams_url }}#code-of-conduct-team">Code of Conduct
         Working Group</a> is responsible for investigating reports and enforcing the Code
       of Conduct. The working group is appointed by the Django Software Foundation
       board and operates according to the procedures documented in the <a href="https://github.com/django/code-of-conduct/blob/main/working-group-manual.md">
@@ -119,7 +119,7 @@
   <p>
     {% blocktranslate trimmed %}
       For day-to-day moderation in Django's online spaces (like the forum and Discord),
-      the <a href="{% url 'members:teams' %}#online-community-team">Online Community
+      the <a href="{{ teams_url }}#online-community-team">Online Community
         Working Group</a> handles issues using their own moderation processes. The Code
       of Conduct Working Group becomes involved for formal reports, cross-community
       violations, or issues escalated by the online moderators.
