@@ -47,8 +47,7 @@ class TemplateTagTests(TestCase):
             self.assertEqual(get_all_doc_versions({}), ["1.8", "1.11", "dev"])
 
     def test_pygments_template_tag(self):
-        template = Template(
-            '''
+        template = Template('''
 {% load docs %}
 {% pygment 'python' %}
 def band_listing(request):
@@ -57,8 +56,7 @@ def band_listing(request):
     return render(request, 'bands/band_listing.html', {'bands': bands})
 
 {% endpygment %}
-'''
-        )
+''')
         self.assertHTMLEqual(
             template.render(Context()),
             """
