@@ -1,45 +1,36 @@
 name: Docker test build
-
 on:
-    pull_request:
-
+  pull_request:
 concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
-
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
-    contents: read
-
+  contents: read
 jobs:
-    build-image:
-        runs-on: ubuntu-latest
-
-        strategy:
-            matrix:
-                req_file:
-                    - prod.txt
-                    - tests.txt
-
-        # steps taken (and trimmed) from docker-publish.yml
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v6
-
-            - if: matrix.req_file != 'tests.txt'
-              name: Test docker image build (${{ matrix.req_file }})
-              uses: docker/build-push-action@v6
-              with:
-                  context: .
-                  push: false
-                  build-args: |
-                      REQ_FILE=requirements/${{ matrix.req_file }}
-
-            - if: matrix.req_file == 'tests.txt'
-              name: Set up Docker Compose
-              uses: docker/setup-compose-action@v1
-
-            - if: matrix.req_file == 'tests.txt'
-              name: Run the tests via Docker
-              run: |
-                  docker compose build
-                  docker compose run --rm web make ci
+  build-image:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        req_file:
+          - prod.txt
+          - tests.txt
+    # steps taken (and trimmed) from docker-publish.yml
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - if: matrix.req_file != 'tests.txt'
+        name: Test docker image build (${{ matrix.req_file }})
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          build-args: |
+            REQ_FILE=requirements/${{ matrix.req_file }}
+      - if: matrix.req_file == 'tests.txt'
+        name: Set up Docker Compose
+        uses: docker/setup-compose-action@v1
+      - if: matrix.req_file == 'tests.txt'
+        name: Run the tests via Docker
+        run: |
+          docker compose build
+          docker compose run --rm web make ci

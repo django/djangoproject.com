@@ -1,17 +1,16 @@
 version: 2
 updates:
-    - package-ecosystem: "pip"
-      directory: "/requirements/"
-      schedule:
-          interval: "weekly"
-          day: "monday"
-          time: "12:00"
-          timezone: "Europe/Oslo" # hipp hipp hurra
-
-    - package-ecosystem: github-actions
-      directory: /
-      schedule:
-          interval: "weekly"
-          day: "monday"
-          time: "12:00"
-          timezone: "Europe/Oslo" # hipp hipp hurra
+  - package-ecosystem: "pip"
+    directory: "/requirements/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "12:00"
+      timezone: "Europe/Oslo" # hipp hipp hurra
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "12:00"
+      timezone: "Europe/Oslo" # hipp hipp hurra
