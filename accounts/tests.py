@@ -240,3 +240,13 @@ class UserDeletionTests(ReleaseMixin, TestCase):
         self.client.force_login(user)
         self.client.post(reverse("delete_profile"))
         self.assertEqual(self.client.cookies["sessionid"].value, "")
+    
+class NoIndexMetaTagTests(TestCase):
+
+    def test_noindex_present_on_untranslated_page(self):
+        response = self.client.get("/")
+        self.assertContains(response, 'noindex')
+
+    def test_noindex_not_present_on_translated_page(self):
+        response = self.client.get("/fr/")
+        self.assertNotContains(response, 'noindex')

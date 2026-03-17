@@ -43,7 +43,7 @@
 
     <script src="{% static "js/mod/switch-dark-mode.js" %}"></script>
     {% block head_extra %}
-      {% if not is_translated %}
+      {% if request.LANGUAGE_CODE != 'en' %}
         <meta name="robots" content="noindex">
       {% endif %}
     {% endblock head_extra %}
