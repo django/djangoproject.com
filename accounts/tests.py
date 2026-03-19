@@ -245,9 +245,9 @@ class UserDeletionTests(ReleaseMixin, TestCase):
 class NoIndexMetaTagTests(ReleaseMixin,TestCase):
 
     def test_noindex_present_on_untranslated_page(self):
-        response = self.client.get("/")
+        response = self.client.get(reverse("home"))
         self.assertContains(response, "noindex")
 
     def test_noindex_not_present_on_translated_page(self):
-        response = self.client.get("/fr/")
+        response = self.client.get(reverse("home",kwargs={"lang":"fr"}))
         self.assertNotContains(response, "noindex")
