@@ -59,9 +59,7 @@ class TicketTestCase(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         """
         A wrapper around assertQuerysetEqual with some useful defaults
         """
-        self.assertQuerySetEqual(
-            queryset, expected, transform=transform, ordered=ordered
-        )
+        self.assertQuerySetEqual(queryset, expected, transform=transform, ordered=ordered)
 
     def test_ticket_table_exist_in_testdb(self):
         self._create_ticket(summary="test", custom={"x": "y"})
@@ -172,9 +170,7 @@ class TicketTestCase(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         self._create_ticket(
             summary="test3", severity="low", custom={"stage": "unreviewed"}
         )
-        self._create_ticket(
-            summary="test4", severity="low", custom={"stage": "reviewed"}
-        )
+        self._create_ticket(summary="test4", severity="low", custom={"stage": "reviewed"})
 
         self.assertTicketsEqual(
             Ticket.objects.from_querystring("severity=high&stage=unreviewed"),
@@ -187,9 +183,7 @@ class TicketTestCase(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
             summary="test",
             time=datetime.fromisoformat("2024-10-24T10:30:00+00:00"),
         )
-        self.assertTicketsEqual(
-            Ticket.objects.from_querystring("time=today.."), ["test"]
-        )
+        self.assertTicketsEqual(Ticket.objects.from_querystring("time=today.."), ["test"])
 
     @time_machine.travel("2024-10-24T14:30:00+00:00")
     def test_from_querystring_time_today_previous_day_less_than_24h(self):

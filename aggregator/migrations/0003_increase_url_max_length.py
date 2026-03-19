@@ -2,7 +2,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("aggregator", "0002_add_feed_approver_auth_group"),
     ]
