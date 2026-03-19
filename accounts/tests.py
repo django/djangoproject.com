@@ -12,6 +12,7 @@ from tracdb.models import Revision, Ticket, TicketChange
 from tracdb.testutils import TracDBCreateDatabaseMixin
 
 
+
 @override_settings(TRAC_URL="https://code.djangoproject.com/")
 class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
     databases = {"default", "trac"}
@@ -241,8 +242,7 @@ class UserDeletionTests(ReleaseMixin, TestCase):
         self.client.post(reverse("delete_profile"))
         self.assertEqual(self.client.cookies["sessionid"].value, "")
 
-
-class NoIndexMetaTagTests(TestCase):
+class NoIndexMetaTagTests(ReleaseMixin,TestCase):
 
     def test_noindex_present_on_untranslated_page(self):
         response = self.client.get("/")
