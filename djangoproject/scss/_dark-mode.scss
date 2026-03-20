@@ -358,3 +358,16 @@ html[data-theme="light"] .admonition {
         opacity: 0.5;
     }
 }
+
+/* Fix logo focus outline in dark mode - header is always dark green */
+html[data-theme="dark"] header .logo:focus {
+    outline: 2px solid #ffffff !important;
+    outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) header .logo:focus {
+        outline: 2px solid #ffffff !important;
+        outline-offset: 2px;
+    }
+}
