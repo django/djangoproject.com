@@ -2414,9 +2414,7 @@ h2+.list-link-soup {
 
     &:hover li.other,
     &.open li.other {
-        @include respond-min(1200px) {
-            display: inline-block;
-        }
+        display: inline-block;
     }
 }
 
