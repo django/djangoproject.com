@@ -37,9 +37,6 @@ class EntryQuerySet(models.QuerySet):
     def active(self):
         return self.filter(is_active=True)
 
-    def searchable(self):
-        return self.filter(is_searchable=True)
-
 
 class ContentFormat(models.TextChoices):
     REST = "reST", "reStructuredText"
@@ -129,12 +126,6 @@ class Entry(models.Model):
             "inactive entries whereas the general public aren't."
         ),
         default=False,
-    )
-    is_searchable = models.BooleanField(
-        default=False,
-        help_text=_(
-            "Tick to make this entry appear in the Django documentation search."
-        ),
     )
     pub_date = models.DateTimeField(
         verbose_name=_("Publication date"),
