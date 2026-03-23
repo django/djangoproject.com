@@ -1,10 +1,12 @@
 from django.contrib.sitemaps import Sitemap
 
+from djangoproject.sitemaps import LocationAbsoluteUrlMixin
+
 from .models import Document
 from .search import DocumentationCategory
 
 
-class DocsSitemap(Sitemap):
+class DocsSitemap(LocationAbsoluteUrlMixin, Sitemap):
     def __init__(self, lang):
         self.lang = lang
 
@@ -15,6 +17,9 @@ class DocsSitemap(Sitemap):
             .order_by("-release__release", "path")
             .select_related("release__release")
         )
+
+    def location(self, item):
+        return item.get_absolute_url()
 
     def changefreq(self, obj):
         return "daily"
@@ -33,19 +38,3 @@ class DocsSitemap(Sitemap):
             return 1
         else:
             return 0.1
-
-    def _urls(self, page, site, protocol):
-        # XXX: To workaround bad interaction between contrib.sitemaps and
-        # django-hosts (scheme/domain would be repeated twice in URLs)
-        urls = []
-        for item in self.paginator.page(page).object_list:
-            loc = item.get_absolute_url()
-            priority = self.priority(item)
-            url_info = {
-                "item": item,
-                "location": loc,
-                "changefreq": self.changefreq(item),
-                "priority": str(priority if priority is not None else ""),
-            }
-            urls.append(url_info)
-        return urls
