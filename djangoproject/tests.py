@@ -202,6 +202,7 @@ class Header1Tests(ReleaseMixin, TestCase):
             "styleguide/",  # Has multiple <h1> examples.
             "admin/",  # Admin templates are out of our control.
             "reset/done/",  # Uses an admin template.
+            "sitemap.xml",
         ]
         resolver = get_resolver()
         urls = self.extract_patterns(resolver.url_patterns)
@@ -222,3 +223,9 @@ class SecurityTxtTests(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response["Content-Type"], "text/plain")
         self.assertIn("Expires:", response.content.decode())
+
+
+class SiteMapTests(TestCase):
+    def test_sitemap_renders(self):
+        response = self.client.get(reverse("sitemap"))
+        self.assertEqual(response.status_code, 200)
