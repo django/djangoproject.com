@@ -14,13 +14,12 @@ RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends \
         gettext \
         git \
-        libpq5 \
         postgresql-common \
         make \
         rsync \
     && /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y \
     && apt-get install --assume-yes --no-install-recommends \
-        postgresql-client-17 \
+        postgresql-client-17 libpq5 \
     && apt-get distclean
 
 ARG REQ_FILE=requirements/prod.txt
