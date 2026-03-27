@@ -82,7 +82,9 @@ class Meeting(models.Model):
         BoardMember, related_name="meetings_led", on_delete=models.CASCADE
     )
     board_attendees = models.ManyToManyField(
-        BoardMember, related_name="meetings_attended"
+        BoardMember,
+        related_name="meetings_attended",
+        help_text=_("Make sure to choose the correct year"),
     )
     non_board_attendees = models.ManyToManyField(
         NonBoardAttendee, related_name="meetings_attended", blank=True
@@ -201,7 +203,14 @@ class Business(models.Model):
     )
 
     title = models.CharField(max_length=255)
-    body = models.TextField()
+    body = models.TextField(
+        help_text=_(
+            "Supports reStructuredText. "
+            "See <a href='https://www.djangoproject.com/styleguide/content/'>"
+            "supported formatting</a>."
+        )
+    )
+
     body_html = models.TextField(editable=False)
     business_type = models.CharField(max_length=25, choices=TYPE_CHOICES)
     meeting = models.ForeignKey(
