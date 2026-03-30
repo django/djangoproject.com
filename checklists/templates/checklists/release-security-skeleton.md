@@ -182,8 +182,6 @@ Details are available on the Django project weblog:
     - Click "Set award" → select "No award (ineligible)" and add the comment:
 ```
 Django does not offer monetary rewards for security reports.
-You may submit the issue to the Internet Bug Bounty program following:
-https://hackerone.com/ibb
 ```
 
 - [ ] Close PRs in security repo linking hashes
