@@ -50,6 +50,8 @@ repos:
       rev: v3.7.4
       hooks:
           - id: prettier
+            # https://github.com/rbubley/mirrors-prettier/issues/3
+            language_version: 24.13.0
             exclude_types: [html, json, scss]
             exclude: '(^djangoproject\/static\/js\/lib\/.*$|^checklists\/templates\/.*$)'
 
