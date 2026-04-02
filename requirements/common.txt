@@ -15,7 +15,7 @@ Jinja2==3.1.6
 libsass==0.23.0
 Markdown==3.10.2
 Pillow==12.1.1
-Pygments==2.19.2
+Pygments==2.20.0
 pykismet3==0.1.1
 pymdown-extensions==10.21
 python-dateutil==2.9.0.post0
