@@ -505,6 +505,11 @@ header {
         @include respond-min(1080px) {
             margin-left: 10px;
         }
+
+        &:focus {
+            outline: 2px solid var(--menu);
+        }
+
     }
 
     .header-tools {
@@ -1013,7 +1018,7 @@ footer {
 
             &:focus {
                 outline: 2px solid var(--menu);
-            }
+            } 
         }
     }
 
