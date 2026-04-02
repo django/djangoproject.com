@@ -16,6 +16,7 @@ from blog.sitemaps import WeblogSitemap
 from djangoproject.sitemaps import TemplateViewSitemap
 from foundation.feeds import FoundationMinutesFeed
 from foundation.views import CoreDevelopers
+from fundraising.views import funding_json
 
 admin.autodiscover()
 
@@ -101,6 +102,7 @@ urlpatterns = [
     path("foundation/django_core/", CoreDevelopers.as_view()),
     path("foundation/minutes/", include("foundation.urls.meetings")),
     path("foundation/", include("members.urls")),
+    path("funding.json", funding_json, name="funding-json"),  # see https://floss.fund
     path("fundraising/", include("fundraising.urls")),
     # Used by docs search suggestions
     re_path(
