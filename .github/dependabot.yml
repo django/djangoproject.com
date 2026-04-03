@@ -9,3 +9,13 @@ updates:
           timezone: "Europe/Oslo" # hipp hipp hurra
       cooldown:
           default-days: 7
+
+    - package-ecosystem: github-actions
+      directory: /
+      schedule:
+          interval: "weekly"
+          day: "monday"
+          time: "12:00"
+          timezone: "Europe/Oslo" # hipp hipp hurra
+      cooldown:
+          default-days: 7

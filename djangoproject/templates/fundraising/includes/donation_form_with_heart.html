@@ -48,13 +48,15 @@
           data-login-url="{% url 'login' %}">
           {% csrf_token %}
           <h3>{% translate "Help us make it happen:" %}</h3>
+          <label for="{{ form.interval.id_for_label }}">{% translate "Donation frequency:" %}</label>
           {{ form.interval }}
+          <label for="{{ form.amount.id_for_label }}">{% translate "Donation amount:" %}</label>
           {{ form.amount }}
           <div class="custom-donation">
             <span class="prefix">US $ ({% translate "integer only" context "Donation amount in US dollars" %})</span>
           </div>
           {{ form.captcha }}
-          <input id="donate-button" type="submit" value="{% translate "Donate monthly" %}" class="cta" />
+          <input id="donate-button" type="submit" value="{% translate 'Donate monthly' %}" class="cta" />
         </form>
       </div>
     </div>

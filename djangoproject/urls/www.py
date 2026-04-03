@@ -13,6 +13,7 @@ from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
+from djangoproject.sitemaps import TemplateViewSitemap
 from foundation.feeds import FoundationMinutesFeed
 from foundation.views import CoreDevelopers
 
@@ -21,6 +22,7 @@ admin.autodiscover()
 sitemaps = {
     "weblog": WeblogSitemap,
     "flatpages": FlatPageSitemap,
+    "templates": TemplateViewSitemap,
 }
 
 
@@ -94,6 +96,7 @@ urlpatterns = [
         TemplateView.as_view(template_name="diversity/changes.html"),
         name="diversity_changes",
     ),
+    path("checklists/", include("checklists.urls")),
     path("contact/", include("contact.urls")),
     path("foundation/django_core/", CoreDevelopers.as_view()),
     path("foundation/minutes/", include("foundation.urls.meetings")),
@@ -135,11 +138,25 @@ urlpatterns = [
         "sitemap.xml",
         cache_page(60 * 60 * 6)(sitemap_views.sitemap),
         {"sitemaps": sitemaps},
+        name="sitemap",
+    ),
+    path(
+        ".well-known/security.txt",
+        TemplateView.as_view(
+            template_name="well-known/security.txt", content_type="text/plain"
+        ),
     ),
     path("weblog/", include("blog.urls")),
     path("download/", include("releases.urls")),
     path("svntogit/", include("svntogit.urls")),
     path("", include("legacy.urls")),
+    path(
+        "foundation/individual-membership-nomination/",
+        RedirectView.as_view(
+            url="https://forms.gle/xKaZQqYswbMu2K5q6",
+            permanent=False,
+        ),
+    ),
 ]
 
 if settings.DEBUG:

@@ -23,11 +23,11 @@ jobs:
         # steps taken (and trimmed) from docker-publish.yml
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v4
+              uses: actions/checkout@v6
 
             - if: matrix.req_file != 'tests.txt'
               name: Test docker image build (${{ matrix.req_file }})
-              uses: docker/build-push-action@v6
+              uses: docker/build-push-action@v7
               with:
                   context: .
                   push: false
@@ -36,7 +36,7 @@ jobs:
 
             - if: matrix.req_file == 'tests.txt'
               name: Set up Docker Compose
-              uses: docker/setup-compose-action@v1
+              uses: docker/setup-compose-action@v2
 
             - if: matrix.req_file == 'tests.txt'
               name: Run the tests via Docker

@@ -1,5 +1,6 @@
 import datetime
 import re
+from functools import total_ordering
 from pathlib import Path
 
 from django.conf import settings
@@ -160,6 +161,7 @@ def upload_to_checksum(release, filename):
     return f"pgp/Django-{version}.checksum.txt"
 
 
+@total_ordering
 class Release(models.Model):
     DEFAULT_CACHE_KEY = "%s_django_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
     STATUS_CHOICES = (
@@ -189,7 +191,7 @@ class Release(models.Model):
         null=True,
         blank=True,
         default=datetime.date.today,
-        help_text="Leave blank if the release date isn't know yet, typically "
+        help_text="Leave blank if the release date isn't known yet, typically "
         "if you're creating the final release just after the alpha "
         "because you want to build docs for the upcoming version.",
     )
@@ -210,8 +212,8 @@ class Release(models.Model):
     is_lts = models.BooleanField(
         "Long Term Support",
         help_text=(
-            'Is this a release for an <abbr title="Long Term Support">LTS</abbr> Django '
-            "version (e.g. 5.2a1, 5.2, 5.2.4)?"
+            'Is this a release for an <abbr title="Long Term Support">LTS</abbr> '
+            "Django version (e.g. 5.2a1, 5.2, 5.2.4)?"
         ),
         default=False,
     )
@@ -272,6 +274,47 @@ class Release(models.Model):
         if len(version) == 4:
             version.append(0)
         return tuple(version)
+
+    @cached_property
+    def version_verbose(self):
+        return (
+            f"{self.feature_version} {self.get_status_display()} {self.iteration}"
+            if self.is_pre_release
+            else self.version
+        )
+
+    @cached_property
+    def feature_version(self):
+        return f"{self.major}.{self.minor}"
+
+    @cached_property
+    def feature_release(self):
+        return Release.objects.get(version=self.feature_version)
+
+    @cached_property
+    def series(self):
+        return f"{self.major}.x"
+
+    @cached_property
+    def stable_branch(self):
+        return f"stable/{self.feature_version}.x"
+
+    @cached_property
+    def commit_prefix(self):
+        return f"[{self.feature_version}.x]"
+
+    @cached_property
+    def is_pre_release(self):
+        """Return True if this is an alpha, beta, or rc release."""
+        return self.status != "f"
+
+    @cached_property
+    def is_dot_zero(self):
+        """Return True if this is a final X.Y.0 release."""
+        return self.status == "f" and self.micro == 0
+
+    def __lt__(self, other):
+        return self.version_tuple < other.version_tuple
 
     def clean(self):
         if self.is_published and not self.tarball:

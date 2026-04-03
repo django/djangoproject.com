@@ -256,6 +256,14 @@ To update this file, run::
 
     python -m manage dumpdata dashboard --exclude dashboard.Datum --indent=4 > dashboard_production_metrics.json
 
+Release Checklists
+------------------
+
+The ``checklists`` app provides assistance for issuing Django releases (feature
+releases, pre-releases (alpha/beta/RC), bugfix releases, and security releases).
+
+For detailed documentation see `checklists/README.md <checklists/README.md>`_.
+
 Translation
 -----------
 
