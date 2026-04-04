@@ -485,7 +485,7 @@ header {
         @include font-size(40);
         @include sans-serif;
         // Small screens less than 500px use the dj logo. This gives more
-        // horizontal space for a searchbar in the header.
+        // horizontal space for a searchbar in the header
         background: url(../img/logo-dj.svg) center center no-repeat;
         color: var(--white-color);
         display: block;
@@ -505,6 +505,11 @@ header {
         @include respond-min(1080px) {
             margin-left: 10px;
         }
+
+        &:focus {
+            outline: 2px solid var(--menu);
+        }
+
     }
 
     .header-tools {
@@ -1012,8 +1017,9 @@ footer {
             margin-top: 20px;
 
             &:focus {
-                outline: 2px solid var(--menu);
+                outline: 2px solid var(--body-fg);
             }
+
         }
     }
 
