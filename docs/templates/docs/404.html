@@ -1,0 +1,13 @@
+{% extends 'base_error.html' %}
+{% load docs %}
+
+{% block title %}Page not found{% endblock %}
+
+{% block header %}<h1>404</h1>{% endblock %}
+
+{% block content %}
+  <h2>Page not found</h2>
+  <p>Looks like you followed a bad link on the docs. Try searching for what you need:</p>
+  {% search_form %}
+  <p>Or go back to the <a href="/">homepage</a>.</p>
+{% endblock %}
