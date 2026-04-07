@@ -319,6 +319,39 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         self.assertEqual(list(checklist.cnas), [])
         self.assertEqual(checklist.hashes_by_versions, [])
 
+    def test_cves_numeric_sort_order_on_cve_year_number(self):
+        release = self.factory.make_release(version="5.2")
+        checklist = self.make_checklist(releases=[])
+        # Lexicographic sort would put 10000 before 9999 ("1" < "9").
+        issue_9999 = self.factory.make_security_issue(
+            checklist, [release], cve_year_number="CVE-2025-9999"
+        )
+        issue_10000 = self.factory.make_security_issue(
+            checklist, [release], cve_year_number="CVE-2025-10000"
+        )
+        self.assertEqual(checklist.cves, [issue_9999, issue_10000])
+
+    def test_hashes_by_versions_numeric_sort_order_on_cve_year_number(self):
+        release = self.factory.make_release(version="5.2")
+        checklist = self.make_checklist(releases=[])
+        # Lexicographic sort would put 10000 before 9999 ("1" < "9").
+        self.factory.make_security_issue(
+            checklist,
+            [release],
+            cve_year_number="CVE-2025-9999",
+            commit_hash_main="main9999",
+        )
+        self.factory.make_security_issue(
+            checklist,
+            [release],
+            cve_year_number="CVE-2025-10000",
+            commit_hash_main="main10000",
+        )
+        self.assertEqual(
+            [h["cve"] for h in checklist.hashes_by_versions],
+            ["CVE-2025-9999", "CVE-2025-10000", "CVE-2025-9999", "CVE-2025-10000"],
+        )
+
     def test_render_checklist_simple(self):
         checklist = self.make_checklist()
         checklist_content = self.do_render_checklist(checklist)
