@@ -4,6 +4,7 @@ import json
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models.functions import Cast, Substr
 from django.shortcuts import reverse
 from django.template.defaultfilters import urlize
 from django.template.loader import render_to_string
@@ -15,6 +16,18 @@ from releases.models import Release
 from .templatetags.checklist_extras import enumerate_items, format_releases_for_cves
 
 CNA_DSF_UUID = "6a34fbeb-21d4-45e7-8e0a-62b95bc12c92"
+
+
+# CVE IDs have the form CVE-YYYY-NNNNN. The year (4 digits) is always at
+# positions 5-8 and the number starts at position 10 (both 1-based). This
+# helper extracts each part as an integer for correct numeric DB-level sorting.
+def cve_sort_key(field="cve_year_number", *, desc=False):
+    year = Cast(Substr(field, 5, 4), output_field=models.IntegerField())
+    number = Cast(Substr(field, 10), output_field=models.IntegerField())
+    if desc:
+        return year.desc(), number.desc()
+    return year, number
+
 
 # CVSS metrics choices.
 
@@ -385,13 +398,13 @@ class SecurityRelease(ReleaseChecklist):
 
     @cached_property
     def cves(self):
-        return [cve for cve in self.securityissue_set.all().order_by("cve_year_number")]
+        return list(self.securityissue_set.all().order_by(*cve_sort_key()))
 
     @cached_property
     def cnas(self):
         return (
             self.securityissue_set.all()
-            .order_by("cve_year_number")
+            .order_by(*cve_sort_key())
             .values_list("cna", flat=True)
         )
 
@@ -443,14 +456,17 @@ class SecurityRelease(ReleaseChecklist):
                 "securityissue", "release"
             )
             .filter(securityissue__release_id=self.id)
-            .order_by("securityissue__id", "-release__version")
+            .order_by(
+                *cve_sort_key("securityissue__cve_year_number"),
+                "-release__version",
+            )
         ] + [
             {
                 "branch": "main",
                 "cve": issue.cve_year_number,
                 "hash": issue.commit_hash_main,
             }
-            for issue in self.securityissue_set.all()
+            for issue in self.cves
         ]
 
     def get_absolute_url(self):
