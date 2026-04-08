@@ -711,6 +711,12 @@ header {
         }
     }
 
+    .banner-preview-notice {
+        background-color: $warning-bg;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
 
     a, h1 a {
         color: $black;

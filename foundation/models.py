@@ -1,10 +1,12 @@
 from decimal import Decimal
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
-from django.urls import reverse
+from django.utils import timezone
 from django.utils.dateformat import format as date_format
 from django.utils.translation import gettext_lazy as _
+from django_hosts.resolvers import reverse
 from djmoney.models.fields import MoneyField
 from djmoney.settings import CURRENCIES
 from docutils.core import publish_parts
@@ -184,6 +186,84 @@ class ApprovedCorporateMember(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Banner(models.Model):
+    """A site-wide campaign banner displayed in the billboard area.
+
+    Only one banner can be active at a time; activating a banner automatically
+    deactivates all others.
+
+    Users with the view_banner permission can preview inactive banners on the
+    live site.
+    """
+
+    title = models.CharField(max_length=512)
+    body = models.TextField(
+        blank=True,
+        help_text=(
+            "Optional banner body text. HTML is supported and will be rendered as given."
+        ),
+    )
+    cta_label = models.CharField(
+        "Call-to-action button label",
+        max_length=100,
+        blank=True,
+        help_text=(
+            "Label for the call-to-action button. Both label and URL must be provided "
+            "for the button to appear."
+        ),
+    )
+    cta_url = models.URLField(
+        "Call-to-action button URL",
+        blank=True,
+        help_text=(
+            "URL for the call-to-action button. Both label and URL must be provided "
+            "for the button to appear."
+        ),
+    )
+    is_active = models.BooleanField(
+        default=False,
+        help_text=(
+            "Only one banner can be active at a time. Activating this banner will "
+            "deactivate all others."
+        ),
+    )
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        editable=False,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        editable=False,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse("foundation_banner_preview", kwargs={"pk": self.pk})
+
+    def clean(self):
+        if bool(self.cta_label) != bool(self.cta_url):
+            raise ValidationError(
+                "Both a call-to-action label and URL must be provided, or neither."
+            )
+
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            Banner.objects.exclude(pk=self.pk).update(is_active=False)
+        super().save(*args, **kwargs)
 
 
 class Business(models.Model):
