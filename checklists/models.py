@@ -541,7 +541,10 @@ class SecurityIssue(models.Model):
     blogdescription = models.TextField(
         blank=True,
         verbose_name="Blog description",
-        help_text="Markdown format. Single `backticks` for inline code.",
+        help_text=(
+            "Markdown format. Single `backticks` for inline code. "
+            "Copy from release notes, include severity sentence.",
+        ),
     )
     reporter = models.CharField(max_length=1024, blank=True)
     remediator = models.CharField(max_length=1024, blank=True)

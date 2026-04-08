@@ -11,7 +11,6 @@ users of Django to upgrade as soon as possible.
 {% if cve.reporter %}
 Thanks to {{ cve.reporter }} for the report.
 {% endif %}
-This issue has severity "{{ cve.severity }}" according to the Django security policy.
 {% endfor %}
 
 ## Affected supported versions
