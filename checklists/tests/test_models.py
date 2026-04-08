@@ -148,7 +148,7 @@ class BugFixReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             "series.",
         )
         self.assertEqual(
-            checklist.blogpost_template, "checklists/release_bugfix_blogpost.rst"
+            checklist.blogpost_template, "checklists/release_bugfix_blogpost.md"
         )
 
     def test_render_checklist(self):
@@ -211,7 +211,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         checklist = self.make_checklist(releases=[release51, release52, prerelease])
         self.factory.make_security_issue(checklist, releases=[release52])
         self.assertEqual(
-            checklist.blogpost_template, "checklists/release_security_blogpost.rst"
+            checklist.blogpost_template, "checklists/release_security_blogpost.md"
         )
         self.assertEqual(
             checklist.blogpost_summary, "Django 5.2 and 5.1.9 fix 2 security issues"
@@ -426,7 +426,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             "a set of security releases will be issued on Wednesday, May 7, 2025 "
             "around 16:18 UTC",
             *(cve.headline_for_blogpost for cve in cves),
-            "Affected supported versions =========================== "
+            "## Affected supported versions "
             + " ".join(f"* Django {branch}" for branch in checklist.affected_branches),
             "* Django 5.0.14",
             "* Django 5.1.8",
@@ -482,26 +482,22 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         checklist = self.make_checklist(releases=releases)
         checklist_content = self.do_render_checklist(checklist)
 
+        url = "https://www.djangoproject.com/download/"
         expected = (
-            "The following releases have been issued\n"
-            "=======================================\n"
+            "## The following releases have been issued\n"
             "\n"
-            "* Django 5.1.9 (`download Django 5.1.9\n"
-            "  <https://www.djangoproject.com/download/5.1.9/tarball/>`_ |\n"
-            "  `5.1.9 checksums\n"
-            "  <https://www.djangoproject.com/download/5.1.9/checksum/>`_)\n"
-            "* Django 4.2.21 (`download Django 4.2.21\n"
-            "  <https://www.djangoproject.com/download/4.2.21/tarball/>`_ |\n"
-            "  `4.2.21 checksums\n"
-            "  <https://www.djangoproject.com/download/4.2.21/checksum/>`_)\n"
+            f"* Django 5.1.9 ([tarball]({url}5.1.9/tarball/) | "
+            f"[checksums]({url}5.1.9/checksum/))\n"
+            f"* Django 4.2.21 ([tarball]({url}4.2.21/tarball/) | "
+            f"[checksums]({url}4.2.21/checksum/))\n"
             "\n"
             "The PGP key ID used for this release is Merry Pippin: "
-            "`1234567890ABCDEF <https://github.com/releaser.gpg>`_\n"
+            "[1234567890ABCDEF](https://github.com/releaser.gpg)\n"
         )
         # Proper download links are shown.
         self.assertIn(expected, checklist_content)
 
-    def test_render_checklist_rst_backticks(self):
+    def test_render_checklist_headline_formats(self):
         releases = [
             self.factory.make_release(version="5.1.9"),
             self.factory.make_release(version="5.2.1"),
@@ -523,15 +519,19 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         )
         checklist_content = self.do_render_checklist(checklist)
 
-        expected = [
-            "CVE-2025-11111: Denial-of-service possibility in ``strip_tags()``\n"
-            "=================================================================\n",
-            "CVE-2025-11111: Denial-of-service possibility in ``strip_tags()``\n"
-            "-----------------------------------------------------------------\n",
-            "CVE-2025-22222: Denial-of-service in ``LoginView`` and ``LogoutView``\n"
-            "=====================================================================\n",
-            "CVE-2025-22222: Denial-of-service in ``LoginView`` and ``LogoutView``\n"
-            "---------------------------------------------------------------------\n",
+        # MD blogpost uses single backticks and ## / ### headings.
+        expected_md = [
+            "## CVE-2025-11111: Denial-of-service possibility in `strip_tags()`\n",
+            "### CVE-2025-11111: Denial-of-service possibility in `strip_tags()`\n",
+            "## CVE-2025-22222: Denial-of-service in `LoginView` and `LogoutView`\n",
+            "### CVE-2025-22222: Denial-of-service in `LoginView` and `LogoutView`\n",
+        ]
+        for headline in expected_md:
+            with self.subTest(headline=headline):
+                self.assertIn(headline, checklist_content)
+
+        # RST security archive uses double backticks and RST-style headings.
+        expected_rst = [
             "May 7, 2025 - :cve:`2025-11111`\n"
             "-------------------------------\n\n"
             "Denial-of-service possibility in ``strip_tags()``.\n"
@@ -541,7 +541,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             "Denial-of-service in ``LoginView`` and ``LogoutView``.\n"
             f"`Full description\n<{checklist.blogpost_link}>`__",
         ]
-        for headline in expected:
+        for headline in expected_rst:
             with self.subTest(headline=headline):
                 self.assertIn(headline, checklist_content)
 
@@ -879,7 +879,7 @@ class PreReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
                 )
                 self.assertEqual(
                     checklist.blogpost_template,
-                    f"checklists/release_{checklist.status_reversed}_blogpost.rst",
+                    f"checklists/release_{checklist.status_reversed}_blogpost.md",
                 )
                 expected = (
                     f"Today Django 6.0 {verbose} 1, a preview/testing package for the "
@@ -943,7 +943,7 @@ class FeatureReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         checklist = self.make_checklist(release=release)
         self.assertEqual(checklist.blogpost_title, "Django 6.0 released")
         self.assertEqual(
-            checklist.blogpost_template, "checklists/release_final_blogpost.rst"
+            checklist.blogpost_template, "checklists/release_final_blogpost.md"
         )
         self.assertEqual(checklist.blogpost_summary, "Django 6.0 has been released!")
 

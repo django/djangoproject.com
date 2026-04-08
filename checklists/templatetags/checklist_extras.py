@@ -72,8 +72,7 @@ def format_releases_for_cves(releases):
 @register.filter
 def format_version_for_blogpost(version):
     return (
-        f"`Django {version} "
-        f"<https://docs.djangoproject.com/en/dev/releases/{version}/>`_"
+        f"[Django {version}](https://docs.djangoproject.com/en/dev/releases/{version}/)"
     )
 
 
