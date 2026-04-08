@@ -99,7 +99,7 @@ CVSS_PROVIDER_URGENCY_CHOICES = [  # U
 
 DESCRIPTION_HELP_TEXT = """Written in present tense.
 
-Use SINGLE `backticks` for code-like words.
+Used in CVE metadata. Single `backticks` for inline code.
 
 ==> Do not include versions, these will be prepended automatically. <==
 
@@ -182,7 +182,7 @@ class ReleaseChecklist(models.Model):
 
     @cached_property
     def blogpost_template(self):
-        return f"checklists/release_{self.status_reversed}_blogpost.rst"
+        return f"checklists/release_{self.status_reversed}_blogpost.md"
 
     @cached_property
     def blogpost_title(self):
@@ -342,7 +342,7 @@ class BugFixRelease(ReleaseChecklist):
 
     @cached_property
     def blogpost_template(self):
-        return "checklists/release_bugfix_blogpost.rst"
+        return "checklists/release_bugfix_blogpost.md"
 
     @cached_property
     def blogpost_title(self):
@@ -380,7 +380,7 @@ class SecurityRelease(ReleaseChecklist):
 
     @cached_property
     def blogpost_template(self):
-        return "checklists/release_security_blogpost.rst"
+        return "checklists/release_security_blogpost.md"
 
     @cached_property
     def blogpost_title(self):
@@ -530,12 +530,18 @@ class SecurityIssue(models.Model):
         choices=[(i, i.capitalize()) for i in ("low", "moderate", "high")],
         default="moderate",
     )
-    summary = models.CharField(max_length=1024, help_text="Single backticks here.")
+    summary = models.CharField(
+        max_length=1024,
+        help_text=(
+            "Markdown format. Single `backticks` for inline code. For the rst "
+            "security archive entry, backticks are doubled automatically."
+        ),
+    )
     description = models.TextField(help_text=DESCRIPTION_HELP_TEXT)
     blogdescription = models.TextField(
         blank=True,
         verbose_name="Blog description",
-        help_text="Double backticks here (general rst format).",
+        help_text="Markdown format. Single `backticks` for inline code.",
     )
     reporter = models.CharField(max_length=1024, blank=True)
     remediator = models.CharField(max_length=1024, blank=True)
