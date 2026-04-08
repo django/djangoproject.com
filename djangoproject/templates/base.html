@@ -1,4 +1,4 @@
-{% load static %}<!DOCTYPE html>
+{% load static banner %}<!DOCTYPE html>
 <html lang="{% block html_language_code %}en{% endblock %}">
   <head>
     <meta charset="utf-8">
@@ -59,7 +59,7 @@
     </section>
 
     <div id="billboard">
-      {% block billboard %}{% endblock %}
+      {% block billboard %}{% active_banner %}{% endblock %}
     </div>
 
     <div class="container {% block layout_class %}{% endblock %}">

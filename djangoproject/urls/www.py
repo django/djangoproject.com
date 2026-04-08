@@ -15,7 +15,7 @@ from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
 from djangoproject.sitemaps import TemplateViewSitemap
 from foundation.feeds import FoundationMinutesFeed
-from foundation.views import CoreDevelopers
+from foundation.views import BannerPreview, CoreDevelopers
 
 admin.autodiscover()
 
@@ -98,6 +98,11 @@ urlpatterns = [
     ),
     path("checklists/", include("checklists.urls")),
     path("contact/", include("contact.urls")),
+    path(
+        "foundation/banners/<int:pk>/preview/",
+        BannerPreview.as_view(),
+        name="foundation_banner_preview",
+    ),
     path("foundation/django_core/", CoreDevelopers.as_view()),
     path("foundation/minutes/", include("foundation.urls.meetings")),
     path("foundation/", include("members.urls")),
