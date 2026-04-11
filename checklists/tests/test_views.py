@@ -92,5 +92,9 @@ class SecurityIssueViewTestCase(TestCase):
         response = self.client.get(self.url(issue))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response["Content-Type"], "application/json")
+        self.assertEqual(
+            response["Content-Disposition"],
+            f'inline; filename="{issue.cve_year_number}.json"',
+        )
         data = response.json()
         self.assertEqual(data, issue.cve_data)

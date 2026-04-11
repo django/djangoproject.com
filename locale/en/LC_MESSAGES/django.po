@@ -1760,6 +1760,12 @@ msgstr ""
 msgid "Help us make it happen:"
 msgstr ""
 
+msgid "Donation frequency:"
+msgstr ""
+
+msgid "Donation amount:"
+msgstr ""
+
 msgctxt "Donation amount in US dollars"
 msgid "integer only"
 msgstr ""

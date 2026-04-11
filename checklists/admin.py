@@ -14,6 +14,7 @@ from .models import (
     SecurityIssue,
     SecurityIssueReleasesThrough,
     SecurityRelease,
+    cve_sort_key,
 )
 
 
@@ -101,7 +102,6 @@ class SecurityIssueAdmin(admin.ModelAdmin):
     ]
     list_filter = ["severity", "release"]
     search_fields = ["cve_year_number", "summary", "description", "commit_hash_main"]
-    ordering = ["-updated_at", "-created_at", "-cve_year_number"]
     readonly_fields = [
         "cvss_base_severity",
         "cvss_vector",
@@ -197,6 +197,13 @@ class SecurityIssueAdmin(admin.ModelAdmin):
         ),
     )
 
+    def get_ordering(self, request):
+        return [
+            "-updated_at",
+            "-created_at",
+            *cve_sort_key(desc=True),
+        ]
+
     @admin.display(description="CVE Record")
     def cve_json_record_link(self, obj):
         url = obj.get_absolute_url()
@@ -212,4 +219,9 @@ class SecurityIssueReleasesThroughAdmin(admin.ModelAdmin):
         "release__version",
         "commit_hash",
     ]
-    ordering = ["-securityissue__cve_year_number", "release__version"]
+
+    def get_ordering(self, request):
+        return [
+            *cve_sort_key("securityissue__cve_year_number", desc=True),
+            "release__version",
+        ]
