@@ -2312,6 +2312,12 @@ msgstr ""
 msgid "Help us make it happen:"
 msgstr "Hjälp oss att få det att hända:"
 
+msgid "Donation frequency:"
+msgstr "Donationsfrekvens:"
+
+msgid "Donation amount:"
+msgstr "Donera belopp:"
+
 msgctxt "Donation amount in US dollars"
 msgid "integer only"
 msgstr "endast heltal"

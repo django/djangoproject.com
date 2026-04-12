@@ -554,13 +554,19 @@ header {
         width: 100%;
         background: $green-dark;
         transition: max-height 0.3s ease-out;
-        max-height: 0; // hide mobile menu by default
+        max-height: 0;
+        display: none; // hide mobile menu by default
         overflow: hidden;
         padding: 0 2px;
         flex-basis: 100%;
 
         &.active {
             max-height: 580px;
+            display: block;
+
+            @starting-style {
+                max-height: 0;
+            }
         }
 
         @include respond-min(1280px) {
@@ -568,7 +574,8 @@ header {
             order: 2;
             margin-left: auto;
             flex-basis: auto;
-            max-height: none; // always show menu on a desktop width
+            display: block; // always show menu on a desktop width
+            max-height: none;
         }
 
         ul {
@@ -1003,6 +1010,10 @@ footer {
             background-position: left center;
             margin-right: 0;
             margin-top: 20px;
+
+            &:focus {
+                outline: 2px solid var(--menu);
+            }
         }
     }
 
@@ -1087,6 +1098,10 @@ footer {
         a.in-kind-donors {
             @include font-size(20);
             color: var(--primary-accent);
+
+            &:focus {
+                outline: 2px solid var(--menu);
+            }
         }
 
         a.threespot,
@@ -2703,7 +2718,7 @@ search.filters {
     position: relative;
 
     a {
-      padding: 10px 20px;
+      padding: 10px 15px;
       text-decoration: none;
       border-bottom: 3px solid transparent;
       transition: color 0.3s ease, border-bottom 0.3s ease;
