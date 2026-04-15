@@ -1,140 +1,556 @@
-{% extends "conduct/base.html" %}
-{% load i18n %}
+{% extends "conduct/base.html" %} {% load i18n %} {% block title %}{% translate
+"Django Code of Conduct" %}{% endblock %} {% block og_title %}{% translate
+"Django Code of Conduct" %}{% endblock %} {% block og_description %}{% translate
+"Some ground rules for the community" %}{% endblock %} {% block content %}
 
-{% block title %}{% translate "Django Code of Conduct" %}{% endblock %}
+{% url 'conduct_reporting' as reporting_url %}
+{% url 'conduct_faq' as faq_url %}
 
-{% block og_title %}{% translate "Django Code of Conduct" %}{% endblock %}
-{% block og_description %}{% translate "Some ground rules for the community" %}{% endblock %}
+<h1>{% translate "Django Code of Conduct" %}</h1>
 
-{% block content %}
+<h2 id="our-pledge">
+  {% translate "Our Pledge" %} <a class="plink" href="#our-pledge">¶</a>
+</h2>
 
-  <h1>{% translate "Django Code of Conduct" %}</h1>
+<p>
+  {% blocktranslate trimmed %}
+  We pledge to make our community welcoming, safe, and equitable for all.
+  {% endblocktranslate %}
+</p>
 
-  <p>
+<p>
+  {% blocktranslate trimmed %}
+  We are committed to fostering an environment that respects and promotes the dignity,
+  rights, and contributions of all individuals, regardless of characteristics including
+  race, ethnicity, caste, color, age, physical characteristics, neurodiversity,
+  disability, sex or gender, gender identity or expression, sexual orientation,
+  language, philosophy or religion, national or social origin, socio-economic position,
+  level of education, or other status. The same privileges of participation are
+  extended to everyone who participates in good faith and in accordance with
+  this Covenant.
+  {% endblocktranslate %}
+</p>
+
+<h2 id="encouraged-behaviors">
+  {% translate "Encouraged Behaviors" %}
+  <a class="plink" href="#encouraged-behaviors">¶</a>
+</h2>
+
+<p>
+  {% blocktranslate trimmed %}
+  While acknowledging differences in social norms, we all strive to meet our community's
+  expectations for positive behavior. We also understand that our words and actions may
+  be interpreted differently than we intend based on culture, background, or native
+  language.
+  {% endblocktranslate %}
+</p>
+
+<p>
+  {% blocktranslate trimmed %}
+  With these considerations in mind, we agree to behave mindfully toward each other and
+  act in ways that center our shared values, including:
+  {% endblocktranslate %}
+</p>
+
+<ul class="simple">
+  <li>
     {% blocktranslate trimmed %}
-      Like the technical community as a whole, the Django team and community is made up
-      of a mixture of professionals and volunteers from all over the world, working on
-      every aspect of the mission - including mentorship, teaching, and connecting
-      people.
-    {% endblocktranslate %}</p>
-
-  <p>
+    Respecting the <strong>purpose of our community</strong>, our activities, and our ways of gathering.
+    {% endblocktranslate %}
+  </li>
+  <li>
     {% blocktranslate trimmed %}
-      Diversity is one of our huge strengths, but it can also lead to communication
-      issues and unhappiness. To that end, we have a few ground rules that we ask
-      people to adhere to. This code applies equally to founders, mentors and those
-      seeking help and guidance.
-    {% endblocktranslate %}</p>
-
-  <p>
+    Engaging <strong>kindly and honestly</strong> with others.
+    {% endblocktranslate %}
+  </li>
+  <li>
     {% blocktranslate trimmed %}
-      This isn’t an exhaustive list of things that you can’t do. Rather, take it in
-      the spirit in which it’s intended - a guide to make it easier to enrich all of
-      us and the technical communities in which we participate.
-    {% endblocktranslate %}</p>
-
-  <p>
+    Respecting <strong>different viewpoints</strong> and experiences.
+    {% endblocktranslate %}
+  </li>
+  <li>
     {% blocktranslate trimmed %}
-      This code of conduct applies to all spaces managed by the Django project or
-      Django Software Foundation. This includes the issue
-      tracker, DSF events, and any other forums created by the project team
-      which the community uses for communication. In addition, violations of this code
-      outside these spaces may affect a person's ability to participate within them.
-    {% endblocktranslate %}</p>
-
-  {% url 'conduct_reporting' as reporting_url %}
-  <p>
+    <strong>Taking responsibility</strong> for our actions and contributions.
+    {% endblocktranslate %}
+  </li>
+  <li>
     {% blocktranslate trimmed %}
-      If you believe someone is violating the code of conduct, we ask that you
-      report it by emailing
-      <a href="mailto:conduct@djangoproject.com">conduct@djangoproject.com</a>.
-      For more details please see our
-      <a href="{{ reporting_url }}">Reporting Guidelines</a>
-    {% endblocktranslate %}</p>
-
-  <ul class="simple">
-    <li><strong>{% translate "Be friendly and patient." %}</strong></li>
-
-    <li>
-      {% blocktranslate trimmed %}
-        <strong>Be welcoming.</strong> We strive to be a community that welcomes
-        and supports people of all backgrounds and identities. This includes, but
-        is not limited to members of any race, ethnicity, culture, national origin,
-        colour, immigration status, social and economic class, educational level, sex,
-        sexual orientation, gender identity and expression, age, size, family status,
-        political belief, religion, and mental and physical ability.
-      {% endblocktranslate %}</li>
-
-    <li>
-      {% blocktranslate trimmed %}
-        <strong>Be considerate.</strong> Your work will be used by other people, and you in turn will
-        depend on the work of others. Any decision you take will affect users and
-        colleagues, and you should take those consequences into account when making
-        decisions. Remember that we're a world-wide community, so you might not be
-        communicating in someone else's primary language.
-      {% endblocktranslate %}</li>
-
-    <li>
-      {% blocktranslate trimmed %}
-        <strong>Be respectful.</strong> Not all of us will agree all the time, but disagreement is no
-        excuse for poor behavior and poor manners. We might all experience some
-        frustration now and then, but we cannot allow that frustration to turn into a
-        personal attack. It’s important to remember that a community where people feel
-        uncomfortable or threatened is not a productive one. Members of the Django
-        community should be respectful when dealing with other members as well as with
-        people outside the Django community.
-      {% endblocktranslate %}</li>
-
-    <li>
-      {% blocktranslate trimmed %}
-        <strong>Be careful in the words that you choose.</strong> We are a community of professionals,
-        and we conduct ourselves professionally. Be kind to others. Do not insult or
-        put down other participants. Harassment and other exclusionary behavior
-        aren't acceptable. This includes, but is not limited to:
-      {% endblocktranslate %}
-      <ul>
-        <li>{% translate "Violent threats or language directed against another person." %}</li>
-        <li>{% translate "Discriminatory jokes and language." %}</li>
-        <li>{% translate "Posting sexually explicit or violent material." %}</li>
-        <li>
-          {% blocktranslate trimmed %}
-            Posting (or threatening to post) other people's personally identifying information ("doxing").
-          {% endblocktranslate %}
-        </li>
-        <li>{% translate "Personal insults, especially those using racist or sexist terms." %}</li>
-        <li>{% translate "Unwelcome sexual attention." %}</li>
-        <li>{% translate "Advocating for, or encouraging, any of the above behavior." %}</li>
-        <li>{% translate "Repeated harassment of others. In general, if someone asks you to stop, then stop." %}</li>
-      </ul>
-    </li>
-
-    <li>
-      {% blocktranslate trimmed %}
-        <strong>When we disagree, try to understand why.</strong> Disagreements, both social and
-        technical, happen all the time and Django is no exception. It is important that
-        we resolve disagreements and differing views constructively. Remember that we’re
-        different. The strength of Django comes from its varied community, people from a
-        wide range of backgrounds. Different people have different perspectives on
-        issues. Being unable to understand why someone holds a viewpoint doesn’t mean
-        that they’re wrong. Don’t forget that it is human to err and blaming each other
-        doesn’t get us anywhere. Instead, focus on helping to resolve issues and learning from mistakes.
-      {% endblocktranslate %}</li>
-  </ul>
-
-  <p>
+    Gracefully giving and accepting <strong>constructive feedback</strong>.
+    {% endblocktranslate %}
+  </li>
+  <li>
     {% blocktranslate trimmed %}
-      Original text courtesy of the
-      <a href="http://web.archive.org/web/20141109123859/http://speakup.io/coc.html">
-        Speak Up! project</a>.
-    {% endblocktranslate %}</p>
-
-  {% url 'conduct_faq' as faq_url %}
-  <h2>{% translate "Questions?" %}</h2>
-  <p>
+    Committing to <strong>repairing harm</strong> when it occurs.
+    {% endblocktranslate %}
+  </li>
+  <li>
     {% blocktranslate trimmed %}
-      If you have questions, please see <a href="{{ faq_url }}">the FAQ</a>. If
-      that doesn't answer your questions, feel free to
-      <a href="mailto:conduct@djangoproject.com">contact us</a>.
-    {% endblocktranslate %}</p>
+    Behaving in other ways that promote and sustain the <strong>well-being of our 
+    community</strong>.
+    {% endblocktranslate %}
+  </li>
+</ul>
+
+<p>
+  {% blocktranslate trimmed %}
+  <strong>Impact matters more than intent.</strong> Even when harm is unintentional,
+  we are all responsible for the impact of our words and actions. If someone tells you
+  that your behavior has caused harm, listen with empathy and take responsibility for
+  making things right.
+  {% endblocktranslate %}
+</p>
+
+<p>
+  {% blocktranslate trimmed %}
+  <strong>Respect consent and boundaries.</strong> Consent is an ongoing process, not
+  a one-time agreement. Respect others' stated boundaries, and be mindful that silence
+  or lack of objection does not equal consent. If someone says "no," asks you to stop,
+  or sets a boundary, respect it immediately and without debate.
+  {% endblocktranslate %}
+</p>
+
+<p>
+  {% blocktranslate trimmed %}
+  <strong>Community members are expected to comply immediately with requests to stop
+  harmful behavior.</strong> This includes requests from other community members,
+  moderators, or the Code of Conduct Working Group. Refusal to comply may result in
+  escalated enforcement actions.
+  {% endblocktranslate %}
+</p>
+
+<h2 id="restriced-behaviors">
+  {% translate "Restricted Behaviors" %}
+  <a class="plink" href="#restricted-behaviors">¶</a>
+</h2>
+
+<p>
+  {% blocktranslate trimmed %}
+  We agree to restrict the following behaviors in our community. Instances, threats,
+  and promotion of these behaviors are violations of this Code of Conduct.
+  {% endblocktranslate %}
+</p>
+
+<ul class="simple">
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Harassment.</strong> Violating explicitly expressed boundaries or
+    engaging in unnecessary personal attention after any clear request to stop.
+    This includes persistent unwanted questioning (sea-lioning), coordinated
+    harassment or brigading, tone policing, and other patterns of behavior
+    designed to exhaust, intimidate, or silence community members.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Character attacks.</strong> Making insulting, demeaning, or
+    pejorative comments directed at a community member or group of people.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Stereotyping or discrimination.</strong> Characterizing anyone's
+    personality or behavior on the basis of immutable identities or traits.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Microaggressions.</strong> Subtle, often unintentional behaviors or
+    comments that communicate hostile, derogatory, or negative attitudes toward
+    marginalized groups. While individual instances may seem minor, their
+    cumulative effect causes real harm.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Sexualization.</strong> Behaving in a way that would generally be
+    considered inappropriately intimate in the context or purpose of the
+    community.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Violating confidentiality.</strong> Sharing or acting on someone's
+    personal or private information without their permission. This includes
+    doxxing (publicly sharing private information), unwelcome recording or
+    photography, and logging online activity for harassment purposes.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Endangerment.</strong> Causing, encouraging, or threatening violence
+    or other harm toward any person or group.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Discouraging involvement.</strong> Acting in ways that discourage
+    others' involvement, such as trying to exploit technicalities, repeatedly
+    arguing against already made decisions, or questioning others' abilities or
+    intents.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    Behaving in other ways that <strong>threaten the well-being</strong> of our
+    community.
+    {% endblocktranslate %}
+  </li>
+</ul>
+
+<h3 id="other-restrictions">
+  {% translate "Other Restrictions" %}
+  <a class="plink" href="#other-restrictions">¶</a>
+</h3>
+
+<ul class="simple">
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Misleading identity.</strong> Impersonating someone else for any
+    reason, or pretending to be someone else to evade enforcement actions.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Failing to credit sources.</strong> Not properly crediting the
+    sources of content you contribute.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Promotional materials.</strong> Sharing marketing or other
+    commercial content in a way that is outside the norms of the community.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Irresponsible communication.</strong> Failing to responsibly present
+    content which includes, links or describes any other restricted behaviors.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Violating community guidelines.</strong> Failing to follow community
+    guidelines for any space covered by the
+    <a
+      href="https://github.com/django/dsf-working-groups/blob/main/active/online-community.md"
+      >Online Community Working Group</a
+    >
+    or a sponsored event's own Code of Conduct.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Retaliation.</strong> Taking adverse action against someone for
+    reporting a violation of this Code of Conduct or participating in an
+    investigation.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Bad-faith reporting.</strong> Repeatedly reporting the same or
+    similar incidents after they have been deemed not to be violations, or
+    otherwise submitting reports intended to harass or burden the working group
+    or reported parties.
+    {% endblocktranslate %}
+  </li>
+</ul>
+
+<h2 id="reporting">
+  {% translate "Reporting an Issue" %} <a class="plink" href="#reporting">¶</a>
+</h2>
+
+<p>
+  {% blocktranslate trimmed %}
+  Tensions can occur between community members even when they are trying their best to
+  collaborate. Not every conflict represents a code of conduct violation, and this
+  Code of Conduct reinforces encouraged behaviors and norms that can help avoid
+  conflicts and minimize harm.
+  {% endblocktranslate %}
+</p>
+
+<p>
+  {% blocktranslate trimmed %}
+  When an incident does occur, it is important to report it promptly. Please see our
+  <a href="https://github.com/django/code-of-conduct/blob/main/reporting-guide.md">
+    Reporting Guide</a> for detailed information on how to report a possible violation
+  and what to expect during the process.
+  {% endblocktranslate %}
+</p>
+
+<p>
+  {% blocktranslate trimmed %}
+  The Code of Conduct Working Group takes reports of violations seriously and will make
+  every effort to respond in a timely manner. They will investigate all reports, which
+  may include reviewing relevant messages, logs, and recordings, or interviewing
+  witnesses and other participants. All evidence is handled with care and respect for
+  privacy, and access is limited to those directly involved in the investigation.
+  The Code of Conduct Working Group will keep investigation and enforcement actions as
+  transparent as possible while prioritizing safety and confidentiality. In order to
+  honor these values, enforcement actions are carried out in private with the involved
+  parties, but communicating to the whole community may be part of a mutually agreed
+  upon resolution.
+  {% endblocktranslate %}
+</p>
+
+<h2 id="addressing-repairing-harm">
+  {% translate "Addressing and Repairing Harm" %}
+  <a class="plink" href="#addressing-repairing-harm">¶</a>
+</h2>
+
+<h2 id="addressing-repairing-harm">
+  {% translate "Addressing and Repairing Harm" %}
+  <a class="plink" href="#addressing-repairing-harm">¶</a>
+</h2>
+
+<p>
+  {% blocktranslate trimmed %}
+  When a Code of Conduct violation occurs, the Code of Conduct Working Group uses an
+  enforcement ladder to determine appropriate responses based on the severity and
+  context of the violation. The goal is to repair harm while maintaining community
+  safety and trust.
+  {% endblocktranslate %}
+</p>
+
+<p>
+  {% blocktranslate trimmed %}
+  We recognize that violations can have disproportionate impact. Behaviors that may
+  seem minor to some community members can have a significantly greater impact on
+  those from marginalized or underrepresented groups who face these patterns
+  repeatedly. We take this into account when addressing incidents.
+  {% endblocktranslate %}
+</p>
+
+<p>{% blocktranslate trimmed %}The enforcement ladder includes the following levels:{% endblocktranslate %}</p>
+
+<ol>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Warning</strong> - A private, written warning from the Code of Conduct
+    Working Group.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Temporary Suspension (Short-term)</strong> - A temporary suspension from
+    Django community spaces for a defined period (typically 30-90 days).
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Temporary Suspension (Extended)</strong> - An extended temporary suspension
+    for a longer defined period (typically 90 days or more) with specific conditions
+    for return.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Permanent Ban</strong> - Permanent removal from all Django community
+    spaces, tools, and communication channels.
+    {% endblocktranslate %}
+  </li>
+</ol>
+
+<p>
+  {% blocktranslate trimmed %}
+  This enforcement ladder is intended as a guideline. It does not limit the ability of
+  the Code of Conduct Working Group to use their discretion and judgment, in keeping
+  with the best interests of our community.
+  {% endblocktranslate %}
+</p>
+
+<p>
+  {% blocktranslate trimmed %}
+  For complete details about our enforcement process, please see our
+  <a href="https://github.com/django/code-of-conduct/blob/main/enforcement-ladder.md">
+    Enforcement Guide</a>.
+  {% endblocktranslate %}
+</p>
+
+<h2 id="scope">{% translate "Scope" %} <a class="plink" href="#scope">¶</a></h2>
+
+<h3 id="django-events">
+  {% translate "Django Events" %}
+  <a class="plink" href="#django-events">¶</a>
+</h3>
+
+<p>
+  {% blocktranslate trimmed %}
+  This Code of Conduct applies to all events sponsored, hosted, or endorsed by the
+  Django Software Foundation, including DjangoCon conferences, Django meetups, and
+  sprints.
+  {% endblocktranslate %}
+</p>
+
+<p>{% blocktranslate trimmed %}The Code of Conduct applies to the following people at events:{% endblocktranslate %}</p>
+
+<ul class="simple">
+  <li>{% translate "Event staff and organizers" %}</li>
+  <li>{% translate "Django Software Foundation board members" %}</li>
+  <li>{% translate "Speakers and presenters" %}</li>
+  <li>{% translate "Tutorial or workshop leaders" %}</li>
+  <li>{% translate "Sprint leaders and mentors" %}</li>
+  <li>{% translate "Sponsors and exhibitors" %}</li>
+  <li>{% translate "Volunteers" %}</li>
+  <li>{% translate "All attendees" %}</li>
+</ul>
+
+<p>{% blocktranslate trimmed %}It applies in all official event spaces, including:{% endblocktranslate %}</p>
+
+<ul class="simple">
+  <li>{% translate "Conference rooms and presentation venues" %}</li>
+  <li>{% translate "Sprint and workshop spaces" %}</li>
+  <li>{% translate "Sponsor and exhibitor areas" %}</li>
+  <li>{% translate "Social events and meal areas" %}</li>
+  <li>
+    {% translate "Hallways, walkways, and common areas that connect event spaces" %}
+  </li>
+</ul>
+
+<p>
+  {% blocktranslate trimmed %}
+  It also applies to interactions on official event accounts and platforms, including
+  event hashtags, social media, and communication channels.
+  {% endblocktranslate %}
+</p>
+
+<p>
+  {% blocktranslate trimmed %}
+  Event organizers should refer to our
+  <a href="https://github.com/django/code-of-conduct/blob/main/events.md">
+    Event Organizer Support Guide</a>
+  for requirements and guidance on implementing this Code of Conduct at in-person
+  events, including designating CoC contacts, handling on-site reports, and publishing
+  event-specific policy extensions.
+  {% endblocktranslate %}
+</p>
+
+<h3 id="django-online-spaces">
+  {% translate "Django Online Spaces" %}
+  <a class="plink" href="#django-online-spaces">¶</a>
+</h3>
+
+<p>
+  {% blocktranslate trimmed %}
+  This Code of Conduct applies to all Django online spaces covered by the
+  <a
+    href="https://github.com/django/dsf-working-groups/blob/main/active/online-community.md"
+    >Online Community Working Group</a
+  >, including:
+  {% endblocktranslate %}
+</p>
+
+<ul class="simple">
+  <li>{% translate "Django mailing lists" %}</li>
+  <li>{% translate "Django GitHub repositories, issue trackers, and pull requests" %}</li>
+  <li>{% translate "Official Django social media accounts" %}</li>
+  <li>{% translate "Any other online space administered by the Django Software Foundation" %}</li>
+</ul>
+
+<p>
+  {% blocktranslate trimmed %}
+  It applies to all community members in these spaces, including administrators,
+  maintainers, contributors, and participants.
+  {% endblocktranslate %}
+</p>
+
+<p>
+  {% blocktranslate trimmed %}
+  The Code of Conduct Working Group will work with the Online Community Working Group
+  and moderators to address reported violations and determine appropriate responses.
+  {% endblocktranslate %}
+</p>
+
+<h3 id="representing-django">
+  {% translate "Representing Django" %}
+  <a class="plink" href="#representing-django">¶</a>
+</h3>
+
+<p>
+  {% blocktranslate trimmed %}
+  This Code of Conduct also applies when individuals are officially representing
+  Django in public spaces. Examples include using an official Django email address,
+  posting via official Django social media accounts, or acting as an appointed
+  representative at online or offline events.
+  {% endblocktranslate %}
+</p>
+
+<h3 id="community-impact">
+  {% translate "Community Impact" %}
+  <a class="plink" href="#community-impact">¶</a>
+</h3>
+
+<p>
+  {% blocktranslate trimmed %}
+  This Code of Conduct also applies to actions taken outside of these spaces when
+  they have a negative impact on community health or safety.
+  {% endblocktranslate %}
+</p>
+
+<h2 id="responsible-use-ai">
+  {% translate "Responsible Use of AI-Generated Content" %}
+  <a class="plink" href="#responsible-use-ai">¶</a>
+</h2>
+
+<p>
+  {% blocktranslate trimmed %}
+  It's essential to use generative AI technologies thoughtfully and in alignment with
+  our shared values of integrity, respect, and authenticity.
+  {% endblocktranslate %}
+</p>
+
+<p>{% blocktranslate trimmed %}When using generative AI to contribute to the community:{% endblocktranslate %}</p>
+
+<ul class="simple">
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Take ownership of your contributions.</strong> You are responsible for the
+    content you share.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Review and revise AI-generated responses before posting.</strong> Ensure
+    they reflect your own understanding and voice.
+    {% endblocktranslate %}
+  </li>
+  <li>
+    {% blocktranslate trimmed %}
+    <strong>Apply your expertise</strong> to validate that the information is accurate,
+    relevant, and helpful.
+    {% endblocktranslate %}
+  </li>
+</ul>
+
+<p>
+  {% blocktranslate trimmed %}
+  These practices support a community built on trust, collaboration, and mutual
+  respect. Misuse of AI-generated content is a violation of our Code of Conduct.
+  {% endblocktranslate %}
+</p>
+
+<h2 id="attribution">
+  {% translate "Attribution" %} <a class="plink" href="#attribution">¶</a>
+</h2>
+
+<p>
+  {% blocktranslate trimmed %}
+  This Code of Conduct is adapted from the
+  <a href="https://www.contributor-covenant.org/version/3/0/">
+    Contributor Covenant, version 3.0</a>.
+  Our documents and policies are adapted from and inspired by a number of
+  <a href="https://github.com/django/code-of-conduct/blob/main/sources.md">
+    additional sources</a>.
+  {% endblocktranslate %}
+</p>
+
+<h2 id="license">{% translate "License" %} <a class="plink" href="#license">¶</a></h2>
+
+<p>
+  {% blocktranslate trimmed %}
+  This Code of Conduct is licensed under a
+  <a href="https://creativecommons.org/licenses/by-sa/4.0/">
+    Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+  {% endblocktranslate %}
+</p>
 
 {% endblock %}
