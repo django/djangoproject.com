@@ -505,6 +505,11 @@ header {
         @include respond-min(1080px) {
             margin-left: 10px;
         }
+
+        &:focus {
+            outline: 2px solid var(--menu);
+        }
+
     }
 
     .header-tools {
@@ -706,6 +711,12 @@ header {
         }
     }
 
+    .banner-preview-notice {
+        background-color: $warning-bg;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
 
     a, h1 a {
         color: $black;

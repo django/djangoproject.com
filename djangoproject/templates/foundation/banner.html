@@ -1,0 +1,9 @@
+{% if banner %}
+  <div class="banner">
+    <h2>{{ banner.title }}</h2>
+    {% if banner.body %}{{ banner.body|safe }}{% endif %}
+    {% if banner.cta_url and banner.cta_label %}
+      <a id="banner-cta" class="cta" href="{{ banner.cta_url }}">{{ banner.cta_label }}</a>
+    {% endif %}
+  </div>
+{% endif %}

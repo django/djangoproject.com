@@ -4,6 +4,7 @@ import json
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models.functions import Cast, Substr
 from django.shortcuts import reverse
 from django.template.defaultfilters import urlize
 from django.template.loader import render_to_string
@@ -15,6 +16,18 @@ from releases.models import Release
 from .templatetags.checklist_extras import enumerate_items, format_releases_for_cves
 
 CNA_DSF_UUID = "6a34fbeb-21d4-45e7-8e0a-62b95bc12c92"
+
+
+# CVE IDs have the form CVE-YYYY-NNNNN. The year (4 digits) is always at
+# positions 5-8 and the number starts at position 10 (both 1-based). This
+# helper extracts each part as an integer for correct numeric DB-level sorting.
+def cve_sort_key(field="cve_year_number", *, desc=False):
+    year = Cast(Substr(field, 5, 4), output_field=models.IntegerField())
+    number = Cast(Substr(field, 10), output_field=models.IntegerField())
+    if desc:
+        return year.desc(), number.desc()
+    return year, number
+
 
 # CVSS metrics choices.
 
@@ -86,7 +99,7 @@ CVSS_PROVIDER_URGENCY_CHOICES = [  # U
 
 DESCRIPTION_HELP_TEXT = """Written in present tense.
 
-Use SINGLE `backticks` for code-like words.
+Used in CVE metadata. Single `backticks` for inline code.
 
 ==> Do not include versions, these will be prepended automatically. <==
 
@@ -169,7 +182,7 @@ class ReleaseChecklist(models.Model):
 
     @cached_property
     def blogpost_template(self):
-        return f"checklists/release_{self.status_reversed}_blogpost.rst"
+        return f"checklists/release_{self.status_reversed}_blogpost.md"
 
     @cached_property
     def blogpost_title(self):
@@ -329,7 +342,7 @@ class BugFixRelease(ReleaseChecklist):
 
     @cached_property
     def blogpost_template(self):
-        return "checklists/release_bugfix_blogpost.rst"
+        return "checklists/release_bugfix_blogpost.md"
 
     @cached_property
     def blogpost_title(self):
@@ -367,7 +380,7 @@ class SecurityRelease(ReleaseChecklist):
 
     @cached_property
     def blogpost_template(self):
-        return "checklists/release_security_blogpost.rst"
+        return "checklists/release_security_blogpost.md"
 
     @cached_property
     def blogpost_title(self):
@@ -385,13 +398,13 @@ class SecurityRelease(ReleaseChecklist):
 
     @cached_property
     def cves(self):
-        return [cve for cve in self.securityissue_set.all().order_by("cve_year_number")]
+        return list(self.securityissue_set.all().order_by(*cve_sort_key()))
 
     @cached_property
     def cnas(self):
         return (
             self.securityissue_set.all()
-            .order_by("cve_year_number")
+            .order_by(*cve_sort_key())
             .values_list("cna", flat=True)
         )
 
@@ -443,14 +456,17 @@ class SecurityRelease(ReleaseChecklist):
                 "securityissue", "release"
             )
             .filter(securityissue__release_id=self.id)
-            .order_by("securityissue__id", "-release__version")
+            .order_by(
+                *cve_sort_key("securityissue__cve_year_number"),
+                "-release__version",
+            )
         ] + [
             {
                 "branch": "main",
                 "cve": issue.cve_year_number,
                 "hash": issue.commit_hash_main,
             }
-            for issue in self.securityissue_set.all()
+            for issue in self.cves
         ]
 
     def get_absolute_url(self):
@@ -514,12 +530,21 @@ class SecurityIssue(models.Model):
         choices=[(i, i.capitalize()) for i in ("low", "moderate", "high")],
         default="moderate",
     )
-    summary = models.CharField(max_length=1024, help_text="Single backticks here.")
+    summary = models.CharField(
+        max_length=1024,
+        help_text=(
+            "Markdown format. Single `backticks` for inline code. For the rst "
+            "security archive entry, backticks are doubled automatically."
+        ),
+    )
     description = models.TextField(help_text=DESCRIPTION_HELP_TEXT)
     blogdescription = models.TextField(
         blank=True,
         verbose_name="Blog description",
-        help_text="Double backticks here (general rst format).",
+        help_text=(
+            "Markdown format. Single `backticks` for inline code. "
+            "Copy from release notes, include severity sentence.",
+        ),
     )
     reporter = models.CharField(max_length=1024, blank=True)
     remediator = models.CharField(max_length=1024, blank=True)

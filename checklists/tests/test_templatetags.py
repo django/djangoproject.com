@@ -232,14 +232,14 @@ class FormatVersionForBlogpostTestCase(TestCase):
         result = format_version_for_blogpost("5.2.3")
         self.assertEqual(
             result,
-            "`Django 5.2.3 <https://docs.djangoproject.com/en/dev/releases/5.2.3/>`_",
+            "[Django 5.2.3](https://docs.djangoproject.com/en/dev/releases/5.2.3/)",
         )
 
     def test_format_version_for_blogpost_dot_zero(self):
         result = format_version_for_blogpost("5.2")
         self.assertEqual(
             result,
-            "`Django 5.2 <https://docs.djangoproject.com/en/dev/releases/5.2/>`_",
+            "[Django 5.2](https://docs.djangoproject.com/en/dev/releases/5.2/)",
         )
 
 
