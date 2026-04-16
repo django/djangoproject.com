@@ -18,6 +18,7 @@ from checklists.models import (
     SecurityIssue,
     SecurityIssueReleasesThrough,
     SecurityRelease,
+    get_cvss_severity,
 )
 from checklists.tests.factory import Factory
 
@@ -846,6 +847,116 @@ class SecurityIssueReleaseThroughTestCase(TestCase):
 
         self.assertEqual(through1.commit_hash, "")
         self.assertEqual(through2.commit_hash, "")
+
+
+class GetCvssSeverityTests(TestCase):
+    def test_none_for_null_score(self):
+        self.assertEqual(get_cvss_severity(None), "NONE")
+
+    def test_none_for_zero_score(self):
+        self.assertEqual(get_cvss_severity(0), "NONE")
+
+    def test_low(self):
+        self.assertEqual(get_cvss_severity(0.1), "LOW")
+        self.assertEqual(get_cvss_severity(3.9), "LOW")
+
+    def test_medium(self):
+        self.assertEqual(get_cvss_severity(4.0), "MEDIUM")
+        self.assertEqual(get_cvss_severity(6.9), "MEDIUM")
+
+    def test_high(self):
+        self.assertEqual(get_cvss_severity(7.0), "HIGH")
+        self.assertEqual(get_cvss_severity(8.9), "HIGH")
+
+    def test_critical(self):
+        self.assertEqual(get_cvss_severity(9.0), "CRITICAL")
+        self.assertEqual(get_cvss_severity(10.0), "CRITICAL")
+
+
+class CvssMetricsInCveDataTests(TestCase):
+    factory = Factory()
+
+    def _make_issue(self, **kwargs):
+        checklist = self.factory.make_security_checklist(releases=[])
+        return self.factory.make_security_issue(checklist, **kwargs)
+
+    def _get_metrics(self, issue):
+        return issue.cve_data["metrics"]
+
+    def test_only_django_severity_when_no_cvss(self):
+        issue = self._make_issue()
+        metrics = self._get_metrics(issue)
+        self.assertEqual(len(metrics), 1)
+        self.assertIn("other", metrics[0])
+        self.assertEqual(metrics[0]["other"]["type"], "Django severity rating")
+
+    def test_v3_added_when_both_v3_fields_set(self):
+        issue = self._make_issue(
+            cvss_v3_vector_string="CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            cvss_v3_score="7.5",
+        )
+        metrics = self._get_metrics(issue)
+        self.assertEqual(len(metrics), 2)
+        cvss = metrics[1]["cvssV3_1"]
+        self.assertEqual(cvss["version"], "3.1")
+        self.assertEqual(
+            cvss["vectorString"],
+            "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        )
+        self.assertEqual(cvss["baseScore"], 7.5)
+        self.assertEqual(cvss["baseSeverity"], "HIGH")
+
+    def test_v4_added_when_both_v4_fields_set(self):
+        vector = "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N"
+        issue = self._make_issue(cvss_v4_vector_string=vector, cvss_v4_score="8.7")
+        metrics = self._get_metrics(issue)
+        self.assertEqual(len(metrics), 2)
+        cvss = metrics[1]["cvssV4_0"]
+        self.assertEqual(cvss["version"], "4.0")
+        self.assertEqual(cvss["vectorString"], vector)
+        self.assertEqual(cvss["baseScore"], 8.7)
+        self.assertEqual(cvss["baseSeverity"], "HIGH")
+
+    def test_both_v3_and_v4_added(self):
+        vector_v3 = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        vector_v4 = "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N"
+        issue = self._make_issue(
+            cvss_v3_vector_string=vector_v3,
+            cvss_v3_score="7.5",
+            cvss_v4_vector_string=vector_v4,
+            cvss_v4_score="8.7",
+        )
+        metrics = self._get_metrics(issue)
+        self.assertEqual(len(metrics), 3)
+        self.assertIn("other", metrics[0])
+        self.assertIn("cvssV3_1", metrics[1])
+        self.assertIn("cvssV4_0", metrics[2])
+
+    def test_v3_omitted_when_score_missing(self):
+        vector = "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
+        issue = self._make_issue(cvss_v3_vector_string=vector)
+        metrics = self._get_metrics(issue)
+        self.assertEqual(len(metrics), 1)
+        self.assertNotIn("cvssV3_1", metrics[0])
+
+    def test_v3_omitted_when_vector_missing(self):
+        issue = self._make_issue(cvss_v3_score="7.5")
+        metrics = self._get_metrics(issue)
+        self.assertEqual(len(metrics), 1)
+        self.assertNotIn("cvssV3_1", metrics[0])
+
+    def test_v4_omitted_when_score_missing(self):
+        vector = "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N"
+        issue = self._make_issue(cvss_v4_vector_string=vector)
+        metrics = self._get_metrics(issue)
+        self.assertEqual(len(metrics), 1)
+        self.assertNotIn("cvssV4_0", metrics[0])
+
+    def test_v4_omitted_when_vector_missing(self):
+        issue = self._make_issue(cvss_v4_score="8.7")
+        metrics = self._get_metrics(issue)
+        self.assertEqual(len(metrics), 1)
+        self.assertNotIn("cvssV4_0", metrics[0])
 
 
 class PreReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
