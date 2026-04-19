@@ -46,9 +46,12 @@
       {% trans "This document is for a preview release of Django, which can be significantly different from previous releases. For older releases, use the version selector floating in the bottom right corner of this page." %}
     </div>
   {% elif not release.is_supported %}
-    <div id="outdated-warning" class="doc-floating-warning">
-      {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
-    </div>
+<div id="outdated-warning" class="doc-floating-warning">
+    {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
+    <a href="https://docs.djangoproject.com/en/stable/">
+        View Stable Documentation
+    </a>
+</div>
   {% endif %}
 {% endblock before_header %}
 
