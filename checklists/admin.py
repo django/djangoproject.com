@@ -103,8 +103,8 @@ class SecurityIssueAdmin(admin.ModelAdmin):
     list_filter = ["severity", "release"]
     search_fields = ["cve_year_number", "summary", "description", "commit_hash_main"]
     readonly_fields = [
-        "cvss_base_severity",
-        "cvss_vector",
+        "cvss_v3_severity",
+        "cvss_v4_severity",
     ]
     inlines = [SecurityIssueReleasesThroughInline]
     formfield_overrides = {
@@ -134,55 +134,23 @@ class SecurityIssueAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "CVSS 4.0 Fields - Base Metrics - Exploitability",
+            "CVSS Scores",
             {
-                "fields": (
-                    "attack_vector",
-                    "attack_complexity",
-                    "attack_requirements",
-                    "privileges_required",
-                    "user_interaction",
+                "description": (
+                    "<p>Use an approved calculator to get the vector string and score, "
+                    "then enter both here. Calculators: "
+                    '<a href="https://www.first.org/cvss/calculator/3.1">CVSS v3.1</a> '
+                    '<a href="https://www.first.org/cvss/calculator/4.0">CVSS v4.0</a> '
+                    "</p>"
                 ),
-                "classes": ["collapse"],
-            },
-        ),
-        (
-            "CVSS 4.0 Fields - Base Metrics - Vulnerable System Impact",
-            {
                 "fields": (
-                    "vuln_confidentiality_impact",
-                    "sub_confidentiality_impact",
-                    "vuln_integrity_impact",
-                    "sub_integrity_impact",
-                    "vuln_availability_impact",
-                    "sub_availability_impact",
+                    "cvss_v3_vector_string",
+                    "cvss_v3_score",
+                    "cvss_v3_severity",
+                    "cvss_v4_vector_string",
+                    "cvss_v4_score",
+                    "cvss_v4_severity",
                 ),
-                "classes": ["collapse"],
-            },
-        ),
-        (
-            "CVSS 4.0 Fields - Supplemental Metrics",
-            {
-                "fields": (
-                    "safety",
-                    "automatable",
-                    "recovery",
-                    "value_density",
-                    "vulnerability_response_effort",
-                    "provider_urgency",
-                ),
-                "classes": ["collapse"],
-            },
-        ),
-        (
-            "CVSS 4.0 Fields - Score and Vector",
-            {
-                "fields": (
-                    "cvss_base_score",
-                    "cvss_base_severity",
-                    "cvss_vector",
-                ),
-                "classes": ["collapse"],
             },
         ),
         (
