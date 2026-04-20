@@ -14,7 +14,7 @@ feedparser==6.0.12
 Jinja2==3.1.6
 libsass==0.23.0
 Markdown==3.10.2
-Pillow==12.1.1
+Pillow==12.2.0
 Pygments==2.20.0
 pykismet3==0.1.1
 pymdown-extensions==10.21
