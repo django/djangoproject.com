@@ -7,11 +7,6 @@ define(function () {
     return !!document.getElementsByClassName(className).length; //return a boolean
   }
 
-  //collapsing list
-  if (hasClass('list-collapsing')) {
-    mods.push('mod/list-collapsing');
-  }
-
   if (hasClass('stripe-donation')) {
     mods.push('mod/stripe-donation');
   }
