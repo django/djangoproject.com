@@ -1,0 +1,9 @@
+{% extends "homepage.html" %}
+
+{% block billboard %}
+  <p class="banner-preview-notice">
+    <strong>Preview!</strong>
+    (last updated by {{ banner.updated_by }} on {{ banner.updated_at|date:"N j, Y, P" }})
+  </p>
+  {% include "foundation/banner.html" %}
+{% endblock %}
