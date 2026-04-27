@@ -129,7 +129,7 @@ class EntryTestCase(DateTimeMixin, TestCase):
             content_format=ContentFormat.REST,
         )
         self.assertHTMLEqual(
-            entry.body_html, '<div class="section" id="s-test"><h3>test</h3></div>'
+            entry.body_html, '<div class="section" id="s-test"><h1>test</h1></div>'
         )
 
     def test_header_base_level_markdown(self):
@@ -139,7 +139,7 @@ class EntryTestCase(DateTimeMixin, TestCase):
             body="# test",
             content_format=ContentFormat.MARKDOWN,
         )
-        self.assertHTMLEqual(entry.body_html, '<h3 id="s-test">test</h3>')
+        self.assertHTMLEqual(entry.body_html, '<h1 id="s-test">test</h1>')
 
     def test_pub_date_localized(self):
         entry = Entry(pub_date=date(2005, 7, 21))
