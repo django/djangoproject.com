@@ -48,7 +48,7 @@
   {% elif not release.is_supported %}
     <div id="outdated-warning" class="doc-floating-warning">
       {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
-      <a href="https://docs.djangoproject.com/en/stable/">
+      <a href="{% url 'docs' %}">
         View Stable Documentation
       </a>
     </div>
