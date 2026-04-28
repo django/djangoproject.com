@@ -588,23 +588,23 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
                         "lessThan": "5.1.8",
                         "status": "affected",
                         "version": "5.1",
-                        "versionType": "semver",
+                        "versionType": "python",
                     },
                     {
                         "status": "unaffected",
                         "version": "5.1.8",
-                        "versionType": "semver",
+                        "versionType": "python",
                     },
                     {
                         "lessThan": "5.0.14",
                         "status": "affected",
                         "version": "5.0",
-                        "versionType": "semver",
+                        "versionType": "python",
                     },
                     {
                         "status": "unaffected",
                         "version": "5.0.14",
-                        "versionType": "semver",
+                        "versionType": "python",
                     },
                 ],
             }
