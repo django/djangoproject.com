@@ -1,10 +1,7 @@
 from django import forms
-from django.contrib import admin, messages
+from django.contrib import admin
 from django.db import models
-from django.http import HttpResponse
 from django.utils.html import format_html
-
-from releases.models import Release
 
 from .models import (
     BugFixRelease,
@@ -31,29 +28,6 @@ class ReleaseChecklistAdminMixin:
 
     def queryset(self, request):
         return super().get_queryset(request).select_related("release")
-
-    @admin.action(description="Render checklists for selected releases")
-    def render_checklist(self, request, queryset):
-        errors = []
-        try:
-            instance = queryset.get()
-        except (Release.DoesNotExist, Release.MultipleObjectsReturned):
-            errors.append("A single item should be selected")
-            instance = None
-
-        if (
-            isinstance(instance, SecurityRelease)
-            and not instance.securityissue_set.filter(releases__isnull=False).exists()
-        ):
-            errors.append("Please provide at least one SecurityIssueReleasesThrough.")
-
-        if errors:
-            for error in errors:
-                self.message_user(request, error, messages.ERROR)
-            return
-
-        checklist = instance.render_to_string(request=request)
-        return HttpResponse(checklist, content_type="text/markdown; charset=utf-8")
 
     @admin.display(description="Checklist")
     def checklist_link(self, obj):
