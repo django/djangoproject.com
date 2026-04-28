@@ -661,12 +661,12 @@ class SecurityIssue(models.Model):
                         "status": "affected",
                         "version": f"{release.feature_version}",
                         "lessThan": release.version,
-                        "versionType": "semver",
+                        "versionType": "python",
                     },
                     {
                         "status": "unaffected",
                         "version": release.version,
-                        "versionType": "semver",
+                        "versionType": "python",
                     },
                 ]
             )
