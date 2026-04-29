@@ -1,7 +1,12 @@
-{% extends "conduct/base.html" %} {% load i18n %} {% block title %}{% translate
-  "Django Code of Conduct" %}{% endblock %} {% block og_title %}{% translate
-    "Django Code of Conduct" %}{% endblock %} {% block og_description %}{% translate
-      "Some ground rules for the community" %}{% endblock %} {% block content %}
+{% extends "conduct/base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Django Code of Conduct" %}{% endblock %}
+
+{% block og_title %}{% translate "Django Code of Conduct" %}{% endblock %}
+{% block og_description %}{% translate "Some ground rules for the community" %}{% endblock %}
+
+{% block content %}
 
         {% url 'conduct_reporting' as reporting_url %}
         {% url 'conduct_faq' as faq_url %}
