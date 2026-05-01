@@ -47,7 +47,11 @@
     </div>
   {% elif not release.is_supported %}
     <div id="outdated-warning" class="doc-floating-warning">
-      {% trans "This document is for an insecure version of Django that is no longer supported. Please upgrade to a newer release!" %}
+      {% trans "This document is for an insecure version of Django that is no longer supported. Please click "%}
+      <a href="{% url 'document-detail' lang='en' version='stable' url='intro/install' host 'docs' %}">
+        {% trans "here" %}
+      </a>
+      {% trans " for the latest version."%}
     </div>
   {% endif %}
 {% endblock before_header %}
