@@ -17,7 +17,7 @@ from markdown.extensions.toc import TocExtension, slugify as _md_title_slugify
 
 BLOG_DOCUTILS_SETTINGS = {
     "doctitle_xform": False,
-    "initial_header_level": 1,
+    "initial_header_level": 2,
     "id_prefix": "s-",
     "raw_enabled": False,
     "file_insertion_enabled": False,
@@ -61,7 +61,10 @@ class ContentFormat(models.TextChoices):
                 source,
                 output_format="html",
                 extensions=[
-                    # baselevel matches `initial_header_level` from BLOG_DOCUTILS_SETTINGS
+                    # baselevel is 1 unlike `initial_header_level` from
+                    # BLOG_DOCUTILS_SETTINGS because rst always starts from heading
+                    # level 1, but markdown can have specific heading levels so
+                    # starting from 1 makes sense.
                     "tables",
                     TocExtension(baselevel=1, slugify=_md_slugify),
                 ],
