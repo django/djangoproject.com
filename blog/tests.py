@@ -129,7 +129,7 @@ class EntryTestCase(DateTimeMixin, TestCase):
             content_format=ContentFormat.REST,
         )
         self.assertHTMLEqual(
-            entry.body_html, '<div class="section" id="s-test"><h1>test</h1></div>'
+            entry.body_html, '<div class="section" id="s-test"><h2>test</h2></div>'
         )
 
     def test_header_base_level_markdown(self):
