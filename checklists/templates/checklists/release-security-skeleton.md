@@ -102,7 +102,7 @@ https://docs.djangoproject.com/en/dev/internals/security/#security-issue-severit
 
 ## Release Day
 
-- [ ] Update security report and update patches for `main` and stable branches
+- [ ] Update patches for `main` and stable branches
 
 - [ ] Empty push to private GH so actions are (re)run
 

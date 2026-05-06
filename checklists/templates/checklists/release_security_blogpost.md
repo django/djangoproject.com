@@ -1,6 +1,6 @@
 {% load checklist_extras %}
 In accordance with [our security release policy](https://docs.djangoproject.com/en/dev/internals/security/),
-the Django team is issuing relases for
+the Django team is issuing releases for
 {{ versions|format_versions_for_blogpost|safe|wordwrap:79 }}.
 These releases address the security issues detailed below. We encourage all
 users of Django to upgrade as soon as possible.
