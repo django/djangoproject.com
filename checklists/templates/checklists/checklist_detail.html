@@ -3,13 +3,18 @@
     <head>
         <meta charset="utf-8">
         <title>Django {{ instance }} Checklist</title>
+        <style>
+            pre {background-color: #f2f2f3; padding: 10px;}
+            code {background-color: #f2f2f3; border-radius: 2px;}
+            #raw-markdown {background-color: #f5f5f5; max-width: 150ch; padding: 1em;}
+        </style>
     </head>
     <body>
         <div class="section">
             <div>
                 {{ markdown|safe }}
             </div>
-            <div style="background-color: #F5F5F5; max-width: 150ch; padding: 1em">
+            <div id="raw-markdown">
                 <h2 id="raw">Raw Markdown</h2>
                 <details>
                     <summary>Open</summary>

@@ -8,8 +8,8 @@
 {% include 'checklists/release_security_archive.rst' %}
 ```
 
-    - In an environment with django branch and docs dependencies installed:
-        - `cd docs && make html check`
+- Then, in an environment with django branch and docs dependencies installed:
+    - `cd docs && make html check`
 
     - Check local docs:
         - `firefox docs/_build/html/releases/security.html`
