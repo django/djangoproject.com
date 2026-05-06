@@ -8,11 +8,8 @@
     - Save
     - Check at: https://www.djangoproject.com/admin/releases/release/{{ release }}/change/
 
-- [ ] Test the release locally with script from `scripts` folder:
-    - `VERSION={{ release }} scripts/test_new_version.sh`
-
-- [ ] Confirm the release signature with script from `scripts` folder:
-    - `VERSION={{ release }} scripts/confirm_release.sh`
+- [ ] Test the release locally and confirm the release signature by running `scripts/verify_release.sh`:
+    - `VERSION={{ release }} scripts/verify_release.sh`
 
 - [ ] Upload to PyPI with Twine (use commands printed by release script)
     - `cd ../releases/{{ release }}`
