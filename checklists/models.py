@@ -2,7 +2,7 @@ import datetime
 import json
 
 from django.contrib.auth.models import User
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 from django.db.models.functions import Cast, Substr
 from django.shortcuts import reverse
@@ -467,7 +467,11 @@ class SecurityIssue(models.Model):
         choices=[(i, i) for i in ("DSF", "MITRE")],
     )
     cve_year_number = models.CharField(
-        "CVE ID", max_length=1024, unique=True, default=get_cve_default
+        "CVE ID",
+        max_length=1024,
+        unique=True,
+        default=get_cve_default,
+        validators=[RegexValidator(regex=r"CVE-\d{4}-\d{4,5}")],
     )
 
     objects = SecurityIssueManager()
