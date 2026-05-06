@@ -3,6 +3,7 @@ import re
 import zoneinfo
 from datetime import UTC, date, datetime
 
+from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.template.loader import render_to_string
 from django.test import RequestFactory, TestCase, override_settings
@@ -870,6 +871,43 @@ class GetCvssSeverityTests(TestCase):
     def test_critical(self):
         self.assertEqual(get_cvss_severity(9.0), "CRITICAL")
         self.assertEqual(get_cvss_severity(10.0), "CRITICAL")
+
+
+class SecurityIssueTestCase(TestCase):
+    def test_cve_year_number_invalid(self):
+        invalid_cve_numbers = [
+            "CVE-2026-1",
+            "CVE-2026-XXXX",
+            "CVE-20026-1111",
+        ]
+        for cve in invalid_cve_numbers:
+            with self.subTest(cve=cve):
+                with self.assertRaises(ValidationError) as context:
+                    SecurityIssue(cve_year_number=cve).full_clean()
+
+                self.assertEqual(
+                    context.exception.message_dict.get("cve_year_number"),
+                    ["Enter a valid value."],
+                )
+
+    def test_cve_year_number_valid(self):
+        valid_cve_numbers = [
+            "CVE-2026-12345",
+            "CVE-2026-1234",
+        ]
+        for cve in valid_cve_numbers:
+            with self.subTest(cve=cve):
+                # No ValidationError raised.
+                SecurityIssue(cve_year_number=cve).full_clean(
+                    exclude=(
+                        "summary",
+                        "description",
+                        "cve_type",
+                        "impact",
+                        "confirmed_at",
+                        "reported_at",
+                    )
+                )
 
 
 class CvssMetricsInCveDataTests(TestCase):
