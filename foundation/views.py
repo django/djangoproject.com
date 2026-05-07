@@ -1,15 +1,11 @@
 from datetime import datetime
 
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import Http404
 from django.shortcuts import redirect
 from django.views import generic
 
 from . import models, redirects
-
-class CoreDevelopers(generic.ListView):
-    queryset = models.CoreAwardCohort.objects.prefetch_related("recipients").order_by(
-        "-cohort_date"
-    )
 
 
 def minutes_redirect(request, year, month, day, slug):
@@ -20,4 +16,17 @@ def minutes_redirect(request, year, month, day, slug):
     return redirect(
         f"{redirects.MINUTES_BASE_URL}{year}/{year}-{month:02}-{day:02}.md",
         permanent=True,
+    )
+
+
+class BannerPreview(PermissionRequiredMixin, generic.DetailView):
+    model = models.Banner
+    permission_required = "foundation.view_banner"
+    template_name = "foundation/banner_preview.html"
+    context_object_name = "banner"
+
+
+class CoreDevelopers(generic.ListView):
+    queryset = models.CoreAwardCohort.objects.prefetch_related("recipients").order_by(
+        "-cohort_date"
     )

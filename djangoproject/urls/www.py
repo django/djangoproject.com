@@ -13,7 +13,7 @@ from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
-from foundation.views import CoreDevelopers, minutes_redirect
+from foundation.views import BannerPreview, CoreDevelopers, minutes_redirect
 
 admin.autodiscover()
 
@@ -96,6 +96,11 @@ urlpatterns = [
     path("checklists/", include("checklists.urls")),
     path("contact/", include("contact.urls")),
     path("foundation/django_core/", CoreDevelopers.as_view()),
+    path(
+        "foundation/banners/<int:pk>/preview/",
+        BannerPreview.as_view(),
+        name="foundation_banner_preview",
+    ),
     path(
         "foundation/minutes/<int:year>/<str:month>/<int:day>/<str:slug>/",
         minutes_redirect,
