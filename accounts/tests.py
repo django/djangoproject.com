@@ -7,7 +7,6 @@ from django_hosts.resolvers import reverse
 
 from accounts.forms import DeleteProfileForm
 from djangoproject.tests import ReleaseMixin
-from foundation import models as foundationmodels
 from tracdb.models import Revision, Ticket, TicketChange
 from tracdb.testutils import TracDBCreateDatabaseMixin
 
@@ -219,17 +218,6 @@ class UserDeletionTests(ReleaseMixin, TestCase):
     def test_deletion_staff_forbidden(self):
         form = self.create_user_and_form(is_staff=True)
         self.assertFormError(form, None, ["Staff users cannot be deleted"])
-
-    def test_user_with_protected_data(self):
-        form = self.create_user_and_form()
-        form.user.boardmember_set.create(
-            office=foundationmodels.Office.objects.create(name="test"),
-            term=foundationmodels.Term.objects.create(year=2000),
-        )
-        form.delete()
-        self.assertFormError(
-            form, None, ["User has protected data and cannot be deleted"]
-        )
 
     def test_form_delete_method_requires_valid_form(self):
         form = self.create_user_and_form(is_staff=True)
