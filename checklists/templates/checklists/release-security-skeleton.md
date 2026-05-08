@@ -79,30 +79,30 @@
 ```
 {% include "checklists/release-security-prenotification.md" %}
 ```
-    - GPG sign that new file:
-        - `gpg --clearsign --digest-algo SHA256 prenotification-email.txt`
+- GPG sign that new file:
+    - `gpg --clearsign --digest-algo SHA256 prenotification-email.txt`
     - Send an email with body using the signed content to a given list of special users:
         - Attach patches.
         - USE BCC!: https://github.com/django/django-security/wiki/Security-Release-Prenotification-Email-List
 
 - [ ] Post announcement in mailing list (without details in django-announce):
-    ```
-    Django versions {{ versions|enumerate_items }} will be released on
-    {{ instance.when|utc|date:"l, F j" }} around {{ instance.when|utc|date:"H:i" }} UTC.
-    {% if cves_length == 1 %}
-    They will fix one security defect with severity "{{ cves.0.severity }}".
-    {% else %}
-    They will fix {{ cves_length }} security defects with severities: {{ cves|enumerate_cves:"severity" }}.
-    {% endif %}
-    For details of severity levels, see:
-    https://docs.djangoproject.com/en/dev/internals/security/#security-issue-severity-levels
-    ```
+```
+Django versions {{ versions|enumerate_items }} will be released on
+{{ instance.when|utc|date:"l, F j" }} around {{ instance.when|utc|date:"H:i" }} UTC.
+{% if cves_length == 1 %}
+They will fix one security defect with severity "{{ cves.0.severity }}".
+{% else %}
+They will fix {{ cves_length }} security defects with severities: {{ cves|enumerate_cves:"severity" }}.
+{% endif %}
+For details of severity levels, see:
+https://docs.djangoproject.com/en/dev/internals/security/#security-issue-severity-levels
+```
 
 - [ ] Land the stub release notes and release date updates in {{ instance.affected_branches|enumerate_items }}
 
 ## Release Day
 
-- [ ] Update security report and update patches for `main` and stable branches
+- [ ] Update patches for `main` and stable branches
 
 - [ ] Empty push to private GH so actions are (re)run
 

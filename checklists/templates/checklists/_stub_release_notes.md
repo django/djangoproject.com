@@ -22,8 +22,8 @@ Bugfixes
 
 ```
 
-    - In an environment with django branch and docs dependencies installed:
-        - `cd docs && make html check`
+- Then, in an environment with django branch and docs dependencies installed:
+    - `cd docs && make html check`
 
     - Check local docs:
         - `firefox docs/_build/html/releases/index.html`

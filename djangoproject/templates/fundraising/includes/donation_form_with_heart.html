@@ -4,7 +4,7 @@
   <div class="fundraising-index" id="donate">
 
     <div class="fundraising-heart" data-percent="{{ goal_percent }}">
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 503 431">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 503 431" role="img" aria-label="{% blocktranslate trimmed %}Fundraising progress: {{ goal_percent }} percent funded{% endblocktranslate %}">
         <switch>
           <g>
             <g transform="translate(4, 2)" id="pixels">
@@ -13,7 +13,7 @@
             <text x="50%" y="43%" alignment-baseline="middle" text-anchor="middle">{{ goal_percent }}%</text>
           </g>
           <foreignObject>
-            <img src="{% static 'img/fundraising-heart.svg' %}" />
+            <img alt="" src="{% static 'img/fundraising-heart.svg' %}" />
           </foreignObject>
         </switch>
       </svg>

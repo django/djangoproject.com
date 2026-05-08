@@ -14,7 +14,7 @@
       <li><a href="{% url 'members:teams' %}#code-of-conduct-team">{% translate "Code of Conduct working group" %}</a></li>
       <li><a href="{% url 'conduct_faq' %}">{% translate "Frequently Asked Questions" %}</a></li>
       <li><a href="{% url 'conduct_reporting' %}">{% translate "Reporting Guide" %}</a></li>
-      <li><a href="{% url 'conduct_enforcement' %}">{% translate "Enforcement Manual" %}</a></li>
+      <li><a href="https://github.com/django/code-of-conduct/blob/main/working-group-manual.md">{% translate "Enforcement Manual" %}</a></li>
       <li><a href="{% url 'conduct_changes' %}">{% translate "Changes" %}</a></li>
     </ul>
 
@@ -22,14 +22,23 @@
     <p>
       {% blocktranslate trimmed %}
         All content on this page is licensed under a
-        <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
-          Attribution </a> license.
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons
+          Attribution-ShareAlike </a> license.
       {% endblocktranslate %}
     </p>
     <p>
-      <a href="https://creativecommons.org/licenses/by/3.0/">
-        <img src="https://i.creativecommons.org/l/by/3.0/88x31.png" height="31" width="88" alt="CC-by">
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/">
+        <img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" height="31" width="88" alt="CC-by-sa">
       </a>
+    </p>
+
+    <h3>{% translate "Sources" %}</h3>
+    <p>
+      {% blocktranslate trimmed %}
+        Our documents and policies are adapted from and inspired by
+        <a href="https://github.com/django/code-of-conduct/blob/main/sources.md">a
+          number of sources</a>.
+      {% endblocktranslate %}
     </p>
   </div>
 {% endblock %}

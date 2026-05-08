@@ -26,6 +26,7 @@ def render_checklist(request, instance):
             "pymdownx.tasklist",
             "pymdownx.superfences",
             "pymdownx.magiclink",
+            "markdown.extensions.fenced_code",
         ],
         extension_configs={
             "pymdownx.tasklist": {
