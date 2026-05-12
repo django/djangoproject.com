@@ -572,6 +572,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             summary=cve_summary,
             description=cve_description,
             reporter=reporter,
+            discovery="INTERNAL",
         )
         checklist_content = self.do_render_checklist(checklist)
 
@@ -656,6 +657,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             ("affected", affected_versions),
             ("credits", credits),
             ("datePublic", checklist.when.isoformat()),
+            ("source", {"discovery": "INTERNAL"}),
             (
                 "descriptions",
                 [
