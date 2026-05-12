@@ -498,6 +498,11 @@ class SecurityIssue(models.Model):
     )
     reporter = models.CharField(max_length=1024, blank=True)
     remediator = models.CharField(max_length=1024, blank=True)
+    discovery = models.CharField(
+        max_length=128,
+        choices=[(i, i.title()) for i in ("EXTERNAL", "INTERNAL", "USER", "UPSTREAM")],
+        default="EXTERNAL",
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     reported_at = models.DateTimeField(null=True)
@@ -807,7 +812,7 @@ class SecurityIssue(models.Model):
             "references": references,
             "credits": credits,
             **dates,
-            "source": {"discovery": "EXTERNAL"},
+            "source": {"discovery": self.discovery},
         }
 
         if self.cna != "DSF":
