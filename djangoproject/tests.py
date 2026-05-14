@@ -282,3 +282,49 @@ class EndToEndTests(ReleaseMixin, StaticLiveServerTestCase):
         expect(desktop_search_bar).to_have_attribute("placeholder", "Search (⌘\u200aK)")
 
         page.close()
+
+    def test_init_light_dark_theme_uses_existing_cookie(self):
+        page = self.browser.new_page(user_agent=self.mac_user_agent)
+        page.context.add_cookies(
+            [{"name": "theme", "value": "dark", "domain": "localhost", "path": "/"}]
+        )
+        page.goto(self.live_server_url)
+        theme = page.evaluate("document.documentElement.dataset.theme")
+        self.assertEqual(theme, "dark")
+
+    def test_set_theme_updates_data_attribute(self):
+        page = self.browser.new_page(user_agent=self.mac_user_agent)
+        page.goto(self.live_server_url)
+        theme = page.evaluate("document.documentElement.dataset.theme")
+        self.assertEqual(theme, "auto")
+        page.locator(".theme-toggle").click()
+        theme = page.evaluate("document.documentElement.dataset.theme")
+        self.assertEqual(theme, "dark")
+
+    def test_cycle_theme_when_prefers_dark(self):
+        page = self.browser.new_page(user_agent=self.mac_user_agent)
+        page.emulate_media(color_scheme="dark")
+        page.goto(self.live_server_url)
+
+        theme = page.evaluate("document.documentElement.dataset.theme")
+        self.assertEqual(theme, "auto")
+
+        for expected_theme in ["light", "dark", "auto"]:
+            with self.subTest(expected_theme=expected_theme):
+                page.locator(".theme-toggle").click()
+                theme = page.evaluate("document.documentElement.dataset.theme")
+                self.assertEqual(theme, expected_theme)
+
+    def test_cycle_theme_when_prefers_light(self):
+        page = self.browser.new_page(user_agent=self.mac_user_agent)
+        page.emulate_media(color_scheme="light")
+        page.goto(self.live_server_url)
+
+        theme = page.evaluate("document.documentElement.dataset.theme")
+        self.assertEqual(theme, "auto")
+
+        for expected_theme in ["dark", "light", "auto"]:
+            with self.subTest(expected_theme=expected_theme):
+                page.locator(".theme-toggle").click()
+                theme = page.evaluate("document.documentElement.dataset.theme")
+                self.assertEqual(theme, expected_theme)
