@@ -1,4 +1,8 @@
+import os
+import shutil
+import tempfile
 from http import HTTPStatus
+from pathlib import Path
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -335,3 +339,23 @@ class SecurityTxtTests(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response["Content-Type"], "text/plain")
         self.assertIn("Expires:", response.content.decode())
+
+
+class DocumentViewTestCase(TestCase):
+    def test_document_renders_from_database(self):
+        doc = Document.objects.create(
+            metadata={
+                "body": "document rendered from database",
+            },
+            path="document",
+            release=DocumentRelease.objects.create(
+                is_default=True,
+                lang=settings.DEFAULT_LANGUAGE_CODE,
+                release=Release.objects.create(version="5.0"),
+            ),
+        )
+        response = self.client.get(
+            "/en/5.0/document/",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertContains(response, "document rendered from database")

@@ -278,6 +278,9 @@ class Command(BaseCommand):
 
         json_built_dir = parent_build_dir / "_built" / "json"
         documents = gen_decoded_documents(json_built_dir)
+        with open(json_built_dir / "globalcontext.json") as context:
+            release.global_context = json.load(context)
+        release.save(update_fields=["global_context"])
         release.sync_to_db(documents)
 
     def update_git(self, url, destdir, changed_dir="."):
