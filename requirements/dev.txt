@@ -22,6 +22,7 @@ colorama==0.4.6 ; sys_platform == 'win32'
     # via
     #   click
     #   sphinx
+coverage==7.13.5
 django==6.0.5
     # via
     #   django-admin-dracula
@@ -57,6 +58,8 @@ docutils==0.21.2
     #   sphinx
 feedparser==6.0.12
     # via djangoproject-com
+greenlet==3.5.1
+    # via playwright
 idna==3.11
     # via requests
 imagesize==1.4.1
@@ -85,12 +88,15 @@ pillow==12.2.0
     # via djangoproject-com
 platformdirs==4.5.1
     # via black
+playwright==1.59.0
 prek==0.3.8
 psycopg==3.3.3
 psycopg-binary==3.3.3 ; implementation_name != 'pypy'
     # via psycopg
 py-moneyed==3.0
     # via django-money
+pyee==13.0.1
+    # via playwright
 pygments==2.20.0
     # via
     #   djangoproject-com
@@ -110,8 +116,10 @@ requests==2.33.1
     #   django-push
     #   djangoproject-com
     #   pykismet3
+    #   requests-mock
     #   sphinx
     #   stripe
+requests-mock==1.12.1
 sgmllib3k==1.0.0
     # via feedparser
 six==1.17.0
@@ -140,6 +148,7 @@ sqlparse==0.5.5
     #   django-debug-toolbar
 stripe==13.2.0
     # via djangoproject-com
+tblib==3.2.1
 time-machine==3.2.0
     # via djangoproject-com
 typing-extensions==4.15.0
@@ -147,6 +156,7 @@ typing-extensions==4.15.0
     #   django-countries
     #   psycopg
     #   py-moneyed
+    #   pyee
     #   stripe
 tzdata==2025.3 ; sys_platform == 'win32'
     # via
