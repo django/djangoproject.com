@@ -1,0 +1,70 @@
+[project]
+name = "djangoproject-com"
+version = "0.1.0"
+description = "Source code to djangoproject.com"
+requires-python = "==3.12.*"
+classifiers = [
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "babel==2.18.0",
+    "django==6.0.5",
+    "django-admin-dracula==0.0.3",
+    "django-contact-form==5.2.0",
+    "django-countries==8.2.0",
+    "django-hosts==7.0.0",
+    "django-money==3.6.0",
+    "django-push @ git+https://github.com/brutasse/django-push.git@22fda99641cfbd2f3075a723d92652a8e38220a5",
+    "django-read-only==1.21.0",
+    "django-recaptcha==4.1.0",
+    "django-registration-redux==2.13",
+    "docutils==0.21.2",
+    "feedparser==6.0.12",
+    "jinja2==3.1.6",
+    "libsass==0.23.0",
+    "markdown==3.10.2",
+    "pillow==12.2.0",
+    "pygments==2.20.0",
+    "pykismet3==0.1.1",
+    "pymdown-extensions==10.21",
+    "python-dateutil==2.9.0.post0",
+    "requests==2.33.1",
+    "sorl-thumbnail==12.11.0",
+    "sphinx==8.1.3",
+    "stripe==13.2.0",
+    "time-machine==3.2.0",
+]
+
+[dependency-groups]
+dev = [
+    "black==26.3.1",               # Used by Django's find_formatters and run_formatters
+    "django-debug-toolbar==6.3.0",
+    "prek==0.3.8",
+    "psycopg[binary]==3.3.3",
+    "watchdog==6.0.0",
+    { include-group = "tests" },
+]
+prod = [
+    "gunicorn==25.3.0",
+    "psycopg[c]==3.3.3",
+    "redis==7.4.0",
+    "sentry-sdk==2.57.0",
+]
+# TODO: Consider merging with dev group
+tests = [
+    "coverage==7.13.5",
+    "playwright==1.59.0",
+    "psycopg[binary]==3.3.3",
+    "requests-mock==1.12.1",
+    "tblib==3.2.1",
+]
+
+[tool.uv]
+# The earliest version that supports the current lock file revision
+required-version = ">=0.8.4"
+package = false
+
+[tool.pyproject-fmt]
+indent = 4
+keep_full_version = true
