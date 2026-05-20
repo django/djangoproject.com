@@ -43,6 +43,7 @@ dev = [
     "prek==0.4.11",
     "psycopg[binary]==3.3.4",
     "watchdog==6.0.0",
+    { include-group = "tests" },
 ]
 prod = [
     "gunicorn==26.0.0",
@@ -54,9 +55,9 @@ prod = [
 tests = [
     "coverage==7.15.2",
     "playwright==1.62.0",
+    "psycopg[binary]==3.3.4",
     "requests-mock==1.12.1",
     "tblib==3.2.2",
-    { include-group = "dev" },
 ]
 
 [tool.uv]

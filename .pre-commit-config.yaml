@@ -106,6 +106,7 @@ repos:
                     "--quiet",
                     "--group",
                     "tests",
+                    "--no-dev",
                     "--output-file=requirements/tests.txt",
                     "--no-hashes",
                 ]

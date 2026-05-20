@@ -310,9 +310,13 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "black" },
+    { name = "coverage" },
     { name = "django-debug-toolbar" },
+    { name = "playwright" },
     { name = "prek" },
     { name = "psycopg", extra = ["binary"] },
+    { name = "requests-mock" },
+    { name = "tblib" },
     { name = "watchdog" },
 ]
 prod = [
@@ -322,15 +326,11 @@ prod = [
     { name = "sentry-sdk" },
 ]
 tests = [
-    { name = "black" },
     { name = "coverage" },
-    { name = "django-debug-toolbar" },
     { name = "playwright" },
-    { name = "prek" },
     { name = "psycopg", extra = ["binary"] },
     { name = "requests-mock" },
     { name = "tblib" },
-    { name = "watchdog" },
 ]
 
 [package.metadata]
@@ -366,9 +366,13 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "black", specifier = "==26.5.1" },
+    { name = "coverage", specifier = "==7.15.2" },
     { name = "django-debug-toolbar", specifier = "==7.0.0" },
+    { name = "playwright", specifier = "==1.62.0" },
     { name = "prek", specifier = "==0.4.11" },
     { name = "psycopg", extras = ["binary"], specifier = "==3.3.4" },
+    { name = "requests-mock", specifier = "==1.12.1" },
+    { name = "tblib", specifier = "==3.2.2" },
     { name = "watchdog", specifier = "==6.0.0" },
 ]
 prod = [
@@ -378,15 +382,11 @@ prod = [
     { name = "sentry-sdk", specifier = "==2.66.1" },
 ]
 tests = [
-    { name = "black", specifier = "==26.5.1" },
     { name = "coverage", specifier = "==7.15.2" },
-    { name = "django-debug-toolbar", specifier = "==7.0.0" },
     { name = "playwright", specifier = "==1.62.0" },
-    { name = "prek", specifier = "==0.4.11" },
     { name = "psycopg", extras = ["binary"], specifier = "==3.3.4" },
     { name = "requests-mock", specifier = "==1.12.1" },
     { name = "tblib", specifier = "==3.2.2" },
-    { name = "watchdog", specifier = "==6.0.0" },
 ]
 
 [[package]]
