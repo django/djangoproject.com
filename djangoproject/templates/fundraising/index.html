@@ -46,11 +46,9 @@
     </li>
     <li><a href="https://github.com/sponsors/django" target="_blank">{% translate "Sponsor Django via GitHub Sponsors" %}</a>.</li>
     <li>
-      {% url 'fundraising:index' as fundraising_url %}
       {% blocktranslate trimmed %}
-        <a href="{{ fundraising_url }}#benevity-giving">Benevity Workplace Giving
-          Program</a> - If your employer participates, you can make donations to the
-        DSF via payroll deduction.
+        Benevity Workplace Giving Program - If your employer participates, you can
+        make donations to the DSF via payroll deduction.
       {% endblocktranslate %}
     </li>
   </ul>
@@ -91,13 +89,6 @@
       {% endblocktranslate %}
     </li>
   </ul>
-
-  <p>
-    {% blocktranslate trimmed %}
-      Still curious? See our <a href="{{ fundraising_url }}">Frequently Asked Questions</a>
-      about donations.
-    {% endblocktranslate %}
-  </p>
 
   <h2 id="fellowship-program">{% translate "Django Fellowship Program" %}</h2>
 
@@ -150,7 +141,7 @@
   <p>
     {% blocktranslate trimmed %}
       <strong>If you use Django on a daily basis and care about the development of Django
-        itself, you should donate today</strong> (may be <a href="{{ fundraising_url }}#tax-deductible">tax deductible</a>).
+        itself, you should donate today</strong> (may be tax deductible).
       Only with your support can we make sure that the web framework you base your work on
       can grow to be even better in the coming years.
     {% endblocktranslate %}
