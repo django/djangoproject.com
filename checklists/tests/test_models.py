@@ -1036,6 +1036,10 @@ class PreReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
                     f"upcoming Django 6.0 release, is available."
                 )
                 self.assertEqual(checklist.blogpost_summary, expected)
+                self.assertIn(
+                    f"60-{checklist.status_reversed}-1-released/",
+                    checklist.blogpost_link,
+                )
 
     def test_versions(self):
         feature_release = self.factory.make_feature_release_checklist("6.0")

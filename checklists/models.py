@@ -271,7 +271,8 @@ class PreRelease(ReleaseChecklist):
     @cached_property
     def slug(self):
         slug_version = self.release.feature_version.replace(".", "")
-        return f"django-{slug_version}-{self.status_reversed}-released"
+        iteration = self.release.iteration
+        return f"django-{slug_version}-{self.status_reversed}-{iteration}-released"
 
 
 class BugFixReleaseManager(models.Manager):
