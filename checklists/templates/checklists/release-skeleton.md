@@ -111,7 +111,8 @@ At this point, most of the larger features planned for {{ release.feature_versio
 
     - Ensure that the release's dedicated virtual environment is enabled and run the following:
         - `cd django`
-        - `django-admin makemessages -l en --domain=djangojs --domain=django`
+        - `django-admin makemessages -l en --domain=django`
+        - `django-admin makemessages -l en --domain=djangojs`
 
     - Review the diff before pushing and avoid committing changes to the `.po` files without any new translations.
         - e.g. https://github.com/django/django/commit/d2b1ec551567c208abfdd21b27ff6d08ae1a6371.
