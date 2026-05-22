@@ -40,6 +40,11 @@ At this point, most of the larger features planned for {{ release.feature_versio
     - `git checkout -b {{ release.stable_branch }} origin/{{ instance.eom_release.stable_branch }}`
     - `git push origin {{ release.stable_branch }}:{{ release.stable_branch }}`
 {% elif release.status == "a" %}
+
+- [ ] Request the new classifier on PyPI by making a PR:
+    - `Framework :: Django :: {{ release.feature_version }}`
+    - e.g. https://github.com/pypa/trove-classifiers/pulls?q=is%3Apr+django+trove+classifier
+
 ## Feature Freeze Day
 {% include 'checklists/_feature_freeze.md' with final_version=release.feature_version %}
 {% endif %}

@@ -51,10 +51,6 @@
   `{{ final_version }}.x`, and make it active.
     - more info: https://github.com/readthedocs/readthedocs.org/issues/12483
 
-- [ ] Request the new classifier on PyPI by making a PR:
-    - `Framework :: Django :: {{ final_version }}`
-    - e.g. https://github.com/pypa/trove-classifiers/pulls?q=is%3Apr+django+trove+classifier
-
 - [ ] Edit the [Django release process on Trac](https://code.djangoproject.com/#Djangoreleaseprocess):
     - Update the current branch under active development
     - Add the pre-release branch
