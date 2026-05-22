@@ -47,7 +47,7 @@
 
 - [ ] Add the new branch/version to Read the Docs:
   (https://app.readthedocs.org/dashboard/django/version/create/). Search for
-  version `stable-{{ final_version }}.x`, add an alias/slug for it named
+  version `stable/{{ final_version }}.x`, add an alias/slug for it named
   `{{ final_version }}.x`, and make it active.
     - more info: https://github.com/readthedocs/readthedocs.org/issues/12483
 
