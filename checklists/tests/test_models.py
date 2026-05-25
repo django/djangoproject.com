@@ -935,6 +935,9 @@ class CvssMetricsInCveDataTests(TestCase):
         checklist = self.factory.make_security_checklist(releases=[])
         return self.factory.make_security_issue(checklist, **kwargs)
 
+    def _get_cna(self, issue):
+        return issue.cve_data["containers"]["cna"]
+
     def _get_metrics(self, issue):
         return issue.cve_data["metrics"]
 
@@ -1012,6 +1015,62 @@ class CvssMetricsInCveDataTests(TestCase):
         metrics = self._get_metrics(issue)
         self.assertEqual(len(metrics), 1)
         self.assertNotIn("cvssV4_0", metrics[0])
+
+    def test_single_cwe(self):
+        issue = self._make_issue(
+            cna="DSF",
+            cve_type="CWE-347: Improper Verification of Cryptographic Signature",
+        )
+        descriptions = self._get_cna(issue)["problemTypes"][0]["descriptions"]
+        self.assertEqual(len(descriptions), 1)
+        self.assertEqual(descriptions[0]["cweId"], "CWE-347")
+        self.assertEqual(
+            descriptions[0]["description"],
+            "CWE-347: Improper Verification of Cryptographic Signature",
+        )
+
+    def test_multiple_cwes(self):
+        issue = self._make_issue(
+            cna="DSF",
+            cve_type="CWE-347: Improper Verification of Signature, CWE-89: SQL Injection",
+        )
+        descriptions = self._get_cna(issue)["problemTypes"][0]["descriptions"]
+        self.assertEqual(len(descriptions), 2)
+        self.assertEqual(descriptions[0]["cweId"], "CWE-347")
+        self.assertEqual(
+            descriptions[0]["description"],
+            "CWE-347: Improper Verification of Signature",
+        )
+        self.assertEqual(descriptions[1]["cweId"], "CWE-89")
+        self.assertEqual(descriptions[1]["description"], "CWE-89: SQL Injection")
+
+    def test_single_capec(self):
+        issue = self._make_issue(
+            cna="DSF",
+            impact="CAPEC-475: Signature Spoofing by Improper Validation",
+        )
+        impacts = self._get_cna(issue)["impacts"]
+        self.assertEqual(len(impacts), 1)
+        self.assertEqual(impacts[0]["capecId"], "CAPEC-475")
+        self.assertEqual(
+            impacts[0]["descriptions"][0]["value"],
+            "CAPEC-475: Signature Spoofing by Improper Validation",
+        )
+
+    def test_multiple_capecs(self):
+        issue = self._make_issue(
+            cna="DSF",
+            impact="CAPEC-475: Spoofing by Improper Validation, CAPEC-62: CSRF",
+        )
+        impacts = self._get_cna(issue)["impacts"]
+        self.assertEqual(len(impacts), 2)
+        self.assertEqual(impacts[0]["capecId"], "CAPEC-475")
+        self.assertEqual(
+            impacts[0]["descriptions"][0]["value"],
+            "CAPEC-475: Spoofing by Improper Validation",
+        )
+        self.assertEqual(impacts[1]["capecId"], "CAPEC-62")
+        self.assertEqual(impacts[1]["descriptions"][0]["value"], "CAPEC-62: CSRF")
 
 
 class PreReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):

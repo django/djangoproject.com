@@ -842,23 +842,27 @@ class SecurityIssue(models.Model):
                             "descriptions": [
                                 {
                                     "lang": "en",
-                                    "cweId": self.cve_type.split(":")[0],
-                                    "description": self.cve_type,
+                                    "cweId": cwe.split(":")[0],
+                                    "description": cwe,
                                     "type": "CWE",
-                                },
+                                }
+                                for cwe in (c.strip() for c in self.cve_type.split(","))
+                                if cwe
                             ],
                         },
                     ],
                     "impacts": [
                         {
-                            "capecId": self.impact.split(":")[0],
+                            "capecId": capec.split(":")[0],
                             "descriptions": [
                                 {
                                     "lang": "en",
-                                    "value": self.impact,
+                                    "value": capec,
                                 },
                             ],
-                        },
+                        }
+                        for capec in (c.strip() for c in self.impact.split(","))
+                        if capec
                     ],
                     **details,
                 },
