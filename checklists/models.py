@@ -1,5 +1,6 @@
 import datetime
 import json
+import re
 
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
@@ -494,7 +495,7 @@ class SecurityIssue(models.Model):
         verbose_name="Blog description",
         help_text=(
             "Markdown format. Single `backticks` for inline code. "
-            "Copy from release notes, include severity sentence.",
+            "Copy from release notes, include severity sentence."
         ),
     )
     reporter = models.CharField(max_length=1024, blank=True)
@@ -622,7 +623,7 @@ class SecurityIssue(models.Model):
     def cve_description(self):
         affected = format_releases_for_cves(self.releases.all())
         return (
-            f"An issue was discovered in {affected}.\n{self.description}\n"
+            f"An issue was discovered in Django {affected}.\n{self.description}\n"
             "Earlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) "
             "were not evaluated and may also be affected.\n"
             f"Django would like to thank {self.reporter} for reporting this issue."
@@ -631,7 +632,7 @@ class SecurityIssue(models.Model):
     @cached_property
     def cve_html_description(self):
         return "".join(
-            f"<p>{line.strip()}</p>"
+            f'<p>{re.sub(r"`([^`]+)`", r"<code>\1</code>", line.strip())}</p>'
             for line in urlize(self.cve_description).split("\n")
         )
 

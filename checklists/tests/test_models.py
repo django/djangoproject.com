@@ -640,15 +640,15 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             },
         ]
         expected_description = (
-            "An issue was discovered in 5.0 before 5.0.14 and 5.1 before 5.1.8.\n"
+            "An issue was discovered in Django 5.0 before 5.0.14 and 5.1 before 5.1.8.\n"
             f"{cve_description}\n"
             "Earlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) "
             "were not evaluated and may also be affected.\n"
             f"Django would like to thank {reporter} for reporting this issue."
         )
         expected_html_description = (
-            "<p>An issue was discovered in 5.0 before 5.0.14 and 5.1 before 5.1.8.</p>"
-            f"<p>{cve_description}</p>"
+            "<p>An issue was discovered in Django 5.0 before 5.0.14 and 5.1 before "
+            f"5.1.8.</p><p>{cve_description}</p>"
             "<p>Earlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) "
             "were not evaluated and may also be affected.</p>"
             f"<p>Django would like to thank {reporter} for reporting this issue.</p>"
@@ -775,6 +775,22 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
                 "value": checklist.releaser.user.get_full_name(),
             },
         )
+
+    def test_cve_html_description_converts_backticks_to_code_tags(self):
+        release = self.factory.make_release(version="5.2.1")
+        checklist = self.make_checklist(releases=[])
+        issue = self.factory.make_security_issue(
+            checklist,
+            [release],
+            description=(
+                "The `vulnerable_method()` is subject to an attack via `user_input`."
+            ),
+        )
+        html = issue.cve_html_description
+        self.assertIn("<code>vulnerable_method()</code>", html)
+        self.assertIn("<code>user_input</code>", html)
+        self.assertNotIn("`vulnerable_method()`", html)
+        self.assertNotIn("`user_input`", html)
 
     def test_hashes_by_branch(self):
         releases = [
