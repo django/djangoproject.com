@@ -353,6 +353,75 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             ["CVE-2025-9999", "CVE-2025-10000", "CVE-2025-9999", "CVE-2025-10000"],
         )
 
+    def test_render_checklist_reporter_patch_notification(self):
+        release = self.factory.make_release(version="5.2.1")
+        when = datetime(2025, 6, 4, 14, 0, tzinfo=UTC)
+        checklist = self.make_checklist(releases=[], when=when)
+        self.factory.make_security_issue(
+            checklist,
+            [release],
+            cve_year_number="CVE-2025-11111",
+            reporter="Alice Smith",
+        )
+        checklist_content = self.do_render_checklist(checklist)
+
+        with self.subTest(task="Patch notification item present in 10-days section"):
+            ten_days_pos = checklist_content.find("## 10 days before")
+            one_week_pos = checklist_content.find("## One Week before")
+            notification_pos = checklist_content.find(
+                "Send patch for **CVE-2025-11111** to the reporter (Alice Smith)"
+            )
+            self.assertGreater(notification_pos, ten_days_pos)
+            self.assertLess(notification_pos, one_week_pos)
+
+        with self.subTest(task="Planned release date appears"):
+            self.assertInChecklistContent("June 4, 2025", checklist_content)
+
+        with self.subTest(task="Announcement channels are listed"):
+            self.assertInChecklistContent(
+                "https://groups.google.com/g/django-announce/", checklist_content
+            )
+            self.assertInChecklistContent(
+                "https://forum.djangoproject.com/tags/c/announcements/releases/31/"
+                "security/",
+                checklist_content,
+            )
+
+        with self.subTest(task="Privacy reminder present"):
+            self.assertInChecklistContent(
+                "keep this information\nprivate", checklist_content
+            )
+
+    def test_render_checklist_reporter_patch_notification_multiple_cves(self):
+        release = self.factory.make_release(version="5.2.1")
+        checklist = self.make_checklist(
+            releases=[], when=datetime(2025, 6, 4, tzinfo=UTC)
+        )
+        self.factory.make_security_issue(
+            checklist,
+            [release],
+            cve_year_number="CVE-2025-11111",
+            reporter="Alice Smith",
+        )
+        self.factory.make_security_issue(
+            checklist,
+            [release],
+            cve_year_number="CVE-2025-22222",
+            reporter="Bob Jones",
+        )
+        checklist_content = self.do_render_checklist(checklist)
+
+        one_week_pos = checklist_content.find("## One Week before")
+        verification_pos = checklist_content.find("Send patch for")
+        notification_section = checklist_content[verification_pos:one_week_pos]
+        for cve, reporter in [
+            ("CVE-2025-11111", "Alice Smith"),
+            ("CVE-2025-22222", "Bob Jones"),
+        ]:
+            with self.subTest(cve=cve):
+                self.assertIn(cve, notification_section)
+                self.assertIn(reporter, notification_section)
+
     def test_render_checklist_simple(self):
         checklist = self.make_checklist()
         checklist_content = self.do_render_checklist(checklist)
