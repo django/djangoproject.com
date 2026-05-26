@@ -1,0 +1,23 @@
+{% load tz %}
+Hello {{ cve.reporter }},
+
+Thank you for your report and patience. We have confirmed the vulnerability,
+which has been assigned {{ cve.cve_year_number }}.
+
+Please find attached our proposed mitigation patch. Could you please test it to
+ensure it reliably fixes the issue?
+
+We plan to credit the discoverer of the vulnerability in the release blog post
+and in the CVE metadata. Please confirm "{{ cve.reporter }}" is the correct
+name to use for the reporter credit.
+
+The Django release with this fix is currently planned for
+{{ instance.when|utc|date:"l, F j, Y" }}. When published, the releases will be
+announced on the django-announce mailing list [0] and on the Django forum [1],
+so consider subscribing to these to be notified. Please keep this information
+private until after the updated versions are published.
+
+Thank you again!
+
+[0] https://groups.google.com/g/django-announce/
+[1] https://forum.djangoproject.com/tags/c/announcements/releases/31/security/

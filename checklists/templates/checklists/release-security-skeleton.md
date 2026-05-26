@@ -68,6 +68,16 @@
     - `git format-patch HEAD~{{ cves_length }}`
     - e.g. https://github.com/django/django-security/pull/375
 
+{% for cve in cves %}
+- [ ] Send patch for **{{ cve.cve_year_number }}** to the reporter ({{ cve.reporter }}) for verification:
+    - Subject: `Patch for {{ cve.cve_year_number }} -- {{ cve.summary }}`
+    - Attach patch(es) and send to the reporter with the following body:
+
+```
+{% include "checklists/release-security-reporter-verification.txt" %}
+```
+{% endfor %}
+
 ## One Week before
 
 - [ ] Send prenotification email
