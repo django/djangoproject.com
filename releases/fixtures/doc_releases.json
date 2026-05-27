@@ -233,5 +233,19 @@
     "iteration": 0,
     "is_lts": false
   }
+},
+{
+  "model": "releases.release",
+  "pk": "6.1",
+  "fields": {
+    "date": "2026-08-05",
+    "eol_date": null,
+    "major": 6,
+    "minor": 1,
+    "micro": 0,
+    "status": "f",
+    "iteration": 0,
+    "is_lts": false
+  }
 }
 ]
