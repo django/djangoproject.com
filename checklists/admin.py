@@ -97,6 +97,7 @@ class SecurityIssueAdmin(admin.ModelAdmin):
                     "description",
                     "blogdescription",
                     "reporter",
+                    "discovery",
                     "remediator",
                     "reported_at",
                     "confirmed_at",
