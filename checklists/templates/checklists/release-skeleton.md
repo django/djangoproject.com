@@ -1,5 +1,5 @@
-{% load checklist_extras %}
-# Django {{ release.version_verbose }} {{ title }} - {{ when|date }}
+{% load checklist_extras tz %}
+# Django {{ release.version_verbose }} {{ title }} - {{ when|utc|date:"N j, Y, P" }}
 
 {% if release.status == "a" %}
 ## One or Two months before Feature Freeze
