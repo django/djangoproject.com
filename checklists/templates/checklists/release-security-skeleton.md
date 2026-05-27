@@ -1,6 +1,6 @@
 {% load checklist_extras tz %}
 {% with cves=instance.cves versions=instance.versions cves_length=instance.cves|length %}
-# Django Security Release: {{ versions|enumerate_items }} ({{ when }})
+# Django Security Release: {{ versions|enumerate_items }} ({{ when|utc|date:"N j, Y, P" }} UTC)
 
 ## 14 days before
 
@@ -178,7 +178,7 @@ https://docs.djangoproject.com/en/dev/internals/security/#security-issue-severit
     - Go to https://hackerone.com/bugs?organization_inbox_handle=django_inbox
     - Select the relevant report and close it as `Resolved` with message:
 ```
-This issue was fixed and released on {{ instance.when }}.
+This issue was fixed and released on {{ instance.when|utc|date:"N j, Y" }}.
 
 {{ instance.blogpost_title }}
 
