@@ -53,7 +53,8 @@ def enumerate_items(items, item_formatter=None):
 
 @register.filter
 def enumerate_cves(cves, field="cve_year_number"):
-    return enumerate_items([getattr(cve, field) for cve in cves])
+    # Use `dict.fromkeys()` to preserve order while removing duplicates.
+    return enumerate_items(dict.fromkeys(getattr(cve, field) for cve in cves))
 
 
 @register.filter
