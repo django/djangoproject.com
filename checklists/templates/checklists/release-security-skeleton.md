@@ -70,24 +70,28 @@
 
 {% for cve in cves %}
 - [ ] Send patch for **{{ cve.cve_year_number }}** to the reporter ({{ cve.reporter }}) for verification:
-    - Subject: `Patch for {{ cve.cve_year_number }} -- {{ cve.summary }}`
+    - Subject: `Patch for {{ cve.cve_year_number }}`
     - Attach patch(es) and send to the reporter with the following body:
-
+<details>
+<summary>Open for message body</summary>
 ```
 {% include "checklists/release-security-reporter-verification.txt" %}
 ```
+</details>
 {% endfor %}
 
 ## One Week before
 
 - [ ] Send prenotification email
+    - Reference: https://github.com/django/django-security/wiki/Security-prenotification-email-template
     - Subject: `Notice of upcoming Django security releases ({{ versions|enumerate_items }})`
     - Create a new text file `prenotification-email.txt` with content similar to this:
-        - Reference: https://github.com/django/django-security/wiki/Security-prenotification-email-template
-        - Remove backticks from code symbols
+<details>
+<summary>Open for message body</summary>
 ```
 {% include "checklists/release-security-prenotification.md" %}
 ```
+</details>
 - GPG sign that new file:
     - `gpg --clearsign --digest-algo SHA256 prenotification-email.txt`
     - Send an email with body using the signed content to a given list of special users:

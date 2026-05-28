@@ -362,8 +362,14 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             [release],
             cve_year_number="CVE-2025-11111",
             reporter="Alice Smith",
+            summary="Potential exposure via missing `Vary: Authorization` header",
         )
         checklist_content = self.do_render_checklist(checklist)
+
+        with self.subTest(task="Subject contains CVE ID but not summary"):
+            self.assertInChecklistContent(
+                "Subject: `Patch for CVE-2025-11111`", checklist_content
+            )
 
         with self.subTest(task="Patch notification item present in 10-days section"):
             ten_days_pos = checklist_content.find("## 10 days before")
