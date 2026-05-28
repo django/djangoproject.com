@@ -44,7 +44,7 @@ def download_donor_report(modeladmin, request, queryset):
                 alternate_email,
                 last_gift_date,
                 last_gift_amount,
-                last_gift.get_interval_display().replace("donation", ""),
+                last_gift.get_interval_display().replace("donation", "").strip(),
                 "Yes" if last_gift.stripe_subscription_id else "",
                 donor.location,
             ]
