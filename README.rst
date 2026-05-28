@@ -123,6 +123,35 @@ Install and run locally from a virtual environment
    http://docs.djangoproject.localhost:8000/,
    or http://dashboard.djangoproject.localhost:8000/.
 
+Contributing
+============
+
+We welcome contributions to the Django website! To ensure a smooth process,
+please keep the following guidelines in mind:
+
+Website Working Group (WG) Approval
+-----------------------------------
+
+While any community member can raise an issue, the `Website Working Group
+<https://www.djangoproject.com/foundation/teams/>`_ should agree that an
+issue is ready to be worked on before a Pull Request is submitted. Look
+for labels or comments from WG members indicating the issue is "accepted"
+or "ready for work."
+
+Issue "Assignment"
+------------------
+
+We do not use the GitHub "Assignee" field. Issues are available for anyone
+to work on if there is no active Pull Request linked to them.
+
+To avoid duplicate work, please:
+
+1. Check if there is already an open PR for the issue.
+2. Leave a comment stating your intention to work on it.
+3. Submit your PR promptly. If an issue has no active PR, it remains open
+   for others to pick up.
+
+
 Running the tests
 -----------------
 
