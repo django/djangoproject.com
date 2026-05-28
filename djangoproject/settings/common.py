@@ -14,15 +14,8 @@ DATA_DIR = (
     Path(os.environ[data_dir_key]) if data_dir_key in os.environ else BASE_DIR.parent
 )
 
-try:
-    with (DATA_DIR / "conf" / "secrets.json").open() as handle:
-        SECRETS = json.load(handle)
-except OSError:
-    SECRETS = {
-        "secret_key": "a",
-        "superfeedr_creds": ["any@email.com", "some_string"],
-    }
-
+with (DATA_DIR / "conf" / "secrets.json").open() as handle:
+    SECRETS = json.load(handle)
 
 # Django settings
 
