@@ -1,0 +1,33 @@
+.sidebar-right {
+    display: flex;
+    gap: 40px;
+
+
+    .side-content {
+        position: sticky;
+        top: 20px;
+        align-self: flex-start;
+        padding: 10px;
+        width: calc(100% - 70%);
+    }
+
+    [role="complementary"] {
+        width: 100% !important;
+    }
+
+    @media screen and (max-width: 768px) {
+        .side-content {
+            width: 100% !important;
+            position: unset !important;
+            top: 0 !important;
+            align-self: unset !important;
+            padding: unset !important;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar-right {
+        flex-direction: column !important;
+    }
+}
