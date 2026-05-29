@@ -1,16 +1,14 @@
 define([
   'jquery', //requires jquery
-], function ($) {
-  var CollapsingList = function (list) {
-    this.list = $(list);
-    this.init();
-  };
+], ($) => {
+  class CollapsingList {
+    constructor(list) {
+      this.list = $(list);
+      this.init();
+    }
 
-  var hash = window.location.hash;
-
-  CollapsingList.prototype = {
-    init: function () {
-      var self = this; //self = this for functions
+    init() {
+      const self = this; //self = this for functions
 
       this.items = this.list.children('li'); //get items
       this.headings = this.items.children('h2'); //get headings
@@ -30,18 +28,17 @@ define([
         .append(' <i class="collapsing-icon icon icon-plus"></i>')
         .attr('tabindex', '0'); //add icons and tabindexes
 
-      this.headings.on('click', function (ev) {
-        //headings onclick (passing event)
-        var target = $(ev.target).closest('h2'),
-          parent = target.closest('li'); //store target as var
+      this.headings.on('click', (ev) => {
+        const target = $(ev.target).closest('h2');
+        const parent = target.closest('li');
         parent.toggleClass('active'); //toggle active class
       });
 
-      this.buttonExpand.on('click', function () {
+      this.buttonExpand.on('click', () => {
         //expand all onclick
         self.items.addClass('active');
       });
-      this.buttonCollapse.on('click', function () {
+      this.buttonCollapse.on('click', () => {
         //expand all onclick
         self.items.removeClass('active');
       });
@@ -49,11 +46,13 @@ define([
       //expand list item with matching hash id
       if (hash) {
         $(hash).addClass('active');
-        var pos = $(hash).position();
-        $(window).scrollTop(pos.top);
+        const pos = $(hash).position();
+        $(globalThis).scrollTop(pos.top);
       }
-    },
-  };
+    }
+  }
+
+  const hash = globalThis.location.hash;
 
   //return a new module for each class detected
   $('.list-collapsing').each(function () {
