@@ -11,7 +11,23 @@ env:
     PYTHON_VERSION: 3.12
 
 jobs:
-    tests:
+    vitest:
+        runs-on: macos-latest
+        steps:
+            - uses: actions/checkout@v6
+            - uses: actions/setup-node@v6
+              with:
+                  node-version-file: package.json
+                  cache: npm
+                  cache-dependency-path: package-lock.json
+            - name: Install Node dependencies
+              run: npm ci
+            - run: npm test
+            - uses: codecov/codecov-action@v6
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  flags: javascript
+    python:
         runs-on: ubuntu-24.04
 
         services:
@@ -72,3 +88,4 @@ jobs:
               uses: codecov/codecov-action@v6
               with:
                   token: ${{ secrets.CODECOV_TOKEN }}
+                  flags: python

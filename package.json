@@ -1,0 +1,27 @@
+{
+  "name": "djangoproject.com",
+  "version": "0.1.0",
+  "description": "Source code to djangoproject.com ",
+  "homepage": "https://github.com/django/djangoproject.com#readme",
+  "bugs": {
+    "url": "https://github.com/django/djangoproject.com/issues"
+  },
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=11.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/django/djangoproject.com.git"
+  },
+  "license": "BSD-3-Clause",
+  "author": "Django Software Foundation",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@vitest/browser-webdriverio": "*",
+    "@vitest/coverage-istanbul": "*"
+  }
+}
