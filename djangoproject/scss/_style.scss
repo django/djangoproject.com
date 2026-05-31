@@ -2633,6 +2633,30 @@ table.foundation td {
     padding: 0 5px;
 }
 
+table.docutils {
+    margin-bottom: 1.5em;
+
+    td,
+    th {
+        border-bottom: 1px solid var(--hairline-color);
+        padding: 8px 12px;
+    }
+
+    thead th {
+        border-bottom: 2px solid $gray-medium;
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: var(--sidebar-bg);
+        background-color: color-mix(in oklab, currentColor 5%, transparent);
+    }
+
+    tr:hover {
+        background-color: color-mix(in oklab, currentColor 10%, transparent);
+    }
+}
+
 table.django-supported-versions,
 table.django-unsupported-versions {
     border: 1px solid var(--hairline-color);
