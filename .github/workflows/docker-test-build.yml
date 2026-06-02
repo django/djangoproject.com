@@ -36,7 +36,7 @@ jobs:
 
             - if: matrix.req_file == 'tests.txt'
               name: Set up Docker Compose
-              uses: docker/setup-compose-action@v2
+              uses: docker/setup-compose-action@v2.1.0
 
             - if: matrix.req_file == 'tests.txt'
               name: Run the tests via Docker
