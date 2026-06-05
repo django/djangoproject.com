@@ -11,10 +11,14 @@
 - [ ] Test the release locally and confirm the release signature by running `scripts/verify_release.sh`:
     - `VERSION={{ release }} scripts/verify_release.sh`
 
+- [ ] If this is your first release today, generate and store new PyPI token.
+
 - [ ] Upload to PyPI with Twine (use commands printed by release script)
     - `cd ../releases/{{ release }}`
     - `twine upload --repository django dist/*`
     - https://pypi.org/project/Django/{{ release }}/
+
+- [ ] If this is your last release today, revoke PyPI token.
 
 - [ ] Mark the release as "active" in
   https://www.djangoproject.com/admin/releases/release/{{ release }}/change/
