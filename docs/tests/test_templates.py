@@ -214,12 +214,12 @@ class TemplateTestCase(TestCase):
 
     def test_opengraph_title(self):
         doc = Document.objects.create(
+            metadata={"body": "test body"},
             release=DocumentRelease.objects.create(
                 lang=settings.DEFAULT_LANGUAGE_CODE,
                 release=Release.objects.create(version="5.0"),
             ),
         )
-        doc.body = "test body"  # avoids trying to load the underlying physical file
 
         for title, expected in [
             ("test title", "test title"),
@@ -230,6 +230,35 @@ class TemplateTestCase(TestCase):
             doc.title = title
             with self.subTest(title=title):
                 self._assertOGTitleEqual(doc, f"{expected} | Django documentation")
+
+    def test_breadcrumbs_render(self):
+        doc = Document.objects.create(
+            metadata={
+                "breadcrumbs": [{"path": "releases", "title": "Release notes"}],
+                "parents": "parent",
+            },
+            release=DocumentRelease.objects.create(
+                lang=settings.DEFAULT_LANGUAGE_CODE,
+                release=Release.objects.create(version="5.0"),
+            ),
+        )
+        output = render_to_string(
+            "docs/doc.html",
+            {
+                "doc": doc.metadata,
+                "lang": settings.DEFAULT_LANGUAGE_CODE,
+                "version": "5.0",
+            },
+            request=RequestFactory().get("/"),
+        )
+        self.assertInHTML(
+            """
+            <a href="http://docs.djangoproject.localhost:8000/en/5.0/releases/">
+              Release notes
+            </a>
+            """,
+            output,
+        )
 
 
 class TemplateTagTestCase(TestCase):
