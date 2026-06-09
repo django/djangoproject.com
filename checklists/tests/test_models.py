@@ -1,8 +1,8 @@
 import json
 import re
-import zoneinfo
 from datetime import UTC, date, datetime
 
+import zoneinfo
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.template.loader import render_to_string
@@ -438,7 +438,10 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             )
 
         with self.subTest(task="Stub release notes added"):
-            self.assertStubReleaseNotesAdded(checklist.latest_release, checklist_content,)
+            self.assertStubReleaseNotesAdded(
+                checklist.latest_release,
+                checklist_content,
+            )
 
         with self.subTest(task="Make release public steps added"):
             self.assertMakeReleasePublicAdded(checklist.latest_release, checklist_content)
@@ -522,9 +525,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         )
         checklist_content = self.do_render_checklist(checklist)
 
-        expected_url = reverse(
-            "checklists:cve_json_record", args=[issue.cve_year_number]
-        )
+        expected_url = reverse("checklists:cve_json_record", args=[issue.cve_year_number])
         self.assertIn(f"Get CVE Record from {expected_url}", checklist_content)
 
     def test_render_checklist_blogdescription_display(self):

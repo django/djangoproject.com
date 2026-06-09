@@ -1,6 +1,5 @@
 import datetime
 import json
-import re
 
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
@@ -629,9 +628,9 @@ class SecurityIssue(models.Model):
 
     @cached_property
     def cve_html_description(self):
-         return "".join(
-        f"<p>{line.strip()}</p>" for line in urlize(self.cve_description).split("\n")
-    )
+        return "".join(
+            f"<p>{line.strip()}</p>" for line in urlize(self.cve_description).split("\n")
+        )
 
     @property
     def cvss_v3_severity(self):
