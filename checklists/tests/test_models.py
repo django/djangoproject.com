@@ -438,7 +438,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             )
 
         with self.subTest(task="Stub release notes added"):
-            self.assertStubReleaseNotesAdded(checklist.latest_release, checklist_content)
+            self.assertStubReleaseNotesAdded(checklist.latest_release, checklist_content,)
 
         with self.subTest(task="Make release public steps added"):
             self.assertMakeReleasePublicAdded(checklist.latest_release, checklist_content)

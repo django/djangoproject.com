@@ -629,11 +629,9 @@ class SecurityIssue(models.Model):
 
     @cached_property
     def cve_html_description(self):
-         text = re.sub(r'`([^`]+)`', r'<code>\1</code>', self.cve_description)
-         paragraphs = [p.strip() for p in text.split("\n") if p.strip()]
          return "".join(
-            f"<p>{para}</p>" for para in paragraphs
-        )
+        f"<p>{line.strip()}</p>" for line in urlize(self.cve_description).split("\n")
+    )
 
     @property
     def cvss_v3_severity(self):
