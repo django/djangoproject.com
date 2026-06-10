@@ -47,7 +47,7 @@
     {% with major_version=preview.version|slice:":3" %}
       <h2>Option {% cycle options %}: Get the {{ preview.get_status_display }} for {{ major_version }}</h2>
       <p>As part of the
-        <a href="https://code.djangoproject.com/wiki/Version{{ major_version }}Roadmap">
+        <a href="{% url 'roadmap' major_version %}">
           Django {{ major_version }} development process</a>, Django
         {{ preview.version }} is available. This release is only for users who
         want to try the new version and help identify remaining bugs before the
