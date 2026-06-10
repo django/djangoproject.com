@@ -5,12 +5,14 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.views import generic
 
-from . import models
-from . import redirects
+from . import models, redirects
 
 
 def minutes_redirect(request, year, month, day, slug):
-    minutes_date = datetime.strptime(f"{year}-{month}-{day}", "%Y-%b-%d").date()
+    try:
+        minutes_date = datetime.strptime(f"{year}-{month}-{day}", "%Y-%b-%d").date()
+    except ValueError:
+        raise Http404
     year, month, day = minutes_date.timetuple()[:3]
     if (year, month, day) not in redirects.MINUTES_DATES:
         raise Http404

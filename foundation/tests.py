@@ -137,3 +137,28 @@ class BannerTestCase(ReleaseMixin, TestCase):
         Banner.objects.create(title="Donate now!", is_active=True)
         response = self.client.get("/fundraising/")
         self.assertNotContains(response, "Donate now!")
+
+
+class MinutesRedirectTests(TestCase):
+    def test_valid_date_redirects_to_github(self):
+        response = self.client.get(
+            "/foundation/minutes/2019/Jan/10/minutes/",
+            headers={"host": "www.djangoproject.localhost"},
+        )
+        self.assertRedirects(
+            response,
+            "https://github.com/django/dsf-minutes/blob/main/2019/2019-01-10.md",
+            status_code=301,
+            fetch_redirect_response=False,
+        )
+
+    def test_invalid_date_returns_404(self):
+        from django.http import Http404
+        from django.test import RequestFactory
+
+        from foundation.views import minutes_redirect
+
+        factory = RequestFactory()
+        request = factory.get("/foundation/minutes/2019/Jan/99/minutes/")
+        with self.assertRaises(Http404):
+            minutes_redirect(request, year=2019, month="Jan", day=99, slug="minutes")
