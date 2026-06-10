@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 {% load fundraising_extras hosts i18n %}
 {% block og_title %}Django Software Foundation{% endblock %}
+
 {% block layout_class %}sidebar-right{% endblock %}
+
 {% block title %}Django Software Foundation{% endblock %}
+
 {% block header %}
   <p>Django Software Foundation</p>
 {% endblock header %}
+
 {% block content-related %}
 {# Always include <h2> label and <div> with aria role. #}
   <div role="complementary">
@@ -22,9 +26,9 @@
     </ul>
     <h3>{% translate "Latest DSF meeting minutes" %}</h3>
     <p>
-      {% blocktrans with minutes_url="https://github.com/django/dsf-minutes" %}
+      {% blocktranslate with minutes_url="https://github.com/django/dsf-minutes" %}
         The latest meeting minutes can be found on <a href="{{ minutes_url }}">the minutes repository</a>.
-      {% endblocktrans %}
+      {% endblocktranslate %}
     </p>
   </div>
 {% endblock content-related %}
