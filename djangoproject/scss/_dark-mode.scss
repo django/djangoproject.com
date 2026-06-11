@@ -296,30 +296,25 @@ html[data-theme="dark"] .img-release {
     justify-content: center;
 }
 
-.theme-toggle svg {
-    max-width: 16px;
-    max-height: 16px;
-    display: none;
-}
-
 /* ICONS */
-.theme-toggle svg.theme-icon-when-auto,
-.theme-toggle svg.theme-icon-when-dark,
-.theme-toggle svg.theme-icon-when-light {
-    fill: var(--menu);
-    color: $green-dark;
-}
+.theme-toggle .theme-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--menu);
 
-html[data-theme="auto"] .theme-toggle svg.theme-icon-when-auto {
-    display: block;
-}
+    display: none;
 
-html[data-theme="dark"] .theme-toggle svg.theme-icon-when-dark {
-    display: block;
-}
+    html[data-theme="auto"] &.theme-icon-when-auto {
+        display: block;
+    }
 
-html[data-theme="light"] .theme-toggle svg.theme-icon-when-light {
-    display: block;
+    html[data-theme="dark"] &.theme-icon-when-dark {
+        display: block;
+    }
+
+    html[data-theme="light"] &.theme-icon-when-light {
+        display: block;
+    }
 }
 
 /* Fully hide screen reader text so we only show the one matching the current theme */
