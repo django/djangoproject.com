@@ -296,29 +296,21 @@ html[data-theme="dark"] .img-release {
     justify-content: center;
 }
 
-.theme-toggle svg {
-    max-width: 16px;
-    max-height: 16px;
-    display: none;
-}
-
 /* ICONS */
-.theme-toggle svg.theme-icon-when-auto,
-.theme-toggle svg.theme-icon-when-dark,
-.theme-toggle svg.theme-icon-when-light {
-    fill: var(--menu);
-    color: $green-dark;
+.theme-toggle .icon {
+    display: none;
+    color: var(--menu);
 }
 
-html[data-theme="auto"] .theme-toggle svg.theme-icon-when-auto {
+html[data-theme="auto"] .theme-toggle .theme-icon-when-auto {
     display: block;
 }
 
-html[data-theme="dark"] .theme-toggle svg.theme-icon-when-dark {
+html[data-theme="dark"] .theme-toggle .theme-icon-when-dark {
     display: block;
 }
 
-html[data-theme="light"] .theme-toggle svg.theme-icon-when-light {
+html[data-theme="light"] .theme-toggle .theme-icon-when-light {
     display: block;
 }
 
