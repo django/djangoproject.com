@@ -78,10 +78,18 @@
         <li class="design"><span>{% translate "Design by" %}</span> <a class="threespot" href="https://www.threespot.com">Threespot</a>
           <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/">andrevv</a></li>
       </ul>
-      <p class="copyright">&copy; 2005-{% now "Y" %}
-        <a href="{% host_url 'homepage' host 'www' %}foundation/"> {% translate "Django Software Foundation" %}</a> {% translate "and individual contributors. Django is a" %}
-        <a href="{% host_url 'homepage' host 'www' %}trademarks/">{% translate "registered trademark" %}</a> {% translate "of the Django Software Foundation." %}
+      {% host_url 'homepage' host 'www' as homepage_url %}
 
+      <p class="copyright">&copy; 2005-{% now "Y" %}
+        {% blocktranslate trimmed with
+            foundation_url=homepage_url|add:"foundation/"
+            trademark_url=homepage_url|add:"trademarks/"
+        %}
+        <a href="{{ foundation_url }}">Django Software Foundation</a>
+        and individual contributors. Django is a
+        <a href="{{ trademark_url }}">registered trademark</a>
+        of the Django Software Foundation.
+        {% endblocktranslate %}
       </p>
     </div>
   </div>
