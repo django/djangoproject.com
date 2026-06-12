@@ -7,7 +7,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = []
@@ -59,9 +58,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "approved",
-                    models.NullBooleanField(
-                        verbose_name="Name, URL, and Logo approved?"
-                    ),
+                    models.NullBooleanField(verbose_name="Name, URL, and Logo approved?"),
                 ),
             ],
             options={

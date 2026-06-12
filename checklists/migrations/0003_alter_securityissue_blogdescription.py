@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("checklists", "0002_alter_securityissue_blogdescription_and_more"),
     ]

@@ -7,7 +7,6 @@ import checklists.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("checklists", "0006_remove_securityissue_attack_complexity_and_more"),
     ]

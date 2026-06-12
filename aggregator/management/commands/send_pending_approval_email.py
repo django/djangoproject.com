@@ -22,9 +22,7 @@ class Command(BaseCommand):
         feeds = Feed.objects.filter(approval_status=PENDING_FEED)
         to_email = [
             x.email
-            for x in User.objects.filter(
-                groups__name=settings.FEED_APPROVERS_GROUP_NAME
-            )
+            for x in User.objects.filter(groups__name=settings.FEED_APPROVERS_GROUP_NAME)
         ]
 
         if len(feeds) == 0:

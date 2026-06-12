@@ -1,6 +1,5 @@
 import datetime
 import json
-import re
 
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
@@ -433,9 +432,7 @@ class SecurityIssueReleasesThrough(models.Model):
         "SecurityIssue", on_delete=models.CASCADE, verbose_name="Security Issue"
     )
     release = models.ForeignKey(Release, on_delete=models.CASCADE)
-    commit_hash = models.CharField(
-        max_length=128, default="", blank=True, db_index=True
-    )
+    commit_hash = models.CharField(max_length=128, default="", blank=True, db_index=True)
 
     objects = SecurityIssueReleasesThroughManager()
 
@@ -632,8 +629,7 @@ class SecurityIssue(models.Model):
     @cached_property
     def cve_html_description(self):
         return "".join(
-            f'<p>{re.sub(r"`([^`]+)`", r"<code>\1</code>", line.strip())}</p>'
-            for line in urlize(self.cve_description).split("\n")
+            f"<p>{line.strip()}</p>" for line in urlize(self.cve_description).split("\n")
         )
 
     @property

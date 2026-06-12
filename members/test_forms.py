@@ -85,9 +85,7 @@ class CorporateMemberCorporateMemberSignUpFormTests(TestCase):
 
         self.assertEqual(len(mail.outbox), 1)
         msg = mail.outbox[0]
-        self.assertEqual(
-            msg.subject, "Django Corporate Membership Renewal: Foo Widgets"
-        )
+        self.assertEqual(msg.subject, "Django Corporate Membership Renewal: Foo Widgets")
         self.assertEqual(
             msg.body,
             (

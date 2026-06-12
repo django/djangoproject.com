@@ -442,9 +442,7 @@ class Document(models.Model):
             )
         ]
         indexes = [
-            models.Index(
-                fields=["release", "title"], name="document_release_title_idx"
-            ),
+            models.Index(fields=["release", "title"], name="document_release_title_idx"),
             GinIndex(fields=["search_vector"], name="document_search_vector_idx"),
         ]
         unique_together = ("release", "path")
