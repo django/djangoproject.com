@@ -1,5 +1,4 @@
-{% load i18n %}
-{% load hosts %}
+{% load hosts i18n %}
 
 <footer>
   <div class="subfooter">
@@ -82,8 +81,8 @@
 
       <p class="copyright">&copy; 2005-{% now "Y" %}
         {% blocktranslate trimmed with
-            foundation_url=homepage_url|add:"foundation/"
-            trademark_url=homepage_url|add:"trademarks/"
+        foundation_url=homepage_url|add:"foundation/"
+        trademark_url=homepage_url|add:"trademarks/"
         %}
         <a href="{{ foundation_url }}">Django Software Foundation</a>
         and individual contributors. Django is a
