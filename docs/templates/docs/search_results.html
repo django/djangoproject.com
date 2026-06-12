@@ -1,13 +1,18 @@
 {% extends "docs/doc.html" %}
-{% load i18n docs %}
+{% load docs i18n %}
 
 {% block title %}{% translate "Search" %}{% endblock %}
+
 {% block header %}<h1>{% translate "Search" %}</h1>{% endblock %}
 
 {% block toc-wrapper %}{% endblock %}
+
 {% block breadcrumbs-wrapper %}{% endblock %}
+
 {% block last-update-wrapper %}{% endblock %}
+
 {% block browse-wrapper %}{% endblock %}
+
 {% block links-wrapper %}{% endblock %}
 
 {% block body %}
@@ -105,4 +110,4 @@
     {% endif %}
 
   {% endif %}
-{% endblock %}
+{% endblock body %}

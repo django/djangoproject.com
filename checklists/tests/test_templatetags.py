@@ -78,6 +78,22 @@ class EnumerateCvesTestCase(TestCase):
         result = enumerate_cves([cve1, cve2, cve3], "severity")
         self.assertEqual(result, "high, medium, and low")
 
+    def test_enumerate_cves_deduplicates_severity(self):
+        cves = [
+            self.factory.make_security_issue(severity="low", releases=[])
+            for _ in range(5)
+        ]
+        result = enumerate_cves(cves, "severity")
+        self.assertEqual(result, "low")
+
+    def test_enumerate_cves_deduplicates_mixed_severity(self):
+        cves = [
+            self.factory.make_security_issue(severity=s, releases=[])
+            for s in ("low", "moderate", "low", "moderate", "high")
+        ]
+        result = enumerate_cves(cves, "severity")
+        self.assertEqual(result, "low, moderate, and high")
+
     def test_enumerate_cves_single(self):
         cve = self.factory.make_security_issue(cve_year_number="CVE-2024-12345")
         result = enumerate_cves([cve])
@@ -232,14 +248,14 @@ class FormatVersionForBlogpostTestCase(TestCase):
         result = format_version_for_blogpost("5.2.3")
         self.assertEqual(
             result,
-            "`Django 5.2.3 <https://docs.djangoproject.com/en/dev/releases/5.2.3/>`_",
+            "[Django 5.2.3](https://docs.djangoproject.com/en/dev/releases/5.2.3/)",
         )
 
     def test_format_version_for_blogpost_dot_zero(self):
         result = format_version_for_blogpost("5.2")
         self.assertEqual(
             result,
-            "`Django 5.2 <https://docs.djangoproject.com/en/dev/releases/5.2/>`_",
+            "[Django 5.2](https://docs.djangoproject.com/en/dev/releases/5.2/)",
         )
 
 

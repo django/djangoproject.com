@@ -8,8 +8,8 @@
 {% include 'checklists/release_security_archive.rst' %}
 ```
 
-    - In an environment with django branch and docs dependencies installed:
-        - `cd docs && make html check`
+- Then, in an environment with django branch and docs dependencies installed:
+    - `cd docs && make html check`
 
     - Check local docs:
         - `firefox docs/_build/html/releases/security.html`
@@ -19,5 +19,5 @@
 
     - Backport security archive update to all branches!
         {% for release in instance.affected_releases %}
-        - `git checkout {{ release.stable_branch }} && backport.sh {HASH}`
+        - `git checkout {{ release.stable_branch }} && scripts/backport.sh {HASH}`
         {% endfor %}

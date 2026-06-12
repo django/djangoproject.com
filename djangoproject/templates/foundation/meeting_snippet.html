@@ -5,7 +5,7 @@
       <h4>
         <a href="{{ m.get_absolute_url }}">{{ m }}</a>
       </h4>
-      {% with m.business.all as businesses %}
+      {% with businesses=m.business.all %}
         {% if businesses %}
           <div class="meta">
             <b>{% translate "New and Ongoing business" %}</b>

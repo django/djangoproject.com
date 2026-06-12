@@ -505,6 +505,11 @@ header {
         @include respond-min(1080px) {
             margin-left: 10px;
         }
+
+        &:focus {
+            outline: 2px solid var(--menu);
+        }
+
     }
 
     .header-tools {
@@ -706,6 +711,12 @@ header {
         }
     }
 
+    .banner-preview-notice {
+        background-color: $warning-bg;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
 
     a, h1 a {
         color: $black;
@@ -1010,6 +1021,10 @@ footer {
             background-position: left center;
             margin-right: 0;
             margin-top: 20px;
+
+            &:focus {
+                outline: 2px solid var(--menu);
+            }
         }
     }
 
@@ -1094,6 +1109,10 @@ footer {
         a.in-kind-donors {
             @include font-size(20);
             color: var(--primary-accent);
+
+            &:focus {
+                outline: 2px solid var(--menu);
+            }
         }
 
         a.threespot,
@@ -2406,9 +2425,7 @@ h2+.list-link-soup {
 
     &:hover li.other,
     &.open li.other {
-        @include respond-min(1200px) {
-            display: inline-block;
-        }
+        display: inline-block;
     }
 }
 
@@ -2712,7 +2729,7 @@ search.filters {
     position: relative;
 
     a {
-      padding: 10px 20px;
+      padding: 10px 15px;
       text-decoration: none;
       border-bottom: 3px solid transparent;
       transition: color 0.3s ease, border-bottom 0.3s ease;

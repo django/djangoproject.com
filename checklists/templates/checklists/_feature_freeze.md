@@ -18,10 +18,15 @@
 
 - [ ] Get reviews and merge the pre-edits branch into `main`.
 
+- [ ] On GitHub.com, turn off the branch protection rule that rejects merge commits.
+
 - [ ] Update `upstream/main` and create a new stable branch from it:
     - `git fetch --all --prune`
     - `git checkout -b {{ release.stable_branch }} upstream/main`
     - `git push upstream -u {{ instance.release.stable_branch }}:{{ instance.release.stable_branch }}`
+
+- [ ] Reenable the rule to reject merge commits.
+
 {% with next_version=instance.feature_release.release|next_feature_version prereleases="1234"|make_list %}
 - [ ] Update `django_next_version` in `docs/conf.py` on the new stable branch:
     - `django_next_version = '{{ next_version }}'`
@@ -47,13 +52,9 @@
 
 - [ ] Add the new branch/version to Read the Docs:
   (https://app.readthedocs.org/dashboard/django/version/create/). Search for
-  version `stable-{{ final_version }}.x`, add an alias/slug for it named
+  version `stable/{{ final_version }}.x`, add an alias/slug for it named
   `{{ final_version }}.x`, and make it active.
     - more info: https://github.com/readthedocs/readthedocs.org/issues/12483
-
-- [ ] Request the new classifier on PyPI by making a PR:
-    - `Framework :: Django :: {{ final_version }}`
-    - e.g. https://github.com/pypa/trove-classifiers/pulls?q=is%3Apr+django+trove+classifier
 
 - [ ] Edit the [Django release process on Trac](https://code.djangoproject.com/#Djangoreleaseprocess):
     - Update the current branch under active development

@@ -14,13 +14,12 @@ RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends \
         gettext \
         git \
-        libpq5 \
         postgresql-common \
         make \
         rsync \
     && /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y \
     && apt-get install --assume-yes --no-install-recommends \
-        postgresql-client-17 \
+        postgresql-client-17 libpq5 \
     && apt-get distclean
 
 ARG REQ_FILE=requirements/prod.txt
@@ -31,6 +30,10 @@ COPY ./requirements ./requirements
 RUN apt-get update \
     && apt-get install --assume-yes --no-install-recommends ${BUILD_DEPENDENCIES} \
     && python3 -m pip install --no-cache-dir -r ${REQ_FILE} \
+    && if [ "${REQ_FILE}" = "requirements/tests.txt" ]; then \
+        echo "Installing Playwright browsers..."; \
+        python3 -m playwright install --with-deps chromium; \
+    fi \
     && apt-get purge --assume-yes --auto-remove ${BUILD_DEPENDENCIES} \
     && apt-get distclean
 

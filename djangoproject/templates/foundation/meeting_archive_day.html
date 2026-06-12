@@ -2,8 +2,9 @@
 {% load i18n %}
 
 {% block og_title %}{% translate "Meeting minutes archive" %}{% endblock %}
+
 {% block og_description %}{% blocktranslate trimmed with day=day|date:"DATE_FORMAT" %}
-  View meeting minutes for {{ day }}{% endblocktranslate %}{% endblock %}
+  View meeting minutes for {{ day }}{% endblocktranslate %}{% endblock og_description %}
 
 {% block content %}
   <h1>{% blocktranslate trimmed with day=day|date:"DATE_FORMAT" %}
@@ -14,4 +15,4 @@
       <li><a href="{{ meeting.get_absolute_url }}">{{ meeting }}</a></li>
     {% endfor %}
   </ul>
-{% endblock %}
+{% endblock content %}

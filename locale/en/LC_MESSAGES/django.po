@@ -1982,6 +1982,10 @@ msgstr ""
 
 #: djangoproject/templates/fundraising/includes/donation_form_with_heart.html:26
 #, python-format
+msgid "Fundraising progress: %(goal_percent)s percent funded"
+msgstr ""
+
+#, python-format
 msgid ""
 "<strong>$%(amount)s donated</strong> of US&nbsp;$%(goal)s goal for "
 "%(start_date)s"

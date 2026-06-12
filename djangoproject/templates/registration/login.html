@@ -2,7 +2,9 @@
 {% load i18n %}
 
 {% block title %}{% translate "Log in" %}{% endblock %}
+
 {% block og_title %}{% translate "Log in" %}{% endblock %}
+
 {% block og_description %}{% translate "Log in to your account" %}{% endblock %}
 
 {% block content %}
@@ -37,7 +39,7 @@
             <input type="submit" value="{% translate 'Log in' %}" class="cta"/>
         </p>
     </form>
-{% endblock %}
+{% endblock content %}
 
 {% block content-related %}
     <div role="complementary">
@@ -57,4 +59,4 @@
             {% endblocktranslate %}
         </p>
     </div>
-{% endblock %}
+{% endblock content-related %}

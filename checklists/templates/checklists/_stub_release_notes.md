@@ -22,8 +22,8 @@ Bugfixes
 
 ```
 
-    - In an environment with django branch and docs dependencies installed:
-        - `cd docs && make html check`
+- Then, in an environment with django branch and docs dependencies installed:
+    - `cd docs && make html check`
 
     - Check local docs:
         - `firefox docs/_build/html/releases/index.html`
@@ -33,4 +33,4 @@ Bugfixes
         - `git commit -a -m 'Added stub release notes for {{ next_version }}.'`
 
     - Backport stub release notes to latest stable branch!
-        - `backport.sh {HASH}`{% endwith %}
+        - `scripts/backport.sh {HASH}`{% endwith %}

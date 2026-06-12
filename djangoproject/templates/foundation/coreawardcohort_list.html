@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block og_title %}{% translate "Django Core Developers" %}{% endblock %}
+
 {% block og_description %}{% translate "Former Django Core Team dissolved on March 12, 2020." %}{% endblock %}
 
 {% block content %}
@@ -21,10 +22,10 @@
     <ul>
       {% for recipient in cohort.recipients.all %}
         <li>
-          {% if recipient.link %}<a href="{{ recipient.link }}">{% endif %}{{ recipient}}{% if recipient.link %}</a>{% endif %}
+          {% if recipient.link %}<a href="{{ recipient.link }}">{% endif %}{{ recipient }}{% if recipient.link %}</a>{% endif %}
           {% if recipient.description %} &mdash; {{ recipient.description }}{% endif %}
         </li>
       {% endfor %}
     </ul>
   {% endfor %}
-{% endblock %}
+{% endblock content %}

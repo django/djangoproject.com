@@ -8,13 +8,15 @@
 - [ ] Enable the venv dedicated to build releases:
     - `source ~/.venvs/djangorelease/bin/activate`
 
-- [ ] Run release script from `scripts` folder:
+- [ ] Run release script `scripts/do_django_release.py`:
     - `PGP_KEY_ID={{ releaser.key_id }} PGP_KEY_URL={{ releaser.key_url }} DEST_FOLDER=../releases scripts/do_django_release.py`
 
 - [ ] Execute ALL commands except for those to upload to Django admin and upload to PyPI, including:
     - `gpg --clearsign --digest-algo SHA256 <path-to-checksums-folder>/Django-{{ release.version }}.checksum.txt`
     - `git tag --sign --message="Tag {{ release.version }}" {{ release.version }}`
     - `git tag --verify {{ release.version }}`{% if not release.is_pre_release %}
+
+- [ ] Save the "15 minutes before" commands from the release script for later.
 
 - [ ] BUMP **MINOR VERSION** in `django/__init__.py`
     - `VERSION = {{ release|next_version_tuple|format_version_tuple|safe }}`

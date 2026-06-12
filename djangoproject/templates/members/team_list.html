@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block og_title %}{% translate "Meet the Teams | Django Software Foundation" %}{% endblock %}
+
 {% block og_description %}{% spaceless %}
   {% blocktranslate trimmed %}
     Get to know the teams behind the Django Software Foundation,
@@ -9,13 +10,13 @@
     their roles and responsibilities in advancing the development and
     adoption of the Django web framework.
   {% endblocktranslate %}
-{% endspaceless %}{% endblock %}
+{% endspaceless %}{% endblock og_description %}
 
 {% block content %}
 
   <h2>{% translate "Teams" %}</h2>
   <p>
-    {% url 'document-detail' lang='en' version='dev' url='internals/organization' host 'docs'  as organization_url %}
+    {% url 'document-detail' lang='en' version='dev' url='internals/organization' host 'docs' as organization_url %}
     {% blocktranslate trimmed %}
       The following teams are groups of people who support the Django project
       and the Django Software Foundation. Apart from the Django Fellows, who
@@ -43,4 +44,4 @@
     </div>
   {% endfor %}
 
-{% endblock %}
+{% endblock content %}

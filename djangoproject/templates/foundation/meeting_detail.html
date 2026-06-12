@@ -2,6 +2,7 @@
 {% load i18n %}
 
 {% block og_title %}{% blocktranslate %}Meeting minutes: {{ meeting }}{% endblocktranslate %}{% endblock %}
+
 {% block og_description %}{% blocktranslate %}Meeting minutes for {{ meeting }}{% endblocktranslate %}{% endblock %}
 
 {% block content %}
@@ -103,4 +104,4 @@
       {% endfor %}
     </ul>
   {% endif %}
-{% endblock %}
+{% endblock content %}

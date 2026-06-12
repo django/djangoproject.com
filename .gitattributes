@@ -1,2 +1,3 @@
 # shell scripts need LF endings to work
 *.sh text eol=lf
+*.html linguist-language=django

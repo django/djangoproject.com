@@ -26,6 +26,7 @@ def render_checklist(request, instance):
             "pymdownx.tasklist",
             "pymdownx.superfences",
             "pymdownx.magiclink",
+            "markdown.extensions.fenced_code",
         ],
         extension_configs={
             "pymdownx.tasklist": {
@@ -74,4 +75,6 @@ def securityrelease_checklist(request, pk):
 @permission_required("checklists.view_securityissue", raise_exception=True)
 def cve_json_record(request, cve_id):
     issue = get_object_or_404(SecurityIssue, cve_year_number=cve_id)
-    return JsonResponse(issue.cve_data)
+    response = JsonResponse(issue.cve_data)
+    response["Content-Disposition"] = f'inline; filename="{cve_id}.json"'
+    return response

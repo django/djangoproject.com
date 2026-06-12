@@ -2,12 +2,14 @@
 {% load date_format fundraising_extras hosts %}
 
 {% block sectionid %}roadmap{% endblock %}
+
 {% block title %}Django {{ series }} Roadmap{% endblock %}
+
 {% block layout_class %}sidebar-right{% endblock %}
 
 {% block header %}
   <p>Download</p>
-{% endblock %}
+{% endblock header %}
 
 {% block content %}
   <h1>Django {{ series }} Roadmap</h1>
@@ -116,11 +118,11 @@
     </section>
   </section>
 
-{% endblock %}
+{% endblock content %}
 
 {% block content-related %}
   <div role="complementary">
     <h2 class="visuallyhidden" id="aside-header">Additional Information</h2>
     {% donation_snippet %}
   </div>
-{% endblock %}
+{% endblock content-related %}

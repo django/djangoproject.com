@@ -52,6 +52,35 @@ class ActionItemInline(admin.StackedInline):
     model = models.ActionItem
 
 
+@admin.register(models.Banner)
+class BannerAdmin(admin.ModelAdmin):
+    list_display = ["title", "is_active", "created_at", "updated_at"]
+    list_editable = ["is_active"]
+    readonly_fields = ["created_by", "created_at", "updated_by", "updated_at"]
+    fieldsets = [
+        (None, {"fields": ["title", "body", "is_active"]}),
+        (
+            "Call to action",
+            {
+                "description": (
+                    "Both fields should be defined for the CTA button to be displayed."
+                ),
+                "fields": ["cta_label", "cta_url"],
+            },
+        ),
+        (
+            "Metadata",
+            {"fields": ["created_by", "created_at", "updated_by", "updated_at"]},
+        ),
+    ]
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
+
+
 @admin.register(models.Meeting)
 class MeetingAdmin(admin.ModelAdmin):
     fieldsets = (

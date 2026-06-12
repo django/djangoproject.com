@@ -1,7 +1,6 @@
-{% load checklist_extras %}
-{% load tz %}
+{% load checklist_extras tz %}
 {% with cves=instance.cves versions=instance.versions cves_length=instance.cves|length %}
-# Django Security Release: {{ versions|enumerate_items }} ({{ when }})
+# Django Security Release: {{ versions|enumerate_items }} ({{ when|utc|date:"N j, Y, P" }} UTC)
 
 ## 14 days before
 
@@ -69,40 +68,54 @@
     - `git format-patch HEAD~{{ cves_length }}`
     - e.g. https://github.com/django/django-security/pull/375
 
+{% for cve in cves %}
+- [ ] Send patch for **{{ cve.cve_year_number }}** to the reporter ({{ cve.reporter }}) for verification:
+    - Subject: `Patch for {{ cve.cve_year_number }}`
+    - Attach patch(es) and send to the reporter with the following body:
+<details>
+<summary>Open for message body</summary>
+```
+{% include "checklists/release-security-reporter-verification.txt" %}
+```
+</details>
+{% endfor %}
+
 ## One Week before
 
 - [ ] Send prenotification email
+    - Reference: https://github.com/django/django-security/wiki/Security-prenotification-email-template
     - Subject: `Notice of upcoming Django security releases ({{ versions|enumerate_items }})`
     - Create a new text file `prenotification-email.txt` with content similar to this:
-        - Reference: https://github.com/django/django-security/wiki/Security-prenotification-email-template
-        - Remove backticks from code symbols
+<details>
+<summary>Open for message body</summary>
 ```
 {% include "checklists/release-security-prenotification.md" %}
 ```
-    - GPG sign that new file:
-        - `gpg --clearsign --digest-algo SHA256 prenotification-email.txt`
+</details>
+- GPG sign that new file:
+    - `gpg --clearsign --digest-algo SHA256 prenotification-email.txt`
     - Send an email with body using the signed content to a given list of special users:
         - Attach patches.
         - USE BCC!: https://github.com/django/django-security/wiki/Security-Release-Prenotification-Email-List
 
 - [ ] Post announcement in mailing list (without details in django-announce):
-    ```
-    Django versions {{ versions|enumerate_items }} will be released on
-    {{ instance.when|utc|date:"l, F j" }} around {{ instance.when|utc|date:"H:i" }} UTC.
-    {% if cves_length == 1 %}
-    They will fix one security defect with severity "{{ cves.0.severity }}".
-    {% else %}
-    They will fix {{ cves_length }} security defects with severities: {{ cves|enumerate_cves:"severity" }}.
-    {% endif %}
-    For details of severity levels, see:
-    https://docs.djangoproject.com/en/dev/internals/security/#security-issue-severity-levels
-    ```
+```
+Django versions {{ versions|enumerate_items }} will be released on
+{{ instance.when|utc|date:"l, F j" }} around {{ instance.when|utc|date:"H:i" }} UTC.
+{% if cves_length == 1 %}
+They will fix one security defect with severity "{{ cves.0.severity }}".
+{% else %}
+They will fix {{ cves_length }} security defects with severities: {{ cves|enumerate_cves:"severity" }}.
+{% endif %}
+For details of severity levels, see:
+https://docs.djangoproject.com/en/dev/internals/security/#security-issue-severity-levels
+```
 
 - [ ] Land the stub release notes and release date updates in {{ instance.affected_branches|enumerate_items }}
 
 ## Release Day
 
-- [ ] Update security report and update patches for `main` and stable branches
+- [ ] Update patches for `main` and stable branches
 
 - [ ] Empty push to private GH so actions are (re)run
 
@@ -150,6 +163,7 @@
 
         - Store each CVE record in a `.json` file and run:
         {% for cve in cves %}
+            - Get CVE Record from {% url "checklists:cve_json_record" cve %}
             - `cve publish {{ cve }} --cve-json-file {{ cve }}.json`{% endfor %}
 {% endif %}
 - [ ] Send email to the OSS Security mailing list notifying about the release
@@ -168,7 +182,7 @@
     - Go to https://hackerone.com/bugs?organization_inbox_handle=django_inbox
     - Select the relevant report and close it as `Resolved` with message:
 ```
-This issue was fixed and released on {{ instance.when }}.
+This issue was fixed and released on {{ instance.when|utc|date:"N j, Y" }}.
 
 {{ instance.blogpost_title }}
 
@@ -181,8 +195,6 @@ Details are available on the Django project weblog:
     - Click "Set award" → select "No award (ineligible)" and add the comment:
 ```
 Django does not offer monetary rewards for security reports.
-You may submit the issue to the Internet Bug Bounty program following:
-https://hackerone.com/ibb
 ```
 
 - [ ] Close PRs in security repo linking hashes

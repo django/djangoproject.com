@@ -1,10 +1,7 @@
 from django import forms
-from django.contrib import admin, messages
+from django.contrib import admin
 from django.db import models
-from django.http import HttpResponse
 from django.utils.html import format_html
-
-from releases.models import Release
 
 from .models import (
     BugFixRelease,
@@ -14,6 +11,7 @@ from .models import (
     SecurityIssue,
     SecurityIssueReleasesThrough,
     SecurityRelease,
+    cve_sort_key,
 )
 
 
@@ -30,29 +28,6 @@ class ReleaseChecklistAdminMixin:
 
     def queryset(self, request):
         return super().get_queryset(request).select_related("release")
-
-    @admin.action(description="Render checklists for selected releases")
-    def render_checklist(self, request, queryset):
-        errors = []
-        try:
-            instance = queryset.get()
-        except (Release.DoesNotExist, Release.MultipleObjectsReturned):
-            errors.append("A single item should be selected")
-            instance = None
-
-        if (
-            isinstance(instance, SecurityRelease)
-            and not instance.securityissue_set.filter(releases__isnull=False).exists()
-        ):
-            errors.append("Please provide at least one SecurityIssueReleasesThrough.")
-
-        if errors:
-            for error in errors:
-                self.message_user(request, error, messages.ERROR)
-            return
-
-        checklist = instance.render_to_string(request=request)
-        return HttpResponse(checklist, content_type="text/markdown; charset=utf-8")
 
     @admin.display(description="Checklist")
     def checklist_link(self, obj):
@@ -101,10 +76,9 @@ class SecurityIssueAdmin(admin.ModelAdmin):
     ]
     list_filter = ["severity", "release"]
     search_fields = ["cve_year_number", "summary", "description", "commit_hash_main"]
-    ordering = ["-updated_at", "-created_at", "-cve_year_number"]
     readonly_fields = [
-        "cvss_base_severity",
-        "cvss_vector",
+        "cvss_v3_severity",
+        "cvss_v4_severity",
     ]
     inlines = [SecurityIssueReleasesThroughInline]
     formfield_overrides = {
@@ -123,6 +97,7 @@ class SecurityIssueAdmin(admin.ModelAdmin):
                     "description",
                     "blogdescription",
                     "reporter",
+                    "discovery",
                     "remediator",
                     "reported_at",
                     "confirmed_at",
@@ -134,55 +109,23 @@ class SecurityIssueAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "CVSS 4.0 Fields - Base Metrics - Exploitability",
+            "CVSS Scores",
             {
-                "fields": (
-                    "attack_vector",
-                    "attack_complexity",
-                    "attack_requirements",
-                    "privileges_required",
-                    "user_interaction",
+                "description": (
+                    "<p>Use an approved calculator to get the vector string and score, "
+                    "then enter both here. Calculators: "
+                    '<a href="https://www.first.org/cvss/calculator/3.1">CVSS v3.1</a> '
+                    '<a href="https://www.first.org/cvss/calculator/4.0">CVSS v4.0</a> '
+                    "</p>"
                 ),
-                "classes": ["collapse"],
-            },
-        ),
-        (
-            "CVSS 4.0 Fields - Base Metrics - Vulnerable System Impact",
-            {
                 "fields": (
-                    "vuln_confidentiality_impact",
-                    "sub_confidentiality_impact",
-                    "vuln_integrity_impact",
-                    "sub_integrity_impact",
-                    "vuln_availability_impact",
-                    "sub_availability_impact",
+                    "cvss_v3_vector_string",
+                    "cvss_v3_score",
+                    "cvss_v3_severity",
+                    "cvss_v4_vector_string",
+                    "cvss_v4_score",
+                    "cvss_v4_severity",
                 ),
-                "classes": ["collapse"],
-            },
-        ),
-        (
-            "CVSS 4.0 Fields - Supplemental Metrics",
-            {
-                "fields": (
-                    "safety",
-                    "automatable",
-                    "recovery",
-                    "value_density",
-                    "vulnerability_response_effort",
-                    "provider_urgency",
-                ),
-                "classes": ["collapse"],
-            },
-        ),
-        (
-            "CVSS 4.0 Fields - Score and Vector",
-            {
-                "fields": (
-                    "cvss_base_score",
-                    "cvss_base_severity",
-                    "cvss_vector",
-                ),
-                "classes": ["collapse"],
             },
         ),
         (
@@ -196,6 +139,13 @@ class SecurityIssueAdmin(admin.ModelAdmin):
             },
         ),
     )
+
+    def get_ordering(self, request):
+        return [
+            "-updated_at",
+            "-created_at",
+            *cve_sort_key(desc=True),
+        ]
 
     @admin.display(description="CVE Record")
     def cve_json_record_link(self, obj):
@@ -212,4 +162,9 @@ class SecurityIssueReleasesThroughAdmin(admin.ModelAdmin):
         "release__version",
         "commit_hash",
     ]
-    ordering = ["-securityissue__cve_year_number", "release__version"]
+
+    def get_ordering(self, request):
+        return [
+            *cve_sort_key("securityissue__cve_year_number", desc=True),
+            "release__version",
+        ]

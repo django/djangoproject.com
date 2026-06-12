@@ -53,7 +53,8 @@ def enumerate_items(items, item_formatter=None):
 
 @register.filter
 def enumerate_cves(cves, field="cve_year_number"):
-    return enumerate_items([getattr(cve, field) for cve in cves])
+    # Use `dict.fromkeys()` to preserve order while removing duplicates.
+    return enumerate_items(dict.fromkeys(getattr(cve, field) for cve in cves))
 
 
 @register.filter
@@ -72,8 +73,7 @@ def format_releases_for_cves(releases):
 @register.filter
 def format_version_for_blogpost(version):
     return (
-        f"`Django {version} "
-        f"<https://docs.djangoproject.com/en/dev/releases/{version}/>`_"
+        f"[Django {version}](https://docs.djangoproject.com/en/dev/releases/{version}/)"
     )
 
 

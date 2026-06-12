@@ -14,7 +14,7 @@
     {% csrf_token %}
     {% for field in form %}
       <div class="form-control">
-        {% if field.name in form.label_fields  %}
+        {% if field.name in form.label_fields %}
           {{ field.label }}: {{ field }}
         {% else %}
           {{ field }}
@@ -25,4 +25,4 @@
     {% endfor %}
     <input class="cta" type="submit" value="{% translate "Send →" %}">
   </form>
-{% endblock %}
+{% endblock content %}
