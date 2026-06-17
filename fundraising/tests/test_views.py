@@ -85,6 +85,24 @@ class TestCampaign(ReleaseMixin, TemporaryMediaRootMixin, TestCase):
             html=True,
         )
 
+    def test_corporate_member_with_svg_logo(self):
+        logo = ImageFileFactory("wide.svg", width=10)
+        member = CorporateMember.objects.create(
+            display_name="Test Member", membership_level=1, logo=logo
+        )
+        Invoice.objects.create(amount=100, expiration_date=date.today(), member=member)
+        response = self.client.get(self.index_url)
+
+        self.assertContains(
+            response,
+            """<img
+                src="/m/corporate-members/wide.svg"
+                loading="lazy"
+                alt="Logo of company Test Member"
+            >""",
+            html=True,
+        )
+
     def test_anonymous_donor(self):
         hero = DjangoHero.objects.create(
             is_visible=True, approved=True, hero_type="individual"

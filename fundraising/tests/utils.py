@@ -12,9 +12,21 @@ def ImageFileFactory(name, width=1, height=1, color=(12, 75, 51)):
     The image will be of the given size, and of solid color. The format will
     be inferred from the filename.
     """
-    img = Image.new("RGB", (width, height), color=color)
     out = BytesIO()
-    img.save(out, format=name.split(".")[-1])
+    if name.lower().endswith(".svg"):
+        # Pillow doesn't support SVG, so write XML.
+        r, g, b = color
+        out.write(
+            (
+                '<svg xmlns="http://www.w3.org/2000/svg" '
+                f'width="{width}" height="{height}" viewBox="0 0 {width} {height}">'
+                f'<rect width="{width}" height="{height}" fill="rgb({r},{g},{b})"/>'
+                "</svg>"
+            ).encode()
+        )
+    else:
+        img = Image.new("RGB", (width, height), color=color)
+        img.save(out, format=name.split(".")[-1])
     return ImageFile(out, name=name)
 
 

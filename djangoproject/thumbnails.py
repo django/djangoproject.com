@@ -12,5 +12,11 @@ class LogoThumbnailMixin:
 
     @property
     def thumbnail(self):
+        if self.logo_is_svg:
+            return None
         geometry = f"{self.THUMBNAIL_SIZE}x{self.THUMBNAIL_SIZE}"
         return get_thumbnail(self.logo, geometry, quality=100) if self.logo else None
+
+    @property
+    def logo_is_svg(self):
+        return bool(self.logo) and self.logo.name.lower().endswith(".svg")
