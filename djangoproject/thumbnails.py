@@ -1,4 +1,8 @@
+import logging
+
 from sorl.thumbnail import get_thumbnail
+
+logger = logging.getLogger(__name__)
 
 
 class LogoThumbnailMixin:
@@ -12,10 +16,16 @@ class LogoThumbnailMixin:
 
     @property
     def thumbnail(self):
+        if not self.logo:
+            return None
         if self.logo_is_svg:
             return None
         geometry = f"{self.THUMBNAIL_SIZE}x{self.THUMBNAIL_SIZE}"
-        return get_thumbnail(self.logo, geometry, quality=100) if self.logo else None
+        try:
+            return get_thumbnail(self.logo, geometry, quality=100)
+        except Exception:
+            logger.warning("Could not thumbnail logo %r", self.logo.name)
+        return None
 
     @property
     def logo_is_svg(self):

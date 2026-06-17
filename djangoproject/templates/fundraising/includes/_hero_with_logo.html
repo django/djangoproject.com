@@ -4,13 +4,13 @@
     {% if obj.url %}<a href="{{ obj.url }}" rel="nofollow">{% endif %}
     {% if obj.logo %}
       <img
-        {% if obj.logo_is_svg %}
-          src="{{ obj.logo.url }}"
-        {% else %}
+        {% if obj.thumbnail %}
           src="{{ obj.thumbnail.url }}"
           srcset="{{ obj.thumbnail.url|resolution:'2x' }} 2x"
           width="{{ obj.thumbnail.width }}"
           height="{{ obj.thumbnail.height }}"
+        {% else %}
+          src="{{ obj.logo.url }}"
         {% endif %}
         loading="lazy"
         alt="{% blocktranslate trimmed with company_name=obj.display_name %}

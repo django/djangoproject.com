@@ -103,6 +103,25 @@ class TestCampaign(ReleaseMixin, TemporaryMediaRootMixin, TestCase):
             html=True,
         )
 
+    def test_corporate_member_with_no_thumbnail_logo_available(self):
+        logo = ImageFileFactory("no_thumbnail.png", width=10)
+        member = CorporateMember.objects.create(
+            display_name="Test Member", membership_level=1, logo=logo
+        )
+        Invoice.objects.create(amount=100, expiration_date=date.today(), member=member)
+        with patch("djangoproject.thumbnails.get_thumbnail", side_effect=OSError):
+            response = self.client.get(self.index_url)
+
+        self.assertContains(
+            response,
+            """<img
+                src="/m/corporate-members/no_thumbnail.png"
+                loading="lazy"
+                alt="Logo of company Test Member"
+            >""",
+            html=True,
+        )
+
     def test_anonymous_donor(self):
         hero = DjangoHero.objects.create(
             is_visible=True, approved=True, hero_type="individual"
