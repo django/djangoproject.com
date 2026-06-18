@@ -1,3 +1,5 @@
+'use strict';
+
 let prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 function setTheme(mode) {
@@ -7,9 +9,9 @@ function setTheme(mode) {
   }
   document.documentElement.dataset.theme = mode;
   // trim host to get base domain name for set in cookie domain name for subdomain access
-  arrHost = window.location.hostname.split('.');
-  prefix = arrHost.shift();
-  host = arrHost.join('.');
+  const arrHost = window.location.hostname.split('.');
+  const prefix = arrHost.shift();
+  const host = arrHost.join('.');
   setCookie('theme', mode, host);
 }
 
@@ -46,7 +48,7 @@ function initTheme() {
 function setupTheme() {
   // Attach event handlers for toggling themes
   let buttons = document.getElementsByClassName('theme-toggle');
-  for (var i = 0; i < buttons.length; i++) {
+  for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', cycleTheme);
   }
 }
@@ -56,8 +58,8 @@ function setCookie(cname, cvalue, domain) {
   d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000); // 1 year
   let expires = 'expires=' + d.toUTCString();
   // change the SameSite attribute if it's on development or production
-  sameSiteAttribute =
-    domain == 'localhost'
+  const sameSiteAttribute =
+    domain === 'localhost'
       ? 'SameSite=Lax;'
       : `Domain=${domain}; SameSite=None; Secure;`;
   document.cookie = `${cname}=${cvalue}; ${sameSiteAttribute} ${expires}; path=/;`;
@@ -69,10 +71,10 @@ function getCookie(cname) {
   let ca = decodedCookie.split(';');
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
-    while (c.charAt(0) == ' ') {
+    while (c.charAt(0) === ' ') {
       c = c.substring(1);
     }
-    if (c.indexOf(name) == 0) {
+    if (c.indexOf(name) === 0) {
       return c.substring(name.length, c.length);
     }
   }
