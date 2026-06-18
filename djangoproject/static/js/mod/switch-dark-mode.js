@@ -16,7 +16,10 @@ function setTheme(mode) {
 }
 
 function cycleTheme() {
-  const currentTheme = getCookie('theme') || 'auto';
+  let currentTheme = document.documentElement.dataset.theme;
+  if (currentTheme !== 'light' && currentTheme !== 'dark' && currentTheme !== 'auto') {
+    currentTheme = 'auto';
+  }
 
   if (prefersDark) {
     // Auto (dark) -> Light -> Dark
@@ -92,5 +95,4 @@ window
   .matchMedia('(prefers-color-scheme: dark)')
   .addEventListener('change', function (e) {
     prefersDark = e.matches;
-    initTheme();
   });
