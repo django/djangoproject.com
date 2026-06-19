@@ -46,7 +46,9 @@ class BannerTestCase(ReleaseMixin, TestCase):
         )
         response = self.client.get("/")
         self.assertContains(response, "<h2>Support Django!</h2>", html=True)
-        self.assertContains(response, "Please donate.")
+        self.assertContains(
+            response, '<div class="banner-body">Please donate.</div>', html=True
+        )
         self.assertContains(
             response,
             '<a id="banner-cta" class="cta" href="https://djangoproject.com/donate/">'

@@ -694,20 +694,41 @@ header {
     }
 
     .banner {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
         text-align: center;
-        padding: 1em 3em;
+        // Narrower side padding than desktop widens the text column on mobile
+        // (fewer wrapped lines), while vertical padding stays comfortable.
+        padding: 1em 1.25em;
         max-width: 60em;
         margin: 0 auto;
-        p {
-            @include sans-serif;
-            font-size: 3.2rem;
-            font-weight: 300;
-            margin: 0.35em 0 0.35em;
-            line-height: 1.3;
-            padding: 1px 0 6px;
+
+        @include sans-serif;
+        font-size: 1.8rem;
+        font-weight: 300;
+        line-height: 1.4;
+
+        @include respond-min(768px) {
+            padding: 1em 3em;
         }
+
+        // gap owns the spacing between items; clear the inherited margins
+        // (the h2 UA default and the global .cta margins) so the gaps stay
+        // uniform and the outer edges are defined by the container padding.
+        > * {
+            margin: 0;
+        }
+
+        .cta {
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
         .underlined {
-          text-decoration: underline;
+            text-decoration: underline;
         }
     }
 
