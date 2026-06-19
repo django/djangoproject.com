@@ -97,6 +97,13 @@ document.addEventListener('DOMContentLoaded', function () {
   setupThemeToggle();
 });
 
+window.addEventListener('pageshow', function (e) {
+  if (e.persisted) {
+    // Re-initialize from cookie in case theme was changed on another page.
+    initTheme();
+  }
+});
+
 prefersDarkMediaQuery.addEventListener('change', (e) => {
   prefersDark = e.matches;
 });
