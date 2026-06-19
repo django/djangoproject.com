@@ -1882,19 +1882,6 @@ h2+.list-link-soup {
                     background-position: -334px -12px;
                 }
             }
-
-            // Fixing opera svg-border-radius bug
-            // http://stackoverflow.com/questions/11114636/opera-border-radius-svg-background-bug
-            :-o-prefocus,
-            & {
-                background: $green-medium !important;
-
-                -webkit-transition: none !important;
-                transition: none !important;
-
-                -webkit-transform: none !important;
-                transform: none !important;
-            }
         }
     }
 
