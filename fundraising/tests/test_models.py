@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.core.files.base import ContentFile
 from django.test import TestCase
 
 from ..models import DjangoHero, Donation, InKindDonor
@@ -34,6 +35,18 @@ class TestDjangoHero(TemporaryMediaRootMixin, TestCase):
 
     def test_thumbnail_no_logo(self):
         self.assertIsNone(self.h2.thumbnail)
+
+    def test_thumbnail_svg(self):
+        self.h1.logo.save("logo.svg", ContentFile("<svg></svg>"))
+        self.h1.save()
+        thumbnail = self.h1.thumbnail
+        self.assertEqual(thumbnail.url, self.h1.logo.url)
+        self.assertIsNone(thumbnail.width)
+        self.assertIsNone(thumbnail.height)
+        self.assertIsNone(thumbnail.x)
+        self.assertIsNone(thumbnail.y)
+        self.assertTrue(thumbnail.exists())
+        self.h1.logo.delete()
 
     def test_name_with_fallback(self):
         hero = DjangoHero()
