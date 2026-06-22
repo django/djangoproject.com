@@ -6,15 +6,23 @@ function setTheme(mode) {
     mode = 'auto';
   }
   document.documentElement.dataset.theme = mode;
-  // trim host to get base domain name for set in cookie domain name for subdomain access
-  arrHost = window.location.hostname.split('.');
-  prefix = arrHost.shift();
-  host = arrHost.join('.');
-  setCookie('theme', mode, host);
+
+  // Determine the cookie domain. We share the cookie across subdomains for known base domains.
+  const hostname = window.location.hostname;
+  let cookieDomain = '';
+  const sharedDomains = ['djangoproject.com', 'djangoproject.local'];
+  for (const domain of sharedDomains) {
+    if (hostname === domain || hostname.endsWith('.' + domain)) {
+      cookieDomain = domain;
+      break;
+    }
+  }
+
+  setCookie('theme', mode, cookieDomain);
 }
 
 function cycleTheme() {
-  const currentTheme = getCookie('theme') || 'auto';
+  const currentTheme = document.documentElement.dataset.theme || 'auto';
 
   if (prefersDark) {
     // Auto (dark) -> Light -> Dark
@@ -38,15 +46,15 @@ function cycleTheme() {
 }
 
 function initTheme() {
-  // set theme defined in localStorage if there is one, or fallback to auto mode
+  // set theme defined in cookie if there is one, or fallback to auto mode
   const currentTheme = getCookie('theme');
   currentTheme ? setTheme(currentTheme) : setTheme('auto');
 }
 
 function setupTheme() {
   // Attach event handlers for toggling themes
-  let buttons = document.getElementsByClassName('theme-toggle');
-  for (var i = 0; i < buttons.length; i++) {
+  const buttons = document.getElementsByClassName('theme-toggle');
+  for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', cycleTheme);
   }
 }
@@ -54,19 +62,25 @@ function setupTheme() {
 function setCookie(cname, cvalue, domain) {
   const d = new Date();
   d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000); // 1 year
-  let expires = 'expires=' + d.toUTCString();
-  // change the SameSite attribute if it's on development or production
-  sameSiteAttribute =
-    domain == 'localhost'
-      ? 'SameSite=Lax;'
-      : `Domain=${domain}; SameSite=None; Secure;`;
+  const expires = 'expires=' + d.toUTCString();
+
+  // Determine SameSite and Secure attributes based on protocol
+  let sameSiteAttribute = 'SameSite=Lax;';
+  if (window.location.protocol === 'https:') {
+    sameSiteAttribute = 'SameSite=None; Secure;';
+  }
+
+  if (domain) {
+    sameSiteAttribute = `Domain=${domain}; ` + sameSiteAttribute;
+  }
+
   document.cookie = `${cname}=${cvalue}; ${sameSiteAttribute} ${expires}; path=/;`;
 }
 
 function getCookie(cname) {
-  let name = cname + '=';
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
+  const name = cname + '=';
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
     while (c.charAt(0) == ' ') {
@@ -85,10 +99,16 @@ document.addEventListener('DOMContentLoaded', function () {
   setupTheme();
 });
 
-// reset theme and release image if auto mode activated and os preferences have changed
+// Update prefersDark if OS preferences change, but do not override manually set theme
 window
   .matchMedia('(prefers-color-scheme: dark)')
   .addEventListener('change', function (e) {
     prefersDark = e.matches;
-    initTheme();
   });
+
+// Reload theme from cookie when loaded from the backward/forward cache (bfcache)
+window.addEventListener('pageshow', function (e) {
+  if (e.persisted) {
+    initTheme();
+  }
+});
