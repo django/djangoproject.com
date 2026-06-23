@@ -47,7 +47,10 @@ MEDIA_URL = f"https://media.{DOMAIN_NAME}/"
 MIDDLEWARE = (
     ["django.middleware.cache.UpdateCacheMiddleware"]
     + MIDDLEWARE
-    + ["django.middleware.cache.FetchFromCacheMiddleware"]
+    + [
+        "django.middleware.cache.FetchFromCacheMiddleware",
+        "djangoproject.middleware.Disable404CachingMiddleware",
+    ]
 )
 
 SESSION_COOKIE_SECURE = True
