@@ -9,5 +9,5 @@ jobs:
     prek:
         runs-on: ubuntu-24.04
         steps:
-            - uses: actions/checkout@v6.0.3
+            - uses: actions/checkout@v7.0.0
             - uses: j178/prek-action@v1.1.1
