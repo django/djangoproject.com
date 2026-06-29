@@ -2,4 +2,4 @@
 gunicorn==25.3.0
 psycopg[c]==3.3.4
 redis==7.4.0
-sentry-sdk==2.60.0
+sentry-sdk==2.63.0
