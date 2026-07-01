@@ -95,8 +95,6 @@ class Command(BaseCommand):
         self.verbosity = kwargs["verbosity"]
         self.purge_cache = kwargs["purge_cache"]
 
-        self.default_builders = ["json", "djangohtml"]
-
         # Keep track of which Git sources have been updated, e.g.,
         # {'1.8': True} if the 1.8 docs updated.
         self.release_docs_changed = {}
@@ -120,6 +118,22 @@ class Command(BaseCommand):
             else:
                 if self.verbosity >= 1:
                     self.stdout.write("No docs changes; skipping cache purge.")
+
+    def _html_builder_name(self, source_dir):
+        """
+        Return the Sphinx builder name to use for HTML output for a given
+        checkout.
+
+        Older Django versions' docs/_ext/djangodocs.py registers a custom
+        "djangohtml" builder. Django's #37150 cleanup removed it in favor of
+        hooking into any HTML-format builder, including the standard "html"
+        builder, but that cleanup isn't backported to branches that predate
+        it (e.g. 6.0, 5.2), so "djangohtml" must still be requested there.
+        """
+        djangodocs_path = source_dir / "_ext" / "djangodocs.py"
+        if '"djangohtml"' in djangodocs_path.read_text():
+            return "djangohtml"
+        return "html"
 
     def build_doc_release(self, release, force=False, interactive=False):
         # Skip not supported releases.
@@ -181,11 +195,11 @@ class Command(BaseCommand):
                 "cd %s && make translations" % trans_dir, shell=True, **extra_kwargs
             )
 
+        html_builder = self._html_builder_name(source_dir)
+        builders = ["json", html_builder]
         if release.is_default:
             # Build the pot files (later retrieved by Transifex)
-            builders = self.default_builders[:] + ["gettext"]
-        else:
-            builders = self.default_builders
+            builders.append("gettext")
 
         #
         # Use Sphinx to build the release docs into JSON and HTML documents.
@@ -235,7 +249,7 @@ class Command(BaseCommand):
         # Create a zip file of the HTML build for offline reading.
         # This gets moved into MEDIA_ROOT for downloading.
         #
-        html_build_dir = parent_build_dir / "_build" / "djangohtml"
+        html_build_dir = parent_build_dir / "_build" / html_builder
         zipfile_name = f"django-docs-{release.version}-{release.lang}.zip"
         zipfile_path = settings.MEDIA_ROOT / "docs" / zipfile_name
         if not zipfile_path.parent.exists():
