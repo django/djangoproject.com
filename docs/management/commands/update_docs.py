@@ -3,26 +3,14 @@ Update and build the documentation into files for display with the djangodocs
 app.
 """
 
-import json
-import multiprocessing
 import os
-import shutil
 import subprocess
 import sys
-import zipfile
-from contextlib import closing
 from datetime import datetime
-from pathlib import Path
 
 from django.conf import settings
 from django.core.management import BaseCommand, call_command
 from django.db.models import Q
-from django.utils.translation import to_locale
-from sphinx.application import Sphinx
-from sphinx.config import Config
-from sphinx.errors import SphinxError
-from sphinx.testing.util import _clean_up_global_state
-from sphinx.util.docutils import docutils_namespace, patch_docutils
 
 from ...models import DocumentRelease
 
@@ -119,22 +107,6 @@ class Command(BaseCommand):
                 if self.verbosity >= 1:
                     self.stdout.write("No docs changes; skipping cache purge.")
 
-    def _html_builder_name(self, source_dir):
-        """
-        Return the Sphinx builder name to use for HTML output for a given
-        checkout.
-
-        Older Django versions' docs/_ext/djangodocs.py registers a custom
-        "djangohtml" builder. Django's #37150 cleanup removed it in favor of
-        hooking into any HTML-format builder, including the standard "html"
-        builder, but that cleanup isn't backported to branches that predate
-        it (e.g. 6.0, 5.2), so "djangohtml" must still be requested there.
-        """
-        djangodocs_path = source_dir / "_ext" / "djangodocs.py"
-        if '"djangohtml"' in djangodocs_path.read_text():
-            return "djangohtml"
-        return "html"
-
     def build_doc_release(self, release, force=False, interactive=False):
         # Skip not supported releases.
         if not release.is_supported and not force:
@@ -152,11 +124,8 @@ class Command(BaseCommand):
 
         # checkout_dir is shared for all languages.
         checkout_dir = settings.DOCS_BUILD_ROOT / "sources" / release.version
-        parent_build_dir = settings.DOCS_BUILD_ROOT / release.lang / release.version
         if not checkout_dir.exists():
             checkout_dir.mkdir(parents=True)
-        if not parent_build_dir.exists():
-            parent_build_dir.mkdir(parents=True)
 
         #
         # Update the release from SCM.
@@ -195,104 +164,36 @@ class Command(BaseCommand):
                 "cd %s && make translations" % trans_dir, shell=True, **extra_kwargs
             )
 
-        html_builder = self._html_builder_name(source_dir)
-        builders = ["json", html_builder]
-        if release.is_default:
-            # Build the pot files (later retrieved by Transifex)
-            builders.append("gettext")
+        self._build_release_in_subprocess(release)
 
-        #
-        # Use Sphinx to build the release docs into JSON and HTML documents.
-        #
-        for builder in builders:
-            # Wipe and re-create the build directory. See #18930.
-            build_dir = parent_build_dir / "_build" / builder
-            if build_dir.exists():
-                shutil.rmtree(str(build_dir))
-            build_dir.mkdir(parents=True)
+    def _build_release_in_subprocess(self, release):
+        """Build a single release's docs in a fresh subprocess.
 
-            if self.verbosity >= 2:
-                self.stdout.write(f"  building {builder} ({source_dir} -> {build_dir})")
-            # Retrieve the extensions from the conf.py so we can append to them.
-            conf_extensions = Config.read(source_dir.resolve()).extensions
-            extensions = [*conf_extensions, "docs.builder"]
-            try:
-                # Prevent global state persisting between builds
-                # https://github.com/sphinx-doc/sphinx/issues/12130
-                with patch_docutils(source_dir), docutils_namespace():
-                    Sphinx(
-                        srcdir=source_dir,
-                        confdir=source_dir,
-                        outdir=build_dir,
-                        doctreedir=build_dir / ".doctrees",
-                        buildername=builder,
-                        # Translated docs builds generate a lot of warnings, so send
-                        # stderr to stdout to be logged (rather than generating an email)
-                        warning=sys.stdout,
-                        parallel=multiprocessing.cpu_count(),
-                        verbosity=0,
-                        confoverrides={
-                            "language": to_locale(release.lang),
-                            "extensions": extensions,
-                        },
-                    ).build()
-                # Clean up global state after building each language.
-                _clean_up_global_state()
-            except SphinxError as e:
-                self.stderr.write(
-                    "sphinx-build returned an error (release %s, builder %s): %s"
-                    % (release, builder, str(e))
-                )
-                return
+        Each release is built in its own process (rather than in-process,
+        looping over every release here) because docs/_ext/djangodocs.py is
+        loaded by dynamically appending the checkout's docs/_ext directory
+        to sys.path and importing it by bare module name. Building multiple
+        checkouts in one Python process lets a later checkout's import of
+        that same module name silently reuse an earlier, different
+        checkout's already-cached module instead of its own.
+        """
+        command = [
+            sys.executable,
+            sys.argv[0],
+            "build_doc_release",
+            release.version,
+            "--language",
+            release.lang,
+            "--verbosity",
+            str(self.verbosity),
+        ]
 
-        #
-        # Create a zip file of the HTML build for offline reading.
-        # This gets moved into MEDIA_ROOT for downloading.
-        #
-        html_build_dir = parent_build_dir / "_build" / html_builder
-        zipfile_name = f"django-docs-{release.version}-{release.lang}.zip"
-        zipfile_path = settings.MEDIA_ROOT / "docs" / zipfile_name
-        if not zipfile_path.parent.exists():
-            zipfile_path.parent.mkdir(parents=True)
-        if self.verbosity >= 2:
-            self.stdout.write("  build zip (into %s)" % zipfile_path)
-
-        def zipfile_inclusion_filter(file_path):
-            return ".doctrees" not in file_path.parts
-
-        with closing(
-            zipfile.ZipFile(str(zipfile_path), "w", compression=zipfile.ZIP_DEFLATED)
-        ) as zf:
-            for root, dirs, files in os.walk(str(html_build_dir)):
-                for f in files:
-                    file_path = Path(os.path.join(root, f))
-                    if zipfile_inclusion_filter(file_path):
-                        rel_path = str(file_path.relative_to(html_build_dir))
-                        zf.write(str(file_path), rel_path)
-
-        #
-        # Copy the build results to the directory used for serving
-        # the documentation in the least disruptive way possible.
-        #
-        build_dir = parent_build_dir / "_build"
-        built_dir = parent_build_dir / "_built"
-        subprocess.check_call(
-            [
-                "rsync",
-                "--archive",
-                "--delete",
-                f"--link-dest={build_dir}",
-                f"{build_dir}/",
-                str(built_dir),
-            ]
-        )
-
-        if release.is_default:
-            self._setup_stable_symlink(release, built_dir)
-
-        json_built_dir = parent_build_dir / "_built" / "json"
-        documents = gen_decoded_documents(json_built_dir)
-        release.sync_to_db(documents)
+        result = subprocess.run(command)
+        if result.returncode != 0:
+            self.stderr.write(
+                "build_doc_release subprocess failed for %s (exit code %s)"
+                % (release, result.returncode)
+            )
 
     def update_git(self, url, destdir, changed_dir="."):
         """
@@ -365,27 +266,3 @@ class Command(BaseCommand):
                 stderr=sys.stdout,
             )
         return True
-
-    def _setup_stable_symlink(self, release, built_dir):
-        """
-        Setup a symbolic link called "stable" pointing to the given release build
-        """
-        stable = built_dir / "stable"
-        target = built_dir / release.version
-        if stable.resolve() != target:  # Symlink is either missing or has changed
-            stable.unlink(missing_ok=True)
-            stable.symlink_to(target, target_is_directory=True)
-
-
-def gen_decoded_documents(directory):
-    """
-    Walk the given directory looking for fjson files and yield their data.
-    """
-    for root, dirs, files in os.walk(str(directory)):
-        for f in files:
-            f = Path(root, f)
-            if not f.suffix == ".fjson":
-                continue
-
-            with f.open() as fp:
-                yield json.load(fp)
