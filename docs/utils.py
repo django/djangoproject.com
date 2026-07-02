@@ -6,6 +6,26 @@ from pathlib import Path
 from django.conf import settings
 from django.http import Http404
 
+try:
+    import sentry_sdk
+except ImportError:
+    sentry_sdk = None
+
+
+def capture_sentry_exception(error, flush=False):
+    """Report an exception to Sentry if sentry_sdk is available.
+
+    Pass flush=True to block until the event is sent (use before process
+    exit). Returns True if sent to Sentry, False if sentry_sdk is not
+    installed.
+    """
+    if sentry_sdk is None:
+        return False
+    sentry_sdk.capture_exception(error)
+    if flush:
+        sentry_sdk.flush()
+    return True
+
 
 def get_doc_root(lang, version, builder="json"):
     return settings.DOCS_BUILD_ROOT / lang / version / "_built" / builder

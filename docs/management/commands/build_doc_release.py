@@ -35,6 +35,7 @@ from sphinx.testing.util import _clean_up_global_state
 from sphinx.util.docutils import docutils_namespace, patch_docutils
 
 from ...models import DocumentRelease
+from ...utils import capture_sentry_exception
 
 
 class Command(BaseCommand):
@@ -136,11 +137,11 @@ class Command(BaseCommand):
                 # Clean up global state after building each language.
                 _clean_up_global_state()
             except SphinxError as e:
-                self.stderr.write(
+                capture_sentry_exception(e, flush=True)
+                raise CommandError(
                     "sphinx-build returned an error (release %s, builder %s): %s"
                     % (release, builder, str(e))
-                )
-                return
+                ) from e
 
         #
         # Create a zip file of the HTML build for offline reading.

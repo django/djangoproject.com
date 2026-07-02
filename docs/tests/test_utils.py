@@ -1,9 +1,41 @@
 import os
 from pathlib import Path
+from unittest.mock import MagicMock, patch
 
 from django.test import SimpleTestCase
 
-from ..utils import extract_inner_html, get_doc_path, sanitize_for_trigram
+from ..utils import (
+    capture_sentry_exception,
+    extract_inner_html,
+    get_doc_path,
+    sanitize_for_trigram,
+)
+
+
+class CaptureSentryExceptionTests(SimpleTestCase):
+    def test_reports_and_returns_true_when_sentry_available(self):
+        mock_sentry = MagicMock()
+        error = ValueError("something broke")
+        with patch("docs.utils.sentry_sdk", mock_sentry):
+            result = capture_sentry_exception(error)
+        mock_sentry.capture_exception.assert_called_once_with(error)
+        mock_sentry.flush.assert_not_called()
+        self.assertIs(result, True)
+
+    def test_flush_blocks_until_sent(self):
+        mock_sentry = MagicMock()
+        error = ValueError("something broke")
+        with patch("docs.utils.sentry_sdk", mock_sentry):
+            result = capture_sentry_exception(error, flush=True)
+        mock_sentry.capture_exception.assert_called_once_with(error)
+        mock_sentry.flush.assert_called_once()
+        self.assertIs(result, True)
+
+    def test_no_op_and_returns_false_when_sentry_not_installed(self):
+        error = ValueError("something broke")
+        with patch("docs.utils.sentry_sdk", None):
+            result = capture_sentry_exception(error)
+        self.assertIs(result, False)
 
 
 class TestUtils(SimpleTestCase):

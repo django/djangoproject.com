@@ -13,6 +13,7 @@ from django.core.management import BaseCommand, call_command
 from django.db.models import Q
 
 from ...models import DocumentRelease
+from ...utils import capture_sentry_exception
 
 
 class Command(BaseCommand):
@@ -88,9 +89,15 @@ class Command(BaseCommand):
         self.release_docs_changed = {}
 
         for release in self._get_doc_releases(versions, kwargs):
-            self.build_doc_release(
-                release, force=kwargs["force"], interactive=kwargs["interactive"]
-            )
+            try:
+                self.build_doc_release(
+                    release, force=kwargs["force"], interactive=kwargs["interactive"]
+                )
+            except Exception as e:
+                capture_sentry_exception(e, flush=True)
+                self.stderr.write(
+                    f"build_doc_release failed for {release}, skipping: {e}"
+                )
 
         if self.purge_cache:
             changed_versions = {
