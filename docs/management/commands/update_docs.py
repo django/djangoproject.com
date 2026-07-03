@@ -186,7 +186,8 @@ class Command(BaseCommand):
         """
         command = [
             sys.executable,
-            sys.argv[0],
+            "-m",
+            "django",
             "build_doc_release",
             release.version,
             "--language",

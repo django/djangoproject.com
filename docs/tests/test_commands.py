@@ -1,6 +1,7 @@
+import sys
 import tempfile
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 from django.core.management import CommandError
 from django.test import TestCase, override_settings
@@ -73,6 +74,31 @@ class BuildDocReleaseSphinxErrorTests(TestCase):
                     self.command.build_doc_release(self.release)
 
         mock_capture.assert_called_once_with(error, flush=True)
+
+
+class BuildReleaseSubprocessInvocationTests(TestCase):
+    def test_invokes_child_via_module_flag_not_sys_argv(self):
+        release = DocumentRelease.objects.create(lang="en", release=None)
+        command = UpdateDocsCommand()
+        command.verbosity = 2
+
+        with patch("docs.management.commands.update_docs.subprocess.run") as mock_run:
+            mock_run.return_value = MagicMock(returncode=0)
+            command._build_release_in_subprocess(release)
+
+        mock_run.assert_called_once_with(
+            [
+                sys.executable,
+                "-m",
+                "django",
+                "build_doc_release",
+                "dev",
+                "--language",
+                "en",
+                "--verbosity",
+                "2",
+            ]
+        )
 
 
 class UpdateDocsResilienceTests(TestCase):
