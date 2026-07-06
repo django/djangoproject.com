@@ -1,5 +1,5 @@
 -r common.txt
 gunicorn==26.0.0
 psycopg[c]==3.3.4
-redis==8.0.0
+redis==8.0.1
 sentry-sdk==2.63.0
