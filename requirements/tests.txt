@@ -2,4 +2,4 @@
 coverage==7.14.3
 playwright==1.60.0
 requests-mock==1.12.1
-tblib>=3.0.0
+tblib>=3.2.2
