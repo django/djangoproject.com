@@ -716,6 +716,14 @@ class SecurityIssue(models.Model):
                 "name": "Django releases announcements",
                 "tags": ["mailing-list"],
             },
+            *[
+                {
+                    "tags": ["patch"],
+                    "url": f"https://github.com/django/django/commit/{commit_hash}",
+                }
+                for _, commit_hash in self.hashes_by_branch
+                if commit_hash
+            ],
         ]
         credits = [
             {

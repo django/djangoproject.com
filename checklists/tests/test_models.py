@@ -648,6 +648,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             description=cve_description,
             reporter=reporter,
             discovery="INTERNAL",
+            commit_hash_main="1234567",
         )
         checklist_content = self.do_render_checklist(checklist)
 
@@ -707,6 +708,10 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
                 "name": "Django releases announcements",
                 "tags": ["mailing-list"],
                 "url": "https://groups.google.com/g/django-announce",
+            },
+            {
+                "tags": ["patch"],
+                "url": "https://github.com/django/django/commit/1234567",
             },
             {
                 "name": "Django security releases issued: 5.1.8 and 5.0.14",
