@@ -64,3 +64,9 @@
       `releases/fixtures/doc_releases.json` for djangoproject.com:
     - `python manage_translations.py export_json doc_releases.json`
     - e.g. https://github.com/django/djangoproject.com/pull/2209
+
+- [ ] Coordinate with the maintainer of ``asgiref`` to determine when to raise the
+minimum version before the final release. For the backport, add an upper bound on the
+next major version. E.g.:
+    - main: https://github.com/django/django/commit/df35cf578f99522dd1ba864d513be95d47bab7a5
+    - backport: https://github.com/django/django/commit/d2b1ec551567c208abfdd21b27ff6d08ae1a6371
