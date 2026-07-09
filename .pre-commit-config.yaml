@@ -1,4 +1,4 @@
-exclude: '^djangoproject\/static\/(css\/|fonts\/|img\/|robots).*$'
+exclude: '^(djangoproject\/static\/(css\/|fonts\/|img\/|robots).*|\.venv\/.*)$'
 default_language_version:
     python: python3
 repos:
