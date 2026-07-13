@@ -233,6 +233,10 @@ class SiteMapTests(TestCase):
         response = self.client.get(reverse("sitemap"))
         self.assertEqual(response.status_code, 200)
 
+    def test_sitemap_contains_core_developers_page(self):
+        response = self.client.get(reverse("sitemap"))
+        self.assertContains(response, "/foundation/django_core/")
+
 
 class EndToEndTests(ReleaseMixin, StaticLiveServerTestCase):
     @classmethod

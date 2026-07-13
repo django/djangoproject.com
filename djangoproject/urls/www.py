@@ -110,7 +110,11 @@ urlpatterns = [
         BannerPreview.as_view(),
         name="foundation_banner_preview",
     ),
-    path("foundation/django_core/", CoreDevelopers.as_view()),
+    path(
+        "foundation/django_core/",
+        CoreDevelopers.as_view(),
+        name="foundation_core_developers",
+    ),
     path("foundation/minutes/", include("foundation.urls.meetings")),
     path("foundation/", include("members.urls")),
     path("fundraising/", include("fundraising.urls")),
