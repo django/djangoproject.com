@@ -19,7 +19,7 @@ class TermAdmin(admin.ModelAdmin):
 class BoardMemberAdmin(admin.ModelAdmin):
     list_display = ("full_name", "office", "term")
     list_filter = ("office", "term")
-    list_select_related = True
+    list_select_related = ("account", "office", "term")
     raw_id_fields = ("account",)
 
     @admin.display(ordering="account__last_name")
