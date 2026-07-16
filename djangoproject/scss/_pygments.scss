@@ -6,9 +6,44 @@
     overflow: auto;
     border-radius: 4px;
     margin: 25px 0;
+    position: relative;
 
     pre {
         margin: 15px 20px;
+    }
+
+    > .btn-clipboard {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+        z-index: 10;
+        opacity: 0.6;
+        transition: opacity 200ms ease;
+        padding: 5px;
+        border-radius: 4px;
+        background: var(--code-bg);
+
+        &:hover {
+            opacity: 1;
+            color: var(--link-color);
+        }
+
+        i {
+            color: var(--code-fg);
+        }
+
+        .clipboard-success {
+            font-size: 80%;
+            margin-right: 6px;
+            color: var(--link-color);
+            @include monospace;
+
+            &.fade-out {
+                opacity: 0;
+                transition: opacity 400ms;
+            }
+        }
     }
 }
 

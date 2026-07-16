@@ -123,6 +123,29 @@ window.addEventListener('keydown', function (e) {
       highlight_el.appendChild(button_el.cloneNode(true));
     }
   });
+
+  document.querySelectorAll('.highlight').forEach(function (highlight_el) {
+    // Skip if inside console block
+    if (highlight_el.closest('.console-block')) {
+      return;
+    }
+    // Skip if has snippet-filename as previous sibling
+    const prev = highlight_el.previousElementSibling;
+    if (prev && prev.classList.contains('snippet-filename')) {
+      return;
+    }
+    // Skip if parent has code-block-caption as previous sibling
+    const parent = highlight_el.parentElement;
+    if (parent) {
+      const parent_prev = parent.previousElementSibling;
+      if (parent_prev && parent_prev.classList.contains('code-block-caption')) {
+        return;
+      }
+    }
+
+    // Append copy button directly to standalone highlight block
+    highlight_el.appendChild(button_el.cloneNode(true));
+  });
 })();
 
 // Attach copy functionality to clipboard buttons
@@ -167,6 +190,9 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
     if (console_section) {
       const pre_el = console_section.querySelector('.highlight pre');
       text = pre_el.textContent.replace(prompt_regex, '');
+    } else if (this.parentElement.classList.contains('highlight')) {
+      const pre_el = this.parentElement.querySelector('pre');
+      text = pre_el ? pre_el.textContent : this.parentElement.textContent;
     } else {
       text = this.parentElement.nextElementSibling.textContent;
     }
