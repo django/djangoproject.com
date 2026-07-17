@@ -51,12 +51,44 @@ class FeatureReleaseAdmin(ReleaseChecklistAdminMixin, admin.ModelAdmin):
     list_display = ReleaseChecklistAdminMixin.list_display + ["tagline"]
 
 
+class SecurityIssueInline(admin.StackedInline):
+    model = SecurityIssue
+    extra = 0
+    show_change_link = True
+    fieldsets = (
+        (
+            "Metadata",
+            {
+                "classes": ["collapse"],
+                "fields": (
+                    "cna",
+                    "cve_year_number",
+                    "severity",
+                    "summary",
+                    "description",
+                    "unsupported_series",
+                    "blogdescription",
+                    "reporter",
+                    "discovery",
+                    "remediator",
+                    "reported_at",
+                    "confirmed_at",
+                    "cve_type",
+                    "impact",
+                    "commit_hash_main",
+                ),
+            },
+        ),
+    )
+
+
 @admin.register(SecurityRelease)
 class SecurityReleaseAdmin(ReleaseChecklistAdminMixin, admin.ModelAdmin):
     list_display = ["versions", "cves", "when", "releaser", "checklist_link"]
     search_fields = ["affected_branches"]
     ordering = ["-when"]
     readonly_fields = ["hashes_by_versions"]
+    inlines = [SecurityIssueInline]
 
 
 class SecurityIssueReleasesThroughInline(admin.TabularInline):
