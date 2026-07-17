@@ -69,6 +69,15 @@ def get_cve_default():
     return f"CVE-{datetime.date.today().year}-{get_random_string(5)}"
 
 
+def get_unsupported_series_default():
+    """Comma separated list of the 3 most recently EOL'd feature versions.
+
+    Return an empty string when no unsupported releases are known.
+    """
+    series = [f"{r.feature_version}.x" for r in Release.objects.unsupported()[:3]]
+    return enumerate_items(series)
+
+
 def get_cvss_severity(score):
     if not score:
         return "NONE"
@@ -490,6 +499,18 @@ class SecurityIssue(models.Model):
         ),
     )
     description = models.TextField(help_text=DESCRIPTION_HELP_TEXT)
+    unsupported_series = models.CharField(
+        "Unsupported series note",
+        max_length=1024,
+        blank=True,
+        default=get_unsupported_series_default,
+        help_text=(
+            'Comma separated versions (such as "5.0.x, 4.1.x, and 3.2.x") '
+            "used in the CVE description noting that earlier, unsupported "
+            "Django series were not evaluated and may also be affected. "
+            "Leave blank to omit that sentence entirely."
+        ),
+    )
     blogdescription = models.TextField(
         blank=True,
         verbose_name="Blog description",
@@ -622,12 +643,16 @@ class SecurityIssue(models.Model):
     @cached_property
     def cve_description(self):
         affected = format_releases_for_cves(self.releases.all())
-        return (
-            f"An issue was discovered in Django {affected}.\n{self.description}\n"
-            "Earlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) "
-            "were not evaluated and may also be affected.\n"
+        parts = [f"An issue was discovered in Django {affected}.", self.description]
+        if self.unsupported_series:
+            parts.append(
+                f"Earlier, unsupported Django series (such as {self.unsupported_series})"
+                " were not evaluated and may also be affected."
+            )
+        parts.append(
             f"Django would like to thank {self.reporter} for reporting this issue."
         )
+        return "\n".join(parts)
 
     @cached_property
     def cve_html_description(self):

@@ -20,6 +20,7 @@ from checklists.models import (
     SecurityIssueReleasesThrough,
     SecurityRelease,
     get_cvss_severity,
+    get_unsupported_series_default,
 )
 from checklists.tests.factory import Factory
 
@@ -649,6 +650,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             reporter=reporter,
             discovery="INTERNAL",
             commit_hash_main="1234567",
+            unsupported_series="5.0.x, 4.1.x, and 3.2.x",
         )
         checklist_content = self.do_render_checklist(checklist)
 
@@ -872,6 +874,34 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         self.assertNotIn("`vulnerable_method()`", html)
         self.assertNotIn("`user_input`", html)
 
+    def test_cve_description_includes_unsupported_series_note(self):
+        release = self.factory.make_release(version="5.2.1")
+        checklist = self.make_checklist(releases=[])
+        issue = self.factory.make_security_issue(
+            checklist, [release], unsupported_series="5.0.x, 4.1.x, and 3.2.x"
+        )
+
+        note = (
+            "Earlier, unsupported Django series (such as 5.0.x, 4.1.x, and "
+            "3.2.x) were not evaluated and may also be affected."
+        )
+        self.assertIn(note, issue.cve_description)
+        self.assertIn(f"<p>{note}</p>", issue.cve_html_description)
+
+    def test_cve_description_omits_unsupported_series_note_when_blank(self):
+        release = self.factory.make_release(version="5.2.1")
+        checklist = self.make_checklist(releases=[])
+        issue = self.factory.make_security_issue(
+            checklist, [release], unsupported_series=""
+        )
+
+        self.assertNotIn(
+            "were not evaluated and may also be affected", issue.cve_description
+        )
+        self.assertNotIn(
+            "were not evaluated and may also be affected", issue.cve_html_description
+        )
+
     def test_hashes_by_branch(self):
         releases = [
             self.factory.make_release(version="5.0.14"),
@@ -969,6 +999,33 @@ class GetCvssSeverityTests(TestCase):
     def test_critical(self):
         self.assertEqual(get_cvss_severity(9.0), "CRITICAL")
         self.assertEqual(get_cvss_severity(10.0), "CRITICAL")
+
+
+class GetDefaultUnsupportedSeriesTests(TestCase):
+    factory = Factory()
+
+    def make_eol_release(self, version, eol_date):
+        return self.factory.make_release(
+            version=version, date=date(2015, 1, 1), eol_date=eol_date, is_active=True
+        )
+
+    def test_empty_when_no_unsupported_releases(self):
+        self.assertEqual(get_unsupported_series_default(), "")
+
+    def test_lists_three_most_recent_eol_series(self):
+        self.make_eol_release("3.2.25", date(2024, 4, 1))
+        self.make_eol_release("4.1.13", date(2024, 12, 1))
+        self.make_eol_release("5.0.14", date(2025, 4, 1))
+        # Older series that must not appear (only 3 most recent are listed).
+        self.make_eol_release("2.2.28", date(2022, 4, 1))
+
+        self.assertEqual(get_unsupported_series_default(), "5.0.x, 4.1.x, and 3.2.x")
+
+    def test_uses_latest_micro_per_series(self):
+        self.make_eol_release("4.1.13", date(2024, 12, 1))
+        self.make_eol_release("4.1.7", date(2024, 12, 1))
+
+        self.assertEqual(get_unsupported_series_default(), "4.1.x")
 
 
 class SecurityIssueTestCase(TestCase):

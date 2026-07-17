@@ -95,6 +95,7 @@ class SecurityIssueAdmin(admin.ModelAdmin):
                     "severity",
                     "summary",
                     "description",
+                    "unsupported_series",
                     "blogdescription",
                     "reporter",
                     "discovery",
