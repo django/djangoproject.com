@@ -66,3 +66,8 @@ SILENCED_SYSTEM_CHECKS = SILENCED_SYSTEM_CHECKS + [
     # Default test keys for development.
     "django_recaptcha.recaptcha_test_key_error"
 ]
+
+# Google's default test keys always verify successfully but return no score,
+# which would be read as a zero and rejected by the production threshold. Turn
+# the score check off so that captcha protected forms can be submitted locally.
+RECAPTCHA_REQUIRED_SCORE = 0

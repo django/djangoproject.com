@@ -40,6 +40,12 @@
       {% endif %}
       {{ form.password2 }}
     </div>
+    <div>
+      {% if form.captcha.errors %}
+        <p class="errors">{{ form.captcha.errors.as_text }}</p>
+      {% endif %}
+      {{ form.captcha }}
+    </div>
     <p class="submit">
       <input type="submit" class="cta" value="{% translate 'Register' %}">
     </p>

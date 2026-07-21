@@ -1,13 +1,13 @@
 from django.urls import include, path
 from registration.backends.default.views import RegistrationView
-from registration.forms import RegistrationFormUniqueEmail
 
 from . import views as account_views
+from .forms import RegistrationFormWithCaptcha
 
 urlpatterns = [
     path(
         "register/",
-        RegistrationView.as_view(form_class=RegistrationFormUniqueEmail),
+        RegistrationView.as_view(form_class=RegistrationFormWithCaptcha),
         name="registration_register",
     ),
     path(

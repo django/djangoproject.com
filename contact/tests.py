@@ -6,7 +6,7 @@ from django.http import HttpRequest
 from django.test import TestCase
 from django.test.utils import override_settings
 
-from djangoproject.tests import ReleaseMixin
+from djangoproject.tests import ReleaseMixin, patch_captcha
 
 from .views import FoundationContactForm
 
@@ -45,16 +45,17 @@ class ContactFormTests(ReleaseMixin, TestCase):
 
     @override_settings(AKISMET_API_KEY="")  # Disable Akismet in tests
     def test_without_akismet(self):
-        response = self.client.post(
-            self.url,
-            {
-                "name": "A. Random Hacker",
-                "email": "a.random@example.com",
-                "message_subject": "Hello",
-                "body": "Hello, World!",
-                "captcha": "TESTING",
-            },
-        )
+        with patch_captcha():
+            response = self.client.post(
+                self.url,
+                {
+                    "name": "A. Random Hacker",
+                    "email": "a.random@example.com",
+                    "message_subject": "Hello",
+                    "body": "Hello, World!",
+                    "captcha": "TESTING",
+                },
+            )
         self.assertRedirects(response, "/contact/sent/")
         self.assertEqual(mail.outbox[-1].subject, "[Contact form] Hello")
 
@@ -90,16 +91,17 @@ class ContactFormTests(ReleaseMixin, TestCase):
 
     @skipIf(not has_network_connection, "Requires a network connection")
     def test_akismet_not_spam(self):
-        response = self.client.post(
-            self.url,
-            {
-                "name": "administrator",
-                "email": "a.random@example.com",
-                "message_subject": "Hello",
-                "body": "Hello, World!",
-                "captcha": "TESTING",
-            },
-        )
+        with patch_captcha():
+            response = self.client.post(
+                self.url,
+                {
+                    "name": "administrator",
+                    "email": "a.random@example.com",
+                    "message_subject": "Hello",
+                    "body": "Hello, World!",
+                    "captcha": "TESTING",
+                },
+            )
         self.assertRedirects(response, "/contact/sent/")
         self.assertEqual(mail.outbox[-1].subject, "[Contact form] Hello")
 

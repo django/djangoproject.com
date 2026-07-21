@@ -1,6 +1,7 @@
 import os
 from http import HTTPStatus
 from io import StringIO
+from unittest.mock import patch
 
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
@@ -9,9 +10,27 @@ from django.test import TestCase
 from django.urls import NoReverseMatch, get_resolver
 from django.utils.translation import activate, gettext as _
 from django_hosts.resolvers import reverse
+from django_recaptcha.client import RecaptchaResponse
 from playwright.sync_api import expect, sync_playwright
 
 from docs.models import DocumentRelease, Release
+
+
+def patch_captcha(is_valid=True, score=1.0, extra_data=None, **response_kwargs):
+    """Patch the only reCAPTCHA call that would otherwise reach Google's servers.
+
+    The score defaults to a passing one, so tests that do not care about
+    reCAPTCHA can just wrap their form submission in this context manager.
+    Forms whose widget declares an action must pass a matching ``action``.
+    """
+    extra_data = dict(extra_data or {})
+    extra_data.setdefault("score", score)
+    return patch(
+        "django_recaptcha.fields.client.submit",
+        return_value=RecaptchaResponse(
+            is_valid=is_valid, extra_data=extra_data, **response_kwargs
+        ),
+    )
 
 
 class ReleaseMixin:

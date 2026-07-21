@@ -2,8 +2,22 @@ from django import forms
 from django.db import transaction
 from django.db.models import ProtectedError
 from django.utils.translation import gettext_lazy as _
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV3
+from registration.forms import RegistrationFormUniqueEmail
 
 from .models import Profile
+
+
+class RegistrationFormWithCaptcha(RegistrationFormUniqueEmail):
+    """Signup form with a reCAPTCHA field.
+
+    This is required to keep bots/spam/automated requests from using the
+    activation email as a way to send mail to arbitrary addresses.
+
+    """
+
+    captcha = ReCaptchaField(widget=ReCaptchaV3)
 
 
 class ProfileForm(forms.ModelForm):

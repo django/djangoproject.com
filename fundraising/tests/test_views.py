@@ -10,9 +10,8 @@ from django.template.defaultfilters import date as date_filter
 from django.test import TestCase
 from django.urls import reverse
 from django_hosts.resolvers import reverse as django_hosts_reverse
-from django_recaptcha.client import RecaptchaResponse
 
-from djangoproject.tests import ReleaseMixin
+from djangoproject.tests import ReleaseMixin, patch_captcha
 from members.models import CorporateMember, Invoice
 
 from ..models import DjangoHero, Donation
@@ -157,18 +156,17 @@ class TestCampaign(ReleaseMixin, TemporaryMediaRootMixin, TestCase):
         self.assertFalse(content["success"])
 
     @patch("stripe.checkout.Session.create")
-    @patch("django_recaptcha.fields.client.submit")
-    def test_submitting_donation_form_valid(self, client_submit, session_create):
+    def test_submitting_donation_form_valid(self, session_create):
         session_create.return_value = {"id": "TEST_ID"}
-        client_submit.return_value = RecaptchaResponse(is_valid=True, action="form")
-        response = self.client.post(
-            reverse("fundraising:donation-session"),
-            {
-                "amount": 100,
-                "interval": "onetime",
-                "captcha": "TESTING",
-            },
-        )
+        with patch_captcha(action="form"):
+            response = self.client.post(
+                reverse("fundraising:donation-session"),
+                {
+                    "amount": 100,
+                    "interval": "onetime",
+                    "captcha": "TESTING",
+                },
+            )
         content = json.loads(response.content.decode())
         self.assertEqual(response.status_code, 200)
         self.assertTrue(content["success"])

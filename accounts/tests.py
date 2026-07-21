@@ -1,12 +1,13 @@
 import hashlib
 
 from django.contrib.auth.models import AnonymousUser, User
+from django.core import mail
 from django.core.cache import cache
 from django.test import TestCase, override_settings
 from django_hosts.resolvers import reverse
 
-from accounts.forms import DeleteProfileForm
-from djangoproject.tests import ReleaseMixin
+from accounts.forms import DeleteProfileForm, RegistrationFormWithCaptcha
+from djangoproject.tests import ReleaseMixin, patch_captcha
 from foundation import models as foundationmodels
 from tracdb.models import Revision, Ticket, TicketChange
 from tracdb.testutils import TracDBCreateDatabaseMixin
@@ -240,3 +241,83 @@ class UserDeletionTests(ReleaseMixin, TestCase):
         self.client.force_login(user)
         self.client.post(reverse("delete_profile"))
         self.assertEqual(self.client.cookies["sessionid"].value, "")
+
+
+class RegistrationTests(ReleaseMixin, TestCase):
+    data = {
+        "username": "newuser",
+        "email": "newuser@example.com",
+        "password1": "a-very-secret-password",
+        "password2": "a-very-secret-password",
+        "captcha": "TESTING",
+    }
+
+    def test_valid_captcha_accepted(self):
+        form = RegistrationFormWithCaptcha(data=self.data)
+        with patch_captcha():
+            self.assertIs(form.is_valid(), True)
+
+    def test_invalid_captcha_rejected(self):
+        form = RegistrationFormWithCaptcha(data=self.data)
+        with (
+            self.assertLogs("django_recaptcha", "WARNING") as logs,
+            patch_captcha(is_valid=False),
+        ):
+            self.assertIs(form.is_valid(), False)
+        self.assertIn("captcha", form.errors)
+        self.assertEqual(
+            logs.output,
+            ["WARNING:django_recaptcha.fields:ReCAPTCHA validation failed due to: []"],
+        )
+
+    def test_low_score_rejected(self):
+        form = RegistrationFormWithCaptcha(data=self.data)
+        # The widget reads its threshold from the settings when it is created,
+        # so set it here to assert on the score check itself and not on the
+        # value that the current environment happens to configure.
+        form.fields["captcha"].widget.required_score = 0.9
+        with (
+            self.assertLogs("django_recaptcha", "WARNING") as logs,
+            patch_captcha(score=0.1),
+        ):
+            self.assertIs(form.is_valid(), False)
+        self.assertIn("captcha", form.errors)
+        self.assertEqual(
+            logs.output,
+            [
+                "WARNING:django_recaptcha.fields:ReCAPTCHA validation failed due to "
+                "its score of 0.1 being lower than the required amount."
+            ],
+        )
+
+    def test_missing_captcha_rejected(self):
+        form = RegistrationFormWithCaptcha(data=dict(self.data, captcha=""))
+        self.assertIs(form.is_valid(), False)
+        self.assertIn("captcha", form.errors)
+
+    def test_view_sends_activation_email(self):
+        # The activation email is sent from a transaction.on_commit() callback.
+        with (
+            self.captureOnCommitCallbacks(execute=True),
+            patch_captcha(),
+        ):
+            response = self.client.post(
+                reverse("registration_register"), data=self.data
+            )
+        self.assertRedirects(response, "/accounts/register/complete/")
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIs(User.objects.filter(username="newuser").exists(), True)
+
+    def test_view_sends_no_email_when_captcha_fails(self):
+        with (
+            self.assertLogs("django_recaptcha", "WARNING"),
+            self.captureOnCommitCallbacks(execute=True),
+            patch_captcha(is_valid=False),
+        ):
+            self.client.post(reverse("registration_register"), data=self.data)
+        self.assertEqual(mail.outbox, [])
+        self.assertIs(User.objects.filter(username="newuser").exists(), False)
+
+    def test_captcha_widget_is_rendered(self):
+        response = self.client.get(reverse("registration_register"))
+        self.assertContains(response, "g-recaptcha")

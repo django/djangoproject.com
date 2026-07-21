@@ -246,6 +246,12 @@ HOST_SITE_TIMEOUT = 3600
 
 ROOT_HOSTCONF = "djangoproject.hosts"
 
+# django-recaptcha settings
+
+# The keys themselves are only set in production, but the score threshold
+# belongs here so that reCAPTCHA behaves the same way in every environment.
+RECAPTCHA_REQUIRED_SCORE = 0.9
+
 # django-registration settings
 
 ACCOUNT_ACTIVATION_DAYS = 3
