@@ -98,7 +98,7 @@ class ReleaserManager(models.Manager):
 
 
 class Releaser(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
     key_id = models.CharField(
         max_length=100, help_text="gpg --list-keys --keyid-format LONG"
     )
