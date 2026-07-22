@@ -114,9 +114,6 @@ At this point, most of the larger features planned for {{ release.feature_versio
         - `django-admin makemessages -l en --domain=django`
         - `django-admin makemessages -l en --domain=djangojs`
 
-    - Review the diff before pushing and avoid committing changes to the `.po` files without any new translations.
-        - e.g. https://github.com/django/django/commit/d2b1ec551567c208abfdd21b27ff6d08ae1a6371.
-
     - Make a pull request against the corresponding stable branch and merge once approved.
 
     - Forward port the updated source translations to the `main` branch.
