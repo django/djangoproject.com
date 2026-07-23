@@ -10,22 +10,26 @@ from django.core.files.storage import FileSystemStorage
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.functional import cached_property
-from django.utils.version import get_complete_version, get_main_version
+from django.utils.version import get_complete_version
 
-from .utils import get_loose_version_tuple
+from .utils import (
+    FIRST_CALENDAR_VERSION_YEAR,
+    get_feature_version,
+    get_main_version,
+    get_version_tuple,
+)
 
 
-# A version of django.utils.version.get_version() which maps "rc" to "rc"
-# (packages generated using setuptools 8+) instead of "c" (older versions of
-# setuptools). This naming schemes starts with Django 1.9 and we don't care
-# about older release candidates. Safe to use Django's copy of get_version()
-# when upgrading this website to use Django 1.10.
+# A version of django.utils.version.get_version() which doesn't append a
+# ".devN" suffix to alpha releases, as that inspects the local git repository,
+# which is this website rather than Django, and which builds the main version
+# with the local get_main_version(), aware of calendar versions (DEP 20).
 def get_version(version=None):
-    """Return a PEP 386-compliant version number from VERSION."""
+    """Return a PEP 440-compliant version number from VERSION."""
     version = get_complete_version(version)
 
     # Now build the two parts of the version number:
-    # main = X.Y[.Z]
+    # main = A.B[.C] or YYYY[.N]
     # sub = {a|b|rc}N - for alpha, beta and rc releases
     main = get_main_version(version)
 
@@ -152,8 +156,7 @@ def get_storage():
 
 
 def upload_to_artifact(release, filename):
-    major, minor = release.version_tuple[:2]
-    return f"releases/{major}.{minor}/{filename}"
+    return f"releases/{release.feature_version}/{filename}"
 
 
 def upload_to_checksum(release, filename):
@@ -261,19 +264,7 @@ class Release(models.Model):
     @cached_property
     def version_tuple(self):
         """Return a tuple in the format of django.VERSION."""
-        version = self.version.replace("-", "").replace("_", "")
-        version = list(get_loose_version_tuple(version))
-        if len(version) == 2:
-            version.append(0)
-        if not isinstance(version[2], int):
-            version.insert(2, 0)
-        if len(version) == 3:
-            version.append("final")
-        if version[3] not in ("alpha", "beta", "rc", "final"):
-            version[3] = {"a": "alpha", "b": "beta", "c": "rc"}[version[3]]
-        if len(version) == 4:
-            version.append(0)
-        return tuple(version)
+        return get_version_tuple(self.version)
 
     @cached_property
     def version_verbose(self):
@@ -285,7 +276,7 @@ class Release(models.Model):
 
     @cached_property
     def feature_version(self):
-        return f"{self.major}.{self.minor}"
+        return get_feature_version(self.version)
 
     @cached_property
     def feature_release(self):
@@ -309,9 +300,18 @@ class Release(models.Model):
         return self.status != "f"
 
     @cached_property
+    def is_calendar_version(self):
+        """Return True if this release is calendar versioned (YYYY[.N])."""
+        return self.major >= FIRST_CALENDAR_VERSION_YEAR
+
+    @cached_property
     def is_dot_zero(self):
-        """Return True if this is a final X.Y.0 release."""
-        return self.status == "f" and self.micro == 0
+        """Return True if this is a final feature release (X.Y or YYYY)."""
+        return (
+            self.status == "f"
+            and self.micro == 0
+            and (not self.is_calendar_version or self.minor == 0)
+        )
 
     def __lt__(self, other):
         return self.version_tuple < other.version_tuple
@@ -367,6 +367,8 @@ class Release(models.Model):
             previous_release_kwargs["status"] = "a"
         elif self.status == "c":
             previous_release_kwargs["status"] = "b"
+        elif self.status == "f" and self.is_calendar_version and self.minor > 0:
+            previous_release_kwargs["minor"] = self.minor - 1
         elif self.status == "f" and self.micro == 0:
             previous_release_kwargs["status"] = "c"
         elif self.status == "f" and self.micro > 0:
