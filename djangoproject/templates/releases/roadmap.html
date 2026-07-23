@@ -111,9 +111,9 @@
 
       <section id="final">
         <h4>Final</h4>
-        <p>Django {{ series }} final will ideally ship two weeks after the last RC. If no major bugs
-          are found by then, {{ series }} final will be issued; otherwise, the timeline will be
-          adjusted as needed.</p>
+        <p>Django {{ series }} final will ideally ship {% if is_calendar_version %}in January{% else %}two weeks after the last RC{% endif %}.
+          If no major bugs are found by then, {{ series }} final will be issued;
+          otherwise, the timeline will be adjusted as needed.</p>
       </section>
     </section>
   </section>

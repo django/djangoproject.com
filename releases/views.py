@@ -2,6 +2,7 @@ from django.http import Http404, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404, render
 
 from .models import Release
+from .utils import FIRST_CALENDAR_VERSION_YEAR
 
 
 def index(request):
@@ -32,14 +33,18 @@ def index(request):
 
 
 def roadmap(request, series):
-    major, minor = series.split(".")
+    major, _, minor = series.partition(".")
     major = int(major)
+    minor = int(minor or 0)
     if major < 2:
         raise Http404
 
     releases = Release.objects.filter(major=major, minor=minor, micro=0)
     context = {
         "series": series,
+        # Do not rely on the final release existing yet, roadmap pages are
+        # published before any release in the series is created.
+        "is_calendar_version": major >= FIRST_CALENDAR_VERSION_YEAR,
         "releases": {r.status: r for r in releases},
     }
     return render(request, "releases/roadmap.html", context)

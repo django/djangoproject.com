@@ -5,17 +5,17 @@ from django.utils.translation import gettext as _
 from django_hosts.resolvers import reverse
 
 from ..models import Release
-from ..utils import get_loose_version_tuple
+from ..utils import get_feature_version
 
 register = template.Library()
 
 
 @register.simple_tag()
 def release_notes(version, show_version=False):
-    version_x_dot_y = ".".join(str(x) for x in get_loose_version_tuple(version)[:2])
+    feature_version = get_feature_version(version)
     is_pre_release = any(c in version for c in ("a", "b", "c"))
     # links for prereleases don't have their own release notes
-    display_version = version_x_dot_y if is_pre_release else version
+    display_version = feature_version if is_pre_release else version
     if show_version:
         anchor_text = _("%(version)s release notes") % {"version": display_version}
     else:
@@ -28,7 +28,7 @@ def release_notes(version, show_version=False):
             host="docs",
             kwargs={
                 "lang": settings.DEFAULT_LANGUAGE_CODE,
-                "version": version_x_dot_y,
+                "version": feature_version,
                 "url": release_notes_path,
             },
         ),
@@ -37,15 +37,18 @@ def release_notes(version, show_version=False):
 
 
 @register.simple_tag()
-def get_latest_micro_release(version):
+def get_latest_release_version(version):
     """
-    Given an X.Y version number, return the latest X.Y.Z version.
+    Given an X.Y or YYYY version number, return the latest version of that release.
     """
-    major, minor = version.split(".")
-    release = (
-        Release.objects.filter(major=major, minor=minor, status="f", is_active=True)
-        .order_by("-micro")
-        .first()
-    )
-    if release:
-        return release.version
+    major, separator, minor = version.partition(".")
+    filters = {
+        "major": major,
+        "status": "f",
+        "is_active": True,
+    }
+    if separator:
+        filters["minor"] = minor
+    ordering = "-micro" if separator else "-minor"
+    release = Release.objects.filter(**filters).order_by(ordering).first()
+    return release.version if release else None
