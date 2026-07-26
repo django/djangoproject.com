@@ -125,8 +125,9 @@ class TranslationBuildInvocationTests(SimpleTestCase):
                 override_settings(DOCS_BUILD_ROOT=build_root),
                 patch.object(UpdateDocsCommand, "update_git", return_value=True),
                 patch.object(UpdateDocsCommand, "_build_release_in_subprocess"),
-                patch("docs.management.commands.update_docs.subprocess.check_call")
-                as mock_check_call,
+                patch(
+                    "docs.management.commands.update_docs.subprocess.check_call"
+                ) as mock_check_call,
             ):
                 command.build_doc_release(release)
 

@@ -167,7 +167,9 @@ class Command(BaseCommand):
                 locale_dir.symlink_to(trans_dir / "translations")
 
             extra_kwargs = {"stdout": subprocess.DEVNULL} if self.verbosity == 0 else {}
-            subprocess.check_call(["make", "translations"], cwd=trans_dir, **extra_kwargs)
+            subprocess.check_call(
+                ["make", "translations"], cwd=trans_dir, **extra_kwargs
+            )
 
         self._build_release_in_subprocess(release)
 
