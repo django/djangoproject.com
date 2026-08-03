@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from operator import attrgetter
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -89,6 +90,18 @@ class SearchFormTestCase(TestCase):
         self.assertNotContains(response, '<li class="active">')
         # The search result page does not have the Documentation banner.
         self.assertNotContains(response, '<div class="copy-banner">')
+
+    def test_search_paginator_includes_pks_only(self):
+        response = self.client.get(
+            "/en/5.1/search/?q=generic",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertTrue(response.context["page"].object_list)
+        self.assertQuerySetEqual(
+            response.context["page_results"],
+            response.context["page"].object_list,
+            transform=attrgetter("pk"),
+        )
 
     def test_search_type_filter_all(self):
         response = self.client.get(
