@@ -361,7 +361,7 @@ class DocumentQuerySet(models.QuerySet):
             vector_qs = (
                 base_qs.alias(rank=search_rank)
                 .filter(search_vector=search_query)
-                .order_by("-rank")
+                .order_by("-rank", "pk")
             )
             if not vector_qs:
                 return (
@@ -371,7 +371,7 @@ class DocumentQuerySet(models.QuerySet):
                         )
                     )
                     .filter(similarity__gt=0.3)
-                    .order_by("-similarity")
+                    .order_by("-similarity", "pk")
                 )
             else:
                 return vector_qs
@@ -421,7 +421,7 @@ class DocumentQuerySet(models.QuerySet):
                 "release__lang",
                 "release__release__version",
             )
-            .order_by("-rank")
+            .order_by("-rank", "pk")
         )
 
 
