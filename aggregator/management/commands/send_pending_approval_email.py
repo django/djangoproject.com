@@ -51,7 +51,6 @@ To approve them, visit: {% url 'admin:aggregator_feed_changelist' %}
             message,
             "nobody@djangoproject.com",
             to_email,
-            fail_silently=False,
         )
 
         if verbosity >= 1:
