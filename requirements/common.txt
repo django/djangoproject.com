@@ -10,7 +10,7 @@ django-recaptcha==4.1.0
 django-registration-redux==2.13
 Django==6.0.7
 docutils==0.21.2
-feedparser==6.0.12
+feedparser==6.0.14
 Jinja2==3.1.6
 libsass==0.23.0
 Markdown==3.10.2
