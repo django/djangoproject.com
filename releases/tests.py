@@ -646,6 +646,25 @@ class ReleaseUploadToTestCase(SimpleTestCase):
                     expected,
                 )
 
+    def test_upload_to_artifact_wrong_release(self):
+        for version, filename in [
+            # A patch release artifact filed under its feature release.
+            ("2028", "django-2028.1.tar.gz"),
+            ("5.2", "django-5.2.1.tar.gz"),
+            # A feature release artifact filed under a patch release.
+            ("2028.1", "django-2028.tar.gz"),
+            ("5.2.1", "django-5.2-py3-none-any.whl"),
+            # A pre-release artifact filed under the final release.
+            ("2028", "django-2028a1.tar.gz"),
+            # Names which don't identify a version at all.
+            ("2028", "tarball.tar.gz"),
+            ("2028", "django-2028.zip"),
+        ]:
+            with self.subTest(version=version, filename=filename):
+                msg = f"Filename {filename} does not belong to the {version} release."
+                with self.assertRaisesMessage(ValidationError, msg):
+                    upload_to_artifact(Release(version=version), filename=filename)
+
     def test_upload_to_checksum(self):
         for version, expected in [
             ("5.2", "pgp/Django-5.2.checksum.txt"),
