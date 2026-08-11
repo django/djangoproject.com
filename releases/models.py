@@ -145,6 +145,16 @@ class ReleaseManager(models.Manager):
         return current_version
 
 
+# Artifact file names are Django-<version><suffix>, where the suffix is
+# .tar.gz for tarballs and -py3-none-any.whl for wheels. Release.clean()
+# validates the whole name; this only extracts the version, so that an
+# artifact is never filed under a release it doesn't belong to.
+artifact_name_re = re.compile(
+    r"^[^-]+-(?P<version>[^-]+?)(?:\.tar\.[a-z]+|-py3-none(?:-any)?\.whl)$",
+    re.IGNORECASE,
+)
+
+
 def get_storage():
     """
     Return a FileSystemStorage that allows file name overwrites.
@@ -156,6 +166,13 @@ def get_storage():
 
 
 def upload_to_artifact(release, filename):
+    name = Path(filename).name
+    version = get_version(release.version_tuple)
+    match = artifact_name_re.match(name)
+    if match is None or match["version"] != version:
+        raise ValidationError(
+            f"Filename {name} does not belong to the {version} release."
+        )
     return f"releases/{release.feature_version}/{filename}"
 
 
