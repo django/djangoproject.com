@@ -375,7 +375,7 @@ class TestWebhooks(ReleaseMixin, TestCase):
     def post_event(self, data):
         return self.client.post(
             reverse("fundraising:receive-webhook"),
-            data=json.dumps(data),
+            data=json.dumps(data.data),
             content_type="application/json",
             headers={
                 "stripe-signature": _stripe_signature_header(data),
