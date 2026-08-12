@@ -230,7 +230,7 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
 
   const amount_el = form_el.querySelector('#id_amount');
   const level_el = form_el.querySelector('#id_membership_level');
-  const levels = [-Infinity, 2000, 5000, 12500, 30000, 100000];
+  const levels = [-Infinity, 2200, 5500, 13750, 30000, 100000];
 
   amount_el.addEventListener('change', function () {
     let value;
