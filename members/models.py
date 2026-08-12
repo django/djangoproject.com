@@ -21,9 +21,9 @@ DIAMOND_MEMBERSHIP = 5
 CORPORATE_MEMBERSHIP_AMOUNTS = {
     "diamond": 100000,
     "platinum": 30000,
-    "gold": 12500,
-    "silver": 5000,
-    "bronze": 2000,
+    "gold": 13750,
+    "silver": 5500,
+    "bronze": 2200,
 }
 
 MEMBERSHIP_LEVELS = (
