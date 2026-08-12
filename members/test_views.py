@@ -89,7 +89,8 @@ class CorporateMemberListViewTests(ReleaseMixin, TestCase):
         response = self.client.get(self.url)
         members = response.context["members"]
         self.assertEqual(
-            sorted(members.keys()), ["bronze", "diamond", "gold", "platinum", "silver"]
+            sorted(members.keys()),
+            ["bronze", "diamond", "gold", "platinum", "silver", "sponsored_fellow"],
         )
         self.assertSequenceEqual(members["silver"], [self.member, member])
 

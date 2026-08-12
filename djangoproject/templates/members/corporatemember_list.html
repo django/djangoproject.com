@@ -17,6 +17,16 @@
     {% endblocktranslate %}
   </p>
 
+  {% if members.sponsored_fellow %}
+    <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.sponsored_fellow|intcomma %}
+      Sponsored Fellow Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>
+    <ul class="corporate-members">
+      {% for obj in members.sponsored_fellow %}
+        {% include "members/includes/_member_with_logo.html" %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+
   {% if members.diamond %}
     <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.diamond|intcomma %}
       Diamond Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>

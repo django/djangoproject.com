@@ -17,8 +17,10 @@ SILVER_MEMBERSHIP = 2
 GOLD_MEMBERSHIP = 3
 PLATINUM_MEMBERSHIP = 4
 DIAMOND_MEMBERSHIP = 5
+SPONSORED_FELLOW_MEMBERSHIP = 6
 
 CORPORATE_MEMBERSHIP_AMOUNTS = {
+    "sponsored_fellow": 200000,
     "diamond": 100000,
     "platinum": 30000,
     "gold": 13750,
@@ -32,9 +34,10 @@ MEMBERSHIP_LEVELS = (
     (GOLD_MEMBERSHIP, _("Gold")),
     (PLATINUM_MEMBERSHIP, _("Platinum")),
     (DIAMOND_MEMBERSHIP, _("Diamond")),
+    (SPONSORED_FELLOW_MEMBERSHIP, _("Sponsored Fellow")),
 )
 
-MEMBERSHIP_TO_KEY = {k: v.lower() for k, v in MEMBERSHIP_LEVELS}
+MEMBERSHIP_TO_KEY = {k: v.lower().replace(" ", "_") for k, v in MEMBERSHIP_LEVELS}
 
 
 class IndividualMember(models.Model):
