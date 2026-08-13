@@ -21,7 +21,7 @@
 
     <div class="description">
       <ul>
-        <li><strong>{% blocktranslate trimmed %}{{ goal_percent }}% funded{% endblocktranslate %}</strong></li>
+        <li><strong>{% blocktranslate trimmed %}{{ goal_percent }}% funded{% endblocktranslate %}</strong> (<a href="/sponsor/">Why Sponsor?</a>)</li>
         <li>
           {% blocktranslate trimmed with amount=donated_amount|intcomma goal=goal_amount|intcomma start_date=goal_start_date|date:"Y" %}
             <strong>${{ amount }} donated</strong> of a ${{ goal }} USD goal for {{ start_date }}
