@@ -1,5 +1,15 @@
 {% load humanize i18n %}
 <div class="heroes">
+  {% if corporate_members.sponsored_fellow %}
+    <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.sponsored_fellow|intcomma %}
+      Sponsored Fellow Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>
+    <div>
+      {% for obj in corporate_members.sponsored_fellow %}
+        {% include "fundraising/includes/_hero_with_logo.html" %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
   {% if corporate_members.diamond %}
     <h3>{% blocktranslate trimmed with amount=corporate_membership_amounts.diamond|intcomma %}
       Diamond Corporate Members (${{ amount }}+){% endblocktranslate %}</h3>
