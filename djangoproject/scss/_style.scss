@@ -454,7 +454,7 @@ header {
     // Includes global navigation, logo, and tagline at top of document
     @include clearfix;
     background: $green-dark;
-    color: var(--menu);
+    color: $white;
     overflow: hidden;
     margin: 0;
     padding: 10px 0 6px;
@@ -468,7 +468,7 @@ header {
 
     .meta {
         @include font-size(13);
-        color: var(--primary);
+        color: $green-medium;
         font-weight: 700;
         width: auto;
         margin: 8px 0 0 10px;
@@ -547,7 +547,7 @@ header {
         }
 
         &:active {
-            color: var(--primary);
+            color: $green-medium;
         }
 
         &.active {
@@ -620,7 +620,7 @@ header {
             }
 
             &.active a {
-                color: var(--primary);
+                color: $green-medium;
             }
         }
 
@@ -630,12 +630,12 @@ header {
             text-decoration: none;
 
             &:visited {
-              color: var(--menu);
+              color: $white;
             }
 
             &:active,
             &:hover {
-                color: var(--secondary-accent);
+                color: $green-medium;
             }
         }
 
@@ -646,7 +646,7 @@ header {
 
             &:active,
             &:hover {
-                color: var(--secondary-accent);
+                color: $green-medium;
             }
 
             @include respond-min(1280px) {
@@ -752,8 +752,8 @@ header {
 
 .copy-banner {
     // Large green callout at the top of the page
-    background: var(--primary);
-    color: var(--secondary-accent);
+    background: darken($green, 10%);
+    color: $green-very-light;
     padding: 1px 10px;
 
     @include respond-min(768px) {
@@ -942,8 +942,8 @@ footer {
     @include clearfix;
     @include sans-serif;
     position: relative;
-    background: var(--primary);
-    color: var(--menu);
+    background: darken($green, 10%);
+    color: $green-very-light;
     clear: both;
     margin-top: 0px;
 
@@ -1031,7 +1031,7 @@ footer {
 
     .footer {
         background: $green-dark;
-        color: var(--primary-accent);
+        color: $green-light;
         margin-top: 20px;
         padding: 10px 0 30px;
 
