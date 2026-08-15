@@ -68,7 +68,7 @@ repos:
             files: .*/templates/.*\.html$
 
     - repo: https://github.com/mrtazz/checkmake.git
-      rev: 0.2.2
+      rev: v0.3.2
       hooks:
           - id: checkmake
     - repo: https://github.com/adamchainz/djade-pre-commit
