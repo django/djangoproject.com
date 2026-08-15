@@ -61,6 +61,13 @@ repos:
       hooks:
           - id: flake8
 
+    - repo: https://github.com/astral-sh/ruff-pre-commit
+      rev: v0.16.3
+      hooks:
+          - id: ruff-check
+            args: ["--fix", "--show-fixes"]
+          - id: ruff-format
+
     - repo: https://github.com/rtts/djhtml
       rev: 3.0.10
       hooks:

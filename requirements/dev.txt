@@ -122,6 +122,7 @@ requests==2.34.2
     #   sphinx
     #   stripe
 requests-mock==1.12.1
+ruff==0.16.3
 six==1.17.0
     # via python-dateutil
 snowballstemmer==3.1.1
