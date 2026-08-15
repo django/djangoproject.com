@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("blog", "0003_entry_content_format_markdown"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),

@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("checklists", "0007_alter_securityissue_cve_year_number"),
     ]

@@ -15,7 +15,6 @@ from releases.models import Release
 
 
 class Factory:
-
     def make_user(self, perm_names=None, **kwargs):
         username = kwargs.setdefault("username", f"username-{uuid4()}")
         kwargs.setdefault("email", f"{username}@example.com")

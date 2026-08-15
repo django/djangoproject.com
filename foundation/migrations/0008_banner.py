@@ -7,7 +7,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("foundation", "0007_boardmember_account_protect"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),

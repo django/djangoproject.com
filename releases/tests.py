@@ -884,7 +884,6 @@ class ReleaseAdminFormTestCase(TestCase):
 
 
 class DownloadViewTestCase(ReleaseMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -1022,9 +1021,10 @@ class CorporateMembersTestCase(ReleaseMixin, TestCase):
         self.assertContains(
             response, "<h3>Sponsored Fellow, Diamond and Platinum Members</h3>"
         )
-        member_link = (
-            lambda m: f'<a href="{m.url}" title="{m.display_name}">{m.description}</a>'
-        )
+
+        def member_link(m):
+            return f'<a href="{m.url}" title="{m.display_name}">{m.description}</a>'
+
         for member in members:
             if member.membership_level < PLATINUM_MEMBERSHIP:
                 self.assertNotContains(response, member.display_name)
@@ -1052,7 +1052,6 @@ class CorporateMembersTestCase(ReleaseMixin, TestCase):
 
 
 class RoadmapViewTestCase(ReleaseMixin, TestCase):
-
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
