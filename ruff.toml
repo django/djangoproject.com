@@ -1,0 +1,7 @@
+[lint]
+select = [
+    # For flake8 compatibility.
+    # Explicit definition of the rule can be removed after the full migration.
+    # https://docs.astral.sh/ruff/rules/lambda-assignment/
+    "E731",
+]
