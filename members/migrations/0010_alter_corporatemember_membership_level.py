@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("members", "0009_alter_individualmember_add_reason_help_text"),
     ]
