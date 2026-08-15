@@ -8,7 +8,8 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import NoReverseMatch, get_resolver
-from django.utils.translation import activate, gettext as _
+from django.utils.translation import activate
+from django.utils.translation import gettext as _
 from django_hosts.resolvers import reverse
 from django_recaptcha.client import RecaptchaResponse
 from playwright.sync_api import expect, sync_playwright

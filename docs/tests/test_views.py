@@ -4,7 +4,8 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse, set_urlconf
-from django.utils.translation import activate, gettext as _
+from django.utils.translation import activate
+from django.utils.translation import gettext as _
 from django_hosts.resolvers import reverse as reverse_with_host
 
 from djangoproject.urls import www as www_urls
