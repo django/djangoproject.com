@@ -24,6 +24,15 @@ class TestIndex(ReleaseMixin, TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+class TestSponsor(ReleaseMixin, TestCase):
+    def test_sponsor_page(self):
+        response = self.client.get(reverse("sponsor"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "How Investing in Django Makes a Difference")
+        self.assertContains(response, "id=\"corporate-membership-tiers\"")
+        self.assertContains(response, "id=\"dsf-social-media-reach\"")
+
+
 class TestCampaign(ReleaseMixin, TemporaryMediaRootMixin, TestCase):
     def setUp(self):
         self.index_url = reverse("fundraising:index")

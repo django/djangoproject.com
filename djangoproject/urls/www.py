@@ -16,6 +16,7 @@ from blog.sitemaps import WeblogSitemap
 from djangoproject.sitemaps import TemplateViewSitemap
 from foundation.feeds import FoundationMinutesFeed
 from foundation.views import BannerPreview, CoreDevelopers
+from fundraising import views as fundraising_views
 
 admin.autodiscover()
 
@@ -118,6 +119,7 @@ urlpatterns = [
     path("foundation/minutes/", include("foundation.urls.meetings")),
     path("foundation/", include("members.urls")),
     path("fundraising/", include("fundraising.urls")),
+    path("sponsor/", fundraising_views.sponsor, name="sponsor"),
     # Used by docs search suggestions
     re_path(
         r"^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$",
