@@ -44,7 +44,7 @@ repos:
       rev: v0.16.3
       hooks:
           - id: ruff-check
-            args: ["--fix", "--show-fixes"]
+            args: ["--fix", "--show-fixes", "--unsafe-fixes"]
           - id: ruff-format
 
     - repo: https://github.com/rtts/djhtml

@@ -20,6 +20,10 @@ extend-select = [
     # https://github.com/asottile/pyupgrade
     "UP",
 ]
+extend-ignore = [
+    "DTZ",
+    "RUF",
+]
 [lint.per-file-ignores]
 # RUF012 is violated by Django-generated migrations.
 # https://docs.astral.sh/ruff/rules/mutable-class-default/
