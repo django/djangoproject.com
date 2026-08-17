@@ -28,7 +28,7 @@ def user_profile(request, username):
 
 @login_required
 def edit_profile(request):
-    profile, created = Profile.objects.get_or_create(user=request.user)
+    profile, _created = Profile.objects.get_or_create(user=request.user)
     form = ProfileForm(request.POST or None, instance=profile)
     if form.is_valid():
         form.save()
@@ -49,20 +49,18 @@ def delete_profile(request):
     context = {
         "form": form,
         # Strings are left untranslated on purpose (ops prefer english :D)
-        "OPS_EMAIL_PRESETS": urlencode(
-            {
-                "subject": "[djangoproject.com] Manual account deletion",
-                "body": (
-                    "Hello lovely Django Ops,\n\n"
-                    "I would like to delete my djangoproject.com user account ("
-                    f"username {request.user.username}) but the system is not letting "
-                    "me do it myself. Could you help me out please?\n\n"
-                    "Thanks in advance,\n"
-                    "You're amazing\n"
-                    f"{request.user.get_full_name() or request.user.username}"
-                ),
-            }
-        ),
+        "OPS_EMAIL_PRESETS": urlencode({
+            "subject": "[djangoproject.com] Manual account deletion",
+            "body": (
+                "Hello lovely Django Ops,\n\n"
+                "I would like to delete my djangoproject.com user account ("
+                f"username {request.user.username}) but the system is not letting "
+                "me do it myself. Could you help me out please?\n\n"
+                "Thanks in advance,\n"
+                "You're amazing\n"
+                f"{request.user.get_full_name() or request.user.username}"
+            ),
+        }),
     }
     return render(request, "accounts/delete_profile.html", context)
 
@@ -73,7 +71,7 @@ def delete_profile_success(request):
 
 def get_user_stats(user):
     username = user.username.encode("ascii", "ignore")
-    key = "user_vital_status:%s" % hashlib.md5(username).hexdigest()
+    key = f"user_vital_status:{hashlib.md5(username).hexdigest()}"
     info = cache.get(key)
     if info is None:
         info = trac_stats.get_user_stats(user.username)

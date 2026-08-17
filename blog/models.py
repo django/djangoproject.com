@@ -16,7 +16,8 @@ from docutils.core import publish_parts
 from docutils.nodes import document
 from docutils.writers.html4css1 import HTMLTranslator, Writer
 from markdown import Markdown
-from markdown.extensions.toc import TocExtension, slugify as _md_title_slugify
+from markdown.extensions.toc import TocExtension
+from markdown.extensions.toc import slugify as _md_title_slugify
 from markdown.treeprocessors import Treeprocessor
 
 BLOG_DOCUTILS_SETTINGS = {

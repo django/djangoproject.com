@@ -1,7 +1,31 @@
+# line-length is migrated from previously existing flake8 config. The following is the original comment:
+# black enforces an 88 char line length but in some edge cases it's unable to
+# do so, and in that case it creates an unresolvable E501 error. The solution
+# is to set a slightly higher limit for flake8.
+line-length = 90
+
+[format]
+preview = true
+
 [lint]
-select = [
+extend-select = [
     # For flake8 compatibility.
     # Explicit definition of the rule can be removed after the full migration.
     # https://docs.astral.sh/ruff/rules/lambda-assignment/
     "E731",
+    # https://docs.astral.sh/ruff/rules/#isort-i
+    # https://pycqa.github.io/isort/
+    "I",
+    # https://docs.astral.sh/ruff/rules/#pyupgrade-up
+    # https://github.com/asottile/pyupgrade
+    "UP",
 ]
+extend-ignore = [
+    "DTZ",
+    "RUF",
+]
+[lint.per-file-ignores]
+# RUF012 is violated by Django-generated migrations.
+# https://docs.astral.sh/ruff/rules/mutable-class-default/
+# TODO: Fix existing issues, update the migration template and remove this exception
+"**/migrations/*" = ["RUF012"]

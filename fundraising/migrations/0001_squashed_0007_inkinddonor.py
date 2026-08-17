@@ -58,9 +58,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "approved",
-                    models.NullBooleanField(
-                        verbose_name="Name, URL, and Logo approved?"
-                    ),
+                    models.NullBooleanField(verbose_name="Name, URL, and Logo approved?"),
                 ),
             ],
             options={

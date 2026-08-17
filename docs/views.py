@@ -9,7 +9,8 @@ from django.core.paginator import InvalidPage, Paginator
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
 from django.template.response import TemplateResponse
-from django.utils.translation import activate, gettext_lazy as _
+from django.utils.translation import activate
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_page
 from django_hosts.resolvers import reverse
 
@@ -66,8 +67,9 @@ def document(request, lang, version, url):
         rtd_version = version + ".x"
 
     template_names = [
-        "docs/%s.html"
-        % str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), ""),
+        "docs/{}.html".format(
+            str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), "")
+        ),
         "docs/doc.html",
     ]
 
@@ -98,16 +100,14 @@ def document(request, lang, version, url):
     response = render(request, template_names, context)
     # Tell Fastly to re-fetch from the origin once a week
     # (we'll invalidate the cache sooner if needed)
-    response["Surrogate-Control"] = "max-age=%d" % (7 * 24 * 60 * 60)
+    response["Surrogate-Control"] = f"max-age={7 * 24 * 60 * 60}"
     return response
 
 
 if not settings.DEBUG:
     # Specify a dedicated cache for docs pages that need to be purged after
     # docs rebuilds (see docs/management/commands/update_docs.py):
-    document = cache_page(settings.CACHE_MIDDLEWARE_SECONDS, cache="docs-pages")(
-        document
-    )
+    document = cache_page(settings.CACHE_MIDDLEWARE_SECONDS, cache="docs-pages")(document)
 
 
 def redirect_index(request, *args, **kwargs):
@@ -128,7 +128,7 @@ def redirect_search(request):
     search_url = reverse("document-search", host="docs", kwargs=kwargs)
     q = request.GET.get("q") or None
     if q:
-        search_url += "?q=%s" % q
+        search_url += f"?q={q}"
     return redirect(search_url)
 
 
@@ -171,9 +171,7 @@ def search_results(request, lang, version, per_page=10, orphans=3):
             if exact is not None:
                 return redirect(exact)
 
-            results = Document.objects.search(
-                q, release, document_category=doc_category
-            )
+            results = Document.objects.search(q, release, document_category=doc_category)
 
             page_number = request.GET.get("page") or 1
             paginator = Paginator(results, per_page=per_page, orphans=orphans)
@@ -196,15 +194,13 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                     % {"page_number": page_number, "message": str(e)}
                 )
 
-            context.update(
-                {
-                    "query": q,
-                    "page": page,
-                    "paginator": paginator,
-                    "start_sel": START_SEL,
-                    "DocumentationCategory": DocumentationCategory,
-                }
-            )
+            context.update({
+                "query": q,
+                "page": page,
+                "paginator": paginator,
+                "start_sel": START_SEL,
+                "DocumentationCategory": DocumentationCategory,
+            })
 
     return render(request, "docs/search_results.html", context)
 
@@ -233,7 +229,8 @@ def search_suggestions(request, lang, version, per_page=20):
         q = form.cleaned_data.get("q")
         if q:
             results = (
-                Document.objects.filter(
+                Document.objects
+                .filter(
                     release__lang=release.lang,
                 )
                 .filter(
@@ -301,7 +298,7 @@ def sitemap_index(request, sitemaps):
     django_hosts for URL reversing.
     """
     sites = []
-    for section in sitemaps.keys():
+    for section in sitemaps:
         sitemap_url = reverse(
             "document-sitemap", host="docs", kwargs={"section": section}
         )

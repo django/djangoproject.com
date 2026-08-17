@@ -168,21 +168,17 @@ def generate_grids(start_year: int, end_year: int, config: dict) -> list:
             is_january = month == 1
             x = year_x_start + ((month - 1) / 12 * pixels_per_year)
 
-            grid_lines.append(
-                {
-                    "x": x,
-                    "width": (
-                        config["year_line_width"]
-                        if is_january
-                        else config["month_line_width"]
-                    ),
-                    "top_label": str(year) if is_january else None,
-                    "bottom_label": month_label if year_index == 0 else None,
-                    "line-color": (
-                        COLORS["grid"] if is_january else COLORS["month-grid"]
-                    ),
-                }
-            )
+            grid_lines.append({
+                "x": x,
+                "width": (
+                    config["year_line_width"]
+                    if is_january
+                    else config["month_line_width"]
+                ),
+                "top_label": str(year) if is_january else None,
+                "bottom_label": month_label if year_index == 0 else None,
+                "line-color": (COLORS["grid"] if is_january else COLORS["month-grid"]),
+            })
     return grid_lines
 
 
@@ -229,14 +225,12 @@ def generate_releases(data: list, start_year: int, config: dict) -> list:
                 "text": "LTS",
             }
 
-        releases_processed.append(
-            {
-                "mainstream_bar": mainstream_bar,
-                "extended_bar": extended_bar,
-                "version_text": version_text,
-                "lts_text": lts_text,
-            }
-        )
+        releases_processed.append({
+            "mainstream_bar": mainstream_bar,
+            "extended_bar": extended_bar,
+            "version_text": version_text,
+            "lts_text": lts_text,
+        })
     return releases_processed
 
 

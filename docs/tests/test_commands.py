@@ -41,37 +41,31 @@ class BuildDocReleaseSphinxErrorTests(TestCase):
 
     def test_sphinx_error_raises_command_error_and_reports_to_sentry(self):
         error = SphinxError("boom")
-        with tempfile.TemporaryDirectory() as tmp:
-            with (
-                override_settings(DOCS_BUILD_ROOT=Path(tmp)),
-                patch.object(Command, "_html_builder_name", return_value="html"),
-                patch(
-                    "docs.management.commands.build_doc_release.Config"
-                ) as mock_config,
-                patch(
-                    "docs.management.commands.build_doc_release.Sphinx"
-                ) as mock_sphinx,
-                patch(
-                    "docs.management.commands.build_doc_release.patch_docutils"
-                ) as mock_patch_docutils,
-                patch(
-                    "docs.management.commands.build_doc_release.docutils_namespace"
-                ) as mock_docutils_namespace,
-                patch(
-                    "docs.management.commands.build_doc_release."
-                    "capture_sentry_exception"
-                ) as mock_capture,
-            ):
-                mock_config.read.return_value.extensions = []
-                # Mocked context managers must not swallow the SphinxError.
-                mock_patch_docutils.return_value.__exit__.return_value = False
-                mock_docutils_namespace.return_value.__exit__.return_value = False
-                mock_sphinx.return_value.build.side_effect = error
 
-                with self.assertRaisesMessage(
-                    CommandError, "sphinx-build returned an error"
-                ):
-                    self.command.build_doc_release(self.release)
+        with (
+            tempfile.TemporaryDirectory() as tmp,
+            override_settings(DOCS_BUILD_ROOT=Path(tmp)),
+            patch.object(Command, "_html_builder_name", return_value="html"),
+            patch("docs.management.commands.build_doc_release.Config") as mock_config,
+            patch("docs.management.commands.build_doc_release.Sphinx") as mock_sphinx,
+            patch(
+                "docs.management.commands.build_doc_release.patch_docutils"
+            ) as mock_patch_docutils,
+            patch(
+                "docs.management.commands.build_doc_release.docutils_namespace"
+            ) as mock_docutils_namespace,
+            patch(
+                "docs.management.commands.build_doc_release.capture_sentry_exception"
+            ) as mock_capture,
+        ):
+            mock_config.read.return_value.extensions = []
+            # Mocked context managers must not swallow the SphinxError.
+            mock_patch_docutils.return_value.__exit__.return_value = False
+            mock_docutils_namespace.return_value.__exit__.return_value = False
+            mock_sphinx.return_value.build.side_effect = error
+
+            with self.assertRaisesMessage(CommandError, "sphinx-build returned an error"):
+                self.command.build_doc_release(self.release)
 
         mock_capture.assert_called_once_with(error, flush=True)
 
@@ -86,19 +80,17 @@ class BuildReleaseSubprocessInvocationTests(TestCase):
             mock_run.return_value = MagicMock(returncode=0)
             command._build_release_in_subprocess(release)
 
-        mock_run.assert_called_once_with(
-            [
-                sys.executable,
-                "-m",
-                "django",
-                "build_doc_release",
-                "dev",
-                "--language",
-                "en",
-                "--verbosity",
-                "2",
-            ]
-        )
+        mock_run.assert_called_once_with([
+            sys.executable,
+            "-m",
+            "django",
+            "build_doc_release",
+            "dev",
+            "--language",
+            "en",
+            "--verbosity",
+            "2",
+        ])
 
 
 class UpdateDocsResilienceTests(TestCase):
@@ -130,9 +122,7 @@ class UpdateDocsResilienceTests(TestCase):
                 "docs.management.commands.update_docs.capture_sentry_exception"
             ) as mock_capture,
         ):
-            command.handle(
-                force=False, interactive=False, purge_cache=False, verbosity=0
-            )
+            command.handle(force=False, interactive=False, purge_cache=False, verbosity=0)
 
         self.assertEqual(attempted, [failing_release, other_release])
         mock_capture.assert_called_once_with(error, flush=True)

@@ -38,9 +38,7 @@ class Command(BaseCommand):
         verbosity = options["verbosity"]
         dry_run = options["dry_run"]
 
-        expiry_cutoff = timezone.now() - timedelta(
-            days=settings.ACCOUNT_ACTIVATION_DAYS
-        )
+        expiry_cutoff = timezone.now() - timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS)
 
         qs = User.objects.filter(
             is_active=False,

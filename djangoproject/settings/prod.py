@@ -1,4 +1,4 @@
-from .common import *  # noqa
+from .common import *
 
 DOMAIN_NAME = os.getenv("DOMAIN_NAME", "djangoproject.com")
 

@@ -75,15 +75,19 @@ class BaseChecklistTestCaseMixin:
         self.assertIn(expected, content)
         version = release.version
         data = [
-            "- [ ] Add (or edit if existing) the the [release entry in the admin]"
-            f"(https://www.djangoproject.com/admin/releases/release?version={version})",
+            (
+                "- [ ] Add (or edit if existing) the the [release entry in the admin]"
+                f"(https://www.djangoproject.com/admin/releases/release?version={version})"
+            ),
             "- Is active: False",
             f"- LTS: {release.is_lts}",
             f"- Release date: {release.date.isoformat()}",
             f"- `VERSION={version} scripts/verify_release.sh`",
             "- `twine upload --repository django dist/*`",
-            '- [ ] Mark the release as "active" in\n  '
-            f"https://www.djangoproject.com/admin/releases/release/{version}/change/",
+            (
+                '- [ ] Mark the release as "active" in\n  '
+                f"https://www.djangoproject.com/admin/releases/release/{version}/change/"
+            ),
         ]
         for item in data:
             with self.subTest(item=item):
@@ -141,9 +145,7 @@ class BugFixReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         release = self.factory.make_release(version="5.2.4")
         checklist = self.make_checklist(release=release)
         self.assertEqual(checklist.slug, "bugfix-releases")
-        self.assertEqual(
-            checklist.blogpost_title, "Django bugfix release issued: 5.2.4"
-        )
+        self.assertEqual(checklist.blogpost_title, "Django bugfix release issued: 5.2.4")
         self.assertEqual(
             checklist.blogpost_summary,
             "Today the Django project issued a bugfix release for the 5.2 release "
@@ -175,9 +177,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         release52 = self.factory.make_release(version="5.2")
         prerelease = self.factory.make_release(version="6.0a1")
         checklist = self.make_checklist(releases=[release51, release52, prerelease])
-        self.assertEqual(
-            checklist.affected_releases, [prerelease, release52, release51]
-        )
+        self.assertEqual(checklist.affected_releases, [prerelease, release52, release51])
 
     def test_blogpost_info(self):
         release42 = self.factory.make_release(version="4.2.13")
@@ -443,14 +443,10 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             )
 
         with self.subTest(task="Stub release notes added"):
-            self.assertStubReleaseNotesAdded(
-                checklist.latest_release, checklist_content
-            )
+            self.assertStubReleaseNotesAdded(checklist.latest_release, checklist_content)
 
         with self.subTest(task="Make release public steps added"):
-            self.assertMakeReleasePublicAdded(
-                checklist.latest_release, checklist_content
-            )
+            self.assertMakeReleasePublicAdded(checklist.latest_release, checklist_content)
 
         with self.subTest(task="Push and announce steps added"):
             self.assertPushAndAnnouncesAdded(checklist, checklist_content)
@@ -500,8 +496,10 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         cves = checklist.securityissue_set.all()
         prenotification = [
             "Create a new text file `prenotification-email.txt` with content",
-            "a set of security releases will be issued on Wednesday, May 7, 2025 "
-            "around 16:18 UTC",
+            (
+                "a set of security releases will be issued on Wednesday, May 7, 2025 "
+                "around 16:18 UTC"
+            ),
             *(cve.headline_for_blogpost for cve in cves),
             "## Affected supported versions "
             + " ".join(f"* Django {branch}" for branch in checklist.affected_branches),
@@ -531,9 +529,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         )
         checklist_content = self.do_render_checklist(checklist)
 
-        expected_url = reverse(
-            "checklists:cve_json_record", args=[issue.cve_year_number]
-        )
+        expected_url = reverse("checklists:cve_json_record", args=[issue.cve_year_number])
         self.assertIn(f"Get CVE Record from {expected_url}", checklist_content)
 
     def test_render_checklist_blogdescription_display(self):
@@ -609,14 +605,18 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
 
         # RST security archive uses double backticks and RST-style headings.
         expected_rst = [
-            "May 7, 2025 - :cve:`2025-11111`\n"
-            "-------------------------------\n\n"
-            "Denial-of-service possibility in ``strip_tags()``.\n"
-            f"`Full description\n<{checklist.blogpost_link}>`__",
-            "May 7, 2025 - :cve:`2025-22222`\n"
-            "-------------------------------\n\n"
-            "Denial-of-service in ``LoginView`` and ``LogoutView``.\n"
-            f"`Full description\n<{checklist.blogpost_link}>`__",
+            (
+                "May 7, 2025 - :cve:`2025-11111`\n"
+                "-------------------------------\n\n"
+                "Denial-of-service possibility in ``strip_tags()``.\n"
+                f"`Full description\n<{checklist.blogpost_link}>`__"
+            ),
+            (
+                "May 7, 2025 - :cve:`2025-22222`\n"
+                "-------------------------------\n\n"
+                "Denial-of-service in ``LoginView`` and ``LogoutView``.\n"
+                f"`Full description\n<{checklist.blogpost_link}>`__"
+            ),
         ]
         for headline in expected_rst:
             with self.subTest(headline=headline):
@@ -1220,7 +1220,7 @@ class PreReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
 
     def test_affected_releases(self):
         feature_release = self.factory.make_feature_release_checklist("6.0")
-        for status, verbose in self.status_to_version.items():
+        for status in self.status_to_version:
             release = self.factory.make_release(version=f"6.0{status}1")
             with self.subTest(release=release):
                 checklist = self.make_checklist(
@@ -1255,7 +1255,7 @@ class PreReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
 
     def test_versions(self):
         feature_release = self.factory.make_feature_release_checklist("6.0")
-        for status, verbose in self.status_to_version.items():
+        for status in self.status_to_version:
             version = f"6.0{status}1"
             release = self.factory.make_release(version=version)
             with self.subTest(release=release):
@@ -1277,9 +1277,7 @@ class PreReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
                 )
                 assert instance.release is release
                 checklist_content = self.do_render_checklist(instance)
-                self.assertIn(
-                    "- [ ] Update the translation catalogs:", checklist_content
-                )
+                self.assertIn("- [ ] Update the translation catalogs:", checklist_content)
                 if status == "rc":
                     self.assertIn(
                         "- [ ] Create a new topic in the `Internationalization` "
@@ -1342,13 +1340,19 @@ class FeatureReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         feature_release_tasks = [
             "- Remove the `UNDER DEVELOPMENT` header at the top of the release notes",
             "- Remove the `Expected` prefix and update the release date if necessary",
-            "- [ ] Create a new branch from the current stable branch in the "
-            "[django-docs-translations repository]",
-            "- [ ] Update the metadata for the docs in "
-            "https://www.djangoproject.com/admin/docs/documentrelease/",
+            (
+                "- [ ] Create a new branch from the current stable branch in the "
+                "[django-docs-translations repository]"
+            ),
+            (
+                "- [ ] Update the metadata for the docs in "
+                "https://www.djangoproject.com/admin/docs/documentrelease/"
+            ),
             "- Create new `DocumentRelease` objects for each language",
-            "- [ ] Extend [robots.docs.txt](https://github.com/django/"
-            "djangoproject.com/blob/main/djangoproject/static/robots.docs.txt)",
+            (
+                "- [ ] Extend [robots.docs.txt](https://github.com/django/"
+                "djangoproject.com/blob/main/djangoproject/static/robots.docs.txt)"
+            ),
             "- [ ] Advance the version in the download page's tables",
             "- [ ] Update the current stable branch and remove the pre-release branch",
             version_trove_classifier_updates,

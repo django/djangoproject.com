@@ -12,7 +12,8 @@ class DocsSitemap(LocationAbsoluteUrlMixin, Sitemap):
 
     def items(self):
         return (
-            Document.objects.filter(release__lang=self.lang)
+            Document.objects
+            .filter(release__lang=self.lang)
             .exclude(metadata__parents=DocumentationCategory.WEBSITE)
             .order_by("-release__release", "path")
             .select_related("release__release")

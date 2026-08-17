@@ -81,12 +81,10 @@ class CorporateMemberBadgesView(TemplateView):
             for variant in img_variants:
                 basename = f"{level}_{variant}" if variant else level
                 filename = f"img/badges/corporate_members/{basename}"
-                badges[level].append(
-                    {
-                        "svg": f"{filename}.svg",
-                        "png": f"{filename}.png",
-                    }
-                )
+                badges[level].append({
+                    "svg": f"{filename}.svg",
+                    "png": f"{filename}.png",
+                })
 
         context["badges"] = badges
         return context

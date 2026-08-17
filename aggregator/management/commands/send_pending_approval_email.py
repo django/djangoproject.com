@@ -22,9 +22,7 @@ class Command(BaseCommand):
         feeds = Feed.objects.filter(approval_status=PENDING_FEED)
         to_email = [
             x.email
-            for x in User.objects.filter(
-                groups__name=settings.FEED_APPROVERS_GROUP_NAME
-            )
+            for x in User.objects.filter(groups__name=settings.FEED_APPROVERS_GROUP_NAME)
         ]
 
         if len(feeds) == 0:
@@ -55,5 +53,5 @@ To approve them, visit: {% url 'admin:aggregator_feed_changelist' %}
 
         if verbosity >= 1:
             self.stdout.write(
-                "Sent pending approval email to: %s" % (", ".join(to_email))
+                "Sent pending approval email to: {}".format(", ".join(to_email))
             )

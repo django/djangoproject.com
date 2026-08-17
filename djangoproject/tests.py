@@ -8,7 +8,8 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import NoReverseMatch, get_resolver
-from django.utils.translation import activate, gettext as _
+from django.utils.translation import activate
+from django.utils.translation import gettext as _
 from django_hosts.resolvers import reverse
 from django_recaptcha.client import RecaptchaResponse
 from playwright.sync_api import expect, sync_playwright
@@ -143,7 +144,7 @@ class ExcludeHostsLocaleMiddlewareTests(ReleaseMixin, TestCase):
         (with a port) is excluded
         """
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/", headers={"host": "%s:8000" % self.docs_host})
+            resp = self.client.get("/", headers={"host": f"{self.docs_host}:8000"})
         self.assertEqual(resp.status_code, HTTPStatus.FOUND)
         self.assertNotIn("Content-Language", resp)
         self.assertNotIn("Vary", resp)
@@ -182,7 +183,7 @@ class ExcludeHostsLocaleMiddlewareTests(ReleaseMixin, TestCase):
     def test_www_host_with_port(self):
         """www (with a port) should still use LocaleMiddleware"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/", headers={"host": "%s:8000" % self.www_host})
+            resp = self.client.get("/", headers={"host": f"{self.www_host}:8000"})
         self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn("Content-Language", resp)
         self.assertIn("Vary", resp)
@@ -304,9 +305,9 @@ class EndToEndTests(ReleaseMixin, StaticLiveServerTestCase):
 
     def test_init_light_dark_theme_uses_existing_cookie(self):
         page = self.browser.new_page(user_agent=self.mac_user_agent)
-        page.context.add_cookies(
-            [{"name": "theme", "value": "dark", "domain": "localhost", "path": "/"}]
-        )
+        page.context.add_cookies([
+            {"name": "theme", "value": "dark", "domain": "localhost", "path": "/"}
+        ])
         page.goto(self.live_server_url)
         theme = page.evaluate("document.documentElement.dataset.theme")
         self.assertEqual(theme, "dark")

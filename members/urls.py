@@ -35,9 +35,7 @@ urlpatterns = [
     ),
     path(
         "corporate-membership/join/thanks/",
-        TemplateView.as_view(
-            template_name="members/corporate_members_join_thanks.html"
-        ),
+        TemplateView.as_view(template_name="members/corporate_members_join_thanks.html"),
         name="corporate-members-join-thanks",
     ),
     path(

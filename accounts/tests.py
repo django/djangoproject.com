@@ -169,7 +169,7 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         }
     )
     def test_caches_trac_stats(self):
-        key = "user_vital_status:%s" % hashlib.md5(b"user1").hexdigest()
+        key = "user_vital_status:{}".format(hashlib.md5(b"user1").hexdigest())
 
         self.assertIsNone(cache.get(key))
 
@@ -284,8 +284,10 @@ class RegistrationTests(ReleaseMixin, TestCase):
         self.assertEqual(
             logs.output,
             [
-                "WARNING:django_recaptcha.fields:ReCAPTCHA validation failed due to "
-                "its score of 0.1 being lower than the required amount."
+                (
+                    "WARNING:django_recaptcha.fields:ReCAPTCHA validation failed due to "
+                    "its score of 0.1 being lower than the required amount."
+                )
             ],
         )
 
@@ -300,9 +302,7 @@ class RegistrationTests(ReleaseMixin, TestCase):
             self.captureOnCommitCallbacks(execute=True),
             patch_captcha(),
         ):
-            response = self.client.post(
-                reverse("registration_register"), data=self.data
-            )
+            response = self.client.post(reverse("registration_register"), data=self.data)
         self.assertRedirects(response, "/accounts/register/complete/")
         self.assertEqual(len(mail.outbox), 1)
         self.assertIs(User.objects.filter(username="newuser").exists(), True)

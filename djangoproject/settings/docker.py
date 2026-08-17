@@ -1,4 +1,4 @@
-from .dev import *  # noqa: F403
+from .dev import *
 
 DATABASES = {
     "default": {

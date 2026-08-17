@@ -4,7 +4,8 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.test import SimpleTestCase, TestCase
 from django.urls import reverse, set_urlconf
-from django.utils.translation import activate, gettext as _
+from django.utils.translation import activate
+from django.utils.translation import gettext as _
 from django_hosts.resolvers import reverse as reverse_with_host
 
 from djangoproject.urls import www as www_urls
@@ -24,9 +25,7 @@ class RedirectsTests(SimpleTestCase):
 
     def test_team_url(self):
         # This URL is linked from the docs.
-        self.assertEqual(
-            "/foundation/teams/", reverse("members:teams", urlconf=www_urls)
-        )
+        self.assertEqual("/foundation/teams/", reverse("members:teams", urlconf=www_urls))
 
     def test_internals_team(self):
         response = self.client.get(
@@ -54,24 +53,22 @@ class SearchFormTestCase(TestCase):
 
         for category in DocumentationCategory:
             Document.objects.create(
-                **{
-                    "metadata": {
-                        "body": "Generic Views",
-                        "breadcrumbs": [
-                            {"path": category.value, "title": str(category.label)},
-                        ],
-                        "parents": category.value,
-                        "slug": "generic-views",
-                        "title": "Generic views",
-                        "toc": (
-                            '<ul>\n<li><a class="reference internal" href="#">'
-                            "Generic views</a></li>\n</ul>\n"
-                        ),
-                    },
-                    "path": f"{category.value}/generic-views",
-                    "release": cls.doc_release,
+                metadata={
+                    "body": "Generic Views",
+                    "breadcrumbs": [
+                        {"path": category.value, "title": str(category.label)},
+                    ],
+                    "parents": category.value,
+                    "slug": "generic-views",
                     "title": "Generic views",
-                }
+                    "toc": (
+                        '<ul>\n<li><a class="reference internal" href="#">'
+                        "Generic views</a></li>\n</ul>\n"
+                    ),
+                },
+                path=f"{category.value}/generic-views",
+                release=cls.doc_release,
+                title="Generic views",
             )
 
     @classmethod
@@ -136,9 +133,7 @@ class SearchFormTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.active_filter, count=1)
-        self.assertContains(
-            response, f"{self.active_filter}API Reference</a>", html=True
-        )
+        self.assertContains(response, f"{self.active_filter}API Reference</a>", html=True)
         self.assertContains(response, "0 results for <em>potato</em>", html=True)
         self.assertContains(
             response,
@@ -170,24 +165,16 @@ class SearchFormTestCase(TestCase):
             headers={"host": "docs.djangoproject.localhost:8000"},
         )
         self.assertEqual(response.status_code, 200)
-        self.assertContains(
-            response, '<input type="hidden" name="category" value="ref">'
-        )
-        self.assertContains(
-            response, f"{self.active_filter}API Reference</a>", html=True
-        )
+        self.assertContains(response, '<input type="hidden" name="category" value="ref">')
+        self.assertContains(response, f"{self.active_filter}API Reference</a>", html=True)
         response = self.client.post(
             "/en/5.1/search/?q=potato&category=ref",
             headers={"host": "docs.djangoproject.localhost:8000"},
             data={"category": "ref", "q": "fish"},
         )
         self.assertEqual(response.status_code, 200)
-        self.assertContains(
-            response, '<input type="hidden" name="category" value="ref">'
-        )
-        self.assertContains(
-            response, f"{self.active_filter}API Reference</a>", html=True
-        )
+        self.assertContains(response, '<input type="hidden" name="category" value="ref">')
+        self.assertContains(response, f"{self.active_filter}API Reference</a>", html=True)
 
     def test_code_links(self):
         queryset_data = {
@@ -235,9 +222,10 @@ class SearchFormTestCase(TestCase):
             "release": self.doc_release,
             "title": "Empty page",
         }
-        Document.objects.bulk_create(
-            [Document(**queryset_data), Document(**empty_page_data)]
-        )
+        Document.objects.bulk_create([
+            Document(**queryset_data),
+            Document(**empty_page_data),
+        ])
         base_url = reverse_with_host(
             "document-detail",
             host="docs",
@@ -250,18 +238,22 @@ class SearchFormTestCase(TestCase):
         for query, expected_code_links in [
             (
                 "queryset",
-                f'<ul class="code-links"><li><a href="{base_url}#django.db.models.query'
-                '.QuerySet"><div><code>QuerySet</code><div class="meta">django.db.'
-                "models.query</div></div></a></li></ul>",
+                (
+                    f'<ul class="code-links"><li><a href="{base_url}#django.db.models.query'
+                    '.QuerySet"><div><code>QuerySet</code><div class="meta">django.db.'
+                    "models.query</div></div></a></li></ul>"
+                ),
             ),
             (
                 "select",
-                f'<ul class="code-links"><li><a href="{base_url}#django.db.models.query'
-                '.QuerySet.select_for_update"><div><code>QuerySet.select_for_update'
-                '</code><div class="meta">django.db.models.query</div></div></a></li>'
-                f'<li><a href="{base_url}#django.db.models.query.QuerySet.'
-                'select_related"><div><code>QuerySet.select_related</code><div '
-                'class="meta">django.db.models.query</div></div></a></li></ul>',
+                (
+                    f'<ul class="code-links"><li><a href="{base_url}#django.db.models.query'
+                    '.QuerySet.select_for_update"><div><code>QuerySet.select_for_update'
+                    '</code><div class="meta">django.db.models.query</div></div></a></li>'
+                    f'<li><a href="{base_url}#django.db.models.query.QuerySet.'
+                    'select_related"><div><code>QuerySet.select_related</code><div '
+                    'class="meta">django.db.models.query</div></div></a></li></ul>'
+                ),
             ),
         ]:
             with self.subTest(query=query):

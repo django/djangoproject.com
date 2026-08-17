@@ -27,7 +27,8 @@ INTERVAL_CHOICES = (
 class DjangoHeroManager(models.Manager):
     def for_public_display(self):
         donors = (
-            self.get_queryset()
+            self
+            .get_queryset()
             .filter(
                 is_visible=True,
                 approved=True,

@@ -3,7 +3,8 @@ from pathlib import Path
 from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import escape, format_html, format_html_join
-from django.utils.translation import gettext as _, gettext_lazy
+from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy
 from sorl.thumbnail import get_thumbnail
 
 from .models import ContentFormat, Entry, Event, ImageUpload
@@ -28,12 +29,10 @@ class EntryAdmin(admin.ModelAdmin):
         if db_field.name == "content_format":
             formfield.help_text = _("Psst, we have markdown now 🤫")
         if db_field.name == "body":
-            formfield.widget.attrs.update(
-                {
-                    "rows": 60,
-                    "style": "font-family: monospace; width: 810px;",
-                }
-            )
+            formfield.widget.attrs.update({
+                "rows": 60,
+                "style": "font-family: monospace; width: 810px;",
+            })
             formfield.help_text = format_html(
                 _(
                     "Want to include an image? "

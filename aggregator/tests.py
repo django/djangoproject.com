@@ -83,7 +83,7 @@ class AggregatorTests(TestCase):
         ]:
             models.FeedItem.objects.get_or_create(
                 feed=feed,
-                title="%s Item" % feed.title,
+                title=f"{feed.title} Item",
                 link=feed.public_url,
                 date_modified=datetime.datetime.now(),
                 guid=feed.title,
@@ -180,19 +180,19 @@ class AggregatorTests(TestCase):
 
 class TestForms(SimpleTestCase):
     def test_rejects_stackoverflow_questions(self):
-        form = FeedModelForm(
-            {
-                "title": "Asynchronous processing of file upload in Django",
-                "feed_url": "http://stackoverflow.com/questions/11752148/",
-                "public_url": "http://stackoverflow.com/questions/11752148/",
-            }
-        )
+        form = FeedModelForm({
+            "title": "Asynchronous processing of file upload in Django",
+            "feed_url": "http://stackoverflow.com/questions/11752148/",
+            "public_url": "http://stackoverflow.com/questions/11752148/",
+        })
         self.assertEqual(
             form.errors,
             {
                 "feed_url": [
-                    "Stack Overflow questions tagged with 'django' will appear "
-                    "here automatically."
+                    (
+                        "Stack Overflow questions tagged with 'django' will appear "
+                        "here automatically."
+                    )
                 ]
             },
         )

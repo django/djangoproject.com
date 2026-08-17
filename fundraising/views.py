@@ -113,7 +113,8 @@ def manage_donations(request, hero):
     hero = get_object_or_404(DjangoHero, pk=hero)
     recurring_donations = hero.donation_set.exclude(stripe_subscription_id="")
     past_payments = (
-        Payment.objects.filter(donation__donor=hero)
+        Payment.objects
+        .filter(donation__donor=hero)
         .select_related("donation")
         .order_by("-date")
     )
@@ -299,9 +300,7 @@ class WebhookHandler:
         """
         session = self.event.data.object
         # TODO: remove stripe_version when updating account settings.
-        customer = stripe.Customer.retrieve(
-            session.customer, stripe_version="2020-08-27"
-        )
+        customer = stripe.Customer.retrieve(session.customer, stripe_version="2020-08-27")
         hero, _created = DjangoHero.objects.get_or_create(
             stripe_customer_id=customer.id,
             defaults={

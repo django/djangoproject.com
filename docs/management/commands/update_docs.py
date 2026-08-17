@@ -108,7 +108,8 @@ class Command(BaseCommand):
             if changed_versions or kwargs["force"]:
                 call_command(
                     "purge_docs_cache",
-                    **{"doc_versions": changed_versions, "verbosity": self.verbosity},
+                    doc_versions=changed_versions,
+                    verbosity=self.verbosity,
                 )
             else:
                 if self.verbosity >= 1:
@@ -119,9 +120,7 @@ class Command(BaseCommand):
         if not release.is_supported and not force:
             return
         if interactive:
-            prompt = (
-                f"About to start building docs for release {release}. Continue? Y/n "
-            )
+            prompt = f"About to start building docs for release {release}. Continue? Y/n "
             if input(prompt).upper() not in {"", "Y", "YES", "OUI"}:
                 return
         if self.verbosity >= 1:
@@ -138,16 +137,14 @@ class Command(BaseCommand):
         # Update the release from SCM.
         #
         # Make a git checkout/update into the destination directory.
-        git_changed = self.update_git(
-            release.scm_url, checkout_dir, changed_dir="docs/"
-        )
+        git_changed = self.update_git(release.scm_url, checkout_dir, changed_dir="docs/")
         if git_changed:
             self.release_docs_changed[release.version] = True
         version_changed = git_changed or self.release_docs_changed.get(release.version)
         if not force and not version_changed:
             if self.verbosity >= 1:
                 self.stdout.write(
-                    "No docs changes for %s, skipping docs building." % release
+                    f"No docs changes for {release}, skipping docs building."
                 )
             return
 
@@ -168,7 +165,7 @@ class Command(BaseCommand):
 
             extra_kwargs = {"stdout": subprocess.DEVNULL} if self.verbosity == 0 else {}
             subprocess.check_call(
-                "cd %s && make translations" % trans_dir, shell=True, **extra_kwargs
+                f"cd {trans_dir} && make translations", shell=True, **extra_kwargs
             )
 
         self._build_release_in_subprocess(release)
@@ -199,8 +196,8 @@ class Command(BaseCommand):
         result = subprocess.run(command)
         if result.returncode != 0:
             self.stderr.write(
-                "build_doc_release subprocess failed for %s (exit code %s)"
-                % (release, result.returncode)
+                f"build_doc_release subprocess failed for {release} "
+                f"(exit code {result.returncode})"
             )
 
     def update_git(self, url, destdir, changed_dir="."):
@@ -224,9 +221,7 @@ class Command(BaseCommand):
                 subprocess.check_call(
                     ["git", "reset", "--hard", "HEAD", quiet], stderr=sys.stdout
                 )
-                subprocess.check_call(
-                    ["git", "clean", "-fdx", quiet], stderr=sys.stdout
-                )
+                subprocess.check_call(["git", "clean", "-fdx", quiet], stderr=sys.stdout)
                 subprocess.check_call(
                     [
                         "git",

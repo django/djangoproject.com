@@ -427,7 +427,8 @@ class DocumentManagerTest(TestCase):
 
     def test_search_breadcrumbs(self):
         doc = (
-            Document.objects.filter(title="Generic views")
+            Document.objects
+            .filter(title="Generic views")
             .search("generic", self.release)
             .get()
         )
@@ -490,41 +491,35 @@ class UpdateDocTests(TestCase):
         cls.release = DocumentRelease.objects.create(is_default=True)
 
     def test_sync_to_db(self):
-        self.release.sync_to_db(
-            [
-                {
-                    "body": "This is the body",
-                    "title": "This is the title",
-                    "current_page_name": "foo/bar",
-                }
-            ]
-        )
+        self.release.sync_to_db([
+            {
+                "body": "This is the body",
+                "title": "This is the title",
+                "current_page_name": "foo/bar",
+            }
+        ])
         document = self.release.documents.get()
         self.assertEqual(document.path, "foo/bar")
 
     def test_clean_path(self):
-        self.release.sync_to_db(
-            [
-                {
-                    "body": "This is the body",
-                    "title": "This is the title",
-                    "current_page_name": "foo/bar/index",
-                }
-            ]
-        )
+        self.release.sync_to_db([
+            {
+                "body": "This is the body",
+                "title": "This is the title",
+                "current_page_name": "foo/bar/index",
+            }
+        ])
         document = self.release.documents.get()
         self.assertEqual(document.path, "foo/bar")
 
     def test_title_strip_tags(self):
-        self.release.sync_to_db(
-            [
-                {
-                    "body": "This is the body",
-                    "title": "This is the <strong>title</strong>",
-                    "current_page_name": "foo/bar",
-                }
-            ]
-        )
+        self.release.sync_to_db([
+            {
+                "body": "This is the body",
+                "title": "This is the <strong>title</strong>",
+                "current_page_name": "foo/bar",
+            }
+        ])
         self.assertQuerySetEqual(
             self.release.documents.all(),
             ["This is the title"],
@@ -532,15 +527,13 @@ class UpdateDocTests(TestCase):
         )
 
     def test_title_entities(self):
-        self.release.sync_to_db(
-            [
-                {
-                    "body": "This is the body",
-                    "title": "Title &amp; title",
-                    "current_page_name": "foo/bar",
-                }
-            ]
-        )
+        self.release.sync_to_db([
+            {
+                "body": "This is the body",
+                "title": "Title &amp; title",
+                "current_page_name": "foo/bar",
+            }
+        ])
         self.assertQuerySetEqual(
             self.release.documents.all(),
             ["Title & title"],
@@ -548,13 +541,11 @@ class UpdateDocTests(TestCase):
         )
 
     def test_empty_documents(self):
-        self.release.sync_to_db(
-            [
-                {"title": "Empty body document", "current_page_name": "foo/1"},
-                {"body": "Empty title document", "current_page_name": "foo/2"},
-                {"current_page_name": "foo/3"},
-            ]
-        )
+        self.release.sync_to_db([
+            {"title": "Empty body document", "current_page_name": "foo/1"},
+            {"body": "Empty title document", "current_page_name": "foo/2"},
+            {"current_page_name": "foo/3"},
+        ])
         self.assertQuerySetEqual(self.release.documents.all(), [])
 
     def test_excluded_documents(self):
@@ -574,12 +565,10 @@ class UpdateDocTests(TestCase):
             lang=lang,
             release=Release.objects.create(version=version),
         )
-        release.sync_to_db(
-            [
-                {"body": "", "title": "", "current_page_name": "nonexcluded/bar"},
-                {"body": "", "title": "", "current_page_name": "%s/bar" % path},
-            ]
-        )
+        release.sync_to_db([
+            {"body": "", "title": "", "current_page_name": "nonexcluded/bar"},
+            {"body": "", "title": "", "current_page_name": f"{path}/bar"},
+        ])
         document = release.documents.get()
         self.assertEqual(document.path, "nonexcluded/bar")
 
@@ -724,8 +713,10 @@ class DocumentUrlTests(TestCase):
             self.release.documents.order_by("path"),
             [
                 "http://docs.djangoproject.localhost:8000/en/1.2.3/",
-                "http://docs.djangoproject.localhost:8000/en/1.2.3/"
-                "topics/http/generic-views/",
+                (
+                    "http://docs.djangoproject.localhost:8000/en/1.2.3/"
+                    "topics/http/generic-views/"
+                ),
             ],
             transform=lambda doc: doc.get_absolute_url(),
         )
