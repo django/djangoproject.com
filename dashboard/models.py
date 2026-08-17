@@ -166,12 +166,12 @@ class GitHubSearchCountMetric(Metric):
         """Request the specified GitHub API and return a total count."""
         today = datetime.date.today()
         if self.period == METRIC_PERIOD_WEEKLY:
-            committer_date = ">%s" % (today - datetime.timedelta(weeks=1)).isoformat()
+            committer_date = f">{(today - datetime.timedelta(weeks=1)).isoformat()}"
         else:
             committer_date = today.isoformat()
         r = requests.get(
             self.api_url
-            + "?per_page=1&q=repo:django/django+committer-date:%s" % committer_date
+            + f"?per_page=1&q=repo:django/django+committer-date:{committer_date}"
         )
         data = r.json()
         return data["total_count"]

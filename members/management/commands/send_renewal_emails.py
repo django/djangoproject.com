@@ -14,8 +14,8 @@ class Command(BaseCommand):
         for member in CorporateMember.objects.filter(inactive=False):
             if member.get_expiry_date() == thirty_days_from_now:
                 send_mail(
-                    "Expiring Django Software Foundation Membership for %s"
-                    % member.display_name,
+                    f"Expiring Django Software Foundation Membership"
+                    f" for {member.display_name}",
                     render_to_string(
                         "members/corporate_member_renewal_email.txt",
                         {

@@ -59,8 +59,9 @@ class Command(BaseCommand):
             )
         except DocumentRelease.DoesNotExist:
             raise CommandError(
-                "No DocumentRelease found for version=%r lang=%r"
-                % (version, options["language"])
+                "No DocumentRelease found for version={!r} lang={!r}".format(
+                    version, options["language"]
+                )
             )
 
         self.build_doc_release(release)
@@ -139,8 +140,8 @@ class Command(BaseCommand):
             except SphinxError as e:
                 capture_sentry_exception(e, flush=True)
                 raise CommandError(
-                    "sphinx-build returned an error (release %s, builder %s): %s"
-                    % (release, builder, str(e))
+                    f"sphinx-build returned an error (release {release}, "
+                    f"builder {builder}): {str(e)}"  # noqa: E501
                 ) from e
 
         #
@@ -153,7 +154,7 @@ class Command(BaseCommand):
         if not zipfile_path.parent.exists():
             zipfile_path.parent.mkdir(parents=True)
         if self.verbosity >= 2:
-            self.stdout.write("  build zip (into %s)" % zipfile_path)
+            self.stdout.write(f"  build zip (into {zipfile_path})")
 
         def zipfile_inclusion_filter(file_path):
             return ".doctrees" not in file_path.parts

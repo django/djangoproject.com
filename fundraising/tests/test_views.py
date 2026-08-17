@@ -317,14 +317,14 @@ class TestManageDonations(ReleaseMixin, TestCase):
         self.assertContains(response, self.past_donations_header)
         self.assertContains(
             response,
-            "<li>$10.00 on %s (Yearly donation)</li>"
-            % self._format_donation_date(self.payment1.date),
+            f"<li>$10.00 on {self._format_donation_date(self.payment1.date)} "
+            f"(Yearly donation)</li>",
             html=True,
         )
         self.assertContains(
             response,
-            "$5.00 on %s (One-time donation)"
-            % self._format_donation_date(self.payment2.date),
+            f"$5.00 on {self._format_donation_date(self.payment2.date)} "
+            f"(One-time donation)",
             html=True,
         )
 

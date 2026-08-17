@@ -147,7 +147,7 @@ class Command(BaseCommand):
         if not force and not version_changed:
             if self.verbosity >= 1:
                 self.stdout.write(
-                    "No docs changes for %s, skipping docs building." % release
+                    f"No docs changes for {release}, skipping docs building."
                 )
             return
 
@@ -168,7 +168,7 @@ class Command(BaseCommand):
 
             extra_kwargs = {"stdout": subprocess.DEVNULL} if self.verbosity == 0 else {}
             subprocess.check_call(
-                "cd %s && make translations" % trans_dir, shell=True, **extra_kwargs
+                f"cd {trans_dir} && make translations", shell=True, **extra_kwargs
             )
 
         self._build_release_in_subprocess(release)
@@ -199,8 +199,8 @@ class Command(BaseCommand):
         result = subprocess.run(command)
         if result.returncode != 0:
             self.stderr.write(
-                "build_doc_release subprocess failed for %s (exit code %s)"
-                % (release, result.returncode)
+                f"build_doc_release subprocess failed for {release} "
+                f"(exit code {result.returncode})"
             )
 
     def update_git(self, url, destdir, changed_dir="."):
