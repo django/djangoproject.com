@@ -32,7 +32,7 @@ repos:
             args: [--py312]
 
     - repo: https://github.com/adamchainz/django-upgrade
-      rev: 1.31.1
+      rev: 1.32.0
       hooks:
           - id: django-upgrade
             args: [--target-version, "6.1"]
@@ -43,7 +43,7 @@ repos:
           - id: black
 
     - repo: https://github.com/rbubley/mirrors-prettier
-      rev: v3.7.4
+      rev: v3.9.6
       hooks:
           - id: prettier
             # https://github.com/rbubley/mirrors-prettier/issues/3
@@ -57,14 +57,14 @@ repos:
           - id: flake8
 
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.16.3
+      rev: v0.16.4
       hooks:
           - id: ruff-check
             args: ["--fix", "--show-fixes"]
           - id: ruff-format
 
     - repo: https://github.com/rtts/djhtml
-      rev: 3.0.10
+      rev: 3.0.11
       hooks:
           - id: djhtml
             files: .*/templates/.*\.html$
@@ -74,18 +74,18 @@ repos:
       hooks:
           - id: checkmake
     - repo: https://github.com/adamchainz/djade-pre-commit
-      rev: 1.7.0
+      rev: 1.9.0
       hooks:
           - id: djade
             args: [--target-version, "6.0"]
 
     - repo: https://github.com/tox-dev/pyproject-fmt
-      rev: v2.27.1
+      rev: v2.28.0
       hooks:
           - id: pyproject-fmt
 
     - repo: https://github.com/astral-sh/uv-pre-commit
-      rev: 0.12.4
+      rev: 0.12.5
       hooks:
           - name: Check lock file
             id: uv-lock
