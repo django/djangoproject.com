@@ -31,11 +31,6 @@ repos:
           - id: django-upgrade
             args: [--target-version, "6.1"]
 
-    - repo: https://github.com/psf/black-pre-commit-mirror
-      rev: 26.5.1
-      hooks:
-          - id: black
-
     - repo: https://github.com/rbubley/mirrors-prettier
       rev: v3.7.4
       hooks:
@@ -44,11 +39,6 @@ repos:
             language_version: 24.15.0
             exclude_types: [html, json, scss]
             exclude: '(^djangoproject\/static\/js\/lib\/.*$|^checklists\/templates\/.*$)'
-
-    - repo: https://github.com/pycqa/flake8
-      rev: 7.3.0
-      hooks:
-          - id: flake8
 
     - repo: https://github.com/astral-sh/ruff-pre-commit
       rev: v0.16.3
