@@ -120,11 +120,7 @@ def generate_scroll_to_text_fragment(highlighted_text):
        has fallen down e.g. test = 5 not test=5 but test(a=5) not test(a = 5).
     """
     first_non_empty_line = next(
-        (
-            stripped
-            for line in highlighted_text.split("\n")
-            if (stripped := line.strip())
-        ),
+        (stripped for line in highlighted_text.split("\n") if (stripped := line.strip())),
         "",
     )
     # Remove highlight tags and unwanted symbols.
@@ -191,7 +187,7 @@ def code_links(searched_python_objects, python_objects):
     ]
     matched_reference = {}
     # Map "select_related" to "QuerySet.select_related" in code_references.
-    reference_map = {key.split(".")[-1]: key for key in python_objects.keys()}
+    reference_map = {key.split(".")[-1]: key for key in python_objects}
     for short_name in python_objects_matched_short_names:
         if full_path := python_objects.get(short_name):
             matched_reference[short_name] = {

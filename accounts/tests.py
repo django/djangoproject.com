@@ -284,8 +284,10 @@ class RegistrationTests(ReleaseMixin, TestCase):
         self.assertEqual(
             logs.output,
             [
-                "WARNING:django_recaptcha.fields:ReCAPTCHA validation failed due to "
-                "its score of 0.1 being lower than the required amount."
+                (
+                    "WARNING:django_recaptcha.fields:ReCAPTCHA validation failed due to "
+                    "its score of 0.1 being lower than the required amount."
+                )
             ],
         )
 
@@ -300,9 +302,7 @@ class RegistrationTests(ReleaseMixin, TestCase):
             self.captureOnCommitCallbacks(execute=True),
             patch_captcha(),
         ):
-            response = self.client.post(
-                reverse("registration_register"), data=self.data
-            )
+            response = self.client.post(reverse("registration_register"), data=self.data)
         self.assertRedirects(response, "/accounts/register/complete/")
         self.assertEqual(len(mail.outbox), 1)
         self.assertIs(User.objects.filter(username="newuser").exists(), True)

@@ -125,8 +125,10 @@ def band_listing(request):
             ),
             (
                 nested_text_choices,
-                "#:~:text=TextChoices%28%22Medal%22%2C%20%22GOLD%20SILVER%20"
-                "BRONZE%22%29",
+                (
+                    "#:~:text=TextChoices%28%22Medal%22%2C%20%22GOLD%20SILVER%20"
+                    "BRONZE%22%29"
+                ),
             ),
             (
                 """<mark>TextChoices</mark>  ,   IntegerChoices  , and   Choices

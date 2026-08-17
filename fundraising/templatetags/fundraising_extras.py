@@ -38,7 +38,8 @@ def as_percentage(part, total):
 def donation_snippet():
     try:
         donation = (
-            DjangoHero.objects.filter(
+            DjangoHero.objects
+            .filter(
                 approved=True,
                 is_visible=True,
             )
@@ -58,9 +59,9 @@ def donation_snippet():
 def donation_form_with_heart(context):
     user = context["user"]
     donated_amount = (
-        Payment.objects.filter(date__gte=GOAL_START_DATE).aggregate(
-            models.Sum("amount")
-        )["amount__sum"]
+        Payment.objects.filter(date__gte=GOAL_START_DATE).aggregate(models.Sum("amount"))[
+            "amount__sum"
+        ]
         or 0
     )
     donated_amount += (
@@ -71,7 +72,8 @@ def donation_form_with_heart(context):
     )
 
     total_donors = (
-        DjangoHero.objects.filter(donation__payment__date__gte=GOAL_START_DATE)
+        DjangoHero.objects
+        .filter(donation__payment__date__gte=GOAL_START_DATE)
         .distinct()
         .count()
     )
@@ -87,7 +89,7 @@ def donation_form_with_heart(context):
     days_in_year = 366 if isleap(today.year) else 365
     expected_amount = (
         GOAL_AMOUNT * Decimal(day_of_year) / Decimal(days_in_year)
-    ).quantize(Decimal("1"))
+    ).quantize(Decimal(1))
 
     return {
         "goal_amount": GOAL_AMOUNT,

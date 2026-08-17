@@ -70,12 +70,10 @@ class Command(BaseCommand):
         # our .post() request below
         retry = Retry(total=5, allowed_methods={"POST"}, backoff_factor=0.1)
         s.mount(fastly_service_url, HTTPAdapter(max_retries=retry))
-        s.headers.update(
-            {
-                "Fastly-Key": fastly_api_key,
-                "Accept": "application/json",
-            }
-        )
+        s.headers.update({
+            "Fastly-Key": fastly_api_key,
+            "Accept": "application/json",
+        })
         if doc_versions == {"dev"}:
             # If only the dev docs have changed, we can purge only the surrogate key
             # we've set up for the dev docs release in Fastly. This will usually

@@ -60,7 +60,7 @@ class PythonObjectsJSONHTMLBuilder(JSONHTMLBuilder):
         out_dict["python_objects_search"] = " ".join(
             # Keeps the code suffix to improve the search results for terms such as
             # "select" for QuerySet.select_related.
-            [key.split(".")[-1] for key in python_objects.keys()]
+            [key.split(".")[-1] for key in python_objects]
         )
         return out_dict
 

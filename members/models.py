@@ -79,7 +79,8 @@ class Team(models.Model):
 class CorporateMemberManager(models.Manager):
     def for_public_display(self):
         objs = (
-            self.get_queryset()
+            self
+            .get_queryset()
             .filter(
                 invoice__expiration_date__gte=timezone_today(),
             )
@@ -147,9 +148,11 @@ class CorporateMember(LogoThumbnailMixin, models.Model):
     def get_expiry_date(self):
         expiry_date = None
         for invoice in self.invoice_set.all():
-            if expiry_date is None:
-                expiry_date = invoice.expiration_date
-            elif invoice.expiration_date and invoice.expiration_date > expiry_date:
+            if (
+                expiry_date is None
+                or invoice.expiration_date
+                and invoice.expiration_date > expiry_date
+            ):
                 expiry_date = invoice.expiration_date
         return expiry_date
 

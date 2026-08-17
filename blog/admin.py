@@ -29,12 +29,10 @@ class EntryAdmin(admin.ModelAdmin):
         if db_field.name == "content_format":
             formfield.help_text = _("Psst, we have markdown now 🤫")
         if db_field.name == "body":
-            formfield.widget.attrs.update(
-                {
-                    "rows": 60,
-                    "style": "font-family: monospace; width: 810px;",
-                }
-            )
+            formfield.widget.attrs.update({
+                "rows": 60,
+                "style": "font-family: monospace; width: 810px;",
+            })
             formfield.help_text = format_html(
                 _(
                     "Want to include an image? "

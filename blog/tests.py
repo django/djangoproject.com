@@ -397,26 +397,24 @@ class ViewsTestCase(ReleaseMixin, DateTimeMixin, TestCase):
                 self.assertQuerySetEqual(response.context["events"], [])
 
     def test_corporate_sponsors_displayed(self):
-        objs = CorporateMember.objects.bulk_create(
-            [
-                CorporateMember(
-                    display_name="Platinum company",
-                    membership_level=PLATINUM_MEMBERSHIP,
-                ),
-                CorporateMember(
-                    display_name="Diamond company", membership_level=DIAMOND_MEMBERSHIP
-                ),
-                CorporateMember(
-                    display_name="Gold company", membership_level=GOLD_MEMBERSHIP
-                ),
-                CorporateMember(
-                    display_name="Silver company", membership_level=SILVER_MEMBERSHIP
-                ),
-                CorporateMember(
-                    display_name="Bronze company", membership_level=BRONZE_MEMBERSHIP
-                ),
-            ]
-        )
+        objs = CorporateMember.objects.bulk_create([
+            CorporateMember(
+                display_name="Platinum company",
+                membership_level=PLATINUM_MEMBERSHIP,
+            ),
+            CorporateMember(
+                display_name="Diamond company", membership_level=DIAMOND_MEMBERSHIP
+            ),
+            CorporateMember(
+                display_name="Gold company", membership_level=GOLD_MEMBERSHIP
+            ),
+            CorporateMember(
+                display_name="Silver company", membership_level=SILVER_MEMBERSHIP
+            ),
+            CorporateMember(
+                display_name="Bronze company", membership_level=BRONZE_MEMBERSHIP
+            ),
+        ])
         for obj in objs:
             obj.invoice_set.create(amount=4, expiration_date=date(3000, 1, 1))
 

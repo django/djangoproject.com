@@ -142,7 +142,7 @@ class Command(BaseCommand):
                 capture_sentry_exception(e, flush=True)
                 raise CommandError(
                     f"sphinx-build returned an error (release {release}, "
-                    f"builder {builder}): {str(e)}"  # noqa: E501
+                    f"builder {builder}): {e!s}"
                 ) from e
 
         #
@@ -176,16 +176,14 @@ class Command(BaseCommand):
         #
         build_dir = parent_build_dir / "_build"
         built_dir = parent_build_dir / "_built"
-        subprocess.check_call(
-            [
-                "rsync",
-                "--archive",
-                "--delete",
-                f"--link-dest={build_dir}",
-                f"{build_dir}/",
-                str(built_dir),
-            ]
-        )
+        subprocess.check_call([
+            "rsync",
+            "--archive",
+            "--delete",
+            f"--link-dest={build_dir}",
+            f"{build_dir}/",
+            str(built_dir),
+        ])
 
         if release.is_default:
             self._setup_stable_symlink(release, built_dir)
@@ -212,7 +210,7 @@ def gen_decoded_documents(directory):
     for root, dirs, files in os.walk(str(directory)):
         for f in files:
             f = Path(root, f)
-            if not f.suffix == ".fjson":
+            if f.suffix != ".fjson":
                 continue
 
             with f.open() as fp:

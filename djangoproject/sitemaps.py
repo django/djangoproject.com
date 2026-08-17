@@ -19,14 +19,12 @@ class LocationAbsoluteUrlMixin:
         urls = []
         for item in self.items():
             loc = self.location(item)
-            urls.append(
-                {
-                    "location": loc,
-                    "lastmod": None,
-                    "changefreq": self.changefreq,
-                    "priority": self.priority,
-                }
-            )
+            urls.append({
+                "location": loc,
+                "lastmod": None,
+                "changefreq": self.changefreq,
+                "priority": self.priority,
+            })
         return urls
 
 

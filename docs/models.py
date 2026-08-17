@@ -163,9 +163,8 @@ class DocumentRelease(models.Model):
         if self.release is None:
             return True
         latest_release = (
-            Release.objects.filter(
-                major=self.release.major, minor=self.release.minor, status="f"
-            )
+            Release.objects
+            .filter(major=self.release.major, minor=self.release.minor, status="f")
             .order_by("-micro")
             .first()
         )
@@ -283,8 +282,7 @@ def _clean_document_path(path):
     # We have to be a bit careful to reverse-engineer the correct
     # relative path component, especially for "index" documents,
     # otherwise the search results will be incorrect.
-    if path.endswith("/index"):
-        path = path[:-6]
+    path = path.removesuffix("/index")
 
     return path
 
@@ -314,7 +312,8 @@ class DocumentQuerySet(models.QuerySet):
         if parent_paths:
             or_queries = [models.Q(path=str(path)) for path in parent_paths]
             return (
-                self.filter(reduce(operator.or_, or_queries))
+                self
+                .filter(reduce(operator.or_, or_queries))
                 .filter(release_id=document.release_id)
                 .exclude(pk=document.pk)
                 .order_by("path")
@@ -354,7 +353,8 @@ class DocumentQuerySet(models.QuerySet):
             if document_category:
                 base_filter &= Q(metadata__parents__startswith=document_category)
             base_qs = (
-                self.select_related("release__release")
+                self
+                .select_related("release__release")
                 .filter(base_filter)
                 .annotate(
                     headline=search("title", search_query),
@@ -377,13 +377,15 @@ class DocumentQuerySet(models.QuerySet):
                 )
             )
             vector_qs = (
-                base_qs.alias(rank=search_rank)
+                base_qs
+                .alias(rank=search_rank)
                 .filter(search_vector=search_query)
                 .order_by("-rank")
             )
             if not vector_qs:
                 return (
-                    base_qs.alias(
+                    base_qs
+                    .alias(
                         similarity=TrigramSimilarity(
                             "title", utils.sanitize_for_trigram(query_text)
                         )
@@ -442,15 +444,13 @@ class Document(models.Model):
             )
         ]
         indexes = [
-            models.Index(
-                fields=["release", "title"], name="document_release_title_idx"
-            ),
+            models.Index(fields=["release", "title"], name="document_release_title_idx"),
             GinIndex(fields=["search_vector"], name="document_search_vector_idx"),
         ]
         unique_together = ("release", "path")
 
     def __str__(self):
-        return "/".join([self.release.lang, self.release.version, self.path])
+        return f"{self.release.lang}/{self.release.version}/{self.path}"
 
     def get_absolute_url(self):
         return document_url(self)

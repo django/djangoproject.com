@@ -59,7 +59,8 @@ class ReleaseManager(models.Manager):
         # .exclude(eol_date__lte=at) includes releases where eol_date IS NULL
         # because a version without an end of life date is still supported.
         return (
-            self.filter(major__gte=1, date__lte=at, is_active=True)
+            self
+            .filter(major__gte=1, date__lte=at, is_active=True)
             .exclude(eol_date__lte=at)
             .order_by("-major", "-minor", "-micro", "-status")
         )
@@ -335,18 +336,14 @@ class Release(models.Model):
 
     def clean(self):
         if self.is_published and not self.tarball:
-            raise ValidationError(
-                {"tarball": "This field is required when the release is active."}
-            )
+            raise ValidationError({
+                "tarball": "This field is required when the release is active."
+            })
 
         if (self.tarball or self.wheel) and not self.checksum:
-            raise ValidationError(
-                {
-                    "checksum": (
-                        "This field is required when an artifact has been uploaded."
-                    )
-                }
-            )
+            raise ValidationError({
+                "checksum": ("This field is required when an artifact has been uploaded.")
+            })
 
         if self.tarball:
             try:

@@ -360,7 +360,8 @@ class SecurityRelease(ReleaseChecklist):
     @cached_property
     def cnas(self):
         return (
-            self.securityissue_set.all()
+            self.securityissue_set
+            .all()
             .order_by(*cve_sort_key())
             .values_list("cna", flat=True)
         )
@@ -371,8 +372,7 @@ class SecurityRelease(ReleaseChecklist):
             (
                 r.feature_version
                 if not r.is_pre_release
-                else f"{r.feature_version} (currently at {r.get_status_display()} "
-                "status)"
+                else f"{r.feature_version} (currently at {r.get_status_display()} status)"
             )
             for r in self.affected_releases
         ]
@@ -399,7 +399,7 @@ class SecurityRelease(ReleaseChecklist):
 
     @cached_property
     def latest_release(self):
-        return [r for r in self.affected_releases if not r.is_pre_release][0]
+        return next(r for r in self.affected_releases if not r.is_pre_release)
 
     @cached_property
     def hashes_by_versions(self):
@@ -409,9 +409,8 @@ class SecurityRelease(ReleaseChecklist):
                 "cve": sirt.securityissue.cve_year_number,
                 "hash": sirt.commit_hash,
             }
-            for sirt in SecurityIssueReleasesThrough.objects.select_related(
-                "securityissue", "release"
-            )
+            for sirt in SecurityIssueReleasesThrough.objects
+            .select_related("securityissue", "release")
             .filter(securityissue__release_id=self.id)
             .order_by(
                 *cve_sort_key("securityissue__cve_year_number"),
@@ -442,9 +441,7 @@ class SecurityIssueReleasesThrough(models.Model):
         "SecurityIssue", on_delete=models.CASCADE, verbose_name="Security Issue"
     )
     release = models.ForeignKey(Release, on_delete=models.CASCADE)
-    commit_hash = models.CharField(
-        max_length=128, default="", blank=True, db_index=True
-    )
+    commit_hash = models.CharField(max_length=128, default="", blank=True, db_index=True)
 
     objects = SecurityIssueReleasesThroughManager()
 
@@ -697,21 +694,19 @@ class SecurityIssue(models.Model):
         versions = []
         for release in self.releases.filter(status="f").order_by("-version"):
             versions.append(release.version)
-            affected_unaffected_versions.extend(
-                [
-                    {
-                        "status": "affected",
-                        "version": f"{release.feature_version}",
-                        "lessThan": release.version,
-                        "versionType": "python",
-                    },
-                    {
-                        "status": "unaffected",
-                        "version": release.version,
-                        "versionType": "python",
-                    },
-                ]
-            )
+            affected_unaffected_versions.extend([
+                {
+                    "status": "affected",
+                    "version": f"{release.feature_version}",
+                    "lessThan": release.version,
+                    "versionType": "python",
+                },
+                {
+                    "status": "unaffected",
+                    "version": release.version,
+                    "versionType": "python",
+                },
+            ])
         dates = {"timeline": []}
         if self.reported_at:
             dates["timeline"].append(
@@ -758,13 +753,11 @@ class SecurityIssue(models.Model):
             },
         ]
         if self.remediator:
-            credits.append(
-                {
-                    "lang": "en",
-                    "type": "remediation developer",
-                    "value": self.remediator,
-                }
-            )
+            credits.append({
+                "lang": "en",
+                "type": "remediation developer",
+                "value": self.remediator,
+            })
 
         if self.release:
             dates["datePublic"] = when = self.release.when.isoformat()
@@ -775,20 +768,16 @@ class SecurityIssue(models.Model):
                     "value": "Security release issued.",
                 },
             )
-            references.append(
-                {
-                    "url": self.release.blogpost_link,
-                    "name": self.release.blogpost_title,
-                    "tags": ["vendor-advisory"],
-                }
-            )
-            credits.append(
-                {
-                    "lang": "en",
-                    "type": "coordinator",
-                    "value": self.release.releaser.user.get_full_name(),
-                }
-            )
+            references.append({
+                "url": self.release.blogpost_link,
+                "name": self.release.blogpost_title,
+                "tags": ["vendor-advisory"],
+            })
+            credits.append({
+                "lang": "en",
+                "type": "coordinator",
+                "value": self.release.releaser.user.get_full_name(),
+            })
 
         metrics = [
             {
@@ -802,27 +791,23 @@ class SecurityIssue(models.Model):
             },
         ]
         if self.cvss_v3_vector_string and self.cvss_v3_score is not None:
-            metrics.append(
-                {
-                    "cvssV3_1": {
-                        "version": "3.1",
-                        "vectorString": self.cvss_v3_vector_string,
-                        "baseScore": float(self.cvss_v3_score),
-                        "baseSeverity": self.cvss_v3_severity,
-                    },
-                }
-            )
+            metrics.append({
+                "cvssV3_1": {
+                    "version": "3.1",
+                    "vectorString": self.cvss_v3_vector_string,
+                    "baseScore": float(self.cvss_v3_score),
+                    "baseSeverity": self.cvss_v3_severity,
+                },
+            })
         if self.cvss_v4_vector_string and self.cvss_v4_score is not None:
-            metrics.append(
-                {
-                    "cvssV4_0": {
-                        "version": "4.0",
-                        "vectorString": self.cvss_v4_vector_string,
-                        "baseScore": float(self.cvss_v4_score),
-                        "baseSeverity": self.cvss_v4_severity,
-                    },
-                }
-            )
+            metrics.append({
+                "cvssV4_0": {
+                    "version": "4.0",
+                    "vectorString": self.cvss_v4_vector_string,
+                    "baseScore": float(self.cvss_v4_score),
+                    "baseSeverity": self.cvss_v4_severity,
+                },
+            })
         details = {
             "title": self.summary.replace("`", ""),
             "metrics": metrics,

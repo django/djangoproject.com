@@ -75,8 +75,10 @@ class TestUtils(SimpleTestCase):
         for html, expected_output in [
             ("<main><p>Hello</p></main>", "<p>Hello</p>"),
             (
-                '<header>Test</header><main id="app" class="container">'
-                "<h1>Title</h1></main>",
+                (
+                    '<header>Test</header><main id="app" class="container">'
+                    "<h1>Title</h1></main>"
+                ),
                 "<h1>Title</h1>",
             ),
             ("<main>&amp; &lt; &gt; &#169;</main>", "& < > ©"),
@@ -96,9 +98,7 @@ class TestUtils(SimpleTestCase):
             )
 
     def test_extract_inner_html_multiple_same_tags_nested_raises(self):
-        with self.assertRaisesMessage(
-            ValueError, "Nested <main> tags are not allowed."
-        ):
+        with self.assertRaisesMessage(ValueError, "Nested <main> tags are not allowed."):
             extract_inner_html(
                 "<main>One main<main id='dupe'>Two main</main></main>", tag="main"
             )

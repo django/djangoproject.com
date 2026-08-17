@@ -87,7 +87,8 @@ class Metric(models.Model):
         just return every single measurement.
         """
         data = (
-            self.data.filter(timestamp__gt=since)
+            self.data
+            .filter(timestamp__gt=since)
             .order_by("timestamp")
             .values_list("timestamp", "measurement")
         )

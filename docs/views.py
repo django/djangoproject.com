@@ -107,9 +107,7 @@ def document(request, lang, version, url):
 if not settings.DEBUG:
     # Specify a dedicated cache for docs pages that need to be purged after
     # docs rebuilds (see docs/management/commands/update_docs.py):
-    document = cache_page(settings.CACHE_MIDDLEWARE_SECONDS, cache="docs-pages")(
-        document
-    )
+    document = cache_page(settings.CACHE_MIDDLEWARE_SECONDS, cache="docs-pages")(document)
 
 
 def redirect_index(request, *args, **kwargs):
@@ -173,9 +171,7 @@ def search_results(request, lang, version, per_page=10, orphans=3):
             if exact is not None:
                 return redirect(exact)
 
-            results = Document.objects.search(
-                q, release, document_category=doc_category
-            )
+            results = Document.objects.search(q, release, document_category=doc_category)
 
             page_number = request.GET.get("page") or 1
             paginator = Paginator(results, per_page=per_page, orphans=orphans)
@@ -198,15 +194,13 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                     % {"page_number": page_number, "message": str(e)}
                 )
 
-            context.update(
-                {
-                    "query": q,
-                    "page": page,
-                    "paginator": paginator,
-                    "start_sel": START_SEL,
-                    "DocumentationCategory": DocumentationCategory,
-                }
-            )
+            context.update({
+                "query": q,
+                "page": page,
+                "paginator": paginator,
+                "start_sel": START_SEL,
+                "DocumentationCategory": DocumentationCategory,
+            })
 
     return render(request, "docs/search_results.html", context)
 
@@ -235,7 +229,8 @@ def search_suggestions(request, lang, version, per_page=20):
         q = form.cleaned_data.get("q")
         if q:
             results = (
-                Document.objects.filter(
+                Document.objects
+                .filter(
                     release__lang=release.lang,
                 )
                 .filter(
@@ -303,7 +298,7 @@ def sitemap_index(request, sitemaps):
     django_hosts for URL reversing.
     """
     sites = []
-    for section in sitemaps.keys():
+    for section in sitemaps:
         sitemap_url = reverse(
             "document-sitemap", host="docs", kwargs={"section": section}
         )

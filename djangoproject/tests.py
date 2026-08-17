@@ -305,9 +305,9 @@ class EndToEndTests(ReleaseMixin, StaticLiveServerTestCase):
 
     def test_init_light_dark_theme_uses_existing_cookie(self):
         page = self.browser.new_page(user_agent=self.mac_user_agent)
-        page.context.add_cookies(
-            [{"name": "theme", "value": "dark", "domain": "localhost", "path": "/"}]
-        )
+        page.context.add_cookies([
+            {"name": "theme", "value": "dark", "domain": "localhost", "path": "/"}
+        ])
         page.goto(self.live_server_url)
         theme = page.evaluate("document.documentElement.dataset.theme")
         self.assertEqual(theme, "dark")
