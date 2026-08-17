@@ -7,4 +7,7 @@ select = [
     # https://docs.astral.sh/ruff/rules/#isort-i
     # https://pycqa.github.io/isort/
     "I",
+    # https://docs.astral.sh/ruff/rules/#pyupgrade-up
+    # https://github.com/asottile/pyupgrade
+    "UP",
 ]
