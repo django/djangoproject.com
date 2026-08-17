@@ -1,0 +1,231 @@
+{
+    "allowed_source_types": [
+      "card"
+    ],
+    "amount": 3000,
+    "amount_capturable": 0,
+    "amount_details": {
+      "tip": {}
+    },
+    "amount_received": 3000,
+    "application": null,
+    "application_fee_amount": null,
+    "automatic_payment_methods": null,
+    "canceled_at": null,
+    "cancellation_reason": null,
+    "capture_method": "automatic",
+    "charges": {
+      "data": [
+        {
+          "amount": 3000,
+          "amount_captured": 3000,
+          "amount_refunded": 0,
+          "application": null,
+          "application_fee": null,
+          "application_fee_amount": null,
+          "balance_transaction": "txn_2MXkIN4ao19wAZWp0wQIDyAD",
+          "billing_details": {
+            "address": {
+              "city": null,
+              "country": null,
+              "line1": null,
+              "line2": null,
+              "postal_code": null,
+              "state": null
+            },
+            "email": null,
+            "name": "d@b.com",
+            "phone": null
+          },
+          "calculated_statement_descriptor": "DJANGOPROJECT.COM",
+          "captured": true,
+          "card": {
+            "address_city": null,
+            "address_country": null,
+            "address_line1": null,
+            "address_line1_check": null,
+            "address_line2": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_zip_check": null,
+            "brand": "Visa",
+            "country": "US",
+            "customer": "cus_3MXPY5pvYMWTBf",
+            "cvc_check": null,
+            "dynamic_last4": null,
+            "exp_month": 12,
+            "exp_year": 2034,
+            "fingerprint": "xygwMO5bYmv4EmZm",
+            "funding": "credit",
+            "id": "card_6Mf8W5TmoG71AP",
+            "last4": "4242",
+            "metadata": {},
+            "name": "d@b.com",
+            "object": "card",
+            "tokenization_method": null,
+            "wallet": null
+          },
+          "created": 1675511560,
+          "currency": "usd",
+          "customer": "cus_6Mf8HUzoOM5r06",
+          "description": "Invoice 94026E9-0072",
+          "destination": null,
+          "dispute": null,
+          "disputed": false,
+          "failure_balance_transaction": null,
+          "failure_code": null,
+          "failure_message": null,
+          "fraud_details": {},
+          "id": "ch_2MXkIN4ao19wAZWp0yIS2t5T",
+          "invoice": "in_0MXjHW4ao19wAZWpwzZjD8Ie",
+          "livemode": false,
+          "metadata": {},
+          "object": "charge",
+          "on_behalf_of": null,
+          "order": null,
+          "outcome": {
+            "network_advice_code": null,
+            "network_decline_code": null,
+            "network_status": "approved_by_network",
+            "reason": null,
+            "risk_level": "normal",
+            "risk_score": 6,
+            "seller_message": "Payment complete.",
+            "type": "authorized"
+          },
+          "paid": true,
+          "payment_intent": "pi_2MXkIN4ao19wAZWp0atVBWd2",
+          "payment_method": "card_6Mf8W5TmoG71AP",
+          "payment_method_details": {
+            "card": {
+              "amount_authorized": 3000,
+              "authorization_code": null,
+              "brand": "visa",
+              "checks": {
+                "address_line1_check": null,
+                "address_postal_code_check": null,
+                "cvc_check": null
+              },
+              "country": "US",
+              "exp_month": 12,
+              "exp_year": 2034,
+              "extended_authorization": {
+                "status": "disabled"
+              },
+              "fingerprint": "xygwMO5bYmv4EmZm",
+              "funding": "credit",
+              "incremental_authorization": {
+                "status": "unavailable"
+              },
+              "installments": null,
+              "last4": "4242",
+              "mandate": null,
+              "multicapture": {
+                "status": "unavailable"
+              },
+              "network": "visa",
+              "network_token": {
+                "used": false
+              },
+              "overcapture": {
+                "maximum_amount_capturable": 3000,
+                "status": "unavailable"
+              },
+              "three_d_secure": null,
+              "wallet": null
+            },
+            "type": "card"
+          },
+          "receipt_email": "d@b.com",
+          "receipt_number": null,
+          "receipt_url": "https://pay.stripe.com/receipts/invoices/CAcaGwoZYWNjdF8xV01QNGFvMTl3QVpXcGlNb3d0QijtvP65BjIG7quOkp-6OiwWZhwfLUVCB3PgWg7lw1O_qxdCsOOzqKj3Gn7Z16NF5qMYuHEtHxhOJa6nJA?s=ap",
+          "refunded": false,
+          "refunds": {
+            "data": [],
+            "has_more": false,
+            "object": "list",
+            "total_count": 0,
+            "url": "/v1/charges/ch_2MXkIN4ao19wAZWp0yIS2t5T/refunds"
+          },
+          "review": null,
+          "shipping": null,
+          "source": {
+            "address_city": null,
+            "address_country": null,
+            "address_line1": null,
+            "address_line1_check": null,
+            "address_line2": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_zip_check": null,
+            "brand": "Visa",
+            "country": "US",
+            "customer": "cus_6Mf8HUzoOM5r06",
+            "cvc_check": null,
+            "dynamic_last4": null,
+            "exp_month": 12,
+            "exp_year": 2034,
+            "fingerprint": "xygwMO5bYmv4EmZm",
+            "funding": "credit",
+            "id": "card_6Mf8W5TmoG71AP",
+            "last4": "4242",
+            "metadata": {},
+            "name": "d@b.com",
+            "object": "card",
+            "tokenization_method": null,
+            "wallet": null
+          },
+          "source_transfer": null,
+          "statement_descriptor": null,
+          "statement_descriptor_suffix": null,
+          "status": "paid",
+          "transfer_data": null,
+          "transfer_group": null
+        }
+      ],
+      "has_more": false,
+      "object": "list",
+      "total_count": 1,
+      "url": "/v1/charges?payment_intent=pi_2MXkIN4ao19wAZWp0atVBWd2"
+    },
+    "client_secret": "pi_2MXkIN4ao19wAZWp0atVBWd2_secret_WX2PK2jXLxklt3dHzrTMNpVn2",
+    "confirmation_method": "automatic",
+    "created": 1675511559,
+    "currency": "usd",
+    "customer": "cus_6Mf8HUzoOM5r06",
+    "description": "Invoice 94026E9-0072",
+    "id": "pi_2MXkIN4ao19wAZWp0atVBWd2",
+    "invoice": "in_0MXjHW4ao19wAZWpwzZjD8Ie",
+    "last_payment_error": null,
+    "latest_charge": "ch_2MXkIN4ao19wAZWp0yIS2t5T",
+    "livemode": false,
+    "metadata": {},
+    "next_action": null,
+    "next_source_action": null,
+    "object": "payment_intent",
+    "on_behalf_of": null,
+    "payment_method": null,
+    "payment_method_configuration_details": null,
+    "payment_method_options": {
+      "card": {
+        "installments": null,
+        "mandate_options": null,
+        "network": null,
+        "request_three_d_secure": "automatic"
+      }
+    },
+    "payment_method_types": [
+      "card"
+    ],
+    "processing": null,
+    "receipt_email": "d@b.com",
+    "review": null,
+    "setup_future_usage": null,
+    "shipping": null,
+    "source": "card_6Mf8W5TmoG71AP",
+    "statement_descriptor": null,
+    "statement_descriptor_suffix": null,
+    "status": "succeeded",
+    "transfer_data": null,
+    "transfer_group": null
+  }
