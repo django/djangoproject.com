@@ -138,6 +138,7 @@ class Command(BaseCommand):
                 # Clean up global state after building each language.
                 _clean_up_global_state()
             except SphinxError as e:
+                # FIXME: The following block creates duplicate errors in Sentry
                 capture_sentry_exception(e, flush=True)
                 raise CommandError(
                     f"sphinx-build returned an error (release {release}, "
