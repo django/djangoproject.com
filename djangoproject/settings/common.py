@@ -54,6 +54,13 @@ DATABASE_ROUTERS = ["tracdb.db_router.TracRouter"]
 DEFAULT_FROM_EMAIL = "noreply@djangoproject.com"
 FUNDRAISING_DEFAULT_FROM_EMAIL = "fundraising@djangoproject.com"
 
+MAILERS = {
+    "default": {
+        "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+    },
+}
+
+
 FIXTURE_DIRS = [PROJECT_PACKAGE / "fixtures"]
 
 INSTALLED_APPS = [
