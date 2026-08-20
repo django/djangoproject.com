@@ -57,6 +57,9 @@ FUNDRAISING_DEFAULT_FROM_EMAIL = "fundraising@djangoproject.com"
 MAILERS = {
     "default": {
         "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+        "OPTIONS": {
+            "host": "localhost",
+        },
     },
 }
 
