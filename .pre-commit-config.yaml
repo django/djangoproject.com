@@ -51,11 +51,6 @@ repos:
             exclude_types: [html, json, scss]
             exclude: '(^djangoproject\/static\/js\/lib\/.*$|^checklists\/templates\/.*$)'
 
-    - repo: https://github.com/pycqa/isort
-      rev: 7.0.0
-      hooks:
-          - id: isort
-
     - repo: https://github.com/pycqa/flake8
       rev: 7.3.0
       hooks:
