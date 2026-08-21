@@ -114,6 +114,7 @@ class ContentFormat(models.TextChoices):
                     # BLOG_DOCUTILS_SETTINGS because rst always starts from heading
                     # level 1, but markdown can have specific heading levels so
                     # starting from 1 makes sense.
+                    "fenced_code",
                     "tables",
                     TocExtension(baselevel=1, slugify=_md_slugify),
                 ],
