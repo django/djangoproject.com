@@ -6,6 +6,7 @@ import requests
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import connections, models
+from django.db.models.functions import JSONObject
 from django.utils.translation import gettext_lazy as _
 from django_hosts.resolvers import reverse
 
@@ -33,6 +34,35 @@ class Category(models.Model):
         return self.name
 
 
+class MetricQuerySet(models.QuerySet):
+    def with_latest(self):
+        """
+        Annotate the queryset with a `latest` JSON object containing two keys:
+            * `measurement` (int): the value of the most recent datum for that metric
+            * `timestamp` (str): the timestamp of the most recent datum
+        """
+        data = Datum.objects.filter(
+            content_type=self.model.content_type(),
+            object_id=models.OuterRef("pk"),
+        )
+        jsonobj = JSONObject(
+            measurement=models.F("measurement"),
+            timestamp=models.F("timestamp"),
+        )
+        latest = models.Subquery(data.values_list(jsonobj).order_by("-timestamp")[:1])
+
+        return self.annotate(latest=latest)
+
+    def for_dashboard(self):
+        """
+        Return a queryset optimized for being displayed on the dashboard index
+        page.
+        """
+        return (
+            self.filter(show_on_dashboard=True).select_related("category").with_latest()
+        )
+
+
 class Metric(models.Model):
     name = models.CharField(max_length=300)
     slug = models.SlugField()
@@ -48,6 +78,8 @@ class Metric(models.Model):
     )
     unit = models.CharField(max_length=100)
     unit_plural = models.CharField(max_length=100)
+
+    objects = MetricQuerySet.as_manager()
 
     class Meta:
         abstract = True
@@ -105,7 +137,6 @@ class Metric(models.Model):
         scale but works for now.
         """
         OFFSET = "2 hours"  # HACK!
-        ctid = ContentType.objects.get_for_model(self).id
 
         c = connections["default"].cursor()
         c.execute(
@@ -117,9 +148,13 @@ class Metric(models.Model):
                        AND object_id = %s
                        AND timestamp >= %s
                      GROUP BY 1;""",
-            [period, OFFSET, ctid, self.id, since],
+            [period, OFFSET, self.content_type().id, self.id, since],
         )
         return [(calendar.timegm(t.timetuple()), float(m)) for (t, m) in c.fetchall()]
+
+    @classmethod
+    def content_type(cls):
+        return ContentType.objects.get_for_model(cls)
 
 
 class TracTicketMetric(Metric):
