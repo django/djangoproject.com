@@ -1,4 +1,9 @@
+import json
+import os
+import shutil
+import tempfile
 from http import HTTPStatus
+from pathlib import Path
 
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -335,3 +340,102 @@ class SecurityTxtTests(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response["Content-Type"], "text/plain")
         self.assertIn("Expires:", response.content.decode())
+
+
+class DocumentViewTestCase(TestCase):
+    def test_document_renders_from_database(self):
+        Document.objects.create(
+            metadata={
+                "body": "document rendered from database",
+            },
+            path="document",
+            release=DocumentRelease.objects.create(
+                is_default=True,
+                lang=settings.DEFAULT_LANGUAGE_CODE,
+                release=Release.objects.create(version="5.0"),
+            ),
+        )
+        response = self.client.get(
+            "/en/5.0/document/",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, "document rendered from database")
+
+    def test_document_renders_from_filesystem(self):
+        DocumentRelease.objects.create(
+            is_default=True,
+            lang=settings.DEFAULT_LANGUAGE_CODE,
+            release=Release.objects.create(version="5.0"),
+        )
+        tmp_docs_build_root = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp_docs_build_root)
+        os.makedirs(
+            tmp_docs_build_root
+            / settings.DEFAULT_LANGUAGE_CODE
+            / "5.0"
+            / "_built"
+            / "json"
+        )
+        with open(
+            tmp_docs_build_root
+            / settings.DEFAULT_LANGUAGE_CODE
+            / "5.0"
+            / "_built"
+            / "json"
+            / "filesystem.fjson",
+            "w",
+        ) as json_file:
+            json_file.write(json.dumps({"body": "document rendered from filesystem"}))
+        with self.settings(DOCS_BUILD_ROOT=tmp_docs_build_root):
+            response = self.client.get(
+                "/en/5.0/filesystem/",
+                headers={"host": "docs.djangoproject.localhost:8000"},
+            )
+            self.assertEqual(response.status_code, HTTPStatus.OK)
+            self.assertContains(response, "document rendered from filesystem")
+
+    def test_filesystem_rendering_template(self):
+        DocumentRelease.objects.create(
+            is_default=True,
+            lang=settings.DEFAULT_LANGUAGE_CODE,
+            release=Release.objects.create(version="5.0"),
+        )
+        tmp_docs_build_root = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp_docs_build_root)
+        os.makedirs(
+            tmp_docs_build_root
+            / settings.DEFAULT_LANGUAGE_CODE
+            / "5.0"
+            / "_built"
+            / "json"
+        )
+        with open(
+            tmp_docs_build_root
+            / settings.DEFAULT_LANGUAGE_CODE
+            / "5.0"
+            / "_built"
+            / "json"
+            / "genindex.fjson",
+            "w",
+        ) as json_file:
+            json_file.write("{}")
+        with self.settings(DOCS_BUILD_ROOT=tmp_docs_build_root):
+            response = self.client.get(
+                "/en/5.0/genindex/",
+                headers={"host": "docs.djangoproject.localhost:8000"},
+            )
+            self.assertEqual(response.status_code, HTTPStatus.OK)
+            self.assertTemplateUsed(response, "docs/genindex.html")
+
+    def test_nonexistent_document(self):
+        DocumentRelease.objects.create(
+            is_default=True,
+            lang=settings.DEFAULT_LANGUAGE_CODE,
+            release=Release.objects.create(version="5.0"),
+        )
+        response = self.client.get(
+            "/en/5.0/nonexistent/",
+            headers={"host": "docs.djangoproject.localhost:8000"},
+        )
+        self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)

@@ -1,6 +1,5 @@
 import datetime
 import html
-import json
 import logging
 import operator
 from functools import partial, reduce
@@ -111,6 +110,7 @@ class DocumentRelease(models.Model):
         limit_choices_to={"status": "f"},
         on_delete=models.CASCADE,
     )
+    global_context = models.JSONField(default=dict)
     is_default = models.BooleanField(default=False)
 
     objects = DocumentReleaseQuerySet.as_manager()
@@ -469,7 +469,4 @@ class Document(models.Model):
 
     @cached_property
     def body(self):
-        """The document's body"""
-        with self.full_path.open() as fp:
-            doc = json.load(fp)
-        return doc["body"]
+        return self.metadata["body"]
