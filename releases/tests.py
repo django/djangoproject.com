@@ -1170,3 +1170,48 @@ class RoadmapViewTestCase(ReleaseMixin, TestCase):
             "Django 5.2 final will ideally ship two weeks after the last RC.",
         )
         self.assertNotContains(response, "ship in January.")
+
+
+class GenerateReleaseRoadmapTestCase(SimpleTestCase):
+    def test_render_svg_light_and_dark(self):
+        from releases.management.commands.generate_release_roadmap import render_svg
+
+        today = datetime.date(2026, 8, 20)
+        svg_light = render_svg("light", today=today)
+        self.assertIn("<svg", svg_light)
+        self.assertIn("Mainstream", svg_light)
+        self.assertIn("Extended", svg_light)
+        self.assertIn("End of", svg_light)
+        self.assertIn("Today", svg_light)
+        self.assertIn("#0C4B33", svg_light)
+        self.assertIn("#E6A100", svg_light)
+        self.assertIn("#C0392B", svg_light)
+
+        svg_dark = render_svg("dark", today=today)
+        self.assertIn("<svg", svg_dark)
+        self.assertIn("#1B7353", svg_dark)
+        self.assertIn("#F5A623", svg_dark)
+        self.assertIn("#E53935", svg_dark)
+
+    def test_render_svg_eol_release(self):
+        from releases.management.commands.generate_release_roadmap import (
+            CONFIG,
+            COLORS_LIGHT,
+            generate_releases,
+        )
+
+        test_data = [
+            {
+                "name": "4.2",
+                "is_lts": True,
+                "release_date": datetime.date(2023, 4, 1),
+                "mainstream_end": datetime.date(2023, 12, 1),
+                "extended_end": datetime.date(2026, 4, 1),
+            }
+        ]
+        today = datetime.date(2026, 8, 20)
+        processed = generate_releases(test_data, 2023, CONFIG, today, COLORS_LIGHT)
+        self.assertEqual(len(processed), 1)
+        self.assertTrue(processed[0]["is_eol"])
+        self.assertEqual(processed[0]["eol_text"]["text"], "End of life")
+        self.assertEqual(processed[0]["eol_bar"]["fill"], COLORS_LIGHT["eol"])
