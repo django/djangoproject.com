@@ -100,7 +100,7 @@ class DocumentRelease(models.Model):
     A "release" of documentation -- i.e. English for v1.2.
     """
 
-    DEFAULT_CACHE_KEY = "%s_docs_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
+    DEFAULT_CACHE_KEY = f"{settings.CACHE_MIDDLEWARE_KEY_PREFIX}_docs_version"
 
     lang = models.CharField(
         max_length=7, choices=settings.LANGUAGES, default=settings.DEFAULT_LANGUAGE_CODE
