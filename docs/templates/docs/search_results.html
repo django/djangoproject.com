@@ -38,7 +38,7 @@
   {% if query %}
     <div id="docs-content">
       <dl class="search-links">
-        {% for result in page.object_list %}
+        {% for result in page_results %}
           <dt>
             <h2 class="result-title">
               <a href="{{ result.get_absolute_url }}{% if not start_sel in result.headline %}{{ result.highlight|fragment }}{% endif %}">{{ result.headline|safe }}</a>

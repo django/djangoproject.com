@@ -1,8 +1,9 @@
 import datetime
 from operator import attrgetter
+from unittest.mock import patch
 
 from django.conf import settings
-from django.db import connection
+from django.db import connection, models
 from django.test import TestCase
 from django.utils import timezone
 
@@ -302,35 +303,8 @@ class DocumentManagerTest(TestCase):
                 "release": cls.release_fr,
                 "title": "Vues génériques",
             },
-            {
-                "metadata": {
-                    "body": (
-                        '<div class="section" id="s-django-1-2-1-release-notes">\n<span'
-                        ' id="django-1-2-1-release-notes"></span><h1>Notes de '
-                        'publication de Django 1.2.1<a class="headerlink" href="#django'
-                        '-1-2-1-release-notes" title="Lien permanent vers ce titre">¶'
-                        "</a></h1>\n<p>Django 1.2.1 was released almost immediately "
-                        "after 1.2.0 to correct two small\nbugs: one was in the "
-                        "documentation packaging script, the other was a <a class="
-                        '"reference external" href="https://code.djangoproject.com/'
-                        'ticket/13560">bug</a> that\naffected datetime form field '
-                        "widgets when localization was enabled.</p>\n</div>\n"
-                    ),
-                    "breadcrumbs": [
-                        {"path": "releases", "title": "Release notes"},
-                    ],
-                    "parents": "releases",
-                    "slug": "1.2.1",
-                    "title": "Notes de publication de Django 1.2.1",
-                    "toc": (
-                        '<ul>\n<li><a class="reference internal" href="#">Notes de '
-                        "publication de Django 1.2.1</a></li>\n</ul>\n"
-                    ),
-                },
-                "path": "releases/1.2.1",
-                "release": cls.release_fr,
-                "title": "Notes de publication de Django 1.2.1",
-            },
+            # Create these entries out of chronological order so that ordering
+            # assertions can prove that ordering by PK breaks ties.
             {
                 "metadata": {
                     "body": (
@@ -359,6 +333,35 @@ class DocumentManagerTest(TestCase):
                 "path": "releases/1.9.4",
                 "release": cls.release_fr,
                 "title": "Notes de publication de Django 1.9.4",
+            },
+            {
+                "metadata": {
+                    "body": (
+                        '<div class="section" id="s-django-1-2-1-release-notes">\n<span'
+                        ' id="django-1-2-1-release-notes"></span><h1>Notes de '
+                        'publication de Django 1.2.1<a class="headerlink" href="#django'
+                        '-1-2-1-release-notes" title="Lien permanent vers ce titre">¶'
+                        "</a></h1>\n<p>Django 1.2.1 was released almost immediately "
+                        "after 1.2.0 to correct two small\nbugs: one was in the "
+                        "documentation packaging script, the other was a <a class="
+                        '"reference external" href="https://code.djangoproject.com/'
+                        'ticket/13560">bug</a> that\naffected datetime form field '
+                        "widgets when localization was enabled.</p>\n</div>\n"
+                    ),
+                    "breadcrumbs": [
+                        {"path": "releases", "title": "Release notes"},
+                    ],
+                    "parents": "releases",
+                    "slug": "1.2.1",
+                    "title": "Notes de publication de Django 1.2.1",
+                    "toc": (
+                        '<ul>\n<li><a class="reference internal" href="#">Notes de '
+                        "publication de Django 1.2.1</a></li>\n</ul>\n"
+                    ),
+                },
+                "path": "releases/1.2.1",
+                "release": cls.release_fr,
+                "title": "Notes de publication de Django 1.2.1",
             },
             {
                 "metadata": {
@@ -414,10 +417,22 @@ class DocumentManagerTest(TestCase):
 
     def test_multilingual_search(self):
         self.assertQuerySetEqual(
-            Document.objects.search("publication", self.release_fr),
+            Document.objects.search("Django OR 1.2.1", self.release_fr),
             [
-                "Notes de publication de Django 1.2.1",  # Ranked: 1.0693262.
-                "Notes de publication de Django 1.9.4",  # Ranked: 1.0458658.
+                "Notes de publication de Django 1.2.1",  # Ranked: 0.7446094.
+                "Notes de publication de Django 1.9.4",  # Ranked: 0.3449142.
+            ],
+            transform=attrgetter("title"),
+        )
+
+    @patch("docs.models.SearchRank", lambda *args: models.Value(1))
+    def test_search_rank_tie(self):
+        """Tied search rank results are still ordered by pk."""
+        self.assertQuerySetEqual(
+            Document.objects.search("Notes de publication", self.release_fr),
+            [
+                "Notes de publication de Django 1.9.4",
+                "Notes de publication de Django 1.2.1",
             ],
             transform=attrgetter("title"),
         )
