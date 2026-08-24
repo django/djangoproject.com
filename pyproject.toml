@@ -42,6 +42,7 @@ dev = [
     "django-debug-toolbar==7.0.0",
     "prek==0.4.11",
     "psycopg[binary]==3.3.4",
+    "ruff==0.16.3",                # IDEs can pick it up from the env and use for auto-linting
     "watchdog==6.0.0",
     { include-group = "tests" },
 ]

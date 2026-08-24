@@ -1,0 +1,29 @@
+[lint]
+select = [
+    # For flake8 compatibility.
+    # Explicit definition of the rule can be removed after the full migration.
+    # https://docs.astral.sh/ruff/rules/lambda-assignment/
+    "E731",
+    # https://docs.astral.sh/ruff/rules/#isort-i
+    # https://pycqa.github.io/isort/
+    "I",
+]
+
+[lint.isort]
+combine-as-imports = true
+known-first-party = [
+    "accounts",
+    "aggregator",
+    "blog",
+    "contact",
+    "dashboard",
+    "djangoproject",
+    "docs",
+    "foundation",
+    "fundraising",
+    "legacy",
+    "members",
+    "releases",
+    "svntogit",
+    "tracdb",
+]

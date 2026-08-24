@@ -185,7 +185,7 @@ def search_results(request, lang, version, per_page=10, orphans=3):
                     page_number = paginator.num_pages
                 else:
                     raise Http404(
-                        _("Page is not 'last', " "nor can it be converted to an int.")
+                        _("Page is not 'last', nor can it be converted to an int.")
                     )
 
             try:

@@ -6,7 +6,6 @@ import checklists.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("checklists", "0009_alter_securityissue_blogdescription"),
     ]

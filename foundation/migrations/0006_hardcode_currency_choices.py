@@ -7,7 +7,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("foundation", "0005_alter_approvedgrant_amount_currency_and_more"),
     ]

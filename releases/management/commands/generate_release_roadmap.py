@@ -109,7 +109,6 @@ RELEASES = [
 
 
 class Command(BaseCommand):
-
     help = "Generate Django release roadmap SVG."
 
     def handle(self, *args, **options):

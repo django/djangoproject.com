@@ -392,6 +392,5 @@ To use git hooks locally, first install ``prek`` and then the git hooks:
 * Install git hooks using ``prek install`` command: https://prek.j178.dev/cli/#prek-install
 
 The installed hooks will be triggered during each commit, or can be manually triggered via
-``prek run`` command: https://prek.j178.dev/cli/#prek-run If an error is found an appropriate
-error message will be displayed. If the error was with ``isort`` then the tool will go ahead
-and fix them for you. Review the changes and re-stage for commit if you are happy with them.
+``prek run`` command: https://prek.j178.dev/cli/#prek-run If an error is found, the tool will go ahead
+and try to fix them for you. Review the changes and re-stage for commit when you are happy with them.

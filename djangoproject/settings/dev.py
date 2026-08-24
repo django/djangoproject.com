@@ -25,7 +25,12 @@ CACHES = {
 
 CSRF_COOKIE_SECURE = False
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+MAILERS = {
+    "default": {
+        "BACKEND": "django.core.mail.backends.console.EmailBackend",
+    },
+}
+
 
 MEDIA_ROOT = DATA_DIR / "media_root"
 
