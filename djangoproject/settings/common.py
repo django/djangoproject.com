@@ -309,7 +309,12 @@ STRIPE_PUBLISHABLE_KEY = SECRETS.get(
     "pk_test_51U94Da2hwueVrXGuhhdAa9cLH8FijVECIRpJqpaC2Fxx"
     "cJJbrPguoUxFCf7JO72iUYWBxq4YuCEQO8Vw1RIpZrgd00mAK5yiT7",
 )
-STRIPE_ENDPOINT_SECRET = SECRETS.get("stripe_endpoint_secret", "insecure")
+# The webhook signing secret from ``stripe listen``.
+STRIPE_ENDPOINT_SECRET = (
+    SECRETS.get("stripe_endpoint_secret")
+    or os.getenv("STRIPE_ENDPOINT_SECRET")
+    or "insecure"
+)
 
 # product IDs
 # Fallbacks come from the sandbox account (kept in sync with the live
