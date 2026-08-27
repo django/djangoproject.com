@@ -8,7 +8,7 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import NoReverseMatch, get_resolver
-from django.utils.translation import activate, gettext as _
+from django.utils.translation import activate, get_language, gettext as _
 from django_hosts.resolvers import reverse
 from django_recaptcha.client import RecaptchaResponse
 from playwright.sync_api import expect, sync_playwright
@@ -251,6 +251,28 @@ class SiteMapTests(TestCase):
     def test_sitemap_renders(self):
         response = self.client.get(reverse("sitemap"))
         self.assertEqual(response.status_code, 200)
+
+
+class ChangeLanguageTests(TestCase):
+    """Test case to verify language changing behaviour"""
+
+    def test_change_language(self):
+        """Verify default language and switching to a new language"""
+        self.client.get(reverse("change_language", kwargs={"lang_code": "fr"}))
+        lang = get_language()
+        self.assertEqual("fr", lang)
+
+        # Change back to default
+        self.client.get(
+            reverse("change_language", kwargs={"lang_code": settings.LANGUAGE_CODE})
+        )
+        lang = get_language()
+        self.assertEqual(settings.LANGUAGE_CODE, lang)
+
+    def test_default_language(self):
+        """Verify default language"""
+        default_lang = get_language()
+        self.assertEqual(settings.LANGUAGE_CODE, default_lang)
 
 
 class EndToEndTests(ReleaseMixin, StaticLiveServerTestCase):
