@@ -161,7 +161,7 @@ class TestCampaign(ReleaseMixin, TemporaryMediaRootMixin, TestCase):
     @patch("stripe.checkout.Session.create")
     def test_submitting_donation_form_valid(self, session_create):
         session_create.return_value = {"id": "TEST_ID"}
-        with patch_captcha(action="form"):
+        with patch_captcha():
             response = self.client.post(
                 reverse("fundraising:donation-session"),
                 {
