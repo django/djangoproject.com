@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.contenttypes import views as contenttypes_views
@@ -7,12 +8,14 @@ from django.contrib.sitemaps import views as sitemap_views
 from django.urls import include, path, re_path
 from django.views.decorators.cache import cache_page
 from django.views.generic import RedirectView, TemplateView
+from django.views.i18n import JavaScriptCatalog
 from django.views.static import serve
 
 from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
+from djangoproject import views as project_views
 from djangoproject.sitemaps import TemplateViewSitemap
 from foundation.feeds import FoundationMinutesFeed
 from foundation.views import BannerPreview, CoreDevelopers
@@ -26,8 +29,14 @@ sitemaps = {
 }
 
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path("", TemplateView.as_view(template_name="homepage.html"), name="homepage"),
+    path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    path(
+        "change-language/<str:lang_code>/",
+        project_views.change_language,
+        name="change_language",
+    ),
     path(
         "about/",
         RedirectView.as_view(
@@ -163,9 +172,7 @@ urlpatterns = [
         ),
     ),
     path("weblog/", include("blog.urls")),
-    path("download/", include("releases.urls")),
     path("svntogit/", include("svntogit.urls")),
-    path("", include("legacy.urls")),
     path(
         "foundation/individual-membership-nomination/",
         RedirectView.as_view(
@@ -173,6 +180,11 @@ urlpatterns = [
             permanent=False,
         ),
     ),
+)
+
+urlpatterns += [
+    path("download/", include("releases.urls")),
+    path("", include("legacy.urls")),  # Exclude from i18n patterns
 ]
 
 if settings.DEBUG:

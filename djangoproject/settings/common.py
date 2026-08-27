@@ -3,6 +3,12 @@ import json
 import os
 from pathlib import Path
 
+
+def gettext(s):
+    """i18n passthrough"""
+    return s
+
+
 # Utilities
 PROJECT_PACKAGE = Path(__file__).resolve().parent.parent
 
@@ -108,7 +114,12 @@ INSTALLED_APPS = [
 if os.getenv("DJANGO_SPOOKY_MODE"):
     INSTALLED_APPS.insert(0, "django_admin_dracula")  # spooky 👻
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en"
+
+LANGUAGES = [
+    ("en", gettext("English")),
+    ("fr", gettext("French")),
+]
 
 LOGGING = {
     "version": 1,
