@@ -12,7 +12,7 @@ def change_language(request, lang_code):
     Most of this code is taken from django's own `set_language` and the next
     url gets checked if it's an allowed host.
     """
-    next_url = request.META.get("HTTP_REFERER")
+    next_url = request.headers.get("referer")
     if not url_has_allowed_host_and_scheme(
         url=next_url,
         allowed_hosts={request.get_host()},
