@@ -17,7 +17,7 @@ class TestPaymentForm(TestCase):
                 "captcha": "TESTING",
             }
         )
-        with patch_captcha():
+        with patch_captcha(action="form"):
             self.assertTrue(form.is_valid(), form.errors)
 
     def test_max_value_validation(self):
@@ -31,7 +31,7 @@ class TestPaymentForm(TestCase):
                 "captcha": "TESTING",
             }
         )
-        with patch_captcha():
+        with patch_captcha(action="form"):
             self.assertFalse(form.is_valid())
         self.assertIn("amount", form.errors)
 
