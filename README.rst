@@ -375,10 +375,8 @@ API key in your Stripe dashboard, add the corresponding ``stripe_secret_key``
 active products, ``stripe_product_id_*`` values) to your ``secrets.json``,
 then restart the dev server with the new keys.
 
-Install the `Stripe CLI <https://docs.stripe.com/stripe-cli>`_ (e.g. ``brew
-install --cask stripe/stripe-cli/stripe``, or follow the installation
-instructions in the CLI docs), then point it at the account whose keys the
-site is using::
+Install the `Stripe CLI <https://docs.stripe.com/stripe-cli>`_,
+then point it at the account whose keys the site is using::
 
     stripe login --interactive
 
@@ -396,6 +394,15 @@ local development server. Keep it running for as long as you want to test
 donations::
 
     stripe listen --forward-to www.djangoproject.localhost:8000/fundraising/receive-webhook/
+
+Note: on some machines ``www.djangoproject.localhost`` doesn't resolve
+automatically, in which case ``stripe listen`` fails with::
+
+    [ERROR] Failed to POST: Post "http://www.djangoproject.localhost:8000/fundraising/receive-webhook/": dial tcp: lookup www.djangoproject.localhost: no such host
+
+Add an entry like ``127.0.0.1 www.djangoproject.localhost`` to
+``/etc/hosts`` and try again (the same entry also makes the site itself
+reachable in a browser on those machines).
 
 ``stripe listen`` prints a webhook signing secret
 (``stripe_endpoint_secret: whsec_...``). Export the webhook secret before starting
@@ -423,25 +430,23 @@ Now, with the dev server and ``stripe listen`` both running:
    "Manage" links in the thank-you email (printed to the console) and the
    https://dashboard.stripe.com/test overview.
 
-.. note::
+Note: the thank-you email is sent as plain text, so the dev server console
+shows it quoted-printable encoded: long lines are wrapped with a trailing
+``=`` and lines beginning with spaces get a leading ``=``. The
+manage-donations URL can get split across two lines (the trailing ``=`` marks
+the wrap), so when copying it, remove any embedded ``=`` before pasting it
+into your browser. E.g. in the console you'll see::
 
-   The thank-you email is sent as plain text, so the dev server console shows
-   it quoted-printable encoded: long lines are wrapped with a trailing ``=``
-   and lines beginning with spaces get a leading ``=``. The manage-donations
-   URL can get split across two lines (the trailing ``=`` marks the wrap), so
-   when copying it, remove any embedded ``=`` before pasting it into your
-   browser. E.g. in the console you'll see::
+    http://www.djangoproject.localhost:8000/fundraising/manage-donations/CKhd=
+    YAjdD39Y/
 
-       http://www.djangoproject.localhost:8000/fundraising/manage-donations/CKhd=
-       YAjdD39Y/
+which is really::
 
-   which is really::
+    http://www.djangoproject.localhost:8000/fundraising/manage-donations/CKhdYAjdD39Y/
 
-       http://www.djangoproject.localhost:8000/fundraising/manage-donations/CKhdYAjdD39Y/
-
-   (A real mail client decodes this automatically, which is why the link
-   appears broken in the console output but may work fine from the email
-   app.)
+(A real mail client decodes this automatically, which is why the link
+appears broken in the console output but may work fine from the email
+app.)
 
 Running Locally with Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
