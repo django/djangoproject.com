@@ -348,7 +348,7 @@ our translation files as follows:
     git push
 
 Testing the fundraising page (Stripe)
--------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The site talks to Stripe in test mode. Out of the box the app falls back to
 shared sandbox keys committed in
@@ -364,7 +364,7 @@ will not be recorded in the database. To test the full flow, relay test-mode
 webhooks to the local development server with the Stripe CLI (below).
 
 Testing Stripe webhooks
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 Mergers have access to the "djangoproject.com Public Sandbox" Stripe account
 that the committed development keys belong to, so they can test the webhook
