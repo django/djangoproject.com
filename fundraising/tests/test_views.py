@@ -1,6 +1,9 @@
 import json
+import os
+import random
 from datetime import date, datetime
 from operator import attrgetter
+from unittest import skipUnless
 from unittest.mock import patch
 
 import stripe
@@ -197,6 +200,47 @@ class TestCampaign(ReleaseMixin, TemporaryMediaRootMixin, TestCase):
         response = self.client.post(url, {"donation": donation.id})
         self.assertEqual(response.status_code, 404)
         self.assertFalse(retrieve_customer.called)
+
+
+@skipUnless(
+    os.environ.get("STRIPE_INTEGRATION"),
+    "Set STRIPE_INTEGRATION=1 to run live Stripe integration tests "
+    "(requires a valid test ``stripe_secret_key`` and network access).",
+)
+class TestCheckoutSessionLive(TestCase):
+    """
+    Real end-to-end checkout against the Stripe test (sandbox) API.
+
+    Skipped by default so the suite stays offline and key-free. Each of the
+    site's donation options is exercised with a random amount, which mirrors
+    what the donation form submits. On failure the assertion shows the exact
+    Stripe error the view received, making it easy to reproduce a frontend
+    checkout failure.
+
+    Run with: ``STRIPE_INTEGRATION=1 manage.py test fundraising -k Live``
+    """
+
+    def test_each_donation_option_with_random_amount(self):
+        for interval in settings.PRODUCTS:
+            with self.subTest(interval=interval):
+                amount = random.randint(1, 100)
+                with patch_captcha():
+                    response = self.client.post(
+                        reverse("fundraising:donation-session"),
+                        {
+                            "amount": amount,
+                            "interval": interval,
+                            "captcha": "TESTING",
+                        },
+                    )
+                content = json.loads(response.content.decode())
+                self.assertEqual(response.status_code, 200)
+                if not content["success"]:
+                    self.fail(
+                        f"Stripe rejected the '{interval}' checkout "
+                        f"(amount {amount}): {content['error']}"
+                    )
+                self.assertTrue(content["sessionId"])
 
 
 class TestUpdateCard(ReleaseMixin, TestCase):
