@@ -32,6 +32,10 @@ def index(request):
     )
 
 
+def sponsor(request):
+    return render(request, "fundraising/sponsor.html")
+
+
 @require_POST
 def configure_checkout_session(request):
     """

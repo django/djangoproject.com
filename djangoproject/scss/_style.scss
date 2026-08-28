@@ -2642,6 +2642,46 @@ table {
     }
 }
 
+// Wide tables break out of the content column and centre on the viewport.
+// 96vw leaves room for the scrollbar, so the page never scrolls sideways.
+// Below 768px the content column is already nearly the full screen width.
+.table-wrapper-wide {
+    @include respond-min(768px) {
+        width: 96vw;
+        max-width: 1160px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+// Sponsor prospectus page at /sponsor/.
+.sponsor-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+table.sponsor-tiers,
+table.sponsor-reach {
+    width: 100%;
+}
+
+table.sponsor-tiers {
+    // Seven columns do not fit the content column, so the table scrolls
+    // sideways inside its .table-wrapper on narrow screens.
+    min-width: 920px;
+    table-layout: fixed;
+
+    th:first-child,
+    td:first-child {
+        width: 28%;
+    }
+}
+
+table.sponsor-reach {
+    min-width: 640px;
+}
+
 table.foundation td {
     padding: 0 5px;
 }
