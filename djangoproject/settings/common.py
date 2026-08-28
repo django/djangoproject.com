@@ -258,9 +258,11 @@ ROOT_HOSTCONF = "djangoproject.hosts"
 
 # django-recaptcha settings
 
-# The keys themselves are only set in production, but the score threshold
-# belongs here so that reCAPTCHA behaves the same way in every environment.
+# The keys themselves are only set in production, but the score threshold and
+# the v3 action belong here so that reCAPTCHA behaves the same way in every
+# environment.
 RECAPTCHA_REQUIRED_SCORE = 0.9
+RECAPTCHA_ACTION = "form"
 
 # django-registration settings
 

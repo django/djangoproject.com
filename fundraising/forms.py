@@ -1,5 +1,6 @@
 import stripe
 from django import forms
+from django.conf import settings
 from django.db import transaction
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
@@ -137,7 +138,7 @@ class DonateForm(forms.Form):
 
     amount = forms.ChoiceField(choices=AMOUNT_CHOICES)
     interval = forms.ChoiceField(choices=INTERVAL_CHOICES)
-    captcha = ReCaptchaField(widget=ReCaptchaV3(action="form"))
+    captcha = ReCaptchaField(widget=ReCaptchaV3(action=settings.RECAPTCHA_ACTION))
 
 
 class DonationForm(forms.ModelForm):
@@ -177,8 +178,9 @@ class PaymentForm(forms.Form):
     `amount` can be any integer, so a ChoiceField is not appropriate.
     """
 
-    # NOTE: `action` needs to match the one used in stripe-donation.js
-    captcha = ReCaptchaField(widget=ReCaptchaV3(action="form"))
+    # NOTE: `action` needs to match the one used in stripe-donation.js.
+    # It is disabled (None) in dev, where the test keys report no action.
+    captcha = ReCaptchaField(widget=ReCaptchaV3(action=settings.RECAPTCHA_ACTION))
     amount = forms.IntegerField(
         required=True,
         min_value=1,  # Minimum payment from Stripe API
