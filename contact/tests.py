@@ -1,6 +1,7 @@
 from unittest import skipIf
 
 import requests
+from django.conf import settings
 from django.core import mail
 from django.http import HttpRequest
 from django.test import TestCase
@@ -118,3 +119,30 @@ class ContactFormTests(ReleaseMixin, TestCase):
         )
         self.assertFalse(form.is_valid())
         self.assertIn("captcha", form.errors)
+
+
+class BannerSponsorshipTests(ReleaseMixin, TestCase):
+    @override_settings(AKISMET_API_KEY="")  # Disable Akismet in tests
+    def test_sponsor_banner_page(self):
+        with patch_captcha():
+            response = self.client.post(
+                "/sponsor/banner/",
+                {
+                    "name": "A. Random Sponsor",
+                    "email": "sponsor@example.com",
+                    "message_subject": "monthly",
+                    "body": "October, please.",
+                    "captcha": "TESTING",
+                },
+            )
+        self.assertRedirects(response, "/contact/sent/")
+        msg = mail.outbox[-1]
+        self.assertEqual(msg.subject, "[Banner sponsorship] One month: $10,000")
+        self.assertEqual(
+            msg.to,
+            [
+                settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
+                "treasurer@djangoproject.com",
+                "dsf-board@googlegroups.com",
+            ],
+        )
