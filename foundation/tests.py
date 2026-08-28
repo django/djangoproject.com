@@ -110,6 +110,7 @@ class BannerTestCase(ReleaseMixin, TestCase):
         self.assertRedirects(
             response,
             f"/accounts/login/?next=/en/foundation/banners/{banner.pk}/preview/",
+            target_status_code=302,
         )
 
     def test_preview_view_requires_permission(self):
