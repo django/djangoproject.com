@@ -163,12 +163,6 @@ urlpatterns = i18n_patterns(
         {"sitemaps": sitemaps},
         name="sitemap",
     ),
-    path(
-        ".well-known/security.txt",
-        TemplateView.as_view(
-            template_name="well-known/security.txt", content_type="text/plain"
-        ),
-    ),
     path("weblog/", include("blog.urls")),
     path("svntogit/", include("svntogit.urls")),
     path(
@@ -182,6 +176,12 @@ urlpatterns = i18n_patterns(
 
 urlpatterns += [
     path("download/", include("releases.urls")),
+    path(
+        ".well-known/security.txt",
+        TemplateView.as_view(
+            template_name="well-known/security.txt", content_type="text/plain"
+        ),
+    ),
     path("", include("legacy.urls")),  # Exclude from i18n patterns
 ]
 
