@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load humanize i18n static %}
+
+{% block title %}{% translate "Sponsor Django's website and documentation" %}{% endblock %}
+
+{% block og_title %}{% translate "Sponsor Django's website and documentation" %}{% endblock %}
+
+{% block og_description %}{% translate "Sponsor the banner on djangoproject.com and the Django documentation, and support the Django Software Foundation." %}{% endblock %}
+
+{% block layout_class %}full-width{% endblock %}
+
+{% block header %}
+  <p>
+    {% blocktranslate trimmed %}
+      Support the <em>Django Software Foundation</em>.
+    {% endblocktranslate %}
+  </p>
+{% endblock header %}
+
+{% block billboard %}{% endblock %}
+
+{% block content %}
+  <div class="section">
+    <div class="layout-2col">
+      <div class="col two-third">
+        <h1>{% translate "Reach Django developers where they work" %}</h1>
+        <p>
+          {% blocktranslate trimmed %}
+            The sponsorship banner is shown on every page of djangoproject.com and
+            the official documentation. The money goes to the Django Software
+            Foundation, the non-profit that supports Django's development.
+          {% endblocktranslate %}
+        </p>
+        <a href="#contact" class="cta arrow">{% translate "Become a sponsor" %}</a>
+        <a href="#pricing" class="link-readmore">{% translate "View sponsorship levels" %}</a>
+      </div>
+      <div class="col one-third last-child">
+        <h3>{% translate "Django in numbers" %}</h3>
+        <ul>
+          <li><strong>70M+</strong> {% translate "page views a month on djangoproject.com" %}</li>
+          <li><strong>35%</strong> {% translate "of Python developers use Django" %}</li>
+          <li><strong>53M+</strong> {% translate "downloads a month from PyPI" %}</li>
+          <li><strong>89k</strong> {% translate "GitHub stars" %}</li>
+        </ul>
+        <p class="footnote">
+          {% blocktranslate trimmed %}
+            Sources: Python Developers Survey 2024, PyPI Stats, GitHub.
+          {% endblocktranslate %}
+        </p>
+      </div>
+    </div>
+    <figure class="sponsor-placement">
+      <img src="{% static 'img/sponsor/placement.png' %}" width="1280" height="351" alt="{% translate 'The Django overview page with the sponsorship banner marked by a dashed outline and a label reading Your banner' %}">
+      <figcaption class="footnote">{% translate "The banner, marked above, on the Django overview page." %}</figcaption>
+    </figure>
+  </div>
+
+  <div class="section">
+    <h2>{% translate "Why sponsor Django" %}</h2>
+    <h3>{% translate "Where developers work" %}</h3>
+    <p>
+      {% blocktranslate trimmed %}
+        Django developers use the documentation every day, and
+        djangoproject.com is where they download releases and read the news.
+      {% endblocktranslate %}
+    </p>
+    <h3>{% translate "When they choose tools" %}</h3>
+    <p>
+      {% blocktranslate trimmed %}
+        Most readers are building an application and deciding which hosting,
+        database, and services to use with it.
+      {% endblocktranslate %}
+    </p>
+    <h3>{% translate "What it funds" %}</h3>
+    <p>
+      {% blocktranslate trimmed %}
+        The Django Software Foundation is a 501(c)(3). Its largest expense is
+        the Django Fellowship program, which pays the people who review
+        contributions and handle security releases.
+      {% endblocktranslate %}
+    </p>
+  </div>
+
+  <div class="section" id="pricing">
+    <h2>{% translate "Sponsorship levels" %}</h2>
+    <p>
+      {% blocktranslate trimmed %}
+        Each sponsorship includes a banner with a title, a short message, and a
+        button. Sponsors are listed as supporters of the Django Software Foundation.
+      {% endblocktranslate %}
+    </p>
+    <div class="layout-2col sponsor-levels">
+      <div class="col">
+        <h3>{% translate "One month" %}</h3>
+        <p class="sponsor-price">${{ amounts.monthly|intcomma }}</p>
+        <p>{% translate "For brand building and hiring." %}</p>
+        <a href="#contact" class="cta arrow">{% translate "Sponsor for a month" %}</a>
+      </div>
+      <div class="col last-child">
+        <h3>{% translate "One week" %}</h3>
+        <p class="sponsor-price">${{ amounts.weekly|intcomma }}</p>
+        <p>{% translate "For launches and events." %}</p>
+        <a href="#contact" class="cta outline arrow">{% translate "Sponsor for a week" %}</a>
+      </div>
+    </div>
+    <p class="sponsor-callout">
+      {% blocktranslate trimmed %}
+        <strong>Corporate members</strong> of the Foundation get year-round
+        recognition, including social media posts, promotion in Django News and on
+        the Django blog, and meetings with the DSF Board.
+      {% endblocktranslate %}
+      <a href="{% url 'members:corporate-members-join' %}">{% translate "See all corporate membership benefits" %}</a>.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>{% translate "Common questions" %}</h2>
+    <h3>{% translate "How does booking work?" %}</h3>
+    <p>
+      {% blocktranslate trimmed %}
+        First come, first served. Send the dates you'd like and we'll confirm
+        whether they're available.
+      {% endblocktranslate %}
+    </p>
+    <h3>{% translate "Who can sponsor?" %}</h3>
+    <p>
+      {% blocktranslate trimmed %}
+        Organizations whose products are relevant to Django developers. The DSF
+        reviews each sponsorship.
+      {% endblocktranslate %}
+    </p>
+    <h3>{% translate "Where does the money go?" %}</h3>
+    <p>
+      {% url 'fundraising:index' as fundraising_url %}
+      {% blocktranslate trimmed %}
+        To the Django Software Foundation. See
+        <a href="{{ fundraising_url }}#why-give">how the Foundation uses donations</a>.
+      {% endblocktranslate %}
+    </p>
+  </div>
+
+  <div class="section sponsor-form" id="contact">
+    <h2>{% translate "Become a sponsor" %}</h2>
+    <p>
+      {% blocktranslate trimmed %}
+        Tell us about your organization, the dates you'd like, and what the banner
+        should say. We'll get back to you about availability.
+      {% endblocktranslate %}
+    </p>
+    <form action="{% url 'sponsor_banner' %}#contact" method="post" accept-charset="utf-8">
+      {% csrf_token %}
+      <div>
+        {{ form.name.as_field_group }}
+      </div>
+      <div>
+        {{ form.email.as_field_group }}
+      </div>
+      <div>
+        {{ form.message_subject.as_field_group }}
+      </div>
+      <div>
+        {{ form.body.as_field_group }}
+      </div>
+      {{ form.captcha }}
+      <div class="submit">
+        <button type="submit" class="cta arrow">{% translate "Send" %}</button>
+      </div>
+    </form>
+  </div>
+{% endblock content %}
