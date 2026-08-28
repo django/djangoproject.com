@@ -29,8 +29,8 @@ class TestSponsor(ReleaseMixin, TestCase):
         response = self.client.get(reverse("sponsor"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "How Investing in Django Makes a Difference")
-        self.assertContains(response, "id=\"corporate-membership-tiers\"")
-        self.assertContains(response, "id=\"dsf-social-media-reach\"")
+        self.assertContains(response, 'id="corporate-membership-tiers"')
+        self.assertContains(response, 'id="dsf-social-media-reach"')
 
 
 class TestCampaign(ReleaseMixin, TemporaryMediaRootMixin, TestCase):

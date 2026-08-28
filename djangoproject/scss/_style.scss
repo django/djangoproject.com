@@ -2642,6 +2642,47 @@ table {
     }
 }
 
+.sponsor-prospectus {
+    // Prospectus page at /sponsor/. Images scale down on small screens and the
+    // tier tables scroll sideways inside .table-wrapper.
+    img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    // The tier tables need more room than the 740px content column. On wide
+    // screens they break out of the column and centre on the viewport. 96vw
+    // leaves room for the scrollbar, so the page itself never scrolls
+    // sideways.
+    .table-wrapper {
+        @include respond-min(768px) {
+            width: 96vw;
+            max-width: 1160px;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    table.sponsor-tiers {
+        min-width: 920px;
+        table-layout: fixed;
+
+        th:first-child,
+        td:first-child {
+            width: 28%;
+        }
+    }
+
+    table.sponsor-reach {
+        min-width: 640px;
+    }
+}
+
 table.foundation td {
     padding: 0 5px;
 }

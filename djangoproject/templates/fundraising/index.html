@@ -75,9 +75,10 @@
       {% endblocktranslate %}
     </li>
     <li>
+      {% url 'sponsor' as sponsor_url %}
       {% blocktranslate trimmed %}
         For more information on why to donate, see our
-        <a href="{% url 'sponsor' %}">Prospectus</a>.
+        <a href="{{ sponsor_url }}">Prospectus</a>.
       {% endblocktranslate %}
     </li>
     <li>
