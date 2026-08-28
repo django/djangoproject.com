@@ -3805,12 +3805,27 @@ ul.corporate-members li {
 }
 
 // Sponsorship banner landing page (/sponsor/banner/)
+// The screenshot is 2560px wide, so it breaks out of the content column the
+// same way a wide table does. See .table-wrapper-wide above for the technique.
 .sponsor-placement {
     margin: 30px 0 0;
 
+    @include respond-min(768px) {
+        width: 96vw;
+        max-width: 1160px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+
     img {
+        display: block;
         height: auto;
         max-width: 100%;
+    }
+
+    figcaption {
+        margin: 10px 0 0;
+        text-align: center;
     }
 }
 
