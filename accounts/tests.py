@@ -184,7 +184,7 @@ class ViewsTests(ReleaseMixin, TestCase):
         User.objects.create_user(**credentials)
 
         response = self.client.post(reverse("login"), credentials)
-        self.assertRedirects(response, "/accounts/edit/")
+        self.assertRedirects(response, "/en/accounts/edit/")
 
     def test_profile_view_reversal(self):
         """
@@ -303,7 +303,7 @@ class RegistrationTests(ReleaseMixin, TestCase):
             response = self.client.post(
                 reverse("registration_register"), data=self.data
             )
-        self.assertRedirects(response, "/accounts/register/complete/")
+        self.assertRedirects(response, "/en/accounts/register/complete/")
         self.assertEqual(len(mail.outbox), 1)
         self.assertIs(User.objects.filter(username="newuser").exists(), True)
 

@@ -33,7 +33,7 @@ class BannerTestCase(ReleaseMixin, TestCase):
 
     def test_active_banner_tag_no_active_banner(self):
         Banner.objects.create(title="Inactive", is_active=False)
-        response = self.client.get("/")
+        response = self.client.get("/en/")
         self.assertNotContains(response, '<div class="banner">')
 
     def test_active_banner_tag_renders_banner(self):
@@ -44,7 +44,7 @@ class BannerTestCase(ReleaseMixin, TestCase):
             cta_url="https://djangoproject.com/donate/",
             is_active=True,
         )
-        response = self.client.get("/")
+        response = self.client.get("/en/")
         self.assertContains(response, "<h2>Support Django!</h2>", html=True)
         self.assertContains(
             response, '<div class="banner-body">Please donate.</div>', html=True
@@ -88,13 +88,13 @@ class BannerTestCase(ReleaseMixin, TestCase):
 
     def test_active_banner_tag_no_cta_when_fields_blank(self):
         Banner.objects.create(title="No CTA", cta_label="", cta_url="", is_active=True)
-        response = self.client.get("/")
+        response = self.client.get("/en/")
         self.assertContains(response, "No CTA")
         self.assertNotContains(response, '<a id="banner-cta" class="cta"')
 
     def test_inactive_banner_not_shown_on_main_site(self):
         Banner.objects.create(title="Inactive banner", is_active=False)
-        response = self.client.get("/")
+        response = self.client.get("/en/")
         self.assertNotContains(response, "Inactive banner")
 
     def test_banner_get_absolute_url(self):
@@ -108,7 +108,8 @@ class BannerTestCase(ReleaseMixin, TestCase):
         banner = Banner.objects.create(title="Draft banner")
         response = self.client.get(banner.get_absolute_url())
         self.assertRedirects(
-            response, f"/accounts/login/?next=/foundation/banners/{banner.pk}/preview/"
+            response,
+            f"/accounts/login/?next=/en/foundation/banners/{banner.pk}/preview/",
         )
 
     def test_preview_view_requires_permission(self):
@@ -140,7 +141,7 @@ class BannerTestCase(ReleaseMixin, TestCase):
 
     def test_fundraising_page_suppresses_banner(self):
         Banner.objects.create(title="Donate now!", is_active=True)
-        response = self.client.get("/fundraising/")
+        response = self.client.get("/en/fundraising/")
         self.assertNotContains(response, "Donate now!")
 
 
