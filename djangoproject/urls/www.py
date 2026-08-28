@@ -164,6 +164,7 @@ urlpatterns = i18n_patterns(
         name="sitemap",
     ),
     path("weblog/", include("blog.urls")),
+    path("download/", include("releases.urls.i18n_paths")),
     path("svntogit/", include("svntogit.urls")),
     path(
         "foundation/individual-membership-nomination/",
@@ -175,7 +176,7 @@ urlpatterns = i18n_patterns(
 )
 
 urlpatterns += [
-    path("download/", include("releases.urls")),
+    path("download/", include("releases.urls.download")),
     path(
         ".well-known/security.txt",
         TemplateView.as_view(
