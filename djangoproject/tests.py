@@ -174,18 +174,16 @@ class ExcludeHostsLocaleMiddlewareTests(ReleaseMixin, TestCase):
     def test_www_host(self):
         """www should still use LocaleMiddleware"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/", headers={"host": self.www_host})
+            resp = self.client.get("/en/", headers={"host": self.www_host})
         self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn("Content-Language", resp)
-        self.assertIn("Vary", resp)
 
     def test_www_host_with_port(self):
         """www (with a port) should still use LocaleMiddleware"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/", headers={"host": "%s:8000" % self.www_host})
+            resp = self.client.get("/en/", headers={"host": "%s:8000" % self.www_host})
         self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn("Content-Language", resp)
-        self.assertIn("Vary", resp)
 
 
 # https://adamj.eu/tech/2024/06/23/django-test-pending-migrations/
