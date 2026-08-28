@@ -50,7 +50,11 @@
 
     <a href="#main-content" class="skip-link">Skip to main content</a>
     {% include "includes/header.html" %}
-    {% include "includes/language_selector.html" %}
+
+    {% block language_selector %}
+      {% include "includes/language_selector.html" %}
+    {% endblock language_selector %}
+
     {% block banner %}{% endblock %}
 
     <section class="copy-banner">
