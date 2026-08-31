@@ -9,7 +9,7 @@ register = template.Library()
 def render_latest_blog_entries(
     num, summary_first=False, hide_readmore=False, header_tag=""
 ):
-    entries = Entry.objects.published()[:num]
+    entries = Entry.objects.published().priority_order()[:num]
     return {
         "entries": entries,
         "summary_first": summary_first,
