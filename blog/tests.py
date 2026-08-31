@@ -25,6 +25,7 @@ from members.models import (
 
 from .models import ContentFormat, Entry, Event, ImageUpload
 from .sitemaps import WeblogSitemap
+from .templatetags.weblog import render_latest_blog_entries
 
 
 class DateTimeMixin:
@@ -76,6 +77,23 @@ class EntryTestCase(DateTimeMixin, TestCase):
             Entry.objects.published(),
             ["past active"],
             transform=lambda entry: entry.headline,
+        )
+
+    def test_manager_priority_order(self):
+        common_kwargs = {"headline": "Test", "slug": "test"}
+        Entry.objects.create(pub_date=self.now, featured=False, **common_kwargs)
+        Entry.objects.create(pub_date=self.now, featured=True, **common_kwargs)
+        Entry.objects.create(pub_date=self.yesterday, featured=False, **common_kwargs)
+        Entry.objects.create(pub_date=self.yesterday, featured=True, **common_kwargs)
+        self.assertQuerySetEqual(
+            Entry.objects.priority_order(),
+            [
+                (self.now, True),
+                (self.yesterday, True),
+                (self.now, False),
+                (self.yesterday, False),
+            ],
+            transform=lambda entry: (entry.pub_date, entry.featured),
         )
 
     def test_docutils_safe(self):
@@ -468,6 +486,31 @@ class ViewsTestCase(ReleaseMixin, DateTimeMixin, TestCase):
                 self.assertNotContains(response, "Silver company")
                 self.assertNotContains(response, "Bronze company")
 
+    def test_featured_entries_are_listed_first(self):
+        newer_entry = Entry.objects.create(
+            pub_date=self.yesterday,
+            is_active=True,
+            headline="newer entry",
+            slug="newer-entry",
+            featured=False,
+        )
+        featured_entry = Entry.objects.create(
+            pub_date=self.yesterday - timedelta(days=1),
+            is_active=True,
+            headline="important entry",
+            slug="important-entry",
+            featured=True,
+        )
+
+        response = self.client.get(reverse("weblog:index"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerySetEqual(
+            response.context["object_list"],
+            [featured_entry, newer_entry],
+        )
+        self.assertContains(response, "Featured", count=1)
+
     def test_anonymous_user_cannot_see_unpublished_entries(self):
         """
         Anonymous users can't see unpublished entries at all (list or detail view)
@@ -804,4 +847,29 @@ class ImageUploadTestCase(TestCase):
             "Raw HTML"
             "</button>",
             admin.site.get_model_admin(ImageUpload).copy_buttons(i),
+        )
+
+
+class TemplateTagTests(DateTimeMixin, TestCase):
+    def test_render_latest_blog_entries_prioritizes_featured_entries(self):
+        newer_entry = Entry.objects.create(
+            pub_date=self.yesterday,
+            is_active=True,
+            headline="newer entry",
+            slug="newer-entry",
+            featured=False,
+        )
+        featured_entry = Entry.objects.create(
+            pub_date=self.yesterday - timedelta(days=1),
+            is_active=True,
+            headline="important entry",
+            slug="important-entry",
+            featured=True,
+        )
+
+        context = render_latest_blog_entries(2)
+
+        self.assertQuerySetEqual(
+            context["entries"],
+            [featured_entry, newer_entry],
         )
