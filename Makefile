@@ -14,7 +14,7 @@ collectstatics: compile-scss
 	python -m manage collectstatic --noinput
 
 compile-scss:
-	python -m pysassc $(SCSS)/output.scss $(STATIC)/css/output.css --style=compressed
+	python -m pysassc $(SCSS)/output.scss $(STATIC)/css/output.css
 
 compile-scss-debug:
 	python -m pysassc $(SCSS)/output.scss $(STATIC)/css/output.css --sourcemap

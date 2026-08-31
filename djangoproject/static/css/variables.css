@@ -1,0 +1,50 @@
+/*
+  Temporarily separating color values from _utils.scss to work on them without
+  having to remove all mixin dependencies immediately.
+*/
+:root {
+    --gray-medium: #859D94;
+    --gray-medium-l10: color-mix(in oklch, var(--gray-medium), white 20%)
+    --gray-dark: #343940;
+    --text: #0C3C26;
+    --text-l10: color-mix(in oklch, var(--text), white 10%);
+    --text-l20: color-mix(in oklch, var(--text), white 20%);
+    --text-light: #798780;
+    --text-light-l20: color-mix(in oklch, var(--text-light), white 20%);
+    --text-light-l30: color-mix(in oklch, var(--text-light), white 30%);
+    --text-light-d10: color-mix(in oklch, var(--text-light), black 10%);
+    --text-light-d20: color-mix(in oklch, var(--text-light), black 20%);
+    --gray-line: #CFE3DC;
+    --green-very-light: #C9F0DD;
+    --green-very-light-l5: color-mix(in oklch, var(--green-very-light), white 5%);
+    --green-very-light-l10: color-mix(in oklch, var(--green-very-light), white 10%);
+    --green-light: #93D7B7;
+    --green-medium: #44B78B;
+    --green-medium-dark: #2B8C67;
+    --green: #20AA76;
+    --green-l6: color-mix(in oklch, var(--green), white 6%);
+    --green-dark: #0C4B33;
+    --green-dark-text: #3C8866;
+    --white: #F1FFF7;
+    --white-dark: #F8F8F8;
+    --warning-bg: #ffe761;
+    --warning-icon: #E9BD46;
+    --warning-yellow: #FFFDF1;
+    --warning-dark-yellow: #F5F1C7;
+    --warning-dark-yellow-d50: color-mix(in oklch, var(--warning-dark-yellow), black 50%);
+    --orange: #ab5603;
+    --dark-orange: #f87c04;
+    --red: #BA2121;
+    --red-light: #FFBABA;
+    --red-light-l10: color-mix(in oklch, var(--red-light), white 10%);
+    --red-medium: #E46767;
+    --red-dark: #6A0E0E;
+    --red-dark-l10: color-mix(in oklch, var(--red-dark), white 10%);
+    --black: #0e1117;
+    --black-light-5: color-mix(in oklch, var(--black), white 5%);
+    --font-path: "../font";
+    --logo-bg-dark: #272c27;
+
+    /* New color value */
+    --green-d10: color-mix(in oklch, var(--green), black 10%);
+}
