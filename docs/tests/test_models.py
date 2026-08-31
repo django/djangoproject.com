@@ -3,11 +3,15 @@ from operator import attrgetter
 from unittest.mock import patch
 
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.core.files.base import ContentFile
 from django.db import connection, models
 from django.test import TestCase
 from django.utils import timezone
 
 from blog.models import ContentFormat, Entry
+from djangoproject.sitemaps import TemplateViewSitemap
+from foundation.models import BoardMember, Meeting, Office, Term
 from releases.models import Release
 
 from ..models import Document, DocumentRelease
@@ -503,6 +507,42 @@ class UpdateDocTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.release = DocumentRelease.objects.create(is_default=True)
+        # The following data is required to render various pages on the website.
+        # Previous release.
+        Release.objects.create(
+            version="6.0.1",
+            is_active=True,
+            is_lts=False,
+            date=datetime.date.today(),
+            eol_date=None,
+            tarball=ContentFile(b".", name="django-6.0.1.tar.gz"),
+            wheel=ContentFile(b".", name="django-6.0.1-py3-none-any.whl"),
+            checksum=ContentFile(b".", name="some-random-name.checksum.txt"),
+        )
+        # Current release.
+        Release.objects.create(
+            version="6.1.1",
+            is_active=True,
+            is_lts=False,
+            date=datetime.date.today(),
+            eol_date=None,
+            tarball=ContentFile(b".", name="django-6.1.1.tar.gz"),
+            wheel=ContentFile(b".", name="django-6.1.1-py3-none-any.whl"),
+            checksum=ContentFile(b".", name="some-random-name.checksum.txt"),
+        )
+        user = User.objects.create_superuser("admin", "admin@example.com", "password")
+        member = BoardMember.objects.create(
+            account=user,
+            office=Office.objects.create(name="treasurer"),
+            term=Term.objects.create(year=2023),
+        )
+        Meeting.objects.create(
+            date=datetime.date.today(),
+            title="DSF Board monthly meeting",
+            slug="dsf-board-monthly-meeting",
+            leader=member,
+            treasurer_report="Hello World",
+        )
 
     def test_sync_to_db(self):
         self.release.sync_to_db(
@@ -657,6 +697,10 @@ class UpdateDocTests(TestCase):
         self.assertIn("<strong>test</strong>", document.metadata["body"])
         self.assertEqual(document.metadata["title"], "Title 1")
         self.assertEqual(document.metadata["toc"], "")
+        # Entries are from the sitemap and the blog entry.
+        self.assertEqual(
+            Document.objects.count(), len(list(TemplateViewSitemap().items())) + 1
+        )
 
     def test_sync_from_sitemap_only_requests_non_existing(self):
         blog_entry = Entry.objects.create(
