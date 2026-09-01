@@ -1,0 +1,102 @@
+/* Colors */
+
+:root {
+    --gray-medium: #859D94;
+    --gray-medium-l10: #a1b4ad;
+    --gray-dark: #343940;
+    --text: #0C3C26;
+    --text-l10: #156741;
+    --text-l20: #1d915c;
+    --text-light: #798780;
+    --text-light-l20: #afb7b3;
+    --text-light-l30: #cacfcd;
+    --text-light-d10: #616c67;
+    --text-light-d20: #49514d;
+    --gray-line: #CFE3DC;
+    --green-very-light: #C9F0DD;
+    --green-very-light-l5: #ddf6ea;
+    --green-very-light-l10: #f1fbf6;
+    --green-light: #93D7B7;
+    --green-medium: #44B78B;
+    --green-medium-dark: #2B8C67;
+    --green: #20AA76;
+    --green-l6: #25c488;
+    --green-dark: #0C4B33;
+    --green-dark-text: #3C8866;
+    --white: #F1FFF7;
+    --white-dark: #F8F8F8;
+    --warning-bg: #ffe761;
+    --warning-icon: #E9BD46;
+    --warning-yellow: #FFFDF1;
+    --warning-dark-yellow: #F5F1C7;
+    --warning-dark-yellow-d50: #a0951d;
+    --orange: #ab5603;
+    --dark-orange: #f87c04;
+    --red: #BA2121;
+    --red-light: #FFBABA;
+    --red-light-l10: #ffeded;
+    --red-medium: #E46767;
+    --red-dark: #6A0E0E;
+    --red-dark-l10: #971414;
+    --black: #0e1117;
+    --black-light-5: #181d27;
+    --logo-bg-dark: #272c27;
+
+    /* New color value */
+    --green-d10: #187f58;
+
+    /* New font values */
+    --sans-serif-font-families: Roboto, Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
+    --monospace-font-families: "Fira Mono", Consolas, Menlo, Monaco, "Courier New", Courier, monospace;
+}
+
+/* @font-face declarations */
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../font/Roboto-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../font/Roboto-Italic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../font/Roboto-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../font/Roboto-BoldItalic.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../font/Roboto-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Mono';
+    src: url('../font/FiraMono-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Fira Mono';
+    src: url('../font/FiraMono-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}

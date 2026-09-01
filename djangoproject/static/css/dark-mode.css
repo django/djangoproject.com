@@ -1,0 +1,355 @@
+/* default theme: light */
+html[data-theme="light"],
+:root {
+    --body-fg: var(--text);
+    --body-bg: var(--white);
+    --logo-bg: var(--white);
+
+    --menu: var(--white);
+
+    /* noop */
+    /* --text-l10: var(--text-l10); */
+    /* --text-l20: var(--text-l20); */
+    /* --text-light: var(--text-light); */
+
+    --primary: var(--green-medium);
+    --primary-accent: var(--green-medium-dark);
+
+    --secondary: var(--green);
+    --secondary-accent: var(--green-very-light);
+    --secondary-accent-l5: var(--green-very-light-l5);
+    --secondary-accent-l10: var(--green-very-light-l10);
+
+    --link-color: var(--green);
+    --sidebar-bg: var(--white-dark);
+
+    --code-bg: var(--white-dark);
+    --code-fg: var(--green-dark);
+    --code-block-title: var(--green-dark);
+    --code-border: #EAEAEA;
+
+
+    --console-tabs-color: #555;
+    --console-tabs-border: var(--orange);
+
+    --warning: var(--warning-yellow);
+    --warning-admonition-icon: var(--warning-icon);
+    --warning-admonition-bg: var(--warning-yellow);
+    --warning-text: var(--text);
+    --warning-link-block: var(--red-medium);
+    --warning-dark: var(--warning-dark-yellow);
+    --warning-dark-d50: var(--warning-dark-yellow-d50);
+
+    --hairline-color: var(--gray-line);
+    --dark-hairline-color: var(--gray-medium);
+
+    --error-fg: var(--red);
+    --error-light: var(--red-light);
+    --error-light-l10: var(--red-light-l10);
+    --error-dark: var(--red-dark);
+    --error-dark-l10: var(--red-dark-l10);
+
+    --cta-color-accent: var(--green-very-light);
+    --table-color: var(--body-fg);
+    --white-color: #fff;
+
+    --search-link: var(--green);
+    --search-link-hover: var(--green-light);
+    --search-mark-text: var(--green-dark);
+
+    --selection: var(--green-very-light);
+
+    --community-img-bg: var(--green-very-light);
+    --community-img-fg: var(--green-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) {
+        color-scheme: dark;
+        --body-fg: #C1CAD2;
+        --body-bg: var(--black);
+        --logo-bg: var(--logo-bg-dark);
+
+        --text-l10: var(--green-light);
+        --text-l20: var(--green-very-light);
+        --text-light: var(--text-light-l20);
+
+        --primary: var(--green-medium);
+        --primary-accent: var(--green-light);
+
+        --secondary-accent: var(--green-medium);
+
+        --link-color: var(--green-light);
+        --sidebar-bg: var(--black-light-5);
+
+        --code-bg: var(--black-light-5);
+        --code-fg: var(--white-dark);
+        --code-border: var(--black-light-5);
+        --code-block-title: var(--black-light-5);
+
+        --console-tabs-color: var(--dark-orange);
+        --console-tabs-border: var(--dark-orange);
+
+        --warning-admonition-icon: var(--warning-icon);
+        --warning-admonition-bg: transparent;
+        --warning-text: var(--white);
+        --warning-link-block: var(--red);
+
+        --hairline-color: var(--gray-line);
+        --dark-hairline-color: var(--gray-medium-l10);
+
+        --error-light: var(--red-medium);
+        --error-dark: var(--red-medium);
+
+        --table-color: var(--body-bg);
+        --cta-color-accent: var(--black);
+        --white-color: var(--black);
+
+        --search-link: var(--green-dark);
+        --search-link-hover: var(--green-light);
+        --search-mark-text: var(--black-light-5);
+
+        --selection: var(--green-dark);
+
+        --community-img-bg: var(--green-dark);
+        --community-img-fg: var(--white);
+    }
+
+    body .homepage {
+        .copy-banner {
+            background: var(--white-color);
+        }
+    }
+
+    body .copy-banner {
+        background: var(--green-d10);
+
+        p,
+        h1 {
+            color: var(--green-very-light);
+
+            /* scss @include respond-min(768px) */
+            @media screen and (width >= 768px) {
+                color: var(--green-very-light);
+            }
+
+            a {
+                color: var(--green-very-light);
+            }
+        }
+    }
+
+    body table.django-supported-versions,
+    body table.django-unsupported-versions {
+        a {
+            color: var(--table-color);
+
+            &:active,
+            &:focus,
+            &:hover {
+                color: var(--table-link-hover);
+            }
+        }
+    }
+
+    body footer {
+        background: var(--green-d10);
+    }
+
+    body .admonition.warning {
+        .admonition-title::before {
+            opacity: 1;
+        }
+    }
+
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+    --body-fg: #C1CAD2;
+    --body-bg: var(--black);
+    --logo-bg: var(--logo-bg-dark);
+
+    --text-l10: var(--green-light);
+    --text-l20: var(--green-very-light);
+    --text-light: var(--text-light-l20);
+
+    --primary: var(--green-medium);
+    --primary-accent: var(--green-light);
+
+    --secondary-accent: var(--green-medium);
+
+    --link-color: var(--green-light);
+    --sidebar-bg: var(--black-light-5);
+
+    --code-bg: var(--black-light-5);
+    --code-fg: var(--white-dark);
+    --code-border: var(--black-light-5);
+    --code-block-title: var(--black-light-5);
+
+    --console-tabs-color: var(--dark-orange);
+    --console-tabs-border: var(--dark-orange);
+
+    --warning-admonition-icon: var(--warning-icon);
+    --warning-admonition-bg: transparent;
+    --warning-text: var(--white);
+    --warning-link-block: var(--red);
+
+    --hairline-color: var(--gray-line);
+    --dark-hairline-color: var(--gray-medium-l10);
+
+    --error-light: var(--red-medium);
+    --error-dark: var(--red-medium);
+
+    --table-color: var(--body-bg);
+    --table-link-hover: #09422C;
+    --cta-color-accent: var(--black);
+    --white-color: var(--black);
+
+    --search-link: var(--green-dark);
+    --search-link-hover: var(--green-light);
+    --search-mark-text: var(--black-light-5);
+
+    --selection: var(--green-dark);
+
+    --community-img-bg: var(--green-dark);
+    --community-img-fg: var(--white);
+
+    .homepage {
+        .copy-banner {
+            background: var(--white-color);
+        }
+    }
+
+    .copy-banner {
+        background: var(--green-d10);
+
+        p,
+        h1 {
+            color: var(--green-very-light);
+
+            /* scss @include respond-min(768px) */
+            @media screen and (width >= 768px) {
+                color: var(--green-very-light);
+            }
+
+            a {
+                color: var(--green-very-light);
+            }
+        }
+    }
+
+    table.django-supported-versions,
+    table.django-unsupported-versions {
+        a {
+            color: var(--table-color);
+
+            &:active,
+            &:focus,
+            &:hover {
+                color: var(--table-link-hover);
+            }
+        }
+    }
+
+    .admonition.warning {
+        .admonition-title::before {
+            opacity: 1;
+        }
+    }
+
+    footer {
+        background: var(--green-d10);
+    }
+}
+
+html[data-theme="light"] .img-release {
+  filter: invert(0);
+}
+
+@media (prefers-color-scheme: light) {
+    html[data-theme="auto"] .img-release {
+        filter: invert(0);
+    }
+}
+
+html[data-theme="dark"] .img-release {
+  filter: invert(1);
+}
+
+@media (prefers-color-scheme: dark) {
+    html[data-theme="auto"] .img-release {
+        filter: invert(1);
+    }
+}
+
+
+/* THEME SWITCH */
+.theme-toggle {
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    margin: 0 2px;
+    padding: 0;
+    color: var(--menu);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ICONS */
+.theme-toggle .icon {
+    display: none;
+    color: var(--menu);
+}
+
+html[data-theme="auto"] .theme-toggle .theme-icon-when-auto {
+    display: block;
+}
+
+html[data-theme="dark"] .theme-toggle .theme-icon-when-dark {
+    display: block;
+}
+
+html[data-theme="light"] .theme-toggle .theme-icon-when-light {
+    display: block;
+}
+
+/* Fully hide screen reader text so we only show the one matching the current theme */
+.theme-toggle .visually-hidden {
+    display: none;
+}
+
+html[data-theme="auto"] .theme-toggle .theme-label-when-auto {
+    display: block;
+}
+
+html[data-theme="dark"] .theme-toggle .theme-label-when-dark {
+    display: block;
+}
+
+html[data-theme="light"] .theme-toggle .theme-label-when-light {
+    display: block;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+    color: var(--body-fg);
+    background-color: var(--body-bg);
+}
+
+html[data-theme="light"] .admonition {
+    .admonition-title::before {
+        opacity: 0.5;
+    }
+}
