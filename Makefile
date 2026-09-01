@@ -1,4 +1,4 @@
-.PHONY: all ci clean collectstatics compile-scss compile-scss-debug install run test watch-scss
+.PHONY: all ci clean collectstatics install run test watch-scss
 
 APP_LIST ?= accounts aggregator blog checklists contact dashboard djangoproject docs foundation fundraising legacy members releases svntogit tracdb
 SCSS = djangoproject/scss
@@ -10,14 +10,8 @@ ci: compilemessages collectstatics test
 compilemessages:
 	python -m manage compilemessages
 
-collectstatics: compile-scss
+collectstatics:
 	python -m manage collectstatic --noinput
-
-compile-scss:
-	python -m pysassc $(SCSS)/output.scss $(STATIC)/css/output.css
-
-compile-scss-debug:
-	python -m pysassc $(SCSS)/output.scss $(STATIC)/css/output.css --sourcemap
 
 install:
 	python -m pip install --requirement requirements/dev.txt
@@ -30,9 +24,6 @@ run:
 
 test:
 	@python -m coverage run --source=. --module manage test --verbosity 2 $(APP_LIST)
-
-watch-scss:
-	watchmedo shell-command --patterns=*.scss --recursive --command="make compile-scss-debug" $(SCSS)
 
 reset-local-db:
 	python -m manage flush --no-input

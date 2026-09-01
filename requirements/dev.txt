@@ -70,8 +70,6 @@ jinja2==3.1.6
     # via
     #   djangoproject-com
     #   sphinx
-libsass==0.23.0
-    # via djangoproject-com
 markdown==3.10.2
     # via
     #   djangoproject-com
@@ -165,4 +163,3 @@ tzdata==2026.3 ; sys_platform == 'win32'
     #   psycopg
 urllib3==2.7.0
     # via requests
-watchdog==6.0.0

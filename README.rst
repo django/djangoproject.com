@@ -194,18 +194,8 @@ Templates can be found in the ``djangoproject/templates`` subdirectory.
 Styles
 ------
 
-CSS is written in `Scss <http://sass-lang.com/>`_ and compiled via
-`Libsass <https://sass-lang.com/libsass/>`_.
-
-Run the following to compile the Scss files to CSS::
-
-    make compile-scss-debug
-
-Alternatively, you can also run the following command in a separate shell
-to continuously watch for changes to the Scss files and automatically compile
-to CSS::
-
-    make watch-scss
+Styles are written in modern-ish vanilla CSS, and require no seperate build or
+compilation step.
 
 Running all at once
 -------------------

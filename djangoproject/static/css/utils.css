@@ -48,16 +48,6 @@
     /* New font values */
     --sans-serif-font-families: Roboto, Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
     --monospace-font-families: "Fira Mono", Consolas, Menlo, Monaco, "Courier New", Courier, monospace;
-
-    /* Fontawesome values */
-    --fa-var-check-circle: "\f058";
-    --fa-var-cogs: "\f085";
-    --fa-var-exclamation-triangle: "\f071";
-    --fa-var-file-text-o: "\f0f6";
-    --fa-var-info-circle: "\f05a";
-    --fa-var-lightbulb-o: "\f0eb";
-    --fa-var-quote-left: "\f10d";
-    --fa-var-times-circle: "\f057";
 }
 
 /* @font-face declarations */

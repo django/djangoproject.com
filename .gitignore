@@ -13,9 +13,3 @@ locale/*/LC_MESSAGES/django.mo
 .direnv
 .envrc
 djangoproject/cache
-djangoproject/static/css/*.map
-djangoproject/static/css/output.css
-node_modules
-package.json
-pnpm-lock.yaml
-stylelint.config.mjs
