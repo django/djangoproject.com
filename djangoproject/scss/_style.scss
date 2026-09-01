@@ -3829,20 +3829,67 @@ ul.corporate-members li {
     }
 }
 
-.sponsor-levels .col {
-    border: 1px solid var(--hairline-color);
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-    padding: 20px 30px 30px;
+// Headline numbers on the sponsorship landing pages.
+.sponsor-stats {
+    list-style: none;
+    margin: 20px 0;
+    padding: 0;
 
-    h3 {
-        margin-top: 0;
+    li {
+        margin-bottom: 15px;
     }
 
-    .cta {
-        margin: 20px 0 0;
-        max-width: none;
+    strong {
+        @include sans-serif;
+        @include font-size(24);
+        color: var(--primary);
+        margin-right: 4px;
+    }
+}
+
+.sponsor-levels {
+    // Flex instead of floats so the cards match heights and the buttons align.
+    @include respond-min(768px) {
+        display: flex;
+    }
+
+    .col {
+        border: 1px solid var(--hairline-color);
+        border-radius: 4px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        padding: 25px 30px 30px;
+
+        // The section's default heading and paragraph margins are too loose
+        // inside a card; tighten them into one readable block.
+        h3 {
+            margin: 0 0 5px;
+        }
+
+        p {
+            margin: 0 0 12px;
+        }
+
+        .sponsor-price {
+            margin: 0 0 12px;
+        }
+
+        ul {
+            flex: 1;
+            margin: 5px 0 10px;
+            padding-left: 1.2em;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .cta {
+            margin: 10px 0 0;
+            max-width: none;
+        }
     }
 }
 

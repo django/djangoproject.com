@@ -13,7 +13,7 @@ from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
-from contact.views import BannerSponsorship
+from contact.views import BannerSponsorship, ContactFoundation
 from djangoproject.sitemaps import TemplateViewSitemap
 from foundation.feeds import FoundationMinutesFeed
 from foundation.views import BannerPreview, CoreDevelopers
@@ -122,6 +122,14 @@ urlpatterns = [
     path("fundraising/", include("fundraising.urls")),
     path("sponsor/", fundraising_views.sponsor, name="sponsor"),
     path("sponsor/banner/", BannerSponsorship.as_view(), name="sponsor_banner"),
+    path(
+        "sponsor/assurance/",
+        ContactFoundation.as_view(
+            template_name="sponsor/assurance.html",
+            initial={"message_subject": "Django Assurance"},
+        ),
+        name="sponsor_assurance",
+    ),
     # Used by docs search suggestions
     re_path(
         r"^r/(?P<content_type_id>\d+)/(?P<object_id>.*)/$",
