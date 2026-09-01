@@ -23,6 +23,40 @@ INTERVAL_CHOICES = (
     ("onetime", _("One-time donation")),
 )
 
+# The levels and headline numbers shown on /sponsor/banner/.
+SPONSORSHIP_LEVELS = [
+    {
+        "slug": "monthly",
+        "name": _("One month"),
+        "amount": 10000,
+        "blurb": _("For brand building and hiring."),
+    },
+    {
+        "slug": "weekly",
+        "name": _("One week"),
+        "amount": 3000,
+        "blurb": _("For launches and events."),
+    },
+]
+MARKETING_STATS = [
+    {
+        "value": "70M+",
+        "label": _("page views a month on djangoproject.com"),
+        "source": "DSF prospectus",
+    },
+    {
+        "value": "35%",
+        "label": _("of Python developers use Django"),
+        "source": "Python Developers Survey 2024",
+    },
+    {
+        "value": "53M+",
+        "label": _("downloads a month from PyPI"),
+        "source": "PyPI Stats",
+    },
+    {"value": "89k", "label": _("GitHub stars"), "source": "GitHub"},
+]
+
 
 class DjangoHeroManager(models.Manager):
     def for_public_display(self):

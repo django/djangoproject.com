@@ -11,6 +11,8 @@ from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV3
 from pykismet3 import Akismet, AkismetServerError
 
+from fundraising.models import SPONSORSHIP_LEVELS
+
 logger = logging.getLogger(__name__)
 
 
@@ -82,10 +84,6 @@ class FoundationContactForm(BaseContactForm):
     recipient_list = ["dsf-board@googlegroups.com"]
 
 
-# USD, for the banner sponsorship page and its inquiry form.
-SPONSORSHIP_AMOUNTS = {"monthly": 10000, "weekly": 3000}
-
-
 class BannerSponsorshipForm(FoundationContactForm):
     """
     The foundation contact form with the subject replaced by a choice of
@@ -98,16 +96,19 @@ class BannerSponsorshipForm(FoundationContactForm):
         "dsf-board@googlegroups.com",
     ]
     message_subject = forms.ChoiceField(
-        widget=forms.RadioSelect, label=_("Sponsorship level"), initial="monthly"
+        widget=forms.RadioSelect,
+        label=_("Sponsorship level"),
+        initial=SPONSORSHIP_LEVELS[0]["slug"],
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["message_subject"].choices = [
-            ("monthly", f"{_('One month')}: ${SPONSORSHIP_AMOUNTS['monthly']:,}"),
-            ("weekly", f"{_('One week')}: ${SPONSORSHIP_AMOUNTS['weekly']:,}"),
-            ("other", _("Something else")),
+        choices = [
+            (level["slug"], f"{level['name']}: ${level['amount']:,}")
+            for level in SPONSORSHIP_LEVELS
         ]
+        choices.append(("other", _("Something else")))
+        self.fields["message_subject"].choices = choices
         self.fields["body"].widget.attrs["placeholder"] = _(
             "I'm with Acme. We'd like to sponsor the banner for the month of "
             "October. Is it available?"

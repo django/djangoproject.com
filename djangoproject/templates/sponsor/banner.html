@@ -37,15 +37,12 @@
       <div class="col one-third last-child">
         <h3>{% translate "Django in numbers" %}</h3>
         <ul>
-          <li><strong>70M+</strong> {% translate "page views a month on djangoproject.com" %}</li>
-          <li><strong>35%</strong> {% translate "of Python developers use Django" %}</li>
-          <li><strong>53M+</strong> {% translate "downloads a month from PyPI" %}</li>
-          <li><strong>89k</strong> {% translate "GitHub stars" %}</li>
+          {% for stat in stats %}
+            <li><strong>{{ stat.value }}</strong> {{ stat.label }}</li>
+          {% endfor %}
         </ul>
         <p class="footnote">
-          {% blocktranslate trimmed %}
-            Sources: Python Developers Survey 2024, PyPI Stats, GitHub.
-          {% endblocktranslate %}
+          {% translate "Sources:" %} {{ stat_sources|join:", " }}.
         </p>
       </div>
     </div>
@@ -90,18 +87,16 @@
       {% endblocktranslate %}
     </p>
     <div class="layout-2col sponsor-levels">
-      <div class="col">
-        <h3>{% translate "One month" %}</h3>
-        <p class="sponsor-price">${{ amounts.monthly|intcomma }}</p>
-        <p>{% translate "For brand building and hiring." %}</p>
-        <a href="?level=monthly#contact" class="cta arrow">{% translate "Sponsor for a month" %}</a>
-      </div>
-      <div class="col last-child">
-        <h3>{% translate "One week" %}</h3>
-        <p class="sponsor-price">${{ amounts.weekly|intcomma }}</p>
-        <p>{% translate "For launches and events." %}</p>
-        <a href="?level=weekly#contact" class="cta outline arrow">{% translate "Sponsor for a week" %}</a>
-      </div>
+      {% for level in levels %}
+        <div class="col{% if forloop.last %} last-child{% endif %}">
+          <h3>{{ level.name }}</h3>
+          <p class="sponsor-price">${{ level.amount|intcomma }}</p>
+          <p>{{ level.blurb }}</p>
+          <a href="?level={{ level.slug }}#contact" class="cta{% if not forloop.first %} outline{% endif %} arrow">
+            {% blocktranslate trimmed with name=level.name|lower %}Sponsor for {{ name }}{% endblocktranslate %}
+          </a>
+        </div>
+      {% endfor %}
     </div>
     <p class="sponsor-callout">
       {% blocktranslate trimmed %}
