@@ -123,6 +123,22 @@ class ContactFormTests(ReleaseMixin, TestCase):
 
 class BannerSponsorshipTests(ReleaseMixin, TestCase):
     @override_settings(AKISMET_API_KEY="")  # Disable Akismet in tests
+    def test_failed_captcha_error_is_visible(self):
+        with patch_captcha(is_valid=False):
+            response = self.client.post(
+                "/sponsor/banner/",
+                {
+                    "name": "A. Random Sponsor",
+                    "email": "sponsor@example.com",
+                    "message_subject": "monthly",
+                    "body": "October, please.",
+                    "captcha": "TESTING",
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Error verifying reCAPTCHA")
+
+    @override_settings(AKISMET_API_KEY="")  # Disable Akismet in tests
     def test_sponsor_banner_page(self):
         with patch_captcha():
             response = self.client.post(
