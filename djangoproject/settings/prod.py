@@ -12,8 +12,6 @@ ALLOWED_HOSTS = [
     f"dashboard.{DOMAIN_NAME}",
 ] + SECRETS.get("allowed_hosts", [])
 
-LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = [f"docs.{DOMAIN_NAME}"]
-
 DEBUG = os.getenv("DJANGO_DEBUG", "false").lower() == "true"
 THUMBNAIL_DEBUG = DEBUG
 

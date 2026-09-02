@@ -267,6 +267,8 @@ HOST_SITE_TIMEOUT = 3600
 
 ROOT_HOSTCONF = "djangoproject.hosts"
 
+LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = ["docs"]
+
 # django-recaptcha settings
 
 # The keys themselves are only set in production, but the score threshold

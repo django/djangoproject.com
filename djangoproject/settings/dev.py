@@ -7,8 +7,6 @@ ALLOWED_HOSTS = [
     "dashboard.djangoproject.localhost",
 ]
 
-LOCALE_MIDDLEWARE_EXCLUDED_HOSTS = ["docs.djangoproject.localhost"]
-
 DEBUG = True
 THUMBNAIL_DEBUG = DEBUG
 

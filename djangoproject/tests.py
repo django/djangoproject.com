@@ -125,25 +125,16 @@ class ExcludeHostsLocaleMiddlewareTests(ReleaseMixin, TestCase):
     response.
     """
 
-    docs_host = "docs.djangoproject.localhost"
-    www_host = "www.djangoproject.localhost"
+    docs_host = "docs"
+    www_host = "www"
+    docs_host_header = "docs.djangoproject.localhost:8000"
+    www_host_header = "www.djangoproject.localhost:8000"
 
     def test_docs_host_excluded(self):
         """We get no Content-Language or Vary headers when docs host is excluded"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/", headers={"host": self.docs_host})
+            resp = self.client.get("/", headers={"host": self.docs_host_header})
 
-        self.assertEqual(resp.status_code, HTTPStatus.OK)
-        self.assertNotIn("Content-Language", resp)
-        self.assertNotIn("Vary", resp)
-
-    def test_docs_host_with_port_excluded(self):
-        """
-        We get no Content-Language or Vary headers when docs host
-        (with a port) is excluded
-        """
-        with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/", headers={"host": "%s:8000" % self.docs_host})
         self.assertEqual(resp.status_code, HTTPStatus.FOUND)
         self.assertNotIn("Content-Language", resp)
         self.assertNotIn("Vary", resp)
@@ -156,32 +147,27 @@ class ExcludeHostsLocaleMiddlewareTests(ReleaseMixin, TestCase):
         with self.settings(
             LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host], USE_X_FORWARDED_HOST=True
         ):
-            resp = self.client.get("/", headers={"x-forwarded-host": self.docs_host})
+            resp = self.client.get(
+                "/", headers={"x-forwarded-host": self.docs_host_header}
+            )
 
-        self.assertEqual(resp.status_code, HTTPStatus.OK)
+        self.assertEqual(resp.status_code, HTTPStatus.FOUND)
         self.assertNotIn("Content-Language", resp)
         self.assertNotIn("Vary", resp)
 
     def test_docs_host_not_excluded(self):
         """We still get Content-Language when docs host is not excluded"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[]):
-            resp = self.client.get("/", headers={"host": self.docs_host})
+            resp = self.client.get("/", headers={"host": self.docs_host_header})
 
-        self.assertEqual(resp.status_code, HTTPStatus.OK)
+        self.assertEqual(resp.status_code, HTTPStatus.FOUND)
         self.assertIn("Content-Language", resp)
         self.assertIn("Vary", resp)
 
     def test_www_host(self):
         """www should still use LocaleMiddleware"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/en/", headers={"host": self.www_host})
-        self.assertEqual(resp.status_code, HTTPStatus.OK)
-        self.assertIn("Content-Language", resp)
-
-    def test_www_host_with_port(self):
-        """www (with a port) should still use LocaleMiddleware"""
-        with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/en/", headers={"host": "%s:8000" % self.www_host})
+            resp = self.client.get("/en/", headers={"host": self.www_host_header})
         self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn("Content-Language", resp)
 
