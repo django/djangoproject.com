@@ -183,7 +183,7 @@ urlpatterns += [
             template_name="well-known/security.txt", content_type="text/plain"
         ),
     ),
-    path("", include("legacy.urls")),  # Exclude from i18n patterns
+    path("", include("legacy.urls")),
 ]
 
 if settings.DEBUG:
