@@ -22,6 +22,15 @@ class CORSMiddleware:
         return response
 
 
+def _get_host_name(request):
+    """
+    Get the name of the `django-hosts` host that was matched for this request.
+    `django-hosts` sets `request.host`; while this behaviour is not documented, it is
+    not likely to change.
+    """
+    return request.host.name
+
+
 class ExcludeHostsLocaleMiddleware(LocaleMiddleware):
     """
     Locale middleware that lets us exclude requests to certain hosts (e.g.,
@@ -40,11 +49,11 @@ class ExcludeHostsLocaleMiddleware(LocaleMiddleware):
         return host not in self._excluded_hosts
 
     def process_request(self, request):
-        if self._is_host_included(request.host.name):
+        if self._is_host_included(_get_host_name(request)):
             super().process_request(request)
 
     def process_response(self, request, response):
-        if self._is_host_included(request.host.name):
+        if self._is_host_included(_get_host_name(request)):
             return super().process_response(request, response)
         return response
 
