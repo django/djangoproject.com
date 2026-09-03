@@ -4,7 +4,7 @@
 <ul class="list-collapsing active">
   {% for month in dates_by_year %}
     <li id="year{{ month.grouper }}"{% if forloop.first %} class="active"{% endif %}>
-      <h2><a href="{% url 'weblog:archive-year' month.grouper %}">{{ month.grouper }}</a> <i class="collapsing-icon icon icon-plus"></i></h2>
+      <h2><a href="{% url 'weblog:archive-year' month.grouper %}">{{ month.grouper }}</a> <i class="collapsing-icon icon icon-plus fa fa-plus"></i></h2>
       <div class="collapsing-content">
         <ul class="list-links-small">
           {% for d in month.list %}
