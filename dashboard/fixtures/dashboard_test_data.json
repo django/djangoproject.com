@@ -10,7 +10,7 @@
     {
         "fields": {
             "position": 2,
-            "name": "Patches"
+            "name": "Pull requests"
         },
         "model": "dashboard.category",
         "pk": 2
@@ -51,7 +51,7 @@
         "fields": {
             "category": 2,
             "show_on_dashboard": true,
-            "name": "Patches needing review",
+            "name": "PRs needing review",
             "period": "instant",
             "show_sparkline": true,
             "query": "status=!closed&needs_better_patch=0&needs_tests=0&needs_docs=0&has_patch=1&stage=Accepted",
@@ -67,7 +67,7 @@
         "fields": {
             "category": 2,
             "show_on_dashboard": true,
-            "name": "Doc. patches needing review",
+            "name": "Doc. PRs needing review",
             "period": "instant",
             "show_sparkline": true,
             "query": "status=!closed&needs_better_patch=0&component=Documentation&needs_tests=0&needs_docs=0&has_patch=1&stage=Accepted",
@@ -161,7 +161,7 @@
     },
     {
         "fields": {
-            "category": 2,
+            "category": 4,
             "show_on_dashboard": true,
             "name": "\"Easy\" tickets",
             "period": "instant",
