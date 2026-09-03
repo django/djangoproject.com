@@ -43,7 +43,7 @@ class CorporateMemberAdminTests(TestCase):
 
     def test_renewal_link(self):
         expected_str = (
-            '<a href="http://www.djangoproject.localhost:8000/foundation/'
+            '<a href="http://www.djangoproject.localhost:8000/en/foundation/'
             "corporate-membership/renew/"
         )
         modeladmin = CorporateMemberAdmin(CorporateMember, admin.site)

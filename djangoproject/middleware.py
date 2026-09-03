@@ -2,11 +2,9 @@ import re
 
 from django.conf import settings
 from django.http import HttpResponsePermanentRedirect
-from django.http.request import split_domain_port
 from django.middleware.locale import LocaleMiddleware
 from django.urls import Resolver404, resolve
 from django.utils.functional import cached_property
-from django.utils.http import is_same_domain
 
 
 class CORSMiddleware:
@@ -24,10 +22,20 @@ class CORSMiddleware:
         return response
 
 
+def _get_host_name(request):
+    """
+    Get the name of the `django-hosts` host that was matched for this request.
+    `django-hosts` sets `request.host`; while this behaviour is not documented, it is
+    not likely to change.
+    """
+    return request.host.name
+
+
 class ExcludeHostsLocaleMiddleware(LocaleMiddleware):
     """
     Locale middleware that lets us exclude requests to certain hosts (e.g.,
-    docs.djangoproject.com) from being processed by LocaleMiddleware.
+    `docs`) from being processed by LocaleMiddleware. Depends on the
+    `django_hosts` middleware having processed the request.
     """
 
     @cached_property
@@ -36,22 +44,16 @@ class ExcludeHostsLocaleMiddleware(LocaleMiddleware):
 
     def _is_host_included(self, host):
         """
-        Mirrors the behavior of django.http.request.validate_host(), but does
-        not match '*' (which would exclude all hosts). To exclude all requests
-        from being processed by LocaleMiddleware one should simply remove this
-        class from settings.MIDDLEWARE.
+        Check whether the host is part of the excluded hosts list.
         """
-        domain, _ = split_domain_port(host)
-        return not any(
-            is_same_domain(domain, pattern) for pattern in self._excluded_hosts
-        )
+        return host not in self._excluded_hosts
 
     def process_request(self, request):
-        if self._is_host_included(request.get_host()):
+        if self._is_host_included(_get_host_name(request)):
             super().process_request(request)
 
     def process_response(self, request, response):
-        if self._is_host_included(request.get_host()):
+        if self._is_host_included(_get_host_name(request)):
             return super().process_response(request, response)
         return response
 

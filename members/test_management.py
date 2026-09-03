@@ -51,7 +51,7 @@ class CorporateMemberTests(TestCase):
             msg.body,
         )
         self.assertIn(
-            "http://www.djangoproject.localhost:8000/foundation/"
+            "http://www.djangoproject.localhost:8000/en/foundation/"
             "corporate-membership/renew/",
             msg.body,
         )

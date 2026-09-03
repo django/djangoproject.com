@@ -8,7 +8,7 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import NoReverseMatch, get_resolver
-from django.utils.translation import activate, gettext as _
+from django.utils.translation import activate, get_language, gettext as _
 from django_hosts.resolvers import reverse
 from django_recaptcha.client import RecaptchaResponse
 from playwright.sync_api import expect, sync_playwright
@@ -125,25 +125,16 @@ class ExcludeHostsLocaleMiddlewareTests(ReleaseMixin, TestCase):
     response.
     """
 
-    docs_host = "docs.djangoproject.localhost"
-    www_host = "www.djangoproject.localhost"
+    docs_host = "docs"
+    www_host = "www"
+    docs_host_header = "docs.djangoproject.localhost:8000"
+    www_host_header = "www.djangoproject.localhost:8000"
 
     def test_docs_host_excluded(self):
         """We get no Content-Language or Vary headers when docs host is excluded"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/", headers={"host": self.docs_host})
+            resp = self.client.get("/", headers={"host": self.docs_host_header})
 
-        self.assertEqual(resp.status_code, HTTPStatus.OK)
-        self.assertNotIn("Content-Language", resp)
-        self.assertNotIn("Vary", resp)
-
-    def test_docs_host_with_port_excluded(self):
-        """
-        We get no Content-Language or Vary headers when docs host
-        (with a port) is excluded
-        """
-        with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/", headers={"host": "%s:8000" % self.docs_host})
         self.assertEqual(resp.status_code, HTTPStatus.FOUND)
         self.assertNotIn("Content-Language", resp)
         self.assertNotIn("Vary", resp)
@@ -156,36 +147,29 @@ class ExcludeHostsLocaleMiddlewareTests(ReleaseMixin, TestCase):
         with self.settings(
             LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host], USE_X_FORWARDED_HOST=True
         ):
-            resp = self.client.get("/", headers={"x-forwarded-host": self.docs_host})
+            resp = self.client.get(
+                "/", headers={"x-forwarded-host": self.docs_host_header}
+            )
 
-        self.assertEqual(resp.status_code, HTTPStatus.OK)
+        self.assertEqual(resp.status_code, HTTPStatus.FOUND)
         self.assertNotIn("Content-Language", resp)
         self.assertNotIn("Vary", resp)
 
     def test_docs_host_not_excluded(self):
         """We still get Content-Language when docs host is not excluded"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[]):
-            resp = self.client.get("/", headers={"host": self.docs_host})
+            resp = self.client.get("/", headers={"host": self.docs_host_header})
 
-        self.assertEqual(resp.status_code, HTTPStatus.OK)
+        self.assertEqual(resp.status_code, HTTPStatus.FOUND)
         self.assertIn("Content-Language", resp)
         self.assertIn("Vary", resp)
 
     def test_www_host(self):
         """www should still use LocaleMiddleware"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/", headers={"host": self.www_host})
+            resp = self.client.get("/en/", headers={"host": self.www_host_header})
         self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn("Content-Language", resp)
-        self.assertIn("Vary", resp)
-
-    def test_www_host_with_port(self):
-        """www (with a port) should still use LocaleMiddleware"""
-        with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/", headers={"host": "%s:8000" % self.www_host})
-        self.assertEqual(resp.status_code, HTTPStatus.OK)
-        self.assertIn("Content-Language", resp)
-        self.assertIn("Vary", resp)
 
 
 # https://adamj.eu/tech/2024/06/23/django-test-pending-migrations/
@@ -251,6 +235,28 @@ class SiteMapTests(TestCase):
     def test_sitemap_renders(self):
         response = self.client.get(reverse("sitemap"))
         self.assertEqual(response.status_code, 200)
+
+
+class ChangeLanguageTests(TestCase):
+    """Test case to verify language changing behaviour"""
+
+    def test_change_language(self):
+        """Verify default language and switching to a new language"""
+        self.client.get(reverse("change_language", kwargs={"lang_code": "fr"}))
+        lang = get_language()
+        self.assertEqual("fr", lang)
+
+        # Change back to default
+        self.client.get(
+            reverse("change_language", kwargs={"lang_code": settings.LANGUAGE_CODE})
+        )
+        lang = get_language()
+        self.assertEqual(settings.LANGUAGE_CODE, lang)
+
+    def test_default_language(self):
+        """Verify default language"""
+        default_lang = get_language()
+        self.assertEqual(settings.LANGUAGE_CODE, default_lang)
 
 
 class EndToEndTests(ReleaseMixin, StaticLiveServerTestCase):

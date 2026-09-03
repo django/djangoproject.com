@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.contenttypes import views as contenttypes_views
@@ -13,6 +14,7 @@ from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
 from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
+from djangoproject import views as project_views
 from djangoproject.sitemaps import TemplateViewSitemap
 from foundation.feeds import FoundationMinutesFeed
 from foundation.views import BannerPreview, CoreDevelopers
@@ -27,8 +29,13 @@ sitemaps = {
 }
 
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path("", TemplateView.as_view(template_name="homepage.html"), name="homepage"),
+    path(
+        "change-language/<str:lang_code>/",
+        project_views.change_language,
+        name="change_language",
+    ),
     path(
         "about/",
         RedirectView.as_view(
@@ -158,16 +165,9 @@ urlpatterns = [
         {"sitemaps": sitemaps},
         name="sitemap",
     ),
-    path(
-        ".well-known/security.txt",
-        TemplateView.as_view(
-            template_name="well-known/security.txt", content_type="text/plain"
-        ),
-    ),
     path("weblog/", include("blog.urls")),
-    path("download/", include("releases.urls")),
+    path("download/", include("releases.urls.i18n_paths")),
     path("svntogit/", include("svntogit.urls")),
-    path("", include("legacy.urls")),
     path(
         "foundation/individual-membership-nomination/",
         RedirectView.as_view(
@@ -175,6 +175,17 @@ urlpatterns = [
             permanent=False,
         ),
     ),
+)
+
+urlpatterns += [
+    path("download/", include("releases.urls.download")),
+    path(
+        ".well-known/security.txt",
+        TemplateView.as_view(
+            template_name="well-known/security.txt", content_type="text/plain"
+        ),
+    ),
+    path("", include("legacy.urls")),
 ]
 
 if settings.DEBUG:
