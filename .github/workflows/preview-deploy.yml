@@ -1,0 +1,23 @@
+name: Preview Deploy
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'The git ref to deploy (branch, tag, or SHA)'
+        required: true
+        default: 'main'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PREVIEW_HOST }}
+          username: ${{ secrets.PREVIEW_USER }}
+          key: ${{ secrets.PREVIEW_SSH_KEY }}
+          port: ${{ secrets.PREVIEW_SSH_PORT || 22 }}
+          script: |
+            cd ${{ secrets.PREVIEW_PROJECT_DIR }}
+            ./scripts/deploy-preview.sh ${{ github.event.inputs.ref }}
