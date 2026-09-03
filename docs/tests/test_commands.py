@@ -1,10 +1,11 @@
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 from django.core.management import CommandError
-from django.test import TestCase, override_settings
+from django.test import SimpleTestCase, TestCase, override_settings
 from sphinx.errors import SphinxError
 
 from ..management.commands.build_doc_release import Command
@@ -98,6 +99,42 @@ class BuildReleaseSubprocessInvocationTests(TestCase):
                 "--verbosity",
                 "2",
             ]
+        )
+
+
+class TranslationBuildInvocationTests(SimpleTestCase):
+    def test_translation_build_uses_cwd_instead_of_shell_command(self):
+        release = MagicMock(
+            lang="fr",
+            release=None,
+            version="dev",
+            scm_url="https://github.com/django/django.git@stable/dev.x",
+            is_supported=True,
+        )
+        release.sync_from_sitemap = MagicMock()
+        command = UpdateDocsCommand()
+        command.verbosity = 0
+        command.release_docs_changed = {}
+
+        with tempfile.TemporaryDirectory() as tmp:
+            build_root = Path(tmp)
+            docs_dir = build_root / "sources" / release.version / "docs"
+            docs_dir.mkdir(parents=True)
+
+            with (
+                override_settings(DOCS_BUILD_ROOT=build_root),
+                patch.object(UpdateDocsCommand, "update_git", return_value=True),
+                patch.object(UpdateDocsCommand, "_build_release_in_subprocess"),
+                patch(
+                    "docs.management.commands.update_docs.subprocess.check_call"
+                ) as mock_check_call,
+            ):
+                command.build_doc_release(release)
+
+        mock_check_call.assert_called_once_with(
+            ["make", "translations"],
+            cwd=build_root / "sources" / release.version / "django-docs-translation",
+            stdout=subprocess.DEVNULL,
         )
 
 
