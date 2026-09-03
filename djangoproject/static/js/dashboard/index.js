@@ -1,13 +1,13 @@
-$(function () {
-  $('.metric .sparkline').each(function (index, elem) {
-    var element = $(elem);
-    var valueElement = element.parent().find('.value a');
-    var timestampElement = element.parent().find('.timestamp');
-    var originalValue = valueElement.html();
-    var green = '#93D7B7';
+$(() => {
+  $('.metric .sparkline').each((index, elem) => {
+    const element = $(elem);
+    const valueElement = element.parent().find('.value a');
+    const timestampElement = element.parent().find('.timestamp');
+    const originalValue = valueElement.html();
+    const green = '#93D7B7';
 
-    var url = element.data('path') + element.data('metric') + '.json';
-    $.getJSON(url, function (response) {
+    const url = `${element.data('path') + element.data('metric')}.json`;
+    $.getJSON(url, (response) => {
       response.data = convertSecondsToMilliseconds(response.data);
       $.plot(element, [response.data], {
         xaxis: { show: false, mode: 'time' },
@@ -26,7 +26,7 @@ $(function () {
         },
       });
 
-      element.bind('plothover', function (event, pos, item) {
+      element.bind('plothover', (event, pos, item) => {
         if (item) {
           valueElement.html(item.datapoint[1]);
           timestampElement.html(
