@@ -1295,6 +1295,36 @@ class PreReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
                 final_version_correct = f"Django 5.2 {version} 1 is now available."
                 self.assertIn(final_version_correct, checklist_content)
 
+    def test_render_checklist_calendar_version_schedule(self):
+        # Under DEP 20 the pre-releases are a month apart, and the final
+        # release follows the release candidate by a month, not two weeks.
+        feature_release = self.factory.make_feature_release_checklist("2028")
+        cases = {
+            "b": "scheduled roughly a month later on",
+            "rc": "can't be solved in the next\nmonth",
+        }
+        for status, expected in cases.items():
+            release = self.factory.make_release(
+                version=f"2028{status}1", date=date(2027, 11, 10)
+            )
+            with self.subTest(status=status):
+                instance = self.make_checklist(
+                    feature_release=feature_release, release=release
+                )
+                checklist_content = self.do_render_checklist(instance)
+                self.assertIn(expected, checklist_content)
+                self.assertNotInChecklistContent("two weeks", checklist_content)
+
+        release = self.factory.make_release(version="5.2b1", date=date(2025, 3, 1))
+        instance = self.make_checklist(
+            feature_release=self.factory.make_feature_release_checklist("5.2"),
+            release=release,
+        )
+        self.assertIn(
+            "scheduled roughly two weeks later on",
+            self.do_render_checklist(instance),
+        )
+
 
 class FeatureReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
     checklist_class = FeatureRelease
@@ -1376,6 +1406,31 @@ class FeatureReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             self.assertIn(
                 "Django 5.0 has reached the end of extended support.", checklist_content
             )
+
+    def test_render_checklist_calendar_version(self):
+        eol_release = self.factory.make_release(version="6.1", date=date(2026, 12, 3))
+        eom_release = self.factory.make_release(version="6.2", date=date(2027, 4, 1))
+        release = self.factory.make_release(version="2028", date=date(2028, 1, 14))
+        checklist = self.make_checklist(
+            release=release, eom_release=eom_release, eol_release=eol_release
+        )
+        checklist_content = self.do_render_checklist(checklist)
+        calendar_version_tasks = [
+            '    - `VERSION = (2028, 0, "final", 0)`',
+            "    - `git commit -a -m '[2028.x] Bumped version for 2028 release.'`",
+            "- [ ] BUMP **PATCH VERSION** in `django/__init__.py`\n"
+            '    - `VERSION = (2028, 1, "alpha", 0)`\n'
+            "    - `git commit -a -m '[2028.x] Post-release version bump.'`",
+            "        - Add an entry for: `2028.1`",
+            "    - Add new file `docs/releases/2028.1.txt`",
+            "Django 2028.1 fixes several bugs in 2028.",
+            "- `git checkout stable/2028.x && git pull -v`",
+        ]
+        for task in calendar_version_tasks:
+            with self.subTest(task=task):
+                self.assertIn(task, checklist_content)
+
+        self.assertNotInChecklistContent("MINOR VERSION", checklist_content)
 
 
 class NaturalKeyTestCase(TestCase):

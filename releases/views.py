@@ -2,7 +2,7 @@ from django.http import Http404, HttpResponsePermanentRedirect
 from django.shortcuts import get_object_or_404, render
 
 from .models import Release
-from .utils import FIRST_CALENDAR_VERSION_YEAR
+from .utils import is_calendar_version
 
 
 def index(request):
@@ -10,11 +10,14 @@ def index(request):
     current = Release.objects.current()
     previous = Release.objects.previous()
 
-    # Look for an LTS release, if there is one.
-    lts = Release.objects.current_lts()
-    if lts in (current, previous):
-        # There might be a previous LTS release that's still supported.
-        lts = Release.objects.previous_lts()
+    # Look for the newest LTS release worth calling out on its own, meaning it
+    # is labelled as one and isn't listed above already. From DEP 20 every
+    # calendar version is long term supported, so none of them is.
+    listed = (current, previous)
+    lts = next(
+        (r for r in Release.objects.lts() if r.show_lts_label and r not in listed),
+        None,
+    )
 
     # Look for a preview release, if there is one.
     preview = Release.objects.preview()
@@ -44,7 +47,7 @@ def roadmap(request, series):
         "series": series,
         # Do not rely on the final release existing yet, roadmap pages are
         # published before any release in the series is created.
-        "is_calendar_version": major >= FIRST_CALENDAR_VERSION_YEAR,
+        "is_calendar_version": is_calendar_version(major),
         "releases": {r.status: r for r in releases},
     }
     return render(request, "releases/roadmap.html", context)

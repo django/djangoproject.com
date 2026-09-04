@@ -12,7 +12,7 @@ be updated following the "string freeze", which occurs when the release
 candidate is issued. The
 [current release schedule](https://www.djangoproject.com/download/{{ final_version }}/roadmap/)
 calls for a release candidate in about a month, with the final release
-scheduled roughly two weeks later on {{ instance.feature_release.when|date:"F j" }}.
+scheduled roughly {% if release.is_calendar_version %}a month{% else %}two weeks{% endif %} later on {{ instance.feature_release.when|date:"F j" }}.
 
 Early and frequent testing from the community will help minimize the number of
 bugs in the release. Updates on the release schedule are available

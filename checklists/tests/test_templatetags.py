@@ -116,6 +116,16 @@ class NextVersionTestCase(TestCase):
         result = next_version(release)
         self.assertEqual(result, "4.2.16")
 
+    def test_next_version_calendar_from_feature_release(self):
+        release = Release.objects.create(version="2028")
+        result = next_version(release)
+        self.assertEqual(result, "2028.1")
+
+    def test_next_version_calendar_from_patch_release(self):
+        release = Release.objects.create(version="2028.15")
+        result = next_version(release)
+        self.assertEqual(result, "2028.16")
+
 
 class NextFeatureVersionTestCase(TestCase):
     def test_next_feature_from_minor(self):
@@ -133,6 +143,16 @@ class NextFeatureVersionTestCase(TestCase):
         result = next_feature_version(release)
         self.assertEqual(result, "6.0")
 
+    def test_next_feature_from_last_non_calendar_version(self):
+        release = Release.objects.create(version="6.2.6")
+        result = next_feature_version(release)
+        self.assertEqual(result, "2028")
+
+    def test_next_feature_calendar(self):
+        release = Release.objects.create(version="2028.3")
+        result = next_feature_version(release)
+        self.assertEqual(result, "2029")
+
 
 class NextVersionTupleTestCase(TestCase):
     def test_next_version_tuple_basic(self):
@@ -144,6 +164,16 @@ class NextVersionTupleTestCase(TestCase):
         release = Release.objects.create(version="3.2")
         result = next_version_tuple(release)
         self.assertEqual(result, (3, 2, 1, "alpha", 0))
+
+    def test_next_version_tuple_calendar(self):
+        release = Release.objects.create(version="2028")
+        result = next_version_tuple(release)
+        self.assertEqual(result, (2028, 1, "alpha", 0))
+
+    def test_next_version_tuple_calendar_from_patch_release(self):
+        release = Release.objects.create(version="2028.2")
+        result = next_version_tuple(release)
+        self.assertEqual(result, (2028, 3, "alpha", 0))
 
 
 class FormatVersionTupleTestCase(TestCase):
@@ -166,6 +196,20 @@ class FormatVersionTupleTestCase(TestCase):
         release = Release.objects.create(version="6.1b2")
         result = format_version_tuple(release.version_tuple)
         self.assertEqual(result, '(6, 1, 0, "beta", 2)')
+
+    def test_format_version_tuple_calendar_version(self):
+        # Calendar versions have no minor component, so the status is the
+        # fourth item rather than the fifth.
+        cases = [
+            ("2028", '(2028, 0, "final", 0)'),
+            ("2028.4", '(2028, 4, "final", 0)'),
+            ("2028b1", '(2028, 0, "beta", 1)'),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                release = Release.objects.create(version=version)
+                result = format_version_tuple(release.django_version_tuple)
+                self.assertEqual(result, expected)
 
     def test_format_version_tuple_rc(self):
         release = Release.objects.create(version="5.1rc1")
@@ -215,6 +259,11 @@ class FormatReleaseForCveTestCase(TestCase):
         release = Release.objects.create(version="3.2.15")
         result = format_release_for_cve(release)
         self.assertEqual(result, "3.2 before 3.2.15")
+
+    def test_format_release_for_cve_calendar_version(self):
+        release = Release.objects.create(version="2028.5")
+        result = format_release_for_cve(release)
+        self.assertEqual(result, "2028 before 2028.5")
 
 
 class FormatReleasesForCvesTestCase(TestCase):
