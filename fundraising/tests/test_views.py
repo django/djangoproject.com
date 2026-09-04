@@ -9,6 +9,7 @@ from unittest.mock import patch
 import stripe
 from django.conf import settings
 from django.core import mail
+from django.db import DatabaseError
 from django.template.defaultfilters import date as date_filter
 from django.test import TestCase
 from django.urls import reverse
@@ -17,7 +18,8 @@ from django_hosts.resolvers import reverse as django_hosts_reverse
 from djangoproject.tests import ReleaseMixin, patch_captcha
 from members.models import CorporateMember, Invoice
 
-from ..models import DjangoHero, Donation
+from ..models import DjangoHero, Donation, Payment
+from ..views import WebhookHandler
 from .utils import ImageFileFactory, TemporaryMediaRootMixin
 
 
@@ -497,3 +499,46 @@ class TestWebhooks(ReleaseMixin, TestCase):
         data["type"] = "unknown"
         response = self.post_event(data)
         self.assertEqual(response.status_code, 422)
+
+    @patch("stripe.PaymentIntent.retrieve")
+    @patch("stripe.Customer.retrieve")
+    def test_checkout_session_completed_is_atomic(
+        self, retrieve_customer, retrieve_payment_intent
+    ):
+        """A failed write leaves no half-recorded donation behind."""
+        retrieve_customer.return_value = stripe.Customer.construct_from(
+            {"id": "cus_atomic", "email": "atomic@djangoproject.com"}, "sk_test"
+        )
+        retrieve_payment_intent.return_value = stripe.PaymentIntent.construct_from(
+            {"id": "pi_atomic", "latest_charge": "ch_atomic"}, "sk_test"
+        )
+        event = stripe.Event.construct_from(
+            {
+                "id": "evt_atomic",
+                "type": "checkout.session.completed",
+                "data": {
+                    "object": {
+                        "id": "cs_atomic",
+                        "customer": "cus_atomic",
+                        "mode": "payment",
+                        "amount_total": 5000,
+                        "subscription": None,
+                        "payment_intent": "pi_atomic",
+                    }
+                },
+            },
+            "sk_test",
+        )
+
+        with patch.object(Payment, "save", side_effect=DatabaseError):
+            with self.assertRaises(DatabaseError):
+                WebhookHandler(event).handle()
+
+        self.assertFalse(
+            DjangoHero.objects.filter(stripe_customer_id="cus_atomic").exists()
+        )
+        self.assertFalse(
+            Donation.objects.filter(stripe_customer_id="cus_atomic").exists()
+        )
+        self.assertEqual(Payment.objects.count(), 0)
+        self.assertEqual(len(mail.outbox), 0)

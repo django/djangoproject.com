@@ -5,6 +5,7 @@ import stripe
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.db import transaction
 from django.forms.models import modelformset_factory
 from django.http import Http404, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -306,30 +307,41 @@ class WebhookHandler:
         customer = stripe.Customer.retrieve(
             session.customer, stripe_version="2020-08-27"
         )
-        hero, _created = DjangoHero.objects.get_or_create(
-            stripe_customer_id=customer.id,
-            defaults={
-                "email": customer.email,
-            },
-        )
         interval = self.get_donation_interval(session)
         dollar_amount = decimal.Decimal(session.amount_total / 100).quantize(
             decimal.Decimal(".01"), rounding=decimal.ROUND_HALF_UP
         )
-        donation = Donation.objects.create(
-            donor=hero,
-            stripe_customer_id=customer.id,
-            receipt_email=customer.email,
-            subscription_amount=dollar_amount,
-            interval=interval,
-            stripe_subscription_id=session.subscription or "",
+        # Query Stripe before opening the transaction, so that no database
+        # transaction is held open while waiting on the network.
+        payment_intent = (
+            stripe.PaymentIntent.retrieve(session.payment_intent)
+            if interval == "onetime"
+            else None
         )
-        if interval == "onetime":
-            payment_intent = stripe.PaymentIntent.retrieve(session.payment_intent)
-            donation.payment_set.create(
-                amount=dollar_amount,
-                stripe_charge_id=payment_intent.latest_charge,
+
+        # The donor, the donation and its payment describe a single donation,
+        # so a failure part way through must not leave the earlier writes
+        # behind.
+        with transaction.atomic():
+            hero, _created = DjangoHero.objects.get_or_create(
+                stripe_customer_id=customer.id,
+                defaults={
+                    "email": customer.email,
+                },
             )
+            donation = Donation.objects.create(
+                donor=hero,
+                stripe_customer_id=customer.id,
+                receipt_email=customer.email,
+                subscription_amount=dollar_amount,
+                interval=interval,
+                stripe_subscription_id=session.subscription or "",
+            )
+            if payment_intent is not None:
+                donation.payment_set.create(
+                    amount=dollar_amount,
+                    stripe_charge_id=payment_intent.latest_charge,
+                )
 
         # Send an email message about managing your donation
         message = render_to_string(
