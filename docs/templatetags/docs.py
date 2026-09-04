@@ -106,6 +106,25 @@ def do_pygments(parser, token):
     return PygmentsNode(parser.compile_filter(tokens[1]), nodelist)
 
 
+# Documents whose readers are working on Django itself rather than on a project
+# built with a released version. "intro/contributing" is the tutorial that leads
+# into internals/, so it belongs here even though it lives outside that
+# directory.
+DEV_CANONICAL_DOCS = ("internals", "intro/contributing")
+
+
+@register.filter
+@stringfilter
+def is_dev_canonical(docurl):
+    """
+    Return whether the development docs are the canonical version of a document.
+
+    Such documents do not get the "this document is for Django's development
+    version" warning, since the development version is the one to read.
+    """
+    return docurl.startswith(DEV_CANONICAL_DOCS)
+
+
 @register.filter(name="fragment")
 @stringfilter
 def generate_scroll_to_text_fragment(highlighted_text):

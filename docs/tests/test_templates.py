@@ -16,6 +16,7 @@ from ..templatetags.docs import (
     code_links,
     generate_scroll_to_text_fragment,
     get_all_doc_versions,
+    is_dev_canonical,
 )
 
 
@@ -83,6 +84,36 @@ def band_listing(request):
 </pre></div>
             """,
         )
+
+    def test_is_dev_canonical(self):
+        cases = [
+            ("internals", True),
+            ("internals/contributing", True),
+            ("internals/contributing/writing-code/unit-tests", True),
+            # The contributing tutorial leads into internals/, so the dev docs
+            # are canonical for it too. Refs #2166.
+            ("intro/contributing", True),
+            ("intro/tutorial01", False),
+            ("intro/overview", False),
+            ("ref/models/fields", False),
+            ("", False),
+        ]
+        for docurl, expected in cases:
+            with self.subTest(docurl=docurl):
+                self.assertIs(is_dev_canonical(docurl), expected)
+
+    def test_is_dev_canonical_template_filter(self):
+        template = Template(
+            "{% load docs %}"
+            "{% if docurl|is_dev_canonical %}dev{% else %}release{% endif %}"
+        )
+        for docurl, expected in [
+            ("intro/contributing", "dev"),
+            ("internals/contributing", "dev"),
+            ("intro/tutorial01", "release"),
+        ]:
+            with self.subTest(docurl=docurl):
+                self.assertEqual(template.render(Context({"docurl": docurl})), expected)
 
     def test_fragment_template_tag(self):
         highlighted_text = (
@@ -228,6 +259,62 @@ class TemplateTestCase(TestCase):
             doc.title = title
             with self.subTest(title=title):
                 self._assertOGTitleEqual(doc, f"{expected} | Django documentation")
+
+    def _render_dev_doc(self, docurl):
+        release, _ = DocumentRelease.objects.get_or_create(
+            lang=settings.DEFAULT_LANGUAGE_CODE, release=None
+        )
+        doc = Document.objects.create(release=release, path=docurl)
+        doc.title = "Contributing"
+        doc.body = "test body"  # avoids trying to load the underlying physical file
+        return render_to_string(
+            "docs/doc.html",
+            {
+                "doc": doc,
+                "lang": settings.DEFAULT_LANGUAGE_CODE,
+                "version": "dev",
+                "canonical_version": "5.0",
+                "docurl": docurl,
+                "release": release,
+            },
+            request=RequestFactory().get("/"),
+        )
+
+    def test_dev_warning_skipped_for_contributing_docs(self):
+        """
+        The contributing tutorial is read by people working on Django itself,
+        so it does not get the "development version" warning. Refs #2166.
+        """
+        for docurl, expected in [
+            ("internals/contributing", False),
+            ("intro/contributing", False),
+            ("intro/tutorial01", True),
+            ("ref/models/fields", True),
+        ]:
+            with self.subTest(docurl=docurl):
+                output = self._render_dev_doc(docurl)
+                self.assertIs('id="dev-warning"' in output, expected)
+
+    def test_canonical_version_for_contributing_docs(self):
+        for docurl, canonical_version in [
+            ("internals/contributing", "dev"),
+            ("intro/contributing", "dev"),
+            ("intro/tutorial01", "5.0"),
+        ]:
+            with self.subTest(docurl=docurl):
+                canonical_url = reverse_with_host(
+                    "document-detail",
+                    host="docs",
+                    kwargs={
+                        "lang": settings.DEFAULT_LANGUAGE_CODE,
+                        "version": canonical_version,
+                        "url": docurl,
+                    },
+                )
+                self.assertInHTML(
+                    f'<link rel="canonical" href="{canonical_url}">',
+                    self._render_dev_doc(docurl),
+                )
 
 
 class TemplateTagTestCase(TestCase):
