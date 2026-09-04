@@ -254,7 +254,7 @@ class SiteMapTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class ProductionSettingsTests(TestCase):
+class StaticFilesTests(TestCase):
     @override_settings(
         STORAGES={
             "staticfiles": {
@@ -266,7 +266,7 @@ class ProductionSettingsTests(TestCase):
         with tempfile.TemporaryDirectory() as temp_dir_path:
             with override_settings(STATIC_ROOT=temp_dir_path):
                 try:
-                    call_command("collectstatic", "--no-input", "--verbosity=0")
+                    call_command("collectstatic", interactive=False, verbosity=0)
                 except ValueError as e:
                     self.fail(e)
 
