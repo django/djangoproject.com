@@ -858,6 +858,106 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             },
         )
 
+    def test_cve_data_credits_one_entry_per_person(self):
+        release = self.factory.make_release(version="5.2.1")
+        checklist = self.make_checklist(releases=[])
+        issue = self.factory.make_security_issue(
+            checklist,
+            [release],
+            reporter="Alice Reporter, Bob Reporter , Carol Reporter",
+            analyst="Frank Analyst",
+            remediator="Dan Fixer,Erin Fixer",
+            reviewer="Grace Reviewer, Heidi Reviewer",
+        )
+
+        self.assertEqual(
+            issue.cve_data["credits"],
+            [
+                {"lang": "en", "type": "reporter", "value": "Alice Reporter"},
+                {"lang": "en", "type": "reporter", "value": "Bob Reporter"},
+                {"lang": "en", "type": "reporter", "value": "Carol Reporter"},
+                {"lang": "en", "type": "analyst", "value": "Frank Analyst"},
+                {"lang": "en", "type": "remediation developer", "value": "Dan Fixer"},
+                {"lang": "en", "type": "remediation developer", "value": "Erin Fixer"},
+                {
+                    "lang": "en",
+                    "type": "remediation reviewer",
+                    "value": "Grace Reviewer",
+                },
+                {
+                    "lang": "en",
+                    "type": "remediation reviewer",
+                    "value": "Heidi Reviewer",
+                },
+                {
+                    "lang": "en",
+                    "type": "coordinator",
+                    "value": checklist.releaser.user.get_full_name(),
+                },
+            ],
+        )
+
+    def test_cve_data_credits_omits_blank_roles(self):
+        release = self.factory.make_release(version="5.2.1")
+        checklist = self.make_checklist(releases=[])
+        issue = self.factory.make_security_issue(
+            checklist,
+            [release],
+            reporter="",
+            analyst="",
+            remediator=" , ",
+            reviewer="",
+        )
+
+        self.assertEqual(
+            issue.cve_data["credits"],
+            [
+                {
+                    "lang": "en",
+                    "type": "coordinator",
+                    "value": checklist.releaser.user.get_full_name(),
+                },
+            ],
+        )
+
+    def test_credit_names_ignore_blanks_and_whitespace(self):
+        issue = self.factory.make_security_issue(
+            reporter="  Alice Reporter ,, Bob Reporter  ",
+            analyst="",
+            remediator=" , ",
+            reviewer="Grace Reviewer",
+        )
+
+        self.assertEqual(issue.reporters, ["Alice Reporter", "Bob Reporter"])
+        self.assertEqual(issue.analysts, [])
+        self.assertEqual(issue.remediators, [])
+        self.assertEqual(issue.reviewers, ["Grace Reviewer"])
+        self.assertEqual(issue.reporters_display, "Alice Reporter and Bob Reporter")
+        self.assertEqual(issue.remediators_display, "")
+
+    def test_cve_description_omits_thanks_when_no_reporters(self):
+        release = self.factory.make_release(version="5.2.1")
+        checklist = self.make_checklist(releases=[])
+        issue = self.factory.make_security_issue(checklist, [release], reporter=" , ")
+
+        self.assertNotIn("would like to thank", issue.cve_description)
+        self.assertNotIn("would like to thank", issue.cve_html_description)
+
+    def test_cve_description_enumerates_reporters(self):
+        release = self.factory.make_release(version="5.2.1")
+        checklist = self.make_checklist(releases=[])
+        issue = self.factory.make_security_issue(
+            checklist,
+            [release],
+            reporter="Alice Reporter, Bob Reporter, Carol Reporter",
+        )
+
+        self.assertIn(
+            "Django would like to thank Alice Reporter, Bob Reporter, and "
+            "Carol Reporter for reporting this issue.",
+            issue.cve_description,
+        )
+
     def test_cve_html_description_converts_backticks_to_code_tags(self):
         release = self.factory.make_release(version="5.2.1")
         checklist = self.make_checklist(releases=[])

@@ -347,6 +347,107 @@ our translation files as follows:
     git commit -m "Updated translations"
     git push
 
+Testing the fundraising page (Stripe)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The site talks to Stripe in test mode. Out of the box the app falls back to
+shared sandbox keys committed in
+``djangoproject/settings/common.py``, so you can test donations without any
+extra configuration. To use your own (or the sandbox team's) keys instead,
+add ``stripe_secret_key``, ``stripe_publishable_key``,
+``stripe_endpoint_secret`` and, if needed, the
+``stripe_product_id_*`` values to your ``secrets.json``.
+
+Without a webhook endpoint registered for the account, the site can't receive
+Stripe's notifications and test donations will complete at the Stripe step but
+will not be recorded in the database. To test the full flow, relay test-mode
+webhooks to the local development server with the Stripe CLI (below).
+
+Testing Stripe webhooks
+-----------------------
+
+Mergers have access to the "djangoproject.com Public Sandbox" Stripe account
+that the committed development keys belong to, so they can test the webhook
+out of the box. Non-mergers can test the same flow by using their own Stripe
+account's test mode and pointing the app at it: create a restricted test-mode
+API key in your Stripe dashboard, add the corresponding ``stripe_secret_key``
+(plus ``stripe_publishable_key`` and, if your account has fewer than four
+active products, ``stripe_product_id_*`` values) to your ``secrets.json``,
+then restart the dev server with the new keys.
+
+Install the `Stripe CLI <https://docs.stripe.com/stripe-cli>`_,
+then point it at the account whose keys the site is using::
+
+    stripe login --interactive
+
+(Enter the test-mode secret key the site uses — for the shared sandbox, that's
+the committed fallback key in ``djangoproject/settings/common.py``.)
+
+Check which authorized contexts the CLI has, and switch to the test-mode
+context that matches the active keys if you have more than one::
+
+    stripe login list
+    stripe switch context
+
+Next, run a webhooks forwarder that relays Stripe's test-mode events to your
+local development server. Keep it running for as long as you want to test
+donations::
+
+    stripe listen --forward-to www.djangoproject.localhost:8000/fundraising/receive-webhook/
+
+Note: on some machines ``www.djangoproject.localhost`` doesn't resolve
+automatically, in which case ``stripe listen`` fails with::
+
+    [ERROR] Failed to POST: Post "http://www.djangoproject.localhost:8000/fundraising/receive-webhook/": dial tcp: lookup www.djangoproject.localhost: no such host
+
+Add an entry like ``127.0.0.1 www.djangoproject.localhost`` to
+``/etc/hosts`` and try again (the same entry also makes the site itself
+reachable in a browser on those machines).
+
+``stripe listen`` prints a webhook signing secret
+(``stripe_endpoint_secret: whsec_...``). Export the webhook secret before starting
+the server (or add it to ``secrets.json``), otherwise webhook signature
+verification fails and no donations are saved::
+
+    export STRIPE_ENDPOINT_SECRET=whsec_...
+    make run
+
+Now, with the dev server and ``stripe listen`` both running:
+
+1. Open http://www.djangoproject.localhost:8000/fundraising/ in your browser.
+2. Fill out the donation form and pay with the test card
+   ``4242 4242 4242 4242`` (future expiry, any CVC, any details).
+3. You'll redirect to the thank-you page, the thank-you email is printed to
+   the dev server console, and the ``stripe listen`` output shows the
+   forwarded webhook events (a handful of events are ignored with HTTP 422 —
+   only ``checkout.session.completed`` and ``invoice.*`` events create
+   records).
+4. The donation appears in the database and in the Django admin (Django
+   heroes, Donations, Payments).
+5. Reload the fundraising page: the heart's total updates to include your
+   donation (e.g. "$50 donated of a $500,000 USD goal for ...").
+6. To see subscription renewals, cancel, or failed payments, use the
+   "Manage" links in the thank-you email (printed to the console) and the
+   https://dashboard.stripe.com/test overview.
+
+Note: the thank-you email is sent as plain text, so the dev server console
+shows it quoted-printable encoded: long lines are wrapped with a trailing
+``=`` and lines beginning with spaces get a leading ``=``. The
+manage-donations URL can get split across two lines (the trailing ``=`` marks
+the wrap), so when copying it, remove any embedded ``=`` before pasting it
+into your browser. E.g. in the console you'll see::
+
+    http://www.djangoproject.localhost:8000/fundraising/manage-donations/CKhd=
+    YAjdD39Y/
+
+which is really::
+
+    http://www.djangoproject.localhost:8000/fundraising/manage-donations/CKhdYAjdD39Y/
+
+(A real mail client decodes this automatically, which is why the link
+appears broken in the console output but may work fine from the email
+app.)
+
 Running Locally with Docker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

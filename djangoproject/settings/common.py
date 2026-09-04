@@ -258,9 +258,11 @@ ROOT_HOSTCONF = "djangoproject.hosts"
 
 # django-recaptcha settings
 
-# The keys themselves are only set in production, but the score threshold
-# belongs here so that reCAPTCHA behaves the same way in every environment.
+# The keys themselves are only set in production, but the score threshold and
+# the v3 action belong here so that reCAPTCHA behaves the same way in every
+# environment.
 RECAPTCHA_REQUIRED_SCORE = 0.9
+RECAPTCHA_ACTION = "form"
 
 # django-registration settings
 
@@ -291,32 +293,67 @@ FASTLY_SERVICE_URL = SECRETS.get("fastly_service_url")
 
 # Stripe settings
 
-# only testing keys as fallback values here please!
-STRIPE_SECRET_KEY = SECRETS.get("stripe_secret_key", "sk_test_x6zP4wd7Z5jcvDOJbbHZlHHt")
-STRIPE_PUBLISHABLE_KEY = SECRETS.get(
-    "stripe_publishable_key", "pk_test_TyB5jcROwK8mlCNrn3dCwW7l"
+# Only sandbox keys as fallback values here: these are committed so that
+# anyone can develop without private keys. ``stripe_secret_key`` must be
+# a *restricted* key enabling only the runtime API capabilities
+# (Checkout, Customers, Subscriptions, PaymentIntents -- NOT Products
+# or Prices, so the public cannot modify the shared sandbox products;
+# see ``scripts/sync_stripe_products.py`` for the full key setup).
+STRIPE_SECRET_KEY = SECRETS.get(
+    "stripe_secret_key",
+    "rk_test_51U94Da2hwueVrXGuYQut4F6VUINmoL0s4IVFcKPivK1A"
+    "JyCifp8d0HTKB1JTy0ipR9z9hQQoGR5pgL1wOHnSOJF700BCYUV7lG",
 )
-STRIPE_ENDPOINT_SECRET = SECRETS.get("stripe_endpoint_secret", "insecure")
+STRIPE_PUBLISHABLE_KEY = SECRETS.get(
+    "stripe_publishable_key",
+    "pk_test_51U94Da2hwueVrXGuhhdAa9cLH8FijVECIRpJqpaC2Fxx"
+    "cJJbrPguoUxFCf7JO72iUYWBxq4YuCEQO8Vw1RIpZrgd00mAK5yiT7",
+)
+# The webhook signing secret from ``stripe listen``.
+STRIPE_ENDPOINT_SECRET = (
+    SECRETS.get("stripe_endpoint_secret")
+    or os.getenv("STRIPE_ENDPOINT_SECRET")
+    or "insecure"
+)
 
 # product IDs
+# Fallbacks come from the sandbox account (kept in sync with the live
+# products by ``scripts/sync_stripe_products.py``); production overrides
+# them via the ``stripe_product_id_*`` secrets.
+with (
+    PROJECT_PACKAGE / "settings" / "stripe_sandbox_product_ids.json"
+).open() as handle:
+    SANDBOX_PRODUCT_IDS = json.load(handle)
 PRODUCTS = {
     "monthly": {
-        "product_id": SECRETS.get("stripe_product_id_monthly", "dummy_monthly_id"),
+        "product_id": SECRETS.get(
+            "stripe_product_id_monthly",
+            SANDBOX_PRODUCT_IDS["monthly"],
+        ),
         "interval": "month",
         "interval_count": 1,
     },
     "quarterly": {
-        "product_id": SECRETS.get("stripe_product_id_quarterly", "dummy_quarterly_id"),
+        "product_id": SECRETS.get(
+            "stripe_product_id_quarterly",
+            SANDBOX_PRODUCT_IDS["quarterly"],
+        ),
         "interval": "month",
         "interval_count": 3,
     },
     "yearly": {
-        "product_id": SECRETS.get("stripe_product_id_yearly", "dummy_yearly_id"),
+        "product_id": SECRETS.get(
+            "stripe_product_id_yearly",
+            SANDBOX_PRODUCT_IDS["yearly"],
+        ),
         "interval": "year",
         "interval_count": 1,
     },
     "onetime": {
-        "product_id": SECRETS.get("stripe_product_id_onetime", "dummy_onetime_id"),
+        "product_id": SECRETS.get(
+            "stripe_product_id_onetime",
+            SANDBOX_PRODUCT_IDS["onetime"],
+        ),
         "recurring": False,
     },
 }
