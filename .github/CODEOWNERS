@@ -1,6 +1,10 @@
 # Alert the Code of Conduct Working Group to changes to conduct templates.
 djangoproject/templates/conduct/**/* @django/coc-committee
 
+# Alert the Fundraising Working Group to changes to pages relating to fundraising.
+fundraising/**/* @django/fundraising
+djangoproject/templates/fundraising/**/* @django/fundraising
+
 # Alert the Releasers to changes relating to releases.
 checklists/**/* @django/releasers
 releases/**/* @django/releasers
