@@ -1,2 +1,7 @@
+# Alert the Releasers to changes relating to releases.
+checklists/**/* @django/releasers
+releases/**/* @django/releasers
+djangoproject/templates/releases/**/* @django/releasers
+
 # Alert the Steering Council to changes to the Community Ecosystem page
 djangoproject/templates/aggregator/ecosystem.html @django/steering-council
