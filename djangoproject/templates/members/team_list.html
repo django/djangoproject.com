@@ -14,7 +14,7 @@
 
 {% block content %}
 
-  <h2>{% translate "Teams" %}</h2>
+  <h1>{% translate "Teams and Working Groups" %}</h1>
   <p>
     {% url 'document-detail' lang='en' version='dev' url='internals/organization' host 'docs' as organization_url %}
     {% blocktranslate trimmed %}
@@ -43,5 +43,17 @@
       </ul>
     </div>
   {% endfor %}
+
+  <div class="section">
+    <p>
+      {% url 'foundation_core_developers' as core_developers_url %}
+      {% blocktranslate trimmed %}
+        <a href="{{ core_developers_url }}">Django Core Developers</a>
+        &mdash; a historical title awarded to individuals who made significant,
+        sustained contributions to Django. This title was retired in 2020 and
+        is not an active team.
+      {% endblocktranslate %}
+    </p>
+  </div>
 
 {% endblock content %}

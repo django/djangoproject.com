@@ -69,7 +69,7 @@
     - e.g. https://github.com/django/django-security/pull/375
 
 {% for cve in cves %}
-- [ ] Send patch for **{{ cve.cve_year_number }}** to the reporter ({{ cve.reporter }}) for verification:
+- [ ] Send patch for **{{ cve.cve_year_number }}** to the reporter ({{ cve.reporters_display }}) for verification:
     - Subject: `Patch for {{ cve.cve_year_number }}`
     - Attach patch(es) and send to the reporter with the following body:
 <details>

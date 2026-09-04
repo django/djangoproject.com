@@ -19,6 +19,12 @@ from .templatetags.checklist_extras import enumerate_items, format_releases_for_
 CNA_DSF_UUID = "6a34fbeb-21d4-45e7-8e0a-62b95bc12c92"
 
 
+# Several fields (credit names, CWE and CAPEC types) hold a comma separated
+# list in a single text field.
+def split_comma_separated(value):
+    return [i.strip() for i in value.split(",") if i.strip()] if value else []
+
+
 # CVE IDs have the form CVE-YYYY-NNNNN. The year (4 digits) is always at
 # positions 5-8 and the number starts at position 10 (both 1-based). This
 # helper extracts each part as an integer for correct numeric DB-level sorting.
@@ -519,8 +525,42 @@ class SecurityIssue(models.Model):
             "Copy from release notes, include severity sentence."
         ),
     )
-    reporter = models.CharField(max_length=1024, blank=True)
-    remediator = models.CharField(max_length=1024, blank=True)
+    reporter = models.CharField(
+        max_length=1024,
+        blank=True,
+        help_text=(
+            "Comma separated list of names, one per person reporting the issue. "
+            'Each name gets its own "reporter" entry in the CVE credits.'
+        ),
+    )
+    remediator = models.CharField(
+        max_length=1024,
+        blank=True,
+        help_text=(
+            "Comma separated list of names, one per person developing the fix. "
+            'Each name gets its own "remediation developer" entry in the CVE '
+            "credits."
+        ),
+    )
+    reviewer = models.CharField(
+        max_length=1024,
+        blank=True,
+        help_text=(
+            "Optional. Comma separated list of names, one per person reviewing "
+            'the fix. Each name gets its own "remediation reviewer" entry in '
+            "the CVE credits. Leave blank to omit these credits."
+        ),
+    )
+    analyst = models.CharField(
+        max_length=1024,
+        blank=True,
+        help_text=(
+            "Optional. Comma separated list of names, one per person analyzing "
+            "the issue (triage, severity and CVSS scoring). Each name gets its "
+            'own "analyst" entry in the CVE credits. Leave blank to omit these '
+            "credits, or when the analysis was done by the release coordinator."
+        ),
+    )
     discovery = models.CharField(
         max_length=128,
         choices={
@@ -641,6 +681,30 @@ class SecurityIssue(models.Model):
         return (self.cve_year_number,)
 
     @cached_property
+    def reporters(self):
+        return split_comma_separated(self.reporter)
+
+    @cached_property
+    def remediators(self):
+        return split_comma_separated(self.remediator)
+
+    @cached_property
+    def reviewers(self):
+        return split_comma_separated(self.reviewer)
+
+    @cached_property
+    def analysts(self):
+        return split_comma_separated(self.analyst)
+
+    @cached_property
+    def reporters_display(self):
+        return enumerate_items(self.reporters)
+
+    @cached_property
+    def remediators_display(self):
+        return enumerate_items(self.remediators)
+
+    @cached_property
     def cve_description(self):
         affected = format_releases_for_cves(self.releases.all())
         parts = [f"An issue was discovered in Django {affected}.", self.description]
@@ -649,9 +713,11 @@ class SecurityIssue(models.Model):
                 f"Earlier, unsupported Django series (such as {self.unsupported_series})"
                 " were not evaluated and may also be affected."
             )
-        parts.append(
-            f"Django would like to thank {self.reporter} for reporting this issue."
-        )
+        if self.reporters:
+            parts.append(
+                f"Django would like to thank {self.reporters_display} for "
+                "reporting this issue."
+            )
         return "\n".join(parts)
 
     @cached_property
@@ -751,20 +817,15 @@ class SecurityIssue(models.Model):
             ],
         ]
         credits = [
-            {
-                "lang": "en",
-                "type": "reporter",
-                "value": self.reporter,
-            },
+            {"lang": "en", "type": credit_type, "value": name}
+            for credit_type, names in [
+                ("reporter", self.reporters),
+                ("analyst", self.analysts),
+                ("remediation developer", self.remediators),
+                ("remediation reviewer", self.reviewers),
+            ]
+            for name in names
         ]
-        if self.remediator:
-            credits.append(
-                {
-                    "lang": "en",
-                    "type": "remediation developer",
-                    "value": self.remediator,
-                }
-            )
 
         if self.release:
             dates["datePublic"] = when = self.release.when.isoformat()
@@ -879,8 +940,7 @@ class SecurityIssue(models.Model):
                                     "description": cwe,
                                     "type": "CWE",
                                 }
-                                for cwe in (c.strip() for c in self.cve_type.split(","))
-                                if cwe
+                                for cwe in split_comma_separated(self.cve_type)
                             ],
                         },
                     ],
@@ -894,8 +954,7 @@ class SecurityIssue(models.Model):
                                 },
                             ],
                         }
-                        for capec in (c.strip() for c in self.impact.split(","))
-                        if capec
+                        for capec in split_comma_separated(self.impact)
                     ],
                     **details,
                 },

@@ -1,12 +1,17 @@
 import datetime
 from operator import attrgetter
+from unittest.mock import patch
 
 from django.conf import settings
-from django.db import connection
+from django.contrib.auth.models import User
+from django.core.files.base import ContentFile
+from django.db import connection, models
 from django.test import TestCase
 from django.utils import timezone
 
 from blog.models import ContentFormat, Entry
+from djangoproject.sitemaps import TemplateViewSitemap
+from foundation.models import BoardMember, Meeting, Office, Term
 from releases.models import Release
 
 from ..models import Document, DocumentRelease
@@ -302,35 +307,8 @@ class DocumentManagerTest(TestCase):
                 "release": cls.release_fr,
                 "title": "Vues génériques",
             },
-            {
-                "metadata": {
-                    "body": (
-                        '<div class="section" id="s-django-1-2-1-release-notes">\n<span'
-                        ' id="django-1-2-1-release-notes"></span><h1>Notes de '
-                        'publication de Django 1.2.1<a class="headerlink" href="#django'
-                        '-1-2-1-release-notes" title="Lien permanent vers ce titre">¶'
-                        "</a></h1>\n<p>Django 1.2.1 was released almost immediately "
-                        "after 1.2.0 to correct two small\nbugs: one was in the "
-                        "documentation packaging script, the other was a <a class="
-                        '"reference external" href="https://code.djangoproject.com/'
-                        'ticket/13560">bug</a> that\naffected datetime form field '
-                        "widgets when localization was enabled.</p>\n</div>\n"
-                    ),
-                    "breadcrumbs": [
-                        {"path": "releases", "title": "Release notes"},
-                    ],
-                    "parents": "releases",
-                    "slug": "1.2.1",
-                    "title": "Notes de publication de Django 1.2.1",
-                    "toc": (
-                        '<ul>\n<li><a class="reference internal" href="#">Notes de '
-                        "publication de Django 1.2.1</a></li>\n</ul>\n"
-                    ),
-                },
-                "path": "releases/1.2.1",
-                "release": cls.release_fr,
-                "title": "Notes de publication de Django 1.2.1",
-            },
+            # Create these entries out of chronological order so that ordering
+            # assertions can prove that ordering by PK breaks ties.
             {
                 "metadata": {
                     "body": (
@@ -359,6 +337,35 @@ class DocumentManagerTest(TestCase):
                 "path": "releases/1.9.4",
                 "release": cls.release_fr,
                 "title": "Notes de publication de Django 1.9.4",
+            },
+            {
+                "metadata": {
+                    "body": (
+                        '<div class="section" id="s-django-1-2-1-release-notes">\n<span'
+                        ' id="django-1-2-1-release-notes"></span><h1>Notes de '
+                        'publication de Django 1.2.1<a class="headerlink" href="#django'
+                        '-1-2-1-release-notes" title="Lien permanent vers ce titre">¶'
+                        "</a></h1>\n<p>Django 1.2.1 was released almost immediately "
+                        "after 1.2.0 to correct two small\nbugs: one was in the "
+                        "documentation packaging script, the other was a <a class="
+                        '"reference external" href="https://code.djangoproject.com/'
+                        'ticket/13560">bug</a> that\naffected datetime form field '
+                        "widgets when localization was enabled.</p>\n</div>\n"
+                    ),
+                    "breadcrumbs": [
+                        {"path": "releases", "title": "Release notes"},
+                    ],
+                    "parents": "releases",
+                    "slug": "1.2.1",
+                    "title": "Notes de publication de Django 1.2.1",
+                    "toc": (
+                        '<ul>\n<li><a class="reference internal" href="#">Notes de '
+                        "publication de Django 1.2.1</a></li>\n</ul>\n"
+                    ),
+                },
+                "path": "releases/1.2.1",
+                "release": cls.release_fr,
+                "title": "Notes de publication de Django 1.2.1",
             },
             {
                 "metadata": {
@@ -414,10 +421,22 @@ class DocumentManagerTest(TestCase):
 
     def test_multilingual_search(self):
         self.assertQuerySetEqual(
-            Document.objects.search("publication", self.release_fr),
+            Document.objects.search("Django OR 1.2.1", self.release_fr),
             [
-                "Notes de publication de Django 1.2.1",  # Ranked: 1.0693262.
-                "Notes de publication de Django 1.9.4",  # Ranked: 1.0458658.
+                "Notes de publication de Django 1.2.1",  # Ranked: 0.7446094.
+                "Notes de publication de Django 1.9.4",  # Ranked: 0.3449142.
+            ],
+            transform=attrgetter("title"),
+        )
+
+    @patch("docs.models.SearchRank", lambda *args: models.Value(1))
+    def test_search_rank_tie(self):
+        """Tied search rank results are still ordered by pk."""
+        self.assertQuerySetEqual(
+            Document.objects.search("Notes de publication", self.release_fr),
+            [
+                "Notes de publication de Django 1.9.4",
+                "Notes de publication de Django 1.2.1",
             ],
             transform=attrgetter("title"),
         )
@@ -488,6 +507,42 @@ class UpdateDocTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.release = DocumentRelease.objects.create(is_default=True)
+        # The following data is required to render various pages on the website.
+        # Previous release.
+        Release.objects.create(
+            version="6.0.1",
+            is_active=True,
+            is_lts=False,
+            date=datetime.date.today(),
+            eol_date=None,
+            tarball=ContentFile(b".", name="django-6.0.1.tar.gz"),
+            wheel=ContentFile(b".", name="django-6.0.1-py3-none-any.whl"),
+            checksum=ContentFile(b".", name="some-random-name.checksum.txt"),
+        )
+        # Current release.
+        Release.objects.create(
+            version="6.1.1",
+            is_active=True,
+            is_lts=False,
+            date=datetime.date.today(),
+            eol_date=None,
+            tarball=ContentFile(b".", name="django-6.1.1.tar.gz"),
+            wheel=ContentFile(b".", name="django-6.1.1-py3-none-any.whl"),
+            checksum=ContentFile(b".", name="some-random-name.checksum.txt"),
+        )
+        user = User.objects.create_superuser("admin", "admin@example.com", "password")
+        member = BoardMember.objects.create(
+            account=user,
+            office=Office.objects.create(name="treasurer"),
+            term=Term.objects.create(year=2023),
+        )
+        Meeting.objects.create(
+            date=datetime.date.today(),
+            title="DSF Board monthly meeting",
+            slug="dsf-board-monthly-meeting",
+            leader=member,
+            treasurer_report="Hello World",
+        )
 
     def test_sync_to_db(self):
         self.release.sync_to_db(
@@ -642,6 +697,10 @@ class UpdateDocTests(TestCase):
         self.assertIn("<strong>test</strong>", document.metadata["body"])
         self.assertEqual(document.metadata["title"], "Title 1")
         self.assertEqual(document.metadata["toc"], "")
+        # Entries are from the sitemap and the blog entry.
+        self.assertEqual(
+            Document.objects.count(), len(list(TemplateViewSitemap().items())) + 1
+        )
 
     def test_sync_from_sitemap_only_requests_non_existing(self):
         blog_entry = Entry.objects.create(
