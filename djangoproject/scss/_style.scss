@@ -3803,3 +3803,76 @@ ul.corporate-members li {
         top: 0;
     }
 }
+
+// Sponsorship banner landing page (/sponsor/banner/)
+// The screenshot is 2560px wide, so it breaks out of the content column the
+// same way a wide table does. See .table-wrapper-wide above for the technique.
+.sponsor-placement {
+    margin: 30px 0 0;
+
+    @include respond-min(768px) {
+        width: 96vw;
+        max-width: 1160px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+
+    img {
+        display: block;
+        height: auto;
+        max-width: 100%;
+    }
+
+    figcaption {
+        margin: 10px 0 0;
+        text-align: center;
+    }
+}
+
+.sponsor-levels .col {
+    border: 1px solid var(--hairline-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    padding: 20px 30px 30px;
+
+    h3 {
+        margin-top: 0;
+    }
+
+    .cta {
+        margin: 20px 0 0;
+        max-width: none;
+    }
+}
+
+.sponsor-callout {
+    background: var(--sidebar-bg);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 4px 4px 0;
+    padding: 16px 20px;
+}
+
+// Django renders radio groups in a fieldset; make it read like the other fields.
+.sponsor-form fieldset {
+    border: 0;
+    margin: 10px 0 20px;
+    padding: 0;
+
+    legend {
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    label {
+        font-weight: 400;
+    }
+}
+
+.sponsor-price {
+    @include sans-serif;
+    @include font-size(36);
+    color: var(--primary);
+    font-weight: 700;
+    line-height: 1.1;
+}
