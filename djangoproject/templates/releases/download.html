@@ -13,7 +13,7 @@
 
 {% block og_image_alt %}Django's release roadmap{% endblock %}
 
-{% block og_description %}The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}{% endblock %}
+{% block og_description %}The latest official version is {{ current.version }}{% if current.show_lts_label %} (LTS){% endif %}{% endblock %}
 
 {% block og_image_width %}1030{% endblock %}
 
@@ -35,7 +35,7 @@
     Here’s how to get it:</p>
 
   <h2>Option {% cycle '1' '2' '3' as options %}: Get the latest official version</h2>
-  <p>The latest official version is {{ current.version }}{% if current.is_lts %} (LTS){% endif %}. Read the
+  <p>The latest official version is {{ current.version }}{% if current.show_lts_label %} (LTS){% endif %}. Read the
     {% release_notes current.version show_version=True %}, then install it with
     <a href="https://pip.pypa.io/en/latest/">pip</a>:</p>
   <p>Linux / macOS:</p>
@@ -315,7 +315,7 @@
     <p>If you’re just looking for a stable deployment target and don’t mind waiting for the next release, you’ll want to stick with the latest official release (which will always include detailed notes on any changes you’ll need to make while upgrading).</p>
     <h3>Previous releases</h3>
     <ul>
-      <li>Django {{ previous.version }}{% if previous.is_lts %} (LTS){% endif %}:
+      <li>Django {{ previous.version }}{% if previous.show_lts_label %} (LTS){% endif %}:
         {% include "releases/_download_links.html" with release=previous %}
       </li>
       {% if lts %}
