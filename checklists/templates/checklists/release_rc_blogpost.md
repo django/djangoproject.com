@@ -5,8 +5,8 @@ before Django {{ final_version }} final is released.
 
 The release candidate stage marks the string freeze and the call for translators
 [to submit translations](https://docs.djangoproject.com/en/dev/internals/contributing/localizing/#translations).
-Provided no major bugs are discovered that can't be solved in the next two
-weeks, Django {{ final_version }} will be released on or around
+Provided no major bugs are discovered that can't be solved in the next
+{% if release.is_calendar_version %}month{% else %}two weeks{% endif %}, Django {{ final_version }} will be released on or around
 {{ instance.feature_release.when|date:"F j" }}. Any  delays will be communicated
 on the [Django forum]({{ instance.feature_release.forum_post }}).
 

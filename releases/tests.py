@@ -18,7 +18,14 @@ from members.models import MEMBERSHIP_LEVELS, PLATINUM_MEMBERSHIP, CorporateMemb
 from .models import Release, get_version, upload_to_artifact, upload_to_checksum
 from .templatetags.date_format import isodate
 from .templatetags.release_notes import get_latest_release_version, release_notes
-from .utils import get_feature_version, get_version_tuple
+from .utils import (
+    get_django_version_tuple,
+    get_feature_version,
+    get_main_version,
+    get_next_feature_version,
+    get_next_patch_version,
+    get_version_tuple,
+)
 
 
 class TestTemplateTags(TestCase):
@@ -243,6 +250,79 @@ class TestReleaseManager(TestCase):
             version="1.9b2", is_active=True, date=datetime.date.today(), eol_date=None
         )
         self.assertEqual(Release.objects.preview().version, "1.9b2")
+
+
+class CalendarVersionSeriesTestCase(TestCase):
+    today = datetime.date.today()
+    day = datetime.timedelta(days=1)
+
+    def test_unsupported_lists_each_calendar_series_once(self):
+        # A calendar version's minor is its patch number, so grouping series by
+        # (major, minor) would list every patch release of 2028 separately.
+        for version in ["2028", "2028.1", "2028.2"]:
+            Release.objects.create(
+                version=version,
+                is_active=True,
+                date=self.today - 30 * self.day,
+                eol_date=self.today - self.day,
+            )
+        Release.objects.create(
+            version="2029", is_active=True, date=self.today - 10 * self.day
+        )
+
+        unsupported = [release.version for release in Release.objects.unsupported()]
+        self.assertEqual(unsupported, ["2028.2"])
+
+    def test_in_feature_series(self):
+        for version in ["2028", "2028.1", "2028.10", "2029", "6.2", "6.2.1"]:
+            Release.objects.create(version=version, date=self.today)
+        Release.objects.create(version="2028.3a1", date=self.today)
+
+        cases = [
+            ("2028", ["2028.10", "2028.1", "2028"]),
+            ("2028.1", ["2028.10", "2028.1", "2028"]),
+            ("2029", ["2029"]),
+            ("6.2", ["6.2.1", "6.2"]),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                release = Release.objects.get(version=version)
+                series = Release.objects.in_feature_series(release)
+                self.assertEqual([r.version for r in series], expected)
+
+    def test_calendar_versions_are_always_lts(self):
+        for version in ["2028a1", "2028", "2028.4", "2030.2"]:
+            with self.subTest(version=version):
+                release = Release.objects.create(
+                    version=version, is_lts=False, date=self.today
+                )
+                self.assertIs(release.is_lts, True)
+                release.refresh_from_db()
+                self.assertIs(release.is_lts, True)
+
+    def test_non_calendar_versions_keep_their_lts_flag(self):
+        for version, is_lts in [("6.1", False), ("6.2", True)]:
+            with self.subTest(version=version):
+                release = Release.objects.create(
+                    version=version, is_lts=is_lts, date=self.today
+                )
+                release.refresh_from_db()
+                self.assertIs(release.is_lts, is_lts)
+
+    def test_calendar_versions_keep_the_flag_but_lose_the_label(self):
+        for version in ["2028a1", "2028", "2028.4"]:
+            with self.subTest(version=version):
+                release = Release.objects.create(version=version, date=self.today)
+                self.assertIs(release.is_lts, True)
+                self.assertIs(release.show_lts_label, False)
+
+    def test_non_calendar_versions_are_labelled_when_lts(self):
+        for version, is_lts in [("6.2", True), ("6.1", False)]:
+            with self.subTest(version=version):
+                release = Release.objects.create(
+                    version=version, is_lts=is_lts, date=self.today
+                )
+                self.assertIs(release.show_lts_label, is_lts)
 
 
 class ReleaseTestCase(TestCase):
@@ -557,6 +637,15 @@ class VersionUtilsTestCase(SimpleTestCase):
             with self.subTest(version=expected):
                 self.assertEqual(get_version(version_tuple), expected)
 
+    def test_get_version_from_django_version_tuple(self):
+        # get_version() reads the status from the end of the tuple, so it also
+        # works for the shorter shape django.VERSION uses for calendar
+        # versions.
+        for version, _ in self.cases:
+            with self.subTest(version=version):
+                version_tuple = get_django_version_tuple(version)
+                self.assertEqual(get_version(version_tuple), version)
+
     def test_version_string_round_trip(self):
         for version, _ in self.cases:
             with self.subTest(version=version):
@@ -595,6 +684,69 @@ class VersionUtilsTestCase(SimpleTestCase):
         for version, expected in cases:
             with self.subTest(version=version):
                 self.assertEqual(get_feature_version(version), expected)
+
+    def test_get_django_version_tuple(self):
+        # django.VERSION has four components for calendar versions, which have
+        # no minor one, and five for the earlier scheme. See DEP 20.
+        cases = [
+            ("1.11", (1, 11, 0, "final", 0)),
+            ("5.2a1", (5, 2, 0, "alpha", 1)),
+            ("5.2", (5, 2, 0, "final", 0)),
+            ("5.2.15", (5, 2, 15, "final", 0)),
+            ("2028a1", (2028, 0, "alpha", 1)),
+            ("2028rc1", (2028, 0, "rc", 1)),
+            ("2028", (2028, 0, "final", 0)),
+            ("2028.1", (2028, 1, "final", 0)),
+            ("2028.15", (2028, 15, "final", 0)),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                self.assertEqual(get_django_version_tuple(version), expected)
+
+    def test_get_next_feature_version(self):
+        cases = [
+            ("5.0", "5.1"),
+            ("5.0.5", "5.1"),
+            ("5.1", "5.2"),
+            ("5.2", "6.0"),
+            ("5.2.9", "6.0"),
+            ("6.0", "6.1"),
+            ("6.1", "6.2"),
+            # 6.2 is the last A.B feature release, followed by 2028.
+            ("6.2", "2028"),
+            ("6.2.6", "2028"),
+            ("6.2rc1", "2028"),
+            ("2028", "2029"),
+            ("2028a1", "2029"),
+            ("2028.15", "2029"),
+            ("2030.2", "2031"),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                self.assertEqual(get_next_feature_version(version), expected)
+
+    def test_get_next_patch_version(self):
+        cases = [
+            ("5.2", (5, 2, 1, "alpha", 0)),
+            ("5.2.1", (5, 2, 2, "alpha", 0)),
+            ("5.2.15", (5, 2, 16, "alpha", 0)),
+            ("1.11.29", (1, 11, 30, "alpha", 0)),
+            ("2028", (2028, 1, "alpha", 0)),
+            ("2028.1", (2028, 2, "alpha", 0)),
+            ("2028.15", (2028, 16, "alpha", 0)),
+        ]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                self.assertEqual(get_next_patch_version(version), expected)
+
+    def test_get_next_patch_version_main_version(self):
+        # The next patch version is written to docs and release notes through
+        # its main version, which drops the status and a zero patch number.
+        cases = [("5.2", "5.2.1"), ("5.2.15", "5.2.16"), ("2028", "2028.1")]
+        for version, expected in cases:
+            with self.subTest(version=version):
+                main = get_main_version(get_next_patch_version(version))
+                self.assertEqual(main, expected)
 
 
 class ReleaseUploadToTestCase(SimpleTestCase):
@@ -905,12 +1057,48 @@ class DownloadViewTestCase(ReleaseMixin, TestCase):
     def test_current_release(self):
         response = self.client.get(reverse("download"))
         self.assertContains(response, "The latest official version is 2028.1.")
+        # The flag is set for calendar versions, but the label is not shown.
+        self.assertIs(self.current.is_lts, True)
+        self.assertNotContains(response, "2028.1 (LTS)")
         self.assertContains(
             response,
             '<a href="http://docs.djangoproject.localhost:8000/en/2028'
             '/releases/2028.1/">2028.1 release notes</a>',
             html=True,
         )
+
+    def test_lts_release_not_listed_twice(self):
+        # 6.2 is the newest LTS release, but it is already listed as the
+        # previous one, so it is not called out again on its own.
+        response = self.client.get(reverse("download"))
+        self.assertIsNone(response.context["lts"])
+        self.assertContains(response, "Django 6.2 (LTS):", count=1)
+
+    def test_lts_label_retired_once_only_calendar_versions_are_supported(self):
+        today = datetime.date.today()
+        day = datetime.timedelta(1)
+        # Two more annual releases, so that the three supported feature
+        # releases DEP 20 keeps at any one time are all calendar versions.
+        for version, age in [("2029", 200), ("2030", 30)]:
+            Release.objects.create(
+                version=version, is_active=True, date=today - age * day
+            )
+
+        response = self.client.get(reverse("download"))
+        # 6.2 is supported still, and the last release the label distinguishes.
+        self.assertEqual(response.context["current"].version, "2030")
+        self.assertEqual(response.context["previous"].version, "2029")
+        self.assertEqual(response.context["lts"], self.previous)
+        self.assertContains(response, "Django 6.2 (LTS):", count=1)
+
+        Release.objects.filter(version="6.2").update(eol_date=today - day)
+
+        response = self.client.get(reverse("download"))
+        self.assertQuerySetEqual(
+            Release.objects.lts(), ["2030", "2029", "2028.1"], transform=str
+        )
+        self.assertIsNone(response.context["lts"])
+        self.assertNotContains(response, "(LTS):")
 
     def test_preview_release(self):
         response = self.client.get(reverse("download"))
