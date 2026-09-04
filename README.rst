@@ -163,6 +163,14 @@ or simply the usual test management command::
 
     python -m manage test [list of app labels]
 
+To also run the end-to-end tests, install the Playwright browsers::
+
+    python -m playwright install --with-deps chromium firefox
+
+Then run::
+
+    make test TEST_ARGS="--browser chromium --browser firefox"
+
 Supported browsers
 ------------------
 
