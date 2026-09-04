@@ -3803,3 +3803,123 @@ ul.corporate-members li {
         top: 0;
     }
 }
+
+// Sponsorship banner landing page (/sponsor/banner/)
+// The screenshot is 2560px wide, so it breaks out of the content column the
+// same way a wide table does. See .table-wrapper-wide above for the technique.
+.sponsor-placement {
+    margin: 30px 0 0;
+
+    @include respond-min(768px) {
+        width: 96vw;
+        max-width: 1160px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+
+    img {
+        display: block;
+        height: auto;
+        max-width: 100%;
+    }
+
+    figcaption {
+        margin: 10px 0 0;
+        text-align: center;
+    }
+}
+
+// Headline numbers on the sponsorship landing pages.
+.sponsor-stats {
+    list-style: none;
+    margin: 20px 0;
+    padding: 0;
+
+    li {
+        margin-bottom: 15px;
+    }
+
+    strong {
+        @include sans-serif;
+        @include font-size(24);
+        color: var(--primary);
+        margin-right: 4px;
+    }
+}
+
+.sponsor-levels {
+    // Flex instead of floats so the cards match heights and the buttons align.
+    @include respond-min(768px) {
+        display: flex;
+    }
+
+    .col {
+        border: 1px solid var(--hairline-color);
+        border-radius: 4px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        padding: 25px 30px 30px;
+
+        // The section's default heading and paragraph margins are too loose
+        // inside a card; tighten them into one readable block.
+        h3 {
+            margin: 0 0 5px;
+        }
+
+        p {
+            margin: 0 0 12px;
+        }
+
+        .sponsor-price {
+            margin: 0 0 12px;
+        }
+
+        ul {
+            flex: 1;
+            margin: 5px 0 10px;
+            padding-left: 1.2em;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .cta {
+            margin: 10px 0 0;
+            max-width: none;
+        }
+    }
+}
+
+.sponsor-callout {
+    background: var(--sidebar-bg);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 4px 4px 0;
+    padding: 16px 20px;
+}
+
+// Django renders radio groups in a fieldset; make it read like the other fields.
+.sponsor-form fieldset {
+    border: 0;
+    margin: 10px 0 20px;
+    padding: 0;
+
+    legend {
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    label {
+        font-weight: 400;
+    }
+}
+
+.sponsor-price {
+    @include sans-serif;
+    @include font-size(36);
+    color: var(--primary);
+    font-weight: 700;
+    line-height: 1.1;
+}
