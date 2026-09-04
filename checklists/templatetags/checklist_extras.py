@@ -2,34 +2,38 @@ from datetime import timedelta
 
 from django import template
 
+from releases.utils import (
+    get_main_version,
+    get_next_feature_version,
+    get_next_patch_version,
+)
+
 register = template.Library()
 
 
 @register.filter
 def next_version(release):
-    return f"{release.major}.{release.minor}.{release.micro + 1}"
+    return get_main_version(get_next_patch_version(release.version))
 
 
 @register.filter
 def next_feature_version(release):
-    if release.minor < 2:
-        result = f"{release.major}.{release.minor + 1}"
-    else:
-        result = f"{release.major + 1}.0"
-    return result
+    return get_next_feature_version(release.version)
 
 
 @register.filter
 def format_version_tuple(version_tuple):
     version_tuple = [str(v) for v in version_tuple]
-    version_tuple[3] = f'"{version_tuple[3]}"'
+    # The status is always the second to last component, whether or not the
+    # version has a minor one. See DEP 20.
+    version_tuple[-2] = f'"{version_tuple[-2]}"'
     version_tuple = ", ".join(version_tuple)
     return f"({version_tuple})"
 
 
 @register.filter
 def next_version_tuple(release):
-    return release.major, release.minor, release.micro + 1, "alpha", 0
+    return get_next_patch_version(release.version)
 
 
 @register.filter
