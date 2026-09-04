@@ -1,4 +1,5 @@
 import os
+import tempfile
 from http import HTTPStatus
 from io import StringIO
 from unittest.mock import patch
@@ -6,7 +7,7 @@ from unittest.mock import patch
 from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.management import call_command
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import NoReverseMatch, get_resolver
 from django.utils.translation import activate, gettext as _
 from django_hosts.resolvers import reverse
@@ -251,6 +252,23 @@ class SiteMapTests(TestCase):
     def test_sitemap_renders(self):
         response = self.client.get(reverse("sitemap"))
         self.assertEqual(response.status_code, 200)
+
+
+class StaticFilesTests(TestCase):
+    @override_settings(
+        STORAGES={
+            "staticfiles": {
+                "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+            }
+        }
+    )
+    def test_collectstatic_with_manifeststaticfilesstorage(self):
+        with tempfile.TemporaryDirectory() as temp_dir_path:
+            with override_settings(STATIC_ROOT=temp_dir_path):
+                try:
+                    call_command("collectstatic", interactive=False, verbosity=0)
+                except ValueError as e:
+                    self.fail(e)
 
 
 class EndToEndTests(ReleaseMixin, StaticLiveServerTestCase):
