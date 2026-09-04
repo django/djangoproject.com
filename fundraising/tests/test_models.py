@@ -1,8 +1,14 @@
-from datetime import date
+from datetime import date, timedelta
 
 from django.test import TestCase
 
-from ..models import DjangoHero, Donation, InKindDonor
+from ..models import (
+    DISPLAY_DONOR_DAYS,
+    LEADERSHIP_LEVEL_AMOUNT,
+    DjangoHero,
+    Donation,
+    InKindDonor,
+)
 from .utils import ImageFileFactory, TemporaryMediaRootMixin
 
 
@@ -44,6 +50,24 @@ class TestDjangoHero(TemporaryMediaRootMixin, TestCase):
     def test_display_name(self):
         hero = DjangoHero(name="Hero")
         self.assertEqual(hero.display_name, "Hero")
+
+    def test_for_public_display_only_sums_recent_payments(self):
+        """`donated_amount` covers the last DISPLAY_DONOR_DAYS days only.
+
+        The displayed total is what decides who is listed as a leader, so it
+        is a rolling window rather than a lifetime or calendar-year total.
+        """
+        hero = DjangoHero.objects.create(approved=True, is_visible=True)
+        donation = hero.donation_set.create()
+        older_than_window = donation.payment_set.create(
+            amount=LEADERSHIP_LEVEL_AMOUNT, stripe_charge_id="old"
+        )
+        older_than_window.date = self.today - timedelta(days=DISPLAY_DONOR_DAYS + 1)
+        older_than_window.save()
+        donation.payment_set.create(amount="20", stripe_charge_id="recent")
+
+        displayed = DjangoHero.objects.for_public_display().get(pk=hero.pk)
+        self.assertEqual(displayed.donated_amount, 20)
 
 
 class TestDonation(TestCase):

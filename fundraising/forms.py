@@ -7,7 +7,13 @@ from django.utils.translation import gettext_lazy as _
 from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV3
 
-from .models import INTERVAL_CHOICES, LEADERSHIP_LEVEL_AMOUNT, DjangoHero, Donation
+from .models import (
+    DISPLAY_DONOR_DAYS,
+    INTERVAL_CHOICES,
+    LEADERSHIP_LEVEL_AMOUNT,
+    DjangoHero,
+    Donation,
+)
 
 
 class DjangoHeroForm(forms.ModelForm):
@@ -48,10 +54,11 @@ class DjangoHeroForm(forms.ModelForm):
     logo = forms.FileField(
         required=False,
         help_text=_(
-            "If you've donated at least US $%d, you can submit your logo and "
-            "we will display it, too."
+            "If you've donated at least US $%(amount)d in the last "
+            "%(days)d days, you can submit your logo and we will display "
+            "it, too."
         )
-        % LEADERSHIP_LEVEL_AMOUNT,
+        % {"amount": LEADERSHIP_LEVEL_AMOUNT, "days": DISPLAY_DONOR_DAYS},
     )
     is_visible = forms.BooleanField(
         required=False,

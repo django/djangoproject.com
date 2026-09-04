@@ -4,8 +4,8 @@ from django.test import TestCase
 
 from djangoproject.tests import patch_captcha
 
-from ..forms import DonationForm, PaymentForm
-from ..models import DjangoHero, Donation
+from ..forms import DjangoHeroForm, DonationForm, PaymentForm
+from ..models import DISPLAY_DONOR_DAYS, LEADERSHIP_LEVEL_AMOUNT, DjangoHero, Donation
 
 
 class TestPaymentForm(TestCase):
@@ -68,3 +68,15 @@ class TestPaymentForm(TestCase):
         donation.refresh_from_db()
         self.assertEqual(donation.interval, "monthly")
         self.assertEqual(donation.subscription_amount, 50)
+
+
+class TestDjangoHeroForm(TestCase):
+    def test_logo_help_text_states_the_display_window(self):
+        """The logo help text matches DjangoHeroManager.for_public_display().
+
+        Only donations from the last DISPLAY_DONOR_DAYS days count towards the
+        leadership level, so the help text has to say so (refs #1766).
+        """
+        help_text = DjangoHeroForm().fields["logo"].help_text
+        self.assertIn(f"US ${LEADERSHIP_LEVEL_AMOUNT:.0f}", help_text)
+        self.assertIn(f"in the last {DISPLAY_DONOR_DAYS} days", help_text)
