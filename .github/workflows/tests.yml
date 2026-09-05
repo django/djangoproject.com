@@ -41,7 +41,7 @@ jobs:
                   python -m pip install -r requirements/tests.txt
             - name: Install playwright browsers
               run: |
-                  python -m playwright install --with-deps chromium
+                  python -m playwright install --with-deps chromium firefox
             - name: Set up databases
               run: |
                   PGPASSWORD="postgres" createuser -U postgres -d djangoproject --superuser -h localhost
