@@ -8,6 +8,10 @@
   {{ object.summary_html|safe }}
 {% endif %}
 <span class="meta">
+  {% if object.featured %}
+    <span class="featured">{% translate "Featured" %}</span>
+    <span aria-hidden="true">|</span>
+  {% endif %}
   {% blocktranslate trimmed with author=object.author pub_date=object.pub_date|date:"DATE_FORMAT" %}
     Posted by <strong>{{ author }}</strong> on {{ pub_date }}
   {% endblocktranslate %}
