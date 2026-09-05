@@ -196,6 +196,26 @@ class EntryTestCase(DateTimeMixin, TestCase):
         )
         self.assertInHTML(expected_html, entry.body_html)
 
+    def test_markdown_code_block(self):
+        body = (
+            "```text\n"
+            "* @django/coc-committee\n"
+            "CODE_OF_CONDUCT.md @django/coc-committee @django/dsf-board\n"
+            "```"
+        )
+        entry = Entry.objects.create(
+            pub_date=self.now,
+            slug="markdown-code-block",
+            body=body,
+            content_format=ContentFormat.MARKDOWN,
+        )
+        expected_html = (
+            '<pre><code class="language-text">* @django/coc-committee\n'
+            "CODE_OF_CONDUCT.md @django/coc-committee @django/dsf-board\n"
+            "</code></pre>"
+        )
+        self.assertInHTML(expected_html, entry.body_html)
+
 
 class EventTestCase(DateTimeMixin, TestCase):
     def test_manager_past_future(self):
