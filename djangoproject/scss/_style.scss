@@ -11,10 +11,12 @@ https://lincolnloop.com/team/michael-trythall/
 CSS rendered with Libsass 0.7.0
 */
 
-//------------------- Globals
+/* ------------------- Globals */
 body {
-    @include sans-serif;
-    @include font-size(18);
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    /* scss @include font-size(18) */
+    font-size: 1.125rem;
     background: var(--sidebar-bg);
     color: var(--body-fg);
     line-height: 1.6;
@@ -23,11 +25,13 @@ body {
 
     .layout-secondary,
     [role="complementary"] {
-        @include sans-serif; // reverse font style on sidebar and secondary areas
+        /* scss @include sans-serif */ /* reverse font style on sidebar and secondary areas */
+        font-family: var(--sans-serif-font-families);
     }
 
-    // don't activate mobile styles for larger screens
-    @include respond-min(768px) {
+    /* don't activate mobile styles for larger screens */
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         min-width: 768px;
     }
 }
@@ -57,13 +61,13 @@ button:focus {
 }
 
 ::selection {
-    // Text Selection Colors
+    /* Text Selection Colors */
     background-color: var(--selection);
 }
 
 ol li,
 ul li {
-    //list style
+    /* list style */
     margin-top: 10px;
 }
 
@@ -71,7 +75,8 @@ dl {
     margin: 20px 0 10px;
 
     dt {
-        @include sans-serif;
+        /* scss @include sans-serif */
+        font-family: var(--sans-serif-font-families);
         font-weight: 400;
     }
 
@@ -97,25 +102,43 @@ h3,
 h4,
 h5,
 h6 {
-    @include sans-serif;
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
     font-weight: 400;
 
     a {
         text-decoration: none;
-        @include link-green;
+        /* scss @include link-green */
+        color: var(--link-color);
+        text-decoration: none;
+
+        &:visited {
+            color: var(--link-color);
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: var(--green-l6);
+            text-decoration: none;
+        }
+        /* scss end */
     }
 
 
 }
 
 h1 {
-    @include font-size(28);
+    /* scss @include font-size(28) */
+    font-size: 1.75rem;
     color: var(--white-color);
     letter-spacing: -1px;
     line-height: 1.1;
 
-    @include respond-min(768px) {
-        @include font-size(32);
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
+        /* scss @include font-size(32) */
+        font-size: 2rem;
     }
 
     .layout-secondary & {
@@ -123,22 +146,26 @@ h1 {
     }
 
     main & {
-        @include font-size(32);
+        /* scss @include font-size(32) */
+        font-size: 2rem;
         margin: 40px 0px 30px;
         color: var(--body-fg);
     }
 
     [role="complementary"] & {
-        @include font-size(28);
+        /* scss @include font-size(28) */
+        font-size: 1.75rem;
     }
 }
 
 h2 {
-    @include font-size(24);
+    /* scss @include font-size(24) */
+    font-size: 1.5rem;
 
     [role="complementary"] &,
     .layout-secondary & {
-        @include font-size(20);
+        /* scss @include font-size(20) */
+        font-size: 1.25rem;
         border-bottom: 1px solid var(--hairline-color);
         font-weight: 400;
         padding-bottom: 15px;
@@ -149,13 +176,15 @@ h2 {
         }
 
         &:first-child {
-            @include respond-min(768px) {
+            /* scss @include respond-min(768px) */
+            @media screen and (min-width: 768px) {
                 margin-top: 20px;
             }
         }
 
         .full-width & {
-            @include font-size(24);
+            /* scss @include font-size(24) */
+            font-size: 1.5rem;
         }
     }
 
@@ -166,7 +195,8 @@ h2 {
 }
 
 h3 {
-    @include font-size(20);
+    /* scss @include font-size(20) */
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--body-fg);
     line-height: 1.2;
@@ -174,7 +204,8 @@ h3 {
 
     [role="complementary"] &,
     .layout-secondary & {
-        @include font-size(20);
+        /* scss @include font-size(20) */
+        font-size: 1.25rem;
         border-bottom: 1px solid var(--hairline-color);
         font-weight: 400;
         padding-bottom: 15px;
@@ -185,18 +216,21 @@ h3 {
         }
 
         &:first-child {
-            @include respond-min(768px) {
+            /* scss @include respond-min(768px) */
+            @media screen and (min-width: 768px) {
                 margin-top: 20px;
             }
         }
         .full-width & {
-            @include font-size(24);
+            /* scss @include font-size(24) */
+            font-size: 1.5rem;
         }
     }
 }
 
 h4 {
-    @include font-size(16);
+    /* scss @include font-size(16) */
+    font-size: 1rem;
     color: var(--body-fg);
     line-height: 1.2;
     margin: 35px 0 20px;
@@ -204,7 +238,8 @@ h4 {
 }
 
 h5 {
-    @include font-size(14);
+    /* scss @include font-size(14) */
+    font-size: 0.875rem;
     color: var(--body-fg);
     line-height: 1.2;
     margin: 35px 0 20px;
@@ -216,7 +251,12 @@ code,
 kbd,
 pre,
 samp {
-    @include monospace;
+    /* scss @include monospace */
+    font-family: var(--monospace-font-families);
+    font-variant-ligatures: no-common-ligatures; /* disables the common ligatures only */
+    text-rendering: optimizeSpeed; /* for Safari 7.x */
+    overflow-wrap: break-word;
+    /* scss end */
     color: var(--code-fg);
     font-size: 1em;
 }
@@ -226,7 +266,12 @@ tt {
 }
 
 span.pre {
-    @include monospace;
+    /* scss @include monospace */
+    font-family: var(--monospace-font-families);
+    font-variant-ligatures: no-common-ligatures; /* disables the common ligatures only */
+    text-rendering: optimizeSpeed; /* for Safari 7.x */
+    overflow-wrap: break-word;
+    /* scss end */
 }
 
 a:hover,
@@ -239,7 +284,7 @@ a:focus {
 
 p {
 
-    //increase top margin if first item in container
+    /* increase top margin if first item in container */
     main>&:first-child {
         margin-top: 30px;
     }
@@ -249,7 +294,7 @@ ul {
     padding-left: 20px;
 }
 
-// TODO: most of this is copy/pasted from .admonition. We should factor out the common bits
+/* TODO: most of this is copy/pasted from .admonition. We should factor out the common bits */
 blockquote {
     background: var(--body-bg);
     padding: 15px 20px 15px 70px;
@@ -263,27 +308,35 @@ blockquote {
     }
 
     &::before {
-        @include fa-icon();
+        /* scss @include fa-icon */
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome; /* shortening font declaration */
+        font-size: inherit; /* can't have font-size inherit on line above, so need to override */
+        text-rendering: auto; /* optimizelegibility throws things off #1094 */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        /* scss end */
         position: absolute;
         top: 20px;
         left: 20px;
         font-size: 30px;
         width: 34px;
         text-align: center;
-        content: $fa-var-quote-left; // default icon
+        content: var(--fa-var-quote-left); /* default icon */
         opacity: 0.5;
     }
 }
 
-//------------------- Layout
+/* ------------------- Layout */
 
 
 main {
-    //Main column. Left aligned by default. See /styleguide for explanation.
+    /* Main column. Left aligned by default. See /styleguide for explanation. */
     background: var(--white-color);
     padding: 1px 10px 40px;
 
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         min-height: 800px;
         border: none;
         box-shadow: 0px 0px 0 0 var(--white-color), 0px 0px 0 0 var(--white-color), 460px 0 0 0 var(--white-color), 1000px 0 0 0 var(--white-color), 0px 600px 0 0px var(--white-color), 460px 600px 0 0px var(--white-color);
@@ -312,7 +365,8 @@ main {
         padding: 0 10px 40px;
         width: auto;
 
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             max-width: 740px;
             padding: 20px 0 40px;
             width: (704/768) * 100%;
@@ -340,7 +394,7 @@ main {
     border: none;
     box-shadow: 0 4px 8px rgba(12, 60, 38, 0.07);
 
-    // Single column, full width layout. See /styleguide for explanation.
+    /* Single column, full width layout. See /styleguide for explanation. */
     &.container {
         width: 100%;
         padding: 0;
@@ -348,16 +402,28 @@ main {
         background: var(--white-color);
     }
 
-    // High-level class denoting full-width layout
-    @include clearfix;
+    /* High-level class denoting full-width layout */
+    /* scss @include clearfix */
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+    /* scss end */
 }
 
 [role="complementary"] {
-    //Sidebar in column layouts, gray section in fullwidth layout
+    /* Sidebar in column layouts, gray section in fullwidth layout */
     padding: 0 10px 20px;
-    @include font-size(14);
+    /* scss @include font-size(14) */
+    font-size: 0.875rem;
 
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         float: right;
         margin: 20px 0;
         margin-right: 3%;
@@ -401,7 +467,8 @@ main {
     margin: 0 10px;
     padding: 40px 0 60px;
 
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         .full-width & {
             max-width: 700px;
             margin: 0 auto;
@@ -410,12 +477,12 @@ main {
 }
 
 .layout-secondary {
-    // Secondary (gray) content area on full-width pages
+    /* Secondary (gray) content area on full-width pages */
     padding: 20px 10px 50px;
 }
 
 .layout-tertiary {
-    // Tertiary (white) content area on full-width pages
+    /* Tertiary (white) content area on full-width pages */
     background: var(--white-color);
     border: none;
     box-shadow: 0 -4px 8px rgba(12, 60, 38, 0.07);
@@ -423,9 +490,10 @@ main {
 }
 
 .container {
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         margin: 0 auto;
-        padding: 0 (32/768) * 100%;
+        padding: 0 calc(32/768 * 100%);
     }
 
     &.sidebar-right {
@@ -442,18 +510,29 @@ main {
 .container--flex--wrap--mobile {
     flex-wrap: wrap;
 
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         flex-wrap: no-wrap;
     }
 }
 
 
-//-------------------  Site Chrome (Header/Footer)
+/* -------------------  Site Chrome (Header/Footer) */
 
 header {
-    // Includes global navigation, logo, and tagline at top of document
-    @include clearfix;
-    background: $green-dark;
+    /* Includes global navigation, logo, and tagline at top of document */
+    /* scss @include clearfix */
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+    /* scss end */
+    background: var(--green-dark);
     overflow: hidden;
     margin: 0;
     padding: 10px 0 6px;
@@ -466,14 +545,16 @@ header {
     }
 
     .meta {
-        @include font-size(13);
+        /* scss @include font-size(13) */
+        font-size: 0.8125rem;
         color: var(--primary);
         font-weight: 700;
         width: auto;
         margin: 8px 0 0 10px;
         display: none;
 
-        @include respond-min(1500px) {
+        /* scss @include respond-min(1500px) */
+        @media screen and (min-width: 1500px) {
             width: 200px;
             display: block;
         }
@@ -482,10 +563,12 @@ header {
     }
 
     .logo {
-        @include font-size(40);
-        @include sans-serif;
-        // Small screens less than 500px use the dj logo. This gives more
-        // horizontal space for a searchbar in the header.
+        /* scss @include font-size(40) */
+        font-size: 2.5rem;
+        /* scss @include sans-serif */
+        font-family: var(--sans-serif-font-families);
+        /* Small screens less than 500px use the dj logo. This gives more
+           horizontal space for a searchbar in the header. */
         background: url(../img/logo-dj.svg) center center no-repeat;
         color: var(--white-color);
         display: block;
@@ -497,12 +580,14 @@ header {
         width: 45px;
         height: 36px;
 
-        @include respond-min(500px) {
+        /* scss @include respond-min(500px) */
+        @media screen and (min-width: 500px) {
             background: url(../img/logo-django.svg) center center no-repeat;
             width: 104px;
         }
 
-        @include respond-min(1080px) {
+        /* scss @include respond-min(1080px) */
+        @media screen and (min-width: 1080px) {
             margin-left: 10px;
         }
 
@@ -522,15 +607,17 @@ header {
             flex: 0 1 240px;
         }
 
-        @include respond-min(1280px) {
+        /* scss @include respond-min(1280px) */
+        @media screen and (min-width: 1280px) {
             order: 3;
             margin-left: 0;
         }
     }
 
     .menu-button {
-        @include font-size(20);
-        background: $green-dark;
+        /* scss @include font-size(20) */
+        font-size: 1.25rem;
+        background: var(--green-dark);
         border: 0;
         color: var(--menu);
         cursor: pointer;
@@ -541,7 +628,8 @@ header {
         width: 45px;
         order: 2;
 
-        @include respond-min(1280px) {
+        /* scss @include respond-min(1280px) */
+        @media screen and (min-width: 1280px) {
             display: none;
         }
 
@@ -557,10 +645,10 @@ header {
     nav {
         order: 4;
         width: 100%;
-        background: $green-dark;
+        background: var(--green-dark);
         transition: max-height 0.3s ease-out;
         max-height: 0;
-        display: none; // hide mobile menu by default
+        display: none; /* hide mobile menu by default */
         overflow: hidden;
         padding: 0 2px;
         flex-basis: 100%;
@@ -574,12 +662,13 @@ header {
             }
         }
 
-        @include respond-min(1280px) {
+        /* scss @include respond-min(1280px) */
+        @media screen and (min-width: 1280px) {
             width: auto;
             order: 2;
             margin-left: auto;
             flex-basis: auto;
-            display: block; // always show menu on a desktop width
+            display: block; /* always show menu on a desktop width */
             max-height: none;
         }
 
@@ -587,7 +676,8 @@ header {
             margin: 10px 0 0;
             padding: 0;
 
-            @include respond-min(1280px) {
+            /* scss @include respond-min(1280px) */
+            @media screen and (min-width: 1280px) {
                 display: flex;
                 align-items: center;
                 margin: 2px 0;
@@ -595,20 +685,23 @@ header {
         }
 
         li {
-            @include sans-serif;
-            @include font-size(13);
+            /* scss @include sans-serif */
+            font-family: var(--sans-serif-font-families);
+            /* scss @include font-size(13) */
+            font-size: 0.8125rem;
             display: block;
             font-weight: 700;
             line-height: 16px;
             text-align: left;
             text-transform: uppercase;
             margin: 0 10px;
-            border-top: 1px solid lighten($green-dark, 5%);
+            border-top: 1px solid color-mix(in oklch, var(--green-dark), white 5%);
             > :not(.search){
               padding: 20px 0px;
             }
 
-            @include respond-min(1280px) {
+            /* scss @include respond-min(1280px) */
+            @media screen and (min-width: 1280px) {
                 margin: 0;
                 border: 0;
                 float: left;
@@ -648,7 +741,8 @@ header {
                 color: var(--secondary-accent);
             }
 
-            @include respond-min(1280px) {
+            /* scss @include respond-min(1280px) */
+            @media screen and (min-width: 1280px) {
                 padding: 20px 10px;
             }
         }
@@ -657,9 +751,10 @@ header {
 }
 
 .header {
-    // dark green bar containing the page title
-    @include sans-serif;
-    background: $green-dark;
+    /* dark green bar containing the page title */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    background: var(--green-dark);
     margin: 0;
     padding: 11px 0px 8px;
     position: relative;
@@ -669,7 +764,8 @@ header {
     }
 
     p {
-        @include font-size(18);
+        /* scss @include font-size(18) */
+        font-size: 1.125rem;
         color: var(--white-color);
         left: -9999px;
         line-height: 1.5;
@@ -678,7 +774,8 @@ header {
         top: 0;
         max-width: 660px;
 
-        @include respond-min(1080px) {
+        /* scss @include respond-min(1080px) */
+        @media screen and (min-width: 1080px) {
             position: static;
         }
     }
@@ -686,11 +783,11 @@ header {
 
 /* banner for billboard */
 #billboard {
-    background-color: $green-light;
-    border-top: 1px solid $black;
+    background-color: var(--green-light);
+    border-top: 1px solid var(--black);
 
     * {
-        color: $black;
+        color: var(--black);
     }
 
     .banner {
@@ -698,24 +795,26 @@ header {
         flex-direction: column;
         gap: 1em;
         text-align: center;
-        // Narrower side padding than desktop widens the text column on mobile
-        // (fewer wrapped lines), while vertical padding stays comfortable.
+        /* Narrower side padding than desktop widens the text column on mobile
+           (fewer wrapped lines), while vertical padding stays comfortable. */
         padding: 1em 1.25em;
         max-width: 60em;
         margin: 0 auto;
 
-        @include sans-serif;
+        /* scss @include sans-serif */
+        font-family: var(--sans-serif-font-families);
         font-size: 1.8rem;
         font-weight: 300;
         line-height: 1.4;
 
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             padding: 1em 3em;
         }
 
-        // gap owns the spacing between items; clear the inherited margins
-        // (the h2 UA default and the global .cta margins) so the gaps stay
-        // uniform and the outer edges are defined by the container padding.
+        /* gap owns the spacing between items; clear the inherited margins
+           (the h2 UA default and the global .cta margins) so the gaps stay
+           uniform and the outer edges are defined by the container padding. */
         > * {
             margin: 0;
         }
@@ -733,14 +832,14 @@ header {
     }
 
     .banner-preview-notice {
-        background-color: $warning-bg;
+        background-color: var(--warning-bg);
         text-align: center;
         margin: 0;
         padding: 0;
     }
 
     a, h1 a {
-        color: $black;
+        color: var(--black);
         font-weight: bold;
         text-decoration: none;
         &:hover {
@@ -750,18 +849,21 @@ header {
 }
 
 .copy-banner {
-    // Large green callout at the top of the page
+    /* Large green callout at the top of the page */
     background: var(--primary);
     padding: 1px 10px;
 
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         padding: 1px 0;
     }
 
     p,
     h1 {
-        @include sans-serif;
-        @include font-size(24);
+        /* scss @include sans-serif */
+        font-family: var(--sans-serif-font-families);
+        /* scss @include font-size(24) */
+        font-size: 1.5rem;
         color: var(--secondary-accent);
         font-weight: 300;
         line-height: 1.3;
@@ -774,8 +876,10 @@ header {
             color: var(--menu);
         }
 
-        @include respond-min(768px) {
-            @include font-size(32);
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
+            /* scss @include font-size(32) */
+            font-size: 2rem;
 
             margin: .35em 0 .35em;
             color: var(--secondary-accent);
@@ -792,7 +896,8 @@ header {
         a.cta,
         .cta {
             margin: 0;
-            @include font-size(18);
+            /* scss @include font-size(18) */
+            font-size: 1.125rem;
         }
     }
 
@@ -803,7 +908,7 @@ header {
         background: var(--primary-light);
 
         &:hover {
-            background: lighten($green-medium-dark, 4%);
+            background: color-mix(in oklch, var(--green-medium-dark), white 4%);
         }
 
         background: none;
@@ -849,12 +954,14 @@ header {
             margin-right: auto;
             margin: 1em auto .5em;
             color: var(--body-fg);
-            @include font-size(36);
+            /* scss @include font-size(36) */
+            font-size: 2.25rem;
 
             &.small {
                 color: var(--text-light);
                 margin: 2em auto 1em;
-                @include font-size(14);
+                /* scss @include font-size(14) */
+                font-size: 0.875rem;
             }
 
             em {
@@ -873,25 +980,39 @@ header {
             font-weight: 700;
 
             &:hover {
-                background: lighten($green-medium, 4%);
+                background: color-mix(in oklch, var(--green-medium), white 4%);
             }
 
             &:active {
-                background: darken($green-medium, 2%);
+                background: color-mix(in oklch, var(--green-medium), black 2%);
             }
         }
     }
 }
 
 [role="alert"] {
-    //Announcement banner above the footer.
+    /* Announcement banner above the footer. */
     clear: both;
     background: var(--body-bg);
     position: relative;
     box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.05);
 
     a {
-        @include link-green;
+        /* scss @include link-green */
+        color: var(--link-color);
+        text-decoration: none;
+
+        &:visited {
+            color: var(--link-color);
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: var(--green-l6);
+            text-decoration: none;
+        }
+        /* scss end */
 
         &.link-readmore {
             margin: 0;
@@ -901,7 +1022,17 @@ header {
     dl {
         margin: 0 10px;
         padding: 25px 0;
-        @include clearfix;
+        /* scss @include clearfix */
+        &:before,
+        &:after {
+            content: "";
+            display: table;
+        }
+
+        &:after {
+            clear: both;
+        }
+        /* scss end */
 
         dt {
             i.icon {
@@ -914,7 +1045,8 @@ header {
             float: left;
             width: 60%;
             margin-top: 0;
-            @include sans-serif;
+            /* scss @include sans-serif */
+            font-family: var(--sans-serif-font-families);
         }
 
         .link-readmore {
@@ -922,7 +1054,8 @@ header {
         }
     }
 
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         dt {
             float: left;
             width: 31%;
@@ -937,9 +1070,20 @@ header {
 }
 
 footer {
-    // Global Footer at bottom of page
-    @include clearfix;
-    @include sans-serif;
+    /* Global Footer at bottom of page */
+    /* scss @include clearfix */
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+    /* scss end */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
     position: relative;
     background: var(--primary);
     clear: both;
@@ -950,10 +1094,21 @@ footer {
     }
 
     .subfooter {
-        @include clearfix;
+        /* scss @include clearfix */
+        &:before,
+        &:after {
+            content: "";
+            display: table;
+        }
+
+        &:after {
+            clear: both;
+        }
+        /* scss end */
         padding: 0 10px;
 
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             padding: 0;
         }
 
@@ -964,7 +1119,8 @@ footer {
                 }
             }
 
-            @include respond-min(768px) {
+            /* scss @include respond-min(768px) */
+            @media screen and (min-width: 768px) {
                 float: left;
                 margin-bottom: -999px;
                 padding: 0 3% 999px 0;
@@ -985,21 +1141,24 @@ footer {
     }
 
     h3 {
-        @include font-size(16);
+        /* scss @include font-size(16) */
+        font-size: 1rem;
         border-top: 1px solid var(--hairline-color);
         color: var(--menu);
         font-weight: 700;
         margin-top: 20px;
         padding: 30px 0 10px;
 
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             border: none;
             margin-top: 0;
         }
     }
 
     ul {
-        @include font-size(14);
+        /* scss @include font-size(14) */
+        font-size: 0.875rem;
         font-weight: 400;
         list-style: none;
         margin: 15px 0 0 0;
@@ -1028,7 +1187,7 @@ footer {
     }
 
     .footer {
-        background: $green-dark;
+        background: var(--green-dark);
         margin-top: 20px;
         padding: 10px 0 30px;
         color: var(--primary-accent);
@@ -1050,10 +1209,12 @@ footer {
     }
 
     .logo {
-        @include font-size(40);
-        @include sans-serif;
+        /* scss @include font-size(40) */
+        font-size: 2.5rem;
+        /* scss @include sans-serif */
+        font-family: var(--sans-serif-font-families);
         background: url(../img/logo-django.svg) center center no-repeat;
-        color: $green-dark;
+        color: var(--green-dark);
         display: block;
         font-weight: 700;
         height: 39px;
@@ -1063,30 +1224,44 @@ footer {
         text-indent: 100%;
         width: 109px;
 
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             float: left;
             margin: 20px 90px 0 0;
         }
     }
 
     .thanks {
-        @include font-size(12);
+        /* scss @include font-size(12) */
+        font-size: 0.75rem;
         color: var(--primary-accent);
         margin: 0;
         padding: 0;
 
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             border: none;
         }
 
         li {
-            @include clearfix;
+            /* scss @include clearfix */
+            &:before,
+            &:after {
+                content: "";
+                display: table;
+            }
+
+            &:after {
+                clear: both;
+            }
+            /* scss end */
             margin: 0;
             padding: 17px 10px 11px;
             display: block;
             clear: both;
 
-            @include respond-min(768px) {
+            /* scss @include respond-min(768px) */
+            @media screen and (min-width: 768px) {
                 background: none;
                 float: left;
                 clear: none;
@@ -1128,7 +1303,8 @@ footer {
         }
 
         a.in-kind-donors {
-            @include font-size(20);
+            /* scss @include font-size(20) */
+            font-size: 1.25rem;
             color: var(--primary-accent);
 
             &:focus {
@@ -1144,7 +1320,8 @@ footer {
             text-indent: -200px;
             width: 94px;
 
-            @include respond-min(768px) {
+            /* scss @include respond-min(768px) */
+            @media screen and (min-width: 768px) {
                 clear: both;
                 margin-top: 5px;
             }
@@ -1161,11 +1338,13 @@ footer {
 
     .copyright {
 
-        @include font-size(12);
+        /* scss @include font-size(12) */
+        font-size: 0.75rem;
         clear: both;
         margin: 20px 0 0 10px;
 
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             max-width: 80%;
             padding-top: 30px;
             margin: 0;
@@ -1178,12 +1357,28 @@ footer {
 }
 
 
-//------------------- Recycleable Style Classes
+/* ------------------- Recycleable Style Classes */
 .backtotop {
-    // Back to top link (in base.html after block body)
-    @include link-green;
-    @include sans-serif;
-    @include font-size(14);
+    /* Back to top link (in base.html after block body) */
+    /* scss @include link-green */
+    color: var(--link-color);
+    text-decoration: none;
+
+    &:visited {
+        color: var(--link-color);
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: var(--green-l6);
+        text-decoration: none;
+    }
+    /* scss end */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    /* scss @include font-size(14) */
+    font-size: 0.875rem;
     display: block;
     font-weight: 700;
     margin: 10px 0;
@@ -1191,15 +1386,17 @@ footer {
     text-align: center;
     text-transform: uppercase;
 
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         display: none;
     }
 }
 
 .cta,
 a.cta {
-    // Call To Action buttons
-    @include sans-serif;
+    /* Call To Action buttons */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
     font-weight: 700;
     appearance: none;
     background: var(--primary);
@@ -1214,7 +1411,8 @@ a.cta {
     text-align: center;
     text-decoration: none;
 
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         margin: 20px auto;
         max-width: 400px;
     }
@@ -1225,7 +1423,7 @@ a.cta {
     }
 
     &:hover {
-        background: lighten($green-medium, 4%);
+        background: color-mix(in oklch, var(--green-medium), white 4%);
     }
 
     &:focus {
@@ -1234,17 +1432,19 @@ a.cta {
     }
 
     &:active {
-        background: darken($green-medium, 2%);
+        background: color-mix(in oklch, var(--green-medium), black 2%);
     }
 
     [role="complementary"] & {
-        @include font-size(16);
+        /* scss @include font-size(16) */
+        font-size: 1rem;
 
         +.link-readmore {
             display: block;
             text-align: center;
 
-            @include respond-min(768px) {
+            /* scss @include respond-min(768px) */
+            @media screen and (min-width: 768px) {
                 margin-top: -10px;
             }
         }
@@ -1252,7 +1452,7 @@ a.cta {
 
 
     &.outline {
-        // Outline button for less-dominant CTA
+        /* Outline button for less-dominant CTA */
         background: none;
         border: 1px solid var(--hairline-color);
         color: var(--dark-hairline-color);
@@ -1264,7 +1464,7 @@ a.cta {
         }
 
         em {
-            color: $green-dark;
+            color: var(--green-dark);
         }
 
         &:hover {
@@ -1288,15 +1488,45 @@ a.cta {
 }
 
 .link-green {
-    // class render of the link-green mixin
-    @include link-green;
+    /* class render of the link-green mixin */
+    /* scss @include link-green */
+    color: var(--link-color);
+    text-decoration: none;
+
+    &:visited {
+        color: var(--link-color);
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: var(--green-l6);
+        text-decoration: none;
+    }
+    /* scss end */
 }
 
 .link-readmore {
-    // Read More links. Should exist outside of <p> tag, and include the '&rsaquo;' arrow after the text.
-    @include link-green;
-    @include sans-serif;
-    @include font-size(14);
+    /* Read More links. Should exist outside of <p> tag, and include the '&rsaquo;' arrow after the text. */
+    /* scss @include link-green */
+    color: var(--link-color);
+    text-decoration: none;
+
+    &:visited {
+        color: var(--link-color);
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: var(--green-l6);
+        text-decoration: none;
+    }
+    /* scss end */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    /* scss @include font-size(14) */
+    font-size: 0.875rem;
     display: inline-block;
     margin: 10px 0;
 
@@ -1320,29 +1550,58 @@ a.cta {
     text-transform: uppercase;
 
     [role="complementary"] & {
-        @include font-size(12);
+        /* scss @include font-size(12) */
+        font-size: 0.75rem;
     }
 }
 
-.meta {
-    // Re-usable meta class for alternate-style content.
-    @include sans-serif;
-    @include font-size(14);
+.meta,
+.list-links dd { /* scss @extend .meta moved from .list-links dd */
+    /* Re-usable meta class for alternate-style content. */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    /* scss @include font-size(14) */
+    font-size: 0.875rem;
     display: block;
     line-height: 1.3;
     margin: 25px 0 20px;
 
     a {
-        @include link-green;
+        /* scss @include link-green */
+        color: var(--link-color);
+        text-decoration: none;
+
+        &:visited {
+            color: var(--link-color);
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: var(--green-l6);
+            text-decoration: none;
+        }
+        /* scss end */
     }
 }
 
 .layout-2col {
-    //two column layout module
+    /* two column layout module */
     margin: 20px 0;
 
-    @include respond-min(768px) {
-        @include clearfix;
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
+        /* scss @include clearfix */
+        &:before,
+        &:after {
+            content: "";
+            display: table;
+        }
+
+        &:after {
+            clear: both;
+        }
+        /* scss end */
         margin: 0;
 
         .col {
@@ -1370,15 +1629,17 @@ a.cta {
 }
 
 .blue {
-    // overide blue color class
+    /* overide blue color class */
     color: var(--secondary);
 }
 
 .label {
-    // Label style associated with forms and other global elements.
-    @include sans-serif;
-    @include font-size(16);
-    color: lighten($text-light, 30%);
+    /* Label style associated with forms and other global elements. */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    /* scss @include font-size(16) */
+    font-size: 1rem;
+    color: color-mix(in oklch, var(--text-light), white 30%);
     display: block;
     font-weight: 700;
     margin: 20px 0 10px;
@@ -1386,7 +1647,8 @@ a.cta {
 
 
     &.form-controls {
-        @include font-size(14);
+        /* scss @include font-size(14) */
+        font-size: 0.875rem;
         display: block;
         margin: 0;
         position: relative;
@@ -1398,7 +1660,7 @@ a.cta {
             &:hover,
             &:active,
             &:focus {
-                color: lighten($text-light, 20%);
+                color: color-mix(in oklch, var(--text-light), white 20%);
             }
         }
     }
@@ -1408,8 +1670,8 @@ label[for] {
   font-weight: bold;
 }
 
-// .errorlist is used by Django
-// .errors and .error are used by manually written forms
+/* .errorlist is used by Django
+   .errors and .error are used by manually written forms */
 .errorlist,
 .errors,
 p.error,
@@ -1433,7 +1695,8 @@ span.error {
 }
 
 .callout-right {
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         float: right;
         margin: 26px 0 0 35px;
         width: 33%;
@@ -1450,7 +1713,8 @@ span.error {
 }
 
 .callout-left {
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         float: left;
         margin: 26px 35px 0 0;
         width: 33%;
@@ -1472,21 +1736,25 @@ span.error {
     border: 1px solid var(--hairline-color);
     padding: 10px;
     border-radius: 4px;
-    @include sans-serif;
-    @include font-size(14);
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    /* scss @include font-size(14) */
+    font-size: 0.875rem;
     line-height: 1.6em;
 }
 
-//------------------- List Modules
+/* ------------------- List Modules */
 .list-events {
-    // reusable event list style class, for use in the sidebar. (See sidebar-news.html include.)
-    @include sans-serif;
+    /* reusable event list style class, for use in the sidebar. (See sidebar-news.html include.) */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
     list-style: none;
     margin: 0;
     padding: 0;
 
     li {
-        @include font-size(18);
+        /* scss @include font-size(18) */
+        font-size: 1.125rem;
         border-top: 1px solid var(--hairline-color);
         display: block;
         line-height: 1.3;
@@ -1495,8 +1763,9 @@ span.error {
         position: relative;
 
         i {
-            @include font-size(16);
-            color: $green-light;
+            /* scss @include font-size(16) */
+            font-size: 1rem;
+            color: var(--green-light);
             display: block;
             left: 0;
             line-height: 20px;
@@ -1518,21 +1787,39 @@ span.error {
     }
 
     .meta {
-        @include sans-serif;
-        @include font-size(14);
+        /* scss @include sans-serif */
+        font-family: var(--sans-serif-font-families);
+        /* scss @include font-size(14) */
+        font-size: 0.875rem;
         display: block;
         margin-top: 10px;
     }
 
     a {
-        @include link-green;
+        /* scss @include link-green */
+        color: var(--link-color);
+        text-decoration: none;
+
+        &:visited {
+            color: var(--link-color);
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: var(--green-l6);
+            text-decoration: none;
+        }
+        /* scss end */
     }
 }
 
 .list-tags {
-    // Tag list style with blue block links. (See sidebar-news.html include.)
-    @include sans-serif;
-    @include font-size(12);
+    /* Tag list style with blue block links. (See sidebar-news.html include.) */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    /* scss @include font-size(12) */
+    font-size: 0.75rem;
     font-weight: 700;
     list-style: none;
     margin: 0;
@@ -1544,7 +1831,7 @@ span.error {
     }
 
     a {
-        background: $green-light;
+        background: var(--green-light);
         color: var(--body-bg);
         display: inline-block;
         line-height: 1.2;
@@ -1562,7 +1849,7 @@ span.error {
 }
 
 .list-news {
-    // News article listing style. (See News & Events Page.)
+    /* News article listing style. (See News & Events Page.) */
     list-style: none;
     margin: 0;
     padding: 0;
@@ -1601,14 +1888,25 @@ span.error {
 }
 
 .list-case-study {
-    // Three column list for Case Studies that switches to one column on mobile. (See Overview page.)
-    @include clearfix;
+    /* Three column list for Case Studies that switches to one column on mobile. (See Overview page.) */
+    /* scss @include clearfix */
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+    /* scss end */
     list-style: none;
     margin: 0;
     padding: 0 0 10px;
 
     p {
-        @include font-size(14);
+        /* scss @include font-size(14) */
+        font-size: 0.875rem;
         margin: 10px 0 5px;
     }
 
@@ -1617,7 +1915,8 @@ span.error {
         margin-top: 20px;
         padding-top: 20px;
 
-        @include respond-min(1024px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             border: none;
             float: left;
             padding-right: 5%;
@@ -1636,9 +1935,25 @@ span.error {
     }
 
     li>a {
-        @include sans-serif;
-        @include link-green;
-        @include font-size(12);
+        /* scss @include sans-serif */
+        font-family: var(--sans-serif-font-families);
+        /* scss @include link-green */
+        color: var(--link-color);
+        text-decoration: none;
+
+        &:visited {
+            color: var(--link-color);
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: var(--green-l6);
+            text-decoration: none;
+        }
+        /* scss end */
+        /* scss @include font-size(12) */
+        font-size: 0.75rem;
         font-weight: 700;
         margin-top: 10px;
         text-transform: uppercase;
@@ -1659,7 +1974,7 @@ span.error {
         }
     }
 
-    // Logo List
+    /* Logo List */
     [title="Knight Foundation"] {
         background: url(../img/logo-knight.svg) no-repeat bottom left;
         height: 25px;
@@ -1687,7 +2002,8 @@ span.error {
             width: auto;
 
             p {
-                @include font-size(18);
+                /* scss @include font-size(18) */
+                font-size: 1.125rem;
                 margin-right: 40px;
             }
 
@@ -1706,10 +2022,22 @@ span.error {
 }
 
 .list-link-soup {
-    // Basic link-soup list style. Three Column on Desktop, two column on mobile. (See Why Django Page.)
-    @include sans-serif;
-    @include clearfix;
-    @include font-size(16);
+    /* Basic link-soup list style. Three Column on Desktop, two column on mobile. (See Why Django Page.) */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    /* scss @include clearfix */
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+    /* scss end */
+    /* scss @include font-size(16) */
+    font-size: 1rem;
     border-top: 1px solid var(--hairline-color);
     list-style: none;
     margin: 20px 0 0;
@@ -1720,14 +2048,29 @@ span.error {
         margin: 10px 5% 0 0;
         width: 45%;
 
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             margin-right: 3%;
             width: 30%;
         }
     }
 
     a {
-        @include link-green;
+        /* scss @include link-green */
+        color: var(--link-color);
+        text-decoration: none;
+
+        &:visited {
+            color: var(--link-color);
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: var(--green-l6);
+            text-decoration: none;
+        }
+        /* scss end */
     }
 
     [role="complementary"] & {
@@ -1744,12 +2087,13 @@ h2+.list-link-soup {
 
 
 .list-features {
-    // Animated Feature List from the Why Django Page. Require looks for the 'list-features' class to load the appropriate scripts to animate the icons. Degrades gracefully into mobile.
+    /* Animated Feature List from the Why Django Page. Require looks for the 'list-features' class to load the appropriate scripts to animate the icons. Degrades gracefully into mobile. */
 
     margin: 50px 0 40px;
 
     dt {
-        @include font-size(24);
+        /* scss @include font-size(24) */
+        font-size: 1.5rem;
         border-top: 1px solid var(--hairline-color);
         padding-top: 25px;
     }
@@ -1774,7 +2118,8 @@ h2+.list-link-soup {
         }
     }
 
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         padding-bottom: 40px;
 
         dt {
@@ -1808,7 +2153,8 @@ h2+.list-link-soup {
         }
 
         i {
-            @include font-size(120);
+            /* scss @include font-size(120) */
+            font-size: 7.5rem;
             background: url(../img/bg-features.svg) no-repeat center center;
             border-radius: 100px;
             color: var(--white-color);
@@ -1910,18 +2256,21 @@ h2+.list-link-soup {
             text-align: center;
             transform: rotate(0.5turn);
             transition: all 0.3s ease-out;
-            @include font-size(24);
+            /* scss @include font-size(24) */
+            font-size: 1.5rem;
 
             &.inview {
                 transform: rotate(0turn);
             }
         }
 
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
 
             dt {
                 padding: 20px 0 0px 110px;
-                @include font-size(18);
+                /* scss @include font-size(18) */
+                font-size: 1.125rem;
                 border-top: 0;
                 margin-top: 0;
             }
@@ -1932,7 +2281,8 @@ h2+.list-link-soup {
 
                 p {
                     margin-top: 0;
-                    @include font-size(18);
+                    /* scss @include font-size(18) */
+                    font-size: 1.125rem;
                 }
             }
 
@@ -1942,13 +2292,15 @@ h2+.list-link-soup {
                 height: 80px;
                 top: 20px;
                 border-radius: 40px;
-                @include font-size(46);
+                /* scss @include font-size(46) */
+                font-size: 2.875rem;
             }
         }
     }
 }
 
-@include respond-min(768px) {
+/* scss @include respond-min(768px) */
+@media screen and (min-width: 768px) {
 
     .list-collapsing-header {
         float: left;
@@ -1970,7 +2322,7 @@ h2+.list-link-soup {
 
 
 .list-collapsing {
-    // reusable accordion style collapsing list, as seen on the Get Started Page. 'Expand/Collapse All' toggle is generated by the javascript. H2 is used for label, and 'collapsing-content' class is used to identify all content that should expand and collapse onclick.
+    /* reusable accordion style collapsing list, as seen on the Get Started Page. 'Expand/Collapse All' toggle is generated by the javascript. H2 is used for label, and 'collapsing-content' class is used to identify all content that should expand and collapse onclick. */
     border-bottom: 1px solid var(--hairline-color);
     list-style: none;
     margin: 30px 0;
@@ -1996,7 +2348,8 @@ h2+.list-link-soup {
         }
 
         h2 {
-            @include font-size(18);
+            /* scss @include font-size(18) */
+            font-size: 1.125rem;
             cursor: pointer;
             margin: 0;
             padding: 18px 40px 18px 0;
@@ -2020,7 +2373,7 @@ h2+.list-link-soup {
             }
 
             &.bullet-icon {
-                // H2 class for using icons as 'bullets' much like the layout of a list. When the line breaks, the text won't fold under the icon. See the community page for an example.
+                /* H2 class for using icons as 'bullets' much like the layout of a list. When the line breaks, the text won't fold under the icon. See the community page for an example. */
                 padding-left: 1.5em;
 
                 >i:first-child {
@@ -2047,7 +2400,7 @@ h2+.list-link-soup {
 }
 
 .list-image {
-    // list style for large, clickable images accompanied by text. (See Get Started Page.)
+    /* list style for large, clickable images accompanied by text. (See Get Started Page.) */
     list-style: none;
     margin: 0;
     padding: 0;
@@ -2057,8 +2410,19 @@ h2+.list-link-soup {
         margin-top: 20px;
         padding-top: 40px;
 
-        @include respond-min(768px) {
-            @include clearfix;
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
+            /* scss @include clearfix */
+            &:before,
+            &:after {
+                content: "";
+                display: table;
+            }
+
+            &:after {
+                clear: both;
+            }
+            /* scss end */
             margin-top: 20px;
             padding-top: 40px;
         }
@@ -2089,7 +2453,8 @@ h2+.list-link-soup {
         max-width: 100%;
     }
 
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         img {
             float: left;
             margin: 0 40px 0 0;
@@ -2128,27 +2493,31 @@ h2+.list-link-soup {
         }
 
         h3 {
-            @include font-size(14);
+            /* scss @include font-size(14) */
+            font-size: 0.875rem;
             margin-top: 0;
             margin-bottom: 1em;
             padding-bottom: 0;
-            @include sans-serif;
+            /* scss @include sans-serif */
+            font-family: var(--sans-serif-font-families);
             font-weight: 700;
         }
     }
 
 }
 
-//-------------------Documentation styles
+/* -------------------Documentation styles */
 
 #s-django-documentation,
 #s-feed {
-    @include sans-serif;
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
 }
 
 .list-outline {
-    // Nested lists to house documentation outline. Meant for use in sidebar. (See Documentation Page.)
-    @include font-size(16);
+    /* Nested lists to house documentation outline. Meant for use in sidebar. (See Documentation Page.) */
+    /* scss @include font-size(16) */
+    font-size: 1rem;
     line-height: 1.3;
     list-style: none;
     margin: 0;
@@ -2167,28 +2536,58 @@ h2+.list-link-soup {
     }
 
     >li>a {
-        //top level
+        /* top level */
         text-transform: uppercase;
         font-weight: 700;
-        @include link-green;
+        /* scss @include link-green */
+        color: var(--link-color);
+        text-decoration: none;
+
+        &:visited {
+            color: var(--link-color);
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: var(--green-l6);
+            text-decoration: none;
+        }
+        /* scss end */
     }
 
     >li>ul {
-        //second level
+        /* second level */
         list-style: none;
-        @include font-size(12);
+        /* scss @include font-size(12) */
+        font-size: 0.75rem;
         padding: 5px 0 0 10px;
 
         >li>a {
             font-weight: 700;
             text-transform: uppercase;
-            @include link-green;
+            /* scss @include link-green */
+            color: var(--link-color);
+            text-decoration: none;
+
+            &:visited {
+                color: var(--link-color);
+            }
+
+            &:hover,
+            &:active,
+            &:focus {
+                color: var(--green-l6);
+                text-decoration: none;
+            }
+            /* scss end */
         }
     }
 
     >li>ul>li ul {
-        //third level & down
-        @include font-size(14);
+        /* third level & down */
+        /* scss @include font-size(14) */
+        font-size: 0.875rem;
         padding: 0 0 0 20px;
 
     }
@@ -2203,7 +2602,7 @@ h2+.list-link-soup {
 }
 
 .headerlink {
-    // Permalink styles for sections in docs
+    /* Permalink styles for sections in docs */
     margin-left: 10px;
     font-size: 0.8em;
     position: relative;
@@ -2218,7 +2617,7 @@ h2+.list-link-soup {
     }
 }
 
-//Notes, help blocks, and annotation sections
+/* Notes, help blocks, and annotation sections */
 .note,
 .admonition,
 .help-block {
@@ -2244,19 +2643,26 @@ h2+.list-link-soup {
         margin-top: 0;
     }
 
-    // Add an icon on the left of the box
+    /* Add an icon on the left of the box */
     .admonition-title {
         font-weight: bold;
 
         &::before {
-            @include fa-icon();
+            /* scss @include fa-icon */
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome; /* shortening font declaration */
+            font-size: inherit; /* can't have font-size inherit on line above, so need to override */
+            text-rendering: auto; /* optimizelegibility throws things off #1094 */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            /* scss end */
             position: absolute;
             top: 20px;
             left: 20px;
             font-size: 30px;
             width: 34px;
             text-align: center;
-            content: $fa-var-file-text-o; // default icon
+            content: var(--fa-var-file-text-o); /* default icon */
             opacity: 0.5;
         }
     }
@@ -2267,9 +2673,9 @@ h2+.list-link-soup {
         color: var(--warning-text);
 
         .admonition-title::before {
-            // color: #E9BD46;
+            /* color: #E9BD46; */
             color: var(--warning-admonition-icon);
-            content: $fa-var-exclamation-triangle;
+            content: var(--fa-var-exclamation-triangle);
         }
 
         code {
@@ -2279,13 +2685,13 @@ h2+.list-link-soup {
 
     &.admonition-philosophy {
         .admonition-title::before {
-            content: $fa-var-lightbulb-o;
+            content: var(--fa-var-lightbulb-o);
         }
     }
 
     &.admonition-behind-the-scenes {
         .admonition-title::before {
-            content: $fa-var-cogs;
+            content: var(--fa-var-cogs);
         }
     }
 
@@ -2296,12 +2702,24 @@ h2+.list-link-soup {
 }
 
 
-// Horizontal navigation links for documentation
+/* Horizontal navigation links for documentation */
 .browse-horizontal {
 
-    @include sans-serif;
-    @include font-size(14);
-    @include clearfix;
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    /* scss @include font-size(14) */
+    font-size: 0.875rem;
+    /* scss @include clearfix */
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+    /* scss end */
     font-weight: 700;
 
     border-top: 1px solid var(--hairline-color);
@@ -2314,7 +2732,8 @@ h2+.list-link-soup {
 
         .icon {
             margin-right: 4px;
-            @include font-size(12);
+            /* scss @include font-size(12) */
+            font-size: 0.75rem;
         }
     }
 
@@ -2323,7 +2742,8 @@ h2+.list-link-soup {
 
         .icon {
             margin-left: 4px;
-            @include font-size(12);
+            /* scss @include font-size(12) */
+            font-size: 0.75rem;
         }
     }
 
@@ -2333,7 +2753,7 @@ h2+.list-link-soup {
 
 }
 
-// Switcher for docs version and language
+/* Switcher for docs version and language */
 
 #version-switcher {
 
@@ -2380,7 +2800,8 @@ h2+.list-link-soup {
         padding: 8px 15px;
         border-radius: 4px;
         border: none;
-        @include sans-serif;
+        /* scss @include sans-serif */
+        font-family: var(--sans-serif-font-families);
         font-size: 12px;
         line-height: inherit;
         color: var(--body-fg);
@@ -2394,7 +2815,7 @@ h2+.list-link-soup {
 
     &:hover,
     &:focus-within {
-        border-color: $green-light;
+        border-color: var(--green-light);
         a {
             color: var(--secondary);
         }
@@ -2407,7 +2828,8 @@ h2+.list-link-soup {
     flex-direction: row-reverse;
     pointer-events: auto;
 
-    @include respond-max(768px) {
+    /* scss @include respond-max(768px) */
+    @media screen and (max-width: 768px) {
         flex-wrap: wrap;
         max-width: calc(100vw - 33px);
     }
@@ -2442,19 +2864,22 @@ h2+.list-link-soup {
     }
 }
 
-@include respond-max(767px) {
+/* scss @include respond-max(767px) */
+@media screen and (max-width: 767px) {
     body:has(.doc-floating-warning) [id] {
         scroll-margin-top: 0;
     }
 }
 
-@include respond-min(768px) {
+/* scss @include respond-min(768px) */
+@media screen and (min-width: 768px) {
     body:has(.doc-floating-warning) [id] {
         scroll-margin-top: 6.3rem;
     }
 }
 
-@include respond-min(1300px) {
+/* scss @include respond-min(1300px) */
+@media screen and (min-width: 1300px) {
     body:has(.doc-floating-warning) [id] {
         scroll-margin-top: 4.2rem;
     }
@@ -2466,30 +2891,32 @@ h2+.list-link-soup {
     padding: 8px 20px 8px;
     box-sizing: border-box;
     background-image: linear-gradient(135deg, rgba(0, 0, 0, .04) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, .04) 50%, rgba(0, 0, 0, .04) 75%, transparent 75%, transparent);
-    @include sans-serif;
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
     font-size: 14px;
     text-align: center;
     z-index: 1;
 
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         position: sticky;
         min-width: 768px;
     }
 }
 
 #dev-warning {
-    background-color: $warning-bg;
-    color: $text;
+    background-color: var(--warning-bg);
+    color: var(--text);
 }
 
 #outdated-warning {
     background-color: var(--error-light);
-    color: $black-light-5;
+    color: var(--black-light-5);
 }
 
 #docs-content {
 
-    // Decrease vertical spacing in docs for less scrolling
+    /* Decrease vertical spacing in docs for less scrolling */
 
     h1,
     h2,
@@ -2510,8 +2937,10 @@ h2+.list-link-soup {
         max-width: 100%;
     }
 
-    @include sans-serif;
-    @include font-size(14);
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    /* scss @include font-size(14) */
+    font-size: 0.875rem;
     line-height: 1.5em;
 
     .warning {
@@ -2521,7 +2950,7 @@ h2+.list-link-soup {
     }
 
     a.reference {
-        // for docs links. if we keep text-decoration, then underscores in function names become invisible.
+        /* for docs links. if we keep text-decoration, then underscores in function names become invisible. */
         color: var(--error-dark);
         text-decoration: none;
         overflow-wrap: break-word;
@@ -2556,8 +2985,10 @@ h2+.list-link-soup {
 
 .versionadded,
 .versionchanged,
-.versionmodified {
-    @include sans-serif;
+.versionmodified,
+.deprecated { /* scss @extend .versionchanged moved from .deprecated */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
     font-weight: bold;
     margin-bottom: 20px;
 
@@ -2576,7 +3007,7 @@ h2+.list-link-soup {
 }
 
 .deprecated {
-    @extend .versionchanged;
+    /* scss @extend .versionchanged moved */
 
     .versionadded,
     .versionchanged,
@@ -2617,8 +3048,8 @@ dl.data {
 }
 
 .table-wrapper {
-    // This class is used to avoid the table exceeds the size of the content
-    // and add a scrollbar to see the rest of the content in mobile
+    /* This class is used to avoid the table exceeds the size of the content
+       and add a scrollbar to see the rest of the content in mobile */
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     overflow: auto;
@@ -2642,11 +3073,12 @@ table {
     }
 }
 
-// Wide tables break out of the content column and centre on the viewport.
-// 96vw leaves room for the scrollbar, so the page never scrolls sideways.
-// Below 768px the content column is already nearly the full screen width.
+/* Wide tables break out of the content column and centre on the viewport.
+   96vw leaves room for the scrollbar, so the page never scrolls sideways.
+   Below 768px the content column is already nearly the full screen width. */
 .table-wrapper-wide {
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         width: 96vw;
         max-width: 1160px;
         margin-left: 50%;
@@ -2654,7 +3086,7 @@ table {
     }
 }
 
-// Sponsor prospectus page at /sponsor/.
+/* Sponsor prospectus page at /sponsor/. */
 .sponsor-image {
     display: block;
     max-width: 100%;
@@ -2667,8 +3099,8 @@ table.sponsor-reach {
 }
 
 table.sponsor-tiers {
-    // Seven columns do not fit the content column, so the table scrolls
-    // sideways inside its .table-wrapper on narrow screens.
+    /* Seven columns do not fit the content column, so the table scrolls
+       sideways inside its .table-wrapper on narrow screens. */
     min-width: 920px;
     table-layout: fixed;
 
@@ -2709,20 +3141,37 @@ table.django-unsupported-versions tr {
     background-color: var(--error-light);
 }
 
-.list-links {
-    //Can be used globally to stack list items either with a <ul>, or with a <dl> using the <dd> to add meta information.  (See Community Page - sidebar and block body.)
-    @include sans-serif;
+.list-links,
+.search-links { /* scss @extend .list-links moved from .search-links */
+    /* Can be used globally to stack list items either with a <ul>, or with a <dl> using the <dd> to add meta information.  (See Community Page - sidebar and block body.) */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
     list-style: none;
     margin: 0;
     padding: 10px 0 0;
 
     a {
-        @include link-green;
+        /* scss @include link-green */
+        color: var(--link-color);
+        text-decoration: none;
+
+        &:visited {
+            color: var(--link-color);
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: var(--green-l6);
+            text-decoration: none;
+        }
+        /* scss end */
     }
 
     dt,
     li {
-        @include font-size(16);
+        /* scss @include font-size(16) */
+        font-size: 1rem;
         margin-top: 15px;
 
         &:first-child {
@@ -2733,7 +3182,7 @@ table.django-unsupported-versions tr {
     }
 
     dd {
-        @extend .meta;
+        /* scss @extend .meta moved */
         margin-top: 0;
         margin-bottom: 30px;
     }
@@ -2744,7 +3193,8 @@ table.django-unsupported-versions tr {
 
         dt,
         li {
-            @include font-size(16);
+            /* scss @include font-size(16) */
+            font-size: 1rem;
             border-top: 1px solid var(--hairline-color);
             margin-top: 0;
             padding-top: 20px;
@@ -2760,7 +3210,8 @@ table.django-unsupported-versions tr {
         }
 
         dd {
-            @include font-size(14);
+            /* scss @include font-size(14) */
+            font-size: 0.875rem;
             margin-bottom: 16px;
         }
     }
@@ -2771,7 +3222,8 @@ table.django-unsupported-versions tr {
 }
 
 search.filters {
-    @include sans-serif;
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
 
     display: flex;
     gap: 10px;
@@ -2805,7 +3257,7 @@ search.filters {
 }
 
 .search-links {
-    @extend .list-links;
+    /* scss @extend .list-links moved */
 
     a {
         mark {
@@ -2848,13 +3300,13 @@ search.filters {
             color: var(--text-light);
 
             &:visited {
-                color: darken($text-light, 10%);
+                color: color-mix(in oklch, var(--text-light), black 10%);
             }
 
             &:active,
             &:focus,
             &:hover {
-                color: darken($text-light, 20%);
+                color: color-mix(in oklch, var(--text-light), black 20%);
             }
         }
     }
@@ -2912,12 +3364,26 @@ search.filters {
 }
 
 .list-links-small {
-    //List style used to display links, with optional icons. See Homepage sidebar
+    /* List style used to display links, with optional icons. See Homepage sidebar */
     padding-left: 0;
     list-style: none;
 
     a {
-        @include link-green;
+        /* scss @include link-green */
+        color: var(--link-color);
+        text-decoration: none;
+
+        &:visited {
+            color: var(--link-color);
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: var(--green-l6);
+            text-decoration: none;
+        }
+        /* scss end */
         text-decoration: none;
     }
 
@@ -2942,7 +3408,7 @@ search.filters {
         padding-top: 2px;
     }
 
-    // Add document icon before list item link
+    /* Add document icon before list item link */
     &.docs-list {
         list-style: none;
 
@@ -2958,7 +3424,7 @@ search.filters {
         }
     }
 
-    // Add news icon before list item link
+    /* Add news icon before list item link */
     &.news-list {
         list-style: none;
 
@@ -2980,7 +3446,7 @@ search.filters {
         }
     }
 
-    // Add link icon before list item link
+    /* Add link icon before list item link */
     &.resource-list {
         list-style: none;
 
@@ -2996,7 +3462,7 @@ search.filters {
         }
     }
 
-    // Add rss icon before list item link
+    /* Add rss icon before list item link */
     &.rss-list {
         list-style: none;
 
@@ -3013,12 +3479,14 @@ search.filters {
     }
 }
 
-//------------------- Forms
+/* ------------------- Forms */
 form {
-    @include sans-serif;
-    @include font-size(16);
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    /* scss @include font-size(16) */
+    font-size: 1rem;
 
-    // Global input styles
+    /* Global input styles */
     input[type="search"],
     input[type="text"],
     input[type="email"],
@@ -3026,8 +3494,10 @@ form {
     input[type="number"],
     input[type="url"],
     textarea {
-        @include sans-serif;
-        @include font-size(16);
+        /* scss @include sans-serif */
+        font-family: var(--sans-serif-font-families);
+        /* scss @include font-size(16) */
+        font-size: 1rem;
         appearance: none;
         background: var(--white-color);
         border: 1px solid var(--hairline-color);
@@ -3043,7 +3513,8 @@ form {
         vertical-align: middle;
         width: 83%;
 
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             padding: 6px 18% 8px 10px;
             width: 80%;
         }
@@ -3079,11 +3550,13 @@ form {
         height: 46px;
         padding: 0 10px;
         border-radius: 4px;
-        @include font-size(16);
+        /* scss @include font-size(16) */
+        font-size: 1rem;
 
         [role="complementary"] & {
             height: 36px;
-            @include font-size(14);
+            /* scss @include font-size(14) */
+            font-size: 0.875rem;
         }
     }
 
@@ -3096,8 +3569,10 @@ form {
         border: 0;
         height: 46px;
         padding: 0 15px;
-        @include sans-serif;
-        @include font-size(16);
+        /* scss @include sans-serif */
+        font-family: var(--sans-serif-font-families);
+        /* scss @include font-size(16) */
+        font-size: 1rem;
 
         &:hover {
             background: var(--primary);
@@ -3107,7 +3582,7 @@ form {
 
 .form-general {
 
-    // Multi-input forms with seperate submit button. For use in Login and Register forms, or other general form uses.
+    /* Multi-input forms with seperate submit button. For use in Login and Register forms, or other general form uses. */
     fieldset {
         max-width: 700px;
         border: 0;
@@ -3125,7 +3600,7 @@ form {
 }
 
 .form-input {
-    // Specific class for single-entry form with <button> submit element utilizing a font-awesome icon. See examples on Community and News & Events pages.
+    /* Specific class for single-entry form with <button> submit element utilizing a font-awesome icon. See examples on Community and News & Events pages. */
     min-height: 40px;
     margin: 30px 0 20px;
     position: relative;
@@ -3146,7 +3621,8 @@ form {
         width: 40px;
 
         i {
-            @include font-size(20);
+            /* scss @include font-size(20) */
+            font-size: 1.25rem;
             line-height: 1;
         }
 
@@ -3154,7 +3630,7 @@ form {
         &:focus,
         &:active {
             background: none;
-            color: $green-dark;
+            color: var(--green-dark);
             outline: none;
         }
     }
@@ -3167,7 +3643,8 @@ form {
         input[type="text"],
         input[type="email"] {
             height: 20px;
-            @include font-size(14);
+            /* scss @include font-size(14) */
+            font-size: 0.875rem;
         }
 
         button {
@@ -3175,12 +3652,14 @@ form {
             width: 30px;
             top: 3px;
 
-            @include respond-min(768px) {
+            /* scss @include respond-min(768px) */
+            @media screen and (min-width: 768px) {
                 right: 0;
             }
 
             i {
-                @include font-size(20);
+                /* scss @include font-size(20) */
+                font-size: 1.25rem;
             }
         }
     }
@@ -3189,7 +3668,8 @@ form {
         width: 20%;
         min-width: 200px;
         margin: 10px 8px 10px 0;
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             margin-left: 10px;
         }
 
@@ -3203,9 +3683,10 @@ form {
 
 .form-email {
 
-    // Email submission forms on Community page.
+    /* Email submission forms on Community page. */
     h3 {
-        @include font-size(18);
+        /* scss @include font-size(18) */
+        font-size: 1.125rem;
         margin: 10px 0;
     }
 
@@ -3218,11 +3699,13 @@ form {
     }
 }
 
-//------------------- Pagination
+/* ------------------- Pagination */
 .nav-pagination {
-    // Pagination style for use with the News & Events pages.
-    @include sans-serif;
-    @include font-size(14);
+    /* Pagination style for use with the News & Events pages. */
+    /* scss @include sans-serif */
+    font-family: var(--sans-serif-font-families);
+    /* scss @include font-size(14) */
+    font-size: 0.875rem;
     border-top: 1px solid var(--hairline-color);
     font-weight: 700;
     line-height: 31px;
@@ -3245,7 +3728,8 @@ form {
         display: block;
         text-decoration: none;
 
-        @include device-min(320px) {
+        /* scss @include device-min(320px) */
+        @media screen and (min-device-width: 320px) {
             background: var(--text-light);
             color: var(--white-color);
             height: 30px;
@@ -3255,9 +3739,11 @@ form {
 
         &.previous,
         &.next {
-            @include font-size(16);
+            /* scss @include font-size(16) */
+            font-size: 1rem;
 
-            @include device-min(320px) {
+            /* scss @include device-min(320px) */
+            @media screen and (min-device-width: 320px) {
                 border-radius: 20px;
                 height: 40px;
                 line-height: 43px;
@@ -3268,7 +3754,8 @@ form {
         &.previous {
             margin-right: 10px;
 
-            @include respond-min(768px) {
+            /* scss @include respond-min(768px) */
+            @media screen and (min-width: 768px) {
                 margin-right: 70px;
             }
         }
@@ -3277,7 +3764,8 @@ form {
             margin-left: 10px;
             text-indent: 1px;
 
-            @include respond-min(768px) {
+            /* scss @include respond-min(768px) */
+            @media screen and (min-width: 768px) {
                 margin-left: 70px;
             }
         }
@@ -3289,7 +3777,8 @@ form {
             background: none;
             color: var(--secondary);
 
-            @include device-min(320px) {
+            /* scss @include device-min(320px) */
+            @media screen and (min-device-width: 320px) {
                 background: var(--secondary);
                 color: var(--white-color);
             }
@@ -3302,10 +3791,12 @@ hr {
     border-top: 1px solid var(--hairline-color);
 }
 
-// em {
-//     // this is because our main font does not support this style:
-//     font-style: normal;
-// }
+/*
+    em {
+        // this is because our main font does not support this style:
+        font-style: normal;
+    }
+*/
 
 .badge {
     border-radius: 4px;
@@ -3321,22 +3812,45 @@ hr {
 
 .user-info {
     .avatar {
-        @include framed-image();
+        /* scss @include framed-image */
+        padding: 20px;
+        border: 1px solid var(--hairline-color);
+        border-radius: 4px;
+        /* scss end */
         float: right;
     }
 }
 
-// Boilerplate Helper mixins (rendered as classes)
+/* Boilerplate Helper mixins (rendered as classes) */
 .visuallyhidden {
-    @include visuallyhidden;
+    /* scss @include visuallyhidden */
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    /* scss end */
 }
 
 .clearfix,
 .group-container {
-    @include clearfix;
+    /* scss @include clearfix */
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+    /* scss end */
 }
 
-/// Fundraising page
+/* Fundraising page */
 @keyframes pixel-pulse {
 
     0%,
@@ -3373,7 +3887,8 @@ hr {
         }
 
         text {
-            @include font-size(120);
+            /* scss @include font-size(120) */
+            font-size: 7.5rem;
             fill: rgba(50, 50, 50, 0.3);
             stroke: #aaaaaa;
             stroke-width: 2px;
@@ -3382,7 +3897,8 @@ hr {
             cursor: default;
         }
 
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             width: 55%;
             float: left;
         }
@@ -3394,7 +3910,8 @@ hr {
         float: none;
         margin-top: 30px;
 
-        @include respond-min(768px) {
+        /* scss @include respond-min(768px) */
+        @media screen and (min-width: 768px) {
             width: 40%;
             float: left;
             margin-top: 0px;
@@ -3402,7 +3919,8 @@ hr {
 
         h2 {
             margin-top: 0;
-            @include font-size(28);
+            /* scss @include font-size(28) */
+            font-size: 1.75rem;
         }
     }
 }
@@ -3412,7 +3930,8 @@ hr {
         select {
             width: 80%;
 
-            @include respond-min(768px) {
+            /* scss @include respond-min(768px) */
+            @media screen and (min-width: 768px) {
                 width: 100%;
             }
         }
@@ -3431,7 +3950,8 @@ hr {
 
         .prefix {
             float: left;
-            @include font-size(19);
+            /* scss @include font-size(19) */
+            font-size: 1.1875rem;
             margin: 8px 9px 0 3px;
         }
 
@@ -3472,7 +3992,8 @@ hr {
 
 .footnote {
     color: var(--dark-hairline-color);
-    @include font-size(14);
+    /* scss @include font-size(14) */
+    font-size: 0.875rem;
     margin-top: 20px;
     text-align: center;
 
@@ -3635,12 +4156,19 @@ ul.corporate-members li {
     li {
         padding: 15px;
         background-color: var(--secondary-accent-l10);
-        color: $green-dark;
-        border: 1px solid $green-dark;
+        color: var(--green-dark);
+        border: 1px solid var(--green-dark);
         border-radius: 4px;
 
         &::before {
-            @include fa-icon();
+            /* scss @include fa-icon */
+            display: inline-block;
+            font: normal normal normal 14px/1 FontAwesome; /* shortening font declaration */
+            font-size: inherit; /* can't have font-size inherit on line above, so need to override */
+            text-rendering: auto; /* optimizelegibility throws things off #1094 */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            /* scss end */
             font-size: 30px;
             width: 34px;
             text-align: center;
@@ -3656,16 +4184,16 @@ ul.corporate-members li {
 
         &.info {
             &::before {
-                content: $fa-var-info-circle;
+                content: var(--fa-var-info-circle);
             }
         }
 
         &.success {
             background-color: var(--secondary-accent-l5);
-            content: $fa-var-check-circle;
+            content: var(--fa-var-check-circle);
 
             &::before {
-                content: $fa-var-check-circle;
+                content: var(--fa-var-check-circle);
             }
         }
 
@@ -3675,7 +4203,7 @@ ul.corporate-members li {
 
             &::before {
                 color: var(--warning-dark-d50);
-                content: $fa-var-exclamation-triangle;
+                content: var(--fa-var-exclamation-triangle);
             }
         }
 
@@ -3685,7 +4213,7 @@ ul.corporate-members li {
             border-color: var(--error-dark);
 
             &::before {
-                content: $fa-var-times-circle;
+                content: var(--fa-var-times-circle);
             }
         }
 
@@ -3708,7 +4236,7 @@ ul.corporate-members li {
         margin-right: -10px;
 
         i:hover {
-            color: lighten($green-dark, 20);
+            color: color-mix(in oklch, var(--green-dark), white 20%)
         }
 
         .clipboard-success {
@@ -3723,17 +4251,19 @@ ul.corporate-members li {
     }
 
     .caption-text::selection {
-        background: $green-light;
+        background: var(--green-light);
     }
 }
 
 .column-container {
-    @include respond-min(768px) {
+    /* scss @include respond-min(768px) */
+    @media screen and (min-width: 768px) {
         display: flex;
         justify-content: space-between;
     }
 
-    @include respond-max(1080px) {
+    /* scss @include respond-max(1080px) */
+    @media screen and (max-width: 1080px) {
         .community-title {
             text-align: center;
         }
@@ -3747,7 +4277,7 @@ ul.corporate-members li {
 
     .community-cta-wrapper {
         display: flex;
-        gap: 6rem;
+        gap: 3.75rem;
         flex-wrap: wrap;
         align-content: center;
     }
@@ -3788,7 +4318,7 @@ ul.corporate-members li {
     }
 }
 
-// added for skip to main functionality
+/* added for skip to main functionality */
 .skip-link {
     position: absolute;
     top: -5em;
