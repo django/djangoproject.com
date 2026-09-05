@@ -1,4 +1,4 @@
-{% load banner static %}<!DOCTYPE html>
+{% load banner i18n static %}<!DOCTYPE html>
 <html lang="{% block html_language_code %}en{% endblock %}">
   <head>
     <meta charset="utf-8">
@@ -57,7 +57,7 @@
   <body id="{% block sectionid %}generic{% endblock %}" class="{% block body_class %}{% endblock %}">
     {% block before_header %}{% endblock %}
 
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="skip-link">{% translate "Skip to main content" %}</a>
     {% include "includes/header.html" %}
     {% block banner %}{% endblock %}
 
