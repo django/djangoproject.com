@@ -27,6 +27,35 @@ def capture_sentry_exception(error, flush=False):
     return True
 
 
+def setup_stable_symlink(lang, version):
+    """
+    Keep the <lang>/stable symlink pointing at the default release's build
+    directory (e.g. docbuilds/en/stable -> docbuilds/en/6.1).
+
+    The web server serves Transifex's source pot files directly from
+    docbuilds/en/stable/_built/gettext/, so this link must always track the
+    release flagged as DocumentRelease.is_default. No-op if the link is
+    already correct.
+    """
+    lang_dir = settings.DOCS_BUILD_ROOT / lang
+    stable = lang_dir / "stable"
+    target = lang_dir / version
+    if stable.is_symlink():
+        # Resolve both sides so parents that are themselves symlinks
+        # (e.g. /var on macOS) don't cause needless relinking.
+        if stable.resolve() == target.resolve():
+            return
+        stable.unlink()
+    elif stable.exists():
+        # A plain file or directory at this path would break symlink
+        # creation; fail loudly rather than deleting it.
+        raise RuntimeError(
+            f"Refusing to replace {stable} with a symlink; it exists and is "
+            "not a symlink. Investigate manually."
+        )
+    stable.symlink_to(target, target_is_directory=True)
+
+
 def get_doc_root(lang, version, builder="json"):
     return settings.DOCS_BUILD_ROOT / lang / version / "_built" / builder
 

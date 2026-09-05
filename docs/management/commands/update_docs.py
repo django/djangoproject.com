@@ -13,7 +13,7 @@ from django.core.management import BaseCommand, call_command
 from django.db.models import Q
 
 from ...models import DocumentRelease
-from ...utils import capture_sentry_exception
+from ...utils import capture_sentry_exception, setup_stable_symlink
 
 
 class Command(BaseCommand):
@@ -98,6 +98,12 @@ class Command(BaseCommand):
                 self.stderr.write(
                     f"build_doc_release failed for {release}, skipping: {e}"
                 )
+                continue
+            if release.is_default:
+                # Re-point the <lang>/stable symlink even on no-change runs,
+                # when build_doc_release returns early and the link could
+                # still be stale (e.g. after is_default changed).
+                setup_stable_symlink(release.lang, release.version)
 
         if self.purge_cache:
             changed_versions = {
