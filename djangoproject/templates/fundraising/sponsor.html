@@ -20,6 +20,7 @@
   </div>
   <section class="sponsor-section" id="corporate-membership-tiers" aria-labelledby="annual-heading">
     <div class="sponsor-section-heading"><div><p class="sponsor-eyebrow">An ongoing investment</p><h2 id="annual-heading">A partnership for every stage.</h2></div><p>Annual corporate memberships.<br>All amounts in US dollars.</p></div>
+    <div class="plan-grid">{% for plan in plans %}{% include "sponsor/card.html" %}{% endfor %}</div>
     <aside class="sponsor-plan-guide" aria-labelledby="plan-guide-heading">
       <h3 id="plan-guide-heading">Find your starting point</h3>
       <p>Consider your company’s size, how much you rely on Django, and the annual support you can sustain.</p>
@@ -30,7 +31,6 @@
       </ul>
       <p class="sponsor-note">Any company can choose any tier. For a short campaign, <a href="#banner-sponsorship">explore weekly or monthly banners</a>. For help choosing, <a href="{% url 'contact_foundation' %}">talk to the Foundation</a>.</p>
     </aside>
-    <div class="plan-grid">{% for plan in plans %}{% include "sponsor/card.html" %}{% endfor %}</div>
     <p class="sponsor-note">Every annual plan includes a corporate member listing, a member badge, and recognition in the DSF annual report. <a href="{% url 'sponsor_prospectus' %}#corporate-membership-tiers">Compare every benefit in the full prospectus →</a></p>
   </section>
   <section class="sponsor-banner-offer" id="banner-sponsorship" aria-labelledby="banner-heading">
