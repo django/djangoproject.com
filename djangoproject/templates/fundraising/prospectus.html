@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block layout_class %}full-width{% endblock %}
 
@@ -12,58 +13,22 @@
 
 {% block content %}
   <p><a href="{% url 'sponsor' %}">← Compare sponsorship plans at a glance</a></p>
-  <a href="/fundraising/"><img class="sponsor-image" src="https://media.djangoproject.com/blog/images/2026/06/2026-04-prospectus-banner.png" alt="Django is counting on your contribution today!"></a>
-
-  <p>By <a href="/foundation/corporate-membership/">sponsoring the DSF</a>, you align your financial commitment with responsible and accountable open-source stewardship, build developer trust, and contribute to long-term technical excellence, all while receiving <a href="/foundation/corporate-members/">global recognition</a> as a Django supporter.</p>
-  <h2 id="strengthening-django-the-django-fellows">Strengthening Django: The Django Fellows</h2>
-  <p><strong>Our paid Fellows are critical to Django.</strong> While the vast majority of Django contributions come from unpaid volunteers, sustaining and growing the paid DSF <a href="/fundraising/#fellowship-program">Django Fellowship program</a> means: </p>
-  <ul>
-    <li>🔒 Handling security reports swiftly.</li>
-    <li>⚡ Speeding up the design of new features.</li>
-    <li>🫶 Supporting the Django package ecosystem.</li>
-    <li>⭐️ Leading mentorship programs and developer sprints.</li>
-  </ul>
-  <p>To make Django more sustainable and responsive, we are expanding the Fellowship program with a new <strong>Sponsored Fellowship initiative.</strong> This lets the DSF increase the number of Fellows, get more work done, and ensure community priorities are addressed with direct feedback from top-level sponsors.</p>
-  <p><strong>Our goal is clear:</strong> faster pull request reviews, quicker security responses, and a healthier ecosystem for Django developers and package maintainers. This expansion is essential to keep up with Django’s growth and ensure that contributors, especially volunteers, are supported and not blocked.</p>
-  <h2 id="current-funding-at-a-glance">Current Funding at a Glance</h2>
-  <p>Typically, our funding looks something like this:</p>
-
-  <ul>
-    <li>
-      Incoming
-      <ul>
-        <li>65% donated by corporate members</li>
-        <li>35% donated by individual donors</li>
-        <li>Small amounts received from other sources (e.g. sale of merchandise, etc.)</li>
-      </ul>
-    </li>
-    <li>
-      Outgoing
-      <ul>
-        <li>80% strengthens Django through our Django Fellowship program</li>
-        <li>15% supports the global Django community workshops, conferences, and other events</li>
-        <li>5% covers administrative essentials that haven’t been covered by in-kind sponsors</li>
-      </ul>
-    </li>
-  </ul>
-
-  <p>Our last <a href="/foundation/reports/2024/">annual report</a> has more details. </p>
   <h2 id="corporate-membership-tiers">Corporate Membership Tiers</h2>
-  <p>For organizations not able to meet the levels for corporate membership, please take a look at the question <a href="/foundation/donate/#alternative-organizational-support">“Are there other ways organizations can support the DSF?”</a> on our Giving FAQ page for other opportunities.</p>
-  <div class="table-wrapper table-wrapper-wide">
-    <table class="sponsor-tiers">
+  <div class="sponsor-comparison table-wrapper-wide" tabindex="0" role="region" aria-label="Compare corporate membership tiers">
+    <table class="sponsor-tiers" aria-labelledby="corporate-membership-tiers">
       <thead>
         <tr>
           <th scope="col">Tier:</th>
-          <th scope="col">Bronze</th>
-          <th scope="col">Silver</th>
-          <th scope="col">Gold</th>
-          <th scope="col">Platinum</th>
-          <th scope="col">Diamond</th>
-          <th scope="col">Sponsored Fellow</th>
+          <th scope="col"><a href="{% url 'sponsor_plan' slug='bronze' %}">Bronze</a></th>
+          <th scope="col"><a href="{% url 'sponsor_plan' slug='silver' %}">Silver</a></th>
+          <th scope="col"><a href="{% url 'sponsor_plan' slug='gold' %}">Gold</a></th>
+          <th scope="col"><a href="{% url 'sponsor_plan' slug='platinum' %}">Platinum</a></th>
+          <th scope="col"><a href="{% url 'sponsor_plan' slug='diamond' %}">Diamond</a></th>
+          <th scope="col"><a href="{% url 'sponsor_plan' slug='fellow' %}">Sponsored Fellow</a></th>
         </tr>
       </thead>
       <tbody>
+
         <tr>
           <th scope="row">Amount Threshold:</th>
           <td>$2,200+</td>
@@ -73,286 +38,11 @@
           <td>$100,000+</td>
           <td>$200,000+</td>
         </tr>
+
       </tbody>
-    </table>
-  </div>
+      <tbody class="sponsor-comparison-section">
+        <tr class="sponsor-comparison-heading"><th colspan="7" scope="rowgroup"><h3>Prominence with Django Leadership</h3></th></tr>
 
-  <h3>The real reasons for giving financial support to the DSF</h3>
-  <div class="table-wrapper table-wrapper-wide">
-    <table class="sponsor-tiers">
-      <thead>
-        <tr>
-          <th></th>
-          <th scope="col">Bronze</th>
-          <th scope="col">Silver</th>
-          <th scope="col">Gold</th>
-          <th scope="col">Platinum</th>
-          <th scope="col">Diamond</th>
-          <th scope="col">Sponsored Fellow</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Ensure the longevity and quality of the Django Framework</th>
-          <td>🙌</td>
-          <td>💪</td>
-          <td>💚</td>
-          <td>🏆</td>
-          <td>💎</td>
-          <td>💎💎</td>
-        </tr>
-        <tr>
-          <th scope="row">Directly support the <a href="/foundation/">DSF goals</a></th>
-          <td>🙌</td>
-          <td>💪</td>
-          <td>💚</td>
-          <td>🏆</td>
-          <td>💎</td>
-          <td>💎💎</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h3>Some other perks of giving financial support to the DSF</h3>
-
-  <h4>Social media spotlights</h4>
-  <p>For more information regarding each account, see our <a href="#dsf-social-media-reach">DSF Social Media Reach</a>.</p>
-  <div class="table-wrapper table-wrapper-wide">
-    <table class="sponsor-tiers">
-      <thead>
-        <tr>
-          <th></th>
-          <th scope="col">Bronze</th>
-          <th scope="col">Silver</th>
-          <th scope="col">Gold</th>
-          <th scope="col">Platinum</th>
-          <th scope="col">Diamond</th>
-          <th scope="col">Sponsored Fellow</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">An appreciation post for your donation posted on platforms of your choosing: Mastodon, Bluesky, X, LinkedIn, Reddit</th>
-          <td>Text &amp; link</td>
-          <td>Text &amp; link</td>
-          <td>Text, link, &amp; picture</td>
-          <td>Text, link, &amp; picture</td>
-          <td>Text, link, &amp; picture</td>
-          <td>Text, link, &amp; picture</td>
-        </tr>
-        <tr>
-          <th scope="row">Dedicated announcement posts/reposts of something from your organization.</th>
-          <td></td>
-          <td>Up to 3 posts/year</td>
-          <td>Up to 5 posts/year</td>
-          <td>Up to 7 posts/year</td>
-          <td>Up to 10 posts/year</td>
-          <td>Up to 10 posts/year</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h4>Promotion through Django News</h4>
-  <div class="table-wrapper table-wrapper-wide">
-    <table class="sponsor-tiers">
-      <thead>
-        <tr>
-          <th></th>
-          <th scope="col">Bronze</th>
-          <th scope="col">Silver</th>
-          <th scope="col">Gold</th>
-          <th scope="col">Platinum</th>
-          <th scope="col">Diamond</th>
-          <th scope="col">Sponsored Fellow</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Custom sponsorship slot/s in <a href="https://django-news.com/sponsorship#details">Django News Newsletter</a></th>
-          <td></td>
-          <td></td>
-          <td>Up to 1 ad/year</td>
-          <td>Up to 2 ads/year</td>
-          <td>Up to 4 ads/year</td>
-          <td>Up to 4 ads/year</td>
-        </tr>
-        <tr>
-          <th scope="row">Shares on Django-News social media accounts: Mastodon, Bluesky, X</th>
-          <td></td>
-          <td></td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h4>Prominence in Online Spaces</h4>
-  <div class="table-wrapper table-wrapper-wide">
-    <table class="sponsor-tiers">
-      <thead>
-        <tr>
-          <th></th>
-          <th scope="col">Bronze</th>
-          <th scope="col">Silver</th>
-          <th scope="col">Gold</th>
-          <th scope="col">Platinum</th>
-          <th scope="col">Diamond</th>
-          <th scope="col">Sponsored Fellow</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Discord Role “Corporate Sponsor” in the <a href="https://chat.djangoproject.com/">Django Discord</a></th>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <th scope="row">Announcements Prominent in Discord</th>
-          <td></td>
-          <td>Up to 1 post/year</td>
-          <td>Up to 2 posts/year</td>
-          <td>Up to 3 posts/year</td>
-          <td>Up to 4 posts/year</td>
-          <td>Up to 4 posts/year</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h4>Showcase your support of the DSF</h4>
-  <div class="table-wrapper table-wrapper-wide">
-    <table class="sponsor-tiers">
-      <thead>
-        <tr>
-          <th></th>
-          <th scope="col">Bronze</th>
-          <th scope="col">Silver</th>
-          <th scope="col">Gold</th>
-          <th scope="col">Platinum</th>
-          <th scope="col">Diamond</th>
-          <th scope="col">Sponsored Fellow</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Logo, link, and description listed on <a href="/foundation/corporate-members/">DSF Corporate Members webpage</a> and <a href="/fundraising/">DSF fundraising webpage</a>.</th>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <th scope="row"><a href="/foundation/corporate-members/badges/">Corporate Member Badge</a> for your website or materials</th>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <th scope="row">Logo and link on our <a href="/foundation/reports/2024/">Annual Report</a></th>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <th scope="row">Logo, link and description on the <a href="/community/">Community</a> and <a href="/foundation/">About</a> Pages</th>
-          <td></td>
-          <td></td>
-          <td>space permitting</td>
-          <td>✅</td>
-          <td>✅</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <th scope="row">Logo, link and description on the <a href="/download/">Downloads</a>, <a href="https://docs.djangoproject.com/en/stable/">Documentation</a>, and <a href="/weblog/">News</a> landing pages sidebar</th>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>space permitting</td>
-          <td>✅</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <th scope="row">Special thanks on new release notes</th>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>✅</td>
-          <td>✅</td>
-        </tr>
-        <tr>
-          <th scope="row">Name and link in website footer</th>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>✅</td>
-          <td>✅</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h4>Promotion through Django Website Blog</h4>
-  <div class="table-wrapper table-wrapper-wide">
-    <table class="sponsor-tiers">
-      <thead>
-        <tr>
-          <th></th>
-          <th scope="col">Bronze</th>
-          <th scope="col">Silver</th>
-          <th scope="col">Gold</th>
-          <th scope="col">Platinum</th>
-          <th scope="col">Diamond</th>
-          <th scope="col">Sponsored Fellow</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Blog posts on the <a href="/weblog/">Django Blog</a></th>
-          <td></td>
-          <td>potential approval</td>
-          <td>Up to 1 post/year</td>
-          <td>Up to 2 posts/year</td>
-          <td>Up to 4 posts/year</td>
-          <td>Up to 4 posts/year</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h4>Prominence with Django Leadership</h4>
-  <div class="table-wrapper table-wrapper-wide">
-    <table class="sponsor-tiers">
-      <thead>
-        <tr>
-          <th></th>
-          <th scope="col">Bronze</th>
-          <th scope="col">Silver</th>
-          <th scope="col">Gold</th>
-          <th scope="col">Platinum</th>
-          <th scope="col">Diamond</th>
-          <th scope="col">Sponsored Fellow</th>
-        </tr>
-      </thead>
-      <tbody>
         <tr>
           <th scope="row">Yearly meeting with the Django Software Foundation Board of Directors</th>
           <td></td>
@@ -389,14 +79,229 @@
           <td></td>
           <td>✅</td>
         </tr>
+
       </tbody>
+      <tbody class="sponsor-comparison-section">
+        <tr class="sponsor-comparison-heading"><th colspan="7" scope="rowgroup"><h3>Showcase your support of the DSF</h3></th></tr>
+
+        <tr>
+          <th scope="row">Special thanks on new release notes</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>✅</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <th scope="row">Name and link in website footer</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>✅</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <th scope="row">Logo, link and description on the <a href="/download/">Downloads</a>, <a href="https://docs.djangoproject.com/en/stable/">Documentation</a>, and <a href="/weblog/">News</a> landing pages sidebar</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>space permitting</td>
+          <td>✅</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <th scope="row">Logo, link and description on the <a href="/community/">Community</a> and <a href="/foundation/">About</a> Pages</th>
+          <td></td>
+          <td></td>
+          <td>space permitting</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <th scope="row">Logo, link, and description listed on <a href="/foundation/corporate-members/">DSF Corporate Members webpage</a> and <a href="/fundraising/">DSF fundraising webpage</a>.</th>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <th scope="row"><a href="/foundation/corporate-members/badges/">Corporate Member Badge</a> for your website or materials</th>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <th scope="row">Logo and link on our <a href="/foundation/reports/2024/">Annual Report</a></th>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+        </tr>
+
+      </tbody>
+      <tbody class="sponsor-comparison-section">
+        <tr class="sponsor-comparison-heading"><th colspan="7" scope="rowgroup"><h3>The real reasons for giving financial support to the DSF</h3></th></tr>
+
+        <tr>
+          <th scope="row">Ensure the longevity and quality of the Django Framework</th>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <th scope="row">Directly support the <a href="/foundation/">DSF goals</a></th>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+        </tr>
+
+      </tbody>
+      <tbody class="sponsor-comparison-section">
+        <tr class="sponsor-comparison-heading"><th colspan="7" scope="rowgroup"><h3>Social media spotlights</h3><p>For more information regarding each account, see our <a href="#dsf-social-media-reach">DSF Social Media Reach</a>.</p></th></tr>
+
+        <tr>
+          <th scope="row">An appreciation post for your donation posted on platforms of your choosing: Mastodon, Bluesky, X, LinkedIn, Reddit</th>
+          <td>Text &amp; link</td>
+          <td>Text &amp; link</td>
+          <td>Text, link, &amp; picture</td>
+          <td>Text, link, &amp; picture</td>
+          <td>Text, link, &amp; picture</td>
+          <td>Text, link, &amp; picture</td>
+        </tr>
+        <tr>
+          <th scope="row">Dedicated announcement posts/reposts of something from your organization.</th>
+          <td></td>
+          <td>Up to 3 posts/year</td>
+          <td>Up to 5 posts/year</td>
+          <td>Up to 7 posts/year</td>
+          <td>Up to 10 posts/year</td>
+          <td>Up to 10 posts/year</td>
+        </tr>
+
+      </tbody>
+      <tbody class="sponsor-comparison-section">
+        <tr class="sponsor-comparison-heading"><th colspan="7" scope="rowgroup"><h3>Promotion through Django News</h3></th></tr>
+
+        <tr>
+          <th scope="row">Custom sponsorship slot/s in <a href="https://django-news.com/sponsorship#details">Django News Newsletter</a></th>
+          <td></td>
+          <td></td>
+          <td>Up to 1 ad/year</td>
+          <td>Up to 2 ads/year</td>
+          <td>Up to 4 ads/year</td>
+          <td>Up to 4 ads/year</td>
+        </tr>
+        <tr>
+          <th scope="row">Shares on Django-News social media accounts: Mastodon, Bluesky, X</th>
+          <td></td>
+          <td></td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+        </tr>
+
+      </tbody>
+      <tbody class="sponsor-comparison-section">
+        <tr class="sponsor-comparison-heading"><th colspan="7" scope="rowgroup"><h3>Prominence in Online Spaces</h3></th></tr>
+
+        <tr>
+          <th scope="row">Discord Role “Corporate Sponsor” in the <a href="https://chat.djangoproject.com/">Django Discord</a></th>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+          <td>✅</td>
+        </tr>
+        <tr>
+          <th scope="row">Announcements Prominent in Discord</th>
+          <td></td>
+          <td>Up to 1 post/year</td>
+          <td>Up to 2 posts/year</td>
+          <td>Up to 3 posts/year</td>
+          <td>Up to 4 posts/year</td>
+          <td>Up to 4 posts/year</td>
+        </tr>
+
+      </tbody>
+
+      <tbody class="sponsor-comparison-section">
+        <tr class="sponsor-comparison-heading"><th colspan="7" scope="rowgroup"><h3>Promotion through Django Website Blog</h3></th></tr>
+
+        <tr>
+          <th scope="row">Blog posts on the <a href="/weblog/">Django Blog</a></th>
+          <td></td>
+          <td>potential approval</td>
+          <td>Up to 1 post/year</td>
+          <td>Up to 2 posts/year</td>
+          <td>Up to 4 posts/year</td>
+          <td>Up to 4 posts/year</td>
+        </tr>
+
+      </tbody>
+
     </table>
   </div>
+  <p>For organizations not able to meet the levels for corporate membership, please take a look at the question <a href="/foundation/donate/#alternative-organizational-support">“Are there other ways organizations can support the DSF?”</a> on our Giving FAQ page for other opportunities.</p>
+
+  <a href="/fundraising/"><img class="sponsor-image" src="https://media.djangoproject.com/blog/images/2026/06/2026-04-prospectus-banner.png" alt="Django is counting on your contribution today!"></a>
+
+  <p>By <a href="/foundation/corporate-membership/">sponsoring the DSF</a>, you align your financial commitment with responsible and accountable open-source stewardship, build developer trust, and contribute to long-term technical excellence, all while receiving <a href="/foundation/corporate-members/">global recognition</a> as a Django supporter.</p>
   <h2 id="django-powers-the-web-for-perfectionists-with-deadlines-the-dsf-powers-django-">Django Powers the Web for Perfectionists With Deadlines. The DSF Powers Django.</h2>
   <p>Django is an open source web framework trusted by companies, organizations, and governments worldwide to build everything from content management systems to social networks to scientific computing platforms. It’s reliable, secure, scalable, ridiculously fast, and free to use for everyone.</p>
   <p>With <strong>87.6k GitHub stars, 34k forks,</strong> and an estimated <strong>500,000 to 1 million projects</strong> built on it globally, Django powers critical infrastructure for thousands of companies and tens of thousands of developers. Yet, despite its widespread adoption and impact, the DSF has historically received only around <strong>$250,000 per year</strong> to sustain Django.</p>
   <p>This stark contrast underscores a hard truth: open-source success doesn&#39;t guarantee sustainability and that is precisely why Django needs your support. By sponsoring Django, you’re not just giving back. You’re investing in the future of reliable, secure, and innovative web development.</p>
   <p>As a sponsor, your organization also gains global recognition and aligns your brand with one of the most respected frameworks in the open-source world. <strong>Support Django. Help it thrive.</strong></p>
+  <h2 id="strengthening-django-the-django-fellows">Strengthening Django: The Django Fellows</h2>
+  <p><strong>Our paid Fellows are critical to Django.</strong> While the vast majority of Django contributions come from unpaid volunteers, sustaining and growing the paid DSF <a href="/fundraising/#fellowship-program">Django Fellowship program</a> means: </p>
+  <ul>
+    <li>🔒 Handling security reports swiftly.</li>
+    <li>⚡ Speeding up the design of new features.</li>
+    <li>🫶 Supporting the Django package ecosystem.</li>
+    <li>⭐️ Leading mentorship programs and developer sprints.</li>
+  </ul>
+  <p>To make Django more sustainable and responsive, we are expanding the Fellowship program with a new <strong>Sponsored Fellowship initiative.</strong> This lets the DSF increase the number of Fellows, get more work done, and ensure community priorities are addressed with direct feedback from top-level sponsors.</p>
+  <p><strong>Our goal is clear:</strong> faster pull request reviews, quicker security responses, and a healthier ecosystem for Django developers and package maintainers. This expansion is essential to keep up with Django’s growth and ensure that contributors, especially volunteers, are supported and not blocked.</p>
+  <h2 id="current-funding-at-a-glance">Current Funding at a Glance</h2>
+  <p>Typically, our funding looks something like this:</p>
+
+  <ul>
+    <li>
+      Incoming
+      <ul>
+        <li>65% donated by corporate members</li>
+        <li>35% donated by individual donors</li>
+        <li>Small amounts received from other sources (e.g. sale of merchandise, etc.)</li>
+      </ul>
+    </li>
+    <li>
+      Outgoing
+      <ul>
+        <li>80% strengthens Django through our Django Fellowship program</li>
+        <li>15% supports the global Django community workshops, conferences, and other events</li>
+        <li>5% covers administrative essentials that haven’t been covered by in-kind sponsors</li>
+      </ul>
+    </li>
+  </ul>
+
+  <p>Our last <a href="/foundation/reports/2024/">annual report</a> has more details. </p>
   <h2 id="our-mission">Our Mission</h2>
   <p>Sustain Django. Support its Community. Strengthen its Future.</p>
   <p>The DSF is a community-driven 501(c)(3) non-profit dedicated to supporting, promoting, protecting, and advancing the Django Web Framework. </p>
@@ -520,3 +425,8 @@
   </p>
 
 {% endblock content %}
+
+{% block javascript %}
+  {{ block.super }}
+  <script src="{% static 'js/sponsor-comparison.js' %}" defer></script>
+{% endblock javascript %}

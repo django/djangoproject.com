@@ -121,6 +121,7 @@ urlpatterns = [
     path("foundation/", include("members.urls")),
     path("fundraising/", include("fundraising.urls")),
     path("sponsor/", fundraising_views.sponsor, name="sponsor"),
+    path("sponsor/plans/", fundraising_views.sponsor_prospectus, name="sponsor_plans"),
     path(
         "sponsor/prospectus/",
         fundraising_views.sponsor_prospectus,

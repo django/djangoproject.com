@@ -1,3 +1,49 @@
+.sponsor-comparison, .sponsor-comparison-sticky {
+  --tier-header-height: 72px;
+  margin-top: 24px;
+  margin-bottom: 40px;
+  table.sponsor-tiers { width: 100%; min-width: 0; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
+  th, td { font-size: 14px; padding: 12px; }
+  th:not(:first-child), td:not(:first-child) { text-align: center; }
+  th:first-child { width: 32%; }
+  thead th { height: var(--tier-header-height); box-sizing: border-box; background: var(--sidebar-bg); border-bottom: 2px solid var(--primary-accent); }
+  .sponsor-comparison-heading th {
+    background: var(--sidebar-bg);
+    border-bottom: 1px solid var(--hairline-color);
+    text-align: left;
+  }
+  .sponsor-comparison-heading h3 { margin: 0; font-size: 18px; }
+  .sponsor-comparison-heading p { margin: 8px 0 0; font-size: 13px; font-weight: normal; }
+  @media (max-width: 1000px) {
+    overflow: auto;
+    table.sponsor-tiers { min-width: 1000px; }
+  }
+  @media print {
+    overflow: visible;
+    max-height: none;
+    thead, .sponsor-comparison-heading th { position: static; transform: none !important; }
+  }
+}
+
+.sponsor-comparison-sticky {
+  position: fixed;
+  top: 0;
+  z-index: 20;
+  margin: 0;
+  overflow: hidden;
+  pointer-events: none;
+  a { pointer-events: auto; }
+  table.sponsor-tiers { position: relative; z-index: 2; margin: 0; }
+  .sponsor-comparison-sticky-section {
+    padding: 12px;
+    background: var(--sidebar-bg);
+    border-bottom: 1px solid var(--hairline-color);
+    h3 { margin: 0; font-size: 18px; }
+    p { margin: 8px 0 0; font-size: 13px; }
+  }
+  @media print { display: none; }
+}
+
 .sponsorship {
   .full-width main { max-width: 1120px; }
   .sponsor-stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
