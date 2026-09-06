@@ -1,0 +1,14 @@
+<article class="plan-card" id="plan-{{ plan.slug }}">
+  <h3>{{ plan.name }}</h3>
+  <p class="plan-price">${{ plan.price }}<span>+ / year</span></p>
+  <p class="plan-tagline">{{ plan.tagline }}</p>
+  <p class="sponsor-note plan-company-profile"><strong>Suggested for:</strong> {{ plan.company_profile }}</p>
+  <div class="plan-card-features">
+    <ul>
+      {% for benefit in plan.highlights %}<li>{{ benefit }}</li>{% endfor %}
+      {% if plan.includes %}<li><strong>Everything in {{ plan.includes }}</strong></li>{% endif %}
+    </ul>
+    {% if plan.more_features_count %}<p class="sponsor-note"><a href="{% url 'sponsor_plan' slug=plan.slug %}#benefits-heading">{% if plan.more_features_count == 1 %}More features{% else %}Plus {{ plan.more_features_count }} more features{% endif %} →</a></p>{% endif %}
+  </div>
+  <a class="plan-button" href="{% url 'sponsor_plan' slug=plan.slug %}">Explore {{ plan.name }} <span aria-hidden="true">→</span></a>
+</article>

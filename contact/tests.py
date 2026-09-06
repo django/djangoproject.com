@@ -4,7 +4,7 @@ import requests
 from django.conf import settings
 from django.core import mail
 from django.http import HttpRequest
-from django.test import TestCase
+from django.test import Client, TestCase
 from django.test.utils import override_settings
 
 from djangoproject.tests import ReleaseMixin, patch_captcha
@@ -177,3 +177,126 @@ class BannerSponsorshipTests(ReleaseMixin, TestCase):
         self.assertContains(response, 'href="?level=monthly#contact"')
         self.assertContains(response, 'href="?level=weekly#contact"')
         self.assertLevelChecked(response, "monthly")
+
+
+@override_settings(AKISMET_API_KEY="")
+class PlanSponsorshipTests(ReleaseMixin, TestCase):
+    def test_diamond_inquiry_with_csrf(self):
+        client = Client(enforce_csrf_checks=True)
+        url = "/sponsor/plans/diamond/"
+        response = client.get(url)
+        self.assertContains(response, '/sponsor/plans/diamond/#contact" method="post"')
+        with patch_captcha():
+            response = client.post(
+                url,
+                {
+                    "csrfmiddlewaretoken": client.cookies["csrftoken"].value,
+                    "name": "Diamond Test Sponsor",
+                    "email": "diamond@example.com",
+                    "body": "Please tell us about Diamond membership.",
+                    "captcha": "TESTING",
+                },
+            )
+        self.assertRedirects(response, "/contact/sent/")
+        self.assertEqual(len(mail.outbox), 1)
+        message = mail.outbox[0]
+        self.assertEqual(
+            message.subject, "[Django sponsorship] Diamond: $100,000+ / year"
+        )
+        self.assertEqual(
+            message.to,
+            [
+                settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
+                "treasurer@djangoproject.com",
+                "dsf-board@googlegroups.com",
+            ],
+        )
+        self.assertIn("Diamond Test Sponsor <diamond@example.com>", message.body)
+        self.assertIn("Please tell us about Diamond membership.", message.body)
+
+    def test_inquiry_uses_plan_from_url(self):
+        with patch_captcha():
+            response = self.client.post(
+                "/sponsor/plans/fellow/",
+                {
+                    "name": "A. Random Sponsor",
+                    "email": "sponsor@example.com",
+                    "body": "We would like to learn about sponsoring a Fellow.",
+                    "message_subject": "Untrusted subject",
+                    "captcha": "TESTING",
+                },
+            )
+        self.assertRedirects(response, "/contact/sent/")
+        self.assertEqual(len(mail.outbox), 1)
+        message = mail.outbox[0]
+        self.assertEqual(
+            message.subject, "[Django sponsorship] Sponsored Fellow: $200,000+ / year"
+        )
+        self.assertEqual(
+            message.to,
+            [
+                settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
+                "treasurer@djangoproject.com",
+                "dsf-board@googlegroups.com",
+            ],
+        )
+        self.assertIn("We would like to learn about sponsoring a Fellow.", message.body)
+
+    def test_invalid_inquiry_preserves_message_and_shows_errors(self):
+        with patch_captcha():
+            response = self.client.post(
+                "/sponsor/plans/gold/",
+                {
+                    "name": "Sponsor",
+                    "email": "invalid",
+                    "body": "Tell me more.",
+                    "captcha": "TESTING",
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(
+            response.context["form"], "email", ["Enter a valid email address."]
+        )
+        self.assertContains(response, "Tell me more.")
+        self.assertContains(response, 'role="alert"')
+        self.assertEqual(len(mail.outbox), 0)
+
+    def test_captcha_is_required(self):
+        response = self.client.post(
+            "/sponsor/plans/fellow/",
+            {"name": "Sponsor", "email": "sponsor@example.com", "body": "Hello."},
+        )
+        self.assertFormError(
+            response.context["form"], "captcha", ["This field is required."]
+        )
+        self.assertEqual(len(mail.outbox), 0)
+
+
+@override_settings(AKISMET_API_KEY="")
+class AssuranceSponsorshipTests(ReleaseMixin, TestCase):
+    def test_pilot_and_selected_level(self):
+        response = self.client.get("/sponsor/assurance/?level=assurance-plus")
+        self.assertContains(response, "This program is a proposed pilot.")
+        self.assertEqual(
+            response.context["form"].initial["message_subject"],
+            "Django Assurance Plus pilot",
+        )
+        self.assertContains(response, "$25,000")
+
+    def test_pilot_inquiry(self):
+        with patch_captcha():
+            response = self.client.post(
+                "/sponsor/assurance/",
+                {
+                    "name": "A. Sponsor",
+                    "email": "sponsor@example.com",
+                    "message_subject": "Django Assurance pilot",
+                    "body": "We would like to discuss the pilot.",
+                    "captcha": "TESTING",
+                },
+            )
+        self.assertRedirects(response, "/contact/sent/")
+        self.assertEqual(mail.outbox[-1].to, ["dsf-board@googlegroups.com"])
+        self.assertEqual(
+            mail.outbox[-1].subject, "[Contact form] Django Assurance pilot"
+        )

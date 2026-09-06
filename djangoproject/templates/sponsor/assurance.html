@@ -1,0 +1,58 @@
+{% extends "sponsor/base.html" %}
+{% load humanize %}
+{% block title %}Django Assurance pilot{% endblock %}
+
+{% block og_title %}Django Assurance pilot{% endblock %}
+
+{% block description %}Explore a proposed annual agreement supporting Django’s published release and security policy.{% endblock %}
+
+{% block content %}
+  <nav class="sponsor-breadcrumb" aria-label="Breadcrumb"><a href="{% url 'sponsor' %}">Sponsorship plans</a> <span aria-hidden="true">/</span> Assurance pilot</nav>
+  <div class="sponsor-intro">
+    <p class="sponsor-eyebrow">For engineering teams · Proposed pilot</p>
+    <h1>A formal commitment<br>to the Django you depend on.</h1>
+    <p>Django Assurance proposes a signed, renewable agreement around Django’s published release and security policy. Give your engineering investment a place in your procurement process while funding the people maintaining Django.</p>
+    <div class="sponsor-actions"><a href="#contact" class="plan-button">Discuss the pilot →</a></div>
+  </div>
+  <p class="sponsor-callout"><strong>This program is a proposed pilot.</strong> Agreement terms and availability are still being developed. Contact the Foundation to discuss your requirements.</p>
+  <section class="sponsor-section">
+    <h2>Built around Django’s existing commitments</h2>
+    <div class="plan-benefit-groups">
+      <section class="plan-benefit-group"><h3>A commitment on file</h3><p>The proposal gives organizations a signed agreement about maintaining Django itself, for use in internal procurement and dependency reviews.</p></section>
+      <section class="plan-benefit-group"><h3>Plan around published support windows</h3><p>Django’s LTS policy provides security and data-loss fixes, typically for three years. Coverage depends on the version’s published support window.</p><a href="https://docs.djangoproject.com/en/dev/internals/release-process/">Read Django’s release policy →</a></section>
+      <section class="plan-benefit-group"><h3>One agreement, annual invoicing</h3><p>The proposed program supports annual renewal and discussion of multi-year commitments, funding the Foundation and its Fellowship program.</p></section>
+      <section class="plan-benefit-group"><h3>Framework maintenance</h3><p>The proposed agreement covers Django’s release and security policy. It does not include support for your application code or response-time SLAs for your tickets.</p></section>
+    </div>
+  </section>
+  <section class="sponsor-section" id="pricing">
+    <p class="sponsor-eyebrow">Proposed annual pricing</p>
+    <h2>Choose the relationship your team needs.</h2>
+    <div class="plan-benefit-groups">
+      {% for level in levels %}
+        <article class="plan-card">
+          <h3>{{ level.name }}</h3>
+          <p class="plan-price">${{ level.amount|intcomma }}<span>/ year · USD</span></p>
+          <p>{{ level.blurb }}</p>
+          <ul>{% for benefit in level.benefits %}<li>{{ benefit }}</li>{% endfor %}</ul>
+          <a href="?level={{ level.slug }}#contact" class="plan-button">Discuss {{ level.name }} →</a>
+        </article>
+      {% endfor %}
+    </div>
+    <p>Assurance and <a href="{% url 'sponsor' %}#corporate-membership-tiers">corporate membership</a> can complement each other. Membership provides recognition; the proposed Assurance program adds a formal agreement.</p>
+  </section>
+  <section class="sponsor-section sponsor-form plan-contact" id="contact">
+    <h2>Help shape the pilot</h2>
+    <p>Tell us about your company, the Django versions you run, and what your internal reviews need. The Foundation will follow up as the proposal develops.</p>
+    <form action="{% url 'sponsor_assurance' %}#contact" method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div>{{ form.name.as_field_group }}</div>
+      <div>{{ form.email.as_field_group }}</div>
+      <div>{{ form.message_subject.as_field_group }}</div>
+      <div>{{ form.body.as_field_group }}</div>
+      {{ form.captcha }}
+      {{ form.captcha.errors }}
+      <div class="submit"><button type="submit" class="plan-button">Send pilot inquiry →</button></div>
+    </form>
+  </section>
+{% endblock content %}

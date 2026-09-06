@@ -1,0 +1,133 @@
+.sponsorship {
+  .full-width main { max-width: 1120px; }
+  .sponsor-stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+  .sponsor-stat-grid .plan-price { margin-bottom: 12px; }
+  .sponsor-stat-grid > div > p:not(.plan-price) { font-size: 14px; }
+  .sponsor-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--primary-accent); margin: 0 0 12px; }
+  .sponsor-intro { max-width: 850px; padding: 38px 0 50px; }
+  h1 { font-size: clamp(32px, 4.1vw, 52px); line-height: 1.15; letter-spacing: -.025em; margin: 0 0 24px; }
+  .sponsor-intro > p:not(.sponsor-eyebrow), .plan-intro { font-size: 20px; line-height: 1.6; }
+  .sponsor-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 28px; }
+  .sponsor-section { padding: 38px 0; border-top: 1px solid var(--hairline-color); }
+  .sponsor-section-heading { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 24px; }
+  .sponsor-section-heading h2, .sponsor-section-heading h3 { margin: 0; }
+  .sponsor-section-heading > p { font-size: 14px; margin: 0; }
+  .plan-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-bottom: 32px; }
+  .sponsor-plan-guide { padding: 24px; margin-bottom: 32px; border-radius: 8px; background: var(--sidebar-bg); }
+  .sponsor-plan-guide h3 { margin-top: 0; font-size: 20px; }
+  .sponsor-plan-guide ul { padding-left: 20px; }
+  .sponsor-plan-guide li { margin-bottom: 12px; font-size: 16px; }
+  .sponsor-plan-guide > p:last-child { margin-bottom: 0; }
+  .plan-grid > .plan-card { scroll-margin-top: 24px; }
+  .plan-card { display: flex; flex-direction: column; padding: 28px; border: 1px solid var(--dark-hairline-color); border-radius: 8px; background: var(--body-bg); }
+  .plan-card h3 { margin: 0 0 20px; font-size: 22px; }
+  .plan-price { color: var(--primary-accent); font-size: clamp(28px, 3.2vw, 42px); font-weight: 700; line-height: 1.15; margin: 0 0 24px; letter-spacing: -.025em; }
+  .plan-price span { display: block; color: var(--body-fg); font-size: 13px; font-weight: 400; letter-spacing: 0; margin-top: 8px; }
+  .plan-tagline { font-size: 17px; min-height: 3em; }
+  .plan-card ul { padding-left: 18px; margin: 0 0 26px; }
+  .plan-card li { margin-bottom: 12px; font-size: 14px; }
+  .plan-button { display: inline-flex; justify-content: center; align-items: center; gap: 8px; padding: 13px 17px; border: 1px solid var(--primary-accent); border-radius: 5px; font-size: 14px; font-weight: 700; text-decoration: none; line-height: 1.5; box-sizing: border-box; height: auto; background: transparent; color: var(--link-color); cursor: pointer; text-align: center; }
+  .plan-button:hover { background: var(--sidebar-bg); text-decoration: underline; }
+  a:focus-visible, .plan-button:focus-visible { outline: 3px solid var(--primary-accent); outline-offset: 4px; }
+  .plan-card > .plan-button { margin-top: auto; }
+  .plan-grid > .plan-card {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 6;
+    row-gap: 12px;
+  }
+  .plan-grid > .plan-card > * { margin-top: 0; margin-bottom: 0; }
+  .plan-grid .plan-tagline { min-height: 0; }
+  .plan-grid .plan-card li:last-child { margin-bottom: 0; }
+  .plan-card-features > ul { margin: 0; }
+  .plan-card-features > .sponsor-note { margin: 12px 0 0; }
+  .plan-grid > .plan-card:first-child { border-top: 4px solid var(--primary-accent); padding-top: 25px; }
+  .sponsor-note { font-size: 13px; line-height: 1.7; }
+  .sponsor-banner-offer { display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; background: var(--sidebar-bg); padding: 36px; border-radius: 8px; border: 1px solid var(--hairline-color); margin: 16px 0 40px; }
+  .sponsor-banner-offer h2 { margin-top: 0; }
+  .banner-options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .banner-options h3 { margin-top: 0; }
+  .banner-options .plan-price { font-size: 32px; }
+  .banner-options > .sponsor-note { grid-column: 1 / -1; margin: 0; }
+  .sponsor-closing { text-align: center; max-width: 750px; margin: 50px auto; }
+  .sponsor-closing > p { margin-top: 20px; }
+  .plan-contact { max-width: 740px; margin: 40px auto 0; scroll-margin-top: 24px; }
+  .plan-contact form > div { margin-bottom: 20px; }
+  .plan-contact input, .plan-contact textarea { box-sizing: border-box; max-width: 100%; }
+  .plan-form-errors { border-left: 3px solid var(--error-fg); padding-left: 16px; }
+  .sponsor-breadcrumb { font-size: 14px; margin: 25px 0 45px; }
+  .sponsor-breadcrumb span { padding: 0 12px; }
+  .sponsor-breadcrumb + .sponsor-intro { padding-top: 0; }
+  .plan-hero, .plan-details { display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px; margin-bottom: 45px; }
+  .plan-sidebar .sponsor-section { padding: 24px 0 0; margin-top: 24px; }
+  .plan-sidebar .sponsor-stat-grid { display: block; }
+  .plan-sidebar .sponsor-stat-grid > div {
+    display: grid;
+    grid-template-columns: 100px minmax(0, 1fr);
+    column-gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--hairline-color);
+  }
+  .plan-sidebar .sponsor-stat-grid .plan-price { grid-row: span 2; font-size: 30px; margin: 0; }
+  .plan-sidebar .sponsor-stat-grid > div > p { margin: 0; }
+  .plan-sidebar .sponsor-stat-grid .sponsor-note { margin-top: 6px; font-size: 12px; }
+  .plan-distinction { margin-top: 32px; }
+  .plan-distinction p { margin-top: 0; }
+  .sponsor-overview-hero { padding-top: 38px; }
+  .sponsor-overview-hero .sponsor-intro { padding: 0; }
+  .sponsor-overview-hero .plan-sidebar .sponsor-section { padding: 0; margin: 0; border: 0; }
+  .plan-sponsors { display: flex; flex-wrap: wrap; gap: 24px; padding: 0; margin: 28px 0 0; list-style: none; }
+  .plan-sponsors li { width: 180px; text-align: center; }
+  .plan-sponsors a { display: flex; flex-direction: column; gap: 12px; font-weight: 700; }
+  .plan-sponsor-logo { display: flex; align-items: center; justify-content: center; height: 110px; padding: 16px; background: #fff; border: 1px solid var(--hairline-color); border-radius: 6px; }
+  .plan-sponsor-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .plan-summary { margin-top: 0; background: var(--sidebar-bg); gap: 16px; }
+  .plan-summary p { margin: 0; }
+  .plan-summary > a:last-child { text-align: center; font-size: 14px; }
+  .plan-benefit-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin: 30px 0;
+  }
+  .plan-benefit-group {
+    border: 1px solid var(--hairline-color);
+    border-radius: 8px;
+    padding: 28px;
+  }
+  .plan-benefit-rows { display: grid; gap: 28px; margin: 20px 0 28px; }
+  .plan-benefit-rows .plan-benefit-group {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+  }
+  .plan-benefit-rows .plan-benefits { margin-top: 0; }
+  .plan-benefit-rows .plan-benefits li:last-child { margin-bottom: 0; }
+  .plan-benefit-rows .plan-benefit-group h3 { margin: 0; font-size: 18px; }
+  .plan-benefit-rows .plan-benefits { font-size: 16px; line-height: 1.6; }
+  .plan-benefit-rows .plan-benefits li { margin-bottom: 8px; }
+  .plan-benefit-group h3 { font-size: 20px; margin: 0 0 16px; }
+  .plan-benefit-group > p { font-size: 15px; }
+  .plan-benefit-group .plan-benefits { margin-bottom: 0; }
+  .plan-benefits { padding-left: 20px; }
+  .plan-benefits li { margin-bottom: 16px; }
+  .sponsor-next { padding: 30px; background: var(--sidebar-bg); border-radius: 8px; }
+  .sponsor-next ol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; padding-left: 20px; }
+  .sponsor-next li p { font-size: 14px; margin-top: 8px; }
+  @media (max-width: 1000px) { .plan-card { padding: 20px; } .plan-grid > .plan-card:first-child { padding-top: 17px; } .sponsor-banner-offer { grid-template-columns: 1fr; } .plan-hero, .plan-details { gap: 30px; } }
+  @media (max-width: 700px) {
+    .plan-grid > .plan-card { grid-row: auto; grid-template-rows: none; }
+    .sponsor-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .plan-benefit-groups, .plan-grid, .plan-hero, .plan-details, .sponsor-next ol { grid-template-columns: 1fr; }
+    .sponsor-section-heading { display: block; }
+    .sponsor-section-heading > p { margin-top: 12px; }
+    .plan-tagline { min-height: 0; }
+    .sponsor-banner-offer { padding: 24px; }
+    .banner-options { grid-template-columns: 1fr; }
+    .sponsor-intro { padding-top: 20px; }
+    .sponsor-overview-hero { padding-top: 20px; }
+  }
+}

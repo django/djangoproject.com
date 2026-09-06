@@ -1,0 +1,90 @@
+{% extends "sponsor/base.html" %}
+
+{% block title %}{{ plan.name }} sponsorship{% endblock %}
+
+{% block og_title %}{{ plan.name }} sponsorship | Support Django{% endblock %}
+
+{% block description %}{{ plan.intro }}{% endblock %}
+
+{% block content %}
+  <nav class="sponsor-breadcrumb" aria-label="Breadcrumb"><a href="{% url 'sponsor' %}">Sponsorship plans</a> <span aria-hidden="true">/</span> {{ plan.name }}</nav>
+  <div class="plan-hero">
+    <div><p class="sponsor-eyebrow">{{ plan.name }} partnership</p><h1>{{ plan.tagline }}</h1><p class="plan-intro">{{ plan.intro }}</p><p>{{ plan.audience }}</p>
+      <section class="plan-distinction" aria-labelledby="benefits-heading">
+        <p class="sponsor-eyebrow" id="benefits-heading">Your membership in detail</p>
+        <div class="plan-benefit-rows">
+          {% for group in plan.benefit_groups %}
+            <section class="plan-benefit-group" aria-labelledby="benefit-group-{{ forloop.counter }}">
+              <h3 id="benefit-group-{{ forloop.counter }}">{{ group.title }}</h3>
+              <ul class="plan-benefits">
+                {% for benefit in group.items %}
+                  <li>{{ benefit }}</li>
+                {% endfor %}
+              </ul>
+            </section>
+          {% endfor %}
+        </div>
+        <p class="sponsor-note">Want to compare tiers? <a href="{% url 'sponsor_prospectus' %}#corporate-membership-tiers">See the complete sponsorship prospectus →</a></p>
+      </section>
+    </div>
+    <div class="plan-sidebar">
+      <aside class="plan-card plan-summary" aria-label="Annual commitment"><p class="sponsor-eyebrow">Your annual investment</p><p class="plan-price">${{ plan.price }}<span>+ / year · USD</span></p><p>Support Django through corporate membership in the Django Software Foundation.</p><a class="plan-button" href="#contact">Become a {{ plan.name }} sponsor →</a><a href="#contact">Talk to the Foundation first</a></aside>
+
+      {% include "sponsor/stats.html" %}
+    </div>
+  </div>
+  {% if sponsors %}
+    <section class="sponsor-section" aria-labelledby="plan-sponsors-heading">
+      <p class="sponsor-eyebrow">In good company</p>
+      <h2 id="plan-sponsors-heading">Meet our {{ plan.name }} sponsors</h2>
+      <ul class="plan-sponsors">
+        {% for sponsor in sponsors %}
+          <li>
+            <a href="{{ sponsor.url }}" rel="nofollow">
+              {% if sponsor.logo %}
+                <span class="plan-sponsor-logo"><img src="{{ sponsor.logo.url }}" alt="" loading="lazy"></span>
+              {% endif %}
+              <span>{{ sponsor.display_name }}</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+  <section class="sponsor-section plan-details">
+    <div>
+      <p class="sponsor-eyebrow">Your partnership at work</p>
+      <h2>Help sustain the work<br>your team relies on.</h2>
+      <p>Paid Django Fellows review contributions, handle security reports, and help contributors make progress. Your investment supports that work and the community around it.</p>
+      <a href="{% url 'fundraising:index' %}#fellowship-program">Meet the Fellowship program →</a>
+    </div>
+    <div>
+      <h2>A stronger Django, a stronger community.</h2>
+      <p>Your support helps the Foundation sustain the quality and longevity of Django, fund community events and workshops, and welcome more people into open source.</p>
+      <a href="/foundation/">Explore the Foundation’s mission →</a>
+    </div>
+  </section>
+  <section class="sponsor-next"><p class="sponsor-eyebrow">Getting started</p><h2>From interest to impact.</h2><ol><li><strong>Introduce your organization.</strong><p>Tell us about your organization using the short form below.</p></li><li><strong>Connect with the DSF.</strong><p>The Foundation follows up to discuss the plan and answer your questions.</p></li><li><strong>Share your support.</strong><p>Complete your membership with the Foundation and arrange your listing and recognition.</p></li></ol></section>
+  <section class="sponsor-section sponsor-form plan-contact" id="contact" aria-labelledby="contact-heading">
+    <p class="sponsor-eyebrow">Let’s talk</p>
+    <h2 id="contact-heading">Become a {{ plan.name }} sponsor</h2>
+    <p>You’re asking about {{ plan.name }} membership at ${{ plan.price }}+ per year. Tell us about your organization and we’ll help you get started.</p>
+    <form action="{% url 'sponsor_plan' slug=plan.slug %}#contact" method="post" accept-charset="utf-8">
+      {% csrf_token %}
+      {% if form.errors %}
+        <div class="plan-form-errors" role="alert">
+          <p>Please correct the errors below and send your inquiry again.</p>
+          {{ form.non_field_errors }}
+          {{ form.captcha.errors }}
+        </div>
+      {% endif %}
+      <div>{{ form.name.as_field_group }}</div>
+      <div>{{ form.email.as_field_group }}</div>
+      <div>{{ form.body.as_field_group }}</div>
+      {{ form.captcha }}
+      <div class="submit"><button type="submit" class="plan-button">Send sponsorship inquiry →</button></div>
+    </form>
+    <p class="sponsor-note">Sending an inquiry starts a conversation with the Foundation. It does not commit you to a payment.</p>
+    <p><a href="{% url 'sponsor' %}">Compare all plans</a> · <a href="{% url 'sponsor_banner' %}">Explore weekly and monthly banner sponsorship</a></p>
+  </section>
+{% endblock content %}
