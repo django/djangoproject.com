@@ -37,6 +37,15 @@
       <meta property="twitter:card" content="{% block twitter_card %}summary{% endblock %}">
     {% endblock og_tags %}
 
+    {% block analytics %}
+      <!-- Privacy-friendly analytics by Plausible -->
+      <script async src="https://analytics.python.org/js/pa-vpHLG0R-txTE4LicNIQU7.js"></script>
+      <script>
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+      </script>
+    {% endblock analytics %}
+
     <title>{% block title %}The web framework for perfectionists with deadlines{% endblock %} | Django</title>
 
     <link rel="stylesheet" href="{% static "css/output.css" %}" >

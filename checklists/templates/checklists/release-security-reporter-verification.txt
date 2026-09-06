@@ -1,5 +1,5 @@
 {% load tz %}
-Hello {{ cve.reporter }},
+Hello {{ cve.reporters_display }},
 
 Thank you for your report and patience. We have confirmed the vulnerability,
 which has been assigned {{ cve.cve_year_number }}.
@@ -7,9 +7,9 @@ which has been assigned {{ cve.cve_year_number }}.
 Please find attached our proposed mitigation patch. Could you please test it to
 ensure it reliably fixes the issue?
 
-We plan to credit the discoverer of the vulnerability in the release blog post
-and in the CVE metadata. Please confirm "{{ cve.reporter }}" is the correct
-name to use for the reporter credit.
+We plan to credit the discoverer(s) of the vulnerability in the release blog
+post and in the CVE metadata. Please confirm the name(s) to use for the
+reporter credit(s) are: {{ cve.reporters_display }}.
 
 The Django release with this fix is currently planned for
 {{ instance.when|utc|date:"l, F j, Y" }}. When published, the releases will be

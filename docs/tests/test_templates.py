@@ -157,6 +157,39 @@ def band_listing(request):
                 See   Built-in class-based <mark>views</mark> API  . """,
                 "#:~:text=Generic%20views",
             ),
+            # execute("UPDATE bar SET foo = 1 WHERE baz = %s", [self.baz])
+            (
+                "<mark>execute</mark>  (  &quot;UPDATE bar SET foo = 1 WHERE baz = "
+                "  %s  &quot;  ,   [  self  .  baz  ]) \n"
+                "         cursor  .  <mark>execute</mark>",
+                "#:~:text=execute%28%22UPDATE%20bar%20SET%20foo%20%3D%201%20WHERE"
+                "%20baz%20%3D%20%25s%22%2C%20%5Bself.baz%5D%29",
+            ),
+            # urlpatterns = [
+            (
+                "<mark>urlpatterns</mark>   =   [ \n     # some generic view\n",
+                "#:~:text=urlpatterns%20%3D%20%5B",
+            ),
+            # model)._meta.fields]
+            (
+                "<mark>model</mark>  )  .  _<mark>meta</mark>  .  fields  ] \n"
+                "              header   =   &quot;,&quot;  .  join  (  fields  )",
+                "#:~:text=model%29._meta.fields%5D",
+            ),
+            # cursor.execute("SELECT foo FROM bar WHERE baz = '30%'")
+            (
+                "<mark>cursor</mark>  .  execute  (  &quot;SELECT foo FROM bar WHERE "
+                "baz = &#39;30%&#39;&quot;  ) \n\n # Parameters passed",
+                "#:~:text=cursor.execute%28%22SELECT%20foo%20FROM%20bar%20WHERE%20"
+                "baz%20%3D%20%2730%25%27%22%29",
+            ),
+            # A full stop ending a sentence must not be joined to the next word.
+            (
+                "<mark>f</mark>-string <mark>expressions</mark> are evaluated before "
+                "they reach   gettext  . This means\n  _(<mark>f</mark>&quot;Welcome",
+                "#:~:text=f-string%20expressions%20are%20evaluated%20before%20they"
+                "%20reach%20gettext.%20This%20means",
+            ),
         ]
         for text, url_text_fragment in cases:
             with self.subTest(url_text_fragment=url_text_fragment):

@@ -1,4 +1,5 @@
 import re
+from html import unescape
 from urllib.parse import quote
 
 from django import template
@@ -131,11 +132,22 @@ def generate_scroll_to_text_fragment(highlighted_text):
     line_without_highlight = re.sub(
         rf"{START_SEL}|{STOP_SEL}|¶", "", first_non_empty_line
     )
-    line_without_highlight = line_without_highlight.replace("&quot;", '"')
+    line_without_highlight = unescape(line_without_highlight)
     # Remove excess spacing.
     single_spaced = re.sub(r"\s+", " ", line_without_highlight).strip()
+    # Pygments splits string literals into several tokens (e.g. the "%s"
+    # placeholder in "WHERE baz = %s"), which adds spacing that is not in the
+    # rendered page. Remove the spacing just inside a pair of double quotes.
+    single_spaced = re.sub(r'"\s*([^"]*?)\s*"', r'"\1"', single_spaced)
+    # Attribute access is also split into separate tokens, so "self . baz" needs
+    # to become "self.baz". A dot which is followed by a capitalised word ends a
+    # sentence in prose, e.g. "reach gettext . This means", so it is left alone.
+    single_spaced = re.sub(r"(?<=[\w)\]]) \. (?![A-Z][a-z])(?=\w)", ".", single_spaced)
     # Handle punctuation spacing.
-    single_spaced = re.sub(r"\s([.,;:!?)(\]\[])", r"\1", single_spaced)
+    single_spaced = re.sub(r"\s([.,;:!?)\]])", r"\1", single_spaced)
+    # An opening bracket only binds to the preceding token when it is a call or a
+    # subscript, e.g. "foo (x)" is "foo(x)" but ", [self.baz]" keeps its space.
+    single_spaced = re.sub(r"(?<=[\w)\]])\s([(\[])", r"\1", single_spaced)
     # Due to Python code such as timezone.now(), remove the space after a bracket.
     single_spaced = re.sub(r"([(\[])\s", r"\1", single_spaced)
     return f"#:~:text={quote(single_spaced)}"
