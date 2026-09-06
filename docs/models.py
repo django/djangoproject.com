@@ -290,7 +290,11 @@ def _clean_document_path(path):
 
 
 def document_url(doc):
-    if doc.metadata.get("parents") == DocumentationCategory.WEBSITE:
+    try:
+        parents = doc.parents  # From a search()/search_results() annotation.
+    except AttributeError:
+        parents = doc.metadata.get("parents")
+    if parents == DocumentationCategory.WEBSITE:
         return doc.path
     elif doc.path:
         kwargs = {
@@ -413,14 +417,10 @@ class DocumentQuerySet(models.QuerySet):
                 ),
                 breadcrumbs=models.F("metadata__breadcrumbs"),
                 python_objects=models.F("metadata__python_objects"),
+                parents=KeyTextTransform("parents", "metadata"),
             )
             .select_related("release__release")
-            .only(
-                "metadata",
-                "path",
-                "release__lang",
-                "release__release__version",
-            )
+            .only("path", "release__lang", "release__release__version")
             .order_by("-rank", "pk")
         )
 
