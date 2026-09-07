@@ -97,6 +97,11 @@ def band_listing(request):
             ("intro/overview", False),
             ("ref/models/fields", False),
             ("", False),
+            # Only whole path segments count, so a document whose name merely
+            # starts with one of the prefixes is not included.
+            ("internals-of-something", False),
+            ("internalsomething", False),
+            ("intro/contributing-extra", False),
         ]
         for docurl, expected in cases:
             with self.subTest(docurl=docurl):

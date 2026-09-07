@@ -122,7 +122,10 @@ def is_dev_canonical(docurl):
     Such documents do not get the "this document is for Django's development
     version" warning, since the development version is the one to read.
     """
-    return docurl.startswith(DEV_CANONICAL_DOCS)
+    return any(
+        docurl == prefix or docurl.startswith(f"{prefix}/")
+        for prefix in DEV_CANONICAL_DOCS
+    )
 
 
 @register.filter(name="fragment")
