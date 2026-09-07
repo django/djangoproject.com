@@ -1,3 +1,4 @@
+import xml.etree.ElementTree as etree
 from contextlib import redirect_stderr
 from datetime import date, timedelta
 from io import StringIO
@@ -9,7 +10,7 @@ from django.contrib.auth.models import Permission, User
 from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
 from django.test import TestCase
-from django.test.utils import override_settings
+from django.test.utils import modify_settings, override_settings
 from django.urls import reverse
 from django.utils import timezone, translation
 
@@ -23,6 +24,7 @@ from members.models import (
     CorporateMember,
 )
 
+from .feeds import WeblogEntrySocialsFeed
 from .models import ContentFormat, Entry, Event, ImageUpload
 from .sitemaps import WeblogSitemap
 
@@ -805,3 +807,58 @@ class ImageUploadTestCase(TestCase):
             "</button>",
             admin.site.get_model_admin(ImageUpload).copy_buttons(i),
         )
+
+
+class FeedTests(TestCase):
+    @staticmethod
+    def create_entry(slug, **kwargs):
+        defaults = {
+            "headline": slug.replace("-", " ").title(),
+            "slug": slug,
+            "is_active": True,
+            "pub_date": timezone.now() - timedelta(days=1),
+            "content_format": ContentFormat.MARKDOWN,
+            "summary": "Social summary",
+            "body": "Blog body",
+            "author": "Django Software Foundation",
+        }
+        defaults.update(kwargs)
+        return Entry.objects.create(**defaults)
+
+    def test_socials_feed_items(self):
+        included = self.create_entry("included")
+        self.create_entry("excluded", automatic_post_to_socials=False)
+        self.create_entry("inactive", is_active=False)
+        self.create_entry(
+            "future",
+            pub_date=timezone.now() + timedelta(days=1),
+        )
+
+        self.assertSequenceEqual(
+            list(WeblogEntrySocialsFeed().items()),
+            [included],
+        )
+
+    @modify_settings(ALLOWED_HOSTS={"append": "www.djangoproject.com"})
+    def test_socials_feed_response(self):
+        entry = self.create_entry("feed-response")
+
+        response = self.client.get(
+            "/rss/weblog-socials/", headers={"host": "www.djangoproject.com"}
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(
+            response.headers["Content-Type"].startswith("application/rss+xml")
+        )
+
+        root = etree.fromstring(response.content)
+        channel = root.find("channel")
+        items = channel.findall("item")
+
+        self.assertEqual(
+            channel.findtext("title"), "The Django weblog social media feed"
+        )
+        self.assertEqual(len(items), 1)
+        self.assertEqual(items[0].findtext("title"), entry.headline)
+        self.assertEqual(items[0].findtext("description"), entry.summary)

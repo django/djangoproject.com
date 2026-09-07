@@ -204,6 +204,13 @@ class Entry(models.Model):
             "and at least 1200x627 px."
         ),
     )
+    automatic_post_to_socials = models.BooleanField(
+        default=True,
+        help_text=_(
+            "Please uncheck this if you want a custom social media post for "
+            "this entry or you do not want this entry posted to socials."
+        ),
+    )
 
     objects = EntryQuerySet.as_manager()
 
