@@ -1,2 +1,4 @@
 # Code formatting via Black
 3045b338de791118962df4db370411247413eca6
+# Run `prettier` on JavaScript via `pre-commit`
+6dc8f418e6b652863ccb16a3e2e01795e8a89d9f
