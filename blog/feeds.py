@@ -20,3 +20,16 @@ class WeblogEntryFeed(Feed):
 
     def item_description(self, item):
         return item.body_html
+
+
+class WeblogEntrySocialsFeed(WeblogEntryFeed):
+    title = _("The Django weblog social media feed")
+    description = _(
+        "Django weblog posts selected for automatic posting to social media."
+    )
+
+    def items(self):
+        return Entry.objects.published().filter(automatic_post_to_socials=True)[:10]
+
+    def item_description(self, item):
+        return item.summary

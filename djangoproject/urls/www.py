@@ -11,7 +11,7 @@ from django.views.static import serve
 
 from accounts import views as account_views
 from aggregator.feeds import CommunityAggregatorFeed, CommunityAggregatorFirehoseFeed
-from blog.feeds import WeblogEntryFeed
+from blog.feeds import WeblogEntryFeed, WeblogEntrySocialsFeed
 from blog.sitemaps import WeblogSitemap
 from djangoproject.sitemaps import TemplateViewSitemap
 from foundation.feeds import FoundationMinutesFeed
@@ -130,6 +130,7 @@ urlpatterns = [
     path("~<username>/", account_views.user_profile, name="user_profile"),
     # Feeds
     path("rss/weblog/", WeblogEntryFeed(), name="weblog-feed"),
+    path("rss/weblog-socials/", WeblogEntrySocialsFeed(), name="weblog-socials-feed"),
     path("rss/community/", RedirectView.as_view(url="/rss/community/blogs/")),
     path(
         "rss/community/firehose/",
