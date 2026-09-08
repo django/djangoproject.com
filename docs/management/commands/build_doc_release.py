@@ -185,22 +185,9 @@ class Command(BaseCommand):
             ]
         )
 
-        if release.is_default:
-            self._setup_stable_symlink(release, built_dir)
-
         json_built_dir = parent_build_dir / "_built" / "json"
         documents = gen_decoded_documents(json_built_dir)
         release.sync_to_db(documents)
-
-    def _setup_stable_symlink(self, release, built_dir):
-        """
-        Setup a symbolic link called "stable" pointing to the given release build
-        """
-        stable = built_dir / "stable"
-        target = built_dir / release.version
-        if stable.resolve() != target:  # Symlink is either missing or has changed
-            stable.unlink(missing_ok=True)
-            stable.symlink_to(target, target_is_directory=True)
 
 
 def gen_decoded_documents(directory):
