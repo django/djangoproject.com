@@ -4,7 +4,8 @@
         text-align: center;
     }
 
-    @include sans-serif;
+    /* scss @mixin sans-serif */
+    font-family: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
 }
 
 .metric {
@@ -20,7 +21,8 @@
     h3 {
         padding: 10px 15px;
         margin: 0 -20px;
-        @include font-size(20);
+        /* scss @include font-size(20) */
+        font-size: 1.25rem;
         font-weight: 400;
         display: block;
         text-align: left;

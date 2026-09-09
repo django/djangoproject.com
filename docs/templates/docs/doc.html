@@ -102,7 +102,7 @@
     </ul>
     <ul id="backtotop-link">
       <li class="current-link">
-        <a href="#top" aria-label="Back to top" class="icon-chevron-up-align"><i class="icon icon-chevron-up"></i></a>
+        <a href="#top" aria-label="Back to top" class="icon-chevron-up-align"><i class="icon icon-chevron-up fa fa-chevron-up"></i></a>
       </li>
     </ul>
   </div>
@@ -117,10 +117,10 @@
     <nav class="browse-horizontal" aria-labelledby="browse-horizontal-header">
       <span id="browse-horizontal-header" class="visuallyhidden">{% translate "Previous page and next page" %}</span>
       {% if doc.prev %}
-        <div class="left"><a rel="prev" href="{{ doc.prev.link }}"><i class="icon icon-chevron-left"></i> {{ doc.prev.title|safe }}</a></div>
+        <div class="left"><a rel="prev" href="{{ doc.prev.link }}"><i class="icon icon-chevron-left fa fa-chevron-left"></i> {{ doc.prev.title|safe }}</a></div>
       {% endif %}
       {% if doc.next %}
-        <div class="right"><a rel="next" href="{{ doc.next.link }}">{{ doc.next.title|safe }} <i class="icon icon-chevron-right"></i></a></div>
+        <div class="right"><a rel="next" href="{{ doc.next.link }}">{{ doc.next.title|safe }} <i class="icon icon-chevron-right fa fa-chevron-right"></i></a></div>
       {% endif %}
     </nav>
   {% endif %}

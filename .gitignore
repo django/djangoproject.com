@@ -14,4 +14,4 @@ locale/*/LC_MESSAGES/django.mo
 .envrc
 djangoproject/cache
 djangoproject/static/css/*.map
-djangoproject/static/css/*.css
+djangoproject/static/css/output.css

@@ -27,7 +27,7 @@ define([
 
       this.list.addClass('active'); //activate the list styles w/ class
       this.headings
-        .append(' <i class="collapsing-icon icon icon-plus"></i>')
+        .append(' <i class="collapsing-icon icon icon-plus fa fa-plus"></i>')
         .attr('tabindex', '0'); //add icons and tabindexes
 
       this.headings.on('click', function (ev) {
