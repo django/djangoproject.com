@@ -20,14 +20,14 @@
   </div>
   <section class="sponsor-section" id="corporate-membership-tiers" aria-labelledby="annual-heading">
     <div class="sponsor-section-heading"><div><p class="sponsor-eyebrow">An ongoing investment</p><h2 id="annual-heading">A partnership for every stage.</h2></div><p>Annual corporate memberships.<br>All amounts in US dollars.</p></div>
-    <div class="plan-grid">{% for plan in plans %}{% include "sponsor/card.html" %}{% endfor %}</div>
+    <div class="plan-grid">{% for plan in plans|slice:":3" %}{% include "sponsor/card.html" %}{% endfor %}<div class="plan-stack">{% for plan in plans|slice:"3:" %}{% include "sponsor/card-compact.html" %}{% endfor %}</div></div>
     <aside class="sponsor-plan-guide" aria-labelledby="plan-guide-heading">
       <h3 id="plan-guide-heading">Find your starting point</h3>
       <p>Consider your company’s size, how much you rely on Django, and the annual support you can sustain.</p>
       <ul>
-        <li><strong>Small teams starting to give back:</strong> choose <a href="#plan-bronze">Bronze</a> for core recognition, or <a href="#plan-silver">Silver</a> to share company news throughout the year.</li>
-        <li><strong>Growing companies building on Django:</strong> explore <a href="#plan-gold">Gold</a> for newsletter and blog opportunities, or <a href="#plan-platinum">Platinum</a> for more frequent promotion and wider website visibility.</li>
         <li><strong>Larger organizations investing in Django’s future:</strong> consider <a href="#plan-diamond">Diamond</a> for leadership connections, or <a href="#plan-fellow">Sponsored Fellow</a> for direct engagement with the people maintaining Django.</li>
+        <li><strong>Growing companies building on Django:</strong> explore <a href="#plan-gold">Gold</a> for newsletter and blog opportunities, or <a href="#plan-platinum">Platinum</a> for more frequent promotion and wider website visibility.</li>
+        <li><strong>Small teams starting to give back:</strong> choose <a href="#plan-bronze">Bronze</a> for core recognition, or <a href="#plan-silver">Silver</a> to share company news throughout the year.</li>
       </ul>
       <p class="sponsor-note">Any company can choose any tier. For a short campaign, <a href="#banner-sponsorship">explore weekly or monthly banners</a>. For help choosing, <a href="{% url 'contact_foundation' %}">talk to the Foundation</a>.</p>
     </aside>

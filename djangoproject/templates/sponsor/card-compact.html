@@ -1,0 +1,10 @@
+<article class="plan-card plan-card-compact" id="plan-{{ plan.slug }}">
+  <h3>{{ plan.name }}</h3>
+  <p class="plan-price">${{ plan.price }}<span>+ / year</span></p>
+  <p class="plan-tagline">{{ plan.tagline }}</p>
+  <ul class="plan-compact-benefits">
+    {% for benefit in plan.highlights %}<li>{{ benefit }}</li>{% endfor %}
+    {% if plan.includes %}<li><strong>Everything in {{ plan.includes }}</strong></li>{% endif %}
+  </ul>
+  <a class="plan-button plan-compact-link" href="{% url 'sponsor_plan' slug=plan.slug %}"><span class="plan-button-label">Explore <span class="nowrap">{{ plan.name }}</span></span> <span aria-hidden="true">&rarr;</span></a>
+</article>

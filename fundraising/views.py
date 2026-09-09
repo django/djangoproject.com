@@ -50,7 +50,7 @@ def sponsor(request):
                     )
                     - plan["highlighted_benefit_count"],
                 }
-                for plan in reversed(PLANS)
+                for plan in PLANS
             ],
             "amounts": SPONSORSHIP_AMOUNTS,
             "stats": MARKETING_STATS,

@@ -10,5 +10,5 @@
     </ul>
     {% if plan.more_features_count %}<p class="sponsor-note"><a href="{% url 'sponsor_plan' slug=plan.slug %}#benefits-heading">{% if plan.more_features_count == 1 %}More features{% else %}Plus {{ plan.more_features_count }} more features{% endif %} →</a></p>{% endif %}
   </div>
-  <a class="plan-button" href="{% url 'sponsor_plan' slug=plan.slug %}">Explore {{ plan.name }} <span aria-hidden="true">→</span></a>
+  <a class="plan-button" href="{% url 'sponsor_plan' slug=plan.slug %}"><span class="plan-button-label">Explore <span class="nowrap">{{ plan.name }}</span></span> <span aria-hidden="true">→</span></a>
 </article>

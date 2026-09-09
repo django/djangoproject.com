@@ -58,13 +58,23 @@
   .sponsor-section-heading { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 24px; }
   .sponsor-section-heading h2, .sponsor-section-heading h3 { margin: 0; }
   .sponsor-section-heading > p { font-size: 14px; margin: 0; }
-  .plan-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-bottom: 32px; }
+  .plan-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-bottom: 32px; }
   .sponsor-plan-guide { padding: 24px; margin-bottom: 32px; border-radius: 8px; background: var(--sidebar-bg); }
   .sponsor-plan-guide h3 { margin-top: 0; font-size: 20px; }
   .sponsor-plan-guide ul { padding-left: 20px; }
   .sponsor-plan-guide li { margin-bottom: 12px; font-size: 16px; }
   .sponsor-plan-guide > p:last-child { margin-bottom: 0; }
   .plan-grid > .plan-card { scroll-margin-top: 24px; }
+  .plan-stack { display: flex; flex-direction: column; gap: 8px; grid-row: span 6; }
+  .plan-button .nowrap { white-space: nowrap; }
+  .plan-stack > .plan-card { flex: 0 0 auto; padding: 28px 20px 16px; scroll-margin-top: 24px; }
+  .plan-card.plan-card-compact h3 { margin: 0 0 12px; font-size: 22px; }
+  .plan-card-compact .plan-price { font-size: 26px; margin: 0 0 10px; }
+  .plan-card-compact .plan-tagline { min-height: 0; margin: 0 0 10px; font-size: 14px; line-height: 1.45; }
+  .plan-card-compact .plan-price span { display: inline; margin: 0 0 0 5px; font-size: 12px; }
+  .plan-card.plan-card-compact .plan-compact-benefits { display: none; padding-left: 16px; margin: 0 0 14px; }
+  .plan-card-compact li { margin-bottom: 6px; font-size: 14px; line-height: 1.5; }
+  .plan-button.plan-compact-link { padding: 10px 14px; font-size: 13px; }
   .plan-card { display: flex; flex-direction: column; padding: 28px; border: 1px solid var(--dark-hairline-color); border-radius: 8px; background: var(--body-bg); }
   .plan-card h3 { margin: 0 0 20px; font-size: 22px; }
   .plan-price { color: var(--primary-accent); font-size: clamp(28px, 3.2vw, 42px); font-weight: 700; line-height: 1.15; margin: 0 0 24px; letter-spacing: -.025em; }
@@ -166,6 +176,8 @@
   @media (max-width: 1000px) { .plan-card { padding: 20px; } .plan-grid > .plan-card:first-child { padding-top: 17px; } .sponsor-banner-offer { grid-template-columns: 1fr; } .plan-hero, .plan-details { gap: 30px; } }
   @media (max-width: 700px) {
     .plan-grid > .plan-card { grid-row: auto; grid-template-rows: none; }
+    .plan-stack { grid-row: auto; }
+    .plan-card.plan-card-compact .plan-compact-benefits { display: block; }
     .sponsor-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .plan-benefit-groups, .plan-grid, .plan-hero, .plan-details, .sponsor-next ol { grid-template-columns: 1fr; }
     .sponsor-section-heading { display: block; }
