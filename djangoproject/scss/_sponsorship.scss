@@ -5,6 +5,7 @@
   table.sponsor-tiers { width: 100%; min-width: 0; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
   th, td { font-size: 14px; padding: 12px; }
   th:not(:first-child), td:not(:first-child) { text-align: center; }
+  table.sponsor-tiers td:empty::after { content: "\2013"; color: color-mix(in srgb, var(--body-fg) 32%, transparent); }
   th:first-child { width: 32%; }
   thead th { height: var(--tier-header-height); box-sizing: border-box; background: var(--sidebar-bg); border-bottom: 2px solid var(--primary-accent); }
   .sponsor-comparison-heading th {
@@ -126,7 +127,8 @@
   }
   .plan-sidebar .sponsor-stat-grid .plan-price { grid-row: span 2; font-size: 30px; margin: 0; }
   .plan-sidebar .sponsor-stat-grid > div > p { margin: 0; }
-  .plan-sidebar .sponsor-stat-grid .sponsor-note { margin-top: 6px; font-size: 12px; }
+  .plan-sidebar .sponsor-stat-grid > div > p:not(.plan-price) { font-size: 16px; line-height: 1.5; }
+  .plan-sidebar .sponsor-stat-grid > div > p.sponsor-note { margin-top: 6px; font-size: 14px; }
   .plan-distinction { margin-top: 32px; }
   .plan-distinction p { margin-top: 0; }
   .sponsor-overview-hero { padding-top: 38px; }

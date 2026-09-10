@@ -2661,6 +2661,17 @@ table {
     height: auto;
 }
 
+.sponsor-figure {
+    margin: 0 0 30px;
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 13px;
+        line-height: 1.6;
+        color: color-mix(in srgb, var(--body-fg) 70%, transparent);
+    }
+}
+
 table.sponsor-tiers,
 table.sponsor-reach {
     width: 100%;
