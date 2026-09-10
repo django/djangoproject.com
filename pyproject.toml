@@ -47,6 +47,7 @@ dev = [
     { include-group = "tests" },
 ]
 prod = [
+    "django-storages[boto3]",
     "gunicorn==26.0.0",
     "psycopg[c]==3.3.4",
     "redis==8.1.0",
