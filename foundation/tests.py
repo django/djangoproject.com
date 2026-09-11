@@ -143,6 +143,11 @@ class BannerTestCase(ReleaseMixin, TestCase):
         response = self.client.get("/fundraising/")
         self.assertNotContains(response, "Donate now!")
 
+    def test_sponsor_banner_page_suppresses_banner(self):
+        Banner.objects.create(title="Donate now!", is_active=True)
+        response = self.client.get("/sponsor/banner/")
+        self.assertNotContains(response, "Donate now!")
+
 
 class MeetingTestCase(ReleaseMixin, TestCase):
     @classmethod
