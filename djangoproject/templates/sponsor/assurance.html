@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% load humanize i18n %}
+
+{% block title %}{% translate "Django Assurance" %}{% endblock %}
+
+{% block og_title %}{% translate "Django Assurance" %}{% endblock %}
+
+{% block og_description %}{% translate "A signed, renewable agreement that Django's published release and security policy will be upheld for the versions you run." %}{% endblock %}
+
+{% block layout_class %}full-width{% endblock %}
+
+{% block header %}
+  <p>
+    {% blocktranslate trimmed %}
+      Support the <em>Django Software Foundation</em>.
+    {% endblocktranslate %}
+  </p>
+{% endblock header %}
+
+{% block billboard %}{% endblock %}
+
+{% block content %}
+  <div class="section">
+    <div class="layout-2col">
+      <div class="col two-third">
+        <h1>{% translate "You built on Django. Guarantee it." %}</h1>
+        <p>
+          {% blocktranslate trimmed %}
+            You built your product on Django. Django Assurance backs that
+            decision with a formal commitment to your company: security releases
+            whenever they're needed, monthly bugfixes, and three years of
+            support for every version you run. Audits pass, and multi-year
+            plans are safe to make.
+          {% endblocktranslate %}
+        </p>
+        <a href="#contact" class="cta arrow">{% translate "Talk to us" %}</a>
+      </div>
+      <div class="col one-third last-child">
+        <h3>{% translate "What's guaranteed" %}</h3>
+        <ul class="sponsor-stats">
+          <li><strong>20+</strong> {% translate "CVEs fixed and coordinated in the last year" %}</li>
+          <li><strong>12</strong> {% translate "scheduled bugfix releases a year" %}</li>
+          <li><strong>3</strong> {% translate "years of support for every LTS" %}</li>
+        </ul>
+        <p class="footnote">
+          {% blocktranslate trimmed %}
+            Plus security releases whenever they're needed, for every supported
+            version.
+          {% endblocktranslate %}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>{% translate "What you get" %}</h2>
+    <h3>{% translate "An answer for your auditors" %}</h3>
+    <p>
+      {% blocktranslate trimmed %}
+        When a customer security review or compliance audit asks how a core
+        dependency is maintained, you can point to a signed commitment from the
+        Django Software Foundation instead of a link to a website.
+      {% endblocktranslate %}
+    </p>
+    <h3>{% translate "A platform you can commit to" %}</h3>
+    <p>
+      {% blocktranslate trimmed %}
+        Green-light systems that will run for years knowing the support window
+        is guaranteed: monthly bugfixes, security releases whenever they're
+        needed, and three years of LTS support, with feature releases yearly
+        from 2028.
+      {% endblocktranslate %}
+    </p>
+    <h3>{% translate "One agreement, one invoice" %}</h3>
+    <p>
+      {% blocktranslate trimmed %}
+        Annual and renewable, billed with an invoice, and funding the Fellows who
+        do the work.
+      {% endblocktranslate %}
+    </p>
+  </div>
+
+  <div class="section" id="pricing">
+    <h2>{% translate "Pilot pricing" %}</h2>
+    <p class="sponsor-callout">
+      {% blocktranslate trimmed %}
+        <strong>Django Assurance is a pilot.</strong> We're drafting the
+        agreement with the Foundation's counsel and shaping it with the first
+        companies to sign up.
+      {% endblocktranslate %}
+    </p>
+    <div class="layout-2col sponsor-levels">
+      <div class="col">
+        <h3>{% translate "Assurance" %}</h3>
+        <p class="sponsor-price">$10,000</p>
+        <p>{% translate "For teams that need the commitment on file." %}</p>
+        <ul>
+          <li>{% translate "A signed agreement covering Django's release and security policy for the versions you run" %}</li>
+          <li>{% translate "Annual invoice and renewal" %}</li>
+        </ul>
+        <a href="#contact" class="cta outline arrow">{% translate "Talk to us" %}</a>
+      </div>
+      <div class="col last-child">
+        <h3>{% translate "Assurance Plus" %}</h3>
+        <p class="sponsor-price">$25,000</p>
+        <p>{% translate "For companies that want a seat at the table." %}</p>
+        <ul>
+          <li>{% translate "The signed assurance agreement" %}</li>
+          <li>{% translate "Listed as a supporter of the Django Software Foundation" %}</li>
+          <li>{% translate "A yearly meeting with the DSF Board" %}</li>
+        </ul>
+        <a href="#contact" class="cta arrow">{% translate "Talk to us" %}</a>
+      </div>
+    </div>
+    <p class="footnote">
+      {% translate "Both levels are priced per year. Multi-year commitments are supported." %}
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>{% translate "Common questions" %}</h2>
+    <h3>{% translate "Is this a support contract for my code?" %}</h3>
+    <p>
+      {% blocktranslate trimmed %}
+        No. There are no SLAs on your tickets, and help with your code still
+        comes from the community and your own team. The agreement covers
+        Django's own release and security policy.
+      {% endblocktranslate %}
+    </p>
+    <h3>{% translate "How is this different from corporate membership?" %}</h3>
+    <p>
+      {% url 'members:corporate-members-join' as join_url %}
+      {% blocktranslate trimmed %}
+        <a href="{{ join_url }}">Corporate membership</a> funds the same work
+        and comes with recognition; an assurance agreement adds a signed
+        commitment. They stack, and the money goes to the same place.
+      {% endblocktranslate %}
+    </p>
+    <h3>{% translate "Where does the money go?" %}</h3>
+    <p>
+      {% url 'fundraising:index' as fundraising_url %}
+      {% blocktranslate trimmed %}
+        To the Django Software Foundation. See
+        <a href="{{ fundraising_url }}#why-give">how the Foundation uses donations</a>.
+      {% endblocktranslate %}
+    </p>
+  </div>
+
+  <div class="section sponsor-form" id="contact">
+    <h2>{% translate "Talk to us" %}</h2>
+    <p>
+      {% blocktranslate trimmed %}
+        Tell us about your company and what your reviews or auditors need, and
+        we'll follow up as the pilot takes shape.
+      {% endblocktranslate %}
+    </p>
+    <form action="{% url 'sponsor_assurance' %}#contact" method="post" accept-charset="utf-8">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div>
+        {{ form.name.as_field_group }}
+      </div>
+      <div>
+        {{ form.email.as_field_group }}
+      </div>
+      <div>
+        {{ form.message_subject.as_field_group }}
+      </div>
+      <div>
+        {{ form.body.as_field_group }}
+      </div>
+      {{ form.captcha }}
+      {{ form.captcha.errors }}
+      <div class="submit">
+        <button type="submit" class="cta arrow">{% translate "Send" %}</button>
+      </div>
+    </form>
+  </div>
+{% endblock content %}

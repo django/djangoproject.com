@@ -113,6 +113,12 @@ class TemplateViewTests(ReleaseMixin, TestCase):
     def test_conduct_changes(self):
         self.assertView("conduct_changes")
 
+    def test_sponsor_banner(self):
+        self.assertView("sponsor_banner")
+
+    def test_sponsor_assurance(self):
+        self.assertView("sponsor_assurance")
+
     def test_styleguide(self):
         self.assertView("styleguide")
 
