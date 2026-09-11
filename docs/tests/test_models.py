@@ -632,7 +632,7 @@ class UpdateDocTests(TestCase):
         release.sync_to_db(
             [
                 {"body": "", "title": "", "current_page_name": "nonexcluded/bar"},
-                {"body": "", "title": "", "current_page_name": "%s/bar" % path},
+                {"body": "", "title": "", "current_page_name": f"{path}/bar"},
             ]
         )
         document = release.documents.get()

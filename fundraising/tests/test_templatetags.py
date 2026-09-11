@@ -84,7 +84,7 @@ class TestDisplayDjangoHeroes(TestCase):
     def test_display_django_heroes(self):
         def create_hero_with_payment_amount(amount):
             hero = DjangoHero.objects.create(
-                email="%s@djangoproject.com" % get_random_string(length=12),
+                email=f"{get_random_string(length=12)}@djangoproject.com",
                 approved=True,
                 is_visible=True,
             )
@@ -112,7 +112,7 @@ class TestDisplayDjangoHeroes(TestCase):
 
         def create_hero_with_payment_date(days):
             hero = DjangoHero.objects.create(
-                email="%s@djangoproject.com" % get_random_string(length=12),
+                email=f"{get_random_string(length=12)}@djangoproject.com",
                 approved=True,
                 is_visible=True,
             )

@@ -53,7 +53,7 @@ class BaseContactForm(ContactForm):
             try:
                 akismet_api = Akismet(
                     api_key=settings.AKISMET_API_KEY,
-                    blog_url="http://%s/" % Site.objects.get_current().domain,
+                    blog_url=f"http://{Site.objects.get_current().domain}/",
                     user_agent="Django {}.{}.{}".format(*django.VERSION),
                 )
 

@@ -51,7 +51,7 @@ def get_doc_path(docroot, subpath):
     except NotADirectoryError:
         pass  # we get here if doc + subpath (without /index.fjson) is a file
 
-    bits = bits[:-2] + ["%s.fjson" % bits[-2]]
+    bits = bits[:-2] + [f"{bits[-2]}.fjson"]
     doc = docroot / Path(*bits)
     if doc.exists():
         return doc

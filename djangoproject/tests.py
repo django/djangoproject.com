@@ -144,7 +144,7 @@ class ExcludeHostsLocaleMiddlewareTests(ReleaseMixin, TestCase):
         (with a port) is excluded
         """
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/", headers={"host": "%s:8000" % self.docs_host})
+            resp = self.client.get("/", headers={"host": f"{self.docs_host}:8000"})
         self.assertEqual(resp.status_code, HTTPStatus.FOUND)
         self.assertNotIn("Content-Language", resp)
         self.assertNotIn("Vary", resp)
@@ -183,7 +183,7 @@ class ExcludeHostsLocaleMiddlewareTests(ReleaseMixin, TestCase):
     def test_www_host_with_port(self):
         """www (with a port) should still use LocaleMiddleware"""
         with self.settings(LOCALE_MIDDLEWARE_EXCLUDED_HOSTS=[self.docs_host]):
-            resp = self.client.get("/", headers={"host": "%s:8000" % self.www_host})
+            resp = self.client.get("/", headers={"host": f"{self.www_host}:8000"})
         self.assertEqual(resp.status_code, HTTPStatus.OK)
         self.assertIn("Content-Language", resp)
         self.assertIn("Vary", resp)

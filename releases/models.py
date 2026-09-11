@@ -183,7 +183,7 @@ def upload_to_checksum(release, filename):
 
 @total_ordering
 class Release(models.Model):
-    DEFAULT_CACHE_KEY = "%s_django_version" % settings.CACHE_MIDDLEWARE_KEY_PREFIX
+    DEFAULT_CACHE_KEY = f"{settings.CACHE_MIDDLEWARE_KEY_PREFIX}_django_version"
     STATUS_CHOICES = (
         ("a", "alpha"),
         ("b", "beta"),
