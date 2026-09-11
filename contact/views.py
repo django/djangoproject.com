@@ -2,7 +2,6 @@ from django.urls import reverse
 from django_contact_form.views import ContactFormView
 
 from fundraising.sponsor_programs import (
-    ASSURANCE_LEVELS,
     BANNER_LEVELS,
     MARKETING_STATS,
     SPONSORSHIP_AMOUNTS,
@@ -34,24 +33,4 @@ class BannerSponsorship(ContactFoundation):
         level = self.request.GET.get("level")
         if level in SPONSORSHIP_AMOUNTS:
             initial["message_subject"] = level
-        return initial
-
-
-class AssuranceSponsorship(ContactFoundation):
-    template_name = "sponsor/assurance.html"
-    extra_context = {"levels": ASSURANCE_LEVELS}
-
-    def get_initial(self):
-        initial = super().get_initial()
-        level = next(
-            (
-                level
-                for level in ASSURANCE_LEVELS
-                if level["slug"] == self.request.GET.get("level")
-            ),
-            None,
-        )
-        initial["message_subject"] = (
-            f"Django {level['name']} pilot" if level else "Django Assurance pilot"
-        )
         return initial

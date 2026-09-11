@@ -20,7 +20,7 @@ from members.models import CorporateMember
 
 from .forms import DjangoHeroForm, DonationForm, PaymentForm
 from .models import DjangoHero, Donation, Payment, Testimonial
-from .sponsor_programs import ASSURANCE_LEVELS, MARKETING_STATS, SPONSORSHIP_AMOUNTS
+from .sponsor_programs import MARKETING_STATS, SPONSORSHIP_AMOUNTS
 from .sponsorship import PLANS
 
 logger = logging.getLogger(__name__)
@@ -54,7 +54,6 @@ def sponsor(request):
             ],
             "amounts": SPONSORSHIP_AMOUNTS,
             "stats": MARKETING_STATS,
-            "assurance_levels": ASSURANCE_LEVELS,
         },
     )
 

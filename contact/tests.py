@@ -270,33 +270,3 @@ class PlanSponsorshipTests(ReleaseMixin, TestCase):
             response.context["form"], "captcha", ["This field is required."]
         )
         self.assertEqual(len(mail.outbox), 0)
-
-
-@override_settings(AKISMET_API_KEY="")
-class AssuranceSponsorshipTests(ReleaseMixin, TestCase):
-    def test_pilot_and_selected_level(self):
-        response = self.client.get("/sponsor/assurance/?level=assurance-plus")
-        self.assertContains(response, "This program is a proposed pilot.")
-        self.assertEqual(
-            response.context["form"].initial["message_subject"],
-            "Django Assurance Plus pilot",
-        )
-        self.assertContains(response, "$25,000")
-
-    def test_pilot_inquiry(self):
-        with patch_captcha():
-            response = self.client.post(
-                "/sponsor/assurance/",
-                {
-                    "name": "A. Sponsor",
-                    "email": "sponsor@example.com",
-                    "message_subject": "Django Assurance pilot",
-                    "body": "We would like to discuss the pilot.",
-                    "captcha": "TESTING",
-                },
-            )
-        self.assertRedirects(response, "/contact/sent/")
-        self.assertEqual(mail.outbox[-1].to, ["dsf-board@googlegroups.com"])
-        self.assertEqual(
-            mail.outbox[-1].subject, "[Contact form] Django Assurance pilot"
-        )

@@ -54,29 +54,3 @@ MARKETING_STATS = [
         "url": "https://github.com/django/django",
     },
 ]
-
-ASSURANCE_LEVELS = [
-    {
-        "slug": "assurance",
-        "name": "Assurance",
-        "amount": 10000,
-        "blurb": "For teams that need a formal commitment on file.",
-        "benefits": [
-            "A proposed signed agreement covering Django’s published "
-            "release and security policy for supported versions.",
-            "Annual invoicing and renewal, with multi-year commitments to discuss.",
-        ],
-    },
-    {
-        "slug": "assurance-plus",
-        "name": "Assurance Plus",
-        "amount": 25000,
-        "blurb": "For organizations looking for a closer relationship with "
-        "the Foundation.",
-        "benefits": [
-            "The proposed assurance agreement and annual invoicing.",
-            "A listing as a supporter of the Django Software Foundation.",
-            "A yearly meeting with the DSF Board.",
-        ],
-    },
-]

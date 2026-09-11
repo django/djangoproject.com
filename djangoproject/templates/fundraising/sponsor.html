@@ -37,11 +37,5 @@
     <div><p class="sponsor-eyebrow">A focused campaign</p><h2 id="banner-heading">Be seen where Django<br>developers work.</h2><p>Launching a product, hiring, or building awareness? Sponsor a banner on the Django website and documentation while supporting the Foundation.</p><a href="{% url 'sponsor_banner' %}">See the placement and explore banner sponsorship →</a></div>
     <div class="banner-options"><div><h3>One week</h3><p class="plan-price">${{ amounts.weekly|intcomma }}<span> / week</span></p><p>Put a launch or event in the spotlight.</p><a class="plan-button" href="{% url 'sponsor_banner' %}?level=weekly#contact">Ask about a week →</a></div><div><h3>One month</h3><p class="plan-price">${{ amounts.monthly|intcomma }}<span> / month</span></p><p>Build familiarity with your brand.</p><a class="plan-button" href="{% url 'sponsor_banner' %}?level=monthly#contact">Ask about a month →</a></div><p class="sponsor-note">Banner sponsorship is booked separately from annual membership. Dates and availability are confirmed with the DSF.</p></div>
   </section>
-  <section class="sponsor-section">
-    <p class="sponsor-eyebrow">For engineering budgets · Proposed pilot</p>
-    <h2>Need a formal commitment for your dependencies?</h2>
-    <p>Django Assurance explores a signed agreement around Django’s published release and security policy, with proposed annual plans at {% for level in assurance_levels %}${{ level.amount|intcomma }}{% if not forloop.last %} and {% endif %}{% endfor %}.</p>
-    <a href="{% url 'sponsor_assurance' %}">Explore the Assurance pilot →</a>
-  </section>
   <section class="sponsor-closing"><h2>A stronger framework starts with its people.</h2><p>Your support helps fund the Django Fellows, community events, and the work that keeps Django available to everyone.</p><a href="{% url 'contact_foundation' %}">Let’s find the right fit for your organization →</a><p><a href="{% url 'fundraising:index' %}">Giving as an individual?</a> · <a href="/foundation/corporate-members/">Meet our corporate members</a></p></section>
 {% endblock content %}
