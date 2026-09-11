@@ -21,11 +21,12 @@ import os
 import shutil
 import subprocess
 import sys
+import tempfile
 import zipfile
-from contextlib import closing
 from pathlib import Path
 
 from django.conf import settings
+from django.core.files.storage import default_storage
 from django.core.management import BaseCommand, CommandError
 from django.utils.translation import to_locale
 from sphinx.application import Sphinx
@@ -149,24 +150,25 @@ class Command(BaseCommand):
         #
         html_build_dir = parent_build_dir / "_build" / html_builder
         zipfile_name = f"django-docs-{release.version}-{release.lang}.zip"
-        zipfile_path = settings.MEDIA_ROOT / "docs" / zipfile_name
-        if not zipfile_path.parent.exists():
-            zipfile_path.parent.mkdir(parents=True)
+        target_path = f"docs/{zipfile_name}"
         if self.verbosity >= 2:
-            self.stdout.write("  build zip (into %s)" % zipfile_path)
+            self.stdout.write("  build zip (into %s)" % target_path)
 
         def zipfile_inclusion_filter(file_path):
             return ".doctrees" not in file_path.parts
 
-        with closing(
-            zipfile.ZipFile(str(zipfile_path), "w", compression=zipfile.ZIP_DEFLATED)
-        ) as zf:
-            for root, dirs, files in os.walk(str(html_build_dir)):
-                for f in files:
-                    file_path = Path(os.path.join(root, f))
-                    if zipfile_inclusion_filter(file_path):
-                        rel_path = str(file_path.relative_to(html_build_dir))
-                        zf.write(str(file_path), rel_path)
+        with tempfile.NamedTemporaryFile(suffix=".zip") as tmp:
+            with zipfile.ZipFile(tmp, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+                for root, dirs, files in os.walk(str(html_build_dir)):
+                    for f in files:
+                        file_path = Path(os.path.join(root, f))
+                        if zipfile_inclusion_filter(file_path):
+                            rel_path = str(file_path.relative_to(html_build_dir))
+                            zf.write(str(file_path), rel_path)
+            tmp.seek(0)
+            if default_storage.exists(target_path):
+                default_storage.delete(target_path)
+            default_storage.save(target_path, tmp)
 
         #
         # Copy the build results to the directory used for serving

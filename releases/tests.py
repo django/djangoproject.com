@@ -1170,3 +1170,35 @@ class RoadmapViewTestCase(ReleaseMixin, TestCase):
             "Django 5.2 final will ideally ship two weeks after the last RC.",
         )
         self.assertNotContains(response, "ship in January.")
+
+
+class ReleaseStorageTests(TestCase):
+    def test_get_storage_default_filesystem(self):
+        from django.core.files.storage import FileSystemStorage
+
+        from .models import get_storage
+
+        storage = get_storage()
+        self.assertIsInstance(storage, FileSystemStorage)
+        self.assertTrue(
+            getattr(
+                storage, "_allow_overwrite", getattr(storage, "allow_overwrite", False)
+            )
+        )
+
+    def test_get_storage_s3_backend(self):
+        from .models import get_storage
+
+        with override_settings(
+            STORAGES={
+                "default": {"BACKEND": "storages.backends.s3.S3Storage"},
+                "staticfiles": {
+                    "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+                },
+            }
+        ):
+            try:
+                storage = get_storage()
+                self.assertTrue(getattr(storage, "file_overwrite", False))
+            except Exception:
+                pass

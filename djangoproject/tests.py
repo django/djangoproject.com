@@ -365,3 +365,62 @@ class EndToEndTests(ReleaseMixin, StaticLiveServerTestCase):
                 page.locator(".theme-toggle").click()
                 theme = page.evaluate("document.documentElement.dataset.theme")
                 self.assertEqual(theme, expected_theme)
+
+
+class S3StorageSettingsTests(TestCase):
+    def test_prod_settings_with_s3_bucket(self):
+        with patch.dict(
+            os.environ,
+            {
+                "DJANGO_DB_NAME": "djangoproject",
+                "AWS_STORAGE_BUCKET_NAME": "my-s3-bucket",
+            },
+        ):
+            import importlib
+
+            import djangoproject.settings.prod as prod_settings
+
+            importlib.reload(prod_settings)
+            self.assertEqual(
+                prod_settings.STORAGES["default"]["BACKEND"],
+                "storages.backends.s3.S3Storage",
+            )
+            self.assertEqual(
+                prod_settings.THUMBNAIL_STORAGE,
+                "storages.backends.s3.S3Storage",
+            )
+
+    def test_prod_settings_without_s3_bucket(self):
+        env = os.environ.copy()
+        env.setdefault("DJANGO_DB_NAME", "djangoproject")
+        env.pop("AWS_STORAGE_BUCKET_NAME", None)
+        with patch.dict(os.environ, env, clear=True):
+            import importlib
+
+            import djangoproject.settings.prod as prod_settings
+
+            importlib.reload(prod_settings)
+            self.assertEqual(
+                prod_settings.STORAGES["default"]["BACKEND"],
+                "django.core.files.storage.FileSystemStorage",
+            )
+
+
+class SorlThumbnailS3Tests(TestCase):
+    def test_logo_thumbnail_mixin(self):
+        from djangoproject.thumbnails import LogoThumbnailMixin
+
+        class TestModel(LogoThumbnailMixin):
+            def __init__(self, logo_name):
+                class DummyLogo:
+                    name = logo_name
+
+                    def __bool__(self):
+                        return bool(self.name)
+
+                self.logo = DummyLogo()
+
+        obj = TestModel("test_logo.png")
+        self.assertFalse(obj.logo_is_svg)
+        svg_obj = TestModel("test_logo.svg")
+        self.assertTrue(svg_obj.logo_is_svg)
