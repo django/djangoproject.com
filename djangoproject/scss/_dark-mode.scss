@@ -260,26 +260,6 @@ html[data-theme="dark"] {
     }
 }
 
-html[data-theme="light"] .img-release {
-  filter: invert(0);
-}
-
-@media (prefers-color-scheme: light) {
-    html[data-theme="auto"] .img-release {
-        filter: invert(0);
-    }
-}
-
-html[data-theme="dark"] .img-release {
-  filter: invert(1);
-}
-
-@media (prefers-color-scheme: dark) {
-    html[data-theme="auto"] .img-release {
-        filter: invert(1);
-    }
-}
-
 
 /* THEME SWITCH */
 .theme-toggle {

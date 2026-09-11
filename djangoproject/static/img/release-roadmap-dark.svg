@@ -23,8 +23,8 @@
         .month-text {
             font-family: 'Segoe UI', 'Arial';
             font-size: 18px;
-            fill: #000000;
-            stroke: #ffffff;
+            fill: #ffffff;
+            stroke: #1f2122;
             stroke-width: 20px;
             paint-order: stroke;
             stroke-linecap: butt;
@@ -33,14 +33,14 @@
         .year-text {
             font-family: 'Segoe UI', 'Arial';
             font-size: 18px;
-            fill: #000000;
+            fill: #ffffff;
             margin-bottom: 4px;
         }
         .today-text {
             font-family: 'Segoe UI', 'Arial';
             font-size: 14px;
             font-weight: bold;
-            fill: #2563EB;
+            fill: #60A5FA;
         }
         .release-text {
             font-family: 'Segoe UI', 'Arial';
@@ -50,8 +50,8 @@
 
     <defs>
         <linearGradient id="fade-right" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0.0" stop-color="#ffffff" stop-opacity="0.3" />
-            <stop offset="1.0" stop-color="#ffffff" stop-opacity="1.0" />
+            <stop offset="0.0" stop-color="#1f2122" stop-opacity="0.3" />
+            <stop offset="1.0" stop-color="#1f2122" stop-opacity="1.0" />
         </linearGradient>
     </defs>
 
@@ -59,25 +59,25 @@
 
     
         <line x1="1090.0" y1="20" x2="1090.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="1050.0" y1="20" x2="1050.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="1010.0" y1="20" x2="1010.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="980.0" y1="20" x2="980.0" y2="389"
-              stroke="#000000" stroke-width="3" />
+              stroke="#ffffff" stroke-width="3" />
         
             <!-- Year label (top) -->
             <text x="970.0" y="15" class="year-text">
@@ -88,25 +88,25 @@
         
     
         <line x1="970.0" y1="20" x2="970.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="930.0" y1="20" x2="930.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="890.0" y1="20" x2="890.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="860.0" y1="20" x2="860.0" y2="389"
-              stroke="#000000" stroke-width="3" />
+              stroke="#ffffff" stroke-width="3" />
         
             <!-- Year label (top) -->
             <text x="850.0" y="15" class="year-text">
@@ -117,25 +117,25 @@
         
     
         <line x1="850.0" y1="20" x2="850.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="810.0" y1="20" x2="810.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="770.0" y1="20" x2="770.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="740.0" y1="20" x2="740.0" y2="389"
-              stroke="#000000" stroke-width="3" />
+              stroke="#ffffff" stroke-width="3" />
         
             <!-- Year label (top) -->
             <text x="730.0" y="15" class="year-text">
@@ -146,25 +146,25 @@
         
     
         <line x1="730.0" y1="20" x2="730.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="690.0" y1="20" x2="690.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="650.0" y1="20" x2="650.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="620.0" y1="20" x2="620.0" y2="389"
-              stroke="#000000" stroke-width="3" />
+              stroke="#ffffff" stroke-width="3" />
         
             <!-- Year label (top) -->
             <text x="610.0" y="15" class="year-text">
@@ -175,25 +175,25 @@
         
     
         <line x1="610.0" y1="20" x2="610.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="570.0" y1="20" x2="570.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="530.0" y1="20" x2="530.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="500.0" y1="20" x2="500.0" y2="389"
-              stroke="#000000" stroke-width="3" />
+              stroke="#ffffff" stroke-width="3" />
         
             <!-- Year label (top) -->
             <text x="490.0" y="15" class="year-text">
@@ -204,25 +204,25 @@
         
     
         <line x1="490.0" y1="20" x2="490.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="450.0" y1="20" x2="450.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="410.0" y1="20" x2="410.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="380.0" y1="20" x2="380.0" y2="389"
-              stroke="#000000" stroke-width="3" />
+              stroke="#ffffff" stroke-width="3" />
         
             <!-- Year label (top) -->
             <text x="370.0" y="15" class="year-text">
@@ -233,25 +233,25 @@
         
     
         <line x1="370.0" y1="20" x2="370.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="330.0" y1="20" x2="330.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="290.0" y1="20" x2="290.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="260.0" y1="20" x2="260.0" y2="389"
-              stroke="#000000" stroke-width="3" />
+              stroke="#ffffff" stroke-width="3" />
         
             <!-- Year label (top) -->
             <text x="250.0" y="15" class="year-text">
@@ -262,25 +262,25 @@
         
     
         <line x1="250.0" y1="20" x2="250.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="210.0" y1="20" x2="210.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="170.0" y1="20" x2="170.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
     
         <line x1="140.0" y1="20" x2="140.0" y2="389"
-              stroke="#000000" stroke-width="3" />
+              stroke="#ffffff" stroke-width="3" />
         
             <!-- Year label (top) -->
             <text x="130.0" y="15" class="year-text">
@@ -291,7 +291,7 @@
         
     
         <line x1="130.0" y1="20" x2="130.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
@@ -309,7 +309,7 @@
         
     
         <line x1="90.0" y1="20" x2="90.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
@@ -327,7 +327,7 @@
         
     
         <line x1="50.0" y1="20" x2="50.0" y2="389"
-              stroke="#666666" stroke-width="1" />
+              stroke="#888888" stroke-width="1" />
         
 
         
@@ -345,7 +345,7 @@
         
     
         <line x1="20.0" y1="20" x2="20.0" y2="389"
-              stroke="#000000" stroke-width="3" />
+              stroke="#ffffff" stroke-width="3" />
         
             <!-- Year label (top) -->
             <text x="10.0" y="15" class="year-text">
@@ -359,7 +359,7 @@
     
         <!-- Today line -->
         <line x1="210.0" y1="20" x2="210.0" y2="389"
-              stroke="#2563EB" stroke-width="2" stroke-dasharray="4,4" />
+              stroke="#60A5FA" stroke-width="2" stroke-dasharray="4,4" />
         <text x="210.0" y="15" class="today-text" text-anchor="middle">
             Today
         </text>
@@ -373,8 +373,8 @@
                     y="30"
                     width="80.0"
                     height="32"
-                    fill="#0C4B33"
-                    stroke="#0C4B33"
+                    fill="#1B7353"
+                    stroke="#1B7353"
                     stroke-width="2"
                 />
             
@@ -385,8 +385,8 @@
                     y="30"
                     width="280.0"
                     height="32"
-                    fill="#E6A100"
-                    stroke="#E6A100"
+                    fill="#F5A623"
+                    stroke="#F5A623"
                     stroke-width="2"
                 />
             
@@ -409,8 +409,8 @@
                     y="72"
                     width="80.0"
                     height="32"
-                    fill="#0C4B33"
-                    stroke="#0C4B33"
+                    fill="#1B7353"
+                    stroke="#1B7353"
                     stroke-width="2"
                 />
             
@@ -421,8 +421,8 @@
                     y="72"
                     width="80.0"
                     height="32"
-                    fill="#E6A100"
-                    stroke="#E6A100"
+                    fill="#F5A623"
+                    stroke="#F5A623"
                     stroke-width="2"
                 />
             
@@ -441,8 +441,8 @@
                     y="114"
                     width="80.0"
                     height="32"
-                    fill="#0C4B33"
-                    stroke="#0C4B33"
+                    fill="#1B7353"
+                    stroke="#1B7353"
                     stroke-width="2"
                 />
             
@@ -453,8 +453,8 @@
                     y="114"
                     width="80.0"
                     height="32"
-                    fill="#E6A100"
-                    stroke="#E6A100"
+                    fill="#F5A623"
+                    stroke="#F5A623"
                     stroke-width="2"
                 />
             
@@ -473,8 +473,8 @@
                     y="156"
                     width="80.0"
                     height="32"
-                    fill="#0C4B33"
-                    stroke="#0C4B33"
+                    fill="#1B7353"
+                    stroke="#1B7353"
                     stroke-width="2"
                 />
             
@@ -485,8 +485,8 @@
                     y="156"
                     width="280.0"
                     height="32"
-                    fill="#E6A100"
-                    stroke="#E6A100"
+                    fill="#F5A623"
+                    stroke="#F5A623"
                     stroke-width="2"
                 />
             
@@ -509,8 +509,8 @@
                     y="198"
                     width="120.0"
                     height="32"
-                    fill="#0C4B33"
-                    stroke="#0C4B33"
+                    fill="#1B7353"
+                    stroke="#1B7353"
                     stroke-width="2"
                 />
             
@@ -521,8 +521,8 @@
                     y="198"
                     width="240.0"
                     height="32"
-                    fill="#E6A100"
-                    stroke="#E6A100"
+                    fill="#F5A623"
+                    stroke="#F5A623"
                     stroke-width="2"
                 />
             
@@ -541,8 +541,8 @@
                     y="240"
                     width="120.0"
                     height="32"
-                    fill="#0C4B33"
-                    stroke="#0C4B33"
+                    fill="#1B7353"
+                    stroke="#1B7353"
                     stroke-width="2"
                 />
             
@@ -553,8 +553,8 @@
                     y="240"
                     width="240.0"
                     height="32"
-                    fill="#E6A100"
-                    stroke="#E6A100"
+                    fill="#F5A623"
+                    stroke="#F5A623"
                     stroke-width="2"
                 />
             
@@ -573,8 +573,8 @@
                     y="282"
                     width="120.0"
                     height="32"
-                    fill="#0C4B33"
-                    stroke="#0C4B33"
+                    fill="#1B7353"
+                    stroke="#1B7353"
                     stroke-width="2"
                 />
             
@@ -585,8 +585,8 @@
                     y="282"
                     width="240.0"
                     height="32"
-                    fill="#E6A100"
-                    stroke="#E6A100"
+                    fill="#F5A623"
+                    stroke="#F5A623"
                     stroke-width="2"
                 />
             
@@ -605,8 +605,8 @@
         y="335"
         width="106"
         height="40"
-        fill="#0C4B33"
-        stroke="#0C4B33" stroke-width="2"
+        fill="#1B7353"
+        stroke="#1B7353" stroke-width="2"
     />
     <text
         y="355"
@@ -635,8 +635,8 @@
         y="335"
         width="106"
         height="40"
-        fill="#E6A100"
-        stroke="#E6A100" stroke-width="2"
+        fill="#F5A623"
+        stroke="#F5A623" stroke-width="2"
     />
     <text
         y="355"
@@ -665,8 +665,8 @@
         y="335"
         width="106"
         height="40"
-        fill="#C0392B"
-        stroke="#C0392B" stroke-width="2"
+        fill="#E53935"
+        stroke="#E53935" stroke-width="2"
     />
     <text
         y="355"

@@ -13,41 +13,53 @@
             font-style: {{ config.font_style_lts }};
             fill: {{ colors.text_lts }};
         }
+        .eol-text {
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size }}px;
+            font-weight: {{ config.font_weight_lts }};
+            font-style: {{ config.font_style_lts }};
+            fill: {{ colors.text }};
+        }
         .month-text {
             font-family: {{ config.font_family }};
             font-size: {{ config.font_size }}px;
             fill: {{ colors.legend_text }};
-            stroke: #ffffff;
+            stroke: {{ colors.month_stroke }};
             stroke-width: 20px;
             paint-order: stroke;
             stroke-linecap: butt;
             stroke-linejoin: miter;
         }
-        .year-text{
+        .year-text {
             font-family: {{ config.font_family }};
             font-size: {{ config.font_size }}px;
             fill: {{ colors.legend_text }};
             margin-bottom: 4px;
         }
-        .release-text{
+        .today-text {
             font-family: {{ config.font_family }};
-            font-size: {{ config.font_size -2 }}px;
+            font-size: {{ config.font_size - 4 }}px;
+            font-weight: bold;
+            fill: {{ colors.today }};
+        }
+        .release-text {
+            font-family: {{ config.font_family }};
+            font-size: {{ config.font_size - 2 }}px;
         }
     </style>
 
     <defs>
         <linearGradient id="fade-right" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0.0" stop-color="#ffffff" stop-opacity="0.3" />
-            <stop offset="1.0" stop-color="#ffffff" stop-opacity="1.0" />
+            <stop offset="0.0" stop-color="{{ colors.fade_color }}" stop-opacity="0.3" />
+            <stop offset="1.0" stop-color="{{ colors.fade_color }}" stop-opacity="1.0" />
         </linearGradient>
     </defs>
 
     <rect width="100%" height="100%" fill="{{ colors.bg }}" />
 
-    {% for line in grid_lines| reverse%}
-
+    {% for line in grid_lines|reverse %}
         <line x1="{{ line.x }}" y1="{{ config.padding_top - 10 }}" x2="{{ line.x }}" y2="{{ svg_height - config.padding_bottom }}"
-              stroke="{{ colors.grid }}" stroke-width="{{ line.width }}" />
+              stroke="{{ line['line-color'] }}" stroke-width="{{ line.width }}" />
         {% if line.top_label %}
             <!-- Year label (top) -->
             <text x="{{ line.x - 10 }}" y="{{ config.padding_top - 15 }}" class="year-text">
@@ -55,11 +67,11 @@
             </text>
         {% endif %}
 
-         {% if line.bottom_label %}
+        {% if line.bottom_label %}
             <!-- Month label -->
             <text
                 x="{{ line.x - 6 }}"
-                y="{{ svg_height / 2 + 6}}"
+                y="{{ svg_height / 2 + 6 }}"
                 transform="rotate(-90, {{ line.x - 6 }}, {{ svg_height / 2 }})"
                 class="month-text"
                 text-anchor="middle"
@@ -68,53 +80,79 @@
                 {{ line.bottom_label }}
             </text>
         {% endif %}
-
     {% endfor %}
 
-    {% for release in releases %}
-        {% if release.mainstream_bar.width > 0 %}
-             <rect
-                x="{{ release.mainstream_bar.x }}"
-                y="{{ release.mainstream_bar.y }}"
-                width="{{ release.mainstream_bar.width }}"
-                height="{{ release.mainstream_bar.height }}"
-                fill="{{ release.mainstream_bar.fill }}"
-                stroke="{{ colors.mainstream }}"
-                stroke-width="2"
-            />
-        {% endif %}
-
-        {% if release.extended_bar.width > 0 %}
-            <rect
-                x="{{ release.extended_bar.x }}"
-                y="{{ release.extended_bar.y }}"
-                width="{{ release.extended_bar.width }}"
-                height="{{ release.extended_bar.height }}"
-                fill="{{ release.extended_bar.fill }}"
-                stroke="{{ colors.mainstream }}"
-                stroke-width="2"
-            />
-        {% endif %}
-
-        <text x="{{ release.version_text.x }}" y="{{ release.version_text.y }}" class="version-text">
-            {{ release.version_text.text }}
+    {% if today_line %}
+        <!-- Today line -->
+        <line x1="{{ today_line.x }}" y1="{{ config.padding_top - 10 }}" x2="{{ today_line.x }}" y2="{{ svg_height - config.padding_bottom }}"
+              stroke="{{ colors.today }}" stroke-width="{{ config.today_line_width }}" stroke-dasharray="4,4" />
+        <text x="{{ today_line.x }}" y="{{ config.padding_top - 15 }}" class="today-text" text-anchor="middle">
+            {{ today_line.label }}
         </text>
+    {% endif %}
 
-        {% if release.lts_text %}
-            <text x="{{ release.lts_text.x }}" y="{{ release.lts_text.y }}" class="lts-text">
-                {{ release.lts_text.text }}
+    {% for release in releases %}
+        {% if release.is_eol %}
+            <rect
+                x="{{ release.eol_bar.x }}"
+                y="{{ release.eol_bar.y }}"
+                width="{{ release.eol_bar.width }}"
+                height="{{ release.eol_bar.height }}"
+                fill="{{ release.eol_bar.fill }}"
+                stroke="{{ release.eol_bar.stroke }}"
+                stroke-width="2"
+            />
+            <text x="{{ release.version_text.x }}" y="{{ release.version_text.y }}" class="version-text">
+                {{ release.version_text.text }}
             </text>
+            <text x="{{ release.eol_text.x }}" y="{{ release.eol_text.y }}" class="eol-text">
+                {{ release.eol_text.text }}
+            </text>
+        {% else %}
+            {% if release.mainstream_bar.width > 0 %}
+                <rect
+                    x="{{ release.mainstream_bar.x }}"
+                    y="{{ release.mainstream_bar.y }}"
+                    width="{{ release.mainstream_bar.width }}"
+                    height="{{ release.mainstream_bar.height }}"
+                    fill="{{ release.mainstream_bar.fill }}"
+                    stroke="{{ release.mainstream_bar.stroke }}"
+                    stroke-width="2"
+                />
+            {% endif %}
+
+            {% if release.extended_bar.width > 0 %}
+                <rect
+                    x="{{ release.extended_bar.x }}"
+                    y="{{ release.extended_bar.y }}"
+                    width="{{ release.extended_bar.width }}"
+                    height="{{ release.extended_bar.height }}"
+                    fill="{{ release.extended_bar.fill }}"
+                    stroke="{{ release.extended_bar.stroke }}"
+                    stroke-width="2"
+                />
+            {% endif %}
+
+            <text x="{{ release.version_text.x }}" y="{{ release.version_text.y }}" class="version-text">
+                {{ release.version_text.text }}
+            </text>
+
+            {% if release.lts_text %}
+                <text x="{{ release.lts_text.x }}" y="{{ release.lts_text.y }}" class="lts-text">
+                    {{ release.lts_text.text }}
+                </text>
+            {% endif %}
         {% endif %}
     {% endfor %}
 
     <!-- Legend -->
     <rect
-        x="{{ legend.mainstream_box.x + config.legend_padding }}"
+        x="{{ legend.mainstream_box.x }}"
         y="{{ legend.mainstream_box.y }}"
         width="{{ legend.mainstream_box.width }}"
-        height="{{ legend.mainstream_box.height}}"
+        height="{{ legend.mainstream_box.height }}"
         fill="{{ legend.mainstream_box.fill }}"
-        stroke="{{ colors.mainstream }}" stroke-width="2"
+        stroke="{{ legend.mainstream_box.stroke }}" stroke-width="2"
     />
     <text
         y="{{ legend.mainstream_text.y + 6 }}"
@@ -123,31 +161,53 @@
     >
         {% for line in legend.mainstream_text.text %}
             <tspan
-                x="{{ legend.mainstream_text.x + config.legend_padding + (0 if loop.first else 8) }}"
+                x="{{ legend.mainstream_text.x + (0 if loop.first else 8) }}"
                 dy="{{ '-0.3em' if loop.first else '1.2em' }}"
             >
                 {{ line }}
             </tspan>
         {% endfor %}
-
     </text>
 
     <rect
-        x="{{ legend.extended_box.x + config.legend_padding}}"
+        x="{{ legend.extended_box.x }}"
         y="{{ legend.extended_box.y }}"
-        width="{{ legend.extended_box.width}}"
-        height="{{ legend.extended_box.height}}"
+        width="{{ legend.extended_box.width }}"
+        height="{{ legend.extended_box.height }}"
         fill="{{ legend.extended_box.fill }}"
-        stroke="{{ colors.mainstream }}" stroke-width="2"
+        stroke="{{ legend.extended_box.stroke }}" stroke-width="2"
     />
     <text
-        y="{{ legend.mainstream_text.y + 6 }}"
+        y="{{ legend.extended_text.y + 6 }}"
         fill="{{ legend.extended_text.fill }}"
         class="release-text"
     >
         {% for line in legend.extended_text.text %}
             <tspan
-                x="{{ legend.extended_text.x + config.legend_padding + (3 if loop.first else 7) }}"
+                x="{{ legend.extended_text.x + (3 if loop.first else 7) }}"
+                dy="{{ '-0.3em' if loop.first else '1.2em' }}"
+            >
+                {{ line }}
+            </tspan>
+        {% endfor %}
+    </text>
+
+    <rect
+        x="{{ legend.eol_box.x }}"
+        y="{{ legend.eol_box.y }}"
+        width="{{ legend.eol_box.width }}"
+        height="{{ legend.eol_box.height }}"
+        fill="{{ legend.eol_box.fill }}"
+        stroke="{{ legend.eol_box.stroke }}" stroke-width="2"
+    />
+    <text
+        y="{{ legend.eol_text.y + 6 }}"
+        fill="{{ legend.eol_text.fill }}"
+        class="release-text"
+    >
+        {% for line in legend.eol_text.text %}
+            <tspan
+                x="{{ legend.eol_text.x + (10 if loop.first else 18) }}"
                 dy="{{ '-0.3em' if loop.first else '1.2em' }}"
             >
                 {{ line }}
