@@ -117,6 +117,26 @@ class ModelsTests(TestCase):
         self.assertFalse(d.is_dev)
         self.assertFalse(d.is_preview)
 
+    def test_most_recent_calendar_patch_release_considered(self):
+        today = datetime.date.today()
+        day = datetime.timedelta(1)
+        r = Release.objects.create(
+            version="2028", is_active=True, date=today - 15 * day
+        )
+        d = DocumentRelease.objects.create(release=r)
+        r2 = Release.objects.create(
+            version="2028.1", is_active=True, date=today - 5 * day
+        )
+
+        # Publishing 2028.1 ends the life of 2028 itself, but not that of the
+        # series, whose patch number is the minor component.
+        r.refresh_from_db()
+        self.assertEqual(r.eol_date, r2.date)
+
+        self.assertTrue(d.is_supported)
+        self.assertFalse(d.is_dev)
+        self.assertFalse(d.is_preview)
+
 
 class ManagerTests(TestCase):
     @classmethod

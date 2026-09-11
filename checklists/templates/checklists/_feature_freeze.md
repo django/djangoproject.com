@@ -37,7 +37,7 @@
     {% for i in prereleases %}
     - Version: {{ next_version }}{% cycle 'a1' 'b1' 'rc1' '' %}
         - Is active: False
-        - Mark LTS if applicable
+        - Mark LTS if applicable (always set for calendar versions)
         - Set scheduled release date
     {% endfor %}
     - Check the generated roadmap at https://www.djangoproject.com/download/{{ next_version }}/roadmap/.
