@@ -1,3 +1,4 @@
+{% load hosts %}
 {% if banner %}
   <div class="banner">
     <h2>{{ banner.title }}</h2>
@@ -6,6 +7,6 @@
     {% if banner.cta_url and banner.cta_label %}
       <a id="banner-cta" class="cta" href="{{ banner.cta_url }}">{{ banner.cta_label }}</a>
     {% endif %}
-    <a class="link-readmore" href="https://www.djangoproject.com/sponsor/">Become a Sponsor</a>
+    <a class="link-readmore" href="{% host_url 'sponsor' host 'www' %}">Become a Sponsor</a>
   </div>
 {% endif %}
