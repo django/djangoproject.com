@@ -1,0 +1,70 @@
+{% extends "sponsor/base.html" %}
+{% load humanize static %}
+{% block title %}Sponsor Django’s website and documentation{% endblock %}
+
+{% block og_title %}Sponsor Django’s website and documentation{% endblock %}
+
+{% block description %}Reach Django developers with a weekly or monthly banner sponsorship that supports the Django Software Foundation.{% endblock %}
+
+{% block content %}
+  <nav class="sponsor-breadcrumb" aria-label="Breadcrumb"><a href="{% url 'sponsor' %}">Sponsorship plans</a> <span aria-hidden="true">/</span> Banner sponsorship</nav>
+  <div class="sponsor-intro">
+    <p class="sponsor-eyebrow">For marketing teams</p>
+    <h1>Reach Django developers<br>where they work.</h1>
+    <p>Put your organization in front of developers using the Django website and official documentation. Support the Foundation while introducing your tools, services, or next opportunity to the community.</p>
+    <div class="sponsor-actions"><a href="#contact" class="plan-button">Become a banner sponsor →</a><a href="#pricing">Explore weekly and monthly options ↓</a></div>
+  </div>
+  {% include "sponsor/stats.html" %}
+  <section class="sponsor-section">
+    <p class="sponsor-eyebrow">Your message, in context</p>
+    <h2>A visible place in the developer’s day.</h2>
+    <p>The banner appears across the Django website and documentation, with some pages excluded. Each sponsorship includes a title, a short message, and a button linking to your site.</p>
+    <figure class="sponsor-placement">
+      <img src="{% static 'img/sponsor/placement.png' %}" width="1280" height="351" alt="The Django overview page with the sponsorship banner marked by a dashed outline and a Your banner label.">
+      <figcaption class="sponsor-note">Example placement on the Django overview page.</figcaption>
+    </figure>
+    <div class="plan-benefit-groups">
+      <section class="plan-benefit-group"><h3>Meet developers researching their next tool</h3><p>Documentation, downloads, and release news bring developers back to Django as they build and maintain applications.</p></section>
+      <section class="plan-benefit-group"><h3>Fund the work behind the framework</h3><p>Sponsorship supports the Django Software Foundation, including the Fellows who review contributions and handle security releases.</p></section>
+    </div>
+  </section>
+  <section class="sponsor-section" id="pricing">
+    <p class="sponsor-eyebrow">Choose your campaign</p>
+    <h2>A week for your launch. A month for your brand.</h2>
+    <div class="plan-benefit-groups">
+      {% for level in levels %}
+        <article class="plan-card">
+          <h3>{{ level.name }}</h3>
+          <p class="plan-price">${{ level.amount|intcomma }}<span>/ {{ level.period }} · USD</span></p>
+          <p>{{ level.blurb }}</p>
+          <ul><li>A banner with your title, message, and link.</li><li>A listing as a supporter of the DSF.</li></ul>
+          <a href="?level={{ level.slug }}#contact" class="plan-button">Sponsor for {{ level.name|lower }} →</a>
+        </article>
+      {% endfor %}
+    </div>
+    <p class="sponsor-note">Proposed program pricing. The Foundation confirms dates, availability, and sponsorship fit before booking.</p>
+    <p>Looking for year-round recognition? <a href="{% url 'sponsor' %}#corporate-membership-tiers">Explore annual corporate membership</a>, with benefits that vary by tier.</p>
+  </section>
+  <section class="sponsor-section">
+    <h2>How banner sponsorship works</h2>
+    <div class="plan-benefit-groups">
+      <section class="plan-benefit-group"><h3>Request your dates</h3><p>Send the week or month you have in mind. Dates are first come, first served, subject to confirmation by the Foundation.</p></section>
+      <section class="plan-benefit-group"><h3>Share your message</h3><p>Tell us about your organization and what the banner should say. The DSF reviews sponsorships for relevance to Django developers.</p></section>
+    </div>
+  </section>
+  <section class="sponsor-section sponsor-form plan-contact" id="contact">
+    <h2>Become a banner sponsor</h2>
+    <p>Tell us about your organization, the dates you’d like, and your message. We’ll follow up about availability.</p>
+    <form action="{% url 'sponsor_banner' %}#contact" method="post" accept-charset="utf-8">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div>{{ form.name.as_field_group }}</div>
+      <div>{{ form.email.as_field_group }}</div>
+      <div>{{ form.message_subject.as_field_group }}</div>
+      <div>{{ form.body.as_field_group }}</div>
+      {{ form.captcha }}
+      {{ form.captcha.errors }}
+      <div class="submit"><button type="submit" class="plan-button">Send banner inquiry →</button></div>
+    </form>
+  </section>
+{% endblock content %}

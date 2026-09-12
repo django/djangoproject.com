@@ -1,0 +1,13 @@
+<section class="sponsor-section" aria-label="Django in numbers">
+  <p class="sponsor-eyebrow">A global developer community</p>
+  <div class="sponsor-stat-grid">
+    {% for stat in stats %}
+      <div>
+        <p class="plan-price">{{ stat.value }}</p>
+        <p>{{ stat.label }}</p>
+        <p class="sponsor-note"><a href="{{ stat.url }}">{{ stat.source }}</a><br>{{ stat.date }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  <p class="sponsor-note">These figures describe Django’s ecosystem. Website hits, downloads, and stars are different measures; they are not unique visitors or guaranteed banner impressions.</p>
+</section>
