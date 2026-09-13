@@ -1197,8 +1197,5 @@ class ReleaseStorageTests(TestCase):
                 },
             }
         ):
-            try:
-                storage = get_storage()
-                self.assertTrue(getattr(storage, "file_overwrite", False))
-            except Exception:
-                pass
+            storage = get_storage()
+            self.assertTrue(getattr(storage, "file_overwrite", False))

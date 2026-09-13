@@ -157,14 +157,16 @@ class Command(BaseCommand):
         def zipfile_inclusion_filter(file_path):
             return ".doctrees" not in file_path.parts
 
-        with tempfile.NamedTemporaryFile(suffix=".zip") as tmp:
-            with zipfile.ZipFile(tmp, "w", compression=zipfile.ZIP_DEFLATED) as zf:
-                for root, dirs, files in os.walk(str(html_build_dir)):
-                    for f in files:
-                        file_path = Path(os.path.join(root, f))
-                        if zipfile_inclusion_filter(file_path):
-                            rel_path = str(file_path.relative_to(html_build_dir))
-                            zf.write(str(file_path), rel_path)
+        with (
+            tempfile.NamedTemporaryFile(suffix=".zip") as tmp,
+            zipfile.ZipFile(tmp, "w", compression=zipfile.ZIP_DEFLATED) as zf,
+        ):
+            for root, dirs, files in os.walk(str(html_build_dir)):
+                for f in files:
+                    file_path = Path(os.path.join(root, f))
+                    if zipfile_inclusion_filter(file_path):
+                        rel_path = str(file_path.relative_to(html_build_dir))
+                        zf.write(str(file_path), rel_path)
             tmp.seek(0)
             if default_storage.exists(target_path):
                 default_storage.delete(target_path)

@@ -52,9 +52,7 @@ MIDDLEWARE = (
 
 SESSION_COOKIE_SECURE = True
 
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME") or SECRETS.get(
-    "aws_storage_bucket_name"
-)
+AWS_STORAGE_BUCKET_NAME = SECRETS.get("aws_storage_bucket_name")
 if AWS_STORAGE_BUCKET_NAME:
     STORAGES = {
         "default": {
@@ -64,12 +62,8 @@ if AWS_STORAGE_BUCKET_NAME:
             "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
         },
     }
-    AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME") or SECRETS.get(
-        "aws_s3_region_name"
-    )
-    if aws_s3_endpoint_url := (
-        os.getenv("AWS_S3_ENDPOINT_URL") or SECRETS.get("aws_s3_endpoint_url")
-    ):
+    AWS_S3_REGION_NAME = SECRETS.get("aws_s3_region_name")
+    if aws_s3_endpoint_url := (SECRETS.get("aws_s3_endpoint_url")):
         AWS_S3_ENDPOINT_URL = aws_s3_endpoint_url
     THUMBNAIL_STORAGE = STORAGES["default"]["BACKEND"]
 else:
