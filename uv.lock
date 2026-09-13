@@ -424,7 +424,7 @@ dev = [
     { name = "watchdog", specifier = "==6.0.0" },
 ]
 prod = [
-    { name = "django-storages", extras = ["boto3"], specifier = ">=1.14" },
+    { name = "django-storages", extras = ["boto3"], specifier = "==1.14.6" },
     { name = "gunicorn", specifier = "==26.0.0" },
     { name = "psycopg", extras = ["c"], specifier = "==3.3.4" },
     { name = "redis", specifier = "==8.1.0" },

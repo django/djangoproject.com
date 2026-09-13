@@ -484,18 +484,20 @@ Testing S3 Storage Locally with MinIO
 
 To manually test S3-compatible media storage locally without an AWS account:
 
-1. Start the MinIO container using Docker Compose::
+1. Start the containers using Docker Compose (MinIO starts automatically and creates the ``djangoproject`` bucket)::
 
-    docker compose up -d minio
+    docker compose up -d
+
+   *(Alternatively, to start MinIO individually: ``docker compose up -d minio``).*
 
 2. Access the MinIO Web Console at http://localhost:9001 in your browser:
 
    - **Username**: ``minioadmin``
    - **Password**: ``minioadmin``
 
-3. Create a bucket named ``djangoproject`` in the MinIO Web Console if it does not already exist (Object Browser -> Create Bucket).
+   *(After logging in, you will see the ``djangoproject`` bucket created automatically).*
 
-4. Configure Django to use local MinIO by adding the S3 keys to your ``secrets.json`` (or setting environment variables)::
+3. Configure Django to use local MinIO by adding the S3 keys to your ``secrets.json``::
 
     {
       "aws_storage_bucket_name": "djangoproject",
@@ -505,11 +507,9 @@ To manually test S3-compatible media storage locally without an AWS account:
       "aws_secret_access_key": "minioadmin"
     }
 
-   *(Note: When running Django inside Docker Compose, set ``"aws_s3_endpoint_url": "http://minio:9000"``).*
+4. Upload a media file via the Django admin (e.g. a logo image under Fundraising -> In-kind donors at http://www.djangoproject.localhost:8000/admin/fundraising/inkinddonor/add/).
 
-5. Upload a media file via the Django admin (e.g. a logo image under Fundraising -> In-kind donors at http://www.djangoproject.localhost:8000/admin/fundraising/inkinddonor/add/).
-
-6. Verify that the uploaded file appears in the ``djangoproject`` bucket in the MinIO Console (http://localhost:9001) and can be retrieved.
+5. Verify that the uploaded file appears in the ``djangoproject`` bucket in the MinIO Console (http://localhost:9001) and can be retrieved.
 
 
 git hooks

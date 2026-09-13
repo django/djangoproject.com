@@ -393,7 +393,7 @@ class S3StorageSettingsTests(TestCase):
             self.assertEqual(backend, "django.core.files.storage.FileSystemStorage")
 
 
-class SorlThumbnailS3Tests(TestCase):
+class LogoThumbnailMixinTests(TestCase):
     def test_logo_thumbnail_mixin(self):
         from djangoproject.thumbnails import LogoThumbnailMixin
 
