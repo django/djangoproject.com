@@ -479,6 +479,39 @@ Running Locally with Docker
 
 7. View the docs at http://docs.djangoproject.localhost:8000/.
 
+Testing S3 Storage Locally with MinIO
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To manually test S3-compatible media storage locally without an AWS account:
+
+1. Start the MinIO container using Docker Compose::
+
+    docker compose up -d minio
+
+2. Access the MinIO Web Console at http://localhost:9001 in your browser:
+
+   - **Username**: ``minioadmin``
+   - **Password**: ``minioadmin``
+
+3. Create a bucket named ``djangoproject`` in the MinIO Web Console if it does not already exist (Object Browser -> Create Bucket).
+
+4. Configure Django to use local MinIO by adding the S3 keys to your ``secrets.json`` (or setting environment variables)::
+
+    {
+      "aws_storage_bucket_name": "djangoproject",
+      "aws_s3_endpoint_url": "http://127.0.0.1:9000",
+      "aws_s3_region_name": "us-east-1",
+      "aws_access_key_id": "minioadmin",
+      "aws_secret_access_key": "minioadmin"
+    }
+
+   *(Note: When running Django inside Docker Compose, set ``"aws_s3_endpoint_url": "http://minio:9000"``).*
+
+5. Upload a media file via the Django admin (e.g. a logo image under Fundraising -> In-kind donors at http://www.djangoproject.localhost:8000/admin/fundraising/inkinddonor/add/).
+
+6. Verify that the uploaded file appears in the ``djangoproject`` bucket in the MinIO Console (http://localhost:9001) and can be retrieved.
+
+
 git hooks
 ---------
     `pre-commit <https://pre-commit.com>`_ is a framework to run hooks written in many languages, and it manages the language toolchain and dependencies for running the hooks.
