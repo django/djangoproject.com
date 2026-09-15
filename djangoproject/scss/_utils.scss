@@ -41,6 +41,7 @@ $black: #0e1117;
 $black-light-5: lighten($black, 5);
 $font-path: "../font";
 $logo-bg-dark: #272c27;
+$sans-serif-stack: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
 
 
 // @font-face declarations
@@ -115,7 +116,7 @@ $logo-bg-dark: #272c27;
 
 // Font Family Mixins
 @mixin sans-serif {
-    font-family: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
+    font-family: $sans-serif-stack;
 }
 
 @mixin monospace {
