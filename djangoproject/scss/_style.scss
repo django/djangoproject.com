@@ -2558,11 +2558,13 @@ h2+.list-link-soup {
     }
 }
 
-.versionadded,
-.versionchanged,
-.versionmodified {
+// Version annotations. Each Django version's docs are built from their own
+// source, so two markup shapes must work at once.
+div.versionadded,
+div.versionchanged,
+div.versionremoved,
+div.deprecated {
     @include sans-serif;
-    font-weight: bold;
     margin-bottom: 20px;
 
     padding: 10px 13px;
@@ -2570,37 +2572,27 @@ h2+.list-link-soup {
     border-radius: 4px;
 
     p {
-        font-weight: normal;
         margin-top: 0.3em;
 
+        // `span.versionmodified` shares this paragraph.
+        &:first-child {
+            margin-top: 0;
+        }
+
         &:last-child {
             margin-bottom: 0;
         }
     }
-}
 
-.deprecated {
-    @extend .versionchanged;
-
-    .versionadded,
-    .versionchanged,
-    .versionmodified {
-        border: none;
-        padding: 0;
-        margin-bottom: 0;
+    // `span.versionmodified` appears just inside the first `p`. (It also has
+    // the directive name as a class, hence scoping the box above to `div`.)
+    // `span.title` is used only for versionadded and versionchanged in Django
+    // 6.1 and earlier. It appears before (outside) the first `p`.
+    span.versionmodified,
+    span.title {
         display: block;
+        font-weight: bold;
     }
-
-    p {
-        font-weight: normal;
-        margin-top: 0;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
-
-
 }
 
 dl.function,
