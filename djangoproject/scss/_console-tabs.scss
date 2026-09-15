@@ -63,7 +63,12 @@
             }
 
             .clipboard-success {
-                @include monospace;
+                /* scss @include monospace */
+                font-family: "Fira Mono", Consolas, Menlo, Monaco, "Courier New", Courier, monospace;
+                font-variant-ligatures: no-common-ligatures; /* disables the common ligatures only */
+                text-rendering: optimizeSpeed; /* for Safari 7.x */
+                overflow-wrap: break-word;
+                /* scss end */
                 font-size: 80%;
                 color: var(--link-color);
                 margin-right: 6px;

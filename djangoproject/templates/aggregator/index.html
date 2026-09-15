@@ -69,7 +69,7 @@
   <ul class="list-collapsing">
     {% for feedtype, latest_feeds in feedtype_list %}
       <li id="{{ feedtype.slug }}">
-        <h2 class="bullet-icon"><i class="icon icon-rss blue"></i> {{ feedtype.name }}</h2>
+        <h2 class="bullet-icon"><i class="icon icon-rss blue fa fa-rss"></i> {{ feedtype.name }}</h2>
         <div class="collapsing-content">
           <dl class="list-links">
             {% for item in latest_feeds %}

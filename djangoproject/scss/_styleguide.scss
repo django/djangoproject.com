@@ -1,4 +1,4 @@
-// Styleguide helper classes. Not intended for production use.
+/* Styleguide helper classes. Not intended for production use. */
 
 .styleguide {
 
@@ -15,7 +15,8 @@
             font-weight: 700;
             display: block;
             color: var(--hairline-color);
-            @include sans-serif;
+            /* scss @include sans-serif */
+            font-family: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
             text-align: left;
             padding: 10px 0;
         }
@@ -53,7 +54,17 @@
         margin: 0;
         padding: 0;
         list-style: none;
-        @include clearfix;
+        /* scss @include clearfix */
+        &:before,
+        &:after {
+            content: "";
+            display: table;
+        }
+
+        &:after {
+            clear: both;
+        }
+        /* scss end */
         margin: 30px 0;
 
         li {
@@ -64,13 +75,13 @@
 
             float: left;
 
-            // Primary
+            /* Primary */
             &.text {
                 background: var(--body-fg);
             }
 
             &.green-dark {
-                background: $green-dark;
+                background: var(--green-dark);
             }
 
             &.green {
@@ -78,7 +89,7 @@
             }
 
             &.green-light {
-                background: $green-light;
+                background: var(--green-light);
             }
 
             &.white {
@@ -90,7 +101,7 @@
                 background: var(--error-dark);
             }
 
-            // Secondary
+            /* Secondary */
             &.text-light {
                 background: var(--text-light);
             }
@@ -112,7 +123,7 @@
             }
 
             &.red {
-                background: $red;
+                background: var(--red);
             }
 
         }
@@ -123,7 +134,8 @@
     }
 
     #icons .icon {
-        @include font-size(32);
+        /* scss @include font-size(32) */
+        font-size: 2rem;
         color: var(--secondary);
         padding: 0 .2em;
     }

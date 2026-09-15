@@ -1,6 +1,7 @@
-// Pygments Code Hightlighting Styles
+/* Pygments Code Hightlighting Styles */
 .highlight {
-    @include font-size(14);
+    /* scss @include font-size(14) */
+    font-size: 0.875rem;
     border: 1px solid var(--code-border);
     background: var(--code-bg);
     overflow: auto;
@@ -15,7 +16,8 @@
 
 pre.literal-block,
 .literal-block {
-    @include font-size(14);
+    /* scss @include font-size(14) */
+    font-size: 0.875rem;
     border: 1px solid var(--code-border);
     background: var(--code-bg);
     overflow: auto;
@@ -29,7 +31,12 @@ html[data-theme="light"],
     .code-block-caption {
         background: var(--secondary-accent);
         color: var(--code-block-title);
-        @include monospace;
+        /* scss @include monospace */
+        font-family: "Fira Mono", Consolas, Menlo, Monaco, "Courier New", Courier, monospace;
+        font-variant-ligatures: no-common-ligatures; /* disables the common ligatures only */
+        text-rendering: optimizeSpeed; /* for Safari 7.x */
+        overflow-wrap: break-word;
+        /* scss end */
         font-size: 1em;
         padding: 5px 20px;
         border-radius: 4px 4px 0 0;
@@ -41,11 +48,16 @@ html[data-theme="light"],
         }
     }
 
-    // For Django 2.0 docs and older.
+    /* For Django 2.0 docs and older. */
     .snippet-filename {
         background: var(--secondary-accent);
         color: var(--code-fg);
-        @include monospace;
+        /* scss @include monospace */
+        font-family: "Fira Mono", Consolas, Menlo, Monaco, "Courier New", Courier, monospace;
+        font-variant-ligatures: no-common-ligatures; /* disables the common ligatures only */
+        text-rendering: optimizeSpeed; /* for Safari 7.x */
+        overflow-wrap: break-word;
+        /* scss end */
         font-size: 1em;
         padding: 5px 20px;
         border-radius: 4px 4px 0 0;

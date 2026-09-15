@@ -108,7 +108,7 @@ window.addEventListener('keydown', function (e) {
 
   button_el.classList.add('btn-clipboard');
   button_el.setAttribute('title', 'Copy this code');
-  button_el.innerHTML = '<i class="icon icon-clipboard"></i>';
+  button_el.innerHTML = '<i class="icon icon-clipboard fa fa-clipboard"></i>';
 
   document
     .querySelectorAll('.snippet-filename, .code-block-caption')
