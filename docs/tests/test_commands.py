@@ -10,6 +10,7 @@ from sphinx.errors import SphinxError
 from ..management.commands.build_doc_release import Command
 from ..management.commands.update_docs import Command as UpdateDocsCommand
 from ..models import DocumentRelease
+from ..utils import setup_stable_symlink
 
 
 class HtmlBuilderNameTests(TestCase):
@@ -99,6 +100,62 @@ class BuildReleaseSubprocessInvocationTests(TestCase):
                 "2",
             ]
         )
+
+
+class StableSymlinkTests(TestCase):
+    """The web server serves pot files from <lang>/stable/_built/gettext/,
+    so the <lang>/stable link must track the is_default release."""
+
+    def setUp(self):
+        self.lang = "en"
+        self.version = "dev"
+
+    def test_creates_stable_link_pointing_at_version_dir(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / self.lang / self.version).mkdir(parents=True)
+            with override_settings(DOCS_BUILD_ROOT=root):
+                setup_stable_symlink(self.lang, self.version)
+            stable = root / self.lang / "stable"
+            self.assertTrue(stable.is_symlink())
+            self.assertEqual(
+                stable.resolve(), (root / self.lang / self.version).resolve()
+            )
+
+    def test_repoints_stale_stable_link(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / self.lang / self.version).mkdir(parents=True)
+            (root / self.lang / "6.0").mkdir()
+            stale = root / self.lang / "stable"
+            stale.symlink_to(root / self.lang / "6.0", target_is_directory=True)
+            with override_settings(DOCS_BUILD_ROOT=root):
+                setup_stable_symlink(self.lang, self.version)
+            self.assertEqual(
+                stale.resolve(), (root / self.lang / self.version).resolve()
+            )
+
+    def test_existing_correct_link_is_kept(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / self.lang / self.version).mkdir(parents=True)
+            stale = root / self.lang / "stable"
+            with override_settings(DOCS_BUILD_ROOT=root):
+                setup_stable_symlink(self.lang, self.version)
+                mtime = stale.lstat().st_mtime_ns
+                setup_stable_symlink(self.lang, self.version)
+            self.assertEqual(mtime, stale.lstat().st_mtime_ns)
+
+    def test_refuses_to_replace_non_symlink(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / self.lang / self.version).mkdir(parents=True)
+            (root / self.lang / "stable").mkdir()
+            with (
+                override_settings(DOCS_BUILD_ROOT=root),
+                self.assertRaisesMessage(RuntimeError, "stable"),
+            ):
+                setup_stable_symlink(self.lang, self.version)
 
 
 class UpdateDocsResilienceTests(TestCase):
