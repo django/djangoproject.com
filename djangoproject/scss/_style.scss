@@ -2575,7 +2575,8 @@ div.deprecated {
 
     p {
         font-weight: normal;
-        margin-top: 0.3em;
+        // Tighter than body text, so the box reads as one unit.
+        margin: 0.3em 0;
 
         // The label shares this paragraph.
         &:first-child {
@@ -2592,6 +2593,8 @@ div.deprecated {
     .versionmodified {
         display: block;
         font-weight: bold;
+        // Match the gap a span.title label gets, so both shapes look alike.
+        margin-bottom: 0.3em;
     }
 }
 
