@@ -382,8 +382,7 @@ if AWS_STORAGE_BUCKET_NAME:
     AWS_S3_REGION_NAME = SECRETS.get("aws_s3_region_name")
     AWS_ACCESS_KEY_ID = SECRETS.get("aws_access_key_id")
     AWS_SECRET_ACCESS_KEY = SECRETS.get("aws_secret_access_key")
-    if aws_s3_endpoint_url := SECRETS.get("aws_s3_endpoint_url"):
-        AWS_S3_ENDPOINT_URL = aws_s3_endpoint_url
+    AWS_S3_ENDPOINT_URL = SECRETS.get("aws_s3_endpoint_url")
     THUMBNAIL_STORAGE = STORAGES["default"]["BACKEND"]
 else:
     STORAGES = {
