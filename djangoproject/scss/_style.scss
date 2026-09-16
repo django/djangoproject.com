@@ -2572,7 +2572,8 @@ div.deprecated {
     border-radius: 4px;
 
     p {
-        margin-top: 0.3em;
+        // Tighter than body text, so the box reads as one unit.
+        margin: 0.3em 0;
 
         // `span.versionmodified` shares this paragraph.
         &:first-child {
@@ -2592,6 +2593,12 @@ div.deprecated {
     span.title {
         display: block;
         font-weight: bold;
+
+        // A directive with no body renders as the label alone, and then the
+        // gap would just pad the bottom of the box.
+        &:not(:only-child) {
+            margin-bottom: 0.3em;
+        }
     }
 }
 
