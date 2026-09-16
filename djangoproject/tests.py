@@ -365,3 +365,23 @@ class EndToEndTests(ReleaseMixin, StaticLiveServerTestCase):
                 page.locator(".theme-toggle").click()
                 theme = page.evaluate("document.documentElement.dataset.theme")
                 self.assertEqual(theme, expected_theme)
+
+
+class LogoThumbnailMixinTests(TestCase):
+    def test_logo_thumbnail_mixin(self):
+        from djangoproject.thumbnails import LogoThumbnailMixin
+
+        class TestModel(LogoThumbnailMixin):
+            def __init__(self, logo_name):
+                class DummyLogo:
+                    name = logo_name
+
+                    def __bool__(self):
+                        return bool(self.name)
+
+                self.logo = DummyLogo()
+
+        obj = TestModel("test_logo.png")
+        self.assertFalse(obj.logo_is_svg)
+        svg_obj = TestModel("test_logo.svg")
+        self.assertTrue(svg_obj.logo_is_svg)
