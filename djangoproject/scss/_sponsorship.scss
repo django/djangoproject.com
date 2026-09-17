@@ -7,6 +7,9 @@
   th:not(:first-child), td:not(:first-child) { text-align: center; }
   table.sponsor-tiers td:empty::after { content: "\2013"; color: color-mix(in srgb, var(--body-fg) 32%, transparent); }
   th:first-child { width: 32%; }
+  // Give row labels the bottom border that td already carries, so each row's
+  // line spans the full table and every section heading reads as its own band.
+  tbody th[scope="row"] { border-bottom: 1px solid var(--hairline-color); }
   thead th { height: var(--tier-header-height); box-sizing: border-box; background: var(--sidebar-bg); border-bottom: 2px solid var(--primary-accent); }
   .sponsor-comparison-heading th {
     background: var(--sidebar-bg);
@@ -19,10 +22,59 @@
     overflow: auto;
     table.sponsor-tiers { min-width: 1000px; }
   }
+  @media (max-width: 700px) {
+    // Six tier columns at 1000px leave a phone showing the labels and little
+    // else. Tightened cells fit two to three tiers beside the pinned column.
+    th, td { font-size: 13px; padding: 10px 8px; }
+    table.sponsor-tiers { min-width: 760px; }
+    table.sponsor-tiers th:first-child { width: 160px; }
+  }
   @media print {
     overflow: visible;
     max-height: none;
-    thead, .sponsor-comparison-heading th { position: static; transform: none !important; }
+    thead,
+    .sponsor-comparison-heading th,
+    .sponsor-comparison-heading h3,
+    .sponsor-comparison-heading p,
+    th:first-child { position: static; transform: none !important; }
+  }
+}
+
+// Only shown at the widths where the table actually scrolls sideways.
+.sponsor-comparison-hint {
+  display: none;
+  margin: 24px 0 -12px;
+  font-size: 13px;
+  color: color-mix(in srgb, var(--body-fg) 70%, transparent);
+  @media (max-width: 1000px) { display: block; }
+  @media print { display: none; }
+}
+
+.sponsor-comparison {
+  // The table scrolls sideways below this width, so pin the feature column:
+  // without it the row label slides out of view and the ticks mean nothing.
+  // Section headings span every column, and are excluded by :not([colspan]).
+  @media (max-width: 1000px) {
+    th:first-child:not([colspan]) {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      box-shadow: 1px 0 0 var(--hairline-color);
+    }
+    thead th:first-child { z-index: 3; }
+    // A full-width heading cell cannot be pinned, but its text can be, so it
+    // stays beside the pinned column instead of sliding away behind it.
+    .sponsor-comparison-heading h3,
+    .sponsor-comparison-heading p {
+      position: sticky;
+      left: 12px;
+      width: fit-content;
+      max-width: 100%;
+    }
+  }
+  @media (max-width: 700px) {
+    .sponsor-comparison-heading h3,
+    .sponsor-comparison-heading p { left: 8px; }
   }
 }
 
@@ -35,6 +87,13 @@
   pointer-events: none;
   a { pointer-events: auto; }
   table.sponsor-tiers { position: relative; z-index: 2; margin: 0; }
+  @media (max-width: 1000px) {
+    thead th:first-child {
+      position: relative;
+      z-index: 1;
+      box-shadow: 1px 0 0 var(--hairline-color);
+    }
+  }
   .sponsor-comparison-sticky-section {
     padding: 12px;
     background: var(--sidebar-bg);
