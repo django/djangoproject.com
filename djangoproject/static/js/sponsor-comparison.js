@@ -37,6 +37,10 @@ document.querySelectorAll('.sponsor-comparison').forEach((comparison) => {
     overlay.style.transform = `translateY(${Math.min(0, bounds.bottom - height)}px)`;
     header.style.width = `${table.getBoundingClientRect().width}px`;
     header.style.transform = `translateX(${-comparison.scrollLeft}px)`;
+    // The overlay table is transformed, which makes position: sticky stick to
+    // the table instead of the viewport, so pin the feature column by hand.
+    header.querySelector('th').style.transform =
+      `translateX(${comparison.scrollLeft}px)`;
     [...tiers.querySelectorAll('th')].forEach((cell, index) => {
       header.querySelectorAll('th')[index].style.width =
         `${cell.getBoundingClientRect().width}px`;

@@ -16,6 +16,7 @@
 {% block content %}
   <p><a href="{% url 'sponsor' %}">← {% translate "Compare sponsorship plans at a glance" %}</a></p>
   <h2 id="corporate-membership-tiers">Corporate Membership Tiers</h2>
+  <p class="sponsor-comparison-hint">{% translate "Scroll the table sideways to compare every tier." %}</p>
   <div class="sponsor-comparison table-wrapper-wide" tabindex="0" role="region" aria-label="{% translate 'Compare corporate membership tiers' %}">
     <table class="sponsor-tiers" aria-labelledby="corporate-membership-tiers">
       <thead>
