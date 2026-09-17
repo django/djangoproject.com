@@ -64,6 +64,7 @@ class TemplateViewSitemap(LocationAbsoluteUrlMixin, sitemaps.Sitemap):
             # fundraising
             URLObject("fundraising:index"),
             URLObject("sponsor"),
+            URLObject("sponsor_banner"),
             # members
             URLObject("members:individual-members"),
             URLObject("members:corporate-members"),
