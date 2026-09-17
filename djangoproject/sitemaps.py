@@ -1,13 +1,16 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from django.contrib import sitemaps
 from django_hosts.resolvers import reverse
+
+from fundraising.sponsorship import PLANS
 
 
 @dataclass
 class URLObject:
     name: str
     host: str = "www"
+    kwargs: dict = field(default_factory=dict)
 
 
 class LocationAbsoluteUrlMixin:
@@ -64,6 +67,11 @@ class TemplateViewSitemap(LocationAbsoluteUrlMixin, sitemaps.Sitemap):
             # fundraising
             URLObject("fundraising:index"),
             URLObject("sponsor"),
+            URLObject("sponsor_prospectus_plans"),
+            *(
+                URLObject("sponsor_plan", kwargs={"slug": plan["slug"]})
+                for plan in PLANS
+            ),
             URLObject("sponsor_banner"),
             # members
             URLObject("members:individual-members"),
@@ -76,4 +84,4 @@ class TemplateViewSitemap(LocationAbsoluteUrlMixin, sitemaps.Sitemap):
         ]
 
     def location(self, item):
-        return reverse(item.name, host=item.host)
+        return reverse(item.name, host=item.host, kwargs=item.kwargs)

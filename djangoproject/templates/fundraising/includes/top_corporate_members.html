@@ -1,3 +1,4 @@
+{% load hosts i18n %}
 {% if members %}
   <div class="corporate-members">
     <h3>{{ header }}</h3>
@@ -26,5 +27,8 @@
         </div>
       </div>
     {% endfor %}
+    <ul class="list-links-small">
+      <li><a href="{% host_url 'sponsor' host 'www' %}">{% translate "Become a sponsor" %}</a></li>
+    </ul>
   </div>
 {% endif %}

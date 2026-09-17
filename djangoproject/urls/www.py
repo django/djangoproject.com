@@ -121,6 +121,16 @@ urlpatterns = [
     path("foundation/", include("members.urls")),
     path("fundraising/", include("fundraising.urls")),
     path("sponsor/", fundraising_views.sponsor, name="sponsor"),
+    path(
+        "sponsor/plans/",
+        fundraising_views.sponsor_prospectus,
+        name="sponsor_prospectus_plans",
+    ),
+    path(
+        "sponsor/plans/<slug:slug>/",
+        fundraising_views.sponsor_plan,
+        name="sponsor_plan",
+    ),
     path("sponsor/banner/", BannerSponsorship.as_view(), name="sponsor_banner"),
     # Used by docs search suggestions
     re_path(
