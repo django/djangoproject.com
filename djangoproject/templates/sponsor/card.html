@@ -1,0 +1,23 @@
+{% load i18n %}
+<article class="plan-card" id="plan-{{ plan.slug }}">
+  <h3>{{ plan.name }}</h3>
+  <p class="plan-price">${{ plan.price }}<span>{% translate "+ / year" %}</span></p>
+  <p class="plan-tagline">{{ plan.tagline }}</p>
+  <p class="sponsor-note plan-company-profile"><strong>{% translate "Suggested for:" %}</strong> {{ plan.company_profile }}</p>
+  <div class="plan-card-features">
+    <ul>
+      {% for benefit in plan.highlights %}<li>{{ benefit }}</li>{% endfor %}
+      {% if plan.includes %}<li><strong>{% blocktranslate with name=plan.includes %}Everything in {{ name }}{% endblocktranslate %}</strong></li>{% endif %}
+    </ul>
+    {% if plan.more_features_count %}
+      <p class="sponsor-note">
+        <a href="{% url 'sponsor_plan' slug=plan.slug %}#benefits-heading">{% blocktranslate count counter=plan.more_features_count trimmed %}
+          More features
+        {% plural %}
+          Plus {{ counter }} more features
+        {% endblocktranslate %} →</a>
+      </p>
+    {% endif %}
+  </div>
+  <a class="plan-button" href="{% url 'sponsor_plan' slug=plan.slug %}"><span class="plan-button-label">{% blocktranslate with name=plan.name %}Explore <span class="nowrap">{{ name }}</span>{% endblocktranslate %}</span> <span aria-hidden="true">→</span></a>
+</article>

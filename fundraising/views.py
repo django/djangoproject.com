@@ -13,10 +13,15 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_http_methods, require_POST
+
+from contact.forms import PlanSponsorshipForm
+from members.models import CorporateMember
 
 from .forms import DjangoHeroForm, DonationForm, PaymentForm
 from .models import DjangoHero, Donation, Payment, Testimonial
+from .sponsor_programs import MARKETING_STATS, SPONSORSHIP_AMOUNTS
+from .sponsorship import PLANS
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +38,55 @@ def index(request):
 
 
 def sponsor(request):
-    return render(request, "fundraising/sponsor.html")
+    return render(
+        request,
+        "fundraising/sponsor.html",
+        {
+            "plans": [
+                {
+                    **plan,
+                    "more_features_count": sum(
+                        len(group["items"]) for group in plan["benefit_groups"]
+                    )
+                    - plan["highlighted_benefit_count"],
+                }
+                for plan in PLANS
+            ],
+            "amounts": SPONSORSHIP_AMOUNTS,
+            "stats": MARKETING_STATS,
+        },
+    )
+
+
+@require_http_methods(["GET", "POST"])
+def sponsor_plan(request, slug):
+    plan = next((plan for plan in PLANS if plan["slug"] == slug), None)
+    if plan is None:
+        raise Http404("Unknown sponsorship plan")
+    form = PlanSponsorshipForm(
+        data=request.POST if request.method == "POST" else None,
+        request=request,
+        plan=plan,
+    )
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return redirect("contact_form_sent")
+    return render(
+        request,
+        "sponsor/plan.html",
+        {
+            "plan": plan,
+            "form": form,
+            "stats": MARKETING_STATS,
+            "sponsors": CorporateMember.objects.by_membership_level().get(
+                "sponsored_fellow" if slug == "fellow" else slug, []
+            ),
+        },
+    )
+
+
+def sponsor_prospectus(request):
+    return render(request, "fundraising/prospectus.html")
 
 
 @require_POST

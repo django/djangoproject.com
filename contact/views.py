@@ -1,7 +1,13 @@
 from django.urls import reverse
 from django_contact_form.views import ContactFormView
 
-from .forms import SPONSORSHIP_AMOUNTS, BannerSponsorshipForm, FoundationContactForm
+from fundraising.sponsor_programs import (
+    BANNER_LEVELS,
+    MARKETING_STATS,
+    SPONSORSHIP_AMOUNTS,
+)
+
+from .forms import BannerSponsorshipForm, FoundationContactForm
 
 
 class ContactFoundation(ContactFormView):
@@ -15,7 +21,7 @@ class ContactFoundation(ContactFormView):
 class BannerSponsorship(ContactFoundation):
     form_class = BannerSponsorshipForm
     template_name = "sponsor/banner.html"
-    extra_context = {"amounts": SPONSORSHIP_AMOUNTS}
+    extra_context = {"levels": BANNER_LEVELS, "stats": MARKETING_STATS}
 
     def get_initial(self):
         """

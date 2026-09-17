@@ -33,11 +33,11 @@
           {% endblocktranslate %}
         </li>
         <li>
-          {% url 'members:corporate-members-join' as corp_join_url %}
+          {% url 'sponsor' as sponsor_url %}
           {% blocktranslate trimmed %}
             Companies able to make a <strong>larger donation</strong>
-            ($2,200+/year) are invited to apply to be Corporate Members
-            <a href="{{ corp_join_url }}">here</a>.
+            ($2,200+/year) can explore our
+            <a href="{{ sponsor_url }}">corporate membership plans and benefits</a>.
           {% endblocktranslate %}
         </li>
       </ul>

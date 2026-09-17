@@ -1,0 +1,122 @@
+{% extends "sponsor/base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktranslate with name=plan.name %}{{ name }} sponsorship{% endblocktranslate %}{% endblock %}
+
+{% block og_title %}{% blocktranslate with name=plan.name %}{{ name }} sponsorship | Support Django{% endblocktranslate %}{% endblock %}
+
+{% block description %}{{ plan.intro }}{% endblock %}
+
+{% block content %}
+  <nav class="sponsor-breadcrumb" aria-label="{% translate 'Breadcrumb' %}"><a href="{% url 'sponsor' %}">{% translate "Sponsorship plans" %}</a> <span aria-hidden="true">/</span> {{ plan.name }}</nav>
+  <div class="plan-hero">
+    <div><p class="sponsor-eyebrow">{% blocktranslate with name=plan.name %}{{ name }} partnership{% endblocktranslate %}</p><h1>{{ plan.tagline }}</h1><p class="plan-intro">{{ plan.intro }}</p><p>{{ plan.audience }}</p>
+      <section class="plan-distinction" aria-labelledby="benefits-heading">
+        <p class="sponsor-eyebrow" id="benefits-heading">{% translate "Your membership in detail" %}</p>
+        <div class="plan-benefit-rows">
+          {% for group in plan.benefit_groups %}
+            <section class="plan-benefit-group" aria-labelledby="benefit-group-{{ forloop.counter }}">
+              <h3 id="benefit-group-{{ forloop.counter }}">{{ group.title }}</h3>
+              <ul class="plan-benefits">
+                {% for benefit in group.items %}
+                  <li>{{ benefit }}</li>
+                {% endfor %}
+              </ul>
+            </section>
+          {% endfor %}
+        </div>
+        <p class="sponsor-note">{% translate "Want to see every benefit side by side?" %} <a href="{% url 'sponsor_prospectus_plans' %}#corporate-membership-tiers">{% translate "Compare all plans" %} →</a></p>
+      </section>
+    </div>
+    <div class="plan-sidebar">
+      <aside class="plan-card plan-summary" aria-label="{% translate 'Annual commitment' %}">
+        <p class="sponsor-eyebrow">{% translate "Your annual investment" %}</p>
+        <p class="plan-price">${{ plan.price }}<span>{% translate "+ / year" %} · USD</span></p>
+        <p>{% translate "Support Django through corporate membership in the Django Software Foundation." %}</p>
+        <a class="plan-button" href="#contact">{% blocktranslate with name=plan.name %}Become a {{ name }} sponsor{% endblocktranslate %} →</a>
+        <a href="#contact">{% translate "Talk to the Foundation first" %}</a>
+      </aside>
+
+      {% include "sponsor/stats.html" %}
+    </div>
+  </div>
+  {% if sponsors %}
+    <section class="sponsor-section" aria-labelledby="plan-sponsors-heading">
+      <p class="sponsor-eyebrow">{% translate "In good company" %}</p>
+      <h2 id="plan-sponsors-heading">{% blocktranslate with name=plan.name %}Meet our {{ name }} sponsors{% endblocktranslate %}</h2>
+      <ul class="plan-sponsors">
+        {% for sponsor in sponsors %}
+          <li>
+            <a href="{{ sponsor.url }}" rel="nofollow">
+              {% if sponsor.logo %}
+                <span class="plan-sponsor-logo"><img src="{{ sponsor.logo.url }}" alt="" loading="lazy"></span>
+              {% endif %}
+              <span>{{ sponsor.display_name }}</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+  <section class="sponsor-section plan-details">
+    <div>
+      <p class="sponsor-eyebrow">{% translate "Your partnership at work" %}</p>
+      <h2>{% blocktranslate trimmed %}Help sustain the work<br>your team relies on.{% endblocktranslate %}</h2>
+      <p>
+        {% blocktranslate trimmed %}
+          Paid Django Fellows review contributions, handle security reports, and
+          help contributors make progress. Your investment supports that work and
+          the community around it.
+        {% endblocktranslate %}
+      </p>
+      <a href="{% url 'fundraising:index' %}#fellowship-program">{% translate "Meet the Fellowship program" %} →</a>
+    </div>
+    <div>
+      <h2>{% translate "A stronger Django, a stronger community." %}</h2>
+      <p>
+        {% blocktranslate trimmed %}
+          Your support helps the Foundation sustain the quality and longevity of
+          Django, fund community events and workshops, and welcome more people
+          into open source.
+        {% endblocktranslate %}
+      </p>
+      <a href="/foundation/">{% translate "Explore the Foundation's mission" %} →</a>
+    </div>
+  </section>
+  <section class="sponsor-next">
+    <p class="sponsor-eyebrow">{% translate "Getting started" %}</p>
+    <h2>{% translate "From interest to impact." %}</h2>
+    <ol>
+      <li><strong>{% translate "Introduce your organization." %}</strong><p>{% translate "Tell us about your organization using the short form below." %}</p></li>
+      <li><strong>{% translate "Connect with the DSF." %}</strong><p>{% translate "The Foundation follows up to discuss the plan and answer your questions." %}</p></li>
+      <li><strong>{% translate "Share your support." %}</strong><p>{% translate "Complete your membership with the Foundation and arrange your listing and recognition." %}</p></li>
+    </ol>
+  </section>
+  <section class="sponsor-section sponsor-form plan-contact" id="contact" aria-labelledby="contact-heading">
+    <p class="sponsor-eyebrow">{% translate "Let's talk" %}</p>
+    <h2 id="contact-heading">{% blocktranslate with name=plan.name %}Become a {{ name }} sponsor{% endblocktranslate %}</h2>
+    <p>
+      {% blocktranslate trimmed with name=plan.name price=plan.price %}
+        You're asking about {{ name }} membership at ${{ price }}+ per year. Tell
+        us about your organization and we'll help you get started.
+      {% endblocktranslate %}
+    </p>
+    <form action="{% url 'sponsor_plan' slug=plan.slug %}#contact" method="post" accept-charset="utf-8">
+      {% csrf_token %}
+      {% if form.errors %}
+        <div class="plan-form-errors" role="alert">
+          <p>{% translate "Please correct the errors below and send your inquiry again." %}</p>
+          {{ form.non_field_errors }}
+          {{ form.captcha.errors }}
+        </div>
+      {% endif %}
+      <div>{{ form.name.as_field_group }}</div>
+      <div>{{ form.email.as_field_group }}</div>
+      <div>{{ form.body.as_field_group }}</div>
+      {{ form.captcha }}
+      <div class="submit"><button type="submit" class="plan-button">{% translate "Send sponsorship inquiry" %} →</button></div>
+    </form>
+    <p class="sponsor-note">{% translate "Sending an inquiry starts a conversation with the Foundation. It does not commit you to a payment." %}</p>
+    <p><a href="{% url 'sponsor' %}">{% translate "See all sponsorship plans" %}</a> · <a href="{% url 'sponsor_prospectus_plans' %}#corporate-membership-tiers">{% translate "Compare all plans" %}</a> · <a href="{% url 'sponsor_banner' %}">{% translate "Explore weekly and monthly banner sponsorship" %}</a></p>
+  </section>
+{% endblock content %}
