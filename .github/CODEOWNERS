@@ -4,6 +4,9 @@ djangoproject/templates/conduct/**/* @django/coc-committee
 # Alert the Fundraising Working Group to changes to pages relating to fundraising.
 fundraising/**/* @django/fundraising
 djangoproject/templates/fundraising/**/* @django/fundraising
+djangoproject/templates/sponsor/**/* @django/fundraising
+djangoproject/scss/_sponsorship.scss @django/fundraising
+djangoproject/static/js/sponsor-comparison.js @django/fundraising
 
 # Alert the Releasers to changes relating to releases.
 checklists/**/* @django/releasers
