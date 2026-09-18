@@ -144,6 +144,9 @@
   .plan-card li { margin-bottom: 12px; font-size: 14px; }
   .plan-button { display: inline-flex; justify-content: center; align-items: center; gap: 8px; padding: 13px 17px; border: 1px solid var(--primary-accent); border-radius: 5px; font-size: 14px; font-weight: 700; text-decoration: none; line-height: 1.5; box-sizing: border-box; height: auto; background: transparent; color: var(--link-color); cursor: pointer; text-align: center; }
   .plan-button:hover { background: var(--sidebar-bg); text-decoration: underline; }
+  // Filled like the site's call-to-action buttons: be the first sponsor of this tier.
+  .plan-button-primary { background: var(--primary); border-color: var(--primary); color: var(--white-color); }
+  .plan-button-primary:hover { background: var(--primary); }
   a:focus-visible, .plan-button:focus-visible { outline: 3px solid var(--primary-accent); outline-offset: 4px; }
   .plan-card > .plan-button { margin-top: auto; }
   .plan-grid > .plan-card {
@@ -193,6 +196,18 @@
   .sponsor-overview-hero { padding-top: 38px; }
   .sponsor-overview-hero .sponsor-intro { padding: 0; }
   .sponsor-overview-hero .plan-sidebar .sponsor-section { padding: 0; margin: 0; border: 0; }
+  .plan-first-sponsor {
+    padding: 28px;
+    margin-bottom: 32px;
+    border: 1px solid var(--hairline-color);
+    border-left: 4px solid var(--primary-accent);
+    border-radius: 8px;
+    background: var(--sidebar-bg);
+  }
+  .plan-first-sponsor h2 { margin-top: 0; }
+  .plan-first-sponsor > p { font-size: 16px; }
+  .plan-first-sponsor .plan-button { margin-top: 8px; }
+  .plan-sponsors-heading { margin: 0; font-size: 18px; }
   .plan-sponsors { display: flex; flex-wrap: wrap; gap: 24px; padding: 0; margin: 28px 0 0; list-style: none; }
   .plan-sponsors li { width: 180px; text-align: center; }
   .plan-sponsors a { display: flex; flex-direction: column; gap: 12px; font-weight: 700; }

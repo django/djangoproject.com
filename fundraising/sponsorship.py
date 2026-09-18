@@ -13,6 +13,7 @@ from django.utils.translation import gettext_lazy as _
 PLANS = [
     {
         "slug": "fellow",
+        "first_sponsor": _("Be our first Fellowship sponsor"),
         "company_profile": _("Large organizations funding core development"),
         "highlighted_benefit_count": 2,
         "includes": _("Diamond"),
@@ -112,6 +113,7 @@ PLANS = [
     },
     {
         "slug": "diamond",
+        "first_sponsor": _("Be our first Diamond sponsor"),
         "company_profile": _("Large organizations"),
         "highlighted_benefit_count": 5,
         "includes": _("Platinum"),
@@ -208,6 +210,7 @@ PLANS = [
     },
     {
         "slug": "platinum",
+        "first_sponsor": _("Be our first Platinum sponsor"),
         "company_profile": _("Established companies"),
         "highlighted_benefit_count": 3,
         "includes": _("Gold"),
@@ -293,6 +296,7 @@ PLANS = [
     },
     {
         "slug": "gold",
+        "first_sponsor": _("Be our first Gold sponsor"),
         "company_profile": _("Growing product companies"),
         "highlighted_benefit_count": 3,
         "includes": _("Silver"),
@@ -370,6 +374,7 @@ PLANS = [
     },
     {
         "slug": "silver",
+        "first_sponsor": _("Be our first Silver sponsor"),
         "company_profile": _("Small and growing companies"),
         "highlighted_benefit_count": 2,
         "includes": _("Bronze"),
@@ -436,6 +441,7 @@ PLANS = [
     },
     {
         "slug": "bronze",
+        "first_sponsor": _("Be our first Bronze sponsor"),
         "company_profile": _("Small businesses and teams"),
         "highlighted_benefit_count": 4,
         "name": _("Bronze"),
