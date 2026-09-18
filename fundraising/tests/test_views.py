@@ -26,6 +26,14 @@ class TestIndex(ReleaseMixin, TestCase):
         response = self.client.get(reverse("fundraising:index"))
         self.assertEqual(response.status_code, 200)
 
+    def test_corporate_callout(self):
+        response = self.client.get(reverse("fundraising:index"))
+        self.assertContains(response, 'id="corporate-sponsorship-heading"')
+        self.assertContains(response, 'href="#corporate-sponsorship-heading"')
+        for name in ["sponsor", "sponsor_prospectus_plans"]:
+            with self.subTest(name=name):
+                self.assertContains(response, 'href="%s"' % django_hosts_reverse(name))
+
 
 class TestSponsor(ReleaseMixin, TestCase):
     def test_sponsor_page(self):
