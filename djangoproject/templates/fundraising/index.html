@@ -34,14 +34,29 @@
 
   <h1>{% translate "Support the Django Software Foundation!" %}</h1>
 
+  {% url 'sponsor' as sponsor_url %}
   <p>
-    {% url 'sponsor' as sponsor_url %}
     {% blocktranslate trimmed %}
-      Giving on behalf of a company? <a href="{{ sponsor_url }}">See corporate sponsorship plans</a>.
+      Giving on behalf of a company?
+      <a href="#corporate-sponsorship-heading">See corporate sponsorship plans</a>.
     {% endblocktranslate %}
   </p>
 
   {% donation_form_with_heart %}
+
+  <section class="corporate-callout" aria-labelledby="corporate-sponsorship-heading">
+    <h2 id="corporate-sponsorship-heading">{% translate "Corporate sponsorship" %}</h2>
+    <p>
+      {% blocktranslate trimmed %}
+        Companies able to make a <strong>larger donation</strong> ($2,200+/year) can
+        join as corporate members, with benefits that grow with each tier.
+      {% endblocktranslate %}
+    </p>
+    <div class="corporate-callout-actions">
+      <a class="cta" href="{{ sponsor_url }}">{% translate "Why sponsor Django?" %}</a>
+      <a href="{% url 'sponsor_prospectus_plans' %}">{% translate "Compare sponsorship plans" %}</a>
+    </div>
+  </section>
 
   <h2>{% translate "Other ways to give" %}</h2>
   <ul>
@@ -82,7 +97,6 @@
       {% endblocktranslate %}
     </li>
     <li>
-      {% url 'sponsor' as sponsor_url %}
       {% blocktranslate trimmed %}
         For more information on why to donate, see our
         <a href="{{ sponsor_url }}">Prospectus</a>.

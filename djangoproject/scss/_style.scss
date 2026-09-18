@@ -3422,6 +3422,38 @@ hr {
     }
 }
 
+// The corporate ask on /fundraising/, pulled out of the donation progress
+// bullets so it reads as its own invitation rather than a footnote to them.
+.corporate-callout {
+    margin: 40px 0;
+    padding: 28px 30px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-accent);
+    background: var(--sidebar-bg);
+
+    h2 {
+        margin-top: 0;
+        // The intro link jumps to this heading, so leave the box's padding
+        // plus a gap above it and the callout lands as a whole block.
+        scroll-margin-top: 52px;
+    }
+
+    > p {
+        max-width: 60ch;
+    }
+
+    .corporate-callout-actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+
+    .cta {
+        margin: 0;
+    }
+}
+
 .fundraising-index {
     .donate {
         select {

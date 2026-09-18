@@ -21,7 +21,7 @@
 
     <div class="description">
       <ul>
-        <li><strong>{% blocktranslate trimmed %}{{ goal_percent }}% funded{% endblocktranslate %}</strong> (<a href="{% url 'sponsor' %}">Why Sponsor?</a>)</li>
+        <li><strong>{% blocktranslate trimmed %}{{ goal_percent }}% funded{% endblocktranslate %}</strong></li>
         <li>
           {% blocktranslate trimmed with amount=donated_amount|intcomma goal=goal_amount|intcomma start_date=goal_start_date|date:"Y" %}
             <strong>${{ amount }} donated</strong> of a ${{ goal }} USD goal for {{ start_date }}
@@ -30,14 +30,6 @@
         <li>
           {% blocktranslate trimmed with expected=expected_amount|intcomma %}
             To reach our goal, we should have raised ${{ expected }} by this point
-          {% endblocktranslate %}
-        </li>
-        <li>
-          {% url 'sponsor' as sponsor_url %}
-          {% blocktranslate trimmed %}
-            Companies able to make a <strong>larger donation</strong>
-            ($2,200+/year) can explore our
-            <a href="{{ sponsor_url }}">corporate membership plans and benefits</a>.
           {% endblocktranslate %}
         </li>
       </ul>
