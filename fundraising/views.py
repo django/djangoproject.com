@@ -58,11 +58,16 @@ def sponsor(request):
     )
 
 
-@require_http_methods(["GET", "POST"])
-def sponsor_plan(request, slug):
+def get_plan_or_404(slug):
     plan = next((plan for plan in PLANS if plan["slug"] == slug), None)
     if plan is None:
         raise Http404("Unknown sponsorship plan")
+    return plan
+
+
+@require_http_methods(["GET", "POST"])
+def sponsor_plan(request, slug):
+    plan = get_plan_or_404(slug)
     form = PlanSponsorshipForm(
         data=request.POST if request.method == "POST" else None,
         request=request,
@@ -70,7 +75,7 @@ def sponsor_plan(request, slug):
     )
     if request.method == "POST" and form.is_valid():
         form.save()
-        return redirect("contact_form_sent")
+        return redirect("sponsor_plan_sent", slug=slug)
     return render(
         request,
         "sponsor/plan.html",
@@ -83,6 +88,11 @@ def sponsor_plan(request, slug):
             ),
         },
     )
+
+
+def sponsor_plan_sent(request, slug):
+    """Confirm a plan inquiry, in place of the generic contact page."""
+    return render(request, "sponsor/plan_sent.html", {"plan": get_plan_or_404(slug)})
 
 
 def sponsor_prospectus(request):
