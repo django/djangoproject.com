@@ -1,0 +1,11 @@
+{% if events %}
+  <ul class="list-events">
+    {% for event in events %}
+      <li>
+        <a href="{{ event.external_url }}" target="_blank" rel="noopener">{{ event.headline }}</a>
+        <span class="meta"><span>{{ event.date|date:"DATE_FORMAT" }}</span>  |  {{ event.location }}</span>
+        <i class="icon icon-calendar"></i>
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block sectionid %}events{% endblock %}
+
+{% block title %}{% translate "Django Events" %}{% endblock %}
+
+{% block og_title %}{% translate "Django Events" %}{% endblock %}
+
+{% block og_description %}{% translate "Upcoming and past Django-related events." %}{% endblock %}
+
+{% block description %}{% translate "Upcoming and past Django-related events including DjangoCons, sprints, workshops, and community gatherings." %}{% endblock %}
+
+{% block layout_class %}sidebar-right{% endblock %}
+
+{% block header %}
+  <h1>{% translate "Events" %}</h1>
+{% endblock header %}
+
+{% block content %}
+
+  <form action="" method="get" role="search" style="margin: 30px 0 20px;" onsubmit="Array.from(this.elements).forEach(function(el){ if(el.name && !el.value) el.disabled = true; });">
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <div class="form-input" style="flex: 1; margin: 0;">
+        <label class="visuallyhidden" for="id_q">{% translate "Search events" %}</label>
+        <input
+          type="search"
+          name="q"
+          id="id_q"
+          value="{{ query|default:'' }}"
+          placeholder="{% translate "Search by name or location" %}"
+        >
+        <button type="submit" style="top: 0; height: 100%; display: flex; align-items: center; justify-content: center;">
+          <i class="icon icon-search" aria-hidden="true"></i>
+          <span class="visuallyhidden">{% translate "Search" %}</span>
+        </button>
+      </div>
+      <button type="button" class="cta outline" id="filter-toggle-btn" style="height: 40px; padding: 0 15px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;" onclick="var panel = document.getElementById('filter-panel'); panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';">
+        <i class="icon icon-filter" aria-hidden="true"></i>
+        {% translate "Filter" %}
+      </button>
+    </div>
+
+    <div id="filter-panel" style="display: {% if selected_location or selected_year %}flex{% else %}none{% endif %}; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-top: 12px; padding: 12px 15px; background: var(--sidebar-bg); border: 1px solid var(--hairline-color); border-radius: 4px; color: var(--body-fg);">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <label for="id_location" style="font-weight: 600; margin: 0; color: var(--body-fg); white-space: nowrap;">{% translate "Location" %}:</label>
+        <select name="location" id="id_location" onchange="this.form.requestSubmit ? this.form.requestSubmit() : this.form.submit()">
+          <option value="">{% translate "All Locations" %}</option>
+          {% for loc in locations %}
+            <option value="{{ loc }}"{% if loc == selected_location %} selected{% endif %}>{{ loc }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <label for="id_year" style="font-weight: 600; margin: 0; color: var(--body-fg); white-space: nowrap;">{% translate "Year" %}:</label>
+        <select name="year" id="id_year" onchange="this.form.requestSubmit ? this.form.requestSubmit() : this.form.submit()">
+          <option value="">{% translate "All Years" %}</option>
+          {% for yr in years %}
+            <option value="{{ yr }}"{% if yr|slugify == selected_year|slugify %} selected{% endif %}>{{ yr }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      {% if query or selected_location or selected_year %}
+        <a href="{% url 'events:index' %}" style="font-size: 14px; color: var(--link-color); text-decoration: underline; white-space: nowrap;">{% translate "Clear filters" %}</a>
+      {% endif %}
+    </div>
+  </form>
+
+  <div class="section">
+    <h2>{% translate "Upcoming Events" %}</h2>
+    {% if upcoming_events %}
+      <ul class="list-events">
+        {% for event in upcoming_events %}
+          <li>
+            <a href="{{ event.external_url }}" target="_blank" rel="noopener">{{ event.headline }}</a>
+            <span class="meta"><span>{{ event.date|date:"DATE_FORMAT" }}</span>  |  {{ event.location }}</span>
+            <i class="icon icon-calendar"></i>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      {% if query or selected_location or selected_year %}
+        <p>{% translate "No upcoming events matching your filter criteria." %}</p>
+      {% else %}
+        <p>{% translate "No upcoming events at the moment." %}</p>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <div class="section">
+    <h2>{% translate "Past Events" %}</h2>
+    {% if past_events %}
+      <ul class="list-events">
+        {% for event in past_events %}
+          <li>
+            <a href="{{ event.external_url }}" target="_blank" rel="noopener">{{ event.headline }}</a>
+            <span class="meta"><span>{{ event.date|date:"DATE_FORMAT" }}</span>  |  {{ event.location }}</span>
+            <i class="icon icon-calendar"></i>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      {% if query or selected_location or selected_year %}
+        <p>{% translate "No past events matching your filter criteria." %}</p>
+      {% else %}
+        <p>{% translate "No past events yet." %}</p>
+      {% endif %}
+    {% endif %}
+  </div>
+
+{% endblock content %}
+
+{% block content-related %}
+  <div role="complementary">
+    <h2 class="visuallyhidden" id="aside-header">{% translate "Additional Information" %}</h2>
+
+    <p><a href="{% url 'homepage' %}foundation/conferences/">{% translate "Want your event listed here?" %}</a></p>
+
+  </div>
+{% endblock content-related %}
