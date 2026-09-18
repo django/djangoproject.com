@@ -67,6 +67,23 @@ class TestSponsor(ReleaseMixin, TestCase):
         response = self.client.get(reverse("sponsor_plan", kwargs={"slug": "fellow"}))
         self.assertNotContains(response, 'id="plan-sponsors-heading"')
 
+    def test_plan_inquiry_confirmation(self):
+        response = self.client.get(
+            reverse("sponsor_plan_sent", kwargs={"slug": "fellow"})
+        )
+        self.assertContains(
+            response, "Thank you for your interest in Sponsored Fellow sponsorship."
+        )
+        self.assertContains(
+            response, reverse("sponsor_plan", kwargs={"slug": "fellow"})
+        )
+
+    def test_unknown_plan_confirmation(self):
+        response = self.client.get(
+            reverse("sponsor_plan_sent", kwargs={"slug": "unknown"})
+        )
+        self.assertEqual(response.status_code, 404)
+
     def test_unknown_plan(self):
         response = self.client.get(reverse("sponsor_plan", kwargs={"slug": "unknown"}))
         self.assertEqual(response.status_code, 404)

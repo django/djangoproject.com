@@ -197,7 +197,7 @@ class PlanSponsorshipTests(ReleaseMixin, TestCase):
                     "captcha": "TESTING",
                 },
             )
-        self.assertRedirects(response, "/contact/sent/")
+        self.assertRedirects(response, "/sponsor/plans/diamond/sent/")
         self.assertEqual(len(mail.outbox), 1)
         message = mail.outbox[0]
         self.assertEqual(
@@ -226,7 +226,7 @@ class PlanSponsorshipTests(ReleaseMixin, TestCase):
                     "captcha": "TESTING",
                 },
             )
-        self.assertRedirects(response, "/contact/sent/")
+        self.assertRedirects(response, "/sponsor/plans/fellow/sent/")
         self.assertEqual(len(mail.outbox), 1)
         message = mail.outbox[0]
         self.assertEqual(
