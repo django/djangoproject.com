@@ -30,20 +30,39 @@
     </div>
     <div class="plan-sidebar">
       <aside class="plan-card plan-summary" aria-label="{% translate 'Annual commitment' %}">
-        <p class="sponsor-eyebrow">{% translate "Your annual investment" %}</p>
+        {% if plan_has_sponsors %}
+          <p class="sponsor-eyebrow">{% translate "Your annual investment" %}</p>
+        {% else %}
+          <p class="sponsor-eyebrow">{% translate "Be the first" %}</p>
+        {% endif %}
         <p class="plan-price">${{ plan.price }}<span>{% translate "+ / year" %} · USD</span></p>
         <p>{% translate "Support Django through corporate membership in the Django Software Foundation." %}</p>
-        <a class="plan-button" href="#contact">{% blocktranslate with name=plan.name %}Become a {{ name }} sponsor{% endblocktranslate %} →</a>
+        <a class="plan-button plan-button-primary" href="#contact">{% if plan_has_sponsors %}{% blocktranslate with name=plan.name %}Become a {{ name }} sponsor{% endblocktranslate %}{% else %}{{ plan.first_sponsor }}{% endif %} →</a>
         <a href="#contact">{% translate "Talk to the Foundation first" %}</a>
       </aside>
 
       {% include "sponsor/stats.html" %}
     </div>
   </div>
-  {% if sponsors %}
-    <section class="sponsor-section" aria-labelledby="plan-sponsors-heading">
+  <section class="sponsor-section" aria-labelledby="plan-sponsors-heading">
+    {% if plan_has_sponsors %}
       <p class="sponsor-eyebrow">{% translate "In good company" %}</p>
       <h2 id="plan-sponsors-heading">{% blocktranslate with name=plan.name %}Meet our {{ name }} sponsors{% endblocktranslate %}</h2>
+    {% else %}
+      {% comment %}
+        Nobody sponsors Django at this level yet, so invite the reader to be
+        the first and show the next tier down for company.
+      {% endcomment %}
+      <div class="plan-first-sponsor">
+        <p class="sponsor-eyebrow">{% translate "Be the first" %}</p>
+        <h2 id="plan-sponsors-heading">{{ plan.first_sponsor }}</h2>
+        <a class="plan-button" href="#contact">{% blocktranslate with name=plan.name %}Become a {{ name }} sponsor{% endblocktranslate %} →</a>
+      </div>
+      {% if sponsors %}
+        <h3 class="plan-sponsors-heading">{% blocktranslate with name=sponsors_plan.name %}Meet our {{ name }} sponsors{% endblocktranslate %}</h3>
+      {% endif %}
+    {% endif %}
+    {% if sponsors %}
       <ul class="plan-sponsors">
         {% for sponsor in sponsors %}
           <li>
@@ -56,8 +75,8 @@
           </li>
         {% endfor %}
       </ul>
-    </section>
-  {% endif %}
+    {% endif %}
+  </section>
   <section class="sponsor-section plan-details">
     <div>
       <p class="sponsor-eyebrow">{% translate "Your partnership at work" %}</p>

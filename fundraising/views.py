@@ -58,6 +58,25 @@ def sponsor(request):
     )
 
 
+def plan_sponsors(slug):
+    """
+    The sponsors to showcase on a plan page, and the plan they belong to.
+
+    The top tiers have no members yet, so rather than show nothing, fall back
+    down the tiers until one has sponsors. The caller labels the section with
+    the returned plan, not the one being viewed.
+    """
+    by_level = CorporateMember.objects.by_membership_level()
+    slugs = [plan["slug"] for plan in PLANS]
+    start = slugs.index(slug)
+    for plan in PLANS[start:]:
+        key = "sponsored_fellow" if plan["slug"] == "fellow" else plan["slug"]
+        sponsors = by_level.get(key, [])
+        if sponsors:
+            return plan, sponsors
+    return None, []
+
+
 @require_http_methods(["GET", "POST"])
 def sponsor_plan(request, slug):
     plan = next((plan for plan in PLANS if plan["slug"] == slug), None)
@@ -71,6 +90,7 @@ def sponsor_plan(request, slug):
     if request.method == "POST" and form.is_valid():
         form.save()
         return redirect("contact_form_sent")
+    sponsors_plan, sponsors = plan_sponsors(slug)
     return render(
         request,
         "sponsor/plan.html",
@@ -78,9 +98,9 @@ def sponsor_plan(request, slug):
             "plan": plan,
             "form": form,
             "stats": MARKETING_STATS,
-            "sponsors": CorporateMember.objects.by_membership_level().get(
-                "sponsored_fellow" if slug == "fellow" else slug, []
-            ),
+            "sponsors": sponsors,
+            "sponsors_plan": sponsors_plan,
+            "plan_has_sponsors": sponsors_plan is plan,
         },
     )
 
