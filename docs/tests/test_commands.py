@@ -136,3 +136,44 @@ class UpdateDocsResilienceTests(TestCase):
 
         self.assertEqual(attempted, [failing_release, other_release])
         mock_capture.assert_called_once_with(error, flush=True)
+
+
+class BuildDocReleaseStorageTests(TestCase):
+    def setUp(self):
+        self.release = DocumentRelease.objects.create(lang="en", release=None)
+        self.command = Command()
+        self.command.verbosity = 0
+
+    def test_build_doc_release_uses_default_storage(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            sources_dir = tmp_path / "sources" / "dev" / "docs"
+            sources_dir.mkdir(parents=True)
+            (sources_dir / "conf.py").write_text("extensions = []\n")
+
+            build_dir = tmp_path / "en" / "dev" / "_build" / "html"
+            build_dir.mkdir(parents=True)
+            (build_dir / "index.html").write_text("<h1>Docs</h1>")
+
+            with (
+                override_settings(DOCS_BUILD_ROOT=tmp_path),
+                patch.object(Command, "_html_builder_name", return_value="html"),
+                patch("docs.management.commands.build_doc_release.Sphinx"),
+                patch("docs.management.commands.build_doc_release.patch_docutils"),
+                patch("docs.management.commands.build_doc_release.docutils_namespace"),
+                patch(
+                    "docs.management.commands.build_doc_release.subprocess.check_call"
+                ),
+                patch.object(DocumentRelease, "sync_to_db"),
+                patch(
+                    "docs.management.commands.build_doc_release.default_storage"
+                ) as mock_storage,
+            ):
+                self.command.build_doc_release(self.release)
+
+                mock_storage.save.assert_called_once()
+                saved_name = mock_storage.save.call_args[0][0]
+                self.assertEqual(
+                    saved_name,
+                    f"docs/django-docs-{self.release.version}-{self.release.lang}.zip",
+                )

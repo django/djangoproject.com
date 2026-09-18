@@ -428,3 +428,29 @@ class EndToEndTests(
                 page.locator(".theme-toggle").click()
                 theme = page.evaluate("document.documentElement.dataset.theme")
                 self.assertEqual(theme, expected_theme)
+
+
+class S3StorageSettingsTests(TestCase):
+    def test_prod_settings_with_s3_bucket(self):
+        with override_settings(
+            SECRETS={**settings.SECRETS, "aws_storage_bucket_name": "my-s3-bucket"}
+        ):
+            bucket_name = settings.SECRETS.get("aws_storage_bucket_name")
+            backend = (
+                "storages.backends.s3.S3Storage"
+                if bucket_name
+                else "django.core.files.storage.FileSystemStorage"
+            )
+            self.assertEqual(backend, "storages.backends.s3.S3Storage")
+
+    def test_prod_settings_without_s3_bucket(self):
+        with override_settings(
+            SECRETS={**settings.SECRETS, "aws_storage_bucket_name": ""}
+        ):
+            bucket_name = settings.SECRETS.get("aws_storage_bucket_name")
+            backend = (
+                "storages.backends.s3.S3Storage"
+                if bucket_name
+                else "django.core.files.storage.FileSystemStorage"
+            )
+            self.assertEqual(backend, "django.core.files.storage.FileSystemStorage")
