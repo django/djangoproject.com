@@ -68,6 +68,12 @@ class BaseChecklistTestCaseMixin:
         )
         self.assertIn(expected, content)
 
+    def assertStubReleaseNotesNotAdded(self, release, content):
+        unexpected = render_to_string(
+            "checklists/_stub_release_notes.md", {"release": release}
+        )
+        self.assertNotInChecklistContent(unexpected, content)
+
     def assertMakeReleasePublicAdded(self, release, content):
         expected = render_to_string(
             "checklists/_make_release_public.md", {"release": release}
@@ -159,6 +165,35 @@ class BugFixReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         checklist_content = self.do_render_checklist(checklist_instance)
         self.assertPushAndAnnouncesAdded(checklist_instance, checklist_content)
         self.assertStubReleaseNotesAdded(release, checklist_content)
+        self.assertMakeReleasePublicAdded(release, checklist_content)
+
+    def test_is_eom_release(self):
+        release = self.factory.make_release(version="5.2.4")
+        checklist_instance = self.make_checklist(release=release)
+        self.assertIs(checklist_instance.is_eom_release, False)
+
+        self.factory.make_feature_release_checklist(version="6.0")
+        FeatureRelease.objects.update(eom_release=release)
+        del checklist_instance.is_eom_release  # Clear the cached property.
+        self.assertIs(checklist_instance.is_eom_release, True)
+
+    def test_render_checklist_for_eom_release(self):
+        """The last bugfix release of a series gets no stub release notes.
+
+        Once mainstream support ends, the next patch version is only released
+        if a security or data loss fix requires it, so the checklist should not
+        prompt for release notes that may never exist (see #2819).
+        """
+        release = self.factory.make_release(version="5.2.4")
+        self.factory.make_feature_release_checklist(version="6.0")
+        FeatureRelease.objects.update(eom_release=release)
+
+        checklist_instance = self.make_checklist(release=release)
+        checklist_content = self.do_render_checklist(checklist_instance)
+
+        self.assertStubReleaseNotesNotAdded(release, checklist_content)
+        # The rest of the "Final tasks" section is unaffected.
+        self.assertPushAndAnnouncesAdded(checklist_instance, checklist_content)
         self.assertMakeReleasePublicAdded(release, checklist_content)
 
 
