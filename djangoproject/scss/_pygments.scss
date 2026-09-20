@@ -1,4 +1,11 @@
-// Pygments Code Hightlighting Styles
+/*
+ * Pygments code highlighting styles.
+ * The color token classes below (e.g. .c, .k, .err) are derived from Pygments
+ * syntax highlighting styles:
+ *   Copyright (c) 2006-2023 by the Pygments Team, see AUTHORS.
+ *   License: BSD, see LICENSE for details.
+ *   https://pygments.org/
+ */
 .highlight {
     @include font-size(14);
     border: 1px solid var(--code-border);
