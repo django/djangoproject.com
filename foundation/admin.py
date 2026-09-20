@@ -10,11 +10,6 @@ class OfficeAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(models.Term)
-class TermAdmin(admin.ModelAdmin):
-    pass
-
-
 @admin.register(models.BoardMember)
 class BoardMemberAdmin(admin.ModelAdmin):
     list_display = ("full_name", "office", "term")
@@ -25,6 +20,17 @@ class BoardMemberAdmin(admin.ModelAdmin):
     @admin.display(ordering="account__last_name")
     def full_name(self, obj):
         return obj.account.get_full_name()
+
+
+class BoardMemberInline(admin.TabularInline):
+    model = models.BoardMember
+    raw_id_fields = ("account",)
+    extra = 1
+
+
+@admin.register(models.Term)
+class TermAdmin(admin.ModelAdmin):
+    inlines = [BoardMemberInline]
 
 
 @admin.register(models.NonBoardAttendee)
