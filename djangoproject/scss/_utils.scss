@@ -125,14 +125,8 @@ $logo-bg-dark: #272c27;
     overflow-wrap: break-word;
 }
 
-// Font Sizing Mixin (http://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/)
-html {
-    font-size: 62.5%;
-}
-
 @mixin font-size ($size: 16) {
-    font-size: $size + px;
-    font-size: $size/10 + rem;
+    font-size: $size/16 + rem;
 }
 
 // Boilerplate Helper mixins (https://github.com/h5bp/html5-boilerplate/blob/v4.1.0/doc/css.md)
