@@ -473,7 +473,7 @@ header {
         margin: 8px 0 0 10px;
         display: none;
 
-        @include respond-min(1500px) {
+        @include respond-min($perfectionists-breakpoint) {
             width: 200px;
             display: block;
         }
@@ -522,7 +522,7 @@ header {
             flex: 0 1 240px;
         }
 
-        @include respond-min(1280px) {
+        @include respond-min($desktop-nav-breakpoint) {
             order: 3;
             margin-left: 0;
         }
@@ -541,7 +541,7 @@ header {
         width: 45px;
         order: 2;
 
-        @include respond-min(1280px) {
+        @include respond-min($desktop-nav-breakpoint) {
             display: none;
         }
 
@@ -574,7 +574,7 @@ header {
             }
         }
 
-        @include respond-min(1280px) {
+        @include respond-min($desktop-nav-breakpoint) {
             width: auto;
             order: 2;
             margin-left: auto;
@@ -587,7 +587,7 @@ header {
             margin: 10px 0 0;
             padding: 0;
 
-            @include respond-min(1280px) {
+            @include respond-min($desktop-nav-breakpoint) {
                 display: flex;
                 align-items: center;
                 margin: 2px 0;
@@ -608,7 +608,7 @@ header {
               padding: 20px 0px;
             }
 
-            @include respond-min(1280px) {
+            @include respond-min($desktop-nav-breakpoint) {
                 margin: 0;
                 border: 0;
                 float: left;
@@ -648,7 +648,7 @@ header {
                 color: var(--secondary-accent);
             }
 
-            @include respond-min(1280px) {
+            @include respond-min($desktop-nav-breakpoint) {
                 padding: 20px 10px;
             }
         }

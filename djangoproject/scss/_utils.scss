@@ -43,6 +43,10 @@ $font-path: "../font";
 $logo-bg-dark: #272c27;
 
 
+// Screen dimensions
+$desktop-nav-breakpoint: 1360px;
+$perfectionists-breakpoint: $desktop-nav-breakpoint + 220px;
+
 // @font-face declarations
 
 @font-face {
