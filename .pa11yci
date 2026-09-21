@@ -1,0 +1,34 @@
+{
+    "defaults": {
+        "hideElements": "iframe[title='reCAPTCHA']",
+        "ignore": [
+            "color-contrast"
+        ],
+        "runners": [
+            "axe"
+        ],
+        "timeout": 10000,
+        "useIncognitoBrowserContext": false
+    },
+    "urls": [
+        "https://www.djangoproject.com/",
+        "https://www.djangoproject.com/start/",
+        "https://www.djangoproject.com/start/overview/",
+        "https://www.djangoproject.com/download/",
+        "https://www.djangoproject.com/weblog/",
+        "https://www.djangoproject.com/foundation/",
+        "https://www.djangoproject.com/foundation/teams/",
+        "https://www.djangoproject.com/foundation/individual-members/",
+        "https://www.djangoproject.com/foundation/corporate-members/",
+        "https://www.djangoproject.com/fundraising/",
+        "https://www.djangoproject.com/conduct/",
+        "https://www.djangoproject.com/diversity/",
+        "https://www.djangoproject.com/community/",
+        "https://docs.djangoproject.com/en/dev/internals/contributing/",
+        "https://docs.djangoproject.com/en/dev/internals/contributing/bugs-and-features/",
+        "https://docs.djangoproject.com/en/dev/internals/security/",
+        "https://docs.djangoproject.com/en/6.0/faq/",
+        "https://docs.djangoproject.com/en/6.0/intro/install/",
+        "https://code.djangoproject.com/"
+    ]
+}
