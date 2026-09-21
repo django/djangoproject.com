@@ -2558,9 +2558,13 @@ h2+.list-link-soup {
     }
 }
 
-.versionadded,
-.versionchanged,
-.versionmodified {
+// Version annotations. Each Django version's docs are built from their own
+// source, so two markup shapes must work at once: a span.title label before
+// the content paragraph, and a span.versionmodified label nested inside it.
+div.versionadded,
+div.versionchanged,
+div.versionremoved,
+div.deprecated {
     @include sans-serif;
     font-weight: bold;
     margin-bottom: 20px;
@@ -2571,36 +2575,27 @@ h2+.list-link-soup {
 
     p {
         font-weight: normal;
-        margin-top: 0.3em;
+        // Tighter than body text, so the box reads as one unit.
+        margin: 0.3em 0;
+
+        // The label shares this paragraph.
+        &:first-child {
+            margin-top: 0;
+        }
 
         &:last-child {
             margin-bottom: 0;
         }
     }
-}
 
-.deprecated {
-    @extend .versionchanged;
-
-    .versionadded,
-    .versionchanged,
+    // The label also carries the directive name as a class, hence scoping the
+    // box above to `div`. Its weight has to be restored inside the paragraph.
     .versionmodified {
-        border: none;
-        padding: 0;
-        margin-bottom: 0;
         display: block;
+        font-weight: bold;
+        // Match the gap a span.title label gets, so both shapes look alike.
+        margin-bottom: 0.3em;
     }
-
-    p {
-        font-weight: normal;
-        margin-top: 0;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
-
-
 }
 
 dl.function,
