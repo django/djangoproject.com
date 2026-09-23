@@ -1,6 +1,6 @@
 // Require.js Module Loader - http://requirejs.org
-define(function () {
-  var mods = [];
+define(() => {
+  const mods = [];
 
   //detect Class function
   function hasClass(className) {
