@@ -1,0 +1,48 @@
+{% extends "sponsor/base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktranslate with name=plan.name %}{{ name }} inquiry sent{% endblocktranslate %}{% endblock %}
+
+{% block og_title %}{% blocktranslate with name=plan.name %}{{ name }} inquiry sent{% endblocktranslate %} | Support Django{% endblock %}
+
+{% block description %}{% translate "Thanks for your interest in supporting Django through corporate membership." %}{% endblock %}
+
+{% block content %}
+  <nav class="sponsor-breadcrumb" aria-label="{% translate 'Breadcrumb' %}"><a href="{% url 'sponsor' %}">{% translate "Sponsorship plans" %}</a> <span aria-hidden="true">/</span> <a href="{% url 'sponsor_plan' slug=plan.slug %}">{{ plan.name }}</a> <span aria-hidden="true">/</span> {% translate "Inquiry sent" %}</nav>
+  <div class="sponsor-intro plan-sent">
+    <p class="sponsor-eyebrow">{% translate "Inquiry sent" %}</p>
+    <h1>{% blocktranslate with name=plan.name %}Thank you for your interest in {{ name }} sponsorship.{% endblocktranslate %}</h1>
+    <p class="plan-intro">
+      {% blocktranslate trimmed %}
+        Your message is on its way to the Django Software Foundation's
+        fundraising team. Someone will be in touch to answer your questions and
+        walk you through the next steps.
+      {% endblocktranslate %}
+    </p>
+    <p>
+      {% blocktranslate trimmed %}
+        We usually reply within a few working days. If you do not hear back,
+        please send us a reminder. We would rather hear from you twice than
+        miss you entirely.
+      {% endblocktranslate %}
+    </p>
+  </div>
+  <section class="sponsor-section" aria-labelledby="plan-sent-next-heading">
+    <div class="sponsor-section-heading">
+      <h2 id="plan-sent-next-heading">{% translate "While you wait" %}</h2>
+    </div>
+    <div class="plan-benefit-groups">
+      <div class="plan-benefit-group">
+        <h3>{% blocktranslate with name=plan.name %}Review the {{ name }} benefits{% endblocktranslate %}</h3>
+        <p>{% translate "Everything included at this level, so you know what to expect before we talk." %}</p>
+        <p><a href="{% url 'sponsor_plan' slug=plan.slug %}">{% blocktranslate with name=plan.name %}Back to {{ name }}{% endblocktranslate %} →</a></p>
+      </div>
+      <div class="plan-benefit-group">
+        <h3>{% translate "Compare every tier" %}</h3>
+        <p>{% translate "See how the corporate membership levels line up side by side." %}</p>
+        <p><a href="{% url 'sponsor_prospectus_plans' %}#corporate-membership-tiers">{% translate "Compare all plans" %} →</a></p>
+      </div>
+    </div>
+    <p><a href="{% url 'sponsor' %}">{% translate "See all sponsorship plans" %}</a> · <a href="{% url 'sponsor_banner' %}">{% translate "Explore weekly and monthly banner sponsorship" %}</a></p>
+  </section>
+{% endblock content %}
