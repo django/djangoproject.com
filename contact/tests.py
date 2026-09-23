@@ -212,7 +212,10 @@ class PlanSponsorshipTests(ReleaseMixin, TestCase):
             ],
         )
         self.assertIn("Diamond Test Sponsor <diamond@example.com>", message.body)
+        self.assertIn("Plan: Diamond ($100,000+ / year)", message.body)
+        self.assertIn("/sponsor/plans/diamond/", message.body)
         self.assertIn("Please tell us about Diamond membership.", message.body)
+        self.assertEqual(message.reply_to, ["diamond@example.com"])
 
     def test_inquiry_uses_plan_from_url(self):
         with patch_captcha():
@@ -240,7 +243,10 @@ class PlanSponsorshipTests(ReleaseMixin, TestCase):
                 "dsf-board@googlegroups.com",
             ],
         )
+        self.assertIn("Plan: Sponsored Fellow ($200,000+ / year)", message.body)
+        self.assertIn("/sponsor/plans/fellow/", message.body)
         self.assertIn("We would like to learn about sponsoring a Fellow.", message.body)
+        self.assertEqual(message.reply_to, ["sponsor@example.com"])
 
     def test_invalid_inquiry_preserves_message_and_shows_errors(self):
         with patch_captcha():
