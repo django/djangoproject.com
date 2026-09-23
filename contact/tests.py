@@ -59,6 +59,7 @@ class ContactFormTests(ReleaseMixin, TestCase):
             )
         self.assertRedirects(response, "/contact/sent/")
         self.assertEqual(mail.outbox[-1].subject, "[Contact form] Hello")
+        self.assertEqual(mail.outbox[-1].reply_to, ["a.random@example.com"])
 
     @skipIf(not has_network_connection, "Requires a network connection")
     def test_empty_name(self):
@@ -146,6 +147,7 @@ class BannerSponsorshipTests(ReleaseMixin, TestCase):
                 "dsf-board@googlegroups.com",
             ],
         )
+        self.assertEqual(msg.reply_to, ["sponsor@example.com"])
 
     # The radio buttons render in the order of the choices of the field.
     RADIO_IDS = {"monthly": "id_message_subject_0", "weekly": "id_message_subject_1"}
@@ -212,7 +214,10 @@ class PlanSponsorshipTests(ReleaseMixin, TestCase):
             ],
         )
         self.assertIn("Diamond Test Sponsor <diamond@example.com>", message.body)
+        self.assertIn("Plan: Diamond ($100,000+ / year)", message.body)
+        self.assertIn("/sponsor/plans/diamond/", message.body)
         self.assertIn("Please tell us about Diamond membership.", message.body)
+        self.assertEqual(message.reply_to, ["diamond@example.com"])
 
     def test_inquiry_uses_plan_from_url(self):
         with patch_captcha():
@@ -240,7 +245,10 @@ class PlanSponsorshipTests(ReleaseMixin, TestCase):
                 "dsf-board@googlegroups.com",
             ],
         )
+        self.assertIn("Plan: Sponsored Fellow ($200,000+ / year)", message.body)
+        self.assertIn("/sponsor/plans/fellow/", message.body)
         self.assertIn("We would like to learn about sponsoring a Fellow.", message.body)
+        self.assertEqual(message.reply_to, ["sponsor@example.com"])
 
     def test_invalid_inquiry_preserves_message_and_shows_errors(self):
         with patch_captcha():

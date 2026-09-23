@@ -4,6 +4,8 @@ import django
 from django import forms
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.core.mail import EmailMessage
+from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.translation import gettext_lazy as _
 from django_contact_form.forms import ContactForm
@@ -43,6 +45,17 @@ class BaseContactForm(ContactForm):
 
     def message(self):
         return "From: {name} <{email}>\n\n{body}".format(**self.cleaned_data)
+
+    def save(self, fail_silently=False):
+        """Send with the sender as Reply-To."""
+        message = self.get_message_dict()
+        EmailMessage(
+            subject=message["subject"],
+            body=message["message"],
+            from_email=message["from_email"],
+            to=message["recipient_list"],
+            reply_to=[self.cleaned_data["email"]],
+        ).send(fail_silently=fail_silently)
 
     def clean_body(self):
         """
@@ -132,4 +145,26 @@ class PlanSponsorshipForm(FoundationContactForm):
     def subject(self):
         return (
             f"[Django sponsorship] {self.plan['name']}: ${self.plan['price']}+ / year"
+        )
+
+    def message(self):
+        """
+        Name the plan in the body as well as the subject.
+
+        Subjects get truncated, rewritten on reply and dropped when a thread is
+        forwarded, and the plan is the one thing whoever picks this up needs.
+        """
+        plan_url = self.request.build_absolute_uri(
+            reverse("sponsor_plan", kwargs={"slug": self.plan["slug"]})
+        )
+        return (
+            "From: {name} <{email}>\n"
+            "Plan: {plan} (${price}+ / year)\n"
+            "Page: {plan_url}\n\n"
+            "{body}"
+        ).format(
+            plan=self.plan["name"],
+            price=self.plan["price"],
+            plan_url=plan_url,
+            **self.cleaned_data,
         )
