@@ -114,29 +114,6 @@ html[data-theme="light"],
         --community-img-fg: #{$white};
     }
 
-    body .homepage {
-        .copy-banner {
-            background: var(--white-color);
-        }
-    }
-
-    body .copy-banner {
-        background: darken($green, 10%);
-
-        p,
-        h1 {
-            color: $green-very-light;
-
-            @include respond-min(768px) {
-                color: $green-very-light;
-            }
-
-            a {
-                color: $green-very-light;
-            }
-        }
-    }
-
     body table.django-supported-versions,
     body table.django-unsupported-versions {
         a {
@@ -148,10 +125,6 @@ html[data-theme="light"],
                 color: var(--table-link-hover);
             }
         }
-    }
-
-    body footer {
-        background: darken($green, 10%);
     }
 
     body .admonition.warning {
@@ -213,29 +186,6 @@ html[data-theme="dark"] {
     --community-img-bg: #{$green-dark};
     --community-img-fg: #{$white};
 
-    .homepage {
-        .copy-banner {
-            background: var(--white-color);
-        }
-    }
-
-    .copy-banner {
-        background: darken($green, 10%);
-
-        p,
-        h1 {
-            color: $green-very-light;
-
-            @include respond-min(768px) {
-                color: $green-very-light;
-            }
-
-            a {
-                color: $green-very-light;
-            }
-        }
-    }
-
     table.django-supported-versions,
     table.django-unsupported-versions {
         a {
@@ -253,10 +203,6 @@ html[data-theme="dark"] {
         .admonition-title::before {
             opacity: 1;
         }
-    }
-
-    footer {
-        background: darken($green, 10%);
     }
 }
 
