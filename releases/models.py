@@ -6,7 +6,7 @@ from pathlib import Path
 from django.conf import settings
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
-from django.core.files.storage import FileSystemStorage
+from django.core.files.storage import FileSystemStorage, storages
 from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.functional import cached_property
@@ -157,12 +157,15 @@ artifact_name_re = re.compile(
 
 def get_storage():
     """
-    Return a FileSystemStorage that allows file name overwrites.
+    Return a storage instance that allows file name overwrites.
 
     The actual file name of release artifacts (tarball, wheel, ...) should not
     be modified on upload (i.e. no prefix should be added).
     """
-    return FileSystemStorage(allow_overwrite=True)
+    storage_cls = storages["default"].__class__
+    if issubclass(storage_cls, FileSystemStorage):
+        return storage_cls(allow_overwrite=True)
+    return storage_cls(file_overwrite=True)
 
 
 def upload_to_artifact(release, filename):
