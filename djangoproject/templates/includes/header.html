@@ -34,6 +34,9 @@
         <li{% if 'community' in request.path or 'conduct' in request.path %} class="active"{% endif %}>
           <a href="{% url 'community-index' %}">Community</a>
         </li>
+        <li{% if 'events' in request.path %} class="active"{% endif %}>
+          <a href="{% url 'events:index' %}">Events</a>
+        </li>
         <li{% if 'foundation' in request.path %} class="active"{% endif %}>
           <a href="{% url 'homepage' %}foundation/">Foundation</a>
         </li>

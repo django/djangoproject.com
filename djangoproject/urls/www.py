@@ -176,6 +176,7 @@ urlpatterns = [
             template_name="well-known/security.txt", content_type="text/plain"
         ),
     ),
+    path("events/", include("events.urls")),
     path("weblog/", include("blog.urls")),
     path("download/", include("releases.urls")),
     path("svntogit/", include("svntogit.urls")),
