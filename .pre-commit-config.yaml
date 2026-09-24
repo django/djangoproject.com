@@ -35,7 +35,6 @@ repos:
       rev: 1.32.0
       hooks:
           - id: django-upgrade
-            args: [--target-version, "6.1"]
 
     - repo: https://github.com/psf/black-pre-commit-mirror
       rev: 26.5.1
@@ -57,7 +56,7 @@ repos:
           - id: flake8
 
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.16.5
+      rev: v0.16.7
       hooks:
           - id: ruff-check
             args: ["--fix", "--show-fixes"]
@@ -80,12 +79,12 @@ repos:
             args: [--target-version, "6.0"]
 
     - repo: https://github.com/tox-dev/pyproject-fmt
-      rev: v2.29.0
+      rev: v2.29.4
       hooks:
           - id: pyproject-fmt
 
     - repo: https://github.com/astral-sh/uv-pre-commit
-      rev: 0.12.7
+      rev: 0.12.13
       hooks:
           - name: Check lock file
             id: uv-lock

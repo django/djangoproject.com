@@ -13,10 +13,15 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_http_methods, require_POST
+
+from contact.forms import PlanSponsorshipForm
+from members.models import CorporateMember
 
 from .forms import DjangoHeroForm, DonationForm, PaymentForm
 from .models import DjangoHero, Donation, Payment, Testimonial
+from .sponsor_programs import MARKETING_STATS, SPONSORSHIP_AMOUNTS
+from .sponsorship import PLANS
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +38,75 @@ def index(request):
 
 
 def sponsor(request):
-    return render(request, "fundraising/sponsor.html")
+    return render(
+        request,
+        "fundraising/sponsor.html",
+        {
+            "plans": [
+                {
+                    **plan,
+                    "more_features_count": sum(
+                        len(group["items"]) for group in plan["benefit_groups"]
+                    )
+                    - plan["highlighted_benefit_count"],
+                }
+                for plan in PLANS
+            ],
+            "amounts": SPONSORSHIP_AMOUNTS,
+            "stats": MARKETING_STATS,
+        },
+    )
+
+
+def plan_sponsors(slug):
+    """
+    The sponsors to showcase on a plan page, and the plan they belong to.
+
+    The top tiers have no members yet, so rather than show nothing, fall back
+    down the tiers until one has sponsors. The caller labels the section with
+    the returned plan, not the one being viewed.
+    """
+    by_level = CorporateMember.objects.by_membership_level()
+    slugs = [plan["slug"] for plan in PLANS]
+    start = slugs.index(slug)
+    for plan in PLANS[start:]:
+        key = "sponsored_fellow" if plan["slug"] == "fellow" else plan["slug"]
+        sponsors = by_level.get(key, [])
+        if sponsors:
+            return plan, sponsors
+    return None, []
+
+
+@require_http_methods(["GET", "POST"])
+def sponsor_plan(request, slug):
+    plan = next((plan for plan in PLANS if plan["slug"] == slug), None)
+    if plan is None:
+        raise Http404("Unknown sponsorship plan")
+    form = PlanSponsorshipForm(
+        data=request.POST if request.method == "POST" else None,
+        request=request,
+        plan=plan,
+    )
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return redirect("contact_form_sent")
+    sponsors_plan, sponsors = plan_sponsors(slug)
+    return render(
+        request,
+        "sponsor/plan.html",
+        {
+            "plan": plan,
+            "form": form,
+            "stats": MARKETING_STATS,
+            "sponsors": sponsors,
+            "sponsors_plan": sponsors_plan,
+            "plan_has_sponsors": sponsors_plan is plan,
+        },
+    )
+
+
+def sponsor_prospectus(request):
+    return render(request, "fundraising/prospectus.html")
 
 
 @require_POST

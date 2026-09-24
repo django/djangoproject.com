@@ -26,13 +26,90 @@ class TestIndex(ReleaseMixin, TestCase):
         response = self.client.get(reverse("fundraising:index"))
         self.assertEqual(response.status_code, 200)
 
+    def test_corporate_callout(self):
+        response = self.client.get(reverse("fundraising:index"))
+        self.assertContains(response, 'id="corporate-sponsorship-heading"')
+        self.assertContains(response, 'href="#corporate-sponsorship-heading"')
+        for name in ["sponsor", "sponsor_prospectus_plans"]:
+            with self.subTest(name=name):
+                self.assertContains(response, 'href="%s"' % django_hosts_reverse(name))
+
 
 class TestSponsor(ReleaseMixin, TestCase):
     def test_sponsor_page(self):
         response = self.client.get(reverse("sponsor"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "How Investing in Django Makes a Difference")
+        self.assertContains(response, "Your business runs on Django.")
         self.assertContains(response, 'id="corporate-membership-tiers"')
+        self.assertContains(response, "$200,000")
+        self.assertContains(response, "$10,000")
+        self.assertContains(response, "$3,000")
+        for slug in ("fellow", "diamond", "platinum", "gold", "silver", "bronze"):
+            url = reverse("sponsor_plan", kwargs={"slug": slug})
+            self.assertContains(response, url)
+            with self.subTest(slug=slug):
+                detail = self.client.get(url)
+                self.assertEqual(detail.status_code, 200)
+                self.assertContains(detail, 'href="#contact"')
+                self.assertContains(detail, reverse("sponsor_prospectus_plans"))
+
+    def test_only_current_sponsors_of_this_plan_are_shown(self):
+        for name, level, expiration in [
+            ("Current Gold Sponsor", 3, date(2099, 1, 1)),
+            ("Expired Gold Sponsor", 3, date(2000, 1, 1)),
+            ("Current Silver Sponsor", 2, date(2099, 1, 1)),
+        ]:
+            member = CorporateMember.objects.create(
+                display_name=name, membership_level=level, url="https://example.com"
+            )
+            Invoice.objects.create(
+                member=member, amount=13750, expiration_date=expiration
+            )
+        response = self.client.get(reverse("sponsor_plan", kwargs={"slug": "gold"}))
+        self.assertContains(response, "Current Gold Sponsor")
+        self.assertNotContains(response, "Expired Gold Sponsor")
+        self.assertNotContains(response, "Current Silver Sponsor")
+        self.assertContains(response, 'id="plan-sponsors-heading"')
+        # The tier has sponsors, so the summary box does not invite a first one.
+        self.assertContains(response, "Your annual investment")
+        self.assertNotContains(response, "Be our first Gold sponsor")
+
+    def test_empty_plan_invites_the_first_sponsor(self):
+        # Nothing to fall back to either, so the invitation stands alone.
+        response = self.client.get(reverse("sponsor_plan", kwargs={"slug": "bronze"}))
+        self.assertContains(response, "Be our first Bronze sponsor")
+        self.assertNotContains(response, 'class="plan-sponsors"')
+        self.assertNotContains(response, "Meet our")
+
+    def test_empty_plan_falls_back_to_the_next_tier_with_sponsors(self):
+        member = CorporateMember.objects.create(
+            display_name="Current Platinum Sponsor",
+            membership_level=4,
+            url="https://example.com",
+        )
+        Invoice.objects.create(
+            member=member, amount=30000, expiration_date=date(2099, 1, 1)
+        )
+        # Nothing at Fellow or Diamond, so both borrow the Platinum sponsors.
+        for slug in ("fellow", "diamond"):
+            with self.subTest(slug=slug):
+                response = self.client.get(
+                    reverse("sponsor_plan", kwargs={"slug": slug})
+                )
+                self.assertContains(response, "Current Platinum Sponsor")
+                self.assertContains(response, "Meet our Platinum sponsors")
+                self.assertNotContains(response, "Meet our Diamond sponsors")
+        response = self.client.get(reverse("sponsor_plan", kwargs={"slug": "fellow"}))
+        self.assertContains(response, "Be our first Fellowship sponsor")
+
+    def test_unknown_plan(self):
+        response = self.client.get(reverse("sponsor_plan", kwargs={"slug": "unknown"}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_prospectus(self):
+        response = self.client.get(reverse("sponsor_prospectus_plans"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "How Investing in Django Makes a Difference")
         self.assertContains(response, 'id="dsf-social-media-reach"')
 
 

@@ -9,6 +9,7 @@
       organization!
     {% endblocktranslate %}
   </p>
+  <p><a href="{% url 'sponsor' %}">{% translate "Compare sponsorship plans and membership benefits" %}</a></p>
   <form class="form-input corporate-membership-join-form" method="post" action="."
         enctype="multipart/form-data">
     {% csrf_token %}

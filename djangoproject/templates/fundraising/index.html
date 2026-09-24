@@ -34,7 +34,29 @@
 
   <h1>{% translate "Support the Django Software Foundation!" %}</h1>
 
+  {% url 'sponsor' as sponsor_url %}
+  <p>
+    {% blocktranslate trimmed %}
+      Giving on behalf of a company?
+      <a href="#corporate-sponsorship-heading">See corporate sponsorship plans</a>.
+    {% endblocktranslate %}
+  </p>
+
   {% donation_form_with_heart %}
+
+  <section class="corporate-callout" aria-labelledby="corporate-sponsorship-heading">
+    <h2 id="corporate-sponsorship-heading">{% translate "Corporate sponsorship" %}</h2>
+    <p>
+      {% blocktranslate trimmed %}
+        Companies able to make a <strong>larger donation</strong> ($2,200+/year) can
+        join as corporate members, with benefits that grow with each tier.
+      {% endblocktranslate %}
+    </p>
+    <div class="corporate-callout-actions">
+      <a class="cta" href="{{ sponsor_url }}">{% translate "Why sponsor Django?" %}</a>
+      <a href="{% url 'sponsor_prospectus_plans' %}">{% translate "Compare sponsorship plans" %}</a>
+    </div>
+  </section>
 
   <h2>{% translate "Other ways to give" %}</h2>
   <ul>
@@ -75,7 +97,6 @@
       {% endblocktranslate %}
     </li>
     <li>
-      {% url 'sponsor' as sponsor_url %}
       {% blocktranslate trimmed %}
         For more information on why to donate, see our
         <a href="{{ sponsor_url }}">Prospectus</a>.
@@ -90,144 +111,6 @@
     </li>
   </ul>
 
-  <h2 id="fellowship-program">{% translate "Django Fellowship Program" %}</h2>
-
-  <p>
-    {% blocktranslate trimmed %}
-      The biggest expense of the <abbr title="Django Software Foundation">DSF</abbr>
-      is the Django Fellowship program. It's a project where
-      <a href="#who-are-the-django-fellows">paid contractors</a> are engaged to
-      manage some of the administrative and community management tasks of the
-      Django project to support rapid development of Django itself.
-    {% endblocktranslate %}
-  </p>
-
-  <p>
-    {% blocktranslate trimmed %}
-      <strong>The Django Fellowship program has a major positive impact on how
-        Django is developed and maintained.</strong>
-      The Django Fellows triage 10-15 new tickets each week and review and merge
-      around fifteen non-trivial patches a week from the community. Release
-      blocking and severe bugs aren't postponed indefinitely. Major releases happen
-      according to an 8 month schedule and bug fix releases occur monthly.
-    {% endblocktranslate %}
-  </p>
-
-  <p>
-    {% host_url 'homepage' host 'www' as base_url %}
-    {% blocktranslate trimmed %}
-      For more details, you can read retrospectives for the
-      <a href="{{ base_url }}weblog/2015/jan/21/django-fellowship-retrospective/"> first three
-        months of the program</a>,
-      <a href="{{ base_url }}weblog/2015/dec/17/fellowship-2015-retrospective/">2015</a>, and
-      <a href="{{ base_url }}weblog/2016/dec/28/fellowship-2016-retrospective/">2016</a>.
-    {% endblocktranslate %}
-  </p>
-
-  <p>
-    {% blocktranslate trimmed %}
-      The Django Fellows are a resource to help review patches and contributions
-      from the community, and the community loves that:
-    {% endblocktranslate %}
-  </p>
-
-  {% if testimonial %}
-    <blockquote>
-      {{ testimonial.body|linebreaks }}
-      <em>{{ testimonial.author }}</em>
-    </blockquote>
-  {% endif %}
-
-  <p>
-    {% blocktranslate trimmed %}
-      <strong>If you use Django on a daily basis and care about the development of Django
-        itself, you should donate today</strong> (may be <a href="/foundation/donate/#tax-deductible">tax deductible</a>).
-      Only with your support can we make sure that the web framework you base your work on
-      can grow to be even better in the coming years.
-    {% endblocktranslate %}
-  </p>
-
-  <h2 id="django-girls">{% translate "Django Girls Outreach" %}</h2>
-
-  <p>
-    {% blocktranslate trimmed %}
-      Supporting <a href="https://djangogirls.org/">Django Girls workshops</a> is
-      a significant priority for the Django Software Foundation. Django Girls
-      workshops are organized by volunteers and are provided as free events for women
-      who want to learn to code. The workshop serves as an introduction to Python and
-      Django, where attendees learn usable skills to build their first web app.
-    {% endblocktranslate %}
-  </p>
-
-  <p>
-    {% blocktranslate trimmed %}
-      Django Girls workshop attendees go on to organize their own workshops, lead
-      in their community, and secure full-time jobs as developers. Read their stories
-      in the “Your Django Story” series on the <a href="https://blog.djangogirls.org/">
-        Django Girls blog</a>.
-    {% endblocktranslate %}
-  </p>
-
-  <p>
-    {% blocktranslate trimmed %}
-      In 2015, the Django Software Foundation contributed $5,400 to eighteen
-      Django Girls workshops around the world. Here's what some of the organizers had
-      to say about the impact:
-    {% endblocktranslate %}
-  </p>
-
-  <blockquote>
-    <p>
-      {% blocktranslate trimmed %}
-        Sponsorship from the DSF allowed us to have on-site child care for our Django
-        Girls Portland workshop. We hosted 2 young children and an infant, and provided
-        them with healthy snacks, games, sidewalk chalk, finger paint, and emoji
-        stickers. Without our nanny, 3 of our attendees wouldn't have been able to come
-        to the workshop. Finger paint photo is
-        <a href="https://blog.djangogirls.org/post/124680859493/django-girls-portland-a-retrospective">
-          on the blog</a>!
-      {% endblocktranslate %}
-    </p>
-    <em>{% translate "Lacey - Portland, Oregon, US" %}</em>
-  </blockquote>
-
-  <blockquote>
-    <p>
-      {% blocktranslate trimmed %}
-        The DSF supported <a href="https://djangogirls.org/warsaw/">Django Girls
-          Poland</a> four times this year and the impact was enormous! In Poland, diversity
-        awareness is not a very common topic. When we approached different local
-        companies about our workshops they usually didn't get what we were actually
-        doing and why it is important. If not for the DSF, we probably would not have
-        been able to hold our workshops at all. Our first workshops were the only until
-        now workshops that were 100% female - female only coaches and female only
-        attendees. Thanks to you, we were able to focus on gathering female mentors
-        instead of searching for sponsors!
-      {% endblocktranslate %}
-    </p>
-    <em>{% translate "Ania - Wrocław, Poland" %}</em>
-  </blockquote>
-
-  <blockquote>
-    <p>
-      {% blocktranslate trimmed %}
-        <a href="https://pyfound.blogspot.kr/2015/10/django-girls-seoul-great-success.html">
-          Django Girls Seoul</a> had 425 applicants from 11 different countries ages
-        ranging from 16 to 50 years old. After acceptances, we had about 105 people to
-        feed and caffeinate! Thanks to Django's sponsorship we could get all of our
-        participants coffee for the day. It really made a huge difference because we
-        all know how a cup of coffee can change the atmosphere and mood! We were so
-        grateful to the sponsorship we received from abroad. We tried to get sponsorship
-        from a lot of Korean companies but the same generosity doesn't translate well
-        into a Korean Business culture, I guess. This made us even more thankful for
-        our friends at the DSF!
-      {% endblocktranslate %}
-    </p>
-    <em>{% translate "Rachell - Seoul, South Korea" %}</em>
-  </blockquote>
-
-  <hr style="margin: 40px 0" />
-
   <div class="heroes-section">
     <h2 id="dsf-supporters">{% translate "DSF Supporters" %}</h2>
     <p>
@@ -240,11 +123,160 @@
 
     {% display_django_heroes %}
   </div>
+
+
 {% endblock content %}
 
 {% block content-extra %}
   <div class="layout-tertiary" id="about">
     <div class="container">
+      <h2 id="fellowship-program">{% translate "Django Fellowship Program" %}</h2>
+
+      <p>
+        {% blocktranslate trimmed %}
+          The biggest expense of the <abbr title="Django Software Foundation">DSF</abbr>
+          is the Django Fellowship program. It's a project where
+          <a href="#who-are-the-django-fellows">paid contractors</a> are engaged to
+          manage some of the administrative and community management tasks of the
+          Django project to support rapid development of Django itself.
+        {% endblocktranslate %}
+      </p>
+
+      <p>
+        {% blocktranslate trimmed %}
+          <strong>The Django Fellowship program has a major positive impact on how
+            Django is developed and maintained.</strong>
+          The Django Fellows triage 10-15 new tickets each week and review and merge
+          around fifteen non-trivial patches a week from the community. Release
+          blocking and severe bugs aren't postponed indefinitely. Major releases happen
+          according to an 8 month schedule and bug fix releases occur monthly.
+        {% endblocktranslate %}
+      </p>
+
+      <p>
+        {% host_url 'homepage' host 'www' as base_url %}
+        {% blocktranslate trimmed %}
+          For more details, you can read retrospectives for the
+          <a href="{{ base_url }}weblog/2015/jan/21/django-fellowship-retrospective/"> first three
+            months of the program</a>,
+          <a href="{{ base_url }}weblog/2015/dec/17/fellowship-2015-retrospective/">2015</a>, and
+          <a href="{{ base_url }}weblog/2016/dec/28/fellowship-2016-retrospective/">2016</a>.
+        {% endblocktranslate %}
+      </p>
+
+      {% comment %}
+        The lead-in ends in a colon, so it belongs inside the guard: disabling the
+        testimonial in the admin (is_active) must not leave it pointing at nothing.
+      {% endcomment %}
+      {% if testimonial %}
+        <p>
+          {% blocktranslate trimmed %}
+            The Django Fellows are a resource to help review patches and contributions
+            from the community, and the community loves that:
+          {% endblocktranslate %}
+        </p>
+
+        <blockquote>
+          {{ testimonial.body|linebreaks }}
+          <em>{{ testimonial.author }}</em>
+        </blockquote>
+      {% endif %}
+
+      <p>
+        {% blocktranslate trimmed %}
+          <strong>If you use Django on a daily basis and care about the development of Django
+            itself, you should donate today</strong> (may be <a href="/foundation/donate/#tax-deductible">tax deductible</a>).
+          Only with your support can we make sure that the web framework you base your work on
+          can grow to be even better in the coming years.
+        {% endblocktranslate %}
+      </p>
+
+      <h2 id="django-girls">{% translate "Django Girls Outreach" %}</h2>
+
+      <p>
+        {% blocktranslate trimmed %}
+          Supporting <a href="https://djangogirls.org/">Django Girls workshops</a> is
+          a significant priority for the Django Software Foundation. Django Girls
+          workshops are organized by volunteers and are provided as free events for women
+          who want to learn to code. The workshop serves as an introduction to Python and
+          Django, where attendees learn usable skills to build their first web app.
+        {% endblocktranslate %}
+      </p>
+
+      <p>
+        {% blocktranslate trimmed %}
+          Django Girls workshop attendees go on to organize their own workshops, lead
+          in their community, and secure full-time jobs as developers. Read their stories
+          in the “Your Django Story” series on the <a href="https://blog.djangogirls.org/">
+            Django Girls blog</a>.
+        {% endblocktranslate %}
+      </p>
+
+      {% comment %}
+        This 2015 funding figure and the organizer testimonials below are out of
+        date. The lead-in paragraph ends in a colon, so it is commented out with
+        the quotes it introduces. Kept rather than deleted so they can be
+        refreshed with current numbers or removed later.
+
+      <p>
+        {% blocktranslate trimmed %}
+          In 2015, the Django Software Foundation contributed $5,400 to eighteen
+          Django Girls workshops around the world. Here's what some of the organizers had
+          to say about the impact:
+        {% endblocktranslate %}
+      </p>
+
+      <blockquote>
+        <p>
+          {% blocktranslate trimmed %}
+            Sponsorship from the DSF allowed us to have on-site child care for our Django
+            Girls Portland workshop. We hosted 2 young children and an infant, and provided
+            them with healthy snacks, games, sidewalk chalk, finger paint, and emoji
+            stickers. Without our nanny, 3 of our attendees wouldn't have been able to come
+            to the workshop. Finger paint photo is
+            <a href="https://blog.djangogirls.org/post/124680859493/django-girls-portland-a-retrospective">
+              on the blog</a>!
+          {% endblocktranslate %}
+        </p>
+        <em>{% translate "Lacey - Portland, Oregon, US" %}</em>
+      </blockquote>
+
+      <blockquote>
+        <p>
+          {% blocktranslate trimmed %}
+            The DSF supported <a href="https://djangogirls.org/warsaw/">Django Girls
+              Poland</a> four times this year and the impact was enormous! In Poland, diversity
+            awareness is not a very common topic. When we approached different local
+            companies about our workshops they usually didn't get what we were actually
+            doing and why it is important. If not for the DSF, we probably would not have
+            been able to hold our workshops at all. Our first workshops were the only until
+            now workshops that were 100% female - female only coaches and female only
+            attendees. Thanks to you, we were able to focus on gathering female mentors
+            instead of searching for sponsors!
+          {% endblocktranslate %}
+        </p>
+        <em>{% translate "Ania - Wrocław, Poland" %}</em>
+      </blockquote>
+
+      <blockquote>
+        <p>
+          {% blocktranslate trimmed %}
+            <a href="https://pyfound.blogspot.kr/2015/10/django-girls-seoul-great-success.html">
+              Django Girls Seoul</a> had 425 applicants from 11 different countries ages
+            ranging from 16 to 50 years old. After acceptances, we had about 105 people to
+            feed and caffeinate! Thanks to Django's sponsorship we could get all of our
+            participants coffee for the day. It really made a huge difference because we
+            all know how a cup of coffee can change the atmosphere and mood! We were so
+            grateful to the sponsorship we received from abroad. We tried to get sponsorship
+            from a lot of Korean companies but the same generosity doesn't translate well
+            into a Korean Business culture, I guess. This made us even more thankful for
+            our friends at the DSF!
+          {% endblocktranslate %}
+        </p>
+        <em>{% translate "Rachell - Seoul, South Korea" %}</em>
+      </blockquote>
+      {% endcomment %}
+
       <h2>{% translate "What is the Django Software Foundation?" %}</h2>
       {% host_url 'homepage' host 'www' as base_url %}
       <p>
