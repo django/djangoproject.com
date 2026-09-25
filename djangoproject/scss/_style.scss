@@ -3193,14 +3193,10 @@ hr {
 }
 
 .user-info {
-    // Keep this value in sync with the width value of the img element in the HTML.
-    $user_info_avatar_img_width: 150px;
-
     .avatar {
         @include framed-image();
         margin: 4rem 1rem 0rem 1rem;
 
-        // Using `float: right` causes the image to separate words vertically by its own height on some screen sizes.
         @include respond-min(811px) {
             float: right;
             margin: 4rem 1rem 1rem 1rem;
@@ -3211,9 +3207,7 @@ hr {
         margin-bottom: 0;
 
         @include respond-min(811px) {
-            // These rules prevents the unwanted vertical space between words as described in the `.avatar` class.
             display: inline-block;
-            max-width: calc(100% - $user_info_avatar_img_width);
         }
 
         @include respond-max(810px) {
