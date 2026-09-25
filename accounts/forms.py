@@ -26,7 +26,7 @@ class ProfileForm(forms.ModelForm):
         bound_field_class=BoundFieldWithCharacterCounter,
         required=False,
         max_length=3_000,
-        widget=forms.Textarea(attrs={"placeholder": _("Bio")}),
+        widget=forms.Textarea(attrs={"placeholder": _("Enter your bio here...")}),
         help_text=_(
             "URLs and email addresses are automatically converted into clickable links.",
         ),
