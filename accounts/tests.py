@@ -481,12 +481,8 @@ class UserProfileUpdateFormTests(TestCase):
         )
         self.assertContains(
             response,
-            f"""
-                                class="character-counter__indicator"
-                            >
-                                {expected_characters_remaining_count}
-                            </span>
-            """.strip(),
+            '_characters_remaining_count" class="character-counter__indicator">'
+            f'{expected_characters_remaining_count}</span>'
         )
 
 

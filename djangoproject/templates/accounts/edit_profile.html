@@ -48,12 +48,7 @@
                             data-character-counter-indicator-selector="#{{ form.bio.id_for_label }}_characters_remaining_count"
                         >
                             <span>{% translate "Characters remaining:" %}</span>
-                            <span
-                                id="{{ form.bio.id_for_label }}_characters_remaining_count"
-                                class="character-counter__indicator"
-                            >
-                                {{ bio_characters_remaining_count }}
-                            </span>
+                            <span id="{{ form.bio.id_for_label }}_characters_remaining_count" class="character-counter__indicator">{{ bio_characters_remaining_count }}</span>
                         </div>
                     {% endif %}
                 {% endwith %}
