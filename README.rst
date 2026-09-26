@@ -171,6 +171,36 @@ Then run::
 
     make test TEST_ARGS="--browser chromium --browser firefox"
 
+Generating visual diffs
+-----------------------
+
+It's possible to use playwright to generate before and after screenshots to
+check for unexpected visual changes. Briefly, you would run the screenshot
+tests once before you make changes to create a baseline. Subsequent runs
+compare your current code with the baseline.
+
+The tests typically take several minutes to run, and use the contents of the
+sitemap as the list of pages to check.
+
+To generate a baseline before you've made any changes in your local repo::
+
+    SCREENSHOT_MODE=baseline python -m manage test djangoproject.test_visual_diff.ScreenshotTests
+
+By default this places the baseline screenshots in
+``djangoproject/tests/screenshots/``. After you have made changes run again in
+compare mode::
+
+    SCREENSHOT_MODE=compare python -m manage test djangoproject.test_visual_diff.ScreenshotTests
+
+For any screens that differ from the baseline a baseline, current, and diff
+image will be generated for you to compare. For example in::
+
+    djangoproject/tests/screenshots/www_fundraising/chromium/dark/1366/
+
+Where ``www_fundraising`` is a user friendly page label, ``chromium`` is the
+browser engine used, ``dark`` is the theme, and ``1366`` is the browser window
+width tested.
+
 Supported browsers
 ------------------
 
