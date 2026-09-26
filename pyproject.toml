@@ -55,6 +55,7 @@ prod = [
 # TODO: Consider merging with dev group
 tests = [
     "coverage==7.15.2",
+    "pixelmatch>=0.3.0",
     "playwright==1.62.0",
     "psycopg[binary]==3.3.4",
     "requests-mock==1.12.1",

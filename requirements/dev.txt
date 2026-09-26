@@ -88,6 +88,7 @@ pathspec==1.1.1
     # via black
 pillow==12.3.0
     # via djangoproject-com
+pixelmatch==0.4.0
 platformdirs==4.11.3
     # via black
 playwright==1.62.0
