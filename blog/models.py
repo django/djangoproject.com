@@ -38,6 +38,9 @@ class EntryQuerySet(models.QuerySet):
     def published(self):
         return self.active().filter(pub_date__lte=timezone.now())
 
+    def priority_order(self):
+        return self.order_by("-featured", "-pub_date")
+
     def active(self):
         return self.filter(is_active=True)
 
@@ -114,6 +117,7 @@ class ContentFormat(models.TextChoices):
                     # BLOG_DOCUTILS_SETTINGS because rst always starts from heading
                     # level 1, but markdown can have specific heading levels so
                     # starting from 1 makes sense.
+                    "fenced_code",
                     "tables",
                     TocExtension(baselevel=1, slugify=_md_slugify),
                 ],
@@ -203,6 +207,10 @@ class Entry(models.Model):
             "For maximum compatibility, the image should be < 5 MB "
             "and at least 1200x627 px."
         ),
+    )
+    featured = models.BooleanField(
+        default=False,
+        help_text=_("Have the entry fixed at the top of the page."),
     )
 
     objects = EntryQuerySet.as_manager()

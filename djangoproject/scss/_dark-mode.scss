@@ -95,7 +95,7 @@ html[data-theme="light"],
         --warning-link-block: #{$red};
 
         --hairline-color: #{$gray-line};
-        --dark-hairline-color: #{gray-medium-l10};
+        --dark-hairline-color: #{$gray-medium-l10};
 
         --error-light: #{$red-medium};
         --error-dark: #{$red-medium};
@@ -194,7 +194,7 @@ html[data-theme="dark"] {
     --warning-link-block: #{$red};
 
     --hairline-color: #{$gray-line};
-    --dark-hairline-color: #{gray-medium-l10};
+    --dark-hairline-color: #{$gray-medium-l10};
 
     --error-light: #{$red-medium};
     --error-dark: #{$red-medium};
