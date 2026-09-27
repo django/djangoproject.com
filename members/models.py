@@ -102,10 +102,12 @@ class IndividualMember(models.Model):
         return updated_count
 
     @classmethod
-    def send_account_invite_mails(cls, queryset):
+    def send_account_invite_mails(cls, queryset, select_for_update_nowait=False):
         results = {}
         # Wait for other active transactions to prevent race conditions.
-        queryset = queryset.select_for_update(nowait=False)
+        # Raises a `django.db.DatabaseError` if `nowait` is `True` and the lock
+        # cannot be obtained.
+        queryset = queryset.select_for_update(nowait=select_for_update_nowait)
         for individual_member in queryset.iterator():
             status = individual_member.send_account_invite_mail()
             if status not in results:
