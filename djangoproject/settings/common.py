@@ -183,6 +183,8 @@ SECURE_BROWSER_XSS_FILTER = True
 
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
+TEST_RUNNER = "djangoproject.test_runner.BrowserTestRunner"
+
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTOCOL", "https")
 
 SERVER_EMAIL = "root@djangoproject.com"

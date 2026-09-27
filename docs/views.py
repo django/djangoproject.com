@@ -173,37 +173,29 @@ def search_results(request, lang, version, per_page=10, orphans=3):
 
             ranked = Document.objects.rank(q, release, document_category=doc_category)
             page_number = request.GET.get("page") or 1
+            paginator = Paginator(ranked, per_page=per_page, orphans=orphans)
 
             try:
                 page_number = int(page_number)
             except ValueError:
-                if page_number != "last":
+                if page_number == "last":
+                    page_number = paginator.num_pages
+                else:
                     raise Http404(
                         _("Page is not 'last', nor can it be converted to an int.")
                     )
-                page_results = Document.objects.annotate_search_results(
-                    ranked, q, uses_trigram=ranked.uses_trigram
-                )
-            else:
-                # Make the offset & limit calculation so that it can be used to
-                # limit the number of annotations.
-                start = (page_number - 1) * per_page
-                stop = start + per_page
-                page_results = Document.objects.annotate_search_results(
-                    ranked[start:stop], q, uses_trigram=ranked.uses_trigram
-                )
-            paginator = Paginator(ranked, per_page=per_page, orphans=orphans)
 
-            if page_number == "last":
-                page = paginator.page(paginator.num_pages)
-            else:
-                try:
-                    page = paginator.page(page_number)
-                except InvalidPage as e:
-                    raise Http404(
-                        _("Invalid page (%(page_number)s): %(message)s")
-                        % {"page_number": page_number, "message": str(e)}
-                    )
+            try:
+                page = paginator.page(page_number)
+            except InvalidPage as e:
+                raise Http404(
+                    _("Invalid page (%(page_number)s): %(message)s")
+                    % {"page_number": page_number, "message": str(e)}
+                )
+
+            page_results = Document.objects.annotate_search_results(
+                page.object_list, q, uses_trigram=ranked.uses_trigram
+            )
 
             context.update(
                 {
