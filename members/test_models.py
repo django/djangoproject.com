@@ -1,12 +1,10 @@
-from concurrent.futures import ThreadPoolExecutor
 from contextlib import ExitStack
 from datetime import date, timedelta
-from multiprocessing import cpu_count as get_cpu_count
-from random import randint
+from threading import Event, Thread
 
 from django.contrib.auth import get_user_model
 from django.core import mail
-from django.db import connections, transaction
+from django.db import DatabaseError, connections, transaction
 from django.test import TestCase, TransactionTestCase
 from django.urls import reverse
 
@@ -133,24 +131,27 @@ class IndividualMemberTests(TestCase):
 
 class IndividualMemberTransactionTests(TransactionTestCase):
     def test_send_account_invite_mails_prevents_race_condition(self):
-        # Try to find the ideal number of processes/workers for the
-        # current machine.
-        cpu_count = get_cpu_count()
-        processes_count = max(min(4 * cpu_count, 64), 8)
-        workers_count = max(min(cpu_count * 2 + 1, 8), 16)
-        individual_members_count = randint(5, 10)
+        new_individual_members_count = 2
+
+        # Strictly required for the test.
+        self.assertGreaterEqual(new_individual_members_count, 1)
+
         individual_member_pks = set()
-        for i in range(individual_members_count):
+        for i in range(new_individual_members_count):
             individual_member = IndividualMember.objects.create(
                 name=f"User {i}",
                 email=f"user{i}@example.com",
             )
             individual_member_pks.add(individual_member.pk)
+
         individual_members_queryset = IndividualMember.objects.filter(
             pk__in=individual_member_pks,
         )
 
-        def execute_send_account_invite_mails_task():
+        lock_signal = Event()
+        unlock_request_signal = Event()
+
+        def lock_individual_members():
             # This is a thread entry point. Note that Django doesn't close
             # our custom connections created in separated threads, which
             # causes `django.db.utils.OperationalError` to be raised with
@@ -161,37 +162,41 @@ class IndividualMemberTransactionTests(TransactionTestCase):
             with ExitStack() as exit_stack:
                 exit_stack.callback(connections.close_all)
                 with transaction.atomic():
-                    return IndividualMember.send_account_invite_mails(
+                    locked_individual_members_queryset = individual_members_queryset.select_for_update()
+                    # Trigger the fetch operation.
+                    self.assertEqual(len(locked_individual_members_queryset), new_individual_members_count)
+                    lock_signal.set()
+                    unlock_request_signal.wait()
+
+        caught_exception = None
+
+        with transaction.atomic():
+            locker_thread = Thread(target=lock_individual_members)
+            locker_thread.start()
+
+            self.assertTrue(lock_signal.wait(timeout=10))
+
+            with ExitStack() as exit_stack:
+                exit_stack.callback(unlock_request_signal.set)
+
+                with self.assertRaises(DatabaseError) as exception_cm:
+                    IndividualMember.send_account_invite_mails(
                         individual_members_queryset,
+                        select_for_update_nowait=True,
                     )
 
-        futures = []
-        with ThreadPoolExecutor(max_workers=workers_count) as executor:
-            for i in range(processes_count):
-                futures.append(
-                    executor.submit(execute_send_account_invite_mails_task),
-                )
-        status_aggregation = {}
-        for future in futures:
-            results = future.result()
-            for key, value in results.items():
-                if key not in status_aggregation:
-                    status_aggregation[key] = value
-                else:
-                    status_aggregation[key] += value
+                caught_exception = exception_cm.exception
+
+        locker_thread.join(timeout=10)
+
+        self.assertIsNotNone(caught_exception)
+        self.assertIn("could not obtain lock on row in relation", str(caught_exception))
+
         self.assertEqual(
-            status_aggregation.get(
-                IndividualMemberAccountInviteSendMailStatus.SENT,
-                0,
-            ),
-            individual_members_count,
-        )
-        self.assertEqual(
-            status_aggregation.get(
-                IndividualMemberAccountInviteSendMailStatus.SKIPPED,
-                0,
-            ),
-            individual_members_count * (processes_count - 1),
+            individual_members_queryset.filter(
+                account_invite_mail_sent_at__isnull=True,
+            ).count(),
+            new_individual_members_count,
         )
 
 
