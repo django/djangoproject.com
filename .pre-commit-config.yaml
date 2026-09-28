@@ -42,7 +42,7 @@ repos:
           - id: black
 
     - repo: https://github.com/rbubley/mirrors-prettier
-      rev: v3.9.6
+      rev: v3.9.8
       hooks:
           - id: prettier
             # https://github.com/rbubley/mirrors-prettier/issues/3
