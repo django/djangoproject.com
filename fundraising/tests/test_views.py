@@ -53,6 +53,20 @@ class TestSponsor(ReleaseMixin, TestCase):
                 self.assertContains(detail, 'href="#contact"')
                 self.assertContains(detail, reverse("sponsor_prospectus_plans"))
 
+    def test_plan_page_leads_with_the_highlights(self):
+        """
+        The card highlights are the curated pitch, so the detail page repeats
+        them above the full breakdown rather than only listing every benefit.
+        """
+        response = self.client.get(reverse("sponsor_plan", kwargs={"slug": "diamond"}))
+        self.assertContains(response, "What sets this tier apart")
+        self.assertContains(
+            response, "Recognition in release notes and the website footer"
+        )
+        highlights = response.content.index(b"What sets this tier apart")
+        detail = response.content.index(b"Your membership in detail")
+        self.assertLess(highlights, detail)
+
     def test_only_current_sponsors_of_this_plan_are_shown(self):
         for name, level, expiration in [
             ("Current Gold Sponsor", 3, date(2099, 1, 1)),

@@ -15,7 +15,7 @@ PLANS = [
         "slug": "fellow",
         "first_sponsor": _("Be our first Fellowship sponsor"),
         "company_profile": _("Large organizations funding core development"),
-        "highlighted_benefit_count": 2,
+        "highlighted_benefit_count": 4,
         "includes": _("Diamond"),
         "name": _("Sponsored Fellow"),
         "price": "200,000",
@@ -30,6 +30,7 @@ PLANS = [
         "highlights": [
             _("Quarterly meetings with a Sponsored Fellow"),
             _("Recognition from Fellows, including at events"),
+            _("Recognition in release notes and the website footer"),
         ],
         "benefit_groups": [
             {
@@ -129,8 +130,8 @@ PLANS = [
             "ecosystem."
         ),
         "highlights": [
-            _("Yearly meetings with Django leadership"),
             _("Recognition in release notes and the website footer"),
+            _("Yearly meetings with Django leadership"),
             _("Up to 4 Django News ads per year"),
         ],
         "benefit_groups": [
