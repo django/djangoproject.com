@@ -17,7 +17,7 @@ class EventListView(TemplateView):
         if query:
             qs = qs.filter(Q(headline__icontains=query) | Q(location__icontains=query))
         if location:
-            qs = qs.filter(location__icontains=location)
+            qs = qs.filter(location__iexact=location)
         if year and year.isdigit():
             qs = qs.filter(date__year=int(year))
 
