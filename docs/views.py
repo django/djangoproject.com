@@ -14,7 +14,7 @@ from django.views.decorators.cache import cache_page
 from django_hosts.resolvers import reverse
 
 from .forms import DocSearchForm
-from .models import Document, DocumentRelease
+from .models import Document, DocumentRelease, _clean_document_path
 from .search import START_SEL, DocumentationCategory
 from .utils import get_doc_path_or_404, get_doc_root_or_404
 
@@ -79,7 +79,12 @@ def document(request, lang, version, url):
         version
     )
 
+    path_str = str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), "")
+    cleaned_path = _clean_document_path(path_str)
+    is_indexed = Document.objects.filter(release=release, path=cleaned_path).exists()
+
     context = {
+        "noindex": not is_indexed,
         "doc": load_json_file(doc_path),
         "env": load_json_file(docroot / "globalcontext.json"),
         "lang": lang,
