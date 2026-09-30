@@ -119,7 +119,7 @@ PLANS = [
         "includes": _("Platinum"),
         "name": _("Diamond"),
         "price": "100,000",
-        "tagline": _("Stand behind the framework you depend on."),
+        "tagline": _("Be thanked in every Django release."),
         "intro": _(
             "Support Django at scale and connect your organization with the people "
             "guiding its future."
@@ -216,7 +216,7 @@ PLANS = [
         "includes": _("Gold"),
         "name": _("Platinum"),
         "price": "30,000",
-        "tagline": _("Django runs your business."),
+        "tagline": _("Put your logo in front of the Django community."),
         "intro": _(
             "Give back to the framework your team relies on while introducing your "
             "organization to the Django community."
@@ -302,7 +302,7 @@ PLANS = [
         "includes": _("Silver"),
         "name": _("Gold"),
         "price": "13,750",
-        "tagline": _("Django runs your product."),
+        "tagline": _("Tell your story to Django developers."),
         "intro": _(
             "Support the framework behind your product and share your work with fellow "
             "Django developers."
@@ -380,7 +380,7 @@ PLANS = [
         "includes": _("Bronze"),
         "name": _("Silver"),
         "price": "5,500",
-        "tagline": _("Django is part of your stack."),
+        "tagline": _("Show up where Django developers talk."),
         "intro": _(
             "Become a visible supporter of the open source software your developers "
             "use every day."
