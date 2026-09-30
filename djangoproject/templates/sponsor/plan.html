@@ -11,11 +11,11 @@
   <nav class="sponsor-breadcrumb" aria-label="{% translate 'Breadcrumb' %}"><a href="{% url 'sponsor' %}">{% translate "Sponsorship plans" %}</a> <span aria-hidden="true">/</span> {{ plan.name }}</nav>
   <div class="plan-hero">
     <div><p class="sponsor-eyebrow">{% blocktranslate with name=plan.name %}{{ name }} partnership{% endblocktranslate %}</p><h1>{{ plan.tagline }}</h1><p class="plan-intro">{{ plan.intro }}</p><p>{{ plan.audience }}</p>
-      {% if plan.highlights %}
+      {% if plan.detail_highlights %}
         <section class="plan-distinction" aria-labelledby="highlights-heading">
           <p class="sponsor-eyebrow" id="highlights-heading">{% translate "What sets this tier apart" %}</p>
           <ul class="plan-highlights">
-            {% for benefit in plan.highlights %}<li>{{ benefit }}</li>{% endfor %}
+            {% for benefit in plan.detail_highlights %}<li>{{ benefit }}</li>{% endfor %}
           </ul>
         </section>
       {% endif %}

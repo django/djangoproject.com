@@ -67,6 +67,21 @@ class TestSponsor(ReleaseMixin, TestCase):
         detail = response.content.index(b"Your membership in detail")
         self.assertLess(highlights, detail)
 
+    def test_card_lists_what_the_tier_adds_and_the_page_its_headlines(self):
+        """
+        The Fellow card sits beside "Everything in Diamond", so it leaves out
+        the release notes recognition Diamond already has. The plan page has no
+        such line, so it leads with it.
+        """
+        release_notes = "Recognition in release notes and the website footer"
+        overview = self.client.get(reverse("sponsor")).content.decode()
+        start = overview.index('id="plan-fellow"')
+        card = overview[start : overview.index("</article>", start)]
+        self.assertIn("Everything in Diamond", card)
+        self.assertNotIn(release_notes, card)
+        detail = self.client.get(reverse("sponsor_plan", kwargs={"slug": "fellow"}))
+        self.assertContains(detail, release_notes)
+
     def test_only_current_sponsors_of_this_plan_are_shown(self):
         for name, level, expiration in [
             ("Current Gold Sponsor", 3, date(2099, 1, 1)),

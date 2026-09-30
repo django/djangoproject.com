@@ -7,15 +7,26 @@ Editable pricing is tracked separately in issue #2815.
 
 from django.utils.translation import gettext_lazy as _
 
-# Count the individual detail benefits covered by the card highlights.
-# A combined highlight can cover multiple benefits; the inheritance summary
-# does not count as an individually displayed benefit.
+# Each plan sets its bullets for both places it appears:
+#
+# - overview_highlights: the plan card on /sponsor/. The card also says
+#   "Everything in <tier below>", so list only what this tier adds.
+# - detail_highlights: the top of the plan page, /sponsor/plans/<slug>/. There
+#   is no "Everything in" line there, so list the tier's headline benefits even
+#   when the tier below has them too.
+#
+# highlighted_benefit_count is how many individual detail benefits the
+# overview highlights cover, for the card's "Plus N more features" link. A
+# combined highlight can cover several; "Everything in" does not count.
+#
+# /sponsor/plans/ is the prospectus comparison table in
+# templates/fundraising/prospectus.html and does not read this data.
 PLANS = [
     {
         "slug": "fellow",
         "first_sponsor": _("Be our first Fellowship sponsor"),
         "company_profile": _("Large organizations funding core development"),
-        "highlighted_benefit_count": 4,
+        "highlighted_benefit_count": 2,
         "includes": _("Diamond"),
         "name": _("Sponsored Fellow"),
         "price": "200,000",
@@ -27,7 +38,11 @@ PLANS = [
         "audience": _(
             "For organizations ready to make a lasting investment in Django's future."
         ),
-        "highlights": [
+        "overview_highlights": [
+            _("Quarterly meetings with a Sponsored Fellow"),
+            _("Recognition from Fellows, including at events"),
+        ],
+        "detail_highlights": [
             _("Quarterly meetings with a Sponsored Fellow"),
             _("Recognition from Fellows, including at events"),
             _("Recognition in release notes and the website footer"),
@@ -129,7 +144,12 @@ PLANS = [
             "For organizations whose long-term success depends on a healthy Django "
             "ecosystem."
         ),
-        "highlights": [
+        "overview_highlights": [
+            _("Recognition in release notes and the website footer"),
+            _("Yearly meetings with Django leadership"),
+            _("Up to 4 Django News ads per year"),
+        ],
+        "detail_highlights": [
             _("Recognition in release notes and the website footer"),
             _("Yearly meetings with Django leadership"),
             _("Up to 4 Django News ads per year"),
@@ -226,7 +246,12 @@ PLANS = [
             "For established teams looking for sustained visibility and meaningful "
             "support for Django."
         ),
-        "highlights": [
+        "overview_highlights": [
+            _("Your logo on Community and About pages"),
+            _("Up to 2 Django News ads per year"),
+            _("Up to 7 social media posts per year"),
+        ],
+        "detail_highlights": [
             _("Your logo on Community and About pages"),
             _("Up to 2 Django News ads per year"),
             _("Up to 7 social media posts per year"),
@@ -309,7 +334,12 @@ PLANS = [
             "Django developers."
         ),
         "audience": _("For growing organizations building their products with Django."),
-        "highlights": [
+        "overview_highlights": [
+            _("Up to 1 Django News ad per year"),
+            _("Up to 1 Django blog post per year"),
+            _("Community and About placement, space permitting"),
+        ],
+        "detail_highlights": [
             _("Up to 1 Django News ad per year"),
             _("Up to 1 Django blog post per year"),
             _("Community and About placement, space permitting"),
@@ -390,7 +420,11 @@ PLANS = [
             "For teams ready to build an ongoing relationship with the Django "
             "community."
         ),
-        "highlights": [
+        "overview_highlights": [
+            _("Up to 3 social media posts per year"),
+            _("Up to 1 Discord announcement per year"),
+        ],
+        "detail_highlights": [
             _("Up to 3 social media posts per year"),
             _("Up to 1 Discord announcement per year"),
         ],
@@ -455,7 +489,12 @@ PLANS = [
         "audience": _(
             "For smaller organizations taking their first step into annual sponsorship."
         ),
-        "highlights": [
+        "overview_highlights": [
+            _("Corporate member listing and badge"),
+            _("Social media appreciation post"),
+            _("Recognition in the annual report"),
+        ],
+        "detail_highlights": [
             _("Corporate member listing and badge"),
             _("Social media appreciation post"),
             _("Recognition in the annual report"),
