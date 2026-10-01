@@ -217,8 +217,8 @@ from django import forms
 class BandContactForm(forms.Form):
     subject = forms.CharField(max_length=100)
     message = forms.TextField()
-    sender = forms.EmailField()
-    cc_myself = forms.BooleanField(required=False){% endpygment %}
+    contact_email = forms.EmailField()
+    join_fan_club  = forms.BooleanField(required=False){% endpygment %}
         {# fmt:on #}
           </div>
         </li>
@@ -269,8 +269,9 @@ class MemberAdmin(admin.ModelAdmin):
     list_display = ("name", "instrument")
     list_filter = ("band",)
 
-    admin.site.register(Band)  # Use the default options
-    admin.site.register(Member, MemberAdmin)  # Use the customized options{% endpygment %}
+
+admin.site.register(Band)  # Use the default options
+admin.site.register(Member, MemberAdmin)  # Use the customized options{% endpygment %}
         {# fmt:on #}
           </div>
         </li>
