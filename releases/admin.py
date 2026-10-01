@@ -53,6 +53,13 @@ class ReleaseAdmin(admin.ModelAdmin):
     ordering = ("-major", "-minor", "-micro", "-status", "-iteration")
     search_fields = ("version",)
 
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = super().get_readonly_fields(request, obj)
+        if obj is not None and obj.is_calendar_version:
+            # Release.save() always sets it, so editing it would do nothing.
+            readonly_fields = (*readonly_fields, "is_lts")
+        return readonly_fields
+
     @admin.display(
         description="status",
         ordering="status",
