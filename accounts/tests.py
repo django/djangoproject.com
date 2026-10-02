@@ -169,7 +169,7 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         }
     )
     def test_caches_trac_stats(self):
-        key = "user_vital_status:%s" % hashlib.md5(b"user1").hexdigest()
+        key = "user_vital_status:{}".format(hashlib.md5(b"user1").hexdigest())
 
         self.assertIsNone(cache.get(key))
 
