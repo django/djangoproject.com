@@ -397,6 +397,25 @@ main {
     }
 }
 
+@media (max-width: 767px) {
+    .container.sidebar-right {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container.sidebar-right #main-content {
+        order: 0;
+    }
+
+    .container.sidebar-right [role="complementary"] {
+        order: -1;
+        width: 100%;
+        float: none;
+        margin: 0 0 20px;
+        padding: 10px;
+    }
+}
+
 [role="secondary"] {
     margin: 0 10px;
     padding: 40px 0 60px;
