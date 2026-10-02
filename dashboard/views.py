@@ -53,16 +53,18 @@ def metric_json(request, metric_slug):
 
     try:
         daysback = int(request.GET["days"])
-    except (TypeError, KeyError, ValueError):
+        # int() accepts values a timedelta cannot represent, so the window has
+        # to be built here to find out whether the number is usable at all.
+        start_date = datetime.datetime.now() - datetime.timedelta(days=daysback)
+    except (TypeError, KeyError, ValueError, OverflowError):
         daysback = 30
+        start_date = datetime.datetime.now() - datetime.timedelta(days=daysback)
 
     generation = generation_key()
     key = f"dashboard:metric:{metric_slug}:{daysback}"
 
     doc = cache.get(key, version=generation)
     if doc is None:
-        start_date = datetime.datetime.now() - datetime.timedelta(days=daysback)
-
         doc = model_to_dict(metric)
         doc["data"] = metric.gather_data(since=start_date)
         cache.set(key, doc, 60 * 60, version=generation)
