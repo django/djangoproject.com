@@ -8,43 +8,56 @@ from django.core.cache import cache
 from django.shortcuts import get_object_or_404, redirect, render
 
 from tracdb import stats as trac_stats
-from tracdb.utils import (
-    check_if_public_trac_stats_are_renderable_for_user,
-    get_user_trac_username,
-)
 
 from .forms import DeleteProfileForm, ProfileForm
-from .models import Profile
+from .models import Profile, TracAccount
 
-
-def get_public_user_trac_stats(user):
-    trac_username = get_user_trac_username(user)
+def get_public_user_trac_stats(trac_username):
     encoded_trac_username = trac_username.encode("ascii", "ignore")
     key = "trac_user_vital_status:%s" % hashlib.md5(encoded_trac_username).hexdigest()
     info = cache.get(key)
     if info is None:
-        info = {}
-        if check_if_public_trac_stats_are_renderable_for_user(user):
-            info = trac_stats.get_user_stats(trac_username)
-            # Hide any stat with a value = 0 so that we don't accidentally insult
-            # non-contributors.
-            for k, v in list(info.items()):
-                if v.count == 0:
-                    info.pop(k)
-            cache.set(key, info, 60 * 60)
+        info = trac_stats.get_user_stats(trac_username)
+        # Hide any stat with a value = 0 so that we don't accidentally insult
+        # non-contributors.
+        for k, v in list(info.items()):
+            if v.count == 0:
+                info.pop(k)
+        cache.set(key, info, 60 * 60)
     return info
 
 
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
-    stats = get_public_user_trac_stats(user)
+    trac_usernames_queryset = TracAccount.objects.filter(
+        user=user,
+    ).order_by("username").values_list(
+        "username",
+        flat=True,
+    )
+    stats_list = []
+    for trac_username in trac_usernames_queryset:
+        stats_list.append(dict(
+            data=get_public_user_trac_stats(trac_username),
+            is_verified=True,
+            trac_username=trac_username,
+        ))
+    if (
+        not stats_list
+        and not TracAccount.objects.is_username_verified_for_another_user(user)
+    ):
+        stats_list.append(dict(
+            data=get_public_user_trac_stats(user.username),
+            is_verified=False,
+            trac_username=user.username,
+        ))
     return render(
         request,
         "accounts/user_profile.html",
         {
             "user_obj": user,
             "email_hash": hashlib.md5(user.email.encode("ascii", "ignore")).hexdigest(),
-            "stats": stats,
+            "stats_list": stats_list,
         },
     )
 

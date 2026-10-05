@@ -47,17 +47,24 @@
             </p>
         {% endif %}
 
-        {% if stats %}
+        {% if stats_list %}
             <h2>{% translate "Statistics on Django core contributions:" %}</h2>
-            <ul>
-                {% for stat, value in stats.items %}
-                    <li>
-                        {% if value.link %}<a href="{{ value.link }}">{{ stat }}: {{ value.count|intcomma }}.</a>
-                        {% else %}{{ stat }}: {{ value.count|intcomma }}.
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
+            {% for stats in stats_list %}
+            <div>
+              {% if stats_list|length > 1 or stats_list|length == 1 and stats.trac_username != user_obj.username %}
+                <h3>{% blocktranslate with trac_username=stats.trac_username %}Trac Account: {{ trac_username }}{% endblocktranslate %}</h3>
+              {% endif %}
+              <ul>
+                  {% for stat, value in stats.data.items %}
+                      <li>
+                          {% if value.link %}<a href="{{ value.link }}">{{ stat }}: {{ value.count|intcomma }}.</a>
+                          {% else %}{{ stat }}: {{ value.count|intcomma }}.
+                          {% endif %}
+                      </li>
+                  {% endfor %}
+              </ul>
+            </div>
+            {% endfor %}
         {% endif %}
 
         {% with user_obj.owned_feeds.all as feeds %}
