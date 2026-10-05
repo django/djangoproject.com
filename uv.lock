@@ -312,6 +312,7 @@ dev = [
     { name = "black" },
     { name = "coverage" },
     { name = "django-debug-toolbar" },
+    { name = "pixelmatch" },
     { name = "playwright" },
     { name = "prek" },
     { name = "psycopg", extra = ["binary"] },
@@ -328,6 +329,7 @@ prod = [
 ]
 tests = [
     { name = "coverage" },
+    { name = "pixelmatch" },
     { name = "playwright" },
     { name = "psycopg", extra = ["binary"] },
     { name = "requests-mock" },
@@ -369,6 +371,7 @@ dev = [
     { name = "black", specifier = "==26.5.1" },
     { name = "coverage", specifier = "==7.15.2" },
     { name = "django-debug-toolbar", specifier = "==7.0.0" },
+    { name = "pixelmatch", specifier = ">=0.3.0" },
     { name = "playwright", specifier = "==1.62.0" },
     { name = "prek", specifier = "==0.4.11" },
     { name = "psycopg", extras = ["binary"], specifier = "==3.3.4" },
@@ -385,6 +388,7 @@ prod = [
 ]
 tests = [
     { name = "coverage", specifier = "==7.15.2" },
+    { name = "pixelmatch", specifier = ">=0.3.0" },
     { name = "playwright", specifier = "==1.62.0" },
     { name = "psycopg", extras = ["binary"], specifier = "==3.3.4" },
     { name = "requests-mock", specifier = "==1.12.1" },
@@ -564,6 +568,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/20/20/25e0f4dc178a6bc0696793720055519a0de89e7661dae886992decbd2f81/pillow-12.3.0-cp312-cp312-win32.whl", hash = "sha256:dbce0b29841537a2fa4a214c2bbf14de3587c9680caa9b4e217568472490b28f", size = 6472684, upload-time = "2026-07-01T11:54:19.839Z" },
     { url = "https://files.pythonhosted.org/packages/45/89/da2f7971a317f83d807fdd4065c0af40208e59e692cc43d315a71a0e96d1/pillow-12.3.0-cp312-cp312-win_amd64.whl", hash = "sha256:a2b55dd6b2a4c4b7d87ffa56bdb33fdc5fdb9a462173861a7bc097f17d91cb09", size = 7227137, upload-time = "2026-07-01T11:54:22.025Z" },
     { url = "https://files.pythonhosted.org/packages/de/47/4845a0a6c0dbf1db8456bd9fc791f13c5ced7ced20606d08a0aacfd25b49/pillow-12.3.0-cp312-cp312-win_arm64.whl", hash = "sha256:331b624368d4f1d069149002f25f44bc61c8919ce8ddb3c45bdad8f6e2d89510", size = 2568267, upload-time = "2026-07-01T11:54:24.051Z" },
+]
+
+[[package]]
+name = "pixelmatch"
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b5/ef/d69a0c50f812326d3b54f8aea0536733d650cc2fb47c6510a2abe54df81d/pixelmatch-0.4.0.tar.gz", hash = "sha256:80a9ae1084941569f0e8cc7fe70b50c02312b4dbaf4b37b710e0f75f9667fa32", size = 7224, upload-time = "2026-03-07T08:55:54.81Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f2/7e/8958796e5077a2473780c9368a0d7f360d1de62c96608b84170c916e4b23/pixelmatch-0.4.0-py3-none-any.whl", hash = "sha256:d40e49e05eab0531bc7665f40309d90f5708c3edd121b3fd63385864005b81a8", size = 9728, upload-time = "2026-03-07T08:55:53.212Z" },
 ]
 
 [[package]]

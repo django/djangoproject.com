@@ -1,0 +1,129 @@
+name: Generate visual diff screenshots
+
+on:
+    pull_request:
+        types: [labeled, synchronize]
+
+env:
+    PYTHON_VERSION: 3.12
+    SCREENSHOT_DIR: /tmp/screenshots
+    # Override if desired.
+    # SCREENSHOT_WIDTHS: "414, 768, 1366"
+    # SCREENSHOT_THEMES: "dark, light"
+
+jobs:
+    visual-diff:
+        runs-on: ubuntu-24.04
+        if: contains(github.event.pull_request.labels.*.name, 'screenshots')
+
+        services:
+            postgres:
+                image: postgres:17-trixie
+                env:
+                    POSTGRES_PASSWORD: postgres
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+                ports:
+                    - 5432:5432
+
+        steps:
+            - name: Set up Python
+              uses: actions/setup-python@v7
+              with:
+                  python-version: ${{ env.PYTHON_VERSION }}
+
+            # Screenshot run #1
+            - name: Checkout PR branch base
+              uses: actions/checkout@v7.0.1
+              with:
+                  ref: ${{ github.event.pull_request.base.sha }}
+
+            - name: Set up databases
+              run: |
+                  PGPASSWORD="postgres" createuser -U postgres -d djangoproject --superuser -h localhost
+                  PGPASSWORD="postgres" createdb -U postgres -O djangoproject djangoproject -h localhost
+                  PGPASSWORD="postgres" createuser -U postgres -d code.djangoproject --superuser -h localhost
+                  PGPASSWORD="postgres" createdb -U postgres -O code.djangoproject code.djangoproject -h localhost
+                  PGPASSWORD="postgres" psql -U postgres -h localhost -c "ALTER USER djangoproject WITH PASSWORD 'secret';"
+                  PGPASSWORD="postgres" psql -U postgres -h localhost -c "ALTER USER \"code.djangoproject\" WITH PASSWORD 'secret';"
+
+            - name: Load Trac data
+              run: |
+                  PGPASSWORD="postgres" psql -U postgres -d code.djangoproject -h localhost < tracdb/trac.sql
+
+            - name: Create secrets.json
+              working-directory: ..
+              run: |
+                  mkdir conf
+                  echo '{"db_host": "localhost", ' > conf/secrets.json
+                  echo '"db_password": "secret", ' >> conf/secrets.json
+                  echo '"trac_db_host": "localhost", ' >> conf/secrets.json
+                  echo '"trac_db_password": "secret", ' >> conf/secrets.json
+                  echo '"secret_key": "a"}' >> conf/secrets.json
+
+            - name: Install deps
+              run: |
+                  python -m pip install --upgrade pip setuptools
+                  python -m pip install -r requirements/tests.txt
+                  python -m playwright install --with-deps chromium
+
+            - name: Static files
+              run: |
+                  make collectstatics
+
+            - name: Generate baseline screenshots
+              env:
+                  SCREENSHOT_MODE: baseline
+              run: python -m manage test --verbosity 2 djangoproject.test_visual_diff.ScreenshotTests
+
+            # Screenshot run #2
+            - name: Checkout PR branch head
+              uses: actions/checkout@v7.0.1
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+                  clean: true
+
+            - name: Install deps
+              run: |
+                  python -m pip install -r requirements/tests.txt
+                  python -m playwright install --with-deps chromium
+
+            - name: Static files
+              run: |
+                  make collectstatics
+
+            - name: Generate comparison screenshots
+              env:
+                  SCREENSHOT_MODE: compare
+              run: python -m manage test --verbosity 2 djangoproject.test_visual_diff.ScreenshotTests
+
+            - name: List differences
+              working-directory: ${{ env.SCREENSHOT_DIR }}
+              run: |
+                  if [ -f diffs.txt ]; then
+                    cat diffs.txt
+                  else
+                    echo "No differences found."
+                  fi
+
+            - name: List skipped
+              working-directory: ${{ env.SCREENSHOT_DIR }}
+              run: |
+                  if [ -f skipped.txt ]; then
+                    cat skipped.txt
+                  else
+                    echo "No pages skipped."
+                  fi
+
+            - name: Upload results
+              uses: actions/upload-artifact@v7.0.1
+              if: always()
+              with:
+                  name: visual-diff-results
+                  path: |
+                      ${{ env.SCREENSHOT_DIR }}/**
+                      !${{ env.SCREENSHOT_DIR }}/baseline
+                  if-no-files-found: ignore
