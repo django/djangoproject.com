@@ -90,7 +90,7 @@ At this point, most of the larger features planned for {{ release.feature_versio
     - Create new `DocumentRelease` objects for each language that has an entry for the previous release.
 
 - [ ] Update djangoproject.com:
-    - [ ] Extend [robots.docs.txt](https://github.com/django/djangoproject.com/blob/main/djangoproject/static/robots.docs.txt) file
+    - [ ] Extend [untranslated_docs.txt](https://github.com/django/djangoproject.com/blob/main/djangoproject/static/untranslated_docs.txt) file
         - Add the result from running in the following using the [django-docs-translations repository](https://github.com/django/django-docs-translations)
         - `git checkout {{ release.stable_branch }} && git pull -v`
         - `python manage_translations.py robots_txt`

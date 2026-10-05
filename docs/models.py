@@ -190,13 +190,13 @@ class DocumentRelease(models.Model):
         """
         self.documents.exclude(metadata__parents=DocumentationCategory.WEBSITE).delete()
 
-        # Read excluded paths from robots.docs.txt.
-        robots_path = settings.BASE_DIR / "djangoproject" / "static" / "robots.docs.txt"
+        # Read excluded paths from untranslated_docs.txt.
+        robots_path = settings.BASE_DIR / "djangoproject" / "static" / "untranslated_docs.txt"
         with robots_path.open() as fh:
             excluded_paths = [
                 line.strip().split("/")[-1]
                 for line in fh
-                if line.startswith(f"Disallow: /{self.lang}/{self.release_id}/")
+                if line.startswith(f"/{self.lang}/{self.release_id}/")
             ]
 
         for document in decoded_documents:

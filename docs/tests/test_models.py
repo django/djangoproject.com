@@ -615,13 +615,13 @@ class UpdateDocTests(TestCase):
     def test_excluded_documents(self):
         """
         Documents aren't created for partially translated documents excluded
-        from robots indexing.
+        from indexing.
         """
-        # Read the first Disallow line of robots.txt.
-        robots_path = settings.BASE_DIR / "djangoproject" / "static" / "robots.docs.txt"
+        # Read the first line of untranslated_docs.txt.
+        robots_path = settings.BASE_DIR / "djangoproject" / "static" / "untranslated_docs.txt"
         with robots_path.open() as fh:
             for line in fh:
-                if line.startswith("Disallow:"):
+                if line.startswith("/"):
                     break
         _, lang, version, path = line.strip().split("/")
 
