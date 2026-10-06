@@ -5,7 +5,17 @@
   table.sponsor-tiers { width: 100%; min-width: 0; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
   th, td { font-size: 14px; padding: 12px; }
   th:not(:first-child), td:not(:first-child) { text-align: center; }
-  table.sponsor-tiers td:empty::after { content: "\2013"; color: color-mix(in srgb, var(--body-fg) 32%, transparent); }
+  table.sponsor-tiers {
+    i.icon-check {
+      color: var(--primary);
+      font-size: 2rem;
+      line-height: 100%;
+    }
+    i.icon-minus {
+      color: color-mix(in srgb, var(--body-fg) 25%, transparent);
+      font-size: 1rem;
+    }
+  }
   th:first-child { width: 32%; }
   // Give row labels the bottom border that td already carries, so each row's
   // line spans the full table and every section heading reads as its own band.
