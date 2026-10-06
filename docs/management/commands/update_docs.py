@@ -168,7 +168,7 @@ class Command(BaseCommand):
 
             extra_kwargs = {"stdout": subprocess.DEVNULL} if self.verbosity == 0 else {}
             subprocess.check_call(
-                "cd %s && make translations" % trans_dir, shell=True, **extra_kwargs
+                ["make", "translations"], cwd=trans_dir, **extra_kwargs
             )
 
         self._build_release_in_subprocess(release)
