@@ -36,6 +36,12 @@ repos:
       hooks:
           - id: django-upgrade
 
+    - repo: https://github.com/codingjoe/esupgrade
+      rev: 2025.14.3
+      hooks:
+          - id: esupgrade
+            exclude: '(^djangoproject\/static\/js\/lib\/.*$)'
+
     - repo: https://github.com/psf/black-pre-commit-mirror
       rev: 26.5.1
       hooks:
