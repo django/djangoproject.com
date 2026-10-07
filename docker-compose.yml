@@ -23,7 +23,8 @@ services:
             - SQL_HOST=db
             - SQL_PORT=5432
             - TRAC_DATABASE=code.djangoproject
-            - TRAC_USER=code.djangoproject
+            # "code.djangoproject" value is hardcoded in trac.sql, no need to pass it via env vars
+            # - TRAC_USER=code.djangoproject
             - TRAC_PASSWORD=secret
             - TRAC_HOST=db
             - TRAC_PORT=5432
