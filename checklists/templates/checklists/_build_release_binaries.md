@@ -1,6 +1,6 @@
 {% load checklist_extras %}
 - [ ] Change version in `django/__init__.py` and maybe trove classifier:
-    - `VERSION = {{ release.version_tuple|format_version_tuple|safe }}`{% if not instance.is_security_release %}
+    - `VERSION = {{ release.django_version_tuple|format_version_tuple|safe }}`{% if not instance.is_security_release %}
     - Ensure the "Development Status" trove classifier in `pyproject.toml` is: `{{ instance.trove_classifier }}`{% endif %}
     - `git commit -a -m '{{ release.commit_prefix }} Bumped version for {{ release.version_verbose }} release.'`
     - e.g. https://github.com/django/django/commit/25fec8940b24107e21314ab6616e18ce8dec1c1c
@@ -18,6 +18,6 @@
 
 - [ ] Save the "15 minutes before" commands from the release script for later.
 
-- [ ] BUMP **MINOR VERSION** in `django/__init__.py`
+- [ ] BUMP **{% if release.is_calendar_version %}PATCH{% else %}MINOR{% endif %} VERSION** in `django/__init__.py`
     - `VERSION = {{ release|next_version_tuple|format_version_tuple|safe }}`
     - `git commit -a -m '{{ release.commit_prefix }} Post-release version bump.'`{% endif %}
