@@ -142,5 +142,5 @@ tzdata==2026.3 ; sys_platform == 'win32'
     # via
     #   django
     #   psycopg
-urllib3==2.7.0
+urllib3==2.8.0
     # via requests
