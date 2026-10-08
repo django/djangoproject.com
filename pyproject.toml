@@ -9,7 +9,7 @@ classifiers = [
 ]
 dependencies = [
     "babel==2.18.0",
-    "django==6.1",
+    "django==6.1.1",
     "django-admin-dracula==0.0.3",
     "django-contact-form==5.2.0",
     "django-countries==9.0.0",
