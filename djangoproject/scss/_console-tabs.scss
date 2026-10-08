@@ -28,7 +28,9 @@
         text-align: center;
         color: #bbb;
         border: 1px solid transparent;
-        font-family: fontawesome;
+        // Older docs label these tabs with Font Awesome glyphs, newer ones
+        // with text, which the icon font has no glyphs for.
+        font-family: fontawesome, $sans-serif-stack;
     }
 
     >section {
