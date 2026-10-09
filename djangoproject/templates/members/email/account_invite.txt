@@ -1,19 +1,21 @@
 {% spaceless %}
 Hello {{ name }},
 
-We're updating the Django Individual Members list so each member's name can link to their djangoproject.com profile. On your profile, you can share a short bio, highlight your contributions to Django or the community, and provide ways for others to get in touch.
+We're updating the Django Individual Members list so each member's name links directly to their djangoproject.com profile.
 
-To have your name linked, please create an account (if you don't already have one) at:
-
+If you don't have an account yet, you can create one here:
 {% url 'registration_register' %}
 
-Note: If you log in to Trac with your GitHub account, your djangoproject.com username should match your GitHub username for certain stats to appear on your profile.
+Notes:
+1. If the email address used for your membership differs from the one on your djangoproject.com account, please reply to this email so we can link them for you.
+2. If your djangoproject.com username differs from your Trac username, or if you use multiple Trac accounts, reply to this email and we will look into linking them for you.
+3. Automatic email-based matching runs periodically, so it may take a little time for your profile link to appear.
 
-Once your account is ready, let us know your username so we can connect it to the members list.
+On your profile, you can share a short bio, highlight your contributions to Django and to the community, and provide ways for others to get in touch.
 
-This small step helps the community grow more connected and makes it easier for everyone to explore and engage with it.
+This small step helps our community grow more connected and makes it easier for everyone to explore and engage with it.
 
-Thank you for being part of the Django community.
+Thank you for being a part of the Django community!
 
 Django Software Foundation
 {% endspaceless %}
