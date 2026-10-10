@@ -25,12 +25,6 @@ repos:
           - id: mixed-line-ending
           - id: trailing-whitespace
 
-    - repo: https://github.com/asottile/pyupgrade
-      rev: v3.21.2
-      hooks:
-          - id: pyupgrade
-            args: [--py312]
-
     - repo: https://github.com/adamchainz/django-upgrade
       rev: 1.32.0
       hooks:

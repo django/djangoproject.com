@@ -46,8 +46,8 @@ class CorporateMemberTests(TestCase):
         self.assertIn("Hi Contact Name,", msg.body)
         self.assertIn(
             "The Django Software Foundation membership for Corporation expires\n"
-            "%s. Would you like to renew your support?"
-            % localize(self.thirty_days_from_now),
+            f"{localize(self.thirty_days_from_now)}. "
+            f"Would you like to renew your support?",
             msg.body,
         )
         self.assertIn(

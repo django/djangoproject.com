@@ -124,7 +124,7 @@ class MetricMixin:
         self.assertEqual(str(self.instance), self.instance.name)
 
     def test_get_absolute_url(self):
-        url_path = "/metric/%s/" % self.instance.slug
+        url_path = f"/metric/{self.instance.slug}/"
         self.assertTrue(url_path in self.instance.get_absolute_url())
 
 
