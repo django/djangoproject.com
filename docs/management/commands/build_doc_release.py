@@ -16,7 +16,6 @@ assumes the checkout is already up to date and only builds it.
 """
 
 import json
-import multiprocessing
 import os
 import shutil
 import subprocess
@@ -28,11 +27,6 @@ from pathlib import Path
 from django.conf import settings
 from django.core.management import BaseCommand, CommandError
 from django.utils.translation import to_locale
-from sphinx.application import Sphinx
-from sphinx.config import Config
-from sphinx.errors import SphinxError
-from sphinx.testing.util import _clean_up_global_state
-from sphinx.util.docutils import docutils_namespace, patch_docutils
 
 from ...models import DocumentRelease
 from ...utils import capture_sentry_exception
@@ -92,6 +86,9 @@ class Command(BaseCommand):
             parent_build_dir.mkdir(parents=True)
 
         source_dir = checkout_dir / "docs"
+        run_sphinx = (
+            settings.BASE_DIR / "docs" / "sphinx_djangoproject" / "run-sphinx.py"
+        )
 
         html_builder = self._html_builder_name(source_dir)
         builders = ["json", html_builder]
@@ -103,44 +100,32 @@ class Command(BaseCommand):
         # Use Sphinx to build the release docs into JSON and HTML documents.
         #
         for builder in builders:
-            # Wipe and re-create the build directory. See #18930.
+            # Wipe and re-create the build directory. See #18930. (This may be
+            # unnecessary once a djangodocs extension bug that breaks doctree
+            # caching has been fixed in all built versions. #37212#comment:13.)
             build_dir = parent_build_dir / "_build" / builder
             if build_dir.exists():
                 shutil.rmtree(str(build_dir))
             build_dir.mkdir(parents=True)
+            doctree_dir = build_dir / ".doctrees"
 
             if self.verbosity >= 2:
                 self.stdout.write(f"  building {builder} ({source_dir} -> {build_dir})")
-            # Retrieve the extensions from the conf.py so we can append to them.
-            conf_extensions = Config.read(source_dir.resolve()).extensions
-            extensions = [*conf_extensions, "docs.builder"]
+            command = [sys.executable, str(run_sphinx)]
+            command.extend(["--checkout-dir", str(checkout_dir)])
+            command.extend(["--source-dir", str(source_dir)])
+            command.extend(["--build-dir", str(build_dir)])
+            command.extend(["--doctree-dir", str(doctree_dir)])
+            command.extend(["--builder", builder])
+            command.extend(["--language", to_locale(release.lang)])
             try:
-                # Prevent global state persisting between builds
-                # https://github.com/sphinx-doc/sphinx/issues/12130
-                with patch_docutils(source_dir), docutils_namespace():
-                    Sphinx(
-                        srcdir=source_dir,
-                        confdir=source_dir,
-                        outdir=build_dir,
-                        doctreedir=build_dir / ".doctrees",
-                        buildername=builder,
-                        # Translated docs builds generate a lot of warnings, so send
-                        # stderr to stdout to be logged (rather than generating an email)
-                        warning=sys.stdout,
-                        parallel=multiprocessing.cpu_count(),
-                        verbosity=0,
-                        confoverrides={
-                            "language": to_locale(release.lang),
-                            "extensions": extensions,
-                        },
-                    ).build()
-                # Clean up global state after building each language.
-                _clean_up_global_state()
-            except SphinxError as e:
+                subprocess.run(command, check=True, capture_output=True, text=True)
+            except subprocess.CalledProcessError as e:
+                stderr = e.stderr.strip() if e.stderr else ""
                 capture_sentry_exception(e, flush=True)
                 raise CommandError(
-                    "sphinx-build returned an error (release %s, builder %s): %s"
-                    % (release, builder, str(e))
+                    f"run-sphinx.py returned an error (release {release}, "
+                    f"builder {builder})\n{e}\nStderr: {stderr}"
                 ) from e
 
         #

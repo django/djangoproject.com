@@ -3,7 +3,7 @@ from unittest.mock import Mock, patch
 from django.test import SimpleTestCase
 from sphinx.testing.util import _clean_up_global_state
 
-from ..builder import DomainObject, PythonObjectsJSONHTMLBuilder
+from ..sphinx_djangoproject.builder import DomainObject, PythonObjectsJSONHTMLBuilder
 
 
 class TestPythonObjectsJSONHTMLBuilder(SimpleTestCase):
@@ -49,7 +49,7 @@ class TestPythonObjectsJSONHTMLBuilder(SimpleTestCase):
         }
         self.assertEqual(self.builder.get_python_objects("doc1"), expected_result)
 
-    @patch("docs.builder.JSONHTMLBuilder.get_doc_context")
+    @patch("docs.sphinx_djangoproject.builder.JSONHTMLBuilder.get_doc_context")
     def test_get_doc_context(self, mock_super_get_doc_context):
         mock_super_get_doc_context.return_value = {}
         self.mock_domain.get_objects.return_value = [
