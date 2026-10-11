@@ -35,7 +35,6 @@ repos:
       rev: 1.32.0
       hooks:
           - id: django-upgrade
-            args: [--target-version, "6.1"]
 
     - repo: https://github.com/psf/black-pre-commit-mirror
       rev: 26.5.1
@@ -43,7 +42,7 @@ repos:
           - id: black
 
     - repo: https://github.com/rbubley/mirrors-prettier
-      rev: v3.9.6
+      rev: v3.9.9
       hooks:
           - id: prettier
             # https://github.com/rbubley/mirrors-prettier/issues/3
@@ -52,12 +51,12 @@ repos:
             exclude: '(^djangoproject\/static\/js\/lib\/.*$|^checklists\/templates\/.*$)'
 
     - repo: https://github.com/pycqa/flake8
-      rev: 7.3.0
+      rev: 7.4.1
       hooks:
           - id: flake8
 
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.16.4
+      rev: v0.16.9
       hooks:
           - id: ruff-check
             args: ["--fix", "--show-fixes"]
@@ -80,12 +79,12 @@ repos:
             args: [--target-version, "6.0"]
 
     - repo: https://github.com/tox-dev/pyproject-fmt
-      rev: v2.28.0
+      rev: v2.29.4
       hooks:
           - id: pyproject-fmt
 
     - repo: https://github.com/astral-sh/uv-pre-commit
-      rev: 0.12.5
+      rev: 0.12.19
       hooks:
           - name: Check lock file
             id: uv-lock

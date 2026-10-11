@@ -18,7 +18,7 @@ charset-normalizer==3.5.0
 colorama==0.4.6 ; sys_platform == 'win32'
     # via sphinx
 coverage==7.15.2
-django==6.1
+django==6.1.1
     # via
     #   django-admin-dracula
     #   django-contact-form
