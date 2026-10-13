@@ -6,6 +6,7 @@ from decimal import Decimal
 from django import template
 from django.conf import settings
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 from fundraising.forms import DonateForm
 from fundraising.models import (
@@ -138,3 +139,25 @@ def top_corporate_members(*levels, header=None):
         members.extend(all_members.get(level, []))
 
     return {"header": header, "members": members}
+
+
+@register.inclusion_tag("fundraising/includes/homepage_sponsors.html")
+def homepage_sponsors():
+    """
+    Highlight top-tier corporate members on the homepage, grouped by tier.
+    """
+    all_members: dict = CorporateMember.objects.by_membership_level()
+
+    tiers = [
+        (name, all_members.get(level, []))
+        for level, name in (
+            ("sponsored_fellow", _("Sponsored Fellow")),
+            ("diamond", _("Diamond")),
+            ("platinum", _("Platinum")),
+            ("gold", _("Gold")),
+            ("silver", _("Silver")),
+            ("bronze", _("Bronze")),
+        )
+    ]
+
+    return {"tiers": [(name, members) for name, members in tiers if members]}
