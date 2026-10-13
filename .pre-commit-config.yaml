@@ -32,7 +32,7 @@ repos:
             args: [--py312]
 
     - repo: https://github.com/adamchainz/django-upgrade
-      rev: 1.32.0
+      rev: 1.33.0
       hooks:
           - id: django-upgrade
 
