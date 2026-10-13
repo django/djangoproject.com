@@ -3,51 +3,43 @@
   <div class="copy-banner" style="background: #fff78e; padding: 10px;"></div>
 {% endif %}
 <header id="top">
-  <div class="container container--flex--wrap--mobile">
-    <a class="logo" href="{% url 'homepage' %}">Django</a>
-    <p class="meta">The web framework for perfectionists with deadlines.</p>
-    <button class="menu-button">
-      <i class="icon icon-reorder" aria-hidden="true"></i>
-      <span class="visuallyhidden">Menu</span>
-    </button>
-    <nav aria-labelledby="navigation-header">
-      <span id="navigation-header" class="visuallyhidden">Main navigation</span>
-      <ul>
-        <li{% if 'start' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'overview' %}">Overview</a>
-        </li>
-        <li{% if 'download' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'download' %}">Download</a>
-        </li>
-        <li{% if request.host.name == 'docs' and 'search' not in request.path %} class="active"{% endif %}>
-          <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}">Documentation</a>
-        </li>
-        <li{% if 'weblog' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'weblog:index' %}">News</a>
-        </li>
-        <li>
-          <a href="https://github.com/django/django" target="_blank" rel="noopener">Code</a>
-        </li>
-        <li>
-          <a href="https://code.djangoproject.com/">Issues</a>
-        </li>
-        <li{% if 'community' in request.path or 'conduct' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'community-index' %}">Community</a>
-        </li>
-        <li{% if 'foundation' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'homepage' %}foundation/">Foundation</a>
-        </li>
-        <li{% if 'fundraising' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'fundraising:index' %}">&#9829; {% translate "Donate" %}</a>
-        </li>
-        <li{% if request.path|slice:':9' == '/sponsor/' %} class="active"{% endif %}>
-          <a href="{% url 'sponsor' %}">{% translate "Sponsor" %}</a>
-        </li>
-      </ul>
-    </nav>
-    <div class="header-tools">
-      {% search_form %}
-      {% include "includes/toggle_theme.html" %}
-    </div>
+  <a class="logo" href="{% url 'homepage' %}">Django</a>
+  <p class="meta">The web framework for perfectionists with deadlines.</p>
+  <button class="menu-button">
+    <i class="icon icon-reorder" aria-hidden="true"></i>
+    <span class="visuallyhidden">Menu</span>
+  </button>
+  <nav aria-labelledby="navigation-header">
+    <span id="navigation-header" class="visuallyhidden">Main navigation</span>
+    <ul>
+      <li{% if request.host.name == 'docs' and 'search' not in request.path %} class="active"{% endif %}>
+        <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}">Docs</a>
+      </li>
+      <li{% if 'weblog' in request.path %} class="active"{% endif %}>
+        <a href="{% url 'weblog:index' %}">News</a>
+      </li>
+      <li>
+        <a href="https://code.djangoproject.com/">Issues</a>
+      </li>
+      <li{% if 'community' in request.path or 'conduct' in request.path %} class="active"{% endif %}>
+        <a href="{% url 'community-index' %}">Community</a>
+      </li>
+      <li{% if 'foundation' in request.path %} class="active"{% endif %}>
+        <a href="{% url 'homepage' %}foundation/">Foundation</a>
+      </li>
+      <li{% if 'fundraising' in request.path %} class="active"{% endif %}>
+        <a href="{% url 'fundraising:index' %}">&#9829; {% translate "Donate" %}</a>
+      </li>
+      <li{% if request.path|slice:':9' == '/sponsor/' %} class="active"{% endif %}>
+        <a href="{% url 'sponsor' %}">{% translate "Sponsor" %}</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="header-tools">
+    <a href="https://github.com/django/django" target="_blank" rel="noopener" class="github-link" aria-label="{% translate "Django source code on github" %}">
+      <i aria-hidden="true" class="icon icon-github"></i>
+    </a>
+    {% include "includes/toggle_theme.html" %}
+    {% search_form %}
   </div>
 </header>
