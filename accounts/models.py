@@ -14,8 +14,8 @@ class Profile(models.Model):
 
 
 class TracAccountQuerySet(models.QuerySet):
-    def is_username_verified_for_another_user(self, user, username=None):
-        return self.exclude(user=user).filter(username=username or user.username).exists()
+    def is_username_verified_for_another_user(self, user, username):
+        return self.exclude(user=user).filter(username=username).exists()
 
 class TracAccount(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

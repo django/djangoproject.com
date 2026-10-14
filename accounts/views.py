@@ -44,7 +44,7 @@ def user_profile(request, username):
         ))
     if (
         not stats_list
-        and not TracAccount.objects.is_username_verified_for_another_user(user)
+        and not TracAccount.objects.is_username_verified_for_another_user(user, user.username)
     ):
         stats_list.append(dict(
             data=get_public_user_trac_stats(user.username),
