@@ -73,7 +73,7 @@ def delete_profile_success(request):
 
 def get_user_stats(user):
     username = user.username.encode("ascii", "ignore")
-    key = "user_vital_status:%s" % hashlib.md5(username).hexdigest()
+    key = f"user_vital_status:{hashlib.md5(username).hexdigest()}"
     info = cache.get(key)
     if info is None:
         info = trac_stats.get_user_stats(user.username)

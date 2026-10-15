@@ -294,5 +294,5 @@ class Attachment(models.Model):
         managed = False
 
     def __str__(self):
-        attached_to = ("#%s" % self.id) if self.type == "ticket" else self.id
+        attached_to = (f"#{self.id}") if self.type == "ticket" else self.id
         return f"{self.filename} (on {attached_to})"

@@ -66,8 +66,9 @@ def document(request, lang, version, url):
         rtd_version = version + ".x"
 
     template_names = [
-        "docs/%s.html"
-        % str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), ""),
+        "docs/{}.html".format(
+            str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), "")
+        ),
         "docs/doc.html",
     ]
 
@@ -98,7 +99,7 @@ def document(request, lang, version, url):
     response = render(request, template_names, context)
     # Tell Fastly to re-fetch from the origin once a week
     # (we'll invalidate the cache sooner if needed)
-    response["Surrogate-Control"] = "max-age=%d" % (7 * 24 * 60 * 60)
+    response["Surrogate-Control"] = f"max-age={7 * 24 * 60 * 60}"
     return response
 
 
@@ -128,7 +129,7 @@ def redirect_search(request):
     search_url = reverse("document-search", host="docs", kwargs=kwargs)
     q = request.GET.get("q") or None
     if q:
-        search_url += "?q=%s" % q
+        search_url += f"?q={q}"
     return redirect(search_url)
 
 
