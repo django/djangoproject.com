@@ -1,0 +1,24 @@
+name: Confirm Release
+
+on:
+    workflow_dispatch:
+        inputs:
+            version:
+                required: true
+                description: The Django version to verify. Should be in the format `major.minor`, `major.minor.patch`, `major.minor((a|b|rc)prerelease)` e.g. 4.2, 4.2.3, 4.2a1
+            environment:
+                type: environment
+
+jobs:
+    confirm-release:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check out the repository
+              uses: actions/checkout@v4
+
+            - name: Run confirm-release script
+              run: ./confirm-release.sh
+              working-directory: ./.github/scripts
+              env:
+                  VERSION: ${{ inputs.version }}
+                  GPG_KEY: ${{ vars.GPG_FINGERPRINT }}
