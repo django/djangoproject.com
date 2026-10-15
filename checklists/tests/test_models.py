@@ -5,6 +5,7 @@ from datetime import UTC, date, datetime
 
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
+from django.db.models import ProtectedError
 from django.template.loader import render_to_string
 from django.test import RequestFactory, TestCase, override_settings
 from django.urls import reverse
@@ -536,6 +537,22 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         )
         self.assertIn(f"Get CVE Record from {expected_url}", checklist_content)
 
+    def test_render_checklist_introduced_in(self):
+        release = self.factory.make_release(version="6.0.10")
+        checklist = self.make_checklist(releases=[release])
+        SecurityIssueReleasesThrough.objects.filter(release=release).update(
+            introduced_in=self.factory.make_release(version="6.0.4")
+        )
+
+        checklist_content = self.do_render_checklist(checklist)
+
+        self.assertInChecklistContent(
+            "[row 1] Django [row 2] 6.0.4 before 6.0.10", checklist_content, flat=True
+        )
+        self.assertInChecklistContent(
+            "An issue was discovered in Django 6.0.4 before 6.0.10.", checklist_content
+        )
+
     def test_render_checklist_blogdescription_display(self):
         checklist = self.make_checklist(releases=[])
         blog = (
@@ -722,15 +739,15 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             },
         ]
         expected_description = (
-            "An issue was discovered in Django 5.0 before 5.0.14 and 5.1 before 5.1.8.\n"
+            "An issue was discovered in Django 5.1 before 5.1.8 and 5.0 before 5.0.14.\n"
             f"{cve_description}\n"
             "Earlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) "
             "were not evaluated and may also be affected.\n"
             f"Django would like to thank {reporter} for reporting this issue."
         )
         expected_html_description = (
-            "<p>An issue was discovered in Django 5.0 before 5.0.14 and 5.1 before "
-            f"5.1.8.</p><p>{cve_description}</p>"
+            "<p>An issue was discovered in Django 5.1 before 5.1.8 and 5.0 before "
+            f"5.0.14.</p><p>{cve_description}</p>"
             "<p>Earlier, unsupported Django series (such as 5.0.x, 4.1.x, and 3.2.x) "
             "were not evaluated and may also be affected.</p>"
             f"<p>Django would like to thank {reporter} for reporting this issue.</p>"
@@ -1076,6 +1093,185 @@ class SecurityIssueReleaseThroughTestCase(TestCase):
         self.assertEqual(through1.commit_hash, "")
         self.assertEqual(through2.commit_hash, "")
 
+    def test_introduced_in_must_be_in_same_series(self):
+        release = self.factory.make_release(version="6.0.10")
+        other_series = self.factory.make_release(version="5.2.13")
+        issue = self.factory.make_security_issue(releases=[release])
+        through = SecurityIssueReleasesThrough.objects.get(
+            securityissue=issue, release=release
+        )
+        through.introduced_in = other_series
+        with self.assertRaisesMessage(
+            ValidationError, "Must be a release in the same series as release."
+        ):
+            through.full_clean()
+
+    def test_introduced_in_must_be_a_final_release(self):
+        release = self.factory.make_release(version="6.0.10")
+        issue = self.factory.make_security_issue(releases=[release])
+        through = SecurityIssueReleasesThrough.objects.get(
+            securityissue=issue, release=release
+        )
+        through.introduced_in = self.factory.make_release(version="6.0rc1")
+        with self.assertRaisesMessage(ValidationError, "Must be a final release."):
+            through.full_clean()
+
+    def test_introduced_in_must_be_older_than_release(self):
+        release = self.factory.make_release(version="6.0.10")
+        issue = self.factory.make_security_issue(releases=[release])
+        through = SecurityIssueReleasesThrough.objects.get(
+            securityissue=issue, release=release
+        )
+        newer = self.factory.make_release(version="6.0.11")
+        for introduced_in in [release, newer]:
+            with self.subTest(introduced_in=introduced_in.version):
+                through.introduced_in = introduced_in
+                with self.assertRaisesMessage(
+                    ValidationError, "Must be older than release."
+                ):
+                    through.full_clean()
+
+    def test_introduced_in_valid(self):
+        release = self.factory.make_release(version="6.0.10")
+        issue = self.factory.make_security_issue(releases=[release])
+        through = SecurityIssueReleasesThrough.objects.get(
+            securityissue=issue, release=release
+        )
+        through.introduced_in = self.factory.make_release(version="6.0.4")
+        through.full_clean()
+
+    def test_cve_data_affected_versions_use_introduced_in(self):
+        releases = [
+            self.factory.make_release(version="6.1.3"),
+            self.factory.make_release(version="6.0.10"),
+            self.factory.make_release(version="5.2.19"),
+        ]
+        issue = self.factory.make_security_issue(releases=releases)
+        SecurityIssueReleasesThrough.objects.filter(
+            securityissue=issue, release=releases[1]
+        ).update(introduced_in=self.factory.make_release(version="6.0.4"))
+        SecurityIssueReleasesThrough.objects.filter(
+            securityissue=issue, release=releases[2]
+        ).update(introduced_in=self.factory.make_release(version="5.2.13"))
+
+        self.assertEqual(
+            issue.cve_data["affected"][0]["versions"],
+            [
+                {
+                    "status": "affected",
+                    "version": "6.1",
+                    "lessThan": "6.1.3",
+                    "versionType": "python",
+                },
+                {"status": "unaffected", "version": "6.1.3", "versionType": "python"},
+                {
+                    "status": "unaffected",
+                    "version": "6.0",
+                    "lessThan": "6.0.4",
+                    "versionType": "python",
+                },
+                {
+                    "status": "affected",
+                    "version": "6.0.4",
+                    "lessThan": "6.0.10",
+                    "versionType": "python",
+                },
+                {"status": "unaffected", "version": "6.0.10", "versionType": "python"},
+                {
+                    "status": "unaffected",
+                    "version": "5.2",
+                    "lessThan": "5.2.13",
+                    "versionType": "python",
+                },
+                {
+                    "status": "affected",
+                    "version": "5.2.13",
+                    "lessThan": "5.2.19",
+                    "versionType": "python",
+                },
+                {"status": "unaffected", "version": "5.2.19", "versionType": "python"},
+            ],
+        )
+
+    def test_cve_description_uses_introduced_in(self):
+        releases = [
+            self.factory.make_release(version="6.0.10"),
+            self.factory.make_release(version="5.2.19"),
+        ]
+        issue = self.factory.make_security_issue(releases=releases)
+        SecurityIssueReleasesThrough.objects.filter(
+            securityissue=issue, release=releases[0]
+        ).update(introduced_in=self.factory.make_release(version="6.0.4"))
+
+        self.assertIn(
+            "An issue was discovered in Django 6.0.4 before 6.0.10 and 5.2 "
+            "before 5.2.19.",
+            issue.cve_description,
+        )
+
+    def test_affected_ranges_ordered_by_version_components(self):
+        # A string sort puts "6.2.7" above "2029.1", and "6.0.9" above "6.0.10".
+        releases = [
+            self.factory.make_release(version="6.2.7"),
+            self.factory.make_release(version="2029.1"),
+            self.factory.make_release(version="2028.4"),
+            self.factory.make_release(version="6.0.9"),
+            self.factory.make_release(version="6.0.10"),
+        ]
+        issue = self.factory.make_security_issue(releases=releases)
+
+        self.assertEqual(
+            [r.release.version for r in issue.affected_ranges],
+            ["2029.1", "2028.4", "6.2.7", "6.0.10", "6.0.9"],
+        )
+
+    def test_affected_ranges_exclude_pre_releases(self):
+        releases = [
+            self.factory.make_release(version="6.1.3"),
+            self.factory.make_release(version="6.2a1"),
+        ]
+        issue = self.factory.make_security_issue(releases=releases)
+
+        self.assertEqual([r.release.version for r in issue.affected_ranges], ["6.1.3"])
+
+    def test_cve_data_introduced_in_feature_release(self):
+        release = self.factory.make_release(version="6.0.10")
+        issue = self.factory.make_security_issue(releases=[release])
+        SecurityIssueReleasesThrough.objects.filter(
+            securityissue=issue, release=release
+        ).update(introduced_in=self.factory.make_release(version="6.0"))
+
+        self.assertEqual(
+            issue.cve_data["affected"][0]["versions"],
+            [
+                {
+                    "status": "affected",
+                    "version": "6.0",
+                    "lessThan": "6.0.10",
+                    "versionType": "python",
+                },
+                {"status": "unaffected", "version": "6.0.10", "versionType": "python"},
+            ],
+        )
+
+    def test_affected_release_cannot_be_deleted(self):
+        release = self.factory.make_release(version="6.0.10")
+        self.factory.make_security_issue(releases=[release])
+
+        with self.assertRaises(ProtectedError):
+            release.delete()
+
+    def test_introduced_in_release_cannot_be_deleted(self):
+        release = self.factory.make_release(version="6.0.10")
+        introduced_in = self.factory.make_release(version="6.0.4")
+        issue = self.factory.make_security_issue(releases=[release])
+        SecurityIssueReleasesThrough.objects.filter(
+            securityissue=issue, release=release
+        ).update(introduced_in=introduced_in)
+
+        with self.assertRaises(ProtectedError):
+            introduced_in.delete()
+
 
 class GetCvssSeverityTests(TestCase):
     def test_none_for_null_score(self):
@@ -1129,6 +1325,14 @@ class GetDefaultUnsupportedSeriesTests(TestCase):
 
 
 class SecurityIssueTestCase(TestCase):
+    factory = Factory()
+
+    def test_security_release_cannot_be_deleted(self):
+        checklist = self.factory.make_security_checklist()
+
+        with self.assertRaises(ProtectedError):
+            checklist.delete()
+
     def test_cve_year_number_invalid(self):
         invalid_cve_numbers = [
             "CVE-2026-1",

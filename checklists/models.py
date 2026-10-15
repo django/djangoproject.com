@@ -3,6 +3,7 @@ import json
 import re
 
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 from django.db.models.functions import Cast, Substr
@@ -447,15 +448,23 @@ class SecurityIssueReleasesThrough(models.Model):
     securityissue = models.ForeignKey(
         "SecurityIssue", on_delete=models.CASCADE, verbose_name="Security Issue"
     )
-    release = models.ForeignKey(Release, on_delete=models.CASCADE)
+    release = models.ForeignKey(Release, on_delete=models.PROTECT)
     commit_hash = models.CharField(
         max_length=128, default="", blank=True, db_index=True
     )
+    introduced_in = models.ForeignKey(
+        Release,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="+",
+        help_text=(
+            "First affected release in this series. Leave blank when the whole "
+            "series is affected."
+        ),
+    )
 
     objects = SecurityIssueReleasesThroughManager()
-
-    def natural_key(self):
-        return self.securityissue.natural_key() + (self.release.version,)
 
     class Meta:
         constraints = [
@@ -469,6 +478,72 @@ class SecurityIssueReleasesThrough(models.Model):
                 condition=~models.Q(commit_hash=""),  # Exclude empty strings
             ),
         ]
+
+    def natural_key(self):
+        return self.securityissue.natural_key() + (self.release.version,)
+
+    def clean(self):
+        super().clean()
+        if self.introduced_in is None or self.release_id is None:
+            return
+
+        error = None
+        if self.introduced_in.feature_version != self.release.feature_version:
+            error = "Must be a release in the same series as release."
+        elif self.introduced_in.is_pre_release:
+            # A flaw already present in a pre-release affects the series from
+            # its feature version, which is what leaving this blank expresses.
+            error = "Must be a final release."
+        elif not self.introduced_in < self.release:
+            error = "Must be older than release."
+        if error is not None:
+            raise ValidationError({"introduced_in": error})
+
+    @property
+    def first_affected_version(self):
+        return (
+            self.release.feature_version
+            if self.introduced_in is None
+            else self.introduced_in.version
+        )
+
+    @property
+    def affected_version_range(self):
+        # The unaffected entries are redundant, since the product's
+        # defaultStatus already marks anything unlisted as unaffected. The
+        # fixed release has always been stated explicitly, and for a
+        # regression it is worth saying which releases of the series were
+        # evaluated and found sound.
+        entries = []
+        # Nothing precedes the feature release, so naming it as the first
+        # affected one leaves an empty range.
+        if self.introduced_in is not None and (
+            self.introduced_in.version != self.release.feature_version
+        ):
+            entries.append(
+                {
+                    "status": "unaffected",
+                    "version": self.release.feature_version,
+                    "lessThan": self.introduced_in.version,
+                    "versionType": "python",
+                }
+            )
+        entries.extend(
+            [
+                {
+                    "status": "affected",
+                    "version": self.first_affected_version,
+                    "lessThan": self.release.version,
+                    "versionType": "python",
+                },
+                {
+                    "status": "unaffected",
+                    "version": self.release.version,
+                    "versionType": "python",
+                },
+            ]
+        )
+        return entries
 
 
 class SecurityIssueManager(models.Manager):
@@ -665,11 +740,15 @@ class SecurityIssue(models.Model):
     release = models.ForeignKey(
         SecurityRelease,
         help_text="Security Release that will fix this issue.",
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         null=True,
         blank=True,
     )
-    releases = models.ManyToManyField(Release, through=SecurityIssueReleasesThrough)
+    releases = models.ManyToManyField(
+        Release,
+        through=SecurityIssueReleasesThrough,
+        through_fields=("securityissue", "release"),
+    )
     commit_hash_main = models.CharField(
         max_length=128, default="", blank=True, db_index=True
     )
@@ -705,8 +784,20 @@ class SecurityIssue(models.Model):
         return enumerate_items(self.remediators)
 
     @cached_property
+    def affected_ranges(self):
+        # Newest first, by version components: ordering by the version string
+        # would compare "6" against "2" and put 6.2.7 ahead of 2029.1.
+        return list(
+            self.securityissuereleasesthrough_set.select_related(
+                "release", "introduced_in"
+            )
+            .filter(release__status="f")
+            .order_by("-release__major", "-release__minor", "-release__micro")
+        )
+
+    @cached_property
     def cve_description(self):
-        affected = format_releases_for_cves(self.releases.all())
+        affected = format_releases_for_cves(self.affected_ranges)
         parts = [f"An issue was discovered in Django {affected}.", self.description]
         if self.unsupported_series:
             parts.append(
@@ -759,25 +850,11 @@ class SecurityIssue(models.Model):
 
     @property
     def cve_data(self):
-        affected_unaffected_versions = []
-        versions = []
-        for release in self.releases.filter(status="f").order_by("-version"):
-            versions.append(release.version)
-            affected_unaffected_versions.extend(
-                [
-                    {
-                        "status": "affected",
-                        "version": f"{release.feature_version}",
-                        "lessThan": release.version,
-                        "versionType": "python",
-                    },
-                    {
-                        "status": "unaffected",
-                        "version": release.version,
-                        "versionType": "python",
-                    },
-                ]
-            )
+        affected_unaffected_versions = [
+            entry
+            for affected_range in self.affected_ranges
+            for entry in affected_range.affected_version_range
+        ]
         dates = {"timeline": []}
         if self.reported_at:
             dates["timeline"].append(

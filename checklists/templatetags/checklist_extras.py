@@ -62,16 +62,17 @@ def enumerate_cves(cves, field="cve_year_number"):
 
 
 @register.filter
-def format_release_for_cve(release):
-    return f"{release.feature_version} before {release.version}"
+def format_release_for_cve(affected_range):
+    return (
+        f"{affected_range.first_affected_version} before "
+        f"{affected_range.release.version}"
+    )
 
 
 @register.filter
-def format_releases_for_cves(releases):
-    return enumerate_items(
-        [r for r in releases if not r.is_pre_release],
-        item_formatter=format_release_for_cve,
-    )
+def format_releases_for_cves(affected_ranges):
+    # Pre-releases are left out by the query building the ranges.
+    return enumerate_items(affected_ranges, item_formatter=format_release_for_cve)
 
 
 @register.filter

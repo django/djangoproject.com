@@ -20,7 +20,7 @@
     - Number of vulnerabilities reported or IDs requested (1-10) info: `{{ cves_length }}`
     - I have verified that this vulnerability is not in a CNA-covered product: `Yes`
     - I have verified that the vulnerability has not already been assigned a CVE ID: `Yes`
-    {% for cve in cves %}{% with releases=cve.releases.all %}
+    {% for cve in cves %}{% with affected_ranges=cve.affected_ranges %}
     - For issue **{{ cve.summary }}**:
         - Vulnerability type info (Other): `{{ cve.cve_type }}`
         {% if cve.other_type %}
@@ -28,10 +28,10 @@
         {% endif %}
         - Vendor of the product(s) info: `djangoproject`
         - Affected product(s)/code base (SPLIT in product and version (X before Y) in rows!):
-          ```{% for release in releases %}{% if not release.is_pre_release %}
+          ```{% for affected_range in affected_ranges %}
           [row 1] Django
-          [row 2] {{ release|format_release_for_cve }}
-          {% if not forloop.last %}---------- Click [+] Add ----------{% endif %}{% endif %}
+          [row 2] {{ affected_range|format_release_for_cve }}
+          {% if not forloop.last %}---------- Click [+] Add ----------{% endif %}
           {% endfor %}```
         - Has vendor confirmed or acknowledged the vulnerability? `Yes`
         - Attack type info: `{{ cve.attack_type }}`
