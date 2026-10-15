@@ -1,0 +1,42 @@
+name: Accessibility
+
+on:
+    workflow_dispatch:
+    schedule:
+        # Runs every Saturday at 4:00 AM UTC
+        - cron: "0 4 * * 6"
+    # Remove the following triggers when no longer needed.
+    pull_request:
+        branches:
+            - main
+    push:
+
+jobs:
+    accessibility:
+        name: Pa11y CI
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v6
+            - name: Set up Node.js
+              uses: actions/setup-node@v6
+            - name: Install Pa11y CI
+              run: npm install -g pa11y-ci
+            - name: Configure Chromium
+              # Ubuntu 23+ requires AppArmor configuration for dev Chromium to run
+              # https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md
+              run: |
+                  export CHROMIUM_BUILD_PATH=/@{HOME}/.cache/puppeteer/**/**/**
+                  cat | sudo tee /etc/apparmor.d/chrome-dev-builds <<EOF
+                  abi <abi/4.0>,
+                  include <tunables/global>
+
+                  profile chrome $CHROMIUM_BUILD_PATH flags=(unconfined) {
+                    userns,
+                    include if exists <local/chrome>
+                  }
+                  EOF
+                  sudo service apparmor reload
+            - name: Run Pa11y CI
+              run: pa11y-ci
