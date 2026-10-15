@@ -7,6 +7,6 @@
     {% if banner.cta_url and banner.cta_label %}
       <a id="banner-cta" class="cta" href="{{ banner.cta_url }}">{{ banner.cta_label }}</a>
     {% endif %}
-    <a class="link-readmore" href="{% host_url 'sponsor' host 'www' %}">{% translate "Become a sponsor" %}</a>
+    <a class="link-readmore" href="{% host_url 'sponsor_banner' host 'www' %}">{% translate "Sponsor the Django Software Foundation" %}</a>
   </div>
 {% endif %}
