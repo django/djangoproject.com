@@ -3,6 +3,7 @@ import json
 import re
 
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
 from django.db.models.functions import Cast, Substr
@@ -447,15 +448,47 @@ class SecurityIssueReleasesThrough(models.Model):
     securityissue = models.ForeignKey(
         "SecurityIssue", on_delete=models.CASCADE, verbose_name="Security Issue"
     )
-    release = models.ForeignKey(Release, on_delete=models.CASCADE)
+    release = models.ForeignKey(Release, on_delete=models.PROTECT)
     commit_hash = models.CharField(
         max_length=128, default="", blank=True, db_index=True
+    )
+    introduced_in = models.ForeignKey(
+        Release,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="+",
+        help_text=(
+            "First affected release in this series. Leave blank when the whole "
+            "series is affected."
+        ),
     )
 
     objects = SecurityIssueReleasesThroughManager()
 
     def natural_key(self):
         return self.securityissue.natural_key() + (self.release.version,)
+
+    def clean(self):
+        super().clean()
+        if self.introduced_in is None or self.release_id is None:
+            return
+
+        error = None
+        if self.introduced_in.feature_version != self.release.feature_version:
+            error = "Must be a release in the same series as release."
+        elif not self.introduced_in < self.release:
+            error = "Must be older than release."
+        if error is not None:
+            raise ValidationError({"introduced_in": error})
+
+    @property
+    def first_affected_version(self):
+        return (
+            self.release.feature_version
+            if self.introduced_in is None
+            else self.introduced_in.version
+        )
 
     class Meta:
         constraints = [
@@ -665,11 +698,15 @@ class SecurityIssue(models.Model):
     release = models.ForeignKey(
         SecurityRelease,
         help_text="Security Release that will fix this issue.",
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         null=True,
         blank=True,
     )
-    releases = models.ManyToManyField(Release, through=SecurityIssueReleasesThrough)
+    releases = models.ManyToManyField(
+        Release,
+        through=SecurityIssueReleasesThrough,
+        through_fields=("securityissue", "release"),
+    )
     commit_hash_main = models.CharField(
         max_length=128, default="", blank=True, db_index=True
     )
@@ -761,13 +798,20 @@ class SecurityIssue(models.Model):
     def cve_data(self):
         affected_unaffected_versions = []
         versions = []
-        for release in self.releases.filter(status="f").order_by("-version"):
+        for sirt in (
+            SecurityIssueReleasesThrough.objects.select_related(
+                "release", "introduced_in"
+            )
+            .filter(securityissue_id=self.id, release__status="f")
+            .order_by("-release__version")
+        ):
+            release = sirt.release
             versions.append(release.version)
             affected_unaffected_versions.extend(
                 [
                     {
                         "status": "affected",
-                        "version": f"{release.feature_version}",
+                        "version": sirt.first_affected_version,
                         "lessThan": release.version,
                         "versionType": "python",
                     },
