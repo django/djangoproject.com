@@ -1119,6 +1119,20 @@ class DownloadViewTestCase(ReleaseMixin, TestCase):
             html=True,
         )
 
+    def test_no_supported_release(self):
+        today = datetime.date.today()
+        Release.objects.filter(status="f").update(
+            eol_date=today - datetime.timedelta(1)
+        )
+        response = self.client.get(reverse("download"))
+        self.assertIsNone(response.context["current"])
+        self.assertNotContains(response, "Get the latest official version")
+        # The description falls back to the site-wide one.
+        self.assertNotContains(response, 'content="The latest official version is')
+        # The remaining options close the gap left by the missing section.
+        self.assertContains(response, "Option 1: Get the alpha for 2029")
+        self.assertContains(response, "Option 2: Get the latest development version")
+
 
 class RedirectViewTestCase(TestCase):
     def test_redirect(self):
