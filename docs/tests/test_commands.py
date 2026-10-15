@@ -33,6 +33,37 @@ class HtmlBuilderNameTests(TestCase):
             self.assertEqual(self.command._html_builder_name(source_dir), "html")
 
 
+class EnsureBuilderExtensionTests(TestCase):
+    def setUp(self):
+        self.command = Command()
+
+    def test_appends_extensions_when_missing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            conf_path = Path(tmp) / "conf.py"
+            conf_path.write_text("extensions = ['sphinx.ext.autodoc']\n")
+            self.command._add_custom_extension(conf_path)
+            content = conf_path.read_text()
+            self.assertIn(
+                'extensions.append("python_objects_json_html_builder")', content
+            )
+
+    def test_idempotent_on_subsequent_runs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            conf_path = Path(tmp) / "conf.py"
+            conf_path.write_text("extensions = ['sphinx.ext.autodoc']\n")
+            self.command._add_custom_extension(conf_path)
+            first_content = conf_path.read_text()
+            self.command._add_custom_extension(conf_path)
+            second_content = conf_path.read_text()
+            self.assertEqual(first_content, second_content)
+            self.assertEqual(
+                second_content.count(
+                    'extensions.append("python_objects_json_html_builder")'
+                ),
+                1,
+            )
+
+
 class BuildDocReleaseSphinxErrorTests(TestCase):
     def setUp(self):
         self.release = DocumentRelease.objects.create(lang="en", release=None)
@@ -41,7 +72,9 @@ class BuildDocReleaseSphinxErrorTests(TestCase):
 
     def test_sphinx_error_raises_command_error_and_reports_to_sentry(self):
         with tempfile.TemporaryDirectory() as tmp:
-            # This will fail: {tmp}/sources/dev/docs/conf.py doesn't exist.
+            docs_dir = Path(tmp) / "sources" / "dev" / "docs"
+            docs_dir.mkdir(parents=True)
+            (docs_dir / "conf.py").write_text('extensions = ["unknown_extension"]\n')
             with (
                 override_settings(DOCS_BUILD_ROOT=Path(tmp)),
                 patch.object(Command, "_html_builder_name", return_value="html"),
@@ -51,12 +84,12 @@ class BuildDocReleaseSphinxErrorTests(TestCase):
                 ) as mock_capture,
             ):
                 with self.assertRaisesMessage(
-                    CommandError, "run-sphinx.py returned an error"
+                    CommandError, "sphinx-build returned an error"
                 ) as caught:
                     self.command.build_doc_release(self.release)
-                self.assertRegex(
+                self.assertIn(
+                    "Could not import extension unknown_extension",
                     str(caught.exception),
-                    r"FileNotFoundError.*sources/dev/docs/conf\.py",
                 )
 
         mock_capture.assert_called_once_with(ANY, flush=True)

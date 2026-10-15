@@ -74,6 +74,19 @@ class Command(BaseCommand):
             return "djangohtml"
         return "html"
 
+    def _add_custom_extension(self, conf_path: Path):
+        """Add djangoproject.com custom Sphinx builder extension to conf.py.
+
+        Add the website's custom builder in the conf.py file if it isn't
+        already there. (This cannot be handled with ``sphinx-build --define
+        extensions=...`` because that would override the existing extensions.)
+        """
+        content = conf_path.read_text(encoding="utf-8")
+        content_to_add = 'extensions.append("python_objects_json_html_builder")'
+        if content_to_add not in content:
+            with conf_path.open("a", encoding="utf-8") as f:
+                f.write(f"\n{content_to_add}\n")
+
     def build_doc_release(self, release):
         """Build the docs for a single release.
 
@@ -86,13 +99,22 @@ class Command(BaseCommand):
             parent_build_dir.mkdir(parents=True)
 
         source_dir = checkout_dir / "docs"
-        run_sphinx = settings.BASE_DIR / "docs" / "sphinx_ext" / "run-sphinx.py"
 
         html_builder = self._html_builder_name(source_dir)
         builders = ["json", html_builder]
         if release.is_default:
             # Build the pot files (later retrieved by Transifex)
             builders.append("gettext")
+
+        # Add djangoproject.com custom Sphinx extensions to the checked out
+        # docs/conf.py and make them available for import.
+        self._add_custom_extension(source_dir / "conf.py")
+        sphinx_ext_dir = str(settings.BASE_DIR / "docs" / "sphinx_ext")
+        env = os.environ.copy()
+        if "PYTHONPATH" in env:
+            env["PYTHONPATH"] = f"{sphinx_ext_dir}{os.pathsep}{env['PYTHONPATH']}"
+        else:
+            env["PYTHONPATH"] = sphinx_ext_dir
 
         #
         # Use Sphinx to build the release docs into JSON and HTML documents.
@@ -109,19 +131,22 @@ class Command(BaseCommand):
 
             if self.verbosity >= 2:
                 self.stdout.write(f"  building {builder} ({source_dir} -> {build_dir})")
-            command = [sys.executable, str(run_sphinx)]
-            command.extend(["--source-dir", str(source_dir)])
-            command.extend(["--build-dir", str(build_dir)])
-            command.extend(["--doctree-dir", str(doctree_dir)])
+            command = [sys.executable, "-m", "sphinx.cmd.build"]
             command.extend(["--builder", builder])
-            command.extend(["--language", to_locale(release.lang)])
+            command.extend(["--doctree-dir", str(doctree_dir)])
+            command.extend(["--jobs", "auto"])
+            command.extend(["--define", f"language={to_locale(release.lang)}"])
+            command.append(str(source_dir))
+            command.append(str(build_dir))
             try:
-                subprocess.run(command, check=True, stderr=subprocess.PIPE, text=True)
+                subprocess.run(
+                    command, check=True, stderr=subprocess.PIPE, text=True, env=env
+                )
             except subprocess.CalledProcessError as e:
                 stderr = e.stderr.strip() if e.stderr else ""
                 capture_sentry_exception(e, flush=True)
                 raise CommandError(
-                    f"run-sphinx.py returned an error (release {release}, "
+                    f"sphinx-build returned an error (release {release}, "
                     f"builder {builder})\n{e}\nStderr: {stderr}"
                 ) from e
 
