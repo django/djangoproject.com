@@ -12,6 +12,7 @@ from tracdb import stats as trac_stats
 from .forms import DeleteProfileForm, ProfileForm
 from .models import Profile, TracAccount
 
+
 def get_public_user_trac_stats(trac_username):
     encoded_trac_username = trac_username.encode("ascii", "ignore")
     key = "trac_user_vital_status:%s" % hashlib.md5(encoded_trac_username).hexdigest()
@@ -29,28 +30,38 @@ def get_public_user_trac_stats(trac_username):
 
 def user_profile(request, username):
     user = get_object_or_404(User, username=username)
-    trac_usernames_queryset = TracAccount.objects.filter(
-        user=user,
-    ).order_by("username").values_list(
-        "username",
-        flat=True,
+    trac_usernames_queryset = (
+        TracAccount.objects.filter(
+            user=user,
+        )
+        .order_by("username")
+        .values_list(
+            "username",
+            flat=True,
+        )
     )
     stats_list = []
     for trac_username in trac_usernames_queryset:
-        stats_list.append(dict(
-            data=get_public_user_trac_stats(trac_username),
-            is_verified=True,
-            trac_username=trac_username,
-        ))
+        stats_list.append(
+            dict(
+                data=get_public_user_trac_stats(trac_username),
+                is_verified=True,
+                trac_username=trac_username,
+            )
+        )
     if (
         not stats_list
-        and not TracAccount.objects.is_username_verified_for_another_user(user, user.username)
+        and not TracAccount.objects.is_username_verified_for_another_user(
+            user, user.username
+        )
     ):
-        stats_list.append(dict(
-            data=get_public_user_trac_stats(user.username),
-            is_verified=False,
-            trac_username=user.username,
-        ))
+        stats_list.append(
+            dict(
+                data=get_public_user_trac_stats(user.username),
+                is_verified=False,
+                trac_username=user.username,
+            )
+        )
     return render(
         request,
         "accounts/user_profile.html",

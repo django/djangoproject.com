@@ -162,9 +162,14 @@ class IndividualMemberTransactionTests(TransactionTestCase):
             with ExitStack() as exit_stack:
                 exit_stack.callback(connections.close_all)
                 with transaction.atomic():
-                    locked_individual_members_queryset = individual_members_queryset.select_for_update()
+                    locked_individual_members_queryset = (
+                        individual_members_queryset.select_for_update()
+                    )
                     # Trigger the fetch operation.
-                    self.assertEqual(len(locked_individual_members_queryset), new_individual_members_count)
+                    self.assertEqual(
+                        len(locked_individual_members_queryset),
+                        new_individual_members_count,
+                    )
                     lock_signal.set()
                     unlock_request_signal.wait()
 

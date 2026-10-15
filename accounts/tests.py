@@ -135,7 +135,7 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         user_profile_response = self.client.get(user_profile_url)
         self.assertNotContains(
             user_profile_response,
-            '<h3>Trac Account: {trac_username}</h3>',
+            "<h3>Trac Account: {trac_username}</h3>",
             html=True,
         )
         self.assertContains(
@@ -167,7 +167,7 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         user_profile_response = self.client.get(user_profile_url)
         self.assertNotContains(
             user_profile_response,
-            '<h3>Trac Account: {trac_username}</h3>',
+            "<h3>Trac Account: {trac_username}</h3>",
             html=True,
         )
         self.assertContains(
@@ -199,7 +199,7 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         user_profile_response = self.client.get(user_profile_url)
         self.assertContains(
             user_profile_response,
-            f'<h3>Trac Account: {trac_username}</h3>',
+            f"<h3>Trac Account: {trac_username}</h3>",
             html=True,
         )
         self.assertContains(
@@ -209,7 +209,9 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
             html=True,
         )
 
-    def test_stat_commits_for_unlinked_matched_trac_username_verified_for_another_user(self):
+    def test_stat_commits_for_unlinked_matched_trac_username_verified_for_another_user(
+        self,
+    ):
         djangoproject_username1 = "djangoproject_user1"
         trac_username1 = "trac_user1"
         user1 = User.objects.create_user(username=djangoproject_username1)
@@ -259,7 +261,7 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         user_profile_response = self.client.get(user_profile_url)
         self.assertContains(
             user_profile_response,
-            f'<h3>Trac Account: {trac_username1}</h3>',
+            f"<h3>Trac Account: {trac_username1}</h3>",
             html=True,
         )
         self.assertContains(
@@ -270,7 +272,7 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         )
         self.assertContains(
             user_profile_response,
-            f'<h3>Trac Account: {trac_username2}</h3>',
+            f"<h3>Trac Account: {trac_username2}</h3>",
             html=True,
         )
         self.assertContains(
@@ -476,7 +478,9 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         user_profile_response = self.client.get(user_profile_url)
         self.assertContains(user_profile_response, "New tickets triaged: 3.")
 
-    def test_stat_tickets_triaged_for_unlinked_matched_trac_username_verified_for_another_user(self):
+    def test_stat_tickets_triaged_for_unlinked_matched_trac_username_verified_for_another_user(
+        self,
+    ):
         djangoproject_username1 = "djangoproject_user1"
         trac_username1 = "trac_user1"
         user1 = User.objects.create_user(username=djangoproject_username1)
@@ -602,7 +606,7 @@ class UserProfileUpdateFormTests(ReleaseMixin, TestCase):
         self.assertContains(
             response,
             '_characters_remaining_count" class="character-counter__indicator">'
-            f'{expected_characters_remaining_count}</span>'
+            f"{expected_characters_remaining_count}</span>",
         )
 
 
@@ -738,10 +742,14 @@ class TracAccountTests(TestCase):
         shared_trac_username = "trac_user"
 
         user_1 = User.objects.create_user(username="user_1", password="password")
-        trac_account_1 = TracAccount.objects.create(user=user_1, username=shared_trac_username)
+        trac_account_1 = TracAccount.objects.create(
+            user=user_1, username=shared_trac_username
+        )
 
         user_2 = User.objects.create_user(username="user_2", password="password")
-        trac_account_2 = TracAccount.objects.create(user=user_2, username=shared_trac_username)
+        trac_account_2 = TracAccount.objects.create(
+            user=user_2, username=shared_trac_username
+        )
 
         self.assertNotEqual(trac_account_1.user, trac_account_2.user)
         self.assertEqual(trac_account_1.username, trac_account_2.username)
