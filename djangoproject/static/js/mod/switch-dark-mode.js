@@ -1,4 +1,4 @@
-let prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+let prefersDark = globalThis.matchMedia('(prefers-color-scheme: dark)').matches;
 
 function setTheme(mode) {
   if (mode !== 'light' && mode !== 'dark' && mode !== 'auto') {
@@ -7,7 +7,7 @@ function setTheme(mode) {
   }
   document.documentElement.dataset.theme = mode;
   // trim host to get base domain name for set in cookie domain name for subdomain access
-  arrHost = window.location.hostname.split('.');
+  arrHost = globalThis.location.hostname.split('.');
   prefix = arrHost.shift();
   host = arrHost.join('.');
   setCookie('theme', mode, host);
@@ -46,7 +46,7 @@ function initTheme() {
 function setupTheme() {
   // Attach event handlers for toggling themes
   let buttons = document.getElementsByClassName('theme-toggle');
-  for (var i = 0; i < buttons.length; i++) {
+  for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', cycleTheme);
   }
 }
@@ -54,9 +54,9 @@ function setupTheme() {
 function setCookie(cname, cvalue, domain) {
   const d = new Date();
   d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000); // 1 year
-  let expires = 'expires=' + d.toUTCString();
+  let expires = `expires=${d.toUTCString()}`;
   // change the SameSite attribute if it's on development or production
-  sameSiteAttribute =
+  const sameSiteAttribute =
     domain == 'localhost'
       ? 'SameSite=Lax;'
       : `Domain=${domain}; SameSite=None; Secure;`;
@@ -64,31 +64,24 @@ function setCookie(cname, cvalue, domain) {
 }
 
 function getCookie(cname) {
-  let name = cname + '=';
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
+  const value = `; ${decodeURIComponent(document.cookie)}`;
+  const parts = value.split(`; ${cname}=`);
+  let returnValue = '';
+  if (parts.length === 2) {
+    returnValue = parts.pop().split(';').shift();
   }
-  return '';
+  console.debug(`Getting cookie "${cname}": ${returnValue}`);
+  return returnValue;
 }
 
 initTheme();
 
-document.addEventListener('DOMContentLoaded', function () {
-  setupTheme();
-});
+document.addEventListener('DOMContentLoaded', setupTheme);
 
 // reset theme and release image if auto mode activated and os preferences have changed
-window
+globalThis
   .matchMedia('(prefers-color-scheme: dark)')
-  .addEventListener('change', function (e) {
+  .addEventListener('change', (e) => {
     prefersDark = e.matches;
     initTheme();
   });
