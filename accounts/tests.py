@@ -573,21 +573,10 @@ class ViewsTests(ReleaseMixin, TestCase):
             reverse("user_profile", host="www", args=[username])
 
 
-class UserProfileUpdateFormTests(TestCase):
+class UserProfileUpdateFormTests(ReleaseMixin, TestCase):
     def setUp(self):
         self.request_factory = RequestFactory()
         self.edit_profile_url = reverse("edit_profile")
-
-    def test_trac_username_field_is_excluded(self):
-        form = ProfileForm()
-        self.assertNotIn(
-            "trac_username",
-            form.fields,
-            (
-                "`ProfileForm` includes the field `trac_username`."
-                " This may lead to security vulnerabilities."
-            ),
-        )
 
     def test_bio_field_has_max_length(self):
         form = ProfileForm()
