@@ -16,7 +16,6 @@ assumes the checkout is already up to date and only builds it.
 """
 
 import json
-import multiprocessing
 import os
 import shutil
 import subprocess
@@ -28,11 +27,6 @@ from pathlib import Path
 from django.conf import settings
 from django.core.management import BaseCommand, CommandError
 from django.utils.translation import to_locale
-from sphinx.application import Sphinx
-from sphinx.config import Config
-from sphinx.errors import SphinxError
-from sphinx.testing.util import _clean_up_global_state
-from sphinx.util.docutils import docutils_namespace, patch_docutils
 
 from ...models import DocumentRelease
 from ...utils import capture_sentry_exception
@@ -80,6 +74,19 @@ class Command(BaseCommand):
             return "djangohtml"
         return "html"
 
+    def _add_custom_extension(self, conf_path: Path):
+        """Add djangoproject.com custom Sphinx builder extension to conf.py.
+
+        Add the website's custom builder in the conf.py file if it isn't
+        already there. (This cannot be handled with ``sphinx-build --define
+        extensions=...`` because that would override the existing extensions.)
+        """
+        content = conf_path.read_text(encoding="utf-8")
+        content_to_add = 'extensions.append("python_objects_json_html_builder")'
+        if content_to_add not in content:
+            with conf_path.open("a", encoding="utf-8") as f:
+                f.write(f"\n{content_to_add}\n")
+
     def build_doc_release(self, release):
         """Build the docs for a single release.
 
@@ -99,48 +106,48 @@ class Command(BaseCommand):
             # Build the pot files (later retrieved by Transifex)
             builders.append("gettext")
 
+        # Add djangoproject.com custom Sphinx extensions to the checked out
+        # docs/conf.py and make them available for import.
+        self._add_custom_extension(source_dir / "conf.py")
+        sphinx_ext_dir = str(settings.BASE_DIR / "docs" / "sphinx_ext")
+        env = os.environ.copy()
+        if "PYTHONPATH" in env:
+            env["PYTHONPATH"] = f"{sphinx_ext_dir}{os.pathsep}{env['PYTHONPATH']}"
+        else:
+            env["PYTHONPATH"] = sphinx_ext_dir
+
         #
         # Use Sphinx to build the release docs into JSON and HTML documents.
         #
         for builder in builders:
-            # Wipe and re-create the build directory. See #18930.
+            # Wipe and re-create the build directory. See #18930. (This may be
+            # unnecessary once a djangodocs extension bug that breaks doctree
+            # caching has been fixed in all built versions. #37212#comment:13.)
             build_dir = parent_build_dir / "_build" / builder
             if build_dir.exists():
                 shutil.rmtree(str(build_dir))
             build_dir.mkdir(parents=True)
+            doctree_dir = build_dir / ".doctrees"
 
             if self.verbosity >= 2:
                 self.stdout.write(f"  building {builder} ({source_dir} -> {build_dir})")
-            # Retrieve the extensions from the conf.py so we can append to them.
-            conf_extensions = Config.read(source_dir.resolve()).extensions
-            extensions = [*conf_extensions, "docs.builder"]
+            command = [sys.executable, "-m", "sphinx.cmd.build"]
+            command.extend(["--builder", builder])
+            command.extend(["--doctree-dir", str(doctree_dir)])
+            command.extend(["--jobs", "auto"])
+            command.extend(["--define", f"language={to_locale(release.lang)}"])
+            command.append(str(source_dir))
+            command.append(str(build_dir))
             try:
-                # Prevent global state persisting between builds
-                # https://github.com/sphinx-doc/sphinx/issues/12130
-                with patch_docutils(source_dir), docutils_namespace():
-                    Sphinx(
-                        srcdir=source_dir,
-                        confdir=source_dir,
-                        outdir=build_dir,
-                        doctreedir=build_dir / ".doctrees",
-                        buildername=builder,
-                        # Translated docs builds generate a lot of warnings, so send
-                        # stderr to stdout to be logged (rather than generating an email)
-                        warning=sys.stdout,
-                        parallel=multiprocessing.cpu_count(),
-                        verbosity=0,
-                        confoverrides={
-                            "language": to_locale(release.lang),
-                            "extensions": extensions,
-                        },
-                    ).build()
-                # Clean up global state after building each language.
-                _clean_up_global_state()
-            except SphinxError as e:
+                subprocess.run(
+                    command, check=True, stderr=subprocess.PIPE, text=True, env=env
+                )
+            except subprocess.CalledProcessError as e:
+                stderr = e.stderr.strip() if e.stderr else ""
                 capture_sentry_exception(e, flush=True)
                 raise CommandError(
-                    "sphinx-build returned an error (release %s, builder %s): %s"
-                    % (release, builder, str(e))
+                    f"sphinx-build returned an error (release {release}, "
+                    f"builder {builder})\n{e}\nStderr: {stderr}"
                 ) from e
 
         #
