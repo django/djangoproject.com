@@ -75,6 +75,7 @@ packaging==26.3
     # via sphinx
 pillow==12.3.0
     # via djangoproject-com
+pixelmatch==0.4.0
 playwright==1.62.0
 psycopg==3.3.4
 psycopg-binary==3.3.4 ; implementation_name != 'pypy'
