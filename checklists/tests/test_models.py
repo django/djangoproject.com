@@ -1076,6 +1076,84 @@ class SecurityIssueReleaseThroughTestCase(TestCase):
         self.assertEqual(through1.commit_hash, "")
         self.assertEqual(through2.commit_hash, "")
 
+    def test_introduced_in_must_be_in_same_series(self):
+        release = self.factory.make_release(version="6.0.10")
+        other_series = self.factory.make_release(version="5.2.13")
+        issue = self.factory.make_security_issue(releases=[release])
+        through = SecurityIssueReleasesThrough.objects.get(
+            securityissue=issue, release=release
+        )
+        through.introduced_in = other_series
+        with self.assertRaisesMessage(
+            ValidationError, "Must be a release in the same series as release."
+        ):
+            through.full_clean()
+
+    def test_introduced_in_must_be_older_than_release(self):
+        release = self.factory.make_release(version="6.0.10")
+        issue = self.factory.make_security_issue(releases=[release])
+        through = SecurityIssueReleasesThrough.objects.get(
+            securityissue=issue, release=release
+        )
+        newer = self.factory.make_release(version="6.0.11")
+        for introduced_in in [release, newer]:
+            with self.subTest(introduced_in=introduced_in.version):
+                through.introduced_in = introduced_in
+                with self.assertRaisesMessage(
+                    ValidationError, "Must be older than release."
+                ):
+                    through.full_clean()
+
+    def test_introduced_in_valid(self):
+        release = self.factory.make_release(version="6.0.10")
+        issue = self.factory.make_security_issue(releases=[release])
+        through = SecurityIssueReleasesThrough.objects.get(
+            securityissue=issue, release=release
+        )
+        through.introduced_in = self.factory.make_release(version="6.0.4")
+        through.full_clean()
+
+    def test_cve_data_affected_versions_use_introduced_in(self):
+        releases = [
+            self.factory.make_release(version="6.1.3"),
+            self.factory.make_release(version="6.0.10"),
+            self.factory.make_release(version="5.2.19"),
+        ]
+        issue = self.factory.make_security_issue(releases=releases)
+        SecurityIssueReleasesThrough.objects.filter(
+            securityissue=issue, release=releases[1]
+        ).update(introduced_in=self.factory.make_release(version="6.0.4"))
+        SecurityIssueReleasesThrough.objects.filter(
+            securityissue=issue, release=releases[2]
+        ).update(introduced_in=self.factory.make_release(version="5.2.13"))
+
+        self.assertEqual(
+            issue.cve_data["affected"][0]["versions"],
+            [
+                {
+                    "status": "affected",
+                    "version": "6.1",
+                    "lessThan": "6.1.3",
+                    "versionType": "python",
+                },
+                {"status": "unaffected", "version": "6.1.3", "versionType": "python"},
+                {
+                    "status": "affected",
+                    "version": "6.0.4",
+                    "lessThan": "6.0.10",
+                    "versionType": "python",
+                },
+                {"status": "unaffected", "version": "6.0.10", "versionType": "python"},
+                {
+                    "status": "affected",
+                    "version": "5.2.13",
+                    "lessThan": "5.2.19",
+                    "versionType": "python",
+                },
+                {"status": "unaffected", "version": "5.2.19", "versionType": "python"},
+            ],
+        )
+
 
 class GetCvssSeverityTests(TestCase):
     def test_none_for_null_score(self):
