@@ -1,10 +1,70 @@
 from datetime import date, timedelta
 
 from django.contrib import admin
+from django.contrib.admin.helpers import ACTION_CHECKBOX_NAME
+from django.contrib.auth import get_user_model
+from django.contrib.messages import INFO, SUCCESS
+from django.core import mail
 from django.test import TestCase
+from django.urls import reverse
 
 from .admin import CorporateMemberAdmin, StatusFilter
-from .models import CorporateMember
+from .models import CorporateMember, IndividualMember
+
+User = get_user_model()
+
+
+class IndividualMemberAdminTests(TestCase):
+    def test_send_account_invite_mail_action(self):
+        superuser = User.objects.create_superuser("superuser")
+        self.client.force_login(superuser)
+
+        individual_member1 = IndividualMember.objects.create(
+            name="Individual Member 1",
+            email="individualmember1@example.com",
+        )
+        individual_member2 = IndividualMember.objects.create(
+            name="Individual Member 2",
+            email="individualmember2@example.com",
+        )
+
+        changelist_url = reverse("admin:members_individualmember_changelist")
+        selected_pks = [
+            str(individual_member1.pk),
+            str(individual_member2.pk),
+        ]
+
+        self.assertEqual(len(mail.outbox), 0)
+        response2 = self.client.post(
+            changelist_url,
+            data={
+                "action": "send_account_invite_mail",
+                ACTION_CHECKBOX_NAME: selected_pks,
+            },
+            follow=True,
+        )
+        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(len(mail.outbox), 2)
+        messages = response2.context.get("messages", [])
+        self.assertEqual(len(messages), 1)
+        # messages storage is not a subscriptable, but it's an iterable.
+        self.assertEqual(next(iter(messages)).level, SUCCESS)
+        mail.outbox.clear()
+
+        response3 = self.client.post(
+            changelist_url,
+            data={
+                "action": "send_account_invite_mail",
+                ACTION_CHECKBOX_NAME: selected_pks,
+            },
+            follow=True,
+        )
+        self.assertEqual(response3.status_code, 200)
+        self.assertEqual(len(mail.outbox), 0)
+        messages = response3.context.get("messages", [])
+        self.assertEqual(len(messages), 1)
+        # messages storage is not a subscriptable, but it's an iterable.
+        self.assertEqual(next(iter(messages)).level, INFO)
 
 
 class CorporateMemberAdminTests(TestCase):

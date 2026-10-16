@@ -3117,6 +3117,10 @@ form {
             background: var(--primary);
         }
     }
+
+    .help-text  {
+      @include font-size(14);
+    }
 }
 
 .form-general {
@@ -3336,7 +3340,33 @@ hr {
 .user-info {
     .avatar {
         @include framed-image();
-        float: right;
+        margin: 4rem 1rem 0rem 1rem;
+
+        @include respond-min(811px) {
+            float: right;
+            margin: 4rem 1rem 1rem 1rem;
+        }
+    }
+
+    .name {
+        margin-bottom: 0;
+
+        @include respond-min(811px) {
+            display: inline-block;
+        }
+
+        @include respond-max(810px) {
+            // Reposition the name when it's below the image on small screens.
+            margin-top: 2rem;
+        }
+    }
+
+    .bio {
+        @include font-size(16);
+        font-weight: normal;
+        line-height: 1.5;
+        white-space: pre-line;
+        margin-top: 0;
     }
 }
 

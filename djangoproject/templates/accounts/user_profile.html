@@ -13,9 +13,9 @@
             {% endif %}
         </h2>
 
-        <p>{% translate "Need to edit something? Here's how:" %}</p>
+        <p>{% translate "Need to edit something?" %}</p>
         <ul>
-            <li><a href="{% url 'edit_profile' %}">{% translate "Edit your name and email here." %}</a></li>
+            <li><a href="{% url 'edit_profile' %}">{% translate "Edit your profile" %}</a></li>
             <li>{% blocktranslate trimmed %}
                 The image is the <a href="https://en.gravatar.com/">Gravatar</a> linked
                 to the email address you signed up with. You can change the image over
@@ -37,21 +37,34 @@
         <img class='avatar' width='150' height='150'
              src="https://secure.gravatar.com/avatar/{{ email_hash }}?s=150&amp;d=https%3A%2F%2Frobohash.org%2F{{ email_hash }}%3Fset%3Dset3%26size%3D150x150">
 
-        <h1>
+        <h1 class="name">
             {% firstof user_obj.profile.name user_obj.username %}
         </h1>
 
-        {% if stats %}
+        {% if user_obj.profile.bio %}
+            <p class="bio">
+                {{ user_obj.profile.bio|urlize }}
+            </p>
+        {% endif %}
+
+        {% if stats_list %}
             <h2>{% translate "Statistics on Django core contributions:" %}</h2>
-            <ul>
-                {% for stat, value in stats.items %}
-                    <li>
-                        {% if value.link %}<a href="{{ value.link }}">{{ stat }}: {{ value.count|intcomma }}.</a>
-                        {% else %}{{ stat }}: {{ value.count|intcomma }}.
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
+            {% for stats in stats_list %}
+            <div>
+              {% if stats_list|length > 1 or stats_list|length == 1 and stats.trac_username != user_obj.username %}
+                <h3>{% blocktranslate with trac_username=stats.trac_username %}Trac Account: {{ trac_username }}{% endblocktranslate %}</h3>
+              {% endif %}
+              <ul>
+                  {% for stat, value in stats.data.items %}
+                      <li>
+                          {% if value.link %}<a href="{{ value.link }}">{{ stat }}: {{ value.count|intcomma }}.</a>
+                          {% else %}{{ stat }}: {{ value.count|intcomma }}.
+                          {% endif %}
+                      </li>
+                  {% endfor %}
+              </ul>
+            </div>
+            {% endfor %}
         {% endif %}
 
         {% with feeds=user_obj.owned_feeds.all %}
