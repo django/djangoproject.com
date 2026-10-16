@@ -159,6 +159,19 @@ class ReleaseChecklist(models.Model):
         return False
 
     @cached_property
+    def is_eom_release(self):
+        """Return True if this release ends mainstream support for its series.
+
+        The feature release that supersedes a series records the last bugfix
+        release of that series as its ``eom_release``, so when this release is
+        pointed at by such a checklist, no further scheduled bugfix release is
+        planned for the series.
+        """
+        if (release := getattr(self, "release", None)) is None:
+            return False
+        return FeatureRelease.objects.filter(eom_release=release).exists()
+
+    @cached_property
     def is_security_release(self):
         return "security" in self.slug
 
