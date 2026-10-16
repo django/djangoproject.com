@@ -61,15 +61,15 @@
     {% include "includes/header.html" %}
     {% block banner %}{% endblock %}
 
+    <div id="billboard">
+      {% block billboard %}{% active_banner %}{% endblock %}
+    </div>
+
     <section class="copy-banner">
       <div class="container {% block header-classes %}{% endblock %}">
         {% block header %}{% endblock %}
       </div>
     </section>
-
-    <div id="billboard">
-      {% block billboard %}{% active_banner %}{% endblock %}
-    </div>
 
     <div class="container {% block layout_class %}{% endblock %}">
       <main id="main-content">

@@ -56,6 +56,15 @@ class BannerTestCase(ReleaseMixin, TestCase):
             html=True,
         )
 
+    def test_banner_renders_above_the_page_hero(self):
+        Banner.objects.create(title="Support Django!", is_active=True)
+        response = self.client.get("/")
+        content = response.content.decode()
+        self.assertLess(
+            content.index('<div id="billboard">'),
+            content.index('<section class="copy-banner">'),
+        )
+
     def test_cta_label_without_url_raises_validation_error(self):
         banner = Banner(title="Incomplete CTA", cta_label="Click me", cta_url="")
         with self.assertRaisesMessage(
