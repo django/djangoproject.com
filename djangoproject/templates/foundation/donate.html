@@ -11,7 +11,7 @@
 
     <h2 id="how-to-donate">How do I donate?</h2>
 
-    <p>We accept donations via card on our <a href="https://www.djangoproject.com/fundraising/">fundraising page</a>.</p>
+    <p>We accept donations via card on our <a href="{% url 'fundraising:index' %}">fundraising page</a>.</p>
 
     <p>You can also mail a check made out to the Django Software Foundation to:</p>
     <address>
@@ -62,7 +62,7 @@
     <h2 id="specific-feature">Can I choose a specific feature or project to support?</h2>
     <p>No: we don't allow donors to directly sponsor specific features.</p>
 
-    <p>However, we may be able to connect you to a Django developer who you can hire to work on a specific feature. Please <a href="/contact/foundation/">get in touch</a> if this sounds like something you'd like to pursue.</p>
+    <p>However, we may be able to connect you to a Django developer who you can hire to work on a specific feature. Please <a href="{% url 'contact_foundation' %}">get in touch</a> if this sounds like something you'd like to pursue.</p>
 
     <h2 id="tax-deductible">Is my donation tax deductible?</h2>
     <p>The Django Software Foundation is a Kansas non-profit corporation; we have tax-exempt status under IRS 501(c)(3). This means that donations are tax-deductible for US citizens; donors outside of the United States should consult a tax advisor.</p>
