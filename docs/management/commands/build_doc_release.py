@@ -58,7 +58,14 @@ class Command(BaseCommand):
                 % (version, options["language"])
             )
 
-        self.build_doc_release(release)
+        try:
+            self.build_doc_release(release)
+        except Exception as e:
+            # update_docs runs this command in a subprocess and only logs the
+            # exit code, so failures have to be reported from here to reach
+            # Sentry at all.
+            capture_sentry_exception(e, flush=True)
+            raise
 
     def _html_builder_name(self, source_dir):
         """Return the Sphinx builder name to use for HTML output for a given
@@ -149,7 +156,6 @@ class Command(BaseCommand):
                 )
             except subprocess.CalledProcessError as e:
                 stderr = e.stderr.strip() if e.stderr else ""
-                capture_sentry_exception(e, flush=True)
                 raise CommandError(
                     f"sphinx-build returned an error (release {release}, "
                     f"builder {builder})\n{e}\nStderr: {stderr}"

@@ -4,7 +4,7 @@ from pathlib import Path
 from subprocess import CalledProcessError
 from unittest.mock import ANY, MagicMock, patch
 
-from django.core.management import CommandError
+from django.core.management import CommandError, call_command
 from django.test import TestCase, override_settings
 
 from ..management.commands.build_doc_release import Command
@@ -66,9 +66,7 @@ class EnsureBuilderExtensionTests(TestCase):
 
 class BuildDocReleaseSphinxErrorTests(TestCase):
     def setUp(self):
-        self.release = DocumentRelease.objects.create(lang="en", release=None)
-        self.command = Command()
-        self.command.verbosity = 0
+        DocumentRelease.objects.create(lang="en", release=None)
 
     def test_sphinx_error_raises_command_error_and_reports_to_sentry(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -86,14 +84,18 @@ class BuildDocReleaseSphinxErrorTests(TestCase):
                 with self.assertRaisesMessage(
                     CommandError, "sphinx-build returned an error"
                 ) as caught:
-                    self.command.build_doc_release(self.release)
+                    call_command(
+                        "build_doc_release", "dev", "--language", "en", verbosity=0
+                    )
                 self.assertIn(
                     "Could not import extension unknown_extension",
                     str(caught.exception),
                 )
 
         mock_capture.assert_called_once_with(ANY, flush=True)
-        self.assertIsInstance(mock_capture.call_args.args[0], CalledProcessError)
+        reported = mock_capture.call_args.args[0]
+        self.assertIsInstance(reported, CommandError)
+        self.assertIsInstance(reported.__cause__, CalledProcessError)
 
 
 class BuildReleaseSubprocessInvocationTests(TestCase):
