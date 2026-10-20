@@ -1,3 +1,28 @@
+// Detect presence of mobile device.
+function isMobile() {
+  // Most contemporary, though not supported by all browsers yet (Oct 2026).
+  if (
+    navigator.userAgentData &&
+    typeof navigator.userAgentData.mobile === 'boolean'
+  ) {
+    return navigator.userAgentData.mobile;
+  }
+
+  // Any sign of a mouse / trackpad?
+  if (window.matchMedia) {
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    const noHover = window.matchMedia('(hover: none)').matches;
+    if (coarse && noHover) return true;
+    if (window.matchMedia('(pointer: fine)').matches) return false;
+  }
+
+  // Old school fallback.
+  const ua = navigator.userAgent || '';
+  if (/Android|iPhone|iPad|iPod|Mobi/i.test(ua)) return true;
+
+  return false;
+}
+
 // Toggle persistent display of documentation version and language options
 document.querySelectorAll('.doc-switcher li.current').forEach(function (el) {
   el.addEventListener('click', function () {
@@ -73,11 +98,14 @@ document.querySelector('.menu-button').addEventListener('click', function () {
     return;
   }
 
-  const original_placeholder = el.getAttribute('placeholder');
-  const is_mac = navigator.userAgent.indexOf('Mac') !== -1;
-  const new_value = `${original_placeholder} (${is_mac ? '⌘\u200aK' : 'Ctrl+K'})`;
+  let value = '';
+  if (isMobile()) {
+    value = 'Search';
+  } else {
+    value = navigator.userAgent.includes('Mac') ? '⌘\u200aK' : 'Ctrl+K';
+  }
 
-  el.setAttribute('placeholder', new_value);
+  el.setAttribute('placeholder', value);
 })();
 
 // Focus, select, and scroll to search input when key combination is pressed
