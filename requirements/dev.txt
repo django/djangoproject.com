@@ -12,7 +12,7 @@ babel==2.18.0
     #   py-moneyed
     #   sphinx
 black==26.5.1
-certifi==2026.7.22
+certifi==2026.10.19
     # via requests
 charset-normalizer==3.5.0
     # via requests
