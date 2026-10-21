@@ -1,16 +1,22 @@
 import hashlib
+from random import randint
 
 from django.contrib.auth.models import AnonymousUser, User
 from django.core import mail
 from django.core.cache import cache
-from django.test import TestCase, override_settings
+from django.db import IntegrityError
+from django.test import RequestFactory, TestCase, override_settings
 from django_hosts.resolvers import reverse
 
 from accounts.forms import DeleteProfileForm, RegistrationFormWithCaptcha
+from accounts.models import Profile, TracAccount
 from djangoproject.tests import ReleaseMixin, patch_captcha
 from foundation import models as foundationmodels
 from tracdb.models import Revision, Ticket, TicketChange
 from tracdb.testutils import TracDBCreateDatabaseMixin
+
+from .forms import ProfileForm
+from .views import edit_profile
 
 
 @override_settings(TRAC_URL="https://code.djangoproject.com/")
@@ -20,14 +26,66 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        User.objects.create_user(username="user1", password="password")
-        User.objects.create_user(username="user2", password="password")
+        user1_bio = "\n".join(
+            [
+                "[pre]",
+                "\n",
+                "Email: user1@example.com",
+                "Website: user1.example.com",
+                "GitHub: https://github.com/ghost",
+                "\n",
+                "[post]",
+            ],
+        )
+        user2_bio = ""
+        user1 = User.objects.create_user(username="user1", password="password")
+        user2 = User.objects.create_user(username="user2", password="password")
+        Profile.objects.create(user=user1, bio=user1_bio)
+        Profile.objects.create(user=user2, bio=user2_bio)
         cls.user1_url = reverse("user_profile", args=["user1"])
         cls.user2_url = reverse("user_profile", args=["user2"])
 
     def test_username_is_page_title(self):
         response = self.client.get(self.user1_url)
-        self.assertContains(response, "<h1>user1</h1>", html=True)
+        self.assertContains(response, '<h1 class="name">user1</h1>', html=True)
+
+    def test_page_displays_bio_when_present(self):
+        response = self.client.get(self.user1_url)
+        self.assertContains(response, '<p class="bio">')
+
+    def test_page_hides_bio_when_absent(self):
+        response = self.client.get(self.user2_url)
+        self.assertNotContains(response, '<p class="bio">')
+
+    def test_bio_contains_mail_addresses_clickable(self):
+        response = self.client.get(self.user1_url)
+        self.assertContains(
+            response,
+            '<a href="mailto:user1@example.com">user1@example.com</a>',
+            html=True,
+        )
+
+    def test_bio_contains_links_without_protocol_clickable(self):
+        response = self.client.get(self.user1_url)
+        self.assertContains(
+            response,
+            (
+                '<a href="http://user1.example.com" rel="nofollow">'
+                "user1.example.com</a>"
+            ),
+            html=True,
+        )
+
+    def test_bio_contains_links_with_protocol_clickable(self):
+        response = self.client.get(self.user1_url)
+        self.assertContains(
+            response,
+            (
+                '<a href="https://github.com/ghost" rel="nofollow">'
+                "https://github.com/ghost</a>"
+            ),
+            html=True,
+        )
 
     def test_stat_commits(self):
         Revision.objects.create(
@@ -55,6 +113,174 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
             html=True,
         )
         self.assertNotContains(user2_response, "Commits")
+
+    def test_stat_commits_for_unlinked_matched_trac_username(self):
+        djangoproject_username = "djangoproject_user"
+        trac_username = djangoproject_username
+        user = User.objects.create_user(username=djangoproject_username)
+        Profile.objects.create(user=user)
+
+        Revision.objects.create(
+            author=trac_username,
+            rev="91c879eda595c12477bbfa6f51115e88b75ddf88",
+            _time=1731669560,
+        )
+        Revision.objects.create(
+            author=trac_username,
+            rev="da2432cccae841f0d7629f17a5d79ec47ed7b7cb",
+            _time=1731669560,
+        )
+
+        user_profile_url = reverse("user_profile", args=[djangoproject_username])
+        user_profile_response = self.client.get(user_profile_url)
+        self.assertNotContains(
+            user_profile_response,
+            "<h3>Trac Account: {trac_username}</h3>",
+            html=True,
+        )
+        self.assertContains(
+            user_profile_response,
+            '<a href="https://github.com/django/django/commits/main/'
+            f'?author={trac_username}">Commits: 2.</a>',
+            html=True,
+        )
+
+    def test_stat_commits_for_linked_matched_trac_username(self):
+        djangoproject_username = "djangoproject_user"
+        trac_username = djangoproject_username
+        user = User.objects.create_user(username=djangoproject_username)
+        TracAccount.objects.create(user=user, username=trac_username)
+        Profile.objects.create(user=user)
+
+        Revision.objects.create(
+            author=trac_username,
+            rev="91c879eda595c12477bbfa6f51115e88b75ddf88",
+            _time=1731669560,
+        )
+        Revision.objects.create(
+            author=trac_username,
+            rev="da2432cccae841f0d7629f17a5d79ec47ed7b7cb",
+            _time=1731669560,
+        )
+
+        user_profile_url = reverse("user_profile", args=[djangoproject_username])
+        user_profile_response = self.client.get(user_profile_url)
+        self.assertNotContains(
+            user_profile_response,
+            "<h3>Trac Account: {trac_username}</h3>",
+            html=True,
+        )
+        self.assertContains(
+            user_profile_response,
+            '<a href="https://github.com/django/django/commits/main/'
+            f'?author={trac_username}">Commits: 2.</a>',
+            html=True,
+        )
+
+    def test_stat_commits_for_linked_unmatched_trac_username(self):
+        djangoproject_username = "djangoproject_user"
+        trac_username = "trac_user"
+        user = User.objects.create_user(username=djangoproject_username)
+        TracAccount.objects.create(user=user, username=trac_username)
+        Profile.objects.create(user=user)
+
+        Revision.objects.create(
+            author=trac_username,
+            rev="91c879eda595c12477bbfa6f51115e88b75ddf88",
+            _time=1731669560,
+        )
+        Revision.objects.create(
+            author=trac_username,
+            rev="da2432cccae841f0d7629f17a5d79ec47ed7b7cb",
+            _time=1731669560,
+        )
+
+        user_profile_url = reverse("user_profile", args=[djangoproject_username])
+        user_profile_response = self.client.get(user_profile_url)
+        self.assertContains(
+            user_profile_response,
+            f"<h3>Trac Account: {trac_username}</h3>",
+            html=True,
+        )
+        self.assertContains(
+            user_profile_response,
+            '<a href="https://github.com/django/django/commits/main/'
+            f'?author={trac_username}">Commits: 2.</a>',
+            html=True,
+        )
+
+    def test_stat_commits_for_unlinked_matched_trac_username_verified_for_another_user(
+        self,
+    ):
+        djangoproject_username1 = "djangoproject_user1"
+        trac_username1 = "trac_user1"
+        user1 = User.objects.create_user(username=djangoproject_username1)
+        TracAccount.objects.create(user=user1, username=trac_username1)
+        Profile.objects.create(user=user1)
+
+        djangoproject_username2 = trac_username1
+        user2 = User.objects.create_user(username=djangoproject_username2)
+        Profile.objects.create(user=user2)
+
+        Revision.objects.create(
+            author=trac_username1,
+            rev="91c879eda595c12477bbfa6f51115e88b75ddf88",
+            _time=1731669560,
+        )
+        Revision.objects.create(
+            author=trac_username1,
+            rev="da2432cccae841f0d7629f17a5d79ec47ed7b7cb",
+            _time=1731669560,
+        )
+
+        user_profile_url2 = reverse("user_profile", args=[djangoproject_username2])
+        user_profile_response2 = self.client.get(user_profile_url2)
+        self.assertNotContains(user_profile_response2, "Commits")
+
+    def test_stat_commits_for_multiple_trac_usernames(self):
+        djangoproject_username = "djangoproject_user"
+        trac_username1 = "trac_user1"
+        trac_username2 = "trac_user2"
+        user = User.objects.create_user(username=djangoproject_username)
+        TracAccount.objects.create(user=user, username=trac_username1)
+        TracAccount.objects.create(user=user, username=trac_username2)
+        Profile.objects.create(user=user)
+
+        Revision.objects.create(
+            author=trac_username1,
+            rev="91c879eda595c12477bbfa6f51115e88b75ddf88",
+            _time=1731669560,
+        )
+        Revision.objects.create(
+            author=trac_username2,
+            rev="da2432cccae841f0d7629f17a5d79ec47ed7b7cb",
+            _time=1731669560,
+        )
+
+        user_profile_url = reverse("user_profile", args=[djangoproject_username])
+        user_profile_response = self.client.get(user_profile_url)
+        self.assertContains(
+            user_profile_response,
+            f"<h3>Trac Account: {trac_username1}</h3>",
+            html=True,
+        )
+        self.assertContains(
+            user_profile_response,
+            '<a href="https://github.com/django/django/commits/main/'
+            f'?author={trac_username1}">Commits: 1.</a>',
+            html=True,
+        )
+        self.assertContains(
+            user_profile_response,
+            f"<h3>Trac Account: {trac_username2}</h3>",
+            html=True,
+        )
+        self.assertContains(
+            user_profile_response,
+            '<a href="https://github.com/django/django/commits/main/'
+            f'?author={trac_username2}">Commits: 1.</a>',
+            html=True,
+        )
 
     def test_stat_tickets(self):
         Ticket.objects.create(status="new", reporter="user1")
@@ -103,6 +329,84 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
             html=True,
         )
 
+    def test_stat_tickets_for_linked_unmatched_trac_username(self):
+        djangoproject_username = "djangoproject_user"
+        trac_username = "trac_user"
+        user = User.objects.create_user(username=djangoproject_username)
+        TracAccount.objects.create(user=user, username=trac_username)
+        Profile.objects.create(user=user)
+
+        Ticket.objects.create(status="new", reporter=trac_username)
+        Ticket.objects.create(status="new", reporter="user2")
+        Ticket.objects.create(
+            status="closed",
+            reporter=trac_username,
+            owner=trac_username,
+            resolution="fixed",
+        )
+        Ticket.objects.create(
+            status="closed", reporter="user2", owner=trac_username, resolution="fixed"
+        )
+        Ticket.objects.create(
+            status="closed", reporter="user2", owner="user2", resolution="fixed"
+        )
+        Ticket.objects.create(
+            status="closed", reporter="user2", owner=trac_username, resolution="wontfix"
+        )
+
+        user_profile_url = reverse("user_profile", args=[djangoproject_username])
+        user_profile_response = self.client.get(user_profile_url)
+        self.assertContains(
+            user_profile_response,
+            '<a href="https://code.djangoproject.com/query?'
+            f'owner={trac_username}&resolution=fixed&desc=1&order=changetime">'
+            "Tickets fixed: 2.</a>",
+            html=True,
+        )
+        self.assertContains(
+            user_profile_response,
+            '<a href="https://code.djangoproject.com/query?'
+            f'reporter={trac_username}&desc=1&order=changetime">'
+            "Tickets opened: 2.</a>",
+            html=True,
+        )
+
+    def test_stat_tickets_for_linked_unmatched_trac_username_used_by_another_user(self):
+        djangoproject_username1 = "djangoproject_user1"
+        trac_username1 = "trac_user1"
+        user1 = User.objects.create_user(username=djangoproject_username1)
+        TracAccount.objects.create(user=user1, username=trac_username1)
+        Profile.objects.create(user=user1)
+
+        djangoproject_username2 = trac_username1
+        user2 = User.objects.create_user(username=djangoproject_username2)
+        Profile.objects.create(user=user2)
+
+        Ticket.objects.create(status="new", reporter=trac_username1)
+        Ticket.objects.create(status="new", reporter="user2")
+        Ticket.objects.create(
+            status="closed",
+            reporter=trac_username1,
+            owner=trac_username1,
+            resolution="fixed",
+        )
+        Ticket.objects.create(
+            status="closed", reporter="user2", owner=trac_username1, resolution="fixed"
+        )
+        Ticket.objects.create(
+            status="closed", reporter="user2", owner="user2", resolution="fixed"
+        )
+        Ticket.objects.create(
+            status="closed",
+            reporter="user2",
+            owner=trac_username1,
+            resolution="wontfix",
+        )
+
+        user_profile_url2 = reverse("user_profile", args=[djangoproject_username2])
+        user_profile_response2 = self.client.get(user_profile_url2)
+        self.assertNotContains(user_profile_response2, "Tickets fixed:")
+
     def test_stat_tickets_triaged(self):
         # Possible values are from trac.ini in code.djangoproject.com.
         initial_ticket_values = {
@@ -138,6 +442,84 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         response = self.client.get(self.user1_url)
         self.assertContains(response, "New tickets triaged: 3.")
 
+    def test_stat_tickets_triaged_for_linked_unmatched_trac_username(self):
+        djangoproject_username = "djangoproject_user"
+        trac_username = "trac_user"
+        user = User.objects.create_user(username=djangoproject_username)
+        TracAccount.objects.create(user=user, username=trac_username)
+        Profile.objects.create(user=user)
+
+        # Possible values are from trac.ini in code.djangoproject.com.
+        initial_ticket_values = {
+            "field": "stage",
+            "oldvalue": "Unreviewed",
+            "_time": 1731669560,
+        }
+        TicketChange.objects.create(
+            author=trac_username,
+            newvalue="Accepted",
+            ticket=Ticket.objects.create(),
+            **initial_ticket_values,
+        )
+        TicketChange.objects.create(
+            author=trac_username,
+            newvalue="Someday/Maybe",
+            ticket=Ticket.objects.create(),
+            **initial_ticket_values,
+        )
+        TicketChange.objects.create(
+            author=trac_username,
+            newvalue="Ready for checkin",
+            ticket=Ticket.objects.create(),
+            **initial_ticket_values,
+        )
+
+        user_profile_url = reverse("user_profile", args=[djangoproject_username])
+        user_profile_response = self.client.get(user_profile_url)
+        self.assertContains(user_profile_response, "New tickets triaged: 3.")
+
+    def test_stat_tickets_triaged_for_unlinked_matched_trac_username_verified_for_another_user(
+        self,
+    ):
+        djangoproject_username1 = "djangoproject_user1"
+        trac_username1 = "trac_user1"
+        user1 = User.objects.create_user(username=djangoproject_username1)
+        TracAccount.objects.create(user=user1, username=trac_username1)
+        Profile.objects.create(user=user1)
+
+        djangoproject_username2 = trac_username1
+        user2 = User.objects.create_user(username=djangoproject_username2)
+        Profile.objects.create(user=user2)
+
+        # Possible values are from trac.ini in code.djangoproject.com.
+        initial_ticket_values = {
+            "field": "stage",
+            "oldvalue": "Unreviewed",
+            "_time": 1731669560,
+        }
+        TicketChange.objects.create(
+            author=trac_username1,
+            newvalue="Accepted",
+            ticket=Ticket.objects.create(),
+            **initial_ticket_values,
+        )
+        TicketChange.objects.create(
+            author=trac_username1,
+            newvalue="Someday/Maybe",
+            ticket=Ticket.objects.create(),
+            **initial_ticket_values,
+        )
+        TicketChange.objects.create(
+            author=trac_username1,
+            newvalue="Ready for checkin",
+            ticket=Ticket.objects.create(),
+            **initial_ticket_values,
+        )
+
+        user_profile_url2 = reverse("user_profile", args=[djangoproject_username2])
+        user_profile_response2 = self.client.get(user_profile_url2)
+        self.assertNotContains(user_profile_response2, "New tickets triaged:")
+
     def test_stat_tickets_triaged_unaccepted_not_counted(self):
         common_ticket_values = {
             "field": "stage",
@@ -169,7 +551,7 @@ class UserProfileTests(TracDBCreateDatabaseMixin, ReleaseMixin, TestCase):
         }
     )
     def test_caches_trac_stats(self):
-        key = "user_vital_status:%s" % hashlib.md5(b"user1").hexdigest()
+        key = "trac_user_vital_status:%s" % hashlib.md5(b"user1").hexdigest()
 
         self.assertIsNone(cache.get(key))
 
@@ -193,6 +575,39 @@ class ViewsTests(ReleaseMixin, TestCase):
         """
         for username in ["asdf", "@asdf", "asd-f", "as.df", "as+df"]:
             reverse("user_profile", host="www", args=[username])
+
+
+class UserProfileUpdateFormTests(ReleaseMixin, TestCase):
+    def setUp(self):
+        self.request_factory = RequestFactory()
+        self.edit_profile_url = reverse("edit_profile")
+
+    def test_bio_field_has_max_length(self):
+        form = ProfileForm()
+        self.assertIsInstance(form.fields["bio"].max_length, int)
+
+    def test_page_shows_characters_remaining_count_for_bio(self):
+        profile_edit_form = ProfileForm()
+        bio_field = profile_edit_form.fields["bio"]
+        bio_length = randint(0, max(bio_field.max_length, 20))
+        bio = "*" * bio_length
+        expected_characters_remaining_count = bio_field.max_length - bio_length
+        self.assertGreaterEqual(expected_characters_remaining_count, 0)
+        user = User.objects.create_user(username="user", password="password")
+        Profile.objects.create(user=user, bio=bio)
+        request = self.request_factory.get(self.edit_profile_url)
+        request.user = user
+        response = edit_profile(request)
+        self.assertContains(
+            response,
+            "<span>Characters remaining:</span>",
+            html=True,
+        )
+        self.assertContains(
+            response,
+            '_characters_remaining_count" class="character-counter__indicator">'
+            f"{expected_characters_remaining_count}</span>",
+        )
 
 
 class UserDeletionTests(ReleaseMixin, TestCase):
@@ -320,3 +735,41 @@ class RegistrationTests(ReleaseMixin, TestCase):
     def test_captcha_widget_is_rendered(self):
         response = self.client.get(reverse("registration_register"))
         self.assertContains(response, "g-recaptcha")
+
+
+class TracAccountTests(TestCase):
+    def test_linking_same_trac_username_to_multiple_users(self):
+        shared_trac_username = "trac_user"
+
+        user_1 = User.objects.create_user(username="user_1", password="password")
+        trac_account_1 = TracAccount.objects.create(
+            user=user_1, username=shared_trac_username
+        )
+
+        user_2 = User.objects.create_user(username="user_2", password="password")
+        trac_account_2 = TracAccount.objects.create(
+            user=user_2, username=shared_trac_username
+        )
+
+        self.assertNotEqual(trac_account_1.user, trac_account_2.user)
+        self.assertEqual(trac_account_1.username, trac_account_2.username)
+
+    def test_linking_multiple_trac_usernames_to_same_user(self):
+        trac_username1 = "trac_user1"
+        trac_username2 = "trac_user2"
+
+        user = User.objects.create_user(username="user", password="password")
+        trac_account_1 = TracAccount.objects.create(user=user, username=trac_username1)
+        trac_account_2 = TracAccount.objects.create(user=user, username=trac_username2)
+
+        self.assertEqual(trac_account_1.user, trac_account_2.user)
+        self.assertNotEqual(trac_account_1.username, trac_account_2.username)
+
+    def test_linking_same_trac_username_to_same_user_multiple_times(self):
+        trac_username = "trac_user"
+
+        user = User.objects.create_user(username="user", password="password")
+        TracAccount.objects.create(user=user, username=trac_username)
+
+        with self.assertRaises(IntegrityError):
+            TracAccount.objects.create(user=user, username=trac_username)
