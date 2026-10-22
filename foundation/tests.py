@@ -264,3 +264,13 @@ class MeetingTestCase(ReleaseMixin, TestCase):
         self.assertContains(response, "Business item 1")
         self.assertContains(response, "Business item 2")
         self.assertContains(response, "Business item 3")
+
+
+class DonateTestCase(ReleaseMixin, TestCase):
+    def test_donate_page(self):
+        response = self.client.get(reverse("foundation_donate"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "<h1>Support the Django Software Foundation</h1>")
+        # Other pages link to anchors on this page; make sure they exist
+        self.assertContains(response, '<h3 id="benevity-giving">')
+        self.assertContains(response, '<h2 id="tax-deductible">')
