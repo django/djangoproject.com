@@ -1,46 +1,31 @@
+@import "django/console-tabs";
+
 .console-block {
-    text-align: right;
+    --tab-active-border-color: #ddd;
+    --tab-active-highlight-color: var(--console-tabs-border);
+    --tab-active-label-color: var(--console-tabs-color);
+    --tab-border-radius: 0;
+    --tab-row-end-margin: 4px;
 
-    *:before,
-    *:after {
-        box-sizing: border-box;
+    // Prior to Django 6.2, tabs used fontawesome icons.
+    --tab-label-font: fontawesome, #{$sans-serif-stack};
+
+    // Undo _style.scss bold for tab labels.
+    label[for] {
+        font-weight: unset;
     }
 
-    >input {
-
-        &.c-tab-unix,
-        &.c-tab-win {
-            display: none;
-        }
-
-        &:checked+label {
-            color: var(--console-tabs-color);
-            border: 1px solid #ddd;
-            border-top: 2px solid var(--console-tabs-border);
-            border-bottom: 1px solid var(--white-color);
-        }
+    // Remove top margin from Pygments highlighted block.
+    section div.highlight {
+        margin-block-start: 0;
     }
 
-    >label {
-        display: inline-block;
-        padding: 4px 8px;
-        font-weight: normal;
-        text-align: center;
-        color: #bbb;
-        border: 1px solid transparent;
-        // Older docs label these tabs with Font Awesome glyphs, newer ones
-        // with text, which the icon font has no glyphs for.
-        font-family: fontawesome, $sans-serif-stack;
-    }
-
+    // Add copy-to-clipboard button.
     >section {
-        display: none;
-        text-align: left;
-
         .highlight {
-            margin-top: 0;
             display: flex;
             align-items: center;
+            padding-inline-start: 20px;
 
             pre {
                 flex: 1;
@@ -78,10 +63,5 @@
                 }
             }
         }
-    }
-
-    >.c-tab-unix:checked~.c-content-unix,
-    >.c-tab-win:checked~.c-content-win {
-        display: block;
     }
 }
