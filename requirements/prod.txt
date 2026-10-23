@@ -87,7 +87,7 @@ packaging==26.3
     # via
     #   gunicorn
     #   sphinx
-pillow==12.3.0
+pillow==13.0.0
     # via djangoproject-com
 psycopg==3.3.4
 psycopg-c==3.3.4 ; implementation_name != 'pypy'
