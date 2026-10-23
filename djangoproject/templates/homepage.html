@@ -1,5 +1,5 @@
 {% extends "base_3col.html" %}
-{% load fundraising_extras hosts i18n weblog %}
+{% load fundraising_extras hosts i18n weblog events %}
 
 {% block sectionid %}homepage{% endblock %}
 
@@ -192,6 +192,10 @@
       </dl>
       <a href="{% url 'weblog:index' %}" class="link-readmore">See all Events</a>
       {% endcomment %}
+
+    <h3>{% translate "Upcoming Events" %}</h3>
+    {% render_upcoming_events 3 %}
+    <a href="{% url 'events:index' %}" class="link-readmore">{% translate "See all events" %}</a>
   </div>
 
 {% endblock content-related %}
