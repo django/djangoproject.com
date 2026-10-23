@@ -38,7 +38,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "black==26.5.1",               # Used by Django's find_formatters and run_formatters
+    "black==26.10.1",               # Used by Django's find_formatters and run_formatters
     "django-debug-toolbar==7.0.0",
     "prek==0.4.11",
     "psycopg[binary]==3.3.4",
