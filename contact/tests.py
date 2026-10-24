@@ -44,6 +44,19 @@ class ContactFormTests(ReleaseMixin, TestCase):
             response.context["form"], "email", ["Enter a valid email address."]
         )
 
+    def test_name_and_email_inputs(self):
+        form = self.client.get(self.url).context["form"]
+        self.assertInHTML(
+            '<input type="text" name="name" class="required" autocomplete="name" '
+            'required id="id_name">',
+            str(form["name"]),
+        )
+        self.assertInHTML(
+            '<input type="email" name="email" class="required" autocomplete="email" '
+            'maxlength="320" required id="id_email">',
+            str(form["email"]),
+        )
+
     @override_settings(AKISMET_API_KEY="")  # Disable Akismet in tests
     def test_without_akismet(self):
         with patch_captcha():
