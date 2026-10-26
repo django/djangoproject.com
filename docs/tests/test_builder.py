@@ -13,7 +13,10 @@ class TestPythonObjectsJSONHTMLBuilder(SimpleTestCase):
     def setUp(self):
         self.app = Mock()
         self.env = Mock()
+        self.app.confdir = "/tmp"
         self.app.doctreedir = "/tmp"
+        self.app.outdir = "/tmp"
+        self.app.srcdir = "/tmp"
         self.env.get_domain = Mock()
         self.mock_domain = Mock()
         self.env.get_domain.return_value = self.mock_domain
