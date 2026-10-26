@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block analytics %}
   <!-- Privacy-friendly analytics by Plausible -->
@@ -9,6 +9,10 @@
     plausible.init()
   </script>
 {% endblock analytics %}
+
+{% block head_extra %}
+  <script src="{% static "js/lib/console-tabs.js" %}" type="module"></script>
+{% endblock head_extra %}
 
 {% block html_language_code %}{{ lang|default:"en" }}{% endblock %}
 
