@@ -2,9 +2,18 @@
 name: Tests on Django main
 
 on:
+    pull_request:
+        paths:
+            - ".github/workflows/django-main.yml"
+            - "djangoproject/static/css/lib/**"
+            - "djangoproject/static/js/lib/**"
     schedule:
         - cron: "0 0 * * *"
     workflow_dispatch:
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 env:
     PYTHON_VERSION: 3.12
@@ -69,3 +78,22 @@ jobs:
                   PYTHONWARNINGS: default
               run: |
                   make ci
+
+    check-vendored-drift:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v7.0.1
+              with:
+                  persist-credentials: false
+            - name: Check equality of vendored console-tabs.css
+              env:
+                  # First line past license comment added in vendoring.
+                  VENDORED_START_LINE: 5
+              run: |
+                  curl -fsS -o upstream.css \
+                      https://raw.githubusercontent.com/django/django/main/docs/_static/console-tabs.css
+                  if ! tail -n "+$VENDORED_START_LINE" djangoproject/static/css/lib/console-tabs.css \
+                         | diff -u upstream.css -; then
+                      echo "::error::console-tabs.css has drifted from django/django:main; re-vendor it."
+                      exit 1
+                  fi
