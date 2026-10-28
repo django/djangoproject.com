@@ -1,6 +1,7 @@
+{% load checklist_extras %}
 - [ ] Switch to the branch and update it:
     - `git checkout {% if release != "main" %}{{ release.stable_branch }}{% else %}main{% endif %} && git pull -v`
-{% for cve in cves %}
+{% for cve in instance|cves_for_release:release %}
 - [ ] Apply patch for **{{ cve }}**
     - `git am path/to/patch/for/{{ release }}/000{{ forloop.counter }}-{{ cve }}.patch`
         - `git am --abort` to the rescue if there are issues
