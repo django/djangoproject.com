@@ -553,6 +553,48 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             "An issue was discovered in Django 6.0.4 before 6.0.10.", checklist_content
         )
 
+    def test_render_checklist_some_cves_not_affected_in_all_versions(self):
+        release1 = self.factory.make_release(version="5.2.20")
+        release2 = self.factory.make_release(version="6.0.a1")
+        checklist = self.factory.make_checklist(SecurityRelease)
+        # This issue does not affect 5.2.x.
+        self.factory.make_security_issue(
+            checklist, cve_year_number="CVE-2026-0001", releases=[release2]
+        )
+        self.factory.make_security_issue(
+            checklist, cve_year_number="CVE-2026-0002", releases=[release1, release2]
+        )
+
+        checklist_content = self.do_render_checklist(checklist)
+        phase_0_content = checklist_content.split("Phase 0")[1].split("Phase 1")[0]
+
+        self.assertEqual(
+            re.findall(
+                r"^#### For .+|Apply patch for \*\*CVE-\d{4}-\d+",
+                phase_0_content,
+                re.MULTILINE,
+            ),
+            [
+                "#### For `main`",
+                "Apply patch for **CVE-2026-0001",
+                "Apply patch for **CVE-2026-0002",
+                "#### For 6.0.a1 (at pre-release alpha status)",
+                "Apply patch for **CVE-2026-0001",
+                "Apply patch for **CVE-2026-0002",
+                "#### For 5.2.20",
+                "Apply patch for **CVE-2026-0002",
+            ],
+        )
+        self.assertInChecklistContent(
+            "path/to/patch/for/5.2.20/0001-CVE-2026-0002.patch", checklist_content
+        )
+        self.assertInChecklistContent(
+            "path/to/patch/for/6.0.a1/0001-CVE-2026-0001.patch", checklist_content
+        )
+        self.assertInChecklistContent(
+            "path/to/patch/for/6.0.a1/0002-CVE-2026-0002.patch", checklist_content
+        )
+
     def test_render_checklist_blogdescription_display(self):
         checklist = self.make_checklist(releases=[])
         blog = (
