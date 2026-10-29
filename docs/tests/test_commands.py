@@ -1,11 +1,11 @@
 import sys
 import tempfile
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from subprocess import CalledProcessError
+from unittest.mock import ANY, MagicMock, patch
 
-from django.core.management import CommandError
+from django.core.management import CommandError, call_command
 from django.test import TestCase, override_settings
-from sphinx.errors import SphinxError
 
 from ..management.commands.build_doc_release import Command
 from ..management.commands.update_docs import Command as UpdateDocsCommand
@@ -33,47 +33,69 @@ class HtmlBuilderNameTests(TestCase):
             self.assertEqual(self.command._html_builder_name(source_dir), "html")
 
 
+class EnsureBuilderExtensionTests(TestCase):
+    def setUp(self):
+        self.command = Command()
+
+    def test_appends_extensions_when_missing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            conf_path = Path(tmp) / "conf.py"
+            conf_path.write_text("extensions = ['sphinx.ext.autodoc']\n")
+            self.command._add_custom_extension(conf_path)
+            content = conf_path.read_text()
+            self.assertIn(
+                'extensions.append("python_objects_json_html_builder")', content
+            )
+
+    def test_idempotent_on_subsequent_runs(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            conf_path = Path(tmp) / "conf.py"
+            conf_path.write_text("extensions = ['sphinx.ext.autodoc']\n")
+            self.command._add_custom_extension(conf_path)
+            first_content = conf_path.read_text()
+            self.command._add_custom_extension(conf_path)
+            second_content = conf_path.read_text()
+            self.assertEqual(first_content, second_content)
+            self.assertEqual(
+                second_content.count(
+                    'extensions.append("python_objects_json_html_builder")'
+                ),
+                1,
+            )
+
+
 class BuildDocReleaseSphinxErrorTests(TestCase):
     def setUp(self):
-        self.release = DocumentRelease.objects.create(lang="en", release=None)
-        self.command = Command()
-        self.command.verbosity = 0
+        DocumentRelease.objects.create(lang="en", release=None)
 
     def test_sphinx_error_raises_command_error_and_reports_to_sentry(self):
-        error = SphinxError("boom")
         with tempfile.TemporaryDirectory() as tmp:
+            docs_dir = Path(tmp) / "sources" / "dev" / "docs"
+            docs_dir.mkdir(parents=True)
+            (docs_dir / "conf.py").write_text('extensions = ["unknown_extension"]\n')
             with (
                 override_settings(DOCS_BUILD_ROOT=Path(tmp)),
                 patch.object(Command, "_html_builder_name", return_value="html"),
-                patch(
-                    "docs.management.commands.build_doc_release.Config"
-                ) as mock_config,
-                patch(
-                    "docs.management.commands.build_doc_release.Sphinx"
-                ) as mock_sphinx,
-                patch(
-                    "docs.management.commands.build_doc_release.patch_docutils"
-                ) as mock_patch_docutils,
-                patch(
-                    "docs.management.commands.build_doc_release.docutils_namespace"
-                ) as mock_docutils_namespace,
                 patch(
                     "docs.management.commands.build_doc_release."
                     "capture_sentry_exception"
                 ) as mock_capture,
             ):
-                mock_config.read.return_value.extensions = []
-                # Mocked context managers must not swallow the SphinxError.
-                mock_patch_docutils.return_value.__exit__.return_value = False
-                mock_docutils_namespace.return_value.__exit__.return_value = False
-                mock_sphinx.return_value.build.side_effect = error
-
                 with self.assertRaisesMessage(
                     CommandError, "sphinx-build returned an error"
-                ):
-                    self.command.build_doc_release(self.release)
+                ) as caught:
+                    call_command(
+                        "build_doc_release", "dev", "--language", "en", verbosity=0
+                    )
+                self.assertIn(
+                    "Could not import extension unknown_extension",
+                    str(caught.exception),
+                )
 
-        mock_capture.assert_called_once_with(error, flush=True)
+        mock_capture.assert_called_once_with(ANY, flush=True)
+        reported = mock_capture.call_args.args[0]
+        self.assertIsInstance(reported, CommandError)
+        self.assertIsInstance(reported.__cause__, CalledProcessError)
 
 
 class BuildReleaseSubprocessInvocationTests(TestCase):

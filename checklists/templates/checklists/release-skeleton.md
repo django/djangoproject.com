@@ -130,7 +130,7 @@ At this point, most of the larger features planned for {{ release.feature_versio
 Hello Translators!
 
 Django {{ release.version_verbose }} was [released today]({{ instance.blogpost_link }}), establishing the string freeze for the {{ release.feature_version }} release.
-This means that strings marked for translations will not change between now and the final release, scheduled for approximately two weeks from now.
+This means that strings marked for translations will not change between now and the final release, scheduled for approximately {% if release.is_calendar_version %}a month{% else %}two weeks{% endif %} from now.
 
 It would be extremely helpful if you could ensure that the Django translations for the languages you contribute to are complete on [Transifex](https://explore.transifex.com/django/django/).
 We will be fetching the available translations a few days before the final release.
