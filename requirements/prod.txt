@@ -11,7 +11,13 @@ babel==2.18.0
     #   djangoproject-com
     #   py-moneyed
     #   sphinx
-certifi==2026.7.22
+boto3==1.43.95
+    # via django-storages
+botocore==1.43.95
+    # via
+    #   boto3
+    #   s3transfer
+certifi==2026.10.19
     # via
     #   requests
     #   sentry-sdk
@@ -19,7 +25,7 @@ charset-normalizer==3.5.0
     # via requests
 colorama==0.4.6 ; sys_platform == 'win32'
     # via sphinx
-django==6.1
+django==6.1.1
     # via
     #   django-admin-dracula
     #   django-contact-form
@@ -27,6 +33,7 @@ django==6.1
     #   django-push
     #   django-read-only
     #   django-recaptcha
+    #   django-storages
     #   djangoproject-com
 django-admin-dracula==0.0.3
     # via djangoproject-com
@@ -46,6 +53,7 @@ django-recaptcha==4.1.0
     # via djangoproject-com
 django-registration-redux==2.13
     # via djangoproject-com
+django-storages==1.14.6
 docutils==0.21.2
     # via
     #   djangoproject-com
@@ -63,6 +71,10 @@ jinja2==3.1.6
     # via
     #   djangoproject-com
     #   sphinx
+jmespath==1.1.0
+    # via
+    #   boto3
+    #   botocore
 libsass==0.23.0
     # via djangoproject-com
 markdown==3.10.2
@@ -91,7 +103,9 @@ pykismet3==0.1.1
 pymdown-extensions==11.0.1
     # via djangoproject-com
 python-dateutil==2.9.0.post0
-    # via djangoproject-com
+    # via
+    #   botocore
+    #   djangoproject-com
 pyyaml==6.0.3
     # via pymdown-extensions
 redis==8.1.0
@@ -102,6 +116,10 @@ requests==2.34.2
     #   pykismet3
     #   sphinx
     #   stripe
+roman-numerals==4.1.0
+    # via sphinx
+s3transfer==0.19.2
+    # via boto3
 sentry-sdk==2.66.1
 six==1.17.0
     # via python-dateutil
@@ -109,7 +127,7 @@ snowballstemmer==3.1.1
     # via sphinx
 sorl-thumbnail==12.11.0
     # via djangoproject-com
-sphinx==8.1.3
+sphinx==9.1.1
     # via djangoproject-com
 sphinxcontrib-applehelp==2.0.0
     # via sphinx
@@ -141,5 +159,6 @@ tzdata==2026.3 ; sys_platform == 'win32'
     #   psycopg
 urllib3==2.7.0
     # via
+    #   botocore
     #   requests
     #   sentry-sdk

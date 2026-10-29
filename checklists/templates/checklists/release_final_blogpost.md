@@ -12,7 +12,7 @@ You can get Django {{ version }} from
 {% include "checklists/_releaser_info.md" %}
 {% if instance.eom_release %}
 With the release of Django {{ version }}, Django {{ instance.eom_release.feature_version }}
-has reached the end of mainstream support. The final minor bug fix release,
+has reached the end of mainstream support. The final bug fix release,
 [{{ instance.eom_release.version }}](https://docs.djangoproject.com/en/stable/releases/{{ instance.eom_release.version }}/),
 was issued on {{ instance.eom_release.date }}. Django {{ instance.eom_release.feature_version }}
 will receive security and data loss fixes until {{ instance.eom_release.feature_release.eol_date|date:"F, Y" }}.

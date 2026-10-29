@@ -55,6 +55,11 @@ CONFIG = {
 # TODO: Once the annual release cycle is established, consider generating
 # future releases dynamically instead of maintaining this list manually.
 # The annual schedule should make future release and support dates predictable.
+#
+# "is_lts" here draws a label on the graphic, and is not Release.is_lts, which
+# is always set for a calendar version. The calendar releases below leave it
+# off deliberately: under DEP 20 every one of them is supported for three
+# years, which their bars already show, so a label on each would say nothing.
 RELEASES = [
     {
         "name": "5.2",

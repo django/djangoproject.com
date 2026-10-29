@@ -29,7 +29,7 @@ run:
 	python -m manage runserver 0.0.0.0:8000
 
 test:
-	@python -m coverage run --source=. --module manage test --verbosity 2 $(APP_LIST)
+	@python -m coverage run --source=. --module manage test --verbosity 2 $(APP_LIST) $(TEST_ARGS)
 
 watch-scss:
 	watchmedo shell-command --patterns=*.scss --recursive --command="make compile-scss-debug" $(SCSS)

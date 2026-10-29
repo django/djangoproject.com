@@ -2558,11 +2558,13 @@ h2+.list-link-soup {
     }
 }
 
-.versionadded,
-.versionchanged,
-.versionmodified {
+// Version annotations. Each Django version's docs are built from their own
+// source, so two markup shapes must work at once.
+div.versionadded,
+div.versionchanged,
+div.versionremoved,
+div.deprecated {
     @include sans-serif;
-    font-weight: bold;
     margin-bottom: 20px;
 
     padding: 10px 13px;
@@ -2570,37 +2572,34 @@ h2+.list-link-soup {
     border-radius: 4px;
 
     p {
-        font-weight: normal;
-        margin-top: 0.3em;
+        // Tighter than body text, so the box reads as one unit.
+        margin: 0.3em 0;
+
+        // `span.versionmodified` shares this paragraph.
+        &:first-child {
+            margin-top: 0;
+        }
 
         &:last-child {
             margin-bottom: 0;
         }
     }
-}
 
-.deprecated {
-    @extend .versionchanged;
-
-    .versionadded,
-    .versionchanged,
-    .versionmodified {
-        border: none;
-        padding: 0;
-        margin-bottom: 0;
+    // `span.versionmodified` appears just inside the first `p`. (It also has
+    // the directive name as a class, hence scoping the box above to `div`.)
+    // `span.title` is used only for versionadded and versionchanged in Django
+    // 6.1 and earlier. It appears before (outside) the first `p`.
+    span.versionmodified,
+    span.title {
         display: block;
-    }
+        font-weight: bold;
 
-    p {
-        font-weight: normal;
-        margin-top: 0;
-
-        &:last-child {
-            margin-bottom: 0;
+        // A directive with no body renders as the label alone, and then the
+        // gap would just pad the bottom of the box.
+        &:not(:only-child) {
+            margin-bottom: 0.3em;
         }
     }
-
-
 }
 
 dl.function,
@@ -2663,6 +2662,17 @@ table {
     display: block;
     max-width: 100%;
     height: auto;
+}
+
+.sponsor-figure {
+    margin: 0 0 30px;
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 13px;
+        line-height: 1.6;
+        color: color-mix(in srgb, var(--body-fg) 70%, transparent);
+    }
 }
 
 table.sponsor-tiers,
@@ -3411,6 +3421,38 @@ hr {
     }
 }
 
+// The corporate ask on /fundraising/, pulled out of the donation progress
+// bullets so it reads as its own invitation rather than a footnote to them.
+.corporate-callout {
+    margin: 40px 0;
+    padding: 28px 30px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-accent);
+    background: var(--sidebar-bg);
+
+    h2 {
+        margin-top: 0;
+        // The intro link jumps to this heading, so leave the box's padding
+        // plus a gap above it and the callout lands as a whole block.
+        scroll-margin-top: 52px;
+    }
+
+    > p {
+        max-width: 60ch;
+    }
+
+    .corporate-callout-actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 24px;
+    }
+
+    .cta {
+        margin: 0;
+    }
+}
+
 .fundraising-index {
     .donate {
         select {
@@ -3805,5 +3847,46 @@ ul.corporate-members li {
 
     &:focus {
         top: 0;
+    }
+}
+
+// Sponsorship banner landing page (/sponsor/banner/)
+// The screenshot is 2560px wide, so it breaks out of the content column the
+// same way a wide table does. See .table-wrapper-wide above for the technique.
+.sponsor-placement {
+    margin: 30px 0 0;
+
+    @include respond-min(768px) {
+        width: 96vw;
+        max-width: 1160px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+
+    img {
+        display: block;
+        height: auto;
+        max-width: 100%;
+    }
+
+    figcaption {
+        margin: 10px 0 0;
+        text-align: center;
+    }
+}
+
+// Django renders radio groups in a fieldset; make it read like the other fields.
+.sponsor-form fieldset {
+    border: 0;
+    margin: 10px 0 20px;
+    padding: 0;
+
+    legend {
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    label {
+        font-weight: 400;
     }
 }

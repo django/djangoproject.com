@@ -162,13 +162,7 @@ class DocumentRelease(models.Model):
     def is_supported(self):
         if self.release is None:
             return True
-        latest_release = (
-            Release.objects.filter(
-                major=self.release.major, minor=self.release.minor, status="f"
-            )
-            .order_by("-micro")
-            .first()
-        )
+        latest_release = Release.objects.in_feature_series(self.release).first()
         if latest_release is None:
             return True
         eol_date = latest_release.eol_date
@@ -290,7 +284,11 @@ def _clean_document_path(path):
 
 
 def document_url(doc):
-    if doc.metadata.get("parents") == DocumentationCategory.WEBSITE:
+    try:
+        parents = doc.parents  # From a search()/search_results() annotation.
+    except AttributeError:
+        parents = doc.metadata.get("parents")
+    if parents == DocumentationCategory.WEBSITE:
         return doc.path
     elif doc.path:
         kwargs = {
@@ -413,14 +411,10 @@ class DocumentQuerySet(models.QuerySet):
                 ),
                 breadcrumbs=models.F("metadata__breadcrumbs"),
                 python_objects=models.F("metadata__python_objects"),
+                parents=KeyTextTransform("parents", "metadata"),
             )
             .select_related("release__release")
-            .only(
-                "metadata",
-                "path",
-                "release__lang",
-                "release__release__version",
-            )
+            .only("path", "release__lang", "release__release__version")
             .order_by("-rank", "pk")
         )
 

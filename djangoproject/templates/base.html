@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="ROBOTS" content="ALL" />
+    {% block robots %}<meta name="ROBOTS" content="ALL" />{% endblock %}
     <meta name="MSSmartTagsPreventParsing" content="true" />
     <meta name="Copyright" content="Django Software Foundation" />
     <meta name="keywords" content="Python, Django, framework, open-source" />
@@ -61,15 +61,15 @@
     {% include "includes/header.html" %}
     {% block banner %}{% endblock %}
 
+    <div id="billboard">
+      {% block billboard %}{% active_banner %}{% endblock %}
+    </div>
+
     <section class="copy-banner">
       <div class="container {% block header-classes %}{% endblock %}">
         {% block header %}{% endblock %}
       </div>
     </section>
-
-    <div id="billboard">
-      {% block billboard %}{% active_banner %}{% endblock %}
-    </div>
 
     <div class="container {% block layout_class %}{% endblock %}">
       <main id="main-content">

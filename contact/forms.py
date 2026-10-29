@@ -4,12 +4,16 @@ import django
 from django import forms
 from django.conf import settings
 from django.contrib.sites.models import Site
+from django.core.mail import EmailMessage
+from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.translation import gettext_lazy as _
 from django_contact_form.forms import ContactForm
 from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV3
 from pykismet3 import Akismet, AkismetServerError
+
+from fundraising.sponsor_programs import BANNER_LEVELS
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +45,17 @@ class BaseContactForm(ContactForm):
 
     def message(self):
         return "From: {name} <{email}>\n\n{body}".format(**self.cleaned_data)
+
+    def save(self, fail_silently=False):
+        """Send with the sender as Reply-To."""
+        message = self.get_message_dict()
+        EmailMessage(
+            subject=message["subject"],
+            body=message["message"],
+            from_email=message["from_email"],
+            to=message["recipient_list"],
+            reply_to=[self.cleaned_data["email"]],
+        ).send(fail_silently=fail_silently)
 
     def clean_body(self):
         """
@@ -80,3 +95,76 @@ class BaseContactForm(ContactForm):
 
 class FoundationContactForm(BaseContactForm):
     recipient_list = ["dsf-board@googlegroups.com"]
+
+
+class BannerSponsorshipForm(FoundationContactForm):
+    """
+    The foundation contact form with the subject replaced by a choice of
+    sponsorship level, for the banner sponsorship page.
+    """
+
+    recipient_list = [
+        settings.FUNDRAISING_DEFAULT_FROM_EMAIL,
+        "treasurer@djangoproject.com",
+        "dsf-board@googlegroups.com",
+    ]
+    message_subject = forms.ChoiceField(
+        widget=forms.RadioSelect, label=_("Sponsorship level"), initial="monthly"
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["message_subject"].choices = [
+            (level["slug"], f"{level['name']}: ${level['amount']:,}")
+            for level in BANNER_LEVELS
+        ] + [("other", _("Something else"))]
+        self.fields["body"].widget.attrs["placeholder"] = _(
+            "I'm with Acme. We'd like to sponsor the banner for the month of "
+            "October. Is it available?"
+        )
+
+    def subject(self):
+        choices = dict(self.fields["message_subject"].choices)
+        return f"[Banner sponsorship] {choices[self.cleaned_data['message_subject']]}"
+
+
+class PlanSponsorshipForm(FoundationContactForm):
+    """A short inquiry with the annual plan determined by its landing page."""
+
+    recipient_list = BannerSponsorshipForm.recipient_list
+
+    def __init__(self, *args, plan, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.plan = plan
+        self.fields.pop("message_subject")
+        self.fields["body"].widget.attrs["placeholder"] = _(
+            "Tell us about your organization and what you'd like to know about "
+            "sponsoring Django."
+        )
+
+    def subject(self):
+        return (
+            f"[Django sponsorship] {self.plan['name']}: ${self.plan['price']}+ / year"
+        )
+
+    def message(self):
+        """
+        Name the plan in the body as well as the subject.
+
+        Subjects get truncated, rewritten on reply and dropped when a thread is
+        forwarded, and the plan is the one thing whoever picks this up needs.
+        """
+        plan_url = self.request.build_absolute_uri(
+            reverse("sponsor_plan", kwargs={"slug": self.plan["slug"]})
+        )
+        return (
+            "From: {name} <{email}>\n"
+            "Plan: {plan} (${price}+ / year)\n"
+            "Page: {plan_url}\n\n"
+            "{body}"
+        ).format(
+            plan=self.plan["name"],
+            price=self.plan["price"],
+            plan_url=plan_url,
+            **self.cleaned_data,
+        )
