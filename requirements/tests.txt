@@ -73,7 +73,7 @@ markupsafe==3.0.3
     # via jinja2
 packaging==26.3
     # via sphinx
-pillow==12.3.0
+pillow==13.0.0
     # via djangoproject-com
 playwright==1.62.0
 psycopg==3.3.4
