@@ -7,6 +7,13 @@
 
 {% block doc_url %}{% url 'document-index' lang=lang version=version host 'docs' %}{% endblock %}
 
+{% block head_extra %}
+  {{ block.super }}
+  {% if noindex %}
+    <meta name="robots" content="noindex">
+  {% endif %}
+{% endblock head_extra %}
+
 {% block link_rel_tags %}
   {% if docurl %}
     {% if "internals" in docurl and lang == "en" %} {# The canonical version of "internals" is the dev docs (but only for English, since the dev docs are never translated). #}
