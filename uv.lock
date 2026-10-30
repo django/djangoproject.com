@@ -357,6 +357,7 @@ dev = [
     { name = "black" },
     { name = "coverage" },
     { name = "django-debug-toolbar" },
+    { name = "pixelmatch" },
     { name = "playwright" },
     { name = "prek" },
     { name = "psycopg", extra = ["binary"] },
@@ -374,6 +375,7 @@ prod = [
 ]
 tests = [
     { name = "coverage" },
+    { name = "pixelmatch" },
     { name = "playwright" },
     { name = "psycopg", extra = ["binary"] },
     { name = "requests-mock" },
@@ -415,6 +417,7 @@ dev = [
     { name = "black", specifier = "==26.10.1" },
     { name = "coverage", specifier = "==7.15.2" },
     { name = "django-debug-toolbar", specifier = "==7.0.0" },
+    { name = "pixelmatch", specifier = ">=0.3.0" },
     { name = "playwright", specifier = "==1.62.0" },
     { name = "prek", specifier = "==0.4.11" },
     { name = "psycopg", extras = ["binary"], specifier = "==3.3.4" },
@@ -432,6 +435,7 @@ prod = [
 ]
 tests = [
     { name = "coverage", specifier = "==7.15.2" },
+    { name = "pixelmatch", specifier = ">=0.3.0" },
     { name = "playwright", specifier = "==1.62.0" },
     { name = "psycopg", extras = ["binary"], specifier = "==3.3.4" },
     { name = "requests-mock", specifier = "==1.12.1" },
@@ -625,6 +629,15 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/8e/ed/d504165ef79af6fafe25c76726cf30f544cc236002f7ed054f1d51adc4ff/pillow-13.0.0-pp312-pypy312_pp80-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:93ff9c9c3663ce23aaa5d0b6b6abac55359e2a0c06c7e30f3771829af816be63", size = 5464358, upload-time = "2026-10-16T22:18:02.779Z" },
     { url = "https://files.pythonhosted.org/packages/7b/fe/a10aba5503ca13e9e009b8bd0a1a4ce5584bdce246245fd6f3a83701369c/pillow-13.0.0-pp312-pypy312_pp80-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:e65dd6e75de67b2362a4fa3e16aa627595f65054dc4ec73d64680c84d592fa61", size = 6043514, upload-time = "2026-10-16T22:18:04.538Z" },
     { url = "https://files.pythonhosted.org/packages/c0/37/66b12dc476041fe523bca29c9d58fbf1ea92a4eaf73acfb9e993948f1191/pillow-13.0.0-pp312-pypy312_pp80-win_amd64.whl", hash = "sha256:567f20f1c75897d7663830da6ea8af719e03d712b1d9ee7f813319f9ece42e5a", size = 7366030, upload-time = "2026-10-16T22:18:06.638Z" },
+]
+
+[[package]]
+name = "pixelmatch"
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b5/ef/d69a0c50f812326d3b54f8aea0536733d650cc2fb47c6510a2abe54df81d/pixelmatch-0.4.0.tar.gz", hash = "sha256:80a9ae1084941569f0e8cc7fe70b50c02312b4dbaf4b37b710e0f75f9667fa32", size = 7224, upload-time = "2026-03-07T08:55:54.81Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f2/7e/8958796e5077a2473780c9368a0d7f360d1de62c96608b84170c916e4b23/pixelmatch-0.4.0-py3-none-any.whl", hash = "sha256:d40e49e05eab0531bc7665f40309d90f5708c3edd121b3fd63385864005b81a8", size = 9728, upload-time = "2026-03-07T08:55:53.212Z" },
 ]
 
 [[package]]
