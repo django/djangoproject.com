@@ -3,6 +3,7 @@ from decimal import Decimal
 from unittest.mock import patch
 
 import time_machine
+from django.template.loader import render_to_string
 from django.test import TestCase
 from django.utils.crypto import get_random_string
 
@@ -20,6 +21,7 @@ from ..templatetags.fundraising_extras import (
     as_percentage,
     display_django_heroes,
     donation_form_with_heart,
+    homepage_sponsors,
     top_corporate_members,
 )
 
@@ -242,3 +244,76 @@ class TestTopCorporateMembers(TestCase):
         ]
 
         self.assertEqual(members, expected)
+
+
+class TestHomepageSponsors(TestCase):
+    future_date = date(3000, 1, 1)
+
+    def create_member(self, membership_level, amount=5, **kwargs):
+        member = CorporateMember.objects.create(
+            membership_level=membership_level, **kwargs
+        )
+        member.invoice_set.create(amount=amount, expiration_date=self.future_date)
+        return member
+
+    def test_with_no_members(self):
+        tiers = homepage_sponsors()["tiers"]
+
+        self.assertEqual(tiers, [])
+
+    def test_groups_members_by_tier_in_order(self):
+        fellow = self.create_member(6)
+        diamond = self.create_member(5)
+        platinum = self.create_member(4)
+        gold = self.create_member(3)
+        silver = self.create_member(2)
+        bronze = self.create_member(1)
+
+        tiers = homepage_sponsors()["tiers"]
+
+        self.assertEqual(
+            [name for name, members in tiers],
+            [
+                "Sponsored Fellow",
+                "Diamond",
+                "Platinum",
+                "Gold",
+                "Silver",
+                "Bronze",
+            ],
+        )
+        self.assertEqual(tiers[0][1], [fellow])
+        self.assertEqual(tiers[1][1], [diamond])
+        self.assertEqual(tiers[2][1], [platinum])
+        self.assertEqual(tiers[3][1], [gold])
+        self.assertEqual(tiers[4][1], [silver])
+        self.assertEqual(tiers[5][1], [bronze])
+
+    def test_omits_tiers_without_members(self):
+        platinum = self.create_member(4)
+
+        tiers = homepage_sponsors()["tiers"]
+
+        self.assertEqual([name for name, members in tiers], ["Platinum"])
+        self.assertEqual(tiers[0][1], [platinum])
+
+    def test_excludes_inactive_members(self):
+        member = CorporateMember.objects.create(membership_level=4)
+        member.invoice_set.create(amount=5, expiration_date=date(2000, 1, 1))
+
+        tiers = homepage_sponsors()["tiers"]
+
+        self.assertEqual(tiers, [])
+
+    def test_template_renders_tier_and_placeholder(self):
+        self.create_member(4, display_name="Acme", url="https://example.com")
+
+        html = render_to_string(
+            "fundraising/includes/homepage_sponsors.html", homepage_sponsors()
+        )
+
+        self.assertIn("Our sponsors", html)
+        self.assertIn("Platinum", html)
+        self.assertIn("Acme", html)
+        self.assertNotIn("Sponsored Fellow", html)
+        self.assertNotIn("homepage-sponsor-name", html)

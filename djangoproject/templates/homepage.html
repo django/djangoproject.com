@@ -46,6 +46,8 @@
     <a href="{% url 'overview' %}" class="cta outline">{% translate "Learn more about Django" %}</a>
   </div>
 
+  {% homepage_sponsors %}
+
   <div class="section">
     <h2>{% translate "Join the Community" %}</h2>
     <div class="community-cta-wrapper">
@@ -116,6 +118,8 @@
     <a href="{% block doc_url %}{% url 'homepage' host 'docs' %}{% endblock %}" class="link-readmore">{% translate "Django documentation" %}</a>
 
     {% donation_snippet %}
+
+    {% top_corporate_members "sponsored_fellow" "diamond" "platinum" header="Sponsored Fellow, Diamond and Platinum Members" %}
 
     <h3>{% translate "Latest news" %}</h3>
     {% render_latest_blog_entries 3 hide_readmore=True summary_first=True header_tag='h4' %}
