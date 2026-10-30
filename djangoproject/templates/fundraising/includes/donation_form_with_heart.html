@@ -59,9 +59,11 @@
     </div>
     <div class="cls"></div>
     <p class="footnote">
-      {% blocktranslate trimmed with amount=display_logo_amount|intcomma %}
+      {% blocktranslate trimmed with amount=display_logo_amount|intcomma goal=goal_amount|intcomma %}
         Your logo will be visible below if you contribute at least
-        US&nbsp;${{ amount }}.<br>
+        US&nbsp;${{ amount }}. The running total represents donations made
+        through this website only. The ${{ goal }} goal is a funding level set
+        to provide financial sustainability to the project.
       {% endblocktranslate %}
     </p>
   </div>
