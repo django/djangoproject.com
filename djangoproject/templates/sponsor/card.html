@@ -6,7 +6,7 @@
   <p class="sponsor-note plan-company-profile"><strong>{% translate "Suggested for:" %}</strong> {{ plan.company_profile }}</p>
   <div class="plan-card-features">
     <ul>
-      {% for benefit in plan.highlights %}<li>{{ benefit }}</li>{% endfor %}
+      {% for benefit in plan.overview_highlights %}<li>{{ benefit }}</li>{% endfor %}
       {% if plan.includes %}<li><strong>{% blocktranslate with name=plan.includes %}Everything in {{ name }}{% endblocktranslate %}</strong></li>{% endif %}
     </ul>
     {% if plan.more_features_count %}
