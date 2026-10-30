@@ -3,6 +3,18 @@ revision = 5
 requires-python = "==3.12.*"
 
 [[package]]
+name = "accessible-pygments"
+version = "0.0.5"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pygments" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/bc/c1/bbac6a50d02774f91572938964c582fff4270eee73ab822a4aeea4d8b11b/accessible_pygments-0.0.5.tar.gz", hash = "sha256:40918d3e6a2b619ad424cb91e556bd3bd8865443d9f22f1dcdf79e33c8046872", size = 1377899, upload-time = "2024-05-10T11:23:10.216Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/8d/3f/95338030883d8c8b91223b4e21744b04d11b161a3ef117295d8241f50ab4/accessible_pygments-0.0.5-py3-none-any.whl", hash = "sha256:88ae3211e68a1d0b011504b2ffc1691feafce124b845bd072ab6f9f66f34d4b7", size = 1395903, upload-time = "2024-05-10T11:23:08.421Z" },
+]
+
+[[package]]
 name = "alabaster"
 version = "1.0.0"
 source = { registry = "https://pypi.org/simple" }
@@ -27,6 +39,19 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/7d/b2/51899539b6ceeeb420d40ed3cd4b7a40519404f9baf3d4ac99dc413a834b/babel-2.18.0.tar.gz", hash = "sha256:b80b99a14bd085fcacfa15c9165f651fbb3406e66cc603abf11c5750937c992d", size = 9959554, upload-time = "2026-02-01T12:30:56.078Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/77/f5/21d2de20e8b8b0408f0681956ca2c69f1320a3848ac50e6e7f39c6159675/babel-2.18.0-py3-none-any.whl", hash = "sha256:e2b422b277c2b9a9630c1d7903c2a00d0830c409c59ac8cae9081c92f1aeba35", size = 10196845, upload-time = "2026-02-01T12:30:53.445Z" },
+]
+
+[[package]]
+name = "beautifulsoup4"
+version = "4.15.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "soupsieve" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/43/65/318323f98dbee45d42dff61d8f047181bc6f2268a9068cfad035a46be5af/beautifulsoup4-4.15.0.tar.gz", hash = "sha256:288e3ca7d54b06f2ac191970bc275c1939cb46d450b255bf6718b04aa37ab4f7", size = 632571, upload-time = "2026-06-07T16:44:20.453Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/88/c6/92fcd42f1ba33e1184263f25bfabf3d27c383410470f169e4b8163bf9c17/beautifulsoup4-4.15.0-py3-none-any.whl", hash = "sha256:d6f88de62e1d4e38ecb1077eb9724cd0eff29d2a08ca16a401e9b9e93f117cf9", size = 109924, upload-time = "2026-06-07T16:44:21.566Z" },
 ]
 
 [[package]]
@@ -341,6 +366,7 @@ dependencies = [
     { name = "libsass" },
     { name = "markdown" },
     { name = "pillow" },
+    { name = "pydata-sphinx-theme" },
     { name = "pygments" },
     { name = "pykismet3" },
     { name = "pymdown-extensions" },
@@ -399,6 +425,7 @@ requires-dist = [
     { name = "libsass", specifier = "==0.23.0" },
     { name = "markdown", specifier = "==3.10.2" },
     { name = "pillow", specifier = "==13.0.0" },
+    { name = "pydata-sphinx-theme", specifier = "==0.23.0" },
     { name = "pygments", specifier = "==2.20.0" },
     { name = "pykismet3", specifier = "==0.1.1" },
     { name = "pymdown-extensions", specifier = "==11.0.1" },
@@ -738,6 +765,25 @@ wheels = [
 ]
 
 [[package]]
+name = "pydata-sphinx-theme"
+version = "0.23.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "accessible-pygments" },
+    { name = "babel" },
+    { name = "beautifulsoup4" },
+    { name = "docutils" },
+    { name = "jinja2" },
+    { name = "pygments" },
+    { name = "requests" },
+    { name = "sphinx" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/54/24/efb184268dc958ea894821b8643954be7746f67cdd2c08f8f47f9b0c4735/pydata_sphinx_theme-0.23.0.tar.gz", hash = "sha256:f9e647e0bb3f1d8eaa6d866248812711211313627cc4ae76b5f88a17a4be38ce", size = 5015474, upload-time = "2026-10-08T08:52:13.975Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e4/a9/187b2aa8ea213d72c13ce3627e605d922d697c470532d67b5b707d944b2c/pydata_sphinx_theme-0.23.0-py3-none-any.whl", hash = "sha256:7bf56f1eda7b03c62719dd0dd3b50035c8bfb72caf4faefa5ac46400a82e408f", size = 6214022, upload-time = "2026-10-08T08:52:11.881Z" },
+]
+
+[[package]]
 name = "pyee"
 version = "13.0.1"
 source = { registry = "https://pypi.org/simple" }
@@ -947,6 +993,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/28/e9/38491b3556c2ec19b53d0dcc5474359fb9344ce24a26745d3ca88237b848/sorl_thumbnail-12.11.0.tar.gz", hash = "sha256:191b89c27ecb40b5c2a35549d557d17c4841c6aff439b2e17b938b91eea463b3", size = 667102, upload-time = "2024-09-21T17:12:08.585Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/bf/b4/4ff585c7b096fe82e55ee8d1dbae74f5f7cedacbf08cb25c9a83755e4ef3/sorl_thumbnail-12.11.0-py3-none-any.whl", hash = "sha256:e3e375013ca3f14bca9f98fe9861153adac3a6ea4af5e9dc3f31cb605df765b5", size = 42789, upload-time = "2024-09-21T17:11:54.11Z" },
+]
+
+[[package]]
+name = "soupsieve"
+version = "3.0.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/19/63/0b6bae54546aed98d72f12d09df57b19a287f01c84d22047fa2e23772ab9/soupsieve-3.0.4.tar.gz", hash = "sha256:924fab84ae21604c19e175e1f39815eb6fa83ba23836e09e9de180925e5bc4c0", size = 119017, upload-time = "2026-10-22T00:45:26.362Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/07/66/473f7ca0be0b06e38ee8c85ee2db184e3981bd769fac2e7c19c8a8865211/soupsieve-3.0.4-py3-none-any.whl", hash = "sha256:8412826614f9c632227067d0985aeb9f584bd15efc852955430e097a9fe7afbf", size = 42458, upload-time = "2026-10-22T00:45:24.843Z" },
 ]
 
 [[package]]
