@@ -3550,7 +3550,7 @@ form .footnote {
         }
 
         .hero {
-            width: 30%;
+            width: calc((100% - 30px) / 3);
             background-color: var(--logo-bg);
             border-radius: 10px;
             margin: 5px;
@@ -3563,8 +3563,8 @@ form .footnote {
         }
 
         .hero-logo {
-            height: 170px;
-            line-height: 170px;
+            height: 120px;
+            line-height: 120px;
 
             img {
                 vertical-align: middle;
@@ -3583,8 +3583,10 @@ form .footnote {
             width: 100%;
 
             img {
-                max-width: 90%;
-                max-height: 170px;
+                max-width: 100%;
+                max-height: 100%;
+                height: auto;
+                object-fit: contain;
             }
         }
 
@@ -3597,6 +3599,18 @@ form .footnote {
 
     .pagination {
         clear: both;
+    }
+
+    @media (max-width: 700px) {
+        .heroes .hero {
+            width: calc((100% - 20px) / 2);
+        }
+    }
+
+    @media (max-width: 400px) {
+        .heroes .hero {
+            width: calc(100% - 10px);
+        }
     }
 }
 
