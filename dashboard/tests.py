@@ -71,6 +71,35 @@ class ViewTests(ReleaseMixin, TestCase):
         self.assertEqual(json.loads(response.content.decode())["data"][0][1], 42)
         self.assertEqual(response.status_code, 200)
 
+    def test_metric_json_days_out_of_range(self):
+        """A days value too large for a timedelta must not 500.
+
+        int() accepts it, so the existing guard passes it through, and the
+        failure happens later at the timedelta.
+        """
+        TracTicketMetric.objects.get(slug="new-tickets-week").data.create(
+            measurement=42
+        )
+        url = reverse("metric-json", args=["new-tickets-week"], host="dashboard")
+        for days in ["3652059", "999999999", "-999999999"]:
+            with self.subTest(days=days):
+                request = self.factory.get(f"{url}?days={days}")
+                response = metric_json(request, "new-tickets-week")
+                self.assertEqual(response.status_code, 200)
+
+    def test_metric_json_bad_days_falls_back(self):
+        """Unusable values keep the default window rather than erroring."""
+        TracTicketMetric.objects.get(slug="new-tickets-week").data.create(
+            measurement=42
+        )
+        url = reverse("metric-json", args=["new-tickets-week"], host="dashboard")
+        for days in ["abc", "", "1.5"]:
+            with self.subTest(days=days):
+                request = self.factory.get(f"{url}?days={days}")
+                self.assertEqual(
+                    metric_json(request, "new-tickets-week").status_code, 200
+                )
+
 
 class AbstractMetricTestCase(TestCase):
     @classmethod
