@@ -49,7 +49,7 @@ dev = [
 ]
 prod = [
     "django-storages[boto3]==1.14.6",
-    "gunicorn==26.0.0",
+    "gunicorn==26.2.0",
     "psycopg[c]==3.3.4",
     "redis==8.1.0",
     "sentry-sdk==2.66.1",
