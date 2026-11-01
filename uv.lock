@@ -274,15 +274,15 @@ wheels = [
 
 [[package]]
 name = "django-money"
-version = "3.6.1"
+version = "3.6.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
     { name = "py-moneyed" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5e/a1/2a86adff207bd7562a26da2319746fba516978a946fe0864fad96640ecae/django_money-3.6.1.tar.gz", hash = "sha256:9b25d992a457af932eef1e5fef0098dd3ff0c92f4255d2d6d452af772b2fdde5", size = 45020, upload-time = "2026-06-07T10:52:34.363Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a5/25/f8da02d67f28a4e023c936597bfc613f7623b26f03488e12b5bac4deb41a/django_money-3.6.2.tar.gz", hash = "sha256:03e0d6c320525058fc5017747344819e86e2cf3a12d564931c29fdd59008178f", size = 45883, upload-time = "2026-10-14T20:04:39.491Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/53/27/d044f09fcdb2a630c12f737a38615e9ace35eeb7923c4a10247f9b1e552b/django_money-3.6.1-py3-none-any.whl", hash = "sha256:32a8027a91dea969951a34a9cc4a4f101aaa6ec45e7f784f0b17ec7813818fb2", size = 38296, upload-time = "2026-06-07T10:52:33.193Z" },
+    { url = "https://files.pythonhosted.org/packages/68/aa/e686be39c9ac3b02f66dff85ed6b80c8f147975cb12abfe04cada232e17e/django_money-3.6.2-py3-none-any.whl", hash = "sha256:b62c7bd489e3b6072cd2d9226676aa7ea1d7b08d10ccfa2a63eee607df1ae618", size = 38234, upload-time = "2026-10-14T20:04:37.947Z" },
 ]
 
 [[package]]
@@ -414,7 +414,7 @@ requires-dist = [
     { name = "django-contact-form", specifier = "==5.2.0" },
     { name = "django-countries", specifier = "==9.0.0" },
     { name = "django-hosts", specifier = "==7.0.0" },
-    { name = "django-money", specifier = "==3.6.1" },
+    { name = "django-money", specifier = "==3.6.2" },
     { name = "django-push", git = "https://github.com/brutasse/django-push.git?rev=22fda99641cfbd2f3075a723d92652a8e38220a5" },
     { name = "django-read-only", specifier = "==1.21.0" },
     { name = "django-recaptcha", specifier = "==4.1.0" },

@@ -48,7 +48,7 @@ django-countries==9.0.0
     # via djangoproject-com
 django-hosts==7.0.0
     # via djangoproject-com
-django-money==3.6.1
+django-money==3.6.2
     # via djangoproject-com
 django-push @ git+https://github.com/brutasse/django-push.git@22fda99641cfbd2f3075a723d92652a8e38220a5
     # via djangoproject-com
