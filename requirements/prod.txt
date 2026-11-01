@@ -130,7 +130,7 @@ requests==2.34.2
     #   stripe
 roman-numerals==4.1.0
     # via sphinx
-s3transfer==0.19.2
+s3transfer==0.19.3
     # via boto3
 sentry-sdk==2.66.1
 six==1.17.0
