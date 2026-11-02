@@ -8,7 +8,7 @@ In accordance with that policy, a set of security releases will be issued on
 message contains descriptions of the issue(s), descriptions of the changes
 which will be made to Django, and the patches which will be applied to Django.
 {% for cve in cves %}
-## {{ cve.headline_for_blogpost }}
+## {{ cve.headline_for_blogpost|safe }}
 
 {{ cve.blogdescription|safe }}
 {% endfor %}
