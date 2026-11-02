@@ -651,7 +651,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             checklist,
             releases,
             cve_year_number="CVE-2025-22222",
-            summary="Denial-of-service in `LoginView` and `LogoutView`",
+            summary='DoS in `LoginView` and `LogoutView` for "superusers"',
         )
         checklist_content = self.do_render_checklist(checklist)
 
@@ -659,8 +659,8 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
         expected_md = [
             "## CVE-2025-11111: Denial-of-service possibility in `strip_tags()`\n",
             "### CVE-2025-11111: Denial-of-service possibility in `strip_tags()`\n",
-            "## CVE-2025-22222: Denial-of-service in `LoginView` and `LogoutView`\n",
-            "### CVE-2025-22222: Denial-of-service in `LoginView` and `LogoutView`\n",
+            '## CVE-2025-22222: DoS in `LoginView` and `LogoutView` for "superusers"\n',
+            '### CVE-2025-22222: DoS in `LoginView` and `LogoutView` for "superusers"\n',
         ]
         for headline in expected_md:
             with self.subTest(headline=headline):
@@ -674,7 +674,7 @@ class SecurityReleaseChecklistTestCase(BaseChecklistTestCaseMixin, TestCase):
             f"`Full description\n<{checklist.blogpost_link}>`__",
             "May 7, 2025 - :cve:`2025-22222`\n"
             "-------------------------------\n\n"
-            "Denial-of-service in ``LoginView`` and ``LogoutView``.\n"
+            'DoS in ``LoginView`` and ``LogoutView`` for "superusers".\n'
             f"`Full description\n<{checklist.blogpost_link}>`__",
         ]
         for headline in expected_rst:
