@@ -44,6 +44,10 @@ $logo-bg-dark: #272c27;
 $sans-serif-stack: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
 
 
+// Screen dimensions
+$desktop-nav-breakpoint: 1360px;
+$large-desktop-breakpoint: calc(#{$desktop-nav-breakpoint} + 220px);
+
 // @font-face declarations
 
 @font-face {
