@@ -38,8 +38,12 @@ class TestIndex(ReleaseMixin, TestCase):
     def test_footnote_explains_running_total_and_goal(self):
         response = self.client.get(reverse("fundraising:index"))
         self.assertContains(
+            response, "are listed under Leaders, with your logo, for 365 days."
+        )
+        self.assertContains(
             response,
-            "The running total represents donations made through this website only.",
+            "The running total includes donations made through this website and "
+            "paid corporate memberships.",
         )
         self.assertContains(
             response,
