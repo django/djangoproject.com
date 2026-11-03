@@ -1,0 +1,701 @@
+<svg width="1050" height="409" version="1.1" xmlns="http://www.w3.org/2000/svg" profile="tiny">
+    <style>
+        .version-text {
+            font-family: 'Segoe UI', 'Arial';
+            font-size: 18px;
+            font-weight: bold;
+            fill: #ffffff;
+        }
+        .lts-text {
+            font-family: 'Segoe UI', 'Arial';
+            font-size: 18px;
+            font-weight: 600;
+            font-style: italic;
+            fill: #000000;
+        }
+        .eol-text {
+            font-family: 'Segoe UI', 'Arial';
+            font-size: 18px;
+            font-weight: 600;
+            font-style: italic;
+            fill: #ffffff;
+        }
+        .month-text {
+            font-family: 'Segoe UI', 'Arial';
+            font-size: 18px;
+            fill: #ffffff;
+            stroke: #1f2122;
+            stroke-width: 20px;
+            paint-order: stroke;
+            stroke-linecap: butt;
+            stroke-linejoin: miter;
+        }
+        .year-text {
+            font-family: 'Segoe UI', 'Arial';
+            font-size: 18px;
+            fill: #ffffff;
+            margin-bottom: 4px;
+        }
+        .today-text {
+            font-family: 'Segoe UI', 'Arial';
+            font-size: 14px;
+            font-weight: bold;
+            fill: #60A5FA;
+        }
+        .release-text {
+            font-family: 'Segoe UI', 'Arial';
+            font-size: 16px;
+        }
+    </style>
+
+    <defs>
+        <linearGradient id="fade-right" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0.0" stop-color="#1f2122" stop-opacity="0.3" />
+            <stop offset="1.0" stop-color="#1f2122" stop-opacity="1.0" />
+        </linearGradient>
+    </defs>
+
+    <rect width="100%" height="100%" fill="none" />
+
+    
+        <line x1="1090.0" y1="20" x2="1090.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="1050.0" y1="20" x2="1050.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="1010.0" y1="20" x2="1010.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="980.0" y1="20" x2="980.0" y2="389"
+              stroke="#ffffff" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="970.0" y="15" class="year-text">
+                2033
+            </text>
+        
+
+        
+    
+        <line x1="970.0" y1="20" x2="970.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="930.0" y1="20" x2="930.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="890.0" y1="20" x2="890.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="860.0" y1="20" x2="860.0" y2="389"
+              stroke="#ffffff" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="850.0" y="15" class="year-text">
+                2032
+            </text>
+        
+
+        
+    
+        <line x1="850.0" y1="20" x2="850.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="810.0" y1="20" x2="810.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="770.0" y1="20" x2="770.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="740.0" y1="20" x2="740.0" y2="389"
+              stroke="#ffffff" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="730.0" y="15" class="year-text">
+                2031
+            </text>
+        
+
+        
+    
+        <line x1="730.0" y1="20" x2="730.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="690.0" y1="20" x2="690.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="650.0" y1="20" x2="650.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="620.0" y1="20" x2="620.0" y2="389"
+              stroke="#ffffff" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="610.0" y="15" class="year-text">
+                2030
+            </text>
+        
+
+        
+    
+        <line x1="610.0" y1="20" x2="610.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="570.0" y1="20" x2="570.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="530.0" y1="20" x2="530.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="500.0" y1="20" x2="500.0" y2="389"
+              stroke="#ffffff" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="490.0" y="15" class="year-text">
+                2029
+            </text>
+        
+
+        
+    
+        <line x1="490.0" y1="20" x2="490.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="450.0" y1="20" x2="450.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="410.0" y1="20" x2="410.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="380.0" y1="20" x2="380.0" y2="389"
+              stroke="#ffffff" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="370.0" y="15" class="year-text">
+                2028
+            </text>
+        
+
+        
+    
+        <line x1="370.0" y1="20" x2="370.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="330.0" y1="20" x2="330.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="290.0" y1="20" x2="290.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="260.0" y1="20" x2="260.0" y2="389"
+              stroke="#ffffff" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="250.0" y="15" class="year-text">
+                2027
+            </text>
+        
+
+        
+    
+        <line x1="250.0" y1="20" x2="250.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="210.0" y1="20" x2="210.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="170.0" y1="20" x2="170.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+    
+        <line x1="140.0" y1="20" x2="140.0" y2="389"
+              stroke="#ffffff" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="130.0" y="15" class="year-text">
+                2026
+            </text>
+        
+
+        
+    
+        <line x1="130.0" y1="20" x2="130.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+            <!-- Month label -->
+            <text
+                x="124.0"
+                y="210.5"
+                transform="rotate(-90, 124.0, 204.5)"
+                class="month-text"
+                text-anchor="middle"
+                dominant-baseline="middle"
+            >
+                December
+            </text>
+        
+    
+        <line x1="90.0" y1="20" x2="90.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+            <!-- Month label -->
+            <text
+                x="84.0"
+                y="210.5"
+                transform="rotate(-90, 84.0, 204.5)"
+                class="month-text"
+                text-anchor="middle"
+                dominant-baseline="middle"
+            >
+                August
+            </text>
+        
+    
+        <line x1="50.0" y1="20" x2="50.0" y2="389"
+              stroke="#888888" stroke-width="1" />
+        
+
+        
+            <!-- Month label -->
+            <text
+                x="44.0"
+                y="210.5"
+                transform="rotate(-90, 44.0, 204.5)"
+                class="month-text"
+                text-anchor="middle"
+                dominant-baseline="middle"
+            >
+                April
+            </text>
+        
+    
+        <line x1="20.0" y1="20" x2="20.0" y2="389"
+              stroke="#ffffff" stroke-width="3" />
+        
+            <!-- Year label (top) -->
+            <text x="10.0" y="15" class="year-text">
+                2025
+            </text>
+        
+
+        
+    
+
+    
+        <!-- Today line -->
+        <line x1="210.0" y1="20" x2="210.0" y2="389"
+              stroke="#60A5FA" stroke-width="2" stroke-dasharray="4,4" />
+        <text x="210.0" y="15" class="today-text" text-anchor="middle">
+            Today
+        </text>
+    
+
+    
+        
+            
+                <rect
+                    x="50.0"
+                    y="30"
+                    width="80.0"
+                    height="32"
+                    fill="#1B7353"
+                    stroke="#1B7353"
+                    stroke-width="2"
+                />
+            
+
+            
+                <rect
+                    x="130.0"
+                    y="30"
+                    width="280.0"
+                    height="32"
+                    fill="#F5A623"
+                    stroke="#F5A623"
+                    stroke-width="2"
+                />
+            
+
+            <text x="60.0" y="52.0" class="version-text">
+                5.2
+            </text>
+
+            
+                <text x="140.0" y="52.0" class="lts-text">
+                    LTS
+                </text>
+            
+        
+    
+        
+            
+                <rect
+                    x="130.0"
+                    y="72"
+                    width="80.0"
+                    height="32"
+                    fill="#1B7353"
+                    stroke="#1B7353"
+                    stroke-width="2"
+                />
+            
+
+            
+                <rect
+                    x="210.0"
+                    y="72"
+                    width="80.0"
+                    height="32"
+                    fill="#F5A623"
+                    stroke="#F5A623"
+                    stroke-width="2"
+                />
+            
+
+            <text x="140.0" y="94.0" class="version-text">
+                6.0
+            </text>
+
+            
+        
+    
+        
+            
+                <rect
+                    x="210.0"
+                    y="114"
+                    width="80.0"
+                    height="32"
+                    fill="#1B7353"
+                    stroke="#1B7353"
+                    stroke-width="2"
+                />
+            
+
+            
+                <rect
+                    x="290.0"
+                    y="114"
+                    width="80.0"
+                    height="32"
+                    fill="#F5A623"
+                    stroke="#F5A623"
+                    stroke-width="2"
+                />
+            
+
+            <text x="220.0" y="136.0" class="version-text">
+                6.1
+            </text>
+
+            
+        
+    
+        
+            
+                <rect
+                    x="290.0"
+                    y="156"
+                    width="80.0"
+                    height="32"
+                    fill="#1B7353"
+                    stroke="#1B7353"
+                    stroke-width="2"
+                />
+            
+
+            
+                <rect
+                    x="370.0"
+                    y="156"
+                    width="280.0"
+                    height="32"
+                    fill="#F5A623"
+                    stroke="#F5A623"
+                    stroke-width="2"
+                />
+            
+
+            <text x="300.0" y="178.0" class="version-text">
+                6.2
+            </text>
+
+            
+                <text x="380.0" y="178.0" class="lts-text">
+                    LTS
+                </text>
+            
+        
+    
+        
+            
+                <rect
+                    x="380.0"
+                    y="198"
+                    width="120.0"
+                    height="32"
+                    fill="#1B7353"
+                    stroke="#1B7353"
+                    stroke-width="2"
+                />
+            
+
+            
+                <rect
+                    x="500.0"
+                    y="198"
+                    width="240.0"
+                    height="32"
+                    fill="#F5A623"
+                    stroke="#F5A623"
+                    stroke-width="2"
+                />
+            
+
+            <text x="390.0" y="220.0" class="version-text">
+                2028
+            </text>
+
+            
+        
+    
+        
+            
+                <rect
+                    x="500.0"
+                    y="240"
+                    width="120.0"
+                    height="32"
+                    fill="#1B7353"
+                    stroke="#1B7353"
+                    stroke-width="2"
+                />
+            
+
+            
+                <rect
+                    x="620.0"
+                    y="240"
+                    width="240.0"
+                    height="32"
+                    fill="#F5A623"
+                    stroke="#F5A623"
+                    stroke-width="2"
+                />
+            
+
+            <text x="510.0" y="262.0" class="version-text">
+                2029
+            </text>
+
+            
+        
+    
+        
+            
+                <rect
+                    x="620.0"
+                    y="282"
+                    width="120.0"
+                    height="32"
+                    fill="#1B7353"
+                    stroke="#1B7353"
+                    stroke-width="2"
+                />
+            
+
+            
+                <rect
+                    x="740.0"
+                    y="282"
+                    width="240.0"
+                    height="32"
+                    fill="#F5A623"
+                    stroke="#F5A623"
+                    stroke-width="2"
+                />
+            
+
+            <text x="630.0" y="304.0" class="version-text">
+                2030
+            </text>
+
+            
+        
+    
+
+    <!-- Legend -->
+    <rect
+        x="70"
+        y="335"
+        width="106"
+        height="40"
+        fill="#1B7353"
+        stroke="#1B7353" stroke-width="2"
+    />
+    <text
+        y="355"
+        fill="#ffffff"
+        class="release-text"
+    >
+        
+            <tspan
+                x="91"
+                dy="-0.3em"
+            >
+                Mainstream
+            </tspan>
+        
+            <tspan
+                x="99"
+                dy="1.2em"
+            >
+                Support
+            </tspan>
+        
+    </text>
+
+    <rect
+        x="186"
+        y="335"
+        width="106"
+        height="40"
+        fill="#F5A623"
+        stroke="#F5A623" stroke-width="2"
+    />
+    <text
+        y="355"
+        fill="#000000"
+        class="release-text"
+    >
+        
+            <tspan
+                x="210"
+                dy="-0.3em"
+            >
+                Extended
+            </tspan>
+        
+            <tspan
+                x="214"
+                dy="1.2em"
+            >
+                Support
+            </tspan>
+        
+    </text>
+
+    <rect
+        x="302"
+        y="335"
+        width="106"
+        height="40"
+        fill="#E53935"
+        stroke="#E53935" stroke-width="2"
+    />
+    <text
+        y="355"
+        fill="#ffffff"
+        class="release-text"
+    >
+        
+            <tspan
+                x="333"
+                dy="-0.3em"
+            >
+                End of
+            </tspan>
+        
+            <tspan
+                x="341"
+                dy="1.2em"
+            >
+                Life
+            </tspan>
+        
+    </text>
+
+    <!--fade-->
+    <rect
+        x="990"
+        y="0"
+        width="120"
+        height="100%"
+        fill="url(#fade-right)"
+    />
+</svg>
