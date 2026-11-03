@@ -7,6 +7,24 @@
     @include sans-serif;
 }
 
+// Graph tooltip, built in js/dashboard/detail.js and appended to <body> with
+// an inline top/left. It had no rule at all, so `top`/`left` were inert
+// (position defaults to static) and the text had no background of its own,
+// leaving it to inherit body-fg over whatever was behind it.
+#hover {
+    position: absolute;
+    z-index: 100;
+    padding: 4px 8px;
+    background: var(--body-bg);
+    color: var(--body-fg);
+    border: 1px solid var(--hairline-color);
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
 .metric {
     height: 10em;
     min-width: 240px;
