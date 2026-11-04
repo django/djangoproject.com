@@ -1,0 +1,79 @@
+{% extends "base_foundation.html" %}
+{% load fundraising_extras %}
+{% block og_title %}Support the Django Software Foundation{% endblock %}
+
+{% block title %}Support the Django Software Foundation{% endblock %}
+
+{% block content %}
+    <h1>Support the Django Software Foundation</h1>
+
+    <p>Development of Django is supported by an independent foundation established as a 501(c)(3) non-profit. Like most open-source foundations, the goal of the Django Foundation is to promote, support, and advance the Django web framework.</p>
+
+    <h2 id="how-to-donate">How do I donate?</h2>
+
+    <p>We accept donations via card on our <a href="{% url 'fundraising:index' %}">fundraising page</a>.</p>
+
+    <p>You can also mail a check made out to the Django Software Foundation to:</p>
+    <address>
+        PO Box 105576<br />
+        Atlanta, GA 30348-5576<br />
+    </address>
+
+    <p>Please put "attn Treasurer" in the notes section.</p>
+
+    <p>We can also accept other payment options, please <a href="mailto:fundraising@djangoproject.com">contact us</a> for details.</p>
+
+    <h2>Are there other ways to give?</h2>
+
+    <p>Yes, here are a few:</p>
+
+    <h3>Buy official Django merchandise</h3>
+    <p>Visit the <a href="https://django.threadless.com/" target="_blank">Official merchandise store</a>
+        to buy Django branded t-shirts, accessories, and more.</p>
+
+    <h3>Sponsor via GitHub Sponsors</h3>
+    <p>Django is part of GitHub Sponsors. Visit <a href="https://github.com/sponsors/django" target="_blank">
+        the Django GitHub Sponsors page</a> to sponsor the DSF via there.
+    </p>
+
+    <h3 id="benevity-giving">Benevity Workplace Giving Program</h3>
+    <p>The DSF is pleased to be a participant in the <strong>Benevity Workplace Giving Program</strong>.
+        When your employer becomes a member of the Benevity community, you are able to make donations to
+        the DSF via payroll deduction. Many employers offer a matching contribution as well, increasing
+        the amount that the DSF receives from your donation.</p>
+    <p>Benevity is available to employers in any country, and works with your company’s payroll department for ease of use from set up to payments.</p>
+    <p>Check with your employer to see if they participate in Benevity, or visit the Benevity site at
+        <a target="_blank" href="https://benevity.com/">benevity.com</a> to find out more if your
+        employer is not yet part of the Benevity program.</p>
+
+    <h2 id="donation-usage">How will my donation be used?</h2>
+    <p>The main focus of the Django Software Foundation is direct support of Django's developers. This means:</p>
+    <ul>
+        <li>Organizing and funding <a href="https://code.djangoproject.com/wiki/Sprints">development sprints</a> so that Django's developers can meet face-to-face: we're far more productive that way.</li>
+        <li>Helping key developers attend these sprints and other community events by covering travel expenses to official Django meetups and sprints.</li>
+        <li>Providing financial assistance to community development and outreach projects such as <a href="https://djangogirls.org">DjangoGirls</a>.</li>
+        <li>Providing financial assistance to individuals so they can attend major conferences and events.</li>
+        <li>Funding the Django Fellowship program, which provides full-time staff to perform community management tasks in the Django community.</li>
+    </ul>
+
+    <h2 id="corporate-donations">Do you accept donations from companies/corporations?</h2>
+    <p>Yes, we also have a <a href="{% url 'sponsor' %}">corporate sponsorship program</a>.</p>
+
+    <h2 id="specific-feature">Can I choose a specific feature or project to support?</h2>
+    <p>No: we don't allow donors to directly sponsor specific features.</p>
+
+    <p>However, we may be able to connect you to a Django developer who you can hire to work on a specific feature. Please <a href="{% url 'contact_foundation' %}">get in touch</a> if this sounds like something you'd like to pursue.</p>
+
+    <h2 id="tax-deductible">Is my donation tax deductible?</h2>
+    <p>The Django Software Foundation is a Kansas non-profit corporation; we have tax-exempt status under IRS 501(c)(3). This means that donations are tax-deductible for US citizens; donors outside of the United States should consult a tax advisor.</p>
+
+    <h2 id="donation-alternatives">How can I donate if Stripe won't process my payment?</h2>
+    <p>Please <a href="mailto:fundraising@djangoproject.com">get in touch</a> with us, and we'll figure something out that works for you.</p>
+
+    <h2 id="bitcoin">Do you accept donations by Bitcoin?</h2>
+    <p>No.</p>
+{% endblock content %}
+
+{% block content-related-extra %}
+    {% top_corporate_members "sponsored_fellow" "diamond" "platinum" "gold" header="Sponsored Fellow, Diamond, Platinum and Gold Members" %}
+{% endblock content-related-extra %}
