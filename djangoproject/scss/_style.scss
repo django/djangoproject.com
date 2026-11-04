@@ -3557,6 +3557,10 @@ form .footnote {
             position: relative;
             height: auto;
 
+            @media (max-width: 700px) {
+                width: calc((100% - 20px) / 2);
+            }
+
             div {
                 width: 100%;
             }
@@ -3600,18 +3604,6 @@ form .footnote {
 
     .pagination {
         clear: both;
-    }
-
-    @media (max-width: 700px) {
-        .heroes .hero {
-            width: calc((100% - 20px) / 2);
-        }
-    }
-
-    @media (max-width: 400px) {
-        .heroes .hero {
-            width: calc(100% - 10px);
-        }
     }
 }
 
