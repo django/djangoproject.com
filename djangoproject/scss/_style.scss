@@ -3404,7 +3404,7 @@ hr {
 
     .description {
         margin-left: 5%;
-        width: 100%;
+        width: 95%;
         float: none;
         margin-top: 30px;
 
@@ -3895,5 +3895,11 @@ ul.corporate-members li {
 
     label {
         font-weight: 400;
+    }
+}
+
+@media (max-width: 767px) {
+    html, body {
+        overflow-x: hidden;
     }
 }
