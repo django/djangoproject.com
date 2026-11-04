@@ -21,7 +21,7 @@
     - I have verified that this vulnerability is not in a CNA-covered product: `Yes`
     - I have verified that the vulnerability has not already been assigned a CVE ID: `Yes`
     {% for cve in cves %}{% with affected_ranges=cve.affected_ranges %}
-    - For issue **{{ cve.summary }}**:
+    - For issue **{{ cve.summary|safe }}**:
         - Vulnerability type info (Other): `{{ cve.cve_type }}`
         {% if cve.other_type %}
         - Other vulnerability type info: `{{ cve.other_type }}`

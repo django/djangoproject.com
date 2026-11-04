@@ -42,6 +42,11 @@ def next_release_date(value):
 
 
 @register.filter
+def cves_for_release(checklist, release):
+    return checklist.cves_for_release(release)
+
+
+@register.filter
 def enumerate_items(items, item_formatter=None):
     if item_formatter is not None:
         items = [item_formatter(item) for item in items]

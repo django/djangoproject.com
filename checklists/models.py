@@ -436,6 +436,15 @@ class SecurityRelease(ReleaseChecklist):
     def get_absolute_url(self):
         return reverse("checklists:securityrelease_checklist", kwargs={"pk": self.pk})
 
+    def cves_for_release(self, release):
+        if release == "main":
+            cves = self.cves
+        else:
+            cves = self.securityissue_set.filter(releases=release).order_by(
+                *cve_sort_key()
+            )
+        return cves
+
 
 class SecurityIssueReleasesThroughManager(models.Manager):
     def get_by_natural_key(self, cve_year_number, version):

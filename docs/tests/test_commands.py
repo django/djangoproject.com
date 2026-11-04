@@ -97,6 +97,28 @@ class BuildDocReleaseSphinxErrorTests(TestCase):
         self.assertIsInstance(reported, CommandError)
         self.assertIsInstance(reported.__cause__, CalledProcessError)
 
+    def test_missing_checkout_theme_only_fails_html_build(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            docs_dir = Path(tmp) / "sources" / "dev" / "docs"
+            (docs_dir / "_ext").mkdir(parents=True)
+            (docs_dir / "_ext" / "djangodocs.py").write_text("")
+            (docs_dir / "conf.py").write_text(
+                'extensions = []\nhtml_theme = "nonexistent_theme"\n'
+            )
+            (docs_dir / "index.rst").write_text("Index\n=====\n")
+            # build_doc_release runs the json builder first, then the html
+            # builder for the offline zip. Only the json build is forced to
+            # Sphinx's basic theme, so a missing checkout theme should break
+            # the html build alone, after the json output has been written.
+            with override_settings(DOCS_BUILD_ROOT=Path(tmp)):
+                with self.assertRaisesMessage(CommandError, "builder html") as caught:
+                    call_command(
+                        "build_doc_release", "dev", "--language", "en", verbosity=0
+                    )
+            self.assertIn("nonexistent_theme", str(caught.exception))
+            json_page = Path(tmp) / "en" / "dev" / "_build" / "json" / "index.fjson"
+            self.assertIs(json_page.exists(), True)
+
 
 class BuildReleaseSubprocessInvocationTests(TestCase):
     def test_invokes_child_via_module_flag_not_sys_argv(self):

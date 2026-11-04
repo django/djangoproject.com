@@ -5,7 +5,7 @@ the Django team is issuing releases for
 These releases address the security issues detailed below. We encourage all
 users of Django to upgrade as soon as possible.
 {% for cve in cves %}
-## {{ cve.headline_for_blogpost }}
+## {{ cve.headline_for_blogpost|safe }}
 
 {{ cve.blogdescription|safe|default:cve.description }}
 {% if cve.reporters %}
@@ -23,7 +23,7 @@ Patches to resolve the issue have been applied to Django's
 {{ instance.affected_branches|enumerate_items }} branches.
 The patches may be obtained from the following changesets.
 {% for cve in cves %}
-### {{ cve.headline_for_blogpost }}
+### {{ cve.headline_for_blogpost|safe }}
 {% for branch, hash in cve.hashes_by_branch %}
 * On the [{{ branch }} branch](https://github.com/django/django/commit/{{ hash }}){% endfor %}
 {% endfor %}

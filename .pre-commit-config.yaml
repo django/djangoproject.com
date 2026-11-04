@@ -26,7 +26,7 @@ repos:
           - id: trailing-whitespace
 
     - repo: https://github.com/asottile/pyupgrade
-      rev: v3.21.2
+      rev: v3.22.0
       hooks:
           - id: pyupgrade
             args: [--py312]
@@ -56,7 +56,7 @@ repos:
           - id: flake8
 
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.17.0
+      rev: v0.17.1
       hooks:
           - id: ruff-check
             args: ["--fix", "--show-fixes"]
@@ -73,7 +73,7 @@ repos:
       hooks:
           - id: checkmake
     - repo: https://github.com/adamchainz/djade-pre-commit
-      rev: 1.9.0
+      rev: 1.10.0
       hooks:
           - id: djade
             args: [--target-version, "6.0"]
@@ -84,7 +84,7 @@ repos:
           - id: pyproject-fmt
 
     - repo: https://github.com/astral-sh/uv-pre-commit
-      rev: 0.13.0
+      rev: 0.13.1
       hooks:
           - name: Check lock file
             id: uv-lock

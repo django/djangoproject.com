@@ -148,6 +148,12 @@ class Command(BaseCommand):
             command.extend(["--doctree-dir", str(doctree_dir)])
             command.extend(["--jobs", "auto"])
             command.extend(["--define", f"language={to_locale(release.lang)}"])
+            if builder == "json":
+                # The website renders the JSON output with its own templates,
+                # so the checkout's HTML theme is irrelevant there. Sphinx's
+                # built-in theme keeps this build from depending on, or being
+                # altered by, whichever theme Django's docs use.
+                command.extend(["--define", "html_theme=basic"])
             command.append(str(source_dir))
             command.append(str(build_dir))
             try:
