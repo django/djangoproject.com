@@ -2,6 +2,7 @@ from datetime import date, datetime
 
 from django.test import TestCase
 
+from checklists.models import SecurityIssueReleasesThrough
 from checklists.templatetags.checklist_extras import (
     enumerate_cves,
     enumerate_items,
@@ -249,47 +250,53 @@ class StubReleaseNotesTitleTestCase(TestCase):
         self.assertEqual(result, expected)
 
 
-class FormatReleaseForCveTestCase(TestCase):
+class AffectedRangeMixin:
+    factory = Factory()
+
+    def make_affected_range(self, version, introduced_in=None):
+        release = self.factory.make_release(version=version)
+        issue = self.factory.make_security_issue(releases=[release])
+        through = SecurityIssueReleasesThrough.objects.get(
+            securityissue=issue, release=release
+        )
+        if introduced_in is not None:
+            through.introduced_in = self.factory.make_release(version=introduced_in)
+        return through
+
+
+class FormatReleaseForCveTestCase(AffectedRangeMixin, TestCase):
     def test_format_release_for_cve_final(self):
-        release = Release.objects.create(version="4.1.8")
-        result = format_release_for_cve(release)
-        self.assertEqual(result, "4.1 before 4.1.8")
+        affected_range = self.make_affected_range("4.1.8")
+        self.assertEqual(format_release_for_cve(affected_range), "4.1 before 4.1.8")
 
     def test_format_release_for_cve_high_micro(self):
-        release = Release.objects.create(version="3.2.15")
-        result = format_release_for_cve(release)
-        self.assertEqual(result, "3.2 before 3.2.15")
+        affected_range = self.make_affected_range("3.2.15")
+        self.assertEqual(format_release_for_cve(affected_range), "3.2 before 3.2.15")
 
     def test_format_release_for_cve_calendar_version(self):
-        release = Release.objects.create(version="2028.5")
-        result = format_release_for_cve(release)
-        self.assertEqual(result, "2028 before 2028.5")
+        affected_range = self.make_affected_range("2028.5")
+        self.assertEqual(format_release_for_cve(affected_range), "2028 before 2028.5")
+
+    def test_format_release_for_cve_introduced_in(self):
+        affected_range = self.make_affected_range("6.0.10", introduced_in="6.0.4")
+        self.assertEqual(format_release_for_cve(affected_range), "6.0.4 before 6.0.10")
 
 
-class FormatReleasesForCvesTestCase(TestCase):
+class FormatReleasesForCvesTestCase(AffectedRangeMixin, TestCase):
     def test_format_releases_for_cves_multiple(self):
-        r1 = Release.objects.create(version="4.2.31")
-        r2 = Release.objects.create(version="5.2.2")
-        r3 = Release.objects.create(version="6.1.3")
-
-        result = format_releases_for_cves([r1, r2, r3])
+        ranges = [
+            self.make_affected_range("6.1.3"),
+            self.make_affected_range("5.2.2", introduced_in="5.2.1"),
+            self.make_affected_range("4.2.31"),
+        ]
         self.assertEqual(
-            result, "4.2 before 4.2.31, 5.2 before 5.2.2, and 6.1 before 6.1.3"
+            format_releases_for_cves(ranges),
+            "6.1 before 6.1.3, 5.2.1 before 5.2.2, and 4.2 before 4.2.31",
         )
 
     def test_format_releases_for_cves_single(self):
-        r1 = Release.objects.create(version="3.2.20")
-        result = format_releases_for_cves([r1])
-        self.assertEqual(result, "3.2 before 3.2.20")
-
-    def test_format_releases_for_cves_filters_prereleases(self):
-        """Pre-releases shouldn't be listed in CVE descriptions."""
-        r1 = Release.objects.create(version="3.2.21")
-        r2 = Release.objects.create(version="5.2a1")
-        r3 = Release.objects.create(version="4.2.22")
-
-        result = format_releases_for_cves([r1, r2, r3])
-        self.assertEqual(result, "3.2 before 3.2.21 and 4.2 before 4.2.22")
+        ranges = [self.make_affected_range("3.2.20")]
+        self.assertEqual(format_releases_for_cves(ranges), "3.2 before 3.2.20")
 
 
 class FormatVersionForBlogpostTestCase(TestCase):

@@ -26,7 +26,7 @@ repos:
           - id: trailing-whitespace
 
     - repo: https://github.com/asottile/pyupgrade
-      rev: v3.21.2
+      rev: v3.22.0
       hooks:
           - id: pyupgrade
             args: [--py312]
@@ -37,12 +37,12 @@ repos:
           - id: django-upgrade
 
     - repo: https://github.com/psf/black-pre-commit-mirror
-      rev: 26.10.0
+      rev: 26.10.1
       hooks:
           - id: black
 
     - repo: https://github.com/rbubley/mirrors-prettier
-      rev: v3.9.9
+      rev: v3.9.10
       hooks:
           - id: prettier
             # https://github.com/rbubley/mirrors-prettier/issues/3
@@ -56,7 +56,7 @@ repos:
           - id: flake8
 
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.16.10
+      rev: v0.17.1
       hooks:
           - id: ruff-check
             args: ["--fix", "--show-fixes"]
@@ -73,18 +73,18 @@ repos:
       hooks:
           - id: checkmake
     - repo: https://github.com/adamchainz/djade-pre-commit
-      rev: 1.9.0
+      rev: 1.10.0
       hooks:
           - id: djade
             args: [--target-version, "6.0"]
 
     - repo: https://github.com/tox-dev/pyproject-fmt
-      rev: v2.30.1
+      rev: v2.30.3
       hooks:
           - id: pyproject-fmt
 
     - repo: https://github.com/astral-sh/uv-pre-commit
-      rev: 0.12.23
+      rev: 0.13.1
       hooks:
           - name: Check lock file
             id: uv-lock

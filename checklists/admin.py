@@ -96,7 +96,7 @@ class SecurityReleaseAdmin(ReleaseChecklistAdminMixin, admin.ModelAdmin):
 class SecurityIssueReleasesThroughInline(admin.TabularInline):
     model = SecurityIssueReleasesThrough
     extra = 0
-    autocomplete_fields = ["release"]
+    autocomplete_fields = ["release", "introduced_in"]
 
 
 @admin.register(SecurityIssue)

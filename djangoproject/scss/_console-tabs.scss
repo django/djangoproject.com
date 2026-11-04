@@ -1,50 +1,48 @@
+@import url("lib/console-tabs.css");
+
+// Adapt djangodocs console tabs for site styles. The base styles are imported
+// above, from a vendored copy of Django's console-tabs.css. Please implement
+// any future accessibility fixes upstream in Django (rather than here).
 .console-block {
-    text-align: right;
+    --tab-active-highlight-color: var(--console-tabs-border);
+    --tab-active-label-color: var(--console-tabs-color);
+    // Border radius from _pygments.scss .highlight.
+    --tab-border-radius: 4px;
+    --tab-row-end-margin: 4px;
+    // Focus ring from _style.scss:
+    //   a:focus { outline: 2px solid currentColor; }
+    // For links in the docs, currentColor is usually var(--error-dark) from
+    // #docs-content a.reference or sometimes var(--link-color) from a, but
+    // neither works well with console tabs in all themes. A reasonable
+    // compromise is var(--tab-active-label-color) (which is always also
+    // currentColor when a tab has focus).
+    --tab-focus-outline: 2px solid var(--tab-active-label-color);
 
-    *:before,
-    *:after {
-        box-sizing: border-box;
+    // Prior to Django 6.2, tabs used fontawesome icons.
+    --tab-label-font: fontawesome, #{$sans-serif-stack};
+
+    // Undo _style.scss bold for tab labels.
+    label[for] {
+        font-weight: unset;
     }
 
-    >input {
-
-        &.c-tab-unix,
-        &.c-tab-win {
-            display: none;
-        }
-
-        &:checked+label {
-            color: var(--console-tabs-color);
-            border: 1px solid #ddd;
-            border-top: 2px solid var(--console-tabs-border);
-            border-bottom: 1px solid var(--white-color);
-        }
+    // Remove top margin from Pygments code block so it connects to the tabs.
+    section div.highlight {
+        margin-block-start: 0;
     }
+}
 
-    >label {
-        display: inline-block;
-        padding: 4px 8px;
-        font-weight: normal;
-        text-align: center;
-        color: #bbb;
-        border: 1px solid transparent;
-        // Older docs label these tabs with Font Awesome glyphs, newer ones
-        // with text, which the icon font has no glyphs for.
-        font-family: fontawesome, $sans-serif-stack;
-    }
-
+// Add copy-to-clipboard button to console blocks. (This is unique to the site,
+// and not provided in the django/django version.)
+.console-block {
     >section {
-        display: none;
-        text-align: left;
-
         .highlight {
-            margin-top: 0;
             display: flex;
             align-items: center;
 
             pre {
                 flex: 1;
-                margin: 0;
+                margin-inline-end: 0;
             }
         }
 
@@ -78,10 +76,5 @@
                 }
             }
         }
-    }
-
-    >.c-tab-unix:checked~.c-content-unix,
-    >.c-tab-win:checked~.c-content-win {
-        display: block;
     }
 }

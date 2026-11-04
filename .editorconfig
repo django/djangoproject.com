@@ -16,7 +16,7 @@ indent_style = space
 indent_size = 2
 trim_trailing_whitespace = false
 
-[*.{scss,js}]
+[*.js]
 indent_style = space
 indent_size = 2
 
@@ -27,7 +27,7 @@ indent_size = 2
 indent_style = space
 indent_size = 2
 
-[static/js/lib/**]
+[djangoproject/static/{css,js}/lib/**]
 trim_trailing_whitespace = ignore
 insert_final_newline = ignore
 indent_style = ignore
