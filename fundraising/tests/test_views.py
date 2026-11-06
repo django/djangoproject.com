@@ -34,6 +34,23 @@ class TestIndex(ReleaseMixin, TestCase):
             with self.subTest(name=name):
                 self.assertContains(response, 'href="%s"' % django_hosts_reverse(name))
 
+    @patch("fundraising.templatetags.fundraising_extras.GOAL_AMOUNT", 123456)
+    def test_footnote_explains_running_total_and_goal(self):
+        response = self.client.get(reverse("fundraising:index"))
+        self.assertContains(
+            response, "are listed under Leaders, with your logo, for 365 days."
+        )
+        self.assertContains(
+            response,
+            "The running total includes donations made through this website and "
+            "paid corporate memberships.",
+        )
+        self.assertContains(
+            response,
+            "The $123,456 goal is a funding level set to provide financial "
+            "sustainability to the project.",
+        )
+
 
 class TestSponsor(ReleaseMixin, TestCase):
     def test_sponsor_page(self):
