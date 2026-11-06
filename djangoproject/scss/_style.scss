@@ -3671,6 +3671,88 @@ ul.corporate-members li {
     clear: both;
 }
 
+/* Homepage sponsor showcase */
+
+.homepage-sponsors {
+    h2 {
+        margin-top: 0;
+    }
+
+    .homepage-sponsors-intro {
+        max-width: 700px;
+    }
+
+    .homepage-sponsors-tier {
+        margin-top: 30px;
+
+        &:first-of-type {
+            margin-top: 24px;
+        }
+
+        h3 {
+            margin-bottom: 16px;
+            text-align: center;
+        }
+    }
+
+    .homepage-sponsors-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .homepage-sponsor {
+        flex: 0 0 auto;
+        margin: 0;
+        list-style: none;
+
+        a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 170px;
+            text-align: center;
+            font-weight: 700;
+        }
+    }
+
+    .homepage-sponsor-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 100%;
+        height: 120px;
+        padding: 16px;
+        // Keep a light tile in both themes so sponsor logos stay legible.
+        background: #fff;
+        border: 1px solid var(--hairline-color);
+        border-radius: 10px;
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    .homepage-sponsor-placeholder {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--primary);
+    }
+
+    .homepage-sponsors-cta {
+        margin: 30px 0 0;
+        text-align: center;
+    }
+}
+
 /* Messages */
 
 .messages {
