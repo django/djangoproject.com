@@ -3404,7 +3404,7 @@ hr {
 
     .description {
         margin-left: 5%;
-        width: 100%;
+        width: 95%;
         float: none;
         margin-top: 30px;
 
@@ -3550,12 +3550,16 @@ form .footnote {
         }
 
         .hero {
-            width: 30%;
+            width: calc((100% - 30px) / 3);
             background-color: var(--logo-bg);
             border-radius: 10px;
             margin: 5px;
             position: relative;
             height: auto;
+
+            @media (max-width: 700px) {
+                width: calc((100% - 20px) / 2);
+            }
 
             div {
                 width: 100%;
@@ -3574,6 +3578,7 @@ form .footnote {
         .hero-name {
             min-height: 87px;
             vertical-align: top;
+            margin-top: 12px;
             margin-bottom: 5px;
         }
 
@@ -3585,6 +3590,8 @@ form .footnote {
             img {
                 max-width: 90%;
                 max-height: 170px;
+                height: auto;
+                object-fit: contain;
             }
         }
 
@@ -3888,5 +3895,11 @@ ul.corporate-members li {
 
     label {
         font-weight: 400;
+    }
+}
+
+@media (max-width: 767px) {
+    html, body {
+        overflow-x: hidden;
     }
 }
