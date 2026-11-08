@@ -38,7 +38,7 @@
           <a href="{% url 'homepage' %}foundation/">Foundation</a>
         </li>
         <li{% if 'fundraising' in request.path %} class="active"{% endif %}>
-          <a href="{% url 'fundraising:index' %}">&#9829; {% translate "Donate" %}</a>
+          <a href="{% url 'fundraising:index' %}"><span aria-hidden="true">&#9829;</span> {% translate "Donate" %}</a>
         </li>
         <li{% if request.path|slice:':9' == '/sponsor/' %} class="active"{% endif %}>
           <a href="{% url 'sponsor' %}">{% translate "Sponsor" %}</a>
