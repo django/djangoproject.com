@@ -106,7 +106,7 @@ py-moneyed==3.0
     # via django-money
 pydata-sphinx-theme==0.23.0
     # via djangoproject-com
-pyee==13.0.1
+pyee==16.0.1
     # via playwright
 pygments==2.20.0
     # via
