@@ -11,7 +11,7 @@
     "model": "dashboard.category",
     "pk": 2,
     "fields": {
-        "name": "Patches",
+        "name": "Pull requests",
         "position": 2
     }
 },
@@ -51,7 +51,7 @@
     "model": "dashboard.tracticketmetric",
     "pk": 2,
     "fields": {
-        "name": "Patches needing review",
+        "name": "PRs needing review",
         "slug": "patches",
         "category": 2,
         "position": 3,
@@ -67,7 +67,7 @@
     "model": "dashboard.tracticketmetric",
     "pk": 3,
     "fields": {
-        "name": "Doc. patches needing review",
+        "name": "Doc. PRs needing review",
         "slug": "doc-patches",
         "category": 2,
         "position": 4,
@@ -165,7 +165,7 @@
     "fields": {
         "name": "\"Easy\" tickets",
         "slug": "easy-tickets",
-        "category": 2,
+        "category": 4,
         "position": 1,
         "show_on_dashboard": true,
         "show_sparkline": true,
