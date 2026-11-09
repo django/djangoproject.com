@@ -105,6 +105,11 @@ urlpatterns = [
         TemplateView.as_view(template_name="diversity/changes.html"),
         name="diversity_changes",
     ),
+    path(
+        "accessibility/",
+        TemplateView.as_view(template_name="accessibility/index.html"),
+        name="accessibility",
+    ),
     path("checklists/", include("checklists.urls")),
     path("contact/", include("contact.urls")),
     path(

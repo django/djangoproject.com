@@ -61,6 +61,7 @@ class TemplateViewSitemap(LocationAbsoluteUrlMixin, sitemaps.Sitemap):
             URLObject("conduct_changes"),
             URLObject("diversity"),
             URLObject("diversity_changes"),
+            URLObject("accessibility"),
             # foundation
             URLObject("foundation_meeting_archive_index"),
             URLObject("foundation_core_developers"),
