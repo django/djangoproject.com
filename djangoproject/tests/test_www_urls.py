@@ -45,3 +45,26 @@ class NormalizeSlashesMiddlewareTests(TestCase):
         )
 
         self.assertNotEqual(response.status_code, 301)
+
+
+class ClipboardAccessibilityTests(TestCase):
+    def test_clipboard_strings_node_present(self):
+        response = self.client.get(
+            "/",
+            headers={"host": "www.djangoproject.localhost"},
+        )
+        self.assertContains(response, 'id="clipboard-strings"')
+        self.assertContains(response, '<span id="clipboard-strings" hidden')
+        self.assertContains(response, 'data-label-copy="Copy this code"')
+        self.assertContains(response, 'data-label-copied="Copied!"')
+        self.assertContains(response, 'data-label-error="Could not copy!"')
+
+    def test_aria_live_status_region_present(self):
+        response = self.client.get(
+            "/",
+            headers={"host": "www.djangoproject.localhost"},
+        )
+        self.assertContains(response, 'id="clipboard-status"')
+        self.assertContains(response, 'role="status"')
+        self.assertContains(response, 'aria-live="polite"')
+
