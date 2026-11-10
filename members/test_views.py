@@ -1,5 +1,6 @@
 from datetime import date, timedelta
 
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
@@ -27,7 +28,80 @@ class IndividualMemberListViewTests(ReleaseMixin, TestCase):
     def test_view_render(self):
         response = self.client.get(self.url)
         self.assertContains(response, "Individual members")
-        self.assertContains(response, "DjangoDeveloper")
+
+    def test_view_should_link_only_existing_profiles_of_members(self):
+        developer1 = User.objects.create_user(
+            username="developer1",
+            password="password",
+        )
+        developer2 = User.objects.create_user(
+            username="developer2",
+            password="password",
+        )
+        individual_member1 = IndividualMember.objects.create(
+            user=developer1,
+            name="DjangoDeveloper1",
+            email="developer1@example.com",
+        )
+        individual_member2 = IndividualMember.objects.create(
+            user=developer2,
+            name="DjangoDeveloper2",
+            email="developer2@example.com",
+        )
+        individual_member3 = IndividualMember.objects.create(
+            name="DjangoDeveloper3",
+            email="developer3@example.com",
+        )
+        developer1_url = reverse("user_profile", args=["developer1"])
+        developer2_url = reverse("user_profile", args=["developer2"])
+        developer3_url = reverse("user_profile", args=["developer3"])
+        response = self.client.get(self.url)
+        self.assertContains(response, developer1_url)
+        self.assertContains(response, individual_member1.name)
+        self.assertContains(response, developer2_url)
+        self.assertContains(response, individual_member2.name)
+        self.assertNotContains(response, developer3_url)
+        self.assertContains(response, individual_member3.name)
+
+    def test_view_should_link_only_existing_profiles_of_former_members(self):
+        developer1 = User.objects.create_user(
+            username="developer1",
+            password="password",
+        )
+        developer2 = User.objects.create_user(
+            username="developer2",
+            password="password",
+        )
+        individual_member1 = IndividualMember.objects.create(
+            user=developer1,
+            name="DjangoDeveloper1",
+            email="developer1@example.com",
+            member_since=date(2015, 7, 26),
+            member_until=date(2015, 7, 27),
+        )
+        individual_member2 = IndividualMember.objects.create(
+            user=developer2,
+            name="DjangoDeveloper2",
+            email="developer2@example.com",
+            member_since=date(2015, 7, 26),
+            member_until=date(2015, 7, 27),
+        )
+        individual_member3 = IndividualMember.objects.create(
+            name="DjangoDeveloper3",
+            email="developer3@example.com",
+            member_since=date(2015, 7, 26),
+            member_until=date(2015, 7, 27),
+        )
+        developer1_url = reverse("user_profile", args=["developer1"])
+        developer2_url = reverse("user_profile", args=["developer2"])
+        developer3_url = reverse("user_profile", args=["developer3"])
+        response = self.client.get(self.url)
+        self.assertContains(response, developer1_url)
+        self.assertContains(response, individual_member1.name)
+        self.assertContains(response, developer2_url)
+        self.assertContains(response, individual_member2.name)
+        self.assertNotContains(response, developer3_url)
+        self.assertContains(response, individual_member3.name)
 
     def test_view_should_only_render_former_members_once(self):
         IndividualMember.objects.create(
