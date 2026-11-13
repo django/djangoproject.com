@@ -51,12 +51,12 @@ repos:
             exclude: '(^djangoproject\/static\/js\/lib\/.*$|^checklists\/templates\/.*$)'
 
     - repo: https://github.com/pycqa/flake8
-      rev: 7.4.1
+      rev: 7.5.0
       hooks:
           - id: flake8
 
     - repo: https://github.com/astral-sh/ruff-pre-commit
-      rev: v0.17.1
+      rev: v0.17.2
       hooks:
           - id: ruff-check
             args: ["--fix", "--show-fixes"]
@@ -84,7 +84,7 @@ repos:
           - id: pyproject-fmt
 
     - repo: https://github.com/astral-sh/uv-pre-commit
-      rev: 0.13.1
+      rev: 0.13.5
       hooks:
           - name: Check lock file
             id: uv-lock
