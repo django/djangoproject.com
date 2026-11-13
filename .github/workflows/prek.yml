@@ -5,9 +5,138 @@ on:
     push:
         branches: [main]
 
+# Hooks execute dependencies, so their runner must remain read-only.
+permissions:
+    contents: read
+
 jobs:
     prek:
         runs-on: ubuntu-24.04
+        outputs:
+            artifact-id: ${{ steps.upload.outputs.artifact-id }}
         steps:
             - uses: actions/checkout@v7.0.1
+              with:
+                  # Do not leave credentials available to hooks.
+                  persist-credentials: false
+                  # Generate exports from the PR commit, not the merge commit.
+                  ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
             - uses: j178/prek-action@v3.1.0
+              id: prek
+
+            # Hooks fail when they modify files. Preserve that failure, but
+            # collect requirements updates for same-repository PRs.
+            # Fork contributors must commit their own regenerated exports.
+            - name: Check for requirements updates
+              id: changes
+              if: >-
+                  failure()
+                  && steps.prek.outcome == 'failure'
+                  && github.event_name == 'pull_request'
+                  && github.event.pull_request.head.repo.full_name == github.repository
+              run: |
+                  # Do not commit exports if hooks also changed their inputs.
+                  git diff --exit-code -- pyproject.toml uv.lock
+
+                  if ! git diff --quiet -- requirements/dev.txt requirements/tests.txt requirements/prod.txt; then
+                      echo "changed=true" >> "$GITHUB_OUTPUT"
+                  fi
+
+            - name: Upload requirements updates
+              id: upload
+              if: failure() && steps.changes.outputs.changed == 'true'
+              uses: actions/upload-artifact@v4
+              with:
+                  name: requirements-fixup
+                  path: |
+                      requirements/dev.txt
+                      requirements/tests.txt
+                      requirements/prod.txt
+                  if-no-files-found: error
+                  retention-days: 1
+
+    fixup:
+        needs: prek
+        # Continue after prek fails, provided it uploaded requirements updates.
+        # Only branches belonging to this repository may receive commits.
+        if: >-
+            always()
+            && !cancelled()
+            && needs.prek.outputs.artifact-id != ''
+            && github.event_name == 'pull_request'
+            && github.event.pull_request.head.repo.full_name == github.repository
+        runs-on: ubuntu-24.04
+        permissions:
+            # GitHub cannot restrict this permission to particular files.
+            # The script below restricts the paths written by this job.
+            contents: write
+        steps:
+            # Use a fresh runner without checking out or executing PR code.
+            # Artifact contents are read as data, never executed.
+            - uses: actions/download-artifact@v5
+              with:
+                  artifact-ids: ${{ needs.prek.outputs.artifact-id }}
+                  path: ${{ runner.temp }}/requirements-fixup
+
+            - name: Commit requirements updates
+              uses: actions/github-script@v8
+              env:
+                  FIXUP_DIRECTORY: ${{ runner.temp }}/requirements-fixup
+              with:
+                  script: |
+                      const fs = require("node:fs/promises");
+                      const path = require("node:path");
+                      const pr = context.payload.pull_request;
+
+                      // Only these fixed paths may be committed. Ignore any
+                      // additional files supplied by the artifact.
+                      const filenames = ["dev.txt", "tests.txt", "prod.txt"];
+                      const additions = [];
+
+                      for (const name of filenames) {
+                        const filename = path.join(
+                          process.env.FIXUP_DIRECTORY, name
+                        );
+                        const stat = await fs.lstat(filename);
+
+                        // Reject symlinks, directories, and oversized files.
+                        if (!stat.isFile() || stat.size > 1024 * 1024) {
+                          throw new Error(`Invalid requirements file: ${name}`);
+                        }
+
+                        additions.push({
+                          path: `requirements/${name}`,
+                          contents: (await fs.readFile(filename)).toString("base64"),
+                        });
+                      }
+
+                      // Pass branch information as API parameters, never as
+                      // shell commands or interpolated JavaScript source.
+                      //
+                      // Reject the commit atomically if the branch has moved
+                      // since prek ran, rather than applying stale exports.
+                      const result = await github.graphql(`
+                        mutation($input: CreateCommitOnBranchInput!) {
+                          createCommitOnBranch(input: $input) {
+                            commit { url }
+                          }
+                        }
+                      `, {
+                        input: {
+                          branch: {
+                            repositoryNameWithOwner:
+                              `${context.repo.owner}/${context.repo.repo}`,
+                            branchName: pr.head.ref,
+                          },
+                          expectedHeadOid: pr.head.sha,
+                          message: {
+                            headline: "Updated compiled requirements.",
+                          },
+                          fileChanges: { additions },
+                        },
+                      });
+
+                      core.info(
+                        result.createCommitOnBranch.commit.url
+                      );
