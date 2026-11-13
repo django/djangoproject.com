@@ -1,0 +1,158 @@
+{% extends "accessibility/base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Django Accessibility Statement" %}{% endblock %}
+
+{% block og_title %}{% translate "Django Accessibility Statement" %}{% endblock %}
+
+{% block og_description %}{% translate "Our commitment to an inclusive and accessible community, project, and ecosystem." %}{% endblock %}
+
+{% block content %}
+
+  <h1>{% translate "Django accessibility statement" %}</h1>
+
+  <p>
+    {% blocktranslate trimmed %}
+      The Django Software Foundation is committed to fostering an inclusive and
+      accessible community, project, and ecosystem. Accessibility is integral to
+      creating a space where everyone — regardless of ability — can contribute,
+      build, and benefit from the Django framework and its broader community.
+    {% endblocktranslate %}
+  </p>
+
+  <h2 id="our-commitment">
+    {% translate "Our commitment" %} <a class="plink" href="#our-commitment">¶</a>
+  </h2>
+
+  <p>
+    {% blocktranslate trimmed %}
+      We strive to make Django itself and its related online and in-person spaces
+      accessible for all. This includes supporting the creation of accessible web
+      applications with Django, ensuring that our documentation, community tools,
+      and websites are navigable and usable for people with disabilities, and
+      encouraging accessibility awareness across all aspects of the project, from
+      events and communication to software design and development.
+    {% endblocktranslate %}
+  </p>
+
+  <h3 id="accessibility-in-the-django-web-framework">
+    {% translate "Accessibility in the Django web framework" %}
+    <a class="plink" href="#accessibility-in-the-django-web-framework">¶</a>
+  </h3>
+
+  <p>
+    {% blocktranslate trimmed %}
+      We aim for conformance with recognized standards such as the
+      <a href="https://www.w3.org/WAI/standards-guidelines/wcag/">Web Content
+      Accessibility Guidelines</a> (WCAG) and the
+      <a href="https://www.w3.org/WAI/standards-guidelines/atag/">Authoring Tool
+      Accessibility Guidelines</a> (ATAG). Where feasible, we strive to exceed
+      these standards. Through documentation, tutorials, and exemplar
+      implementation, we highlight best practices for building accessible
+      applications.
+    {% endblocktranslate %}
+  </p>
+
+  <p>
+    {% blocktranslate trimmed %}
+      We also encourage feedback and contributions to improve accessibility
+      features in Django's admin interface and related tools such as Django
+      forms, particularly from people with disabilities or other accessibility
+      needs.
+    {% endblocktranslate %}
+  </p>
+
+  <h3 id="community-and-events">
+    {% translate "Community and events" %}
+    <a class="plink" href="#community-and-events">¶</a>
+  </h3>
+
+  <p>
+    {% blocktranslate trimmed %}
+      The Django Software Foundation is committed to ensuring that events
+      receiving our grant funding are accessible to all. We encourage organizers
+      to choose venues and platforms that meet physical accessibility needs, that
+      provide resources such as captioning and sign language interpretation where
+      possible. We welcome feedback to make improvements on any and all aspects
+      of physical accessibility.
+    {% endblocktranslate %}
+  </p>
+
+  <h2 id="what-we-do">
+    {% translate "What we do" %} <a class="plink" href="#what-we-do">¶</a>
+  </h2>
+
+  <h3 id="known-issues-and-continuous-improvement">
+    {% translate "Known issues and continuous improvement" %}
+    <a class="plink" href="#known-issues-and-continuous-improvement">¶</a>
+  </h3>
+
+  <p>
+    {% blocktranslate trimmed %}
+      We acknowledge that there is always room to improve. Accessibility is an
+      ongoing process, and we aim to address issues as they arise. Known
+      accessibility issues with the Django framework, admin interface, or
+      community platforms are tracked publicly, and we welcome collaboration to
+      resolve them.
+    {% endblocktranslate %}
+  </p>
+
+  <p>
+    {% blocktranslate trimmed %}
+      For further details, see the
+      <a href="https://code.djangoproject.com/query?description=~accessibility&amp;status=assigned&amp;status=closed&amp;status=new&amp;or&amp;keywords=~accessibility&amp;or&amp;summary=~accessibility&amp;order=id&amp;desc=1&amp;col=id&amp;col=summary&amp;col=owner&amp;col=type&amp;col=component">issues
+      matching "accessibility" for the Django framework</a>, the
+      <a href="https://github.com/django/djangoproject.com/issues?q=is%3Aissue+state%3Aopen+label%3Aaccessibility">issues
+      tagged "accessibility" for the Django website</a>, and the
+      <a href="https://github.com/orgs/django/projects/7">Django accessibility
+      improvements kanban</a>.
+    {% endblocktranslate %}
+  </p>
+
+  <h3 id="current-efforts">
+    {% translate "Current efforts" %} <a class="plink" href="#current-efforts">¶</a>
+  </h3>
+
+  <p>
+    {% blocktranslate trimmed %}
+      The Django accessibility team encourages projects maintained by the Django
+      Software Foundation to be accessible to as many people as possible,
+      particularly those with disabilities that make using the web more
+      difficult. This includes testing with assistive technologies, reviewing
+      changes to Django for accessibility, updating project guidelines and
+      documentation, and publishing reports.
+    {% endblocktranslate %}
+  </p>
+
+  <h3 id="how-you-can-help">
+    {% translate "How you can help" %} <a class="plink" href="#how-you-can-help">¶</a>
+  </h3>
+
+  <p>
+    {% blocktranslate trimmed %}
+      We invite all members of the community to contribute to accessibility
+      efforts. This could include reporting accessibility issues in Django's
+      admin interface, documentation, or websites, sharing knowledge, testing,
+      or feedback on accessibility in Django-built projects, or sponsoring or
+      contributing to accessibility-focused initiatives.
+    {% endblocktranslate %}
+  </p>
+
+  <h2 id="feedback-and-contact">
+    {% translate "Feedback and contact" %} <a class="plink" href="#feedback-and-contact">¶</a>
+  </h2>
+
+  <p>
+    {% blocktranslate trimmed %}
+      We value your input. If you encounter an accessibility barrier or have
+      suggestions for improvement, please contact the accessibility team. Find us
+      on the
+      <a href="https://forum.djangoproject.com/c/internals/accessibility/26">Accessibility
+      forum</a>, <a href="https://discord.com/channels/856567261900832808/931568482489860137">#accessibility
+      on Discord</a>, or use the
+      <a href="https://www.djangoproject.com/contact/foundation/">Contact us</a>
+      page.
+    {% endblocktranslate %}
+  </p>
+
+{% endblock content %}

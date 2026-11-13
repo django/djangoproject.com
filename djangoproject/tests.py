@@ -115,6 +115,14 @@ class TemplateViewTests(ReleaseMixin, TestCase):
     def test_conduct_changes(self):
         self.assertView("conduct_changes")
 
+    def test_accessibility(self):
+        self.assertView("accessibility")
+
+    def test_accessibility_linked_from_footer(self):
+        response = self.client.get(reverse("homepage", host="www"))
+        self.assertContains(response, "/accessibility/")
+        self.assertContains(response, "Accessibility Statement")
+
     def test_sponsor_banner(self):
         self.assertView("sponsor_banner")
 

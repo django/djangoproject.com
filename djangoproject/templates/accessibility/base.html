@@ -1,0 +1,19 @@
+{% extends "base_community.html" %}
+{% load i18n %}
+
+{% block header %}
+  <p>{% translate "Accessibility Statement" %}</p>
+{% endblock header %}
+
+{% block content-related %}
+  <div role="complementary">
+    <h2 id="aside-header">{% translate "Django Accessibility Statement" %}</h2>
+
+    <ul class="list-links">
+      <li><a href="{% url 'accessibility' %}">{% translate "Accessibility Statement" %}</a></li>
+      <li><a href="https://forum.djangoproject.com/c/internals/accessibility/26">{% translate "Accessibility forum" %}</a></li>
+    </ul>
+  </div>
+{% endblock content-related %}
+
+{% block title %}{% translate "Django Accessibility Statement" %}{% endblock %}
