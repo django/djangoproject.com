@@ -1,8 +1,12 @@
+import logging
 from decimal import Decimal
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.db import models
+from django.core.management import call_command
+from django.db import models, transaction
+from django.db.models.signals import post_delete, post_save, pre_save
+from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.dateformat import format as date_format
 from django.utils.translation import gettext_lazy as _
@@ -12,6 +16,8 @@ from djmoney.settings import CURRENCIES
 from docutils.core import publish_parts
 
 from blog.models import BLOG_DOCUTILS_SETTINGS
+
+logger = logging.getLogger(__name__)
 
 
 class Office(models.Model):
@@ -264,6 +270,31 @@ class Banner(models.Model):
         if self.is_active:
             Banner.objects.exclude(pk=self.pk).update(is_active=False)
         super().save(*args, **kwargs)
+
+
+def purge_docs_cache():
+    # Docs pages are cached by Fastly for a week, so they'd keep showing the
+    # previous banner. Other pages expire from the caches within minutes.
+    try:
+        call_command("purge_docs_cache", verbosity=0)
+    except SystemExit:
+        # The command calls sys.exit(1) on failure.
+        logger.error("Failed to purge docs cache")
+
+
+@receiver(pre_save, sender=Banner)
+def remember_banner_was_active(sender, instance, **kwargs):
+    instance._was_active = (
+        instance.pk is not None
+        and Banner.objects.filter(pk=instance.pk, is_active=True).exists()
+    )
+
+
+@receiver(post_save, sender=Banner)
+@receiver(post_delete, sender=Banner)
+def purge_docs_cache_on_banner_change(sender, instance, **kwargs):
+    if instance.is_active or getattr(instance, "_was_active", False):
+        transaction.on_commit(purge_docs_cache)
 
 
 class Business(models.Model):
