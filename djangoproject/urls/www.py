@@ -113,6 +113,11 @@ urlpatterns = [
         name="foundation_banner_preview",
     ),
     path(
+        "foundation/donate/",
+        TemplateView.as_view(template_name="foundation/donate.html"),
+        name="foundation_donate",
+    ),
+    path(
         "foundation/django_core/",
         CoreDevelopers.as_view(),
         name="foundation_core_developers",
