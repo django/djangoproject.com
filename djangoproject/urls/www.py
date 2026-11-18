@@ -15,8 +15,7 @@ from blog.feeds import WeblogEntryFeed
 from blog.sitemaps import WeblogSitemap
 from contact.views import BannerSponsorship
 from djangoproject.sitemaps import TemplateViewSitemap
-from foundation.feeds import FoundationMinutesFeed
-from foundation.views import BannerPreview, CoreDevelopers
+from foundation.views import BannerPreview, CoreDevelopers, minutes_redirect
 from fundraising import views as fundraising_views
 
 admin.autodiscover()
@@ -107,6 +106,7 @@ urlpatterns = [
     ),
     path("checklists/", include("checklists.urls")),
     path("contact/", include("contact.urls")),
+    path("foundation/django_core/", CoreDevelopers.as_view()),
     path(
         "foundation/banners/<int:pk>/preview/",
         BannerPreview.as_view(),
@@ -117,7 +117,11 @@ urlpatterns = [
         CoreDevelopers.as_view(),
         name="foundation_core_developers",
     ),
-    path("foundation/minutes/", include("foundation.urls.meetings")),
+    path(
+        "foundation/minutes/<int:year>/<str:month>/<int:day>/<str:slug>/",
+        minutes_redirect,
+        name="minutes_redirect",
+    ),
     path("foundation/", include("members.urls")),
     path("fundraising/", include("fundraising.urls")),
     path("sponsor/", fundraising_views.sponsor, name="sponsor"),
@@ -154,11 +158,6 @@ urlpatterns = [
         name="aggregator-firehose-feed",
     ),
     path("rss/community/<slug>/", CommunityAggregatorFeed(), name="aggregator-feed"),
-    path(
-        "rss/foundation/minutes/",
-        FoundationMinutesFeed(),
-        name="foundation-minutes-feed",
-    ),
     # django-push
     path("subscriber/", include("django_push.subscriber.urls")),
     # Trac schtuff

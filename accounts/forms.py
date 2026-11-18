@@ -83,6 +83,7 @@ class DeleteProfileForm(forms.Form):
         Convert the given ProtectedError exception object into validation
         errors on the instance.
         """
+
         self.add_error(None, _("User has protected data and cannot be deleted"))
 
     @transaction.atomic()
