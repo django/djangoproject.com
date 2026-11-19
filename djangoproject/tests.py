@@ -13,7 +13,7 @@ from django.urls import NoReverseMatch, get_resolver
 from django.utils.translation import activate, gettext as _
 from django_hosts.resolvers import reverse
 from django_recaptcha.client import RecaptchaResponse
-from playwright.sync_api import expect, sync_playwright
+from playwright.sync_api import TimeoutError, expect, sync_playwright
 
 from djangoproject.test_runner import selected_browsers
 from docs.models import DocumentRelease, Release
@@ -343,30 +343,64 @@ class EndToEndTests(
         self.setUpTestData()
 
     def test_search_ctrl_k_hotkey(self):
-        page1 = self.browser.new_page(user_agent=self.windows_user_agent)
-        page2 = self.browser.new_page(
-            user_agent=self.mobile_linux_user_agent,
-            viewport={"width": 375, "height": 812},
-        )
-        for page in [page1, page2]:
-            with self.subTest(page=page):
-                page.goto(self.live_server_url)
-                search_bar = page.locator("#id_q")
-                expect(search_bar).to_have_attribute("placeholder", "Search (Ctrl+K)")
-                is_focused = page.evaluate("document.activeElement.id === 'id_q'")
-                self.assertFalse(is_focused)
+        page = self.browser.new_page(user_agent=self.windows_user_agent)
+        page.goto(self.live_server_url)
 
-                page.keyboard.press("Control+KeyK")
-                is_focused = page.evaluate("document.activeElement.id === 'id_q'")
-                self.assertTrue(is_focused)
-                page.close()
+        search_bar = page.locator("#id_q")
+        expect(search_bar).to_have_attribute("placeholder", "Ctrl+K")
+        width_before = search_bar.bounding_box()["width"]
+        is_focused = page.evaluate("document.activeElement.id === 'id_q'")
+        self.assertFalse(is_focused)
+
+        page.keyboard.press("Control+KeyK")
+        is_focused = page.evaluate("document.activeElement.id === 'id_q'")
+        self.assertTrue(is_focused)
+        # search_bar should at least double in size on focus.
+        try:
+            page.wait_for_function(
+                """([s, w]) =>
+                    document.querySelector(s).getBoundingClientRect().width > (w * 2)""",
+                arg=["#id_q", width_before],
+                timeout=2000,
+            )
+        except TimeoutError:
+            width_after = search_bar.bounding_box()["width"]
+            self.fail(
+                f"Search input did not widen enough on focus: before={width_before}, "
+                f"after={width_after}"
+            )
+
+        page.close()
 
     def test_search_placeholder_mac_mode(self):
         page = self.browser.new_page(user_agent=self.mac_user_agent)
         page.goto(self.live_server_url)
 
-        desktop_search_bar = page.locator("#id_q")
-        expect(desktop_search_bar).to_have_attribute("placeholder", "Search (⌘\u200aK)")
+        search_bar = page.locator("#id_q")
+        expect(search_bar).to_have_attribute("placeholder", "⌘\u200aK")
+
+        page.keyboard.press("Meta+KeyK")
+        is_focused = page.evaluate("document.activeElement.id === 'id_q'")
+        self.assertTrue(is_focused)
+
+        page.close()
+
+    def test_search_placeholder_mobile_mode(self):
+        page = self.browser.new_page(
+            user_agent=self.mobile_linux_user_agent,
+            viewport={"width": 375, "height": 812},
+            is_mobile=True,
+            has_touch=True,
+        )
+        page.goto(self.live_server_url)
+
+        search_bar = page.locator("#id_q")
+        expect(search_bar).to_have_attribute("placeholder", "Search")
+        width_before = search_bar.bounding_box()["width"]
+
+        search_bar.focus()
+        # search_bar should not grow wider on focus.
+        expect(search_bar).to_have_css("width", f"{width_before}px")
 
         page.close()
 
