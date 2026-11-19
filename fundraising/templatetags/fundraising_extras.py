@@ -96,6 +96,7 @@ def donation_form_with_heart(context):
         "total_donors": total_donors,
         "form": form,
         "display_logo_amount": LEADERSHIP_LEVEL_AMOUNT,
+        "display_donor_days": DISPLAY_DONOR_DAYS,
         "stripe_publishable_key": settings.STRIPE_PUBLISHABLE_KEY,
         "user": user,
         "expected_amount": expected_amount,

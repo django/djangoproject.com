@@ -59,9 +59,12 @@
     </div>
     <div class="cls"></div>
     <p class="footnote">
-      {% blocktranslate trimmed with amount=display_logo_amount|intcomma %}
-        Your logo will be visible below if you contribute at least
-        US&nbsp;${{ amount }}.<br>
+      {% blocktranslate trimmed with amount=display_logo_amount|intcomma days=display_donor_days goal=goal_amount|intcomma %}
+        Donations of at least US&nbsp;${{ amount }} are listed under Leaders,
+        with your logo, for {{ days }} days. The running total includes
+        donations made through this website and paid corporate memberships.
+        The ${{ goal }} goal is a funding level set to provide financial
+        sustainability to the project.
       {% endblocktranslate %}
     </p>
   </div>
