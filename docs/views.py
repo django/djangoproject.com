@@ -1,4 +1,3 @@
-import datetime
 import json
 
 from django.conf import settings
@@ -53,12 +52,26 @@ def document(request, lang, version, url):
     if version == "stable":
         version = canonical_version
 
-    docroot = get_doc_root_or_404(lang, version)
-    doc_path = get_doc_path_or_404(docroot, url)
     try:
         release = DocumentRelease.objects.get_by_version_and_lang(version, lang)
     except DocumentRelease.DoesNotExist:
         raise Http404
+
+    try:
+        document = Document.objects.get(release=release, path__in=[url, f"{url}index"])
+        doc_name = document.path
+        metadata = document.metadata
+    except Document.DoesNotExist:
+        # We won't find e.g. the genindex page nor partially
+        # translated documents in the database.
+        docroot = get_doc_root_or_404(lang, version)
+        doc_path = get_doc_path_or_404(docroot, url)
+        doc_name = str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), "")
+        try:
+            with doc_path.open("r") as f:
+                metadata = json.load(f)
+        except FileNotFoundError:
+            raise Http404
 
     if version == "dev":
         rtd_version = "latest"
@@ -66,22 +79,17 @@ def document(request, lang, version, url):
         rtd_version = version + ".x"
 
     template_names = [
-        "docs/%s.html"
-        % str(doc_path.relative_to(docroot)).replace(str(doc_path.suffix), ""),
+        f"docs/{doc_name}.html",
         "docs/doc.html",
     ]
-
-    def load_json_file(path):
-        with path.open("r") as f:
-            return json.load(f)
 
     available_languages = DocumentRelease.objects.get_available_languages_by_version(
         version
     )
 
     context = {
-        "doc": load_json_file(doc_path),
-        "env": load_json_file(docroot / "globalcontext.json"),
+        "doc": metadata,
+        "env": release.global_context,
         "lang": lang,
         "version": version,
         "canonical_version": canonical_version,
@@ -90,9 +98,6 @@ def document(request, lang, version, url):
         "release": release,
         "rtd_version": rtd_version,
         "docurl": url,
-        "update_date": datetime.datetime.fromtimestamp(
-            (docroot / "last_build").stat().st_mtime
-        ),
         "redirect_from": request.GET.get("from", None),
     }
     response = render(request, template_names, context)

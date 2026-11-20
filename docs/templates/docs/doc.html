@@ -166,11 +166,11 @@
         <ul>
           <li>
             <a href="{% url 'document-index' lang=lang version=version host 'docs' %}">{% blocktranslate %}Django {{ version }} documentation{% endblocktranslate %}</a>
-            {% for p in doc.parents %}
-              <ul><li><a href="{{ p.link }}">{{ p.title|safe }}</a>
+            {% for p in doc.breadcrumbs %}
+              <ul><li><a href="{% url 'document-detail' lang=lang version=version url=p.path host 'docs' %}">{{ p.title|safe }}</a>
             {% endfor %}
             <ul><li>{% block current-page-title %}{{ doc.title|safe }}{% endblock %}</li></ul>
-            {% for p in doc.parents %}</li></ul>{% endfor %}
+            {% for p in doc.breadcrumbs %}</li></ul>{% endfor %}
           </li>
         </ul>
       </nav>
