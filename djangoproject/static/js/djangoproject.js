@@ -23,18 +23,6 @@ document.querySelectorAll('.messages li .close').forEach(function (el) {
   });
 });
 
-// Check all console tab inputs of the same type when one's label is clicked
-document.querySelectorAll('.console-block label').forEach(function (el) {
-  el.addEventListener('click', function (e) {
-    const input_id = e.currentTarget.getAttribute('for');
-    const selector = input_id.endsWith('unix') ? '.c-tab-unix' : '.c-tab-win';
-
-    document.querySelectorAll(selector).forEach(function (input_el) {
-      input_el.checked = true;
-    });
-  });
-});
-
 // Add animation class to feature icons when they are fully visible
 (function () {
   const observer = new IntersectionObserver(

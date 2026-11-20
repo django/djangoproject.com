@@ -97,3 +97,15 @@ jobs:
                       echo "::error::console-tabs.css has drifted from django/django:main; re-vendor it."
                       exit 1
                   fi
+            - name: Check equality of vendored console-tabs.js
+              env:
+                  # First line past license comment added in vendoring.
+                  VENDORED_START_LINE: 5
+              run: |
+                  curl -fsS -o upstream.js \
+                      https://raw.githubusercontent.com/django/django/main/docs/_static/console-tabs.js
+                  if ! tail -n "+$VENDORED_START_LINE" djangoproject/static/js/lib/console-tabs.js \
+                         | diff -u upstream.js -; then
+                      echo "::error::console-tabs.js has drifted from django/django:main; re-vendor it."
+                      exit 1
+                  fi
