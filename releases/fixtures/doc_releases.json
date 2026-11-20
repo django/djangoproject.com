@@ -231,7 +231,8 @@
     "micro": 0,
     "status": "f",
     "iteration": 0,
-    "is_lts": false
+    "is_lts": false,
+    "is_active": 1
   }
 },
 {
@@ -245,7 +246,8 @@
     "micro": 0,
     "status": "f",
     "iteration": 0,
-    "is_lts": false
+    "is_lts": false,
+    "is_active": 1
   }
 }
 ]
