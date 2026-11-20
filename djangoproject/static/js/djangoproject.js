@@ -104,10 +104,17 @@ window.addEventListener('keydown', function (e) {
 
 // Add copy buttons to code snippets and console tabs
 (function () {
+  // Read translated strings injected by the Django template, with English fallbacks.
+  const i18n = document.getElementById('clipboard-strings')?.dataset ?? {};
+  const label_copy = i18n.labelCopy ?? 'Copy this code';
+
   const button_el = document.createElement('span');
 
   button_el.classList.add('btn-clipboard');
-  button_el.setAttribute('title', 'Copy this code');
+  button_el.setAttribute('role', 'button');
+  button_el.setAttribute('tabindex', '0');
+  button_el.setAttribute('title', label_copy);
+  button_el.setAttribute('aria-label', label_copy);
   button_el.innerHTML = '<i class="icon icon-clipboard"></i>';
 
   document
@@ -127,6 +134,12 @@ window.addEventListener('keydown', function (e) {
 
 // Attach copy functionality to clipboard buttons
 document.querySelectorAll('.btn-clipboard').forEach(function (el) {
+  // Read translated strings injected by the Django template, with English fallbacks.
+  const i18n = document.getElementById('clipboard-strings')?.dataset ?? {};
+  const label_copied = i18n.labelCopied ?? 'Copied!';
+  const label_error = i18n.labelError ?? 'Could not copy!';
+  const status_el = document.getElementById('clipboard-status');
+
   el.addEventListener('click', function () {
     const existing_el = this.querySelector('.clipboard-success');
 
@@ -145,18 +158,37 @@ document.querySelectorAll('.btn-clipboard').forEach(function (el) {
     });
 
     function on_success() {
-      success_el.innerText = 'Copied!';
+      success_el.innerText = label_copied;
+      if (status_el) {
+        // Clear first so the same string re-triggers the live region announcement.
+        status_el.textContent = '';
+        setTimeout(function () {
+          status_el.textContent = label_copied;
+        }, 50);
+      }
 
       setTimeout(function () {
         success_el.classList.add('fade-out');
+        if (status_el) {
+          status_el.textContent = '';
+        }
       }, 1000);
     }
 
     function on_error() {
-      success_el.innerText = 'Could not copy!';
+      success_el.innerText = label_error;
+      if (status_el) {
+        status_el.textContent = '';
+        setTimeout(function () {
+          status_el.textContent = label_error;
+        }, 50);
+      }
 
       setTimeout(function () {
         success_el.classList.add('fade-out');
+        if (status_el) {
+          status_el.textContent = '';
+        }
       }, 5000);
     }
 

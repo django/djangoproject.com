@@ -107,6 +107,14 @@
       {% include "includes/footer.html" %}
     {% endblock footer %}
 
+    {# Strings for the clipboard copy buttons; read by djangoproject.js #}
+    <span id="clipboard-strings" hidden
+          data-label-copy="{% translate 'Copy this code' %}"
+          data-label-copied="{% translate 'Copied!' %}"
+          data-label-error="{% translate 'Could not copy!' %}"></span>
+    {# Live region so screen readers announce clipboard status changes #}
+    <span id="clipboard-status" role="status" aria-live="polite" class="sr-only"></span>
+
     {% block javascript %}
       {# Require JS #}
       <script>
