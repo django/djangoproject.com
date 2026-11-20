@@ -1,0 +1,68 @@
+name: Tests (Django main)
+
+on:
+    schedule:
+        - cron: "0 3 * * *"
+    workflow_dispatch:
+
+env:
+    PYTHON_VERSION: 3.12
+    PYTHONWARNINGS: default
+
+jobs:
+    tests:
+        runs-on: ubuntu-24.04
+
+        services:
+            postgres:
+                image: postgres:17-trixie
+                env:
+                    POSTGRES_PASSWORD: postgres
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+                ports:
+                    - 5432:5432
+
+        steps:
+            - uses: actions/checkout@v4
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: ${{ env.PYTHON_VERSION }}
+            - name: Install gettext
+              run: sudo apt-get update && sudo apt-get install -y gettext
+            - name: Install dependencies
+              run: |
+                  python -m pip install --upgrade pip setuptools
+                  python -m pip install -r requirements/tests.txt
+            - name: Install Django from main branch
+              run: |
+                  python -m pip install \
+                    git+https://github.com/django/django.git@main
+            - name: Set up databases
+              run: |
+                  PGPASSWORD="postgres" createuser -U postgres -d djangoproject --superuser -h localhost
+                  PGPASSWORD="postgres" createdb -U postgres -O djangoproject djangoproject -h localhost
+                  PGPASSWORD="postgres" createuser -U postgres -d code.djangoproject --superuser -h localhost
+                  PGPASSWORD="postgres" createdb -U postgres -O code.djangoproject code.djangoproject -h localhost
+                  PGPASSWORD="postgres" psql -U postgres -h localhost -c "ALTER USER djangoproject WITH PASSWORD 'secret';"
+                  PGPASSWORD="postgres" psql -U postgres -h localhost -c "ALTER USER \"code.djangoproject\" WITH PASSWORD 'secret';"
+            - name: Load Trac data
+              run: |
+                  PGPASSWORD="postgres" psql -U postgres -d code.djangoproject -h localhost < tracdb/trac.sql
+            - name: Create secrets.json
+              working-directory: ..
+              run: |
+                  mkdir conf
+                  echo '{"db_host": "localhost", ' > conf/secrets.json
+                  echo '"db_password": "secret", ' >> conf/secrets.json
+                  echo '"trac_db_host": "localhost", ' >> conf/secrets.json
+                  echo '"trac_db_password": "secret", ' >> conf/secrets.json
+                  echo '"secret_key": "a"}' >> conf/secrets.json
+            - name: Run tests with warnings enabled
+              run: |
+                  export PYTHONWARNINGS="default::DeprecationWarning,default::PendingDeprecationWarning"
+                  make ci
