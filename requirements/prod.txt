@@ -139,7 +139,7 @@ snowballstemmer==3.1.1
     # via sphinx
 sorl-thumbnail==12.11.0
     # via djangoproject-com
-soupsieve==3.0.4
+soupsieve==4.0
     # via beautifulsoup4
 sphinx==9.1.1
     # via
