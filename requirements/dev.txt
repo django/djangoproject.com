@@ -83,7 +83,7 @@ markdown==3.10.2
     # via
     #   djangoproject-com
     #   pymdown-extensions
-markupsafe==3.0.3
+markupsafe==3.0.4
     # via jinja2
 mypy-extensions==1.1.0
     # via black
