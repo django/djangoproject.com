@@ -77,7 +77,7 @@ At this point, most of the larger features planned for {{ release.feature_versio
 
 ### Final tasks
 
-{% if not release.is_pre_release %}{% include "checklists/_stub_release_notes.md" %}{% endif %}
+{% if not release.is_pre_release and not instance.is_eom_release %}{% include "checklists/_stub_release_notes.md" %}{% endif %}
 
 {% include "checklists/_push_changes_and_announce.md" %}
 
