@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     "contact",
     "dashboard",
     "docs",
+    "events",
     "foundation",
     "legacy",
     "members",
