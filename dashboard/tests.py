@@ -71,6 +71,19 @@ class ViewTests(ReleaseMixin, TestCase):
         self.assertEqual(json.loads(response.content.decode())["data"][0][1], 42)
         self.assertEqual(response.status_code, 200)
 
+    def test_metric_json_out_of_range_days(self):
+        metric = TracTicketMetric.objects.get(slug="new-tickets-week")
+        metric.data.create(measurement=42)
+        request = self.factory.get(
+            reverse("metric-json", args=[metric.slug], host="dashboard"),
+            {"days": "3652059"},
+        )
+
+        response = metric_json(request, metric.slug)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content.decode())["data"][0][1], 42)
+
 
 class AbstractMetricTestCase(TestCase):
     @classmethod
