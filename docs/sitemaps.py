@@ -1,8 +1,9 @@
 from django.contrib.sitemaps import Sitemap
+from django.db.models import Q
 
 from djangoproject.sitemaps import LocationAbsoluteUrlMixin
 
-from .models import Document
+from .models import Document, DocumentRelease
 from .search import DocumentationCategory
 
 
@@ -11,8 +12,17 @@ class DocsSitemap(LocationAbsoluteUrlMixin, Sitemap):
         self.lang = lang
 
     def items(self):
+        current_release = DocumentRelease.objects.current(self.lang)
+        canonical_releases = Q(release=current_release)
+        if self.lang == "en":
+            # Internals pages are canonical on the development documentation.
+            canonical_releases |= Q(
+                release__release__isnull=True, path__startswith="internals/"
+            )
+
         return (
             Document.objects.filter(release__lang=self.lang)
+            .filter(canonical_releases)
             .exclude(metadata__parents=DocumentationCategory.WEBSITE)
             .order_by("-release__release", "path")
             .select_related("release__release")

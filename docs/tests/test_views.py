@@ -322,21 +322,47 @@ class SitemapTests(TestCase):
         self.assertContains(response, f"<loc>{en_sitemap_url}</loc>")
 
     def test_sitemap(self):
-        doc_release = DocumentRelease.objects.create()
-        document = Document.objects.create(
-            release=doc_release,
+        current_release = DocumentRelease.objects.current()
+        current_document = Document.objects.create(
+            release=current_release,
             metadata={"parents": DocumentationCategory.TOPICS},
+            path="current",
+        )
+        old_release = DocumentRelease.objects.get(
+            lang=settings.DEFAULT_LANGUAGE_CODE, release__version="1.7"
+        )
+        old_document = Document.objects.create(
+            release=old_release,
+            metadata={"parents": DocumentationCategory.TOPICS},
+            path="old",
+        )
+        dev_release = DocumentRelease.objects.get(
+            lang=settings.DEFAULT_LANGUAGE_CODE, release__isnull=True
+        )
+        dev_internals_document = Document.objects.create(
+            release=dev_release,
+            metadata={"parents": "internals"},
+            path="internals/contributing",
+        )
+        dev_topics_document = Document.objects.create(
+            release=dev_release,
+            metadata={"parents": DocumentationCategory.TOPICS},
+            path="topics/dev-only",
         )
         Document.objects.create(
-            release=doc_release,
+            release=current_release,
             metadata={"parents": DocumentationCategory.WEBSITE},
             path="example",
         )
         sitemap = DocsSitemap(settings.DEFAULT_LANGUAGE_CODE)
         urls = sitemap.get_urls()
-        self.assertEqual(len(urls), 1)
-        url_info = urls[0]
-        self.assertEqual(url_info["location"], document.get_absolute_url())
+        locations = {url["location"] for url in urls}
+        self.assertEqual(
+            locations,
+            {current_document.get_absolute_url(), dev_internals_document.get_absolute_url()},
+        )
+        self.assertNotIn(old_document.get_absolute_url(), locations)
+        self.assertNotIn(dev_topics_document.get_absolute_url(), locations)
 
     def test_sitemap_404(self):
         response = self.client.get(
