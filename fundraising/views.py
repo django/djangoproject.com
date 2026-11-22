@@ -270,9 +270,6 @@ def cancel_donation(request, hero):
     )
     customer.subscriptions.retrieve(donation.stripe_subscription_id).delete()
 
-    donation.stripe_subscription_id = ""
-    donation.save()
-
     messages.success(request, _("Your donation has been canceled."))
     return redirect("fundraising:manage-donations", hero=hero.pk)
 
