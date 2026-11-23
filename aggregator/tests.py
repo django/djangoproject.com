@@ -1,5 +1,6 @@
 import datetime
 from operator import attrgetter
+from unittest.mock import MagicMock, patch
 
 import requests_mock
 from django.conf import settings
@@ -196,3 +197,128 @@ class TestForms(SimpleTestCase):
                 ]
             },
         )
+
+
+class FeedSubscriptionCleanupTests(TestCase):
+    """
+    Regression tests for the stale subscription bug related to Issue #1647.
+
+    When an already-approved feed's feed_url is changed, the old Superfeedr
+    subscription must be cancelled before the new URL is subscribed. Without
+    this cleanup, stale subscriptions accumulate for URLs that no longer
+    belong to any feed.
+    """
+
+    @requests_mock.mock()
+    def setUp(self, mocker):
+        mocker.register_uri("POST", settings.PUSH_HUB, status_code=202)
+        release, _ = Release.objects.get_or_create(version="1.4")
+        DocumentRelease.objects.update_or_create(
+            release=release,
+            lang=settings.DEFAULT_LANGUAGE_CODE,
+            defaults={"is_default": True},
+        )
+        self.feed_type, _ = models.FeedType.objects.get_or_create(
+            name="Subscription Test Feed Type",
+            slug="subscription-test-feed-type",
+            can_self_add=True,
+        )
+
+    @requests_mock.mock()
+    def test_changing_approved_feed_url_unsubscribes_old_url(self, mocker):
+        """
+        When the feed_url of an approved feed is changed, the old subscription
+        is removed and a new subscription is created for the updated URL.
+        """
+        mocker.register_uri("POST", settings.PUSH_HUB, status_code=202)
+
+        feed = models.Feed.objects.create(
+            title="Old Feed",
+            feed_url="https://oldblog.com/rss/",
+            public_url="https://oldblog.com/",
+            approval_status=models.APPROVED_FEED,
+            feed_type=self.feed_type,
+        )
+
+        old_url = "https://oldblog.com/rss/"
+        new_url = "https://newblog.com/rss/"
+
+        old_unsubscribe = MagicMock()
+        mock_old_subscription = MagicMock()
+        mock_old_subscription.unsubscribe = old_unsubscribe
+
+        with (
+            patch(
+                "aggregator.models.Subscription.objects.get",
+                return_value=mock_old_subscription,
+            ) as mock_get,
+            patch("aggregator.models.Subscription.objects.subscribe") as mock_subscribe,
+        ):
+            feed.feed_url = new_url
+            feed.save()
+
+            # The old URL subscription should have been looked up and cancelled.
+            mock_get.assert_called_once_with(topic=old_url)
+            old_unsubscribe.assert_called_once()
+
+            # A new subscription should have been created for the new URL.
+            mock_subscribe.assert_called_once_with(new_url, settings.PUSH_HUB)
+
+    @requests_mock.mock()
+    def test_saving_approved_feed_with_unchanged_url_does_not_unsubscribe(self, mocker):
+        """
+        When an approved feed is saved without changing feed_url, no
+        unnecessary unsubscribe call is made for the existing subscription.
+        """
+        mocker.register_uri("POST", settings.PUSH_HUB, status_code=202)
+
+        feed = models.Feed.objects.create(
+            title="Stable Feed",
+            feed_url="https://stableblog.com/rss/",
+            public_url="https://stableblog.com/",
+            approval_status=models.APPROVED_FEED,
+            feed_type=self.feed_type,
+        )
+
+        with (
+            patch("aggregator.models.Subscription.objects.get") as mock_get,
+            patch("aggregator.models.Subscription.objects.subscribe") as mock_subscribe,
+        ):
+            # Save without changing any field.
+            feed.save()
+
+            # get() should NOT be called to look up an old subscription.
+            mock_get.assert_not_called()
+
+            # A subscription renewal for the same URL is still expected.
+            mock_subscribe.assert_called_once_with(
+                "https://stableblog.com/rss/", settings.PUSH_HUB
+            )
+
+    @requests_mock.mock()
+    def test_new_approved_feed_does_not_trigger_old_unsubscribe(self, mocker):
+        """
+        When a brand-new feed is saved as approved for the first time (no
+        prior database record), no unsubscribe call is attempted.
+        """
+        mocker.register_uri("POST", settings.PUSH_HUB, status_code=202)
+
+        with (
+            patch("aggregator.models.Subscription.objects.get") as mock_get,
+            patch("aggregator.models.Subscription.objects.subscribe") as mock_subscribe,
+        ):
+            models.Feed.objects.create(
+                title="Brand New Feed",
+                feed_url="https://brand-new.com/rss/",
+                public_url="https://brand-new.com/",
+                approval_status=models.APPROVED_FEED,
+                feed_type=self.feed_type,
+            )
+
+            # No old subscription lookup should happen for a new feed.
+            mock_get.assert_not_called()
+
+            # The new URL should be subscribed.
+            mock_subscribe.assert_called_once_with(
+                "https://brand-new.com/rss/", settings.PUSH_HUB
+            )

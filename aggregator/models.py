@@ -61,9 +61,25 @@ class Feed(models.Model):
         return self.title
 
     def save(self, **kwargs):
+        # Capture the old feed_url before saving so we can detect changes.
+        old_feed_url = None
+        if self.pk is not None:
+            try:
+                old_feed_url = Feed.objects.get(pk=self.pk).feed_url
+            except Feed.DoesNotExist:
+                pass
+
         super().save(**kwargs)
+
         if settings.SUPERFEEDR_CREDS is not None:
             if self.approval_status == APPROVED_FEED:
+                # If the feed URL changed while already approved, unsubscribe
+                # from the old URL first to avoid stale subscriptions.
+                if old_feed_url is not None and old_feed_url != self.feed_url:
+                    try:
+                        Subscription.objects.get(topic=old_feed_url).unsubscribe()
+                    except Subscription.DoesNotExist:
+                        pass
                 Subscription.objects.subscribe(self.feed_url, settings.PUSH_HUB)
             elif self.approval_status == DENIED_FEED:
                 self.unsubscribe()
