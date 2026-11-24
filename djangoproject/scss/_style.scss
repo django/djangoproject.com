@@ -2710,6 +2710,13 @@ table.django-unsupported-versions {
         border-bottom: none;
         padding: 5px;
         text-align: center;
+
+        // Let the four columns fit on narrow phones instead of
+        // overflowing the page.
+        @include respond-max(400px) {
+            @include font-size(15);
+            padding: 5px 2px;
+        }
     }
 }
 
