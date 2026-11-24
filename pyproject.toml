@@ -2,6 +2,7 @@
 name = "djangoproject-com"
 version = "0.1.0"
 description = "Source code to djangoproject.com"
+license = "BSD-3-Clause"
 requires-python = "==3.12.*"
 classifiers = [
     "Programming Language :: Python :: 3 :: Only",
@@ -36,6 +37,11 @@ dependencies = [
     "stripe==13.2.0",
     "time-machine==3.3.0",
 ]
+
+[project.urls]
+Homepage = "https://www.djangoproject.com/"
+Repository = "https://github.com/django/djangoproject.com"
+Issues = "https://github.com/django/djangoproject.com/issues"
 
 [dependency-groups]
 dev = [
