@@ -16,10 +16,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods, require_POST
 
 from contact.forms import PlanSponsorshipForm
-from members.models import CorporateMember
+from members.models import MEMBERSHIP_TO_KEY, CorporateMember
 
 from .forms import DjangoHeroForm, DonationForm, PaymentForm
-from .models import DjangoHero, Donation, Payment, Testimonial
+from .models import DjangoHero, Donation, Payment, SponsorshipInquiry, Testimonial
 from .sponsor_programs import MARKETING_STATS, SPONSORSHIP_AMOUNTS
 from .sponsorship import PLANS
 
@@ -70,8 +70,7 @@ def plan_sponsors(slug):
     slugs = [plan["slug"] for plan in PLANS]
     start = slugs.index(slug)
     for plan in PLANS[start:]:
-        key = "sponsored_fellow" if plan["slug"] == "fellow" else plan["slug"]
-        sponsors = by_level.get(key, [])
+        sponsors = by_level.get(MEMBERSHIP_TO_KEY[plan["membership_level"]], [])
         if sponsors:
             return plan, sponsors
     return None, []
@@ -93,6 +92,13 @@ def sponsor_plan(request, slug):
         plan=plan,
     )
     if request.method == "POST" and form.is_valid():
+        # Save the lead before sending, so a mail failure can't lose it.
+        SponsorshipInquiry.objects.create(
+            name=form.cleaned_data["name"],
+            email=form.cleaned_data["email"],
+            message=form.cleaned_data["body"],
+            membership_level=plan["membership_level"],
+        )
         form.save()
         return redirect("sponsor_plan_sent", slug=slug)
     sponsors_plan, sponsors = plan_sponsors(slug)

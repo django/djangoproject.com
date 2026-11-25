@@ -7,12 +7,22 @@ Editable pricing is tracked separately in issue #2815.
 
 from django.utils.translation import gettext_lazy as _
 
+from members.models import (
+    BRONZE_MEMBERSHIP,
+    DIAMOND_MEMBERSHIP,
+    GOLD_MEMBERSHIP,
+    PLATINUM_MEMBERSHIP,
+    SILVER_MEMBERSHIP,
+    SPONSORED_FELLOW_MEMBERSHIP,
+)
+
 # Count the individual detail benefits covered by the card highlights.
 # A combined highlight can cover multiple benefits; the inheritance summary
 # does not count as an individually displayed benefit.
 PLANS = [
     {
         "slug": "fellow",
+        "membership_level": SPONSORED_FELLOW_MEMBERSHIP,
         "first_sponsor": _("Be our first Fellowship sponsor"),
         "company_profile": _("Large organizations funding core development"),
         "highlighted_benefit_count": 2,
@@ -113,6 +123,7 @@ PLANS = [
     },
     {
         "slug": "diamond",
+        "membership_level": DIAMOND_MEMBERSHIP,
         "first_sponsor": _("Be our first Diamond sponsor"),
         "company_profile": _("Large organizations"),
         "highlighted_benefit_count": 5,
@@ -210,6 +221,7 @@ PLANS = [
     },
     {
         "slug": "platinum",
+        "membership_level": PLATINUM_MEMBERSHIP,
         "first_sponsor": _("Be our first Platinum sponsor"),
         "company_profile": _("Established companies"),
         "highlighted_benefit_count": 3,
@@ -296,6 +308,7 @@ PLANS = [
     },
     {
         "slug": "gold",
+        "membership_level": GOLD_MEMBERSHIP,
         "first_sponsor": _("Be our first Gold sponsor"),
         "company_profile": _("Growing product companies"),
         "highlighted_benefit_count": 3,
@@ -374,6 +387,7 @@ PLANS = [
     },
     {
         "slug": "silver",
+        "membership_level": SILVER_MEMBERSHIP,
         "first_sponsor": _("Be our first Silver sponsor"),
         "company_profile": _("Small and growing companies"),
         "highlighted_benefit_count": 2,
@@ -441,6 +455,7 @@ PLANS = [
     },
     {
         "slug": "bronze",
+        "membership_level": BRONZE_MEMBERSHIP,
         "first_sponsor": _("Be our first Bronze sponsor"),
         "company_profile": _("Small businesses and teams"),
         "highlighted_benefit_count": 4,

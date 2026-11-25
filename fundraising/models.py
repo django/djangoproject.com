@@ -10,6 +10,7 @@ from django_hosts.resolvers import reverse
 from sorl.thumbnail import ImageField
 
 from djangoproject.thumbnails import LogoThumbnailMixin
+from members.models import MEMBERSHIP_LEVELS, CorporateMember
 
 GOAL_AMOUNT = Decimal("500000.00")
 GOAL_START_DATE = datetime.date(datetime.datetime.today().year, 1, 1)
@@ -162,6 +163,31 @@ class InKindDonor(LogoThumbnailMixin, models.Model):
     @property
     def display_name(self):
         return self.name
+
+
+class SponsorshipInquiry(models.Model):
+    """Someone who asked about an annual plan on its sponsorship page."""
+
+    name = models.CharField(max_length=250)
+    email = models.EmailField()
+    message = models.TextField()
+    membership_level = models.IntegerField(choices=MEMBERSHIP_LEVELS)
+    created = models.DateTimeField(auto_now_add=True)
+    corporate_member = models.ForeignKey(
+        CorporateMember,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="sponsorship_inquiries",
+        help_text=_("The corporate member this inquiry became, once they join."),
+    )
+
+    class Meta:
+        ordering = ["-created"]
+        verbose_name_plural = _("sponsorship inquiries")
+
+    def __str__(self):
+        return f"{self.name} ({self.get_membership_level_display()})"
 
 
 @receiver(post_save, sender=DjangoHero)
