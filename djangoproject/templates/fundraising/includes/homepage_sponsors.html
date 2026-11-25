@@ -1,0 +1,46 @@
+{% load hosts i18n thumbnail %}
+{% if tiers %}
+  <section class="section homepage-sponsors" aria-labelledby="homepage-sponsors-heading">
+    <h2 id="homepage-sponsors-heading">{% translate "Our sponsors" %}</h2>
+    <p class="homepage-sponsors-intro">
+      {% blocktranslate trimmed %}
+        Django is made possible by the organizations who sponsor its development.
+        Thank you to our corporate members.
+      {% endblocktranslate %}
+    </p>
+    {% for name, members in tiers %}
+      <div class="homepage-sponsors-tier">
+        <h3>{{ name }}</h3>
+        <ul class="homepage-sponsors-list">
+          {% for obj in members %}
+            <li class="homepage-sponsor">
+              <a href="{{ obj.url }}" rel="nofollow" title="{{ obj.display_name }}">
+                <span class="homepage-sponsor-logo">
+                  {% if obj.logo %}
+                    <img
+                      {% if obj.thumbnail %}
+                        src="{{ obj.thumbnail.url }}"
+                        srcset="{{ obj.thumbnail.url|resolution:'2x' }} 2x"
+                        width="{{ obj.thumbnail.width }}"
+                        height="{{ obj.thumbnail.height }}"
+                      {% else %}
+                        src="{{ obj.logo.url }}"
+                      {% endif %}
+                      loading="lazy"
+                      alt="{% blocktranslate trimmed with company_name=obj.display_name %}Logo of company {{ company_name }}{% endblocktranslate %}"
+                    >
+                  {% else %}
+                    <span class="homepage-sponsor-placeholder">{{ obj.display_name }}</span>
+                  {% endif %}
+                </span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+    <p class="homepage-sponsors-cta">
+      <a href="{% host_url 'sponsor' host 'www' %}" class="link-readmore">{% translate "Become a sponsor" %}</a>
+    </p>
+  </section>
+{% endif %}
