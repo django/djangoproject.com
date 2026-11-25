@@ -452,17 +452,25 @@ main {
 
 header {
     // Includes global navigation, logo, and tagline at top of document
-    @include clearfix;
+    align-items: center;
     background: $green-dark;
+    column-gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
     overflow: hidden;
     margin: 0;
-    padding: 10px 0 6px;
+    padding: 20px 10px 16px 20px;
     position: relative;
     z-index: 0;
 
-    .container {
-        display: flex;
-        align-items: center;
+    // Once the body content margin increases shift the logo to align.
+    @include respond-min(768px) {
+      padding-left: 4.16667%;
+    }
+
+    // Then balance other end of header when hamburger menu disappears.
+    @include respond-min(1150px) {
+        padding-right: 4.16667%;
     }
 
     .meta {
@@ -470,15 +478,14 @@ header {
         color: var(--primary);
         font-weight: 700;
         width: auto;
-        margin: 8px 0 0 10px;
+        margin: 0 0 0 10px;
         display: none;
 
-        @include respond-min(1500px) {
+        // Display "perfectionists" meta.
+        @include respond-min(1370px) {
             width: 200px;
             display: block;
         }
-
-
     }
 
     .logo {
@@ -490,20 +497,15 @@ header {
         color: var(--white-color);
         display: block;
         font-weight: 700;
-        margin: 10px 4px;
         overflow: hidden;
         text-decoration: none;
         text-indent: 100%;
-        width: 45px;
+        width: 27px;
         height: 36px;
 
         @include respond-min(500px) {
             background: url(../img/logo-django.svg) center center no-repeat;
             width: 104px;
-        }
-
-        @include respond-min(1080px) {
-            margin-left: 10px;
         }
 
         &:focus {
@@ -518,11 +520,66 @@ header {
         order: 1;
         margin-left: auto;
 
-        .search {
-            flex: 0 1 240px;
+        .github-link {
+            align-items: center;
+            color: var(--menu);
+            display: flex;
+            height: 45px;
+            justify-content: center;
+            text-decoration: none;
+            width: 45px;
+
+            i {
+                font-size: 2.8rem;
+            }
         }
 
-        @include respond-min(1280px) {
+        .search-slot {
+            height: 40px;
+            position: relative;
+            width: 15rem; // Space reserved in menu layout, never changes.
+
+            @include respond-min(1150px) {
+                width: 10rem; // Space reserved in menu layout, never changes.
+            }
+
+            .search {
+                height: 100%;
+                margin: 0;
+                position: absolute;
+                right: 0; /* Expand leftward. */
+                top: 0;
+                width: 100%;
+                transition: width .2s ease;
+
+                form {
+                    height: 100%;
+                }
+
+                @include respond-min(1150px) {
+                    &:focus-within {
+                        width: 24rem;
+                    }
+                }
+
+                input[type="search"] {
+                    box-sizing: border-box;
+                    height: 100%;
+                    margin: 0;
+                    width: 100%;
+                    padding-right: 3.5rem;
+                    padding-top: 8px;
+                }
+
+                button {
+                    right: 0.25rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+
+        @include respond-min(1150px) {
             order: 3;
             margin-left: 0;
         }
@@ -541,7 +598,7 @@ header {
         width: 45px;
         order: 2;
 
-        @include respond-min(1280px) {
+        @include respond-min(1150px) {
             display: none;
         }
 
@@ -574,12 +631,13 @@ header {
             }
         }
 
-        @include respond-min(1280px) {
+        @include respond-min(1150px) {
             width: auto;
             order: 2;
-            margin-left: auto;
             flex-basis: auto;
-            display: block; // always show menu on a desktop width
+            display: flex;
+            flex-grow: 1;
+            justify-content: end;
             max-height: none;
         }
 
@@ -587,7 +645,7 @@ header {
             margin: 10px 0 0;
             padding: 0;
 
-            @include respond-min(1280px) {
+            @include respond-min(1150px) {
                 display: flex;
                 align-items: center;
                 margin: 2px 0;
@@ -608,7 +666,7 @@ header {
               padding: 20px 0px;
             }
 
-            @include respond-min(1280px) {
+            @include respond-min(1150px) {
                 margin: 0;
                 border: 0;
                 float: left;
@@ -648,7 +706,7 @@ header {
                 color: var(--secondary-accent);
             }
 
-            @include respond-min(1280px) {
+            @include respond-min(1150px) {
                 padding: 20px 10px;
             }
         }
@@ -678,7 +736,7 @@ header {
         top: 0;
         max-width: 660px;
 
-        @include respond-min(1080px) {
+        @include respond-min(1150px) {
             position: static;
         }
     }
@@ -2452,12 +2510,14 @@ h2+.list-link-soup {
     }
 }
 
+// Warning likely requires two lines at this page width.
 @include respond-min(768px) {
     body:has(.doc-floating-warning) [id] {
         scroll-margin-top: 6.3rem;
     }
 }
 
+// Warning likely fits all on one line once the page reaches this width.
 @include respond-min(1300px) {
     body:has(.doc-floating-warning) [id] {
         scroll-margin-top: 4.2rem;
@@ -3152,7 +3212,7 @@ form {
         background: none;
         border: none;
         color: var(--primary);
-        height: 40px;
+        height: 36px;
         padding: 0;
         position: absolute;
         right: 0;
@@ -3200,16 +3260,7 @@ form {
     }
 
     &.search {
-        width: 20%;
-        min-width: 200px;
         margin: 10px 8px 10px 0;
-        @include respond-min(768px) {
-            margin-left: 10px;
-        }
-
-        input {
-          margin: 0;
-        }
     }
 }
 
@@ -3779,7 +3830,7 @@ ul.corporate-members li {
         justify-content: space-between;
     }
 
-    @include respond-max(1080px) {
+    @include respond-max(1150px) {
         .community-title {
             text-align: center;
         }
