@@ -8,6 +8,8 @@ from django.test import Client, TestCase
 from django.test.utils import override_settings
 
 from djangoproject.tests import ReleaseMixin, patch_captcha
+from fundraising.models import SponsorshipInquiry
+from members.models import DIAMOND_MEMBERSHIP, SPONSORED_FELLOW_MEMBERSHIP
 
 from .views import FoundationContactForm
 
@@ -218,6 +220,12 @@ class PlanSponsorshipTests(ReleaseMixin, TestCase):
         self.assertIn("/sponsor/plans/diamond/", message.body)
         self.assertIn("Please tell us about Diamond membership.", message.body)
         self.assertEqual(message.reply_to, ["diamond@example.com"])
+        inquiry = SponsorshipInquiry.objects.get()
+        self.assertEqual(inquiry.name, "Diamond Test Sponsor")
+        self.assertEqual(inquiry.email, "diamond@example.com")
+        self.assertEqual(inquiry.message, "Please tell us about Diamond membership.")
+        self.assertEqual(inquiry.membership_level, DIAMOND_MEMBERSHIP)
+        self.assertIsNone(inquiry.corporate_member)
 
     def test_inquiry_uses_plan_from_url(self):
         with patch_captcha():
@@ -249,6 +257,10 @@ class PlanSponsorshipTests(ReleaseMixin, TestCase):
         self.assertIn("/sponsor/plans/fellow/", message.body)
         self.assertIn("We would like to learn about sponsoring a Fellow.", message.body)
         self.assertEqual(message.reply_to, ["sponsor@example.com"])
+        self.assertEqual(
+            SponsorshipInquiry.objects.get().membership_level,
+            SPONSORED_FELLOW_MEMBERSHIP,
+        )
 
     def test_invalid_inquiry_preserves_message_and_shows_errors(self):
         with patch_captcha():
@@ -268,6 +280,7 @@ class PlanSponsorshipTests(ReleaseMixin, TestCase):
         self.assertContains(response, "Tell me more.")
         self.assertContains(response, 'role="alert"')
         self.assertEqual(len(mail.outbox), 0)
+        self.assertFalse(SponsorshipInquiry.objects.exists())
 
     def test_captcha_is_required(self):
         response = self.client.post(

@@ -15,9 +15,15 @@ from django.urls import reverse
 from django_hosts.resolvers import reverse as django_hosts_reverse
 
 from djangoproject.tests import ReleaseMixin, patch_captcha
-from members.models import CorporateMember, Invoice
+from members.models import (
+    CORPORATE_MEMBERSHIP_AMOUNTS,
+    MEMBERSHIP_TO_KEY,
+    CorporateMember,
+    Invoice,
+)
 
 from ..models import DjangoHero, Donation
+from ..sponsorship import PLANS
 from .utils import ImageFileFactory, TemporaryMediaRootMixin
 
 
@@ -52,6 +58,14 @@ class TestSponsor(ReleaseMixin, TestCase):
                 self.assertEqual(detail.status_code, 200)
                 self.assertContains(detail, 'href="#contact"')
                 self.assertContains(detail, reverse("sponsor_prospectus_plans"))
+
+    def test_each_plan_matches_its_membership_level(self):
+        for plan in PLANS:
+            with self.subTest(slug=plan["slug"]):
+                key = MEMBERSHIP_TO_KEY[plan["membership_level"]]
+                self.assertEqual(
+                    plan["price"], f"{CORPORATE_MEMBERSHIP_AMOUNTS[key]:,}"
+                )
 
     def test_only_current_sponsors_of_this_plan_are_shown(self):
         for name, level, expiration in [

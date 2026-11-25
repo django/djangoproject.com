@@ -9,6 +9,7 @@ from .models import (
     Donation,
     InKindDonor,
     Payment,
+    SponsorshipInquiry,
     Testimonial,
     get_fundraising_id,
 )
@@ -98,6 +99,17 @@ class PaymentAdmin(admin.ModelAdmin):
         "donation__donor__email",
         "donation__donor__stripe_customer_id",
     ]
+
+
+@admin.register(SponsorshipInquiry)
+class SponsorshipInquiryAdmin(admin.ModelAdmin):
+    date_hierarchy = "created"
+    list_display = ["name", "email", "membership_level", "created", "corporate_member"]
+    list_filter = ["membership_level", "created"]
+    list_select_related = ["corporate_member"]
+    raw_id_fields = ["corporate_member"]
+    readonly_fields = ["created"]
+    search_fields = ["name", "email", "message"]
 
 
 @admin.register(Testimonial)
