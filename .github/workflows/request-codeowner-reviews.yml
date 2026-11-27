@@ -1,5 +1,9 @@
 # CODEOWNERS only applies to teams with write access, so request reviews
 # from the matching teams explicitly (that only needs read access).
+#
+# GITHUB_TOKEN can't see org teams, so this needs a CODEOWNERS_TOKEN secret:
+# a fine-grained PAT with "Pull requests: read and write" on this repository
+# and "Members: read" on the organization.
 name: Request codeowner reviews
 
 on:
@@ -8,7 +12,6 @@ on:
 
 permissions:
     contents: read
-    pull-requests: write
 
 jobs:
     request-reviews:
@@ -21,5 +24,5 @@ jobs:
                   persist-credentials: false
             - run: python .github/workflows/request-codeowner-reviews.py "$PR"
               env:
-                  GITHUB_TOKEN: ${{ github.token }}
+                  GITHUB_TOKEN: ${{ secrets.CODEOWNERS_TOKEN }}
                   PR: ${{ github.event.pull_request.number }}
