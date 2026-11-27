@@ -72,7 +72,7 @@ def main():
     )
     teams = owning_teams(codeowners, changed_files(args.pr))
 
-    print(f"Requesting reviews from: {', '.join(teams) or 'nobody'}")
+    print(f"Requesting reviews from: {', '.join(teams) or 'nobody'}", file=sys.stderr)
     if teams and not args.dry_run:
         github(f"pulls/{args.pr}/requested_reviewers", data={"team_reviewers": teams})
 
