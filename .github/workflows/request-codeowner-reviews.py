@@ -9,7 +9,9 @@ environment. CODEOWNERS is read from the repository's default branch.
 import argparse
 import json
 import os
+import sys
 from fnmatch import fnmatch
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 REPO = os.environ["GITHUB_REPOSITORY"]
@@ -25,8 +27,11 @@ def github(path, data=None, accept="application/vnd.github+json"):
         data=json.dumps(data).encode() if data else None,
         headers=headers,
     )
-    with urlopen(request) as response:
-        body = response.read()
+    try:
+        with urlopen(request) as response:
+            body = response.read()
+    except HTTPError as error:
+        sys.exit(f"{error}: {error.read().decode()}")
     return body.decode() if accept.endswith(".raw") else json.loads(body)
 
 
