@@ -25,11 +25,11 @@ class BaseContactForm(ContactForm):
         label=_("Message subject"),
     )
     email = forms.EmailField(
-        widget=forms.TextInput(attrs={"class": "required"}),
+        widget=forms.EmailInput(attrs={"class": "required", "autocomplete": "email"}),
         label=_("E-mail"),
     )
     name = forms.CharField(
-        widget=forms.TextInput(attrs={"class": "required"}),
+        widget=forms.TextInput(attrs={"class": "required", "autocomplete": "name"}),
         label=_("Name"),
     )
     body = forms.CharField(
