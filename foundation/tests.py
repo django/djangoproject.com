@@ -1,4 +1,5 @@
 from datetime import date
+from unittest.mock import patch
 
 from django.contrib.auth.models import Permission, User
 from django.core.exceptions import ValidationError
@@ -8,7 +9,16 @@ from djmoney.money import Money
 
 from djangoproject.tests import ReleaseMixin
 
-from .models import ApprovedGrant, Banner, BoardMember, Business, Meeting, Office, Term
+from .models import (
+    ApprovedGrant,
+    Banner,
+    BoardMember,
+    Business,
+    Meeting,
+    Office,
+    Term,
+    purge_docs_cache,
+)
 
 
 class BannerTestCase(ReleaseMixin, TestCase):
@@ -156,6 +166,69 @@ class BannerTestCase(ReleaseMixin, TestCase):
         Banner.objects.create(title="Donate now!", is_active=True)
         response = self.client.get("/sponsor/banner/")
         self.assertNotContains(response, "Donate now!")
+
+
+@patch("foundation.models.purge_docs_cache")
+class BannerPurgeDocsCacheTests(TestCase):
+    def test_creating_active_banner_purges(self, mock_purge):
+        with self.captureOnCommitCallbacks(execute=True):
+            Banner.objects.create(title="Active", is_active=True)
+        mock_purge.assert_called_once_with()
+
+    def test_creating_inactive_banner_does_not_purge(self, mock_purge):
+        with self.captureOnCommitCallbacks(execute=True):
+            Banner.objects.create(title="Inactive")
+        mock_purge.assert_not_called()
+
+    def test_updating_active_banner_purges(self, mock_purge):
+        banner = Banner.objects.create(title="Active", is_active=True)
+        mock_purge.reset_mock()
+        banner.title = "New title"
+        with self.captureOnCommitCallbacks(execute=True):
+            banner.save()
+        mock_purge.assert_called_once_with()
+
+    def test_updating_inactive_banner_does_not_purge(self, mock_purge):
+        banner = Banner.objects.create(title="Inactive")
+        banner.title = "New title"
+        with self.captureOnCommitCallbacks(execute=True):
+            banner.save()
+        mock_purge.assert_not_called()
+
+    def test_deactivating_banner_purges(self, mock_purge):
+        banner = Banner.objects.create(title="Active", is_active=True)
+        mock_purge.reset_mock()
+        banner.is_active = False
+        with self.captureOnCommitCallbacks(execute=True):
+            banner.save()
+        mock_purge.assert_called_once_with()
+
+    def test_deleting_active_banner_purges(self, mock_purge):
+        banner = Banner.objects.create(title="Active", is_active=True)
+        mock_purge.reset_mock()
+        with self.captureOnCommitCallbacks(execute=True):
+            banner.delete()
+        mock_purge.assert_called_once_with()
+
+    def test_deleting_inactive_banner_does_not_purge(self, mock_purge):
+        banner = Banner.objects.create(title="Inactive")
+        with self.captureOnCommitCallbacks(execute=True):
+            banner.delete()
+        mock_purge.assert_not_called()
+
+
+class PurgeDocsCacheTests(TestCase):
+    @patch("foundation.models.call_command")
+    def test_calls_purge_docs_cache_command(self, mock_call_command):
+        purge_docs_cache()
+        mock_call_command.assert_called_once_with("purge_docs_cache", verbosity=0)
+
+    @patch("foundation.models.call_command")
+    def test_command_failure_logs_error(self, mock_call_command):
+        mock_call_command.side_effect = SystemExit(1)
+        with self.assertLogs("foundation.models", "ERROR") as logs:
+            purge_docs_cache()
+        self.assertIn("Failed to purge docs cache", logs.output[0])
 
 
 class MeetingTestCase(ReleaseMixin, TestCase):
